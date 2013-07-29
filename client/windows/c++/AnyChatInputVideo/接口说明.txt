@@ -1,0 +1,29 @@
+一、视频部分
+1、设置外部视频输入模式（设置模式后，SDK内核不会打开摄像头进行视频的采集）
+BOOL bExtVideoInput = 1;
+BRAC_SetSDKOption(BRAC_SO_CORESDK_EXTVIDEOINPUT, (CHAR*)&bExtVideoInput, sizeof(DWORD));
+
+2、设置输入视频格式，进入房间成功之后调用，而且只需要调用一次即可
+BRAC_SetInputVideoFormat(BRAC_PIX_FMT_RGB24, INPUTVIDEO_WIDTH, INPUTVIDEO_HEIGHT, INPUTVIDEO_FPS, 0);
+
+3、 将产生的视频帧输入AnyChat（采集一帧调用一次，退出房间后不能再调用，而且必须在设置输入视频格式之后再调用）
+BRAC_InputVideoData(m_lpVideoBuf, dwImageSize, 0);	// 最后一个参数为时间戳，可以为0，或是上层设置的时间戳，毫秒间隔
+
+二、音频部分
+1、设置外部音频输入模式（设置模式后，SDK内核不会打开Mic进行音频的采集）
+BOOL bExtAudioInput = 1;
+BRAC_SetSDKOption(BRAC_SO_CORESDK_EXTAUDIOINPUT, (CHAR*)&bExtAudioInput, sizeof(DWORD));
+
+2、设置输入音频格式，进入房间成功之后调用，而且只需要调用一次即可
+BRAC_SetInputAudioFormat(1, 16000, 16, 0);		// 最后一个参数为时间戳，可以为0，或是上层设置的时间戳，毫秒间隔
+
+3、将采样的音频数据输入AnyChat（采集50ms，或是100ms调用一次，退出房间后不能再调用，而且必须在设置输入音频格式之后再调用）
+BRAC_InputAudioData(lpSamples, dwSize, 0);
+
+（注：如果需要SDK内核采集音频，则不能设置外部音频输入模式：BRAC_SO_CORESDK_EXTAUDIOINPUT）
+
+相比于标准的AnyChat SDK V4.1SDK，主要更新了BRAnyChatCore.dll库，别的库没有修改。
+
+增加两个新的API接口，可以回调带时间戳的音频、视频数据给上层应用
+BRAC_SetVideoDataExCallBack(BRAC_PIX_FMT_RGB24, OnAnyChatVideoDataExCallBack, this);
+BRAC_SetAudioDataExCallBack(OnAnyChatAudioDataExCallBack, this);
