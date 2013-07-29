@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Thu Nov 22 11:37:36 CST 2012
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=AnyChatDemoForJava_fat.jar
+manifest.mergeall=true
+manifest.mainclass=com.bairuitech.demo.AnychatDemo
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=
