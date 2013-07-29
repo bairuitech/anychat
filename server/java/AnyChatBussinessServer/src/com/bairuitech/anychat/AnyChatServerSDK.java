@@ -4,6 +4,9 @@ import com.bairuitech.anychat.TransTaskOutParam;
 
 public class AnyChatServerSDK
 {
+	public static final int BRAS_SERVERAPPMSG_CONNECTED		= 	1;	///< 与AnyChat核心服务器连接成功
+	public static final int BRAS_SERVERAPPMSG_DISCONNECT	=	2;	///< 与AnyChat核心服务器断开连接
+
 	AnyChatServerEvent event;
 	
 	// 设置事件回调通知接口
