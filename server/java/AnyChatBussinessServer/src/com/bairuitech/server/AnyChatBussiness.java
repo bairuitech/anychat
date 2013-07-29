@@ -1,4 +1,4 @@
-package com.bairuitech.server;
+﻿package com.bairuitech.server;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -463,5 +463,4 @@ public class AnyChatBussiness extends JFrame implements AnyChatServerEvent {
 		String str = "OnAnyChatServerRecordCallBack";
 		generateLog(str);
 	}
-
 }
