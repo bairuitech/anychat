@@ -3,6 +3,8 @@ package com.bairuitech.server;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.bairuitech.anychat.*;
 
@@ -20,67 +22,86 @@ public class SampleServer implements AnyChatServerEvent{
 		anychat = new AnyChatServerSDK();
 		anychat.SetServerEvent(new SampleServer());
 		anychat.InitSDK(0);
-		System.out.print("Welcome use AnyChat! (" + anychat.GetSDKVersion() + ")\r\n");
+		System.out.print(getCurrentTime() + "Welcome use AnyChat! (" + anychat.GetSDKVersion() + ")\r\n");
 		Reader reader = new InputStreamReader(System.in);
+		char ch = 0;
 		do{
-			System.out.print("Business server(Java) still running, press 'q' to exit...\r\n\r\n");
+			if(ch != '\r')
+				System.out.print(getCurrentTime() + "Business server(Java) still running, press 'q' to exit...\r\n");
 			Thread.sleep(100);
-		}while((char)reader.read() != 'q');
-		System.out.print("Business server(Java) already exited...\r\n");
+		}while((ch=(char)reader.read()) != 'q');
+		anychat.Release();
+		System.out.print(getCurrentTime() + "Business server(Java) already exited...\r\n");
 	}
 
-	@Override
-	public void OnAnyChatServerAppMessageCallBack(int dwMsg) {
-		if(dwMsg == AnyChatServerSDK.BRAS_SERVERAPPMSG_CONNECTED)
-			System.out.print("Success connected with anychatcoreserver...\r\n");
-		else if(dwMsg == AnyChatServerSDK.BRAS_SERVERAPPMSG_DISCONNECT)
-			System.out.print("ERROR: Disconnected from the anychatcoreserver, it may be the anychatcoreserver is closed!\r\n");
-		else
-			System.out.print("OnServerAppMessageCallBack: " + dwMsg + "\r\n");
+	/**
+	 * 获取当前时间
+	 */
+	public static String getCurrentTime() {
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat tm = new SimpleDateFormat("MM-dd HH:mm:ss:SSS");
+		String strTime = "";
+		try {
+			strTime = tm.format(date) + "\t";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return strTime;
 	}
 	
 	@Override
+	public void OnAnyChatServerAppMessageCallBack(int dwMsg) {
+		if(dwMsg == AnyChatServerSDK.BRAS_SERVERAPPMSG_CONNECTED)
+			System.out.print(getCurrentTime() + "Success connected with anychatcoreserver...\r\n");
+		else if(dwMsg == AnyChatServerSDK.BRAS_SERVERAPPMSG_DISCONNECT)
+			System.out.print(getCurrentTime() + "ERROR: Disconnected from the anychatcoreserver, it may be the anychatcoreserver is closed!\r\n");
+		else
+			System.out.print(getCurrentTime() + "OnServerAppMessageCallBack: " + dwMsg + "\r\n");
+	}
+	
+	// 用户身份验证，若验证成功，则必须返回0，且分配一个唯一的userid，若验证失败，则返回出错代码，不用分配userid
+	@Override
 	public int OnAnyChatVerifyUserCallBack(String szUserName, String szPassword, VerifyUserOutParam outParam) {
-		outParam.SetUserId(iUserIdSeed);
+		outParam.SetUserId(iUserIdSeed);		// 若身份验证成功，必须分配一个唯一的userid
 		outParam.SetUserLevel(0);
 		outParam.SetNickName(szUserName);
 		
-		System.out.print("OnVerifyUserCallBack: userid:" + iUserIdSeed + " username: " + szUserName + "\r\n");
+		System.out.print(getCurrentTime() + "OnVerifyUserCallBack: userid:" + iUserIdSeed + " username: " + szUserName + "\r\n");
 		iUserIdSeed += 1;
 		return 0;
 	}
 	
 	@Override
 	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr) {
-		System.out.print("OnUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + "\r\n");
-		// ��ʾTransBufferEx����
+		System.out.print(getCurrentTime() + "OnUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + "\r\n");
+		// 演示如何使用TransBufferEx获取taskid
 		/*TransTaskOutParam outParam = new TransTaskOutParam();
 		byte[] sendbuf = new byte[100];
 		int ret = AnyChatServerSDK.TransBufferEx(dwUserId, sendbuf, sendbuf.length, 0, 0, 0, outParam);
-		System.out.print("TransBufferEx: ret:" + ret + " taskid: " + outParam.GetTaskId() + "\r\n");
+		System.out.print(getCurrentTime() + "TransBufferEx: ret:" + ret + " taskid: " + outParam.GetTaskId() + "\r\n");
 		*/
 	}
 	
 	@Override
 	public void OnAnyChatUserLogoutActionCallBack(int dwUserId) {
-		System.out.print("OnUserLogoutActionCallBack: userid:" + dwUserId + "\r\n");	
+		System.out.print(getCurrentTime() + "OnUserLogoutActionCallBack: userid:" + dwUserId + "\r\n");	
 	}
 
-	// �û�������뷿��ص������������û����뷿�䣬�򷵻�0�����򷵻س������
+	// 用户准备进入房间验证，如果允许用户进入房间，则必须返回0，则否返回出错代码
 	@Override
 	public int OnAnyChatPrepareEnterRoomCallBack(int dwUserId, int dwRoomId, String szRoomName, String szPassword) {
-		System.out.print("OnPrepareEnterRoomCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
+		System.out.print(getCurrentTime() + "OnPrepareEnterRoomCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
 		return 0;
 	}
 	
 	@Override
 	public void OnAnyChatUserEnterRoomActionCallBack(int dwUserId, int dwRoomId) {
-		System.out.print("OnUserEnterRoomActionCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
+		System.out.print(getCurrentTime() + "OnUserEnterRoomActionCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
 	}
 
 	@Override
 	public void OnAnyChatUserLeaveRoomActionCallBack(int dwUserId, int dwRoomId) {
-		System.out.print("OnUserLeaveRoomActionCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
+		System.out.print(getCurrentTime() + "OnUserLeaveRoomActionCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
 	}
 	
 	@Override
@@ -103,19 +124,19 @@ public class SampleServer implements AnyChatServerEvent{
 
 	@Override
 	public void OnAnyChatSDKFilterData(int dwUserId, byte[] lpBuf, int dwLen) {
-		System.out.print("OnAnyChatSDKFilterData\r\n");
+		System.out.print(getCurrentTime() + "OnAnyChatSDKFilterData\r\n");
 		
 	}
 
 	@Override
 	public void OnAnyChatTimerEventCallBack() {
-		System.out.print("OnTimerEventCallBack\r\n");
+		System.out.print(getCurrentTime() + "OnTimerEventCallBack\r\n");
 		
 	}
 
 	@Override
 	public void OnAnyChatRecvUserTextMsgCallBack(int dwRoomId, int dwSrcUserId, int dwTarUserId, int bSecret, String szTextMessage, int dwLen) {
-		System.out.print("OnAnyChatRecvUserTextMsgCallBack: " + dwSrcUserId + " to " + dwTarUserId + " " + szTextMessage +"\r\n");
+		System.out.print(getCurrentTime() + "OnAnyChatRecvUserTextMsgCallBack: " + dwSrcUserId + " to " + dwTarUserId + " " + szTextMessage +"\r\n");
 		
 	}
 

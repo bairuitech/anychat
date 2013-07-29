@@ -1,4 +1,4 @@
-﻿package com.bairuitech.server;
+package com.bairuitech.server;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,9 +31,9 @@ import com.bairuitech.anychat.TransTaskOutParam;
 import com.bairuitech.anychat.VerifyUserOutParam;
 
 /**
- * 主程序
+ * AnyChat Platform Core SDK ---- Business Server
  */
-public class AnyChatBussiness extends JFrame implements AnyChatServerEvent {
+public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	private static final long serialVersionUID = 1L;
 	public AnyChatServerSDK anyChatSDK;
 	public StringBuilder message = new StringBuilder();
@@ -51,17 +51,17 @@ public class AnyChatBussiness extends JFrame implements AnyChatServerEvent {
 	public static final int COLUM_COUNT = 5;
 	public static final int ROOM_INDEX = 3;
 
-	public AnyChatBussiness() {
+	public BusinessServer() {
 
 		initView();
 	}
 
 	private void initUserTable() {
 
-		tableTitles.addElement("用户id");
+		tableTitles.addElement("用户ID");
 		tableTitles.addElement("用户姓名");
-		tableTitles.addElement("用户ip");
-		tableTitles.addElement("房间id");
+		tableTitles.addElement("用户IP");
+		tableTitles.addElement("房间ID");
 		tableTitles.addElement("登录时间");
 		model = new DefaultTableModel() {
 			public boolean isCellEditable(int row, int column) {
@@ -244,8 +244,8 @@ public class AnyChatBussiness extends JFrame implements AnyChatServerEvent {
 	 */
 	public static void main(String[] args) {
 
-		AnyChatBussiness bussines = new AnyChatBussiness();
-		bussines.initSdk();
+		BusinessServer anychat = new BusinessServer();
+		anychat.initSdk();
 	}
 
 	/**
@@ -418,7 +418,7 @@ public class AnyChatBussiness extends JFrame implements AnyChatServerEvent {
 	}
 
 	/**
-	 * 接收SDKfilter数据回调，
+	 * 接收SDKfilter数据回调
 	 */
 	@Override
 	public void OnAnyChatSDKFilterData(int dwUserId, byte[] lpBuf, int dwLen) {
@@ -463,4 +463,5 @@ public class AnyChatBussiness extends JFrame implements AnyChatServerEvent {
 		String str = "OnAnyChatServerRecordCallBack";
 		generateLog(str);
 	}
+
 }
