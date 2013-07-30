@@ -122,9 +122,10 @@ public class AnyChatDefine {
 	public static final int BRAC_TRANSTASK_STATUS			=	3;	///< 传输任务当前状态（参数为：int型）
 
 
-	// 录像功能标志定义
+	// 录像功能标志定义（API：StreamRecordCtrl传入参数，目前Android平台暂时只支持服务器端录制）
 	public static final int BRAC_RECORD_FLAGS_VIDEO			=	0x00000001;	///< 录制视频
 	public static final int BRAC_RECORD_FLAGS_AUDIO			=	0x00000002;	///< 录制音频
+	public static final int BRAC_RECORD_FLAGS_SERVER		=	0x00000004;	///< 服务器端录制
 
 
 	// 用户状态标志定义
