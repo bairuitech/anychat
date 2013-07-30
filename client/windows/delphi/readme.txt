@@ -1,0 +1,1 @@
+AnyChatDelphi 工程演示了AnyChat Platform Core SDK在Delphi环境下的编程思路，由其它客户提供，我们不能保证该工程能正常编译、运行，但其代码，特别是与AnyChat相关的API调用方法可供参考。
