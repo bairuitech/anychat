@@ -1,7 +1,7 @@
 package com.bairuitech.anychat;		// 不能修改包的名称
 
 
-public class VerifyUserOutParam{
+public class AnyChatVerifyUserOutParam{
 	private int userid;
 	private int userlevel;
 	private String nickname;

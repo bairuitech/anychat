@@ -1,34 +1,15 @@
 package com.bairuitech.server;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.*;
+import javax.swing.table.*;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-
-import com.bairuitech.anychat.AnyChatServerEvent;
-import com.bairuitech.anychat.AnyChatServerSDK;
-import com.bairuitech.anychat.TransTaskOutParam;
-import com.bairuitech.anychat.VerifyUserOutParam;
+import com.bairuitech.anychat.*;
 
 /**
  * AnyChat Platform Core SDK ---- Business Server
@@ -286,8 +267,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 * 用户登录验证函数，可以在此函数中进行验证登录，赋值客户端userid等操作
 	 */
 	@Override
-	public int OnAnyChatVerifyUserCallBack(String szUserName,
-			String szPassword, VerifyUserOutParam outParam) {
+	public int OnAnyChatVerifyUserCallBack(String szUserName, String szPassword, AnyChatVerifyUserOutParam outParam) {
 		outParam.SetUserId(iUserIdSeed);
 		outParam.SetUserLevel(0);
 		outParam.SetNickName(szUserName);
@@ -302,17 +282,17 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 * 用户登录成功回调
 	 */
 	@Override
-	public void OnAnyChatUserLoginActionCallBack(int dwUserId,
-			String szUserName, int dwLevel, String szIpAddr) {
+	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr) {
 		System.out.print("OnUserLoginActionCallBack: userid:" + dwUserId
 				+ " username: " + szUserName + "\r\n");
 		// 测试扩展透明通道发送数据
-		TransTaskOutParam outParam = new TransTaskOutParam();
+/*		AnyChatTransTaskOutParam outParam = new AnyChatTransTaskOutParam();
 		byte[] sendbuf = new byte[100];
 		int ret = AnyChatServerSDK.TransBufferEx(dwUserId, sendbuf,
 				sendbuf.length, 0, 0, 0, outParam);
 		System.out.print("TransBufferEx: ret:" + ret + " taskid: "
 				+ outParam.GetTaskId() + "\r\n");
+*/
 		String str = "OnAnyChatUserLoginActionCallBack: userid:" + dwUserId
 				+ " username: " + szUserName + " Ip: " + szIpAddr;
 		generateLog(str);

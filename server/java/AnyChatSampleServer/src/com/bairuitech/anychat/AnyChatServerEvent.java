@@ -1,6 +1,6 @@
 package com.bairuitech.anychat;
 
-import com.bairuitech.anychat.VerifyUserOutParam;
+import com.bairuitech.anychat.AnyChatVerifyUserOutParam;
 
 // 数据传输通知接口
 public interface AnyChatServerEvent {
@@ -11,7 +11,7 @@ public interface AnyChatServerEvent {
 	public void OnAnyChatTimerEventCallBack();
 	
 	// 用户身份验证回调函数定义
-	public int OnAnyChatVerifyUserCallBack(String szUserName, String szPassword, VerifyUserOutParam outParam);
+	public int OnAnyChatVerifyUserCallBack(String szUserName, String szPassword, AnyChatVerifyUserOutParam outParam);
 	// 用户登录成功回调函数定义
 	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr);
 	// 用户注销回调函数定义

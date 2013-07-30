@@ -1,6 +1,6 @@
 package com.bairuitech.anychat;		// 不能修改包的名称
 
-import com.bairuitech.anychat.TransTaskOutParam;
+import com.bairuitech.anychat.AnyChatTransTaskOutParam;
 
 public class AnyChatServerSDK
 {
@@ -31,11 +31,11 @@ public class AnyChatServerSDK
     public native int SetTimerEventCallBack(int elapse);
     
 	// 传送文件
-	public static native int TransFile(int userid, String filepath, int wparam, int lparam, int flags, TransTaskOutParam outParam);
+	public static native int TransFile(int userid, String filepath, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
 	// 透明通道传送缓冲区
 	public static native int TransBuffer(int userid, byte[] buf, int len);
 	// 透明通道传送缓冲区扩展
-	public static native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags, TransTaskOutParam outParam);
+	public static native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
 	// 发送SDK Filter 通信数据
 	public static native int SendSDKFilterData(byte[] buf, int len);
 	
@@ -62,7 +62,7 @@ public class AnyChatServerSDK
 	}
 	
 	// 用户身份验证回调函数定义
-	private int OnAnyChatVerifyUserCallBack(String szUserName, String szPassword, VerifyUserOutParam outParam)
+	private int OnAnyChatVerifyUserCallBack(String szUserName, String szPassword, AnyChatVerifyUserOutParam outParam)
 	{
 		int ret = -1;
 		if(this.event != null)

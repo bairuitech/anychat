@@ -61,7 +61,7 @@ public class SampleServer implements AnyChatServerEvent{
 	
 	// 用户身份验证，若验证成功，则必须返回0，且分配一个唯一的userid，若验证失败，则返回出错代码，不用分配userid
 	@Override
-	public int OnAnyChatVerifyUserCallBack(String szUserName, String szPassword, VerifyUserOutParam outParam) {
+	public int OnAnyChatVerifyUserCallBack(String szUserName, String szPassword, AnyChatVerifyUserOutParam outParam) {
 		outParam.SetUserId(iUserIdSeed);		// 若身份验证成功，必须分配一个唯一的userid
 		outParam.SetUserLevel(0);
 		outParam.SetNickName(szUserName);
@@ -75,7 +75,7 @@ public class SampleServer implements AnyChatServerEvent{
 	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr) {
 		System.out.print(getCurrentTime() + "OnUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + "\r\n");
 		// 演示如何使用TransBufferEx获取taskid
-		/*TransTaskOutParam outParam = new TransTaskOutParam();
+		/*AnyChatTransTaskOutParam outParam = new AnyChatTransTaskOutParam();
 		byte[] sendbuf = new byte[100];
 		int ret = AnyChatServerSDK.TransBufferEx(dwUserId, sendbuf, sendbuf.length, 0, 0, 0, outParam);
 		System.out.print(getCurrentTime() + "TransBufferEx: ret:" + ret + " taskid: " + outParam.GetTaskId() + "\r\n");
