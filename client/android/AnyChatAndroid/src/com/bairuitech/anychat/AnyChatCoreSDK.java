@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import com.bairuitech.anychat.*;
+
 
 public class AnyChatCoreSDK
 {
@@ -106,6 +108,8 @@ public class AnyChatCoreSDK
     public native int UserCameraControl(int userid, int bopen);
     // 用户音频控制
     public native int UserSpeakControl(int userid, int bopen);
+	// 用户音、视频录制（中心服务器录像）
+	public native int StreamRecordCtrl(int userid, int bstartrecord, int flags, int param);
     
     // 获取指定用户的字符串类型状态
     public native String QueryUserStateString(int userid, int infoname);
@@ -136,11 +140,11 @@ public class AnyChatCoreSDK
 	// 发送文字消息
 	public native int SendTextMessage(int userid, int secret, String message);
 	// 传送文件
-	public native int TransFile(int userid, String filepath, int wparam, int lparam, int flags);
+	public native int TransFile(int userid, String filepath, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
 	// 透明通道传送缓冲区
 	public native int TransBuffer(int userid, byte[] buf, int len);
 	// 透明通道传送缓冲区扩展
-	public native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags);
+	public native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
 	// 终止传输任务
 	public native int CancelTransTask(int userid, int taskid);
 	// 查询传输任务状态
