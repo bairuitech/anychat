@@ -56,8 +56,8 @@ public class VideoConfigActivity extends Activity{
 	private final int[] videoWidthValue={176,320,352,640, 720, 1280};
 	private final int[] videoHeightValue={144,240,288,480, 480, 720};
 	
-	private final String[] videoBitrateString={"质量优先模式", "60kbps（默认）", "80kbps", "100kbps", "150kbps", "200kbps", "300kbps"};
-	private final int[]	videoBitrateValue={0,60*1000,80*1000,100*1000,150*1000,200*1000,300*1000};
+	private final String[] videoBitrateString={"质量优先模式", "60kbps（默认）", "80kbps", "100kbps", "150kbps", "200kbps", "300kbps", "500kbps", "800kbps", "1Mbps"};
+	private final int[]	videoBitrateValue={0,60*1000,80*1000,100*1000,150*1000,200*1000,300*1000,500*1000,800*1000,1000*1000};
 	
 	private final String[] videofpsString={"2 FPS", "4 FPS", "6 FPS", "8 FPS", "10FPS（默认）", "15FPS", "20FPS", "25FPS"};
 	private final int[]	videofpsValue={2,4,6,8,10,15,20,25};
