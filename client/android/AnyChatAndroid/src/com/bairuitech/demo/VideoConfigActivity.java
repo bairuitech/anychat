@@ -66,7 +66,7 @@ public class VideoConfigActivity extends Activity{
 	private final int[] videoQualityValue={2,3,4};
 	
 	private final String[] videoPresetString={"最高效率，较低质量","较高效率，较低质量","性能均衡（默认）","较高质量，较低效率","最高质量，较低效率"};
-	private final int[] videoPresetValue={1,2,3};
+	private final int[] videoPresetValue={1,2,3,4,5};
 	
 	private final String[] videoShowDriverString={"内核视频显示驱动", "Android 2.x兼容模式", "Java视频显示驱动"};
 	private final int[]	videoShowDriverValue={0,4,5};

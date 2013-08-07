@@ -23,7 +23,7 @@ public class ConfigService {
         configEntity.configMode = share.getInt("configMode", ConfigEntity.VIDEO_MODE_CUSTOMCONFIG);
         configEntity.resolution_width = share.getInt("resolution_width", 320);
         configEntity.resolution_height = share.getInt("resolution_height", 240);
-        configEntity.videoBitrate = share.getInt("videoBitrate", 0);
+        configEntity.videoBitrate = share.getInt("videoBitrate", 150*1000);
         configEntity.videoFps = share.getInt("videoFps", 10);
         configEntity.videoQuality = share.getInt("videoQuality", ConfigEntity.VIDEO_QUALITY_GOOD);
         configEntity.videoPreset = share.getInt("videoPreset", 3);

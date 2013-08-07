@@ -19,8 +19,8 @@ public class ConfigEntity {
 	public int resolution_width = 0;
 	public int resolution_height = 0;
 	
-	public int videoBitrate = 0;
-	public int videoFps = 0;
+	public int videoBitrate = 150*1000;						// 本地视频码率
+	public int videoFps = 10;								// 本地视频帧率
 	public int videoQuality = VIDEO_QUALITY_GOOD;
 	public int videoPreset = 1;
 	public int videoOverlay = 1;							// 本地视频是否采用Overlay模式
@@ -33,7 +33,7 @@ public class ConfigEntity {
 	public int useARMv6Lib = 0;								// 是否强制使用ARMv6指令集，默认是内核自动判断
 	public int enableAEC = 1;								// 是否使用回音消除功能
 	public int useHWCodec = 0;								// 是否使用平台内置硬件编解码器
-	public int smoothPlayMode = 0;							// 是否使用平滑播放模式（打开时播放更平滑，丢包时会出现马赛克，关闭时不会出现马赛克[默认]，但丢包时画面会短暂卡住）
+	public int smoothPlayMode = 0;							// 是否使用平滑播放模式
 	public int videoShowDriver = 5;							// 视频显示驱动（0 默认， 4 Android 2.x兼容模式，5 Java驱动）
 	public int audioPlayDriver = 3;							// 音频播放驱动（0 默认，3 Java驱动）
 	public int audioRecordDriver = 3;						// 音频采集驱动（0默认，3 Java驱动）
