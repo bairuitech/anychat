@@ -99,7 +99,11 @@ public class AnyChatAudioHelper {
             } catch (Exception e) {
             	Log.d(TAG, "Set play thread priority failed: " + e.getMessage());
             }
-			mAudioTrack.play();	
+            try {
+            	mAudioTrack.play();	
+            }catch(Exception e) {
+            	e.printStackTrace();
+            }
 			Log.d(TAG, "audio play....");
 			while(!mPlayThreadExitFlag)
 			{
@@ -195,7 +199,11 @@ public class AnyChatAudioHelper {
             } catch (Exception e) {
             	Log.d(TAG, "Set record thread priority failed: " + e.getMessage());
             }
-			mAudioRecord.startRecording();	
+            try{
+            	mAudioRecord.startRecording();
+            }catch(Exception e) {
+            	e.printStackTrace();
+            }
 			Log.d(TAG, "audio record....");
 			byte [] recordbuf = new byte [640];
 			while(!mRecordThreadExitFlag)
