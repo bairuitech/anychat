@@ -30,15 +30,15 @@ namespace ANYCHATAPI
 
 		// 用户身份验证回调函数定义
 		// typedef DWORD (CALLBACK* BRAS_VerifyUser_CallBack)(IN LPCTSTR lpUserName,IN LPCTSTR lpPassword, OUT LPDWORD lpUserID, OUT LPDWORD lpUserLevel, OUT LPTSTR lpNickName,IN DWORD dwNCLen, LPVOID lpUserValue);
-        public delegate int VerifyUserCallBack(string userName, string password, ref int userID, ref int userLevel, IntPtr nickName, int len,int userValue);
+        public delegate int VerifyUserCallBack([MarshalAs(UnmanagedType.LPWStr)] string userName, [MarshalAs(UnmanagedType.LPWStr)] string password, ref int userID, ref int userLevel, IntPtr nickName, int len, int userValue);
 
         // 用户申请进入房间回调函数定义
         //typedef DWORD (CALLBACK* BRAS_PrepareEnterRoom_CallBack)(DWORD dwUserId, DWORD dwRoomId, LPCTSTR lpRoomName,LPCTSTR lpPassword, LPVOID lpUserValue);
-        public delegate int PrepareEnterRoomCallBack(int userId, int roomId, string roomName, string password, int userValue);
+        public delegate int PrepareEnterRoomCallBack(int userId, int roomId, [MarshalAs(UnmanagedType.LPWStr)] string roomName, [MarshalAs(UnmanagedType.LPWStr)] string password, int userValue);
 
         // 用户登录成功回调函数定义
         //typedef void (CALLBACK* BRAS_OnUserLoginAction_CallBack)(DWORD dwUserId, LPCTSTR szUserName, DWORD dwLevel, LPCTSTR szIpAddr, LPVOID lpUserValue);
-        public delegate void OnUserLoginActionCallBack(int userId, string userName, int level, string addr, int userValue);
+        public delegate void OnUserLoginActionCallBack(int userId, [MarshalAs(UnmanagedType.LPWStr)] string userName, int level, string addr, int userValue);
 
         // 用户注销回调函数定义
         //typedef void (CALLBACK* BRAS_OnUserLogoutAction_CallBack)(DWORD dwUserId, LPVOID lpUserValue);
@@ -70,11 +70,11 @@ namespace ANYCHATAPI
 		
 		// 文件传输回调函数定义
 		//typedef void (CALLBACK * BRAS_OnTransFile_CallBack)(DWORD dwUserId, LPCTSTR lpFileName, LPCTSTR lpTempFilePath, DWORD dwFileLength, DWORD wParam, DWORD lParam, DWORD dwTaskId, LPVOID lpUserValue);
-		public delegate void OnTransFileCallBack(int dwUserId, string lpFileName, string lpTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId, int lpUserValue);
+        public delegate void OnTransFileCallBack(int dwUserId, [MarshalAs(UnmanagedType.LPWStr)] string lpFileName, string lpTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId, int lpUserValue);
 
 		// 服务器录像回调函数定义
 		//typedef void (CALLBACK * BRAS_OnServerRecord_CallBack)(DWORD dwUserId, DWORD dwParam, DWORD dwRecordServerId, DWORD dwElapse, LPCTSTR lpRecordFileName, LPVOID lpUserValue);
-		public delegate void OnServerRecordCallBack(int dwUserId, int dwParam, int dwRecordServerId, int dwElapse, string lpRecordFileName, int lpUserValue);
+        public delegate void OnServerRecordCallBack(int dwUserId, int dwParam, int dwRecordServerId, int dwElapse, [MarshalAs(UnmanagedType.LPWStr)] string lpRecordFileName, int lpUserValue);
 
 		/**
 		*    API 方法定义

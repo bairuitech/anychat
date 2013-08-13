@@ -232,7 +232,7 @@ namespace ANYCHATAPI
         /// <param name="lParam">附带信息2</param>
         /// <param name="taskId">传输任务编号</param>
         /// <param name="userValue">自定义参数</param>
-        public delegate void TransFileCallBack(int userId, string fileName, string filePath, int fileLength, int wParam, int lParam, int taskId, int userValue);
+        public delegate void TransFileCallBack(int userId, [MarshalAs(UnmanagedType.LPWStr)] string fileName, string filePath, int fileLength, int wParam, int lParam, int taskId, int userValue);
 
         /// <summary>
         /// 音量变化回调函数定义
@@ -252,7 +252,7 @@ namespace ANYCHATAPI
         /// <param name="param">参数</param>
         /// <param name="recordType">录像类型,1录像,0拍照</param>
         /// <param name="userValue">用户参数</param>
-        public delegate void RecordCallBack(int userId, string filePath, int param, bool recordType,int userValue);
+        public delegate void RecordCallBack(int userId, [MarshalAs(UnmanagedType.LPWStr)] string filePath, int param, bool recordType, int userValue);
 
         /// <summary>
         /// 视频回调函数
@@ -283,8 +283,7 @@ namespace ANYCHATAPI
         /// <param name="message"></param>
         /// <param name="len"></param>
         /// <param name="userValue"></param>
-        public delegate void TextMessage_CallBack(int fromuserId, int touserId, bool isserect, 
-            string message, int len, int userValue);
+        public delegate void TextMessage_CallBack(int fromuserId, int touserId, bool isserect, [MarshalAs(UnmanagedType.LPWStr)] string message, int len, int userValue);
 
 		/// <summary>
         /// 异步消息通知回调函数定义
