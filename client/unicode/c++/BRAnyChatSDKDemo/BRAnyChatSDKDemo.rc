@@ -1,0 +1,254 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\BRAnyChatSDKDemo.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\BRAnyChatSDKDemo.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG  0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 BRAnyChatSDKDemo"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "BRAnyChatSDKDemo 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2008",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_BRANYCHATSDKDEMO_DIALOG DIALOGEX 0, 0, 524, 347
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "BRAnyChatSDKDemo"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "初始化(1)",IDC_BUTTON_INIT,313,14,50,14
+    EDITTEXT        IDC_EDIT_LOG,23,58,263,116,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | ES_WANTRETURN
+    PUSHBUTTON      "离开房间(4)",IDC_BUTTON_LEAVEROOM,384,56,50,14
+    PUSHBUTTON      "进入房间(3)",IDC_BUTTON_ENTERROOM,313,56,50,14
+    PUSHBUTTON      "画质调节",IDC_BUTTON_VIDEOPROPERTY,317,112,50,14
+    LTEXT           "视频设备：",IDC_STATIC,23,183,41,8
+    COMBOBOX        IDC_COMBO_VCAPTURE,68,180,117,141,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "刷新",IDC_BUTTON_REFRESHCAPTURE,199,187,50,14
+    LTEXT           "Wave",IDC_STATIC,270,191,17,8
+    CONTROL         "Slider1",IDC_SLIDER_OUTVOLUME,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,295,188,82,15
+    LTEXT           "Mic",IDC_STATIC,389,193,13,8
+    CONTROL         "Slider1",IDC_SLIDER_INVOLUME,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,415,190,82,15
+    LTEXT           "音频设备：",IDC_STATIC,23,199,41,8
+    COMBOBOX        IDC_COMBO_ACAPTURE,68,195,117,141,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "传输文件",IDC_BUTTON_SENDFILE,316,85,50,14
+    CONTROL         "VAD (静音检测)",IDC_CHECK_VAD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,335,148,72,10
+    CONTROL         "AGC (自动增益)",IDC_CHECK_AGC,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,335,166,72,10
+    CONTROL         "AEC(回音消除)",IDC_CHECK_ECHO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,434,149,68,10
+    CONTROL         "NS  (噪音抑制)",IDC_CHECK_NS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,434,165,72,10
+    LTEXT           "",IDC_STATIC_FILESTATUS,328,126,170,8
+    PUSHBUTTON      "传缓冲区",IDC_BUTTON_TRANSBUF,389,85,50,14
+    LTEXT           "服务器：",IDC_STATIC,21,16,33,8
+    LTEXT           "端口：",IDC_STATIC,175,16,25,8
+    EDITTEXT        IDC_EDIT_PORT,205,14,40,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "释放资源(6)",IDC_BUTTON_RELEASE,384,14,50,14
+    CONTROL         "Progress1",IDC_PROGRESS_SPEAKVOLUME0,"msctls_progress32",PBS_SMOOTH,20,308,115,6
+    GROUPBOX        "",IDC_STATIC_USER0,19,217,120,90
+    GROUPBOX        "",IDC_STATIC_USER1,142,217,117,92
+    GROUPBOX        "",IDC_STATIC_USER2,264,218,119,92
+    GROUPBOX        "",IDC_STATIC_USER3,388,217,121,92
+    CONTROL         "Progress1",IDC_PROGRESS_SPEAKVOLUME1,"msctls_progress32",PBS_SMOOTH,141,309,113,6
+    CONTROL         "Progress1",IDC_PROGRESS_SPEAKVOLUME2,"msctls_progress32",PBS_SMOOTH,265,311,113,6
+    CONTROL         "Progress1",IDC_PROGRESS_SPEAKVOLUME3,"msctls_progress32",PBS_SMOOTH,389,311,117,6
+    PUSHBUTTON      "V",IDC_BUTTON_VIDEOCTRL0,22,320,9,14
+    LTEXT           "R",IDC_STATIC_RECORDSTATE0,124,323,8,8
+    LTEXT           "R",IDC_STATIC_RECORDSTATE1,240,323,8,8
+    LTEXT           "R",IDC_STATIC_RECORDSTATE2,367,323,8,8
+    LTEXT           "R",IDC_STATIC_RECORDSTATE3,497,323,8,8
+    PUSHBUTTON      "A",IDC_BUTTON_AUDIOCTRL0,35,320,9,14
+    PUSHBUTTON      "R",IDC_BUTTON_RECORDCTRL0,48,320,9,14
+    PUSHBUTTON      "S",IDC_BUTTON_SNAPSHOTCTRL0,61,320,9,14
+    LTEXT           "V：视频控制  A：音频控制  R：录像控制  S：快照",IDC_STATIC,21,337,203,8
+    PUSHBUTTON      "V",IDC_BUTTON_VIDEOCTRL1,143,319,9,14
+    PUSHBUTTON      "A",IDC_BUTTON_AUDIOCTRL1,157,319,9,14
+    PUSHBUTTON      "R",IDC_BUTTON_RECORDCTRL1,169,319,9,14
+    PUSHBUTTON      "S",IDC_BUTTON_SNAPSHOTCTRL1,183,319,9,14
+    PUSHBUTTON      "V",IDC_BUTTON_VIDEOCTRL2,265,321,9,14
+    PUSHBUTTON      "A",IDC_BUTTON_AUDIOCTRL2,279,321,9,14
+    PUSHBUTTON      "R",IDC_BUTTON_RECORDCTRL2,291,321,9,14
+    PUSHBUTTON      "S",IDC_BUTTON_SNAPSHOTCTRL2,305,321,9,14
+    PUSHBUTTON      "V",IDC_BUTTON_VIDEOCTRL3,390,321,9,14
+    PUSHBUTTON      "A",IDC_BUTTON_AUDIOCTRL3,403,321,9,14
+    PUSHBUTTON      "R",IDC_BUTTON_RECORDCTRL3,416,321,9,14
+    PUSHBUTTON      "S",IDC_BUTTON_SNAPSHOTCTRL3,429,321,9,14
+    LTEXT           "用户名：",IDC_STATIC,23,39,33,8
+    EDITTEXT        IDC_EDIT_USERNAME,61,37,55,14,ES_AUTOHSCROLL
+    LTEXT           "密码：",IDC_STATIC,124,39,25,8
+    EDITTEXT        IDC_EDIT_LOGINPASS,150,37,53,14,ES_AUTOHSCROLL
+    LTEXT           "房间号：",IDC_STATIC,213,41,33,8
+    EDITTEXT        IDC_EDIT_ROOMID,247,38,40,14,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "用户登录(2)",IDC_BUTTON_LOGIN,313,35,50,14
+    PUSHBUTTON      "用户注销(5)",IDC_BUTTON_LOGOUT,384,35,50,14
+    EDITTEXT        IDC_IPADDRESS_SERVER,60,14,100,14,ES_AUTOHSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,0,0,0
+ PRODUCTVERSION 2,0,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "http://www.bairuitech.com"
+            VALUE "CompanyName", "GuangZhou BaiRui Network Technology Co., Ltd."
+            VALUE "FileDescription", "BRAnyChatSDKDemo Microsoft 基础类应用程序"
+            VALUE "FileVersion", "2, 0, 0, 0"
+            VALUE "InternalName", "BRAnyChatSDKDemo"
+            VALUE "LegalCopyright", "版权所有 (C) 2008-2009"
+            VALUE "OriginalFilename", "BRAnyChatSDKDemo.EXE"
+            VALUE "ProductName", "BRAnyChatSDKDemo 应用程序"
+            VALUE "ProductVersion", "2, 0, 0, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 BRAnyChatSDKDemo(&A)..."
+END
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\BRAnyChatSDKDemo.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
