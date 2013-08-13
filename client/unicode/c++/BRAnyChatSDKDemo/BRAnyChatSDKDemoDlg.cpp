@@ -437,8 +437,7 @@ void CBRAnyChatSDKDemoDlg::OnButtonInit()
 
 	// 根据BRAC_InitSDK的第二个参数：dwFuncMode，来告诉SDK该如何处理相关的任务（详情请参考开发文档）
 	DWORD dwFuncMode = BRAC_FUNC_VIDEO_AUTODISP | BRAC_FUNC_AUDIO_AUTOPLAY | BRAC_FUNC_CHKDEPENDMODULE | 
-		BRAC_FUNC_AUDIO_VOLUMECALC | BRAC_FUNC_NET_SUPPORTUPNP | BRAC_FUNC_FIREWALL_OPEN |
-		BRAC_FUNC_AUDIO_AUTOVOLUME| BRAC_FUNC_AUDIO_VOLUMECALC | BRAC_FUNC_CONFIG_LOCALINI;
+		BRAC_FUNC_AUDIO_VOLUMECALC | BRAC_FUNC_NET_SUPPORTUPNP | BRAC_FUNC_FIREWALL_OPEN |	BRAC_FUNC_AUDIO_AUTOVOLUME | BRAC_FUNC_CONFIG_LOCALINI;
 	BRAC_InitSDK(this->GetSafeHwnd(),dwFuncMode);
 	BRAC_SetVideoDataCallBack(BRAC_PIX_FMT_RGB24,VideoData_CallBack,this);
 	BRAC_SetAudioDataCallBack(AudioData_CallBack,this);
@@ -448,7 +447,6 @@ void CBRAnyChatSDKDemoDlg::OnButtonInit()
 	BRAC_SetTransFileCallBack(TransFile_CallBack,this);
 	BRAC_SetRecordSnapShotCallBack(RecordSnapShot_CallBack,this);
 	BRAC_SetSDKFilterDataCallBack(SDKFilterData_CallBack,this);
-//	BRAC_SelectVideoCapture("USB 视频设备");	// 设置指定的视频设备，则在后面打开时，就可以打开该设备，如果不调用该方法，则会打开默认的视频设备
 	
 	UpdateData(TRUE);
 	BRAC_SetSDKOption(BRAC_SO_AUDIO_AGCCTRL,(PCHAR)&m_bEnableAGC,sizeof(m_bEnableAGC));
@@ -462,6 +460,20 @@ void CBRAnyChatSDKDemoDlg::OnButtonInit()
 	(_tcsrchr(szTempPath,_T('\\')))[1] = 0; 
 	_tcscat(szTempPath,_T("Temp"));
 	BRAC_SetSDKOption(BRAC_SO_CORESDK_TMPDIR,(const char*)szTempPath,_tcslen(szTempPath));
+
+	// 设置录像临时文件保存路径
+	TCHAR szRecordDirectory[MAX_PATH] = {0};
+	::GetModuleFileName(NULL,szRecordDirectory,MAX_PATH);
+	(_tcsrchr(szRecordDirectory,_T('\\')))[1] = 0; 
+	_tcscat(szRecordDirectory,_T("Record"));
+	BRAC_SetSDKOption(BRAC_SO_RECORD_TMPDIR,(const char*)szRecordDirectory,_tcslen(szRecordDirectory));
+
+	// 设置快照临时文件保存路径
+	TCHAR szSnapShotDirectory[MAX_PATH] = {0};
+	::GetModuleFileName(NULL,szSnapShotDirectory,MAX_PATH);
+	(_tcsrchr(szSnapShotDirectory,_T('\\')))[1] = 0; 
+	_tcscat(szSnapShotDirectory,_T("SnapShot"));
+	BRAC_SetSDKOption(BRAC_SO_SNAPSHOT_TMPDIR,(const char*)szSnapShotDirectory,_tcslen(szSnapShotDirectory));
 	
 	// 设置服务器认证密码
 	BRAC_SetServerAuthPass(_T("BaiRuiTech"));		// 需要与服务器配置项“SDKAuthPass”相同（大小写敏感），SDK才能正常连接到服务器
