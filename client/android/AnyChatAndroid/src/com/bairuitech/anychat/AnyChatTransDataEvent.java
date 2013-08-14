@@ -1,4 +1,4 @@
-﻿package com.bairuitech.anychat;
+package com.bairuitech.anychat;
 
 // 数据传输通知接口
 public interface AnyChatTransDataEvent {

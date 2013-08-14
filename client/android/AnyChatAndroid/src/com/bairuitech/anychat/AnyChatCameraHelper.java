@@ -1,4 +1,4 @@
-﻿package com.bairuitech.anychat;
+package com.bairuitech.anychat;
 
 
 import java.util.List;

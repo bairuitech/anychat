@@ -1,4 +1,4 @@
-﻿package com.bairuitech.anychat;
+package com.bairuitech.anychat;
 
 // 文字聊天通知接口
 public interface AnyChatTextMsgEvent {

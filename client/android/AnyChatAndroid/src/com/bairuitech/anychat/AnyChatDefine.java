@@ -1,4 +1,4 @@
-﻿package com.bairuitech.anychat;
+package com.bairuitech.anychat;
 
 public class AnyChatDefine {
 	// 消息通知类型定义

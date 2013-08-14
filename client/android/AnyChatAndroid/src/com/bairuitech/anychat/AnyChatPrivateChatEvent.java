@@ -1,4 +1,4 @@
-﻿package com.bairuitech.anychat;
+package com.bairuitech.anychat;
 
 // AnyChat私聊消息通知接口
 public interface AnyChatPrivateChatEvent {

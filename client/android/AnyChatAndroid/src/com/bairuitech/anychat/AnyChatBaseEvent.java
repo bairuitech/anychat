@@ -1,4 +1,4 @@
-﻿package com.bairuitech.anychat;
+package com.bairuitech.anychat;
 
 //AnyChat基本事件接口
 public interface AnyChatBaseEvent {

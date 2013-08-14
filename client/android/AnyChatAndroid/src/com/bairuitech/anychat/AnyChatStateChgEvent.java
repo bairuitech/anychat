@@ -1,4 +1,4 @@
-﻿package com.bairuitech.anychat;
+package com.bairuitech.anychat;
 
 // AnyChat状态变化事件通知接口
 public interface AnyChatStateChgEvent {

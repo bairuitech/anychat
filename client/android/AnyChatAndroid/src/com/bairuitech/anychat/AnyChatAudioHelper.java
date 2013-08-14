@@ -1,4 +1,4 @@
-﻿package com.bairuitech.anychat;
+package com.bairuitech.anychat;
 
 import android.media.AudioFormat;
 import android.media.AudioManager;
