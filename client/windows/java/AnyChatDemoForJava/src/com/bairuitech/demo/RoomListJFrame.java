@@ -51,20 +51,20 @@ public class RoomListJFrame extends JFrame implements ActionListener {
 	public RoomListJFrame(AnyChatCoreSDK anychat, int userId) {
 		mPanlRoomlist = new JPanel();
 		mPanlRoomlist1 = new JPanel();
-		mLabelEnterRomTip = new JLabel("(ÎÂÜ°ÌáÊ¾:Ë«»÷·¿¼äÃû½øÈë·¿¼ä)");
-		mLabelNameTag = new JLabel("êÇ³Æ:");
-		mLabelRoomTip = new JLabel("×Ô¶¨Òå·¿¼ä:");
-		mLabelIdTag = new JLabel("ÓÃ»§Id:");
-		mLabelLevelTag = new JLabel("µÈ¼¶:");
-		mBtnEnterRoom = new JButton("½øÈë·¿¼ä");
-		mBtnExit = new JButton("ÍË³öÏµÍ³");
+		mLabelEnterRomTip = new JLabel("(æ¸©é¦¨æç¤º:åŒå‡»æˆ¿é—´åè¿›å…¥æˆ¿é—´)");
+		mLabelNameTag = new JLabel("æ˜µç§°:");
+		mLabelRoomTip = new JLabel("è‡ªå®šä¹‰æˆ¿é—´:");
+		mLabelIdTag = new JLabel("ç”¨æˆ·Id:");
+		mLabelLevelTag = new JLabel("ç­‰çº§:");
+		mBtnEnterRoom = new JButton("è¿›å…¥æˆ¿é—´");
+		mBtnExit = new JButton("é€€å‡ºç³»ç»Ÿ");
 		mLabelNameValue = new JLabel();
 		mLabelLevelValue = new JLabel();
 		mLabelIdValue = new JLabel();
-		mBtnRoom1 = new JButton("²âÊÔ·¿¼ä1");
-		mBtnRoom2 = new JButton("²âÊÔ·¿¼ä2");
-		mBtnRoom3 = new JButton("²âÊÔ·¿¼ä3");
-		mBtnRoom4 = new JButton("²âÊÔ·¿¼ä4");
+		mBtnRoom1 = new JButton("æµ‹è¯•æˆ¿é—´1");
+		mBtnRoom2 = new JButton("æµ‹è¯•æˆ¿é—´2");
+		mBtnRoom3 = new JButton("æµ‹è¯•æˆ¿é—´3");
+		mBtnRoom4 = new JButton("æµ‹è¯•æˆ¿é—´4");
 		mTxtRoomId = new JEditorPane();
 		this.anychat = anychat;
 		this.userId = userId;
@@ -74,10 +74,10 @@ public class RoomListJFrame extends JFrame implements ActionListener {
 
 	public void initJFrame() {
 		Insets margins = new Insets(10, 10, 10, 10);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// ÉèÖÃ¹Ø±Õ¿ò¼ÜµÄÍ¬Ê±½áÊø³ÌĞò
-		this.setSize(600, 400);// ÉèÖÃ¿ò¼Ü´óĞ¡Îª³¤300,¿í200
-		this.setResizable(false);// ÉèÖÃ¿ò¼Ü²»¿ÉÒÔ¸Ä±ä´óĞ¡
-		this.setTitle("AnyChat´óÌü");// ÉèÖÃ¿ò¼Ü±êÌâ
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// è®¾ç½®å…³é—­æ¡†æ¶çš„åŒæ—¶ç»“æŸç¨‹åº
+		this.setSize(600, 400);// è®¾ç½®æ¡†æ¶å¤§å°ä¸ºé•¿300,å®½200
+		this.setResizable(false);// è®¾ç½®æ¡†æ¶ä¸å¯ä»¥æ”¹å˜å¤§å°
+		this.setTitle("AnyChatå¤§å…");// è®¾ç½®æ¡†æ¶æ ‡é¢˜
 		this.setForeground(Color.lightGray);
 		this.setLayout(null);
 		mPanlRoomlist1.setLayout(new BoxLayout(mPanlRoomlist1, BoxLayout.X_AXIS));
@@ -103,7 +103,7 @@ public class RoomListJFrame extends JFrame implements ActionListener {
 		this.add(mBtnRoom3);
 		this.add(mBtnRoom4);
 		this.add(mPanlRoomlist1);
-		this.setVisible(true);// ÉèÖÃ¿ò¼Ü¿ÉÏÔ
+		this.setVisible(true);// è®¾ç½®æ¡†æ¶å¯æ˜¾
 	}
 
 	public void hideLogin() {
@@ -118,7 +118,7 @@ public class RoomListJFrame extends JFrame implements ActionListener {
 			int dwRoomId=0;
 			String strRoomId = mTxtRoomId.getText();
 			if (strRoomId.length() == 0) {
-				JOptionPane.showMessageDialog(null, "ÇëÊäÈë·¿¼äºÅ", "´íÎó",
+				JOptionPane.showMessageDialog(null, "è¯·è¾“å…¥æˆ¿é—´å·", "é”™è¯¯",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				try

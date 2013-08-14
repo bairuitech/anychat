@@ -1,18 +1,18 @@
 package com.bairuitech.anychat;
 
-//AnyChat�����¼��ӿ�
+//AnyChat基本事件接口
 public interface AnyChatBaseEvent {
-	// ���ӷ�������Ϣ, bSuccess��ʾ�Ƿ����ӳɹ�
+	// 连接服务器消息, bSuccess表示是否连接成功
     public void OnAnyChatConnectMessage(boolean bSuccess);
-	// �û���¼��Ϣ��dwUserId��ʾ�Լ����û�ID�ţ�dwErrorCode��ʾ��¼�����0 �ɹ�������Ϊ��������
+	// 用户登录消息，dwUserId表示自己的用户ID号，dwErrorCode表示登录结果：0 成功，否则为出错代码
     public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode);
-	// �û����뷿����Ϣ��dwRoomId��ʾ�����뷿���ID�ţ�dwErrorCode��ʾ�Ƿ���뷿�䣺0�ɹ����룬����Ϊ��������
+	// 用户进入房间消息，dwRoomId表示所进入房间的ID号，dwErrorCode表示是否进入房间：0成功进入，否则为出错代码
     public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode);
-	// ���������û���Ϣ�����뷿��󴥷�һ�Σ�dwUserNum��ʾ�����û����������Լ�����dwRoomId��ʾ����ID
+	// 房间在线用户消息，进入房间后触发一次，dwUserNum表示在线用户数（包含自己），dwRoomId表示房间ID
     public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId);
-	// �û�����/�˳�������Ϣ��dwUserId��ʾ�û�ID�ţ�bEnter��ʾ���û��ǽ��루TRUE�����뿪��FALSE������
+	// 用户进入/退出房间消息，dwUserId表示用户ID号，bEnter表示该用户是进入（TRUE）或离开（FALSE）房间
     public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter);
-	//����Ͽ���Ϣ������Ϣֻ���ڿͻ������ӷ������ɹ�֮�������쳣�ж�֮ʱ������dwErrorCode��ʾ���ӶϿ���ԭ��
+	//网络断开消息，该消息只有在客户端连接服务器成功之后，网络异常中断之时触发，dwErrorCode表示连接断开的原因
     public void OnAnyChatLinkCloseMessage(int dwErrorCode);	
 	
 }

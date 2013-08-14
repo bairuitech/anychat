@@ -60,33 +60,33 @@ public class LoginJFrame extends JFrame implements ActionListener {
 
 	}
 	public void initJFrame() {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// ÉèÖÃ¹Ø±Õ¿ò¼ÜµÄÍ¬Ê±½áÊø³ÌĞò
-		this.setSize(350, 250);// ÉèÖÃ¿ò¼Ü´óĞ¡Îª³¤300,¿í200
-		this.setResizable(false);// ÉèÖÃ¿ò¼Ü²»¿ÉÒÔ¸Ä±ä´óĞ¡
-		this.setTitle("ÓÃ»§µÇÂ¼");// ÉèÖÃ¿ò¼Ü±êÌâ
-		this.mPanlLogin1.setLayout(null);// ÉèÖÃÃæ°å²¼¾Ö¹ÜÀí
-		this.mPanlLogin1.setBackground(Color.cyan);// ÉèÖÃÃæ°å±³¾°ÑÕÉ«
-		this.mPanlLogin2.setBackground(Color.blue);// ÉèÖÃÃæ°å±³¾°ÑÕÉ«
-		this.mPanlLogin3.setBackground(Color.blue);// ÉèÖÃÃæ°å±³¾°ÑÕÉ«
-		this.mPanlLogin4.setBackground(Color.yellow);// ÉèÖÃÃæ°å±³¾°ÑÕÉ«
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// è®¾ç½®å…³é—­æ¡†æ¶çš„åŒæ—¶ç»“æŸç¨‹åº
+		this.setSize(350, 250);// è®¾ç½®æ¡†æ¶å¤§å°ä¸ºé•¿300,å®½200
+		this.setResizable(false);// è®¾ç½®æ¡†æ¶ä¸å¯ä»¥æ”¹å˜å¤§å°
+		this.setTitle("ç”¨æˆ·ç™»å½•");// è®¾ç½®æ¡†æ¶æ ‡é¢˜
+		this.mPanlLogin1.setLayout(null);// è®¾ç½®é¢æ¿å¸ƒå±€ç®¡ç†
+		this.mPanlLogin1.setBackground(Color.cyan);// è®¾ç½®é¢æ¿èƒŒæ™¯é¢œè‰²
+		this.mPanlLogin2.setBackground(Color.blue);// è®¾ç½®é¢æ¿èƒŒæ™¯é¢œè‰²
+		this.mPanlLogin3.setBackground(Color.blue);// è®¾ç½®é¢æ¿èƒŒæ™¯é¢œè‰²
+		this.mPanlLogin4.setBackground(Color.yellow);// è®¾ç½®é¢æ¿èƒŒæ™¯é¢œè‰²
 		this.mPanlLogin2.setLayout(new BoxLayout(mPanlLogin2, BoxLayout.Y_AXIS));
-		this.mLabelLogin.setText("ÓÃ»§µÇÂ¼");// ÉèÖÃ±êÇ©±êÌâ
-		this.mLabelLogin.setFont(new Font("ËÎÌå", Font.BOLD | Font.ITALIC, 14));// ÉèÖÃ±êÇ©×ÖÌå
-		this.mLabelLogin.setForeground(Color.RED);// ÉèÖÃ±êÇ©×ÖÌåÑÕÉ«
-		this.mLabelName.setText("ÓÃ»§Ãû:");
-		this.mLabelPWD.setText("ÃÜ    Âë:");
-		this.mBtnLogin.setText("µÇÂ¼");
+		this.mLabelLogin.setText("ç”¨æˆ·ç™»å½•");// è®¾ç½®æ ‡ç­¾æ ‡é¢˜
+		this.mLabelLogin.setFont(new Font("å®‹ä½“", Font.BOLD | Font.ITALIC, 14));// è®¾ç½®æ ‡ç­¾å­—ä½“
+		this.mLabelLogin.setForeground(Color.RED);// è®¾ç½®æ ‡ç­¾å­—ä½“é¢œè‰²
+		this.mLabelName.setText("ç”¨æˆ·å:");
+		this.mLabelPWD.setText("å¯†    ç :");
+		this.mBtnLogin.setText("ç™»å½•");
 		mBtnLogin.addActionListener(this);
 		mBtnSeting.addActionListener(this);
-		this.mBtnSeting.setText("ÉèÖÃ");
-		mCheckAnnymous.setText("ÓÎ¿ÍµÇÂ½");
-		this.mLabelLogin.setBounds(120, 15, 60, 20);// ÉèÖÃ±êÇ©x×ø±ê120,y×ø±ê15,³¤60,¿í20
+		this.mBtnSeting.setText("è®¾ç½®");
+		mCheckAnnymous.setText("æ¸¸å®¢ç™»é™†");
+		this.mLabelLogin.setBounds(120, 15, 60, 20);// è®¾ç½®æ ‡ç­¾xåæ ‡120,yåæ ‡15,é•¿60,å®½20
 		this.mLabelName.setBounds(50, 55, 60, 20);
 		this.mLabelPWD.setBounds(50, 85, 60, 25);
 		this.mTxtName.setBounds(110, 55, 120, 20);
 		this.mTxtPwd.setBounds(110, 85, 120, 20);
 		this.mCheckAnnymous.setBounds(150, 115, 80, 20);
-		this.mPanlLogin1.add(mLabelLogin);// ¼ÓÔØ±êÇ©µ½Ãæ°å
+		this.mPanlLogin1.add(mLabelLogin);// åŠ è½½æ ‡ç­¾åˆ°é¢æ¿
 		this.mPanlLogin1.add(mLabelName);
 		this.mPanlLogin1.add(mLabelPWD);
 		this.mPanlLogin1.add(mTxtName);
@@ -94,16 +94,16 @@ public class LoginJFrame extends JFrame implements ActionListener {
 		this.mPanlLogin1.add(mCheckAnnymous);
 		this.mPanlLogin3.add(mBtnSeting);
 		this.mPanlLogin3.add(mBtnLogin);
-		mPanlLogin4.add(new JLabel("·şÎñÆ÷µØÖ·:"));
+		mPanlLogin4.add(new JLabel("æœåŠ¡å™¨åœ°å€:"));
 		this.mPanlLogin4.add(mTxtServeIp);
-		mPanlLogin4.add(new JLabel("·şÎñÆ÷¶Ë¿Ú:"));
+		mPanlLogin4.add(new JLabel("æœåŠ¡å™¨ç«¯å£:"));
 		this.mPanlLogin4.add(mTxtServePort);
 		this.mPanlLogin2.add(mPanlLogin3);
 		this.mPanlLogin2.add(mPanlLogin4);
-		this.add(mPanlLogin1, "Center");// ¼ÓÔØÃæ°åµ½¿ò¼Ü
-		this.add(mPanlLogin2, "South");// ¼ÓÔØÃæ°åµ½¿ò¼Ü
+		this.add(mPanlLogin1, "Center");// åŠ è½½é¢æ¿åˆ°æ¡†æ¶
+		this.add(mPanlLogin2, "South");// åŠ è½½é¢æ¿åˆ°æ¡†æ¶
 		mPanlLogin4.setVisible(false);
-		this.setVisible(true);// ÉèÖÃ¿ò¼Ü¿ÉÏÔ
+		this.setVisible(true);// è®¾ç½®æ¡†æ¶å¯æ˜¾
 	}
 
 	public void hideLogin() {
@@ -130,10 +130,10 @@ public class LoginJFrame extends JFrame implements ActionListener {
 				return;
 			}
 			if (strName.length() == 0) {
-				JOptionPane.showMessageDialog(null, "ÕËºÅ²»ÄÜÎª¿Õ", "´íÎó",
+				JOptionPane.showMessageDialog(null, "è´¦å·ä¸èƒ½ä¸ºç©º", "é”™è¯¯",
 						JOptionPane.ERROR_MESSAGE);
 			} else if (strPasswd.length() == 0) {
-				JOptionPane.showMessageDialog(null, "ÃÜÂë²»ÄÜÎª¿Õ", "´íÎó",
+				JOptionPane.showMessageDialog(null, "å¯†ç ä¸èƒ½ä¸ºç©º", "é”™è¯¯",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				anychat.Login(strName, strPasswd);
@@ -145,12 +145,12 @@ public class LoginJFrame extends JFrame implements ActionListener {
 			if(mPanlLogin4.isVisible())
 			{
 				mPanlLogin4.setVisible(false);
-				mBtnSeting.setText("ÉèÖÃ");
+				mBtnSeting.setText("è®¾ç½®");
 			}
 			else 
 			{
 				mPanlLogin4.setVisible(true);
-				mBtnSeting.setText("Òş²Ø");
+				mBtnSeting.setText("éšè—");
 			}
 		}
 	}
