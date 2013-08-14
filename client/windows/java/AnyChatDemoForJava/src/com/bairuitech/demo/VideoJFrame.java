@@ -81,12 +81,12 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 		mTxtChatMsg = new JTextArea();
 		mTxtChatMsg.setEditable(false);
 		mEditChatMsg = new JEditorPane();
-		mBtnSend = new JButton("·¢ËÍ");
+		mBtnSend = new JButton("å‘é€");
 		mJScrollList = new JScrollPane(mJListOnline);
 		mPanlVideoSelf = new JPanel();
 		jRemoteLabel = new JLabel();
 		jRemoteLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		jRemoteLabel.setText("Ô¶³ÌÊÓÆµ");
+		jRemoteLabel.setText("è¿œç¨‹è§†é¢‘");
 		String strSelfName = anychat.GetUserName(dwSelfUserId);
 		dwOnlines = anychat.GetOnlineUser();
 		mListModel = new DefaultListModel();
@@ -111,7 +111,7 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 		return jlabelRemote;
 	}
 
-	// ³õÊ¼»¯ÉùÒôË¢ĞÂ¼ÆÊ±Æ÷
+	// åˆå§‹åŒ–å£°éŸ³åˆ·æ–°è®¡æ—¶å™¨
 	public void initTimeTask() {
 		if (mTimer == null) {
 			mTimer = new Timer();
@@ -141,21 +141,21 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 	}
 
 	public void initVideoJFrame() {
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);// ÉèÖÃ¹Ø±Õ¿ò¼ÜµÄÍ¬Ê±½áÊø³ÌĞò
-		this.setSize(840, 700);// ÉèÖÃ¿ò¼Ü´óĞ¡Îª³¤300,¿í200
-		this.setResizable(false);// ÉèÖÃ¿ò¼Ü²»¿ÉÒÔ¸Ä±ä´óĞ¡
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);// è®¾ç½®å…³é—­æ¡†æ¶çš„åŒæ—¶ç»“æŸç¨‹åº
+		this.setSize(840, 700);// è®¾ç½®æ¡†æ¶å¤§å°ä¸ºé•¿300,å®½200
+		this.setResizable(false);// è®¾ç½®æ¡†æ¶ä¸å¯ä»¥æ”¹å˜å¤§å°
 		// this.enableEvents(AWTEvent.WINDOW_EVENT_MASK);
 		this.mPanlVideoSelf.setLayout(null);
-		this.setTitle("AnyChat·¿¼ä");// ÉèÖÃ¿ò¼Ü±êÌâ
+		this.setTitle("AnyChatæˆ¿é—´");// è®¾ç½®æ¡†æ¶æ ‡é¢˜
 		this.setForeground(Color.lightGray);
 		jlabelOnlineNum = new JLabel();
 		int dwNum = dwOnlines.length + 1;
-		jlabelOnlineNum.setText("ÔÚÏßÁĞ±í:" + "(" + dwNum + "ÈË" + ")");
+		jlabelOnlineNum.setText("åœ¨çº¿åˆ—è¡¨:" + "(" + dwNum + "äºº" + ")");
 		jlabelOnlineNum.setForeground(Color.blue);
 		jlabelOnlineNum.setBounds(10, 10, 250, 15);
 		mJScrollList.setBounds(10, 30, 250, 400);
 		mJListOnline.setBackground(Color.white);
-		jlabelSelf = new JLabel("±¾µØÊÓÆµ:");
+		jlabelSelf = new JLabel("æœ¬åœ°è§†é¢‘:");
 		jlabelSelf.setBackground(Color.green);
 		jlabelSelf.setBounds(10, 440, 250, 200);
 		mProgressLocal.setMaximum(100);
@@ -172,7 +172,7 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 		jPanTxtMsg.setBounds(270, 455, 550, 170);
 		mPanlEditChat.setLayout(new BoxLayout(mPanlEditChat, BoxLayout.X_AXIS));
 		mPanlEditChat.setBounds(270, 635, 550, 30);
-		mPanlEditChat.add(new JLabel("ÎÄ×ÖÁÄÌì£º"));
+		mPanlEditChat.add(new JLabel("æ–‡å­—èŠå¤©ï¼š"));
 		mPanlEditChat.add(mEditChatMsg);
 		mBtnSend.addActionListener(this);
 		mPanlEditChat.add(mBtnSend);
@@ -195,7 +195,7 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 	protected void processWindowEvent(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		if (arg0.getID() == WindowEvent.WINDOW_CLOSING) {
-			int tag = JOptionPane.showConfirmDialog(null, "È·¶¨¹Ø±ÕÂğ£¿", "ÎÂÜ°ÌáÊ¾",
+			int tag = JOptionPane.showConfirmDialog(null, "ç¡®å®šå…³é—­å—ï¼Ÿ", "æ¸©é¦¨æç¤º",
 					JOptionPane.YES_NO_OPTION);
 
 			if (tag == 0) {
@@ -218,7 +218,7 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 		}
 	}
 
-	// ³õÊ¼»¯ÔÚÏßÓÃ»§ÁĞ±í
+	// åˆå§‹åŒ–åœ¨çº¿ç”¨æˆ·åˆ—è¡¨
 	public void InitUserList() {
 		for (int i = 0; i < dwOnlines.length; i++) {
 			int dwuserid = dwOnlines[i];
@@ -300,7 +300,7 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 
 		}
 		int dwNum = dwOnlines.length + 1;
-		jlabelOnlineNum.setText("ÔÚÏßÁĞ±í:" + "(" + dwNum + "ÈË" + ")");
+		jlabelOnlineNum.setText("åœ¨çº¿åˆ—è¡¨:" + "(" + dwNum + "äºº" + ")");
 
 	}
 
@@ -344,16 +344,16 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 		String strTarget;
 		String strFrom;
 		if (dwFromUserid == dwSelfUserId)
-			strFrom = "ÎÒ";
+			strFrom = "æˆ‘";
 		else
 			strFrom = anychat.GetUserName(dwFromUserid);
 		if (dwToUserid == dwSelfUserId)
-			strTarget = "ÎÒ";
+			strTarget = "æˆ‘";
 		else if (dwToUserid == -1)
-			strTarget = "ËùÓĞÈË";
+			strTarget = "æ‰€æœ‰äºº";
 		else
 			strTarget = anychat.GetUserName(dwFromUserid);
-		strChat.append(strFrom + " ¶Ô " + strTarget + " Ëµ: " + message + " "
+		strChat.append(strFrom + " å¯¹ " + strTarget + " è¯´: " + message + " "
 				+ getCurrentTime());
 		return strChat.toString();
 	}
@@ -371,13 +371,13 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 		return strTime;
 	}
 
-	// Ë¢ĞÂÔ¶³ÌÊÓÆµ
+	// åˆ·æ–°è¿œç¨‹è§†é¢‘
 	public void refreshRemoteVideo(int dwUserid) {
 
 		if (dwRemoteUserid != 0) {
 			return;
 		}
-		jRemoteLabel.setText("Ô¶³ÌÊÓÆµ");
+		jRemoteLabel.setText("è¿œç¨‹è§†é¢‘");
 		if (dwUserid == -1) {
 			for (int i = 0; i < dwOnlines.length; i++) {
 				int dwuserid = dwOnlines[i];
@@ -392,13 +392,13 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 		}
 		if (dwRemoteUserid != 0) {
 			String strRname = anychat.GetUserName(dwRemoteUserid);
-			jRemoteLabel.setText("Ô¶³ÌÊÓÆµ:  ÓÃ»§Ãû:" + strRname + "  ÓÃ»§ID:"
+			jRemoteLabel.setText("è¿œç¨‹è§†é¢‘:  ç”¨æˆ·å:" + strRname + "  ç”¨æˆ·ID:"
 					+ dwRemoteUserid);
 			anychat.UserCameraControl(dwRemoteUserid, 1);
 			anychat.UserSpeakControl(dwRemoteUserid, 1);
 			anychat.SetVideoPos(dwRemoteUserid, VideoJFrame.this, 290, 30, 790,
 					390);
-			// Ñ¡ÖĞÔ¶³ÌÓÃ»§
+			// é€‰ä¸­è¿œç¨‹ç”¨æˆ·
 			int position = 1;
 			for (int i = 0; i < dwOnlines.length; i++) {
 

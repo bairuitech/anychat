@@ -1,7 +1,7 @@
 package com.bairuitech.anychat;
 
-// ÎÄ×ÖÁÄÌìÍ¨Öª½Ó¿Ú
+// æ–‡å­—èŠå¤©é€šçŸ¥æ¥å£
 public interface AnyChatTextMsgEvent {
-	// ÎÄ×ÖÏûÏ¢Í¨Öª,dwFromUserid±íÊ¾ÏûÏ¢·¢ËÍÕßµÄÓÃ»§IDºÅ£¬dwToUserid±íÊ¾Ä¿±êÓÃ»§IDºÅ£¬¿ÉÄÜÎª-1£¬±íÊ¾¶Ô´ó¼ÒËµ£¬bSecret±íÊ¾ÊÇ·ñÎªÇÄÇÄ»°
+	// æ–‡å­—æ¶ˆæ¯é€šçŸ¥,dwFromUseridè¡¨ç¤ºæ¶ˆæ¯å‘é€è€…çš„ç”¨æˆ·IDå·ï¼ŒdwToUseridè¡¨ç¤ºç›®æ ‡ç”¨æˆ·IDå·ï¼Œå¯èƒ½ä¸º-1ï¼Œè¡¨ç¤ºå¯¹å¤§å®¶è¯´ï¼ŒbSecretè¡¨ç¤ºæ˜¯å¦ä¸ºæ‚„æ‚„è¯
     public void OnAnyChatTextMessage(int dwFromUserid, int dwToUserid, boolean bSecret, String message);
 }
