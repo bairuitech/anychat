@@ -1,4 +1,4 @@
-﻿package com.bairuitech.demo;
+package com.bairuitech.demo;
 
 import com.bairuitech.anychat.AnyChatDefine;
 

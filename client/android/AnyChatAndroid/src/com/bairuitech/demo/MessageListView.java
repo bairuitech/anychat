@@ -1,4 +1,4 @@
-﻿package com.bairuitech.demo;
+package com.bairuitech.demo;
 import java.util.ArrayList;
 
 import android.R.color;

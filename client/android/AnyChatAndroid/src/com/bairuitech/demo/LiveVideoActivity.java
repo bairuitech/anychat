@@ -1,4 +1,4 @@
-﻿package com.bairuitech.demo;
+package com.bairuitech.demo;
 
 import java.util.Date;
 import java.util.Timer;

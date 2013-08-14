@@ -1,4 +1,4 @@
-﻿package com.bairuitech.demo;
+package com.bairuitech.demo;
 
 public class ConfigEntity {
 	public static final int VIDEO_MODE_SERVERCONFIG = 0;	// 服务器视频参数配置
