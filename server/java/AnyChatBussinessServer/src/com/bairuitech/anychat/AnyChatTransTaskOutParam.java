@@ -1,4 +1,4 @@
-package com.bairuitech.anychat;		// 不能修改包的名称
+package com.bairuitech.anychat;		// 涓嶈兘淇敼鍖呯殑鍚嶇О
 
 
 public class AnyChatTransTaskOutParam{
