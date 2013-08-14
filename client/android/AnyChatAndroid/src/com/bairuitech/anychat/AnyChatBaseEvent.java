@@ -1,18 +1,18 @@
-package com.bairuitech.anychat;
+ï»¿package com.bairuitech.anychat;
 
-//AnyChat»ù±¾ÊÂ¼ş½Ó¿Ú
+//AnyChatåŸºæœ¬äº‹ä»¶æ¥å£
 public interface AnyChatBaseEvent {
-	// Á¬½Ó·şÎñÆ÷ÏûÏ¢, bSuccess±íÊ¾ÊÇ·ñÁ¬½Ó³É¹¦
+	// è¿æ¥æœåŠ¡å™¨æ¶ˆæ¯, bSuccessè¡¨ç¤ºæ˜¯å¦è¿æ¥æˆåŠŸ
     public void OnAnyChatConnectMessage(boolean bSuccess);
-	// ÓÃ»§µÇÂ¼ÏûÏ¢£¬dwUserId±íÊ¾×Ô¼ºµÄÓÃ»§IDºÅ£¬dwErrorCode±íÊ¾µÇÂ¼½á¹û£º0 ³É¹¦£¬·ñÔòÎª³ö´í´úÂë
+	// ç”¨æˆ·ç™»å½•æ¶ˆæ¯ï¼ŒdwUserIdè¡¨ç¤ºè‡ªå·±çš„ç”¨æˆ·IDå·ï¼ŒdwErrorCodeè¡¨ç¤ºç™»å½•ç»“æœï¼š0 æˆåŠŸï¼Œå¦åˆ™ä¸ºå‡ºé”™ä»£ç 
     public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode);
-	// ÓÃ»§½øÈë·¿¼äÏûÏ¢£¬dwRoomId±íÊ¾Ëù½øÈë·¿¼äµÄIDºÅ£¬dwErrorCode±íÊ¾ÊÇ·ñ½øÈë·¿¼ä£º0³É¹¦½øÈë£¬·ñÔòÎª³ö´í´úÂë
+	// ç”¨æˆ·è¿›å…¥æˆ¿é—´æ¶ˆæ¯ï¼ŒdwRoomIdè¡¨ç¤ºæ‰€è¿›å…¥æˆ¿é—´çš„IDå·ï¼ŒdwErrorCodeè¡¨ç¤ºæ˜¯å¦è¿›å…¥æˆ¿é—´ï¼š0æˆåŠŸè¿›å…¥ï¼Œå¦åˆ™ä¸ºå‡ºé”™ä»£ç 
     public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode);
-	// ·¿¼äÔÚÏßÓÃ»§ÏûÏ¢£¬½øÈë·¿¼äºó´¥·¢Ò»´Î£¬dwUserNum±íÊ¾ÔÚÏßÓÃ»§Êı£¨°üº¬×Ô¼º£©£¬dwRoomId±íÊ¾·¿¼äID
+	// æˆ¿é—´åœ¨çº¿ç”¨æˆ·æ¶ˆæ¯ï¼Œè¿›å…¥æˆ¿é—´åè§¦å‘ä¸€æ¬¡ï¼ŒdwUserNumè¡¨ç¤ºåœ¨çº¿ç”¨æˆ·æ•°ï¼ˆåŒ…å«è‡ªå·±ï¼‰ï¼ŒdwRoomIdè¡¨ç¤ºæˆ¿é—´ID
     public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId);
-	// ÓÃ»§½øÈë/ÍË³ö·¿¼äÏûÏ¢£¬dwUserId±íÊ¾ÓÃ»§IDºÅ£¬bEnter±íÊ¾¸ÃÓÃ»§ÊÇ½øÈë£¨TRUE£©»òÀë¿ª£¨FALSE£©·¿¼ä
+	// ç”¨æˆ·è¿›å…¥/é€€å‡ºæˆ¿é—´æ¶ˆæ¯ï¼ŒdwUserIdè¡¨ç¤ºç”¨æˆ·IDå·ï¼ŒbEnterè¡¨ç¤ºè¯¥ç”¨æˆ·æ˜¯è¿›å…¥ï¼ˆTRUEï¼‰æˆ–ç¦»å¼€ï¼ˆFALSEï¼‰æˆ¿é—´
     public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter);
-	//ÍøÂç¶Ï¿ªÏûÏ¢£¬¸ÃÏûÏ¢Ö»ÓĞÔÚ¿Í»§¶ËÁ¬½Ó·şÎñÆ÷³É¹¦Ö®ºó£¬ÍøÂçÒì³£ÖĞ¶ÏÖ®Ê±´¥·¢£¬dwErrorCode±íÊ¾Á¬½Ó¶Ï¿ªµÄÔ­Òò
+	//ç½‘ç»œæ–­å¼€æ¶ˆæ¯ï¼Œè¯¥æ¶ˆæ¯åªæœ‰åœ¨å®¢æˆ·ç«¯è¿æ¥æœåŠ¡å™¨æˆåŠŸä¹‹åï¼Œç½‘ç»œå¼‚å¸¸ä¸­æ–­ä¹‹æ—¶è§¦å‘ï¼ŒdwErrorCodeè¡¨ç¤ºè¿æ¥æ–­å¼€çš„åŸå› 
     public void OnAnyChatLinkCloseMessage(int dwErrorCode);	
 	
 }

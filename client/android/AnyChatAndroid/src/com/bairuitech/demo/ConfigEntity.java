@@ -1,12 +1,12 @@
-package com.bairuitech.demo;
+ï»¿package com.bairuitech.demo;
 
 public class ConfigEntity {
-	public static final int VIDEO_MODE_SERVERCONFIG = 0;	// ·şÎñÆ÷ÊÓÆµ²ÎÊıÅäÖÃ
-	public static final int VIDEO_MODE_CUSTOMCONFIG = 1;	// ×Ô¶¨ÒåÊÓÆµ²ÎÊıÅäÖÃ
+	public static final int VIDEO_MODE_SERVERCONFIG = 0;	// æœåŠ¡å™¨è§†é¢‘å‚æ•°é…ç½®
+	public static final int VIDEO_MODE_CUSTOMCONFIG = 1;	// è‡ªå®šä¹‰è§†é¢‘å‚æ•°é…ç½®
 	
-	public static final int VIDEO_QUALITY_NORMAL = 2;		// ÆÕÍ¨ÊÓÆµÖÊÁ¿
-	public static final int VIDEO_QUALITY_GOOD = 3;			// ÖĞµÈÊÓÆµÖÊÁ¿
-	public static final int VIDEO_QUALITY_BEST = 4;			// ½ÏºÃÊÓÆµÖÊÁ¿
+	public static final int VIDEO_QUALITY_NORMAL = 2;		// æ™®é€šè§†é¢‘è´¨é‡
+	public static final int VIDEO_QUALITY_GOOD = 3;			// ä¸­ç­‰è§†é¢‘è´¨é‡
+	public static final int VIDEO_QUALITY_BEST = 4;			// è¾ƒå¥½è§†é¢‘è´¨é‡
 	
 	public boolean IsSaveNameAndPw;
 	public String name = "";
@@ -19,22 +19,22 @@ public class ConfigEntity {
 	public int resolution_width = 0;
 	public int resolution_height = 0;
 	
-	public int videoBitrate = 150*1000;						// ±¾µØÊÓÆµÂëÂÊ
-	public int videoFps = 10;								// ±¾µØÊÓÆµÖ¡ÂÊ
+	public int videoBitrate = 150*1000;						// æœ¬åœ°è§†é¢‘ç ç‡
+	public int videoFps = 10;								// æœ¬åœ°è§†é¢‘å¸§ç‡
 	public int videoQuality = VIDEO_QUALITY_GOOD;
 	public int videoPreset = 1;
-	public int videoOverlay = 1;							// ±¾µØÊÓÆµÊÇ·ñ²ÉÓÃOverlayÄ£Ê½
-	public int videorotatemode = 0;							// ±¾µØÊÓÆµĞı×ªÄ£Ê½
-	public int videoCapDriver = 3;							// ±¾µØÊÓÆµ²É¼¯Çı¶¯£¨0 Ä¬ÈÏ£¬ 1 LinuxÇı¶¯£¬3 JavaÇı¶¯
-	public int fixcolordeviation = 0;						// ĞŞÕı±¾µØÊÓÆµ²É¼¯Æ«É«£º0 ¹Ø±Õ(Ä¬ÈÏ£©£¬ 1 ¿ªÆô
-	public int videoShowGPURender = 0;						// ÊÓÆµÊı¾İÍ¨¹ıGPUÖ±½ÓäÖÈ¾£º0  ¹Ø±Õ(Ä¬ÈÏ)£¬ 1 ¿ªÆô
+	public int videoOverlay = 1;							// æœ¬åœ°è§†é¢‘æ˜¯å¦é‡‡ç”¨Overlayæ¨¡å¼
+	public int videorotatemode = 0;							// æœ¬åœ°è§†é¢‘æ—‹è½¬æ¨¡å¼
+	public int videoCapDriver = 3;							// æœ¬åœ°è§†é¢‘é‡‡é›†é©±åŠ¨ï¼ˆ0 é»˜è®¤ï¼Œ 1 Linuxé©±åŠ¨ï¼Œ3 Javaé©±åŠ¨
+	public int fixcolordeviation = 0;						// ä¿®æ­£æœ¬åœ°è§†é¢‘é‡‡é›†åè‰²ï¼š0 å…³é—­(é»˜è®¤ï¼‰ï¼Œ 1 å¼€å¯
+	public int videoShowGPURender = 0;						// è§†é¢‘æ•°æ®é€šè¿‡GPUç›´æ¥æ¸²æŸ“ï¼š0  å…³é—­(é»˜è®¤)ï¼Œ 1 å¼€å¯
 	
 	public int enableP2P = 1;
-	public int useARMv6Lib = 0;								// ÊÇ·ñÇ¿ÖÆÊ¹ÓÃARMv6Ö¸Áî¼¯£¬Ä¬ÈÏÊÇÄÚºË×Ô¶¯ÅĞ¶Ï
-	public int enableAEC = 1;								// ÊÇ·ñÊ¹ÓÃ»ØÒôÏû³ı¹¦ÄÜ
-	public int useHWCodec = 0;								// ÊÇ·ñÊ¹ÓÃÆ½Ì¨ÄÚÖÃÓ²¼ş±à½âÂëÆ÷
-	public int smoothPlayMode = 0;							// ÊÇ·ñÊ¹ÓÃÆ½»¬²¥·ÅÄ£Ê½
-	public int videoShowDriver = 5;							// ÊÓÆµÏÔÊ¾Çı¶¯£¨0 Ä¬ÈÏ£¬ 4 Android 2.x¼æÈİÄ£Ê½£¬5 JavaÇı¶¯£©
-	public int audioPlayDriver = 3;							// ÒôÆµ²¥·ÅÇı¶¯£¨0 Ä¬ÈÏ£¬3 JavaÇı¶¯£©
-	public int audioRecordDriver = 3;						// ÒôÆµ²É¼¯Çı¶¯£¨0Ä¬ÈÏ£¬3 JavaÇı¶¯£©
+	public int useARMv6Lib = 0;								// æ˜¯å¦å¼ºåˆ¶ä½¿ç”¨ARMv6æŒ‡ä»¤é›†ï¼Œé»˜è®¤æ˜¯å†…æ ¸è‡ªåŠ¨åˆ¤æ–­
+	public int enableAEC = 1;								// æ˜¯å¦ä½¿ç”¨å›éŸ³æ¶ˆé™¤åŠŸèƒ½
+	public int useHWCodec = 0;								// æ˜¯å¦ä½¿ç”¨å¹³å°å†…ç½®ç¡¬ä»¶ç¼–è§£ç å™¨
+	public int smoothPlayMode = 0;							// æ˜¯å¦ä½¿ç”¨å¹³æ»‘æ’­æ”¾æ¨¡å¼
+	public int videoShowDriver = 5;							// è§†é¢‘æ˜¾ç¤ºé©±åŠ¨ï¼ˆ0 é»˜è®¤ï¼Œ 4 Android 2.xå…¼å®¹æ¨¡å¼ï¼Œ5 Javaé©±åŠ¨ï¼‰
+	public int audioPlayDriver = 3;							// éŸ³é¢‘æ’­æ”¾é©±åŠ¨ï¼ˆ0 é»˜è®¤ï¼Œ3 Javaé©±åŠ¨ï¼‰
+	public int audioRecordDriver = 3;						// éŸ³é¢‘é‡‡é›†é©±åŠ¨ï¼ˆ0é»˜è®¤ï¼Œ3 Javaé©±åŠ¨ï¼‰
 }

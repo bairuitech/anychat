@@ -1,17 +1,17 @@
-package com.bairuitech.anychat;
+ï»¿package com.bairuitech.anychat;
 
-// AnyChat×´Ì¬±ä»¯ÊÂ¼şÍ¨Öª½Ó¿Ú
+// AnyChatçŠ¶æ€å˜åŒ–äº‹ä»¶é€šçŸ¥æ¥å£
 public interface AnyChatStateChgEvent {
-	// ÓÃ»§µÄÒôÆµÉè±¸×´Ì¬±ä»¯ÏûÏ¢£¬dwUserId±íÊ¾ÓÃ»§IDºÅ£¬bOpenMic±íÊ¾¸ÃÓÃ»§ÊÇ·ñÒÑ´ò¿ªÒôÆµ²É¼¯Éè±¸
+	// ç”¨æˆ·çš„éŸ³é¢‘è®¾å¤‡çŠ¶æ€å˜åŒ–æ¶ˆæ¯ï¼ŒdwUserIdè¡¨ç¤ºç”¨æˆ·IDå·ï¼ŒbOpenMicè¡¨ç¤ºè¯¥ç”¨æˆ·æ˜¯å¦å·²æ‰“å¼€éŸ³é¢‘é‡‡é›†è®¾å¤‡
     public void OnAnyChatMicStateChgMessage(int dwUserId, boolean bOpenMic);
-	// ÓÃ»§ÉãÏñÍ·×´Ì¬¸Ä±äÏûÏ¢£¬dwUserId±íÊ¾ÓÃ»§IDºÅ£¬dwState±íÊ¾ÉãÏñÍ·µÄµ±Ç°×´Ì¬
+	// ç”¨æˆ·æ‘„åƒå¤´çŠ¶æ€æ”¹å˜æ¶ˆæ¯ï¼ŒdwUserIdè¡¨ç¤ºç”¨æˆ·IDå·ï¼ŒdwStateè¡¨ç¤ºæ‘„åƒå¤´çš„å½“å‰çŠ¶æ€
     public void OnAnyChatCameraStateChgMessage(int dwUserId, int dwState);
-	// ÓÃ»§ÁÄÌìÄ£Ê½¸Ä±äÏûÏ¢£¬dwUserId±íÊ¾ÓÃ»§IDºÅ£¬bPublicChat±íÊ¾ÓÃ»§µÄµ±Ç°ÁÄÌìÄ£Ê½
+	// ç”¨æˆ·èŠå¤©æ¨¡å¼æ”¹å˜æ¶ˆæ¯ï¼ŒdwUserIdè¡¨ç¤ºç”¨æˆ·IDå·ï¼ŒbPublicChatè¡¨ç¤ºç”¨æˆ·çš„å½“å‰èŠå¤©æ¨¡å¼
     public void OnAnyChatChatModeChgMessage(int dwUserId, boolean bPublicChat);
-	// ÓÃ»§»î¶¯×´Ì¬·¢Éú±ä»¯ÏûÏ¢£¬dwUserId±íÊ¾ÓÃ»§IDºÅ£¬dwState±íÊ¾ÓÃ»§µÄµ±Ç°»î¶¯×´Ì¬
+	// ç”¨æˆ·æ´»åŠ¨çŠ¶æ€å‘ç”Ÿå˜åŒ–æ¶ˆæ¯ï¼ŒdwUserIdè¡¨ç¤ºç”¨æˆ·IDå·ï¼ŒdwStateè¡¨ç¤ºç”¨æˆ·çš„å½“å‰æ´»åŠ¨çŠ¶æ€
     public void OnAnyChatActiveStateChgMessage(int dwUserId, int dwState);
-	// ±¾µØÓÃ»§ÓëÆäËüÓÃ»§µÄP2PÍøÂçÁ¬½Ó×´Ì¬·¢Éú±ä»¯£¬dwUserId±íÊ¾ÆäËüÓÃ»§IDºÅ£¬dwState±íÊ¾±¾µØÓÃ»§ÓëÆäËüÓÃ»§µÄµ±Ç°P2PÍøÂçÁ¬½Ó×´Ì¬
+	// æœ¬åœ°ç”¨æˆ·ä¸å…¶å®ƒç”¨æˆ·çš„P2Pç½‘ç»œè¿æ¥çŠ¶æ€å‘ç”Ÿå˜åŒ–ï¼ŒdwUserIdè¡¨ç¤ºå…¶å®ƒç”¨æˆ·IDå·ï¼ŒdwStateè¡¨ç¤ºæœ¬åœ°ç”¨æˆ·ä¸å…¶å®ƒç”¨æˆ·çš„å½“å‰P2Pç½‘ç»œè¿æ¥çŠ¶æ€
     public void OnAnyChatP2PConnectStateMessage(int dwUserId, int dwState);
-	// ÓÃ»§ÊÓÆµ·Ö±æÂÊ¸Ä±äÏûÏ¢
+	// ç”¨æˆ·è§†é¢‘åˆ†è¾¨ç‡æ”¹å˜æ¶ˆæ¯
     //	public void OnAnyChatVideoSizeChgMessage(int dwUserId, int dwWidth, int dwHeight);
 }

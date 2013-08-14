@@ -1,4 +1,4 @@
-package com.bairuitech.anychat;
+ï»¿package com.bairuitech.anychat;
 
 
 
@@ -10,7 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 
 
-//AnyChat ÊÓÆµÏÔÊ¾°ü×°Àà£¬ÊµÏÖJava²ãÃæµÄÊÓÆµ²¥·Å
+//AnyChat è§†é¢‘æ˜¾ç¤ºåŒ…è£…ç±»ï¼Œå®ç°Javaå±‚é¢çš„è§†é¢‘æ’­æ”¾
 public class AnyChatVideoHelper {
 	private int MAX_VIDEO_NUM = 10;
 	VideoRenderer render[];
@@ -93,14 +93,14 @@ class VideoRenderer implements Callback {
     public VideoRenderer(SurfaceHolder holder) {
         if(holder == null)
             return;
-        mUserid = 0;			// Î´Öª×´Ì¬
+        mUserid = 0;			// æœªçŸ¥çŠ¶æ€
         surfaceHolder = holder;
         holder.addCallback(this);
     }
     
-    // »ñÈ¡µ±Ç°ÊÓÆµÏÔÊ¾µ¥Ôª°ó¶¨µÄÓÃ»§ID
+    // è·å–å½“å‰è§†é¢‘æ˜¾ç¤ºå•å…ƒç»‘å®šçš„ç”¨æˆ·ID
     public int GetUserId() 				{		return mUserid;			}
-    // ÉèÖÃÓÃ»§ID
+    // è®¾ç½®ç”¨æˆ·ID
     public void SetUserId(int userid)	{		mUserid = userid;   	}
     
     // surfaceChanged and surfaceCreated share this function
@@ -164,7 +164,7 @@ class VideoRenderer implements Callback {
     public void DrawByteBuffer(byte [] mPixel) {
         if(bitmap == null)
             return;
-        ByteBuffer byteBuffer = ByteBuffer.wrap( mPixel );		// ½« byte Êı×é°ü×°µ½»º³åÇøÖĞ
+        ByteBuffer byteBuffer = ByteBuffer.wrap( mPixel );		// å°† byte æ•°ç»„åŒ…è£…åˆ°ç¼“å†²åŒºä¸­
         byteBuffer.rewind();
        
         bitmap.copyPixelsFromBuffer(byteBuffer);

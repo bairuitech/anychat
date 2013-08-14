@@ -1,4 +1,4 @@
-package com.bairuitech.demo;
+ï»¿package com.bairuitech.demo;
 
 import java.util.ArrayList;
 
@@ -67,7 +67,7 @@ public class RoomActivity extends Activity implements AnyChatBaseEvent,AnyChatTe
     }
     private void InitialLayout()
     {   
-    	this.setTitle("ÊÓÆµÁÄÌì");
+    	this.setTitle("è§†é¢‘èŠå¤©");
 
     	fullLayout =  new LinearLayout(this);
     	fullLayout.setBackgroundResource(R.drawable.chat_bk);
@@ -86,7 +86,7 @@ public class RoomActivity extends Activity implements AnyChatBaseEvent,AnyChatTe
 
 		messageEditText = new EditText(this);
 	    sendBtn  = new Button(this);
-	    sendBtn.setText("·¢ËÍ");
+	    sendBtn.setText("å‘é€");
 		sendBtn.setOnClickListener(listener);
 	    
 		sendLayout.addView(messageEditText,new LayoutParams(ScreenInfo.WIDTH*4/5,LayoutParams.FILL_PARENT));
@@ -97,7 +97,7 @@ public class RoomActivity extends Activity implements AnyChatBaseEvent,AnyChatTe
 		tvMessage.setTextColor(Color.WHITE);
 		tvMessage.setPadding(0, 2, 0, 2);
 		tvMessage.setTextSize(18);
-		tvMessage.setText("ÏûÏ¢¼ÇÂ¼");
+		tvMessage.setText("æ¶ˆæ¯è®°å½•");
 		tvMessage.setBackgroundColor(Color.GRAY);
 		mainLayout.addView(tvMessage,new LayoutParams(LayoutParams.FILL_PARENT,ScreenInfo.HEIGHT*1/20));
 
@@ -112,7 +112,7 @@ public class RoomActivity extends Activity implements AnyChatBaseEvent,AnyChatTe
 		tv.setTextColor(Color.WHITE);
 		tv.setPadding(0, 2, 0, 2);
 		tv.setTextSize(18);
-		tv.setText("ÔÚÏßÈËÔ±");
+		tv.setText("åœ¨çº¿äººå‘˜");
 		tv.setBackgroundColor(Color.GRAY);
 		mainLayout.addView(tv,new LayoutParams(LayoutParams.FILL_PARENT,ScreenInfo.HEIGHT*1/20));
 
@@ -187,7 +187,7 @@ public class RoomActivity extends Activity implements AnyChatBaseEvent,AnyChatTe
     private void SendMessage()
     {
 		anychat.SendTextMessage(-1, 0, messageEditText.getText().toString());
-		messageList.add("ÎÒËµ: "+ messageEditText.getText().toString());
+		messageList.add("æˆ‘è¯´: "+ messageEditText.getText().toString());
 		//messageListView.setStackFromBottom(true);
 		messageListView.SetFileList(messageList);
 		messageEditText.setText("");
@@ -313,7 +313,7 @@ public class RoomActivity extends Activity implements AnyChatBaseEvent,AnyChatTe
 	@Override
 	public void OnAnyChatTextMessage(int dwFromUserid, int dwToUserid,
 			boolean bSecret, String message) {
-		messageList.add(anychat.GetUserName(dwFromUserid)+"Ëµ: "+message);
+		messageList.add(anychat.GetUserName(dwFromUserid)+"è¯´: "+message);
 		//messageListView.setStackFromBottom(true);
 		messageListView.SetFileList(messageList);
 		messageListView.setSelection(messageListView.getAdapter().getCount()-1);

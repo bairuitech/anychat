@@ -1,4 +1,4 @@
-package com.bairuitech.demo;
+Ôªøpackage com.bairuitech.demo;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -33,7 +33,7 @@ public class ConfigActivity extends Activity{
 
     private void InitialLayout()
     {   
-        this.setTitle("≈‰÷√");
+        this.setTitle("ÈÖçÁΩÆ");
     	fullLayout =  new LinearLayout(this);
     	fullLayout.setBackgroundColor(Color.WHITE);
     	fullLayout.setOrientation(LinearLayout.VERTICAL);
@@ -47,14 +47,14 @@ public class ConfigActivity extends Activity{
     	
 		LayoutParams normalEditLayoutLp =  new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
     	
-    	//º”»ÎIP
+    	//Âä†ÂÖ•IP
     	LinearLayout ipLayout =  new LinearLayout(this);
     	ipLayout.setPadding(10, 0, 0, 0);
     	ipLayout.setOrientation(LinearLayout.HORIZONTAL);
     	
     	TextView ipLabel = new TextView(this);
     	ipLabel.setTextColor(Color.BLACK);
-    	ipLabel.setText("IPµÿ÷∑£∫");
+    	ipLabel.setText("IPÂú∞ÂùÄÔºö");
     	ipLayout.addView(ipLabel,new LayoutParams(ScreenInfo.WIDTH/5,LayoutParams.WRAP_CONTENT));
     	
     	ipEditText = new  EditText(this);
@@ -63,14 +63,14 @@ public class ConfigActivity extends Activity{
     	ipLayout.addView(ipEditText,new LayoutParams(ScreenInfo.WIDTH*4/5-20,LayoutParams.WRAP_CONTENT));
     	mainLayout.addView(ipLayout,normalEditLayoutLp);
     	
-    	//º”»Î”√ªß√˚
+    	//Âä†ÂÖ•Áî®Êà∑Âêç
     	LinearLayout portLayout =  new LinearLayout(this);
     	portLayout.setPadding(10, 0, 0, 0);
     	portLayout.setOrientation(LinearLayout.HORIZONTAL);
     	
     	TextView portLabel = new TextView(this);
     	portLabel.setTextColor(Color.BLACK);
-    	portLabel.setText("∂Àø⁄£∫");
+    	portLabel.setText("Á´ØÂè£Ôºö");
     	portLayout.addView(portLabel,new LayoutParams(ScreenInfo.WIDTH/5,LayoutParams.WRAP_CONTENT));
     	
     	portEditText = new  EditText(this);
@@ -79,12 +79,12 @@ public class ConfigActivity extends Activity{
     	portLayout.addView(portEditText,new LayoutParams(ScreenInfo.WIDTH*4/5-20,LayoutParams.WRAP_CONTENT));
     	mainLayout.addView(portLayout,normalEditLayoutLp);
     	
-    	//º”»Îµ◊≤ø∞¥≈•
+    	//Âä†ÂÖ•Â∫ïÈÉ®ÊåâÈíÆ
     	LinearLayout btnLayout =  new LinearLayout(this);
     	btnLayout.setOrientation(LinearLayout.HORIZONTAL);
     	
     	saveBtn = new Button(this);
-    	saveBtn.setText("±£¥Ê…Ë÷√");
+    	saveBtn.setText("‰øùÂ≠òËÆæÁΩÆ");
     	btnLayout.addView(saveBtn,new LayoutParams(ScreenInfo.WIDTH,LayoutParams.WRAP_CONTENT));
     	saveBtn.setOnClickListener(listener);
     	

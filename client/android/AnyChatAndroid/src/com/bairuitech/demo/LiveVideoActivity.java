@@ -1,4 +1,4 @@
-package com.bairuitech.demo;
+ï»¿package com.bairuitech.demo;
 
 import java.util.Date;
 import java.util.Timer;
@@ -25,18 +25,18 @@ import android.widget.ProgressBar;
 public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
 	private SurfaceView videoView;
 	ProgressBar volumeProgressBar;
-	private ImageView mCameraSwitchImage;		// Ç°ºóÉãÏñÍ·ÇĞ»»°´Å¥
+	private ImageView mCameraSwitchImage;		// å‰åæ‘„åƒå¤´åˆ‡æ¢æŒ‰é’®
 
 	public AnyChatCoreSDK anychat;
 	int userID = -1;
-	int otherVideoIndex = -1;					// ÊÓÆµÏÔÊ¾ĞòºÅ£¨JavaÊÓÆµÏÔÊ¾Çı¶¯ĞèÒª£©
+	int otherVideoIndex = -1;					// è§†é¢‘æ˜¾ç¤ºåºå·ï¼ˆJavaè§†é¢‘æ˜¾ç¤ºé©±åŠ¨éœ€è¦ï¼‰
 	private ConfigEntity configEntity;
 	
-	private boolean bVideoOpened = false;		// ÊÓÆµÊÇ·ñÒÑ´ò¿ª
-	private boolean bSuccessEnterRoom = false;	// ÊÇ·ñÒÑ³É¹¦½øÈë·¿¼ä
+	private boolean bVideoOpened = false;		// è§†é¢‘æ˜¯å¦å·²æ‰“å¼€
+	private boolean bSuccessEnterRoom = false;	// æ˜¯å¦å·²æˆåŠŸè¿›å…¥æˆ¿é—´
 	
-	private final int WORK_MODE_DOWNSTREAM = 1;	// ÏÂÔØ¹¤×÷Ä£Ê½
-	private final int WORK_MODE_UPSTREAM = 2;	// ÉÏ´«¹¤×÷Ä£Ê½
+	private final int WORK_MODE_DOWNSTREAM = 1;	// ä¸‹è½½å·¥ä½œæ¨¡å¼
+	private final int WORK_MODE_UPSTREAM = 2;	// ä¸Šä¼ å·¥ä½œæ¨¡å¼
 	private int iWorkMode;
 	private boolean bOnPaused = false;
 	
@@ -45,15 +45,15 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
 	private Handler handler = null;
 
 	private Button quitBtn;
-	private boolean bShowQuitBtn = true;			// ÊÇ·ñÒÑÏÔÊ¾ÍË³ö°´Å¥
-	private Date mLastShowQuitBtnTime = new Date();	// ¿ªÊ¼ÏÔÊ¾ÍË³ö°´Å¥µÄÊ±¼ä
+	private boolean bShowQuitBtn = true;			// æ˜¯å¦å·²æ˜¾ç¤ºé€€å‡ºæŒ‰é’®
+	private Date mLastShowQuitBtnTime = new Date();	// å¼€å§‹æ˜¾ç¤ºé€€å‡ºæŒ‰é’®çš„æ—¶é—´
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configEntity = ConfigService.LoadConfig(this);
         iWorkMode = getIntent().getIntExtra("mode",0);
-        if(iWorkMode == WORK_MODE_UPSTREAM)		// Èç¹ûÊÇÉÏ´«Ä£Ê½£¬Ö»´ò¿ª×Ô¼ºµÄÊÓÆµ
+        if(iWorkMode == WORK_MODE_UPSTREAM)		// å¦‚æœæ˜¯ä¸Šä¼ æ¨¡å¼ï¼Œåªæ‰“å¼€è‡ªå·±çš„è§†é¢‘
         {
         	userID = -1;
         }
@@ -78,10 +78,10 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
              public void handleMessage(Message msg)  
              {
             	 CheckVideoStatus();
-            	 // Ë¢ĞÂÒôÁ¿Ìõ
+            	 // åˆ·æ–°éŸ³é‡æ¡
             	 if(LiveVideoActivity.this.bSuccessEnterRoom)
             		 LiveVideoActivity.this.volumeProgressBar.setProgress(LiveVideoActivity.this.anychat.GetUserSpeakVolume(userID));
-            	 // ÅĞ¶ÏÊÇ·ñĞèÒªÒş²ØÍË³ö°´Å¥
+            	 // åˆ¤æ–­æ˜¯å¦éœ€è¦éšè—é€€å‡ºæŒ‰é’®
             	 Date now = new Date();
             	 long interval = now.getTime() - LiveVideoActivity.this.mLastShowQuitBtnTime.getTime();
             	 if(LiveVideoActivity.this.bShowQuitBtn && (interval > 2000))
@@ -93,12 +93,12 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
              }
          };
     }
-    // ÅĞ¶ÏÊÓÆµ´ò¿ª×´Ì¬£¬Èç¹ûÃ»ÓĞ´ò¿ª£¬ÔòÕÒÒ»¸öÊÊºÏµÄÓÃ»§
+    // åˆ¤æ–­è§†é¢‘æ‰“å¼€çŠ¶æ€ï¼Œå¦‚æœæ²¡æœ‰æ‰“å¼€ï¼Œåˆ™æ‰¾ä¸€ä¸ªé€‚åˆçš„ç”¨æˆ·
     private void CheckVideoStatus()
     {
     	if(bVideoOpened || !bSuccessEnterRoom || bOnPaused)
     		return;
-    	if(iWorkMode == WORK_MODE_DOWNSTREAM)			// ´ò¿ªÆäËûÈËµÄÊÓÆµ
+    	if(iWorkMode == WORK_MODE_DOWNSTREAM)			// æ‰“å¼€å…¶ä»–äººçš„è§†é¢‘
     	{
 	     	int[] userarray = anychat.GetOnlineUser();
 	   		for(int i=0; i<userarray.length; i++)
@@ -116,7 +116,7 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
 	   				anychat.UserSpeakControl(userID, 1);
 	   				bVideoOpened = true;
 	   				
-	   				// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµÏÔÊ¾£¬ÔòĞèÒª½«ÊÓÆµ´°¿ÚÓëÓÃ»§¹ØÁªÆğÀ´
+	   				// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘æ˜¾ç¤ºï¼Œåˆ™éœ€è¦å°†è§†é¢‘çª—å£ä¸ç”¨æˆ·å…³è”èµ·æ¥
 	   				if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 	   					anychat.mVideoHelper.SetVideoUser(otherVideoIndex, userID);
 	   				}
@@ -124,7 +124,7 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
 	   			}
 	   		}   		
     	}
-    	else		// ´ò¿ª±¾µØµÄÊÓÆµ£¬½øÈë·¿¼ä³É¹¦ÒÑ¾­½øĞĞÁË´ò¿ª²Ù×÷£¬Õâ¶ùÖ»ĞèÒªÉèÖÃÏÔÊ¾
+    	else		// æ‰“å¼€æœ¬åœ°çš„è§†é¢‘ï¼Œè¿›å…¥æˆ¿é—´æˆåŠŸå·²ç»è¿›è¡Œäº†æ‰“å¼€æ“ä½œï¼Œè¿™å„¿åªéœ€è¦è®¾ç½®æ˜¾ç¤º
     	{
     		if(anychat.GetCameraState(userID) == 2 && anychat.GetUserVideoWidth(userID) != 0)
     		{
@@ -144,7 +144,7 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
         anychat = new AnyChatCoreSDK();
         anychat.SetBaseEvent(this);
         
-        // Æô¶¯AnyChat´«¸ĞÆ÷¼àÌı
+        // å¯åŠ¨AnyChatä¼ æ„Ÿå™¨ç›‘å¬
 		anychat.mSensorHelper.InitSensor(this);
         
         int RoomID = getIntent().getIntExtra("RoomID",0);
@@ -155,9 +155,9 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
     {
 		this.setContentView(R.layout.live_video_room);
 		if(iWorkMode == WORK_MODE_UPSTREAM)
-			this.setTitle("±¾µØÊÓÆµÉÏ´«");
+			this.setTitle("æœ¬åœ°è§†é¢‘ä¸Šä¼ ");
 		else
-			this.setTitle("ÊµÊ±Á÷Ã½ÌåÖ±²¥");
+			this.setTitle("å®æ—¶æµåª’ä½“ç›´æ’­");
 		videoView = (SurfaceView) findViewById(R.id.surface_video);
 		SurfaceHolder holder=videoView.getHolder();
 		holder.setKeepScreenOn(true);
@@ -166,11 +166,11 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
 			holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		
 		if(iWorkMode == WORK_MODE_UPSTREAM) {
-			// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµ²É¼¯£¬ÔòĞèÒªÉèÖÃSurfaceµÄCallBack
+			// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘é‡‡é›†ï¼Œåˆ™éœ€è¦è®¾ç½®Surfaceçš„CallBack
 			if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA)
 				videoView.getHolder().addCallback(AnyChatCoreSDK.mCameraHelper);
 		} else {
-			// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµÏÔÊ¾£¬ÔòĞèÒªÉèÖÃSurfaceµÄCallBack
+			// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘æ˜¾ç¤ºï¼Œåˆ™éœ€è¦è®¾ç½®Surfaceçš„CallBack
 			if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 				otherVideoIndex = anychat.mVideoHelper.bindVideo(videoView.getHolder());
 			}
@@ -182,7 +182,7 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
     	quitBtn.setOnClickListener(listener);
     	volumeProgressBar = (ProgressBar) findViewById(R.id.progress_volume);
     	
-    	// ÅĞ¶ÏÊÇ·ñÏÔÊ¾±¾µØÉãÏñÍ·ÇĞ»»Í¼±ê
+    	// åˆ¤æ–­æ˜¯å¦æ˜¾ç¤ºæœ¬åœ°æ‘„åƒå¤´åˆ‡æ¢å›¾æ ‡
     	if(iWorkMode==WORK_MODE_UPSTREAM) {
 	 		if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
 				if(AnyChatCoreSDK.mCameraHelper.GetCameraNumber() > 1)
@@ -216,9 +216,9 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
 				mLastShowQuitBtnTime = new Date();
 				quitBtn.setVisibility(View.VISIBLE);
 			}
-			else if(v==mCameraSwitchImage)		// Ç°ºóÉãÏñÍ·ÇĞ»»ÊÂ¼ş
+			else if(v==mCameraSwitchImage)		// å‰åæ‘„åƒå¤´åˆ‡æ¢äº‹ä»¶
 			{
-				// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµ²É¼¯£¬ÔòÔÚJava²ã½øĞĞÉãÏñÍ·ÇĞ»»
+				// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘é‡‡é›†ï¼Œåˆ™åœ¨Javaå±‚è¿›è¡Œæ‘„åƒå¤´åˆ‡æ¢
 				if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
 					AnyChatCoreSDK.mCameraHelper.SwitchCamera();
 					return;
@@ -298,7 +298,7 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
 
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-		// ÍøÂçÁ¬½Ó¶Ï¿ªÖ®ºó£¬ÉÏ²ãĞèÒªÖ÷¶¯¹Ø±ÕÒÑ¾­´ò¿ªµÄÒôÊÓÆµÉè±¸
+		// ç½‘ç»œè¿æ¥æ–­å¼€ä¹‹åï¼Œä¸Šå±‚éœ€è¦ä¸»åŠ¨å…³é—­å·²ç»æ‰“å¼€çš„éŸ³è§†é¢‘è®¾å¤‡
 		if(bVideoOpened)
 		{
 			if(iWorkMode == WORK_MODE_DOWNSTREAM)

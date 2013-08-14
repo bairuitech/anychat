@@ -1,4 +1,4 @@
-package com.bairuitech.demo;
+ï»¿package com.bairuitech.demo;
 
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
@@ -80,13 +80,13 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 		LayoutParams normalEditLayoutLp = new LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-		// ¼ÓÈë°ÛÈñLogo
+		// åŠ å…¥ä½°é”Logo
 		ImageView iv = new ImageView(this);
 		iv.setScaleType(ScaleType.CENTER_INSIDE);
 		iv.setBackgroundResource(R.drawable.logo);
 		// mainLayout.addView(iv,new LayoutParams(257,96));
 
-		// ¼ÓÈë±êÌâ
+		// åŠ å…¥æ ‡é¢˜
 		TextView titleLabel = new TextView(this);
 		titleLabel.setTextColor(Color.YELLOW);
 		titleLabel.setTextSize(24);
@@ -96,14 +96,14 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 
 		mainLayout.addView(titleLabel, new LayoutParams(ScreenInfo.WIDTH, 100));
 
-		// ¼ÓÈëÓÃ»§Ãû
+		// åŠ å…¥ç”¨æˆ·å
 		LinearLayout nameLayout = new LinearLayout(this);
 		nameLayout.setPadding(10, 0, 0, 0);
 		nameLayout.setOrientation(LinearLayout.HORIZONTAL);
 
 		TextView nameLabel = new TextView(this);
 		nameLabel.setTextColor(Color.BLACK);
-		nameLabel.setText("ÓÃ»§Ãû£º");
+		nameLabel.setText("ç”¨æˆ·åï¼š");
 		nameLayout.addView(nameLabel, new LayoutParams(ScreenInfo.WIDTH / 5,
 				LayoutParams.WRAP_CONTENT));
 
@@ -114,14 +114,14 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 		if (configEntity.IsSaveNameAndPw) {
 			nameEditText.setText(configEntity.name);
 		}
-		// ¼ÓÈëÃÜÂë
+		// åŠ å…¥å¯†ç 
 		LinearLayout passwordLayout = new LinearLayout(this);
 		passwordLayout.setPadding(10, 0, 0, 0);
 		passwordLayout.setOrientation(LinearLayout.HORIZONTAL);
 
 		TextView passwordLabel = new TextView(this);
 		passwordLabel.setTextColor(Color.BLACK);
-		passwordLabel.setText("ÃÜÂë£º");
+		passwordLabel.setText("å¯†ç ï¼š");
 		passwordLayout.addView(passwordLabel, new LayoutParams(
 				ScreenInfo.WIDTH / 5, LayoutParams.WRAP_CONTENT));
 
@@ -135,19 +135,19 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 			passwordEditText.setText(configEntity.password);
 		}
 
-		// ¼ÓÈëÊÇ·ñ±£´æ
+		// åŠ å…¥æ˜¯å¦ä¿å­˜
 		saveCheckBox = new CheckBox(this);
-		saveCheckBox.setText("±£´æÓÃ»§ÃûºÍÃÜÂë");
+		saveCheckBox.setText("ä¿å­˜ç”¨æˆ·åå’Œå¯†ç ");
 		saveCheckBox.setTextColor(Color.BLACK);
 		saveCheckBox.setChecked(configEntity.IsSaveNameAndPw);
 		mainLayout.addView(saveCheckBox, normalEditLayoutLp);
 
-		// ¼ÓÈëÊÇ·ñÄäÃûµÇÂ¼
+		// åŠ å…¥æ˜¯å¦åŒ¿åç™»å½•
 		anonymousCheckBox = new CheckBox(this);
 		anonymousCheckBox.setTextColor(Color.BLACK);
-		anonymousCheckBox.setText("ÄäÃûµÇÂ¼");
+		anonymousCheckBox.setText("åŒ¿åç™»å½•");
 		mainLayout.addView(anonymousCheckBox, normalEditLayoutLp);
-		// µÇÂ¼Ê±ÏÔÊ¾µÇÂ¼¹ı³Ì
+		// ç™»å½•æ—¶æ˜¾ç¤ºç™»å½•è¿‡ç¨‹
 		LinearLayout layout = new LinearLayout(this);
 		layout.setGravity(Gravity.CENTER);
 		progressLayout = new LinearLayout(this);
@@ -161,14 +161,14 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 				android.R.attr.progressBarStyleLarge);
 		TextView textView = new TextView(this);
 		textView.setTextSize(20);
-		textView.setText("ÕıÔÚµÇÂ¼ÖĞ£¬ÇëÉÔºó!");
+		textView.setText("æ­£åœ¨ç™»å½•ä¸­ï¼Œè¯·ç¨å!");
 		progressLayout.addView(progressBar, params);
 		progressLayout.addView(textView, params);
 		progressLayout.setVisibility(View.GONE);
 		layout.addView(progressLayout, new LinearLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-		// ¼ÓÈë°æ±¾ĞÅÏ¢
+		// åŠ å…¥ç‰ˆæœ¬ä¿¡æ¯
 		LinearLayout versionLayout = new LinearLayout(this);
 		versionLayout.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -184,15 +184,15 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 		LinearLayout btnLayout = new LinearLayout(this);
 		btnLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-		// ¼ÓÈëµ×²¿°´Å¥
+		// åŠ å…¥åº•éƒ¨æŒ‰é’®
 		configBtn = new Button(this);
-		configBtn.setText("ÉèÖÃ");
+		configBtn.setText("è®¾ç½®");
 		btnLayout.addView(configBtn, new LayoutParams(ScreenInfo.WIDTH / 2,
 				LayoutParams.WRAP_CONTENT));
 		configBtn.setOnClickListener(listener);
 
 		loginBtn = new Button(this);
-		loginBtn.setText("µÇÂ¼");
+		loginBtn.setText("ç™»å½•");
 		btnLayout.addView(loginBtn, new LayoutParams(ScreenInfo.WIDTH / 2,
 				LayoutParams.WRAP_CONTENT));
 		loginBtn.setOnClickListener(listener);
@@ -232,10 +232,10 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 			configEntity.IsSaveNameAndPw = false;
 			ConfigService.SaveConfig(this, configEntity);
 		}
-		// Ã»ÓĞÊäÈëÓÃ»§Ãû£¬¶øÇÒÒ²Ã»ÓĞ¹´Ñ¡ÄäÃûµÇÂ¼£¬ÔòÌáÊ¾ÓÃ»§
+		// æ²¡æœ‰è¾“å…¥ç”¨æˆ·åï¼Œè€Œä¸”ä¹Ÿæ²¡æœ‰å‹¾é€‰åŒ¿åç™»å½•ï¼Œåˆ™æç¤ºç”¨æˆ·
 		if (nameEditText.getText().length() == 0
 				&& !anonymousCheckBox.isChecked()) {
-			Toast.makeText(this, "ÇëÊäÈëÓÃ»§Ãû", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "è¯·è¾“å…¥ç”¨æˆ·å", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
@@ -283,7 +283,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 	protected void onDestroy() {
 
 		if (bNeedRelease) {
-			anychat.Release(); // ¹Ø±ÕSDK
+			anychat.Release(); // å…³é—­SDK
 		}
 		super.onDestroy();
 	}
@@ -298,7 +298,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
 		if (!bSuccess) {
 			loginBtn.setClickable(true);
-			Toast.makeText(this, "Á¬½Ó·şÎñÆ÷Ê§°Ü£¬×Ô¶¯ÖØÁ¬£¬ÇëÉÔºó...", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "è¿æ¥æœåŠ¡å™¨å¤±è´¥ï¼Œè‡ªåŠ¨é‡è¿ï¼Œè¯·ç¨å...", Toast.LENGTH_SHORT).show();
 			progressLayout.setVisibility(View.GONE);
 		}
 	}
@@ -311,21 +311,21 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-		Toast.makeText(this, "Á¬½Ó¹Ø±Õ£¬error£º" + dwErrorCode, Toast.LENGTH_SHORT)
+		Toast.makeText(this, "è¿æ¥å…³é—­ï¼Œerrorï¼š" + dwErrorCode, Toast.LENGTH_SHORT)
 				.show();
 	}
 
 	@Override
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
 		if (dwErrorCode == 0) {
-			Toast.makeText(this, "µÇÂ¼³É¹¦£¡", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "ç™»å½•æˆåŠŸï¼", Toast.LENGTH_SHORT).show();
 			bNeedRelease = false;
 			Intent itent = new Intent();
 			itent.setClass(this, HallActivity.class);
 			startActivity(itent);
 			finish();
 		} else {
-			Toast.makeText(this, "µÇÂ¼Ê§°Ü£¬´íÎó´úÂë£º" + dwErrorCode, Toast.LENGTH_SHORT)
+			Toast.makeText(this, "ç™»å½•å¤±è´¥ï¼Œé”™è¯¯ä»£ç ï¼š" + dwErrorCode, Toast.LENGTH_SHORT)
 					.show();
 		}
 	}

@@ -1,4 +1,4 @@
-package com.bairuitech.demo;
+ï»¿package com.bairuitech.demo;
 
 import java.util.Date;
 import java.util.Timer;
@@ -32,7 +32,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 	private SurfaceView otherView;
 	ProgressBar OtherProgressBar;
 	ProgressBar MyProgressBar;
-	private ImageView mCameraSwitchImage; // Ç°ºóÉãÏñÍ·ÇĞ»»°´Å¥
+	private ImageView mCameraSwitchImage; // å‰åæ‘„åƒå¤´åˆ‡æ¢æŒ‰é’®
 
 	private SurfaceView myView;
 
@@ -40,9 +40,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 	int userID;
 	boolean bOnPaused = false;
 
-	private boolean bSelfVideoOpened = false; // ±¾µØÊÓÆµÊÇ·ñÒÑ´ò¿ª
-	private boolean bOtherVideoOpened = false; // ¶Ô·½ÊÓÆµÊÇ·ñÒÑ´ò¿ª
-	private boolean bVideoAreaLoaded = false; // ÊÓÆµÇøÓò´óĞ¡ÊÇ·ñ¼ÓÔØ
+	private boolean bSelfVideoOpened = false; // æœ¬åœ°è§†é¢‘æ˜¯å¦å·²æ‰“å¼€
+	private boolean bOtherVideoOpened = false; // å¯¹æ–¹è§†é¢‘æ˜¯å¦å·²æ‰“å¼€
+	private boolean bVideoAreaLoaded = false; // è§†é¢‘åŒºåŸŸå¤§å°æ˜¯å¦åŠ è½½
 
 	private int dwLocalVideoWidth = 0;
 	private int dwLocalVideoHeight = 0;
@@ -87,7 +87,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 		MyProgressBar.setProgress(anychat.GetUserSpeakVolume(-1));
 	}
 
-	// ÅĞ¶ÏÊÓÆµÊÇ·ñÒÑ´ò¿ª
+	// åˆ¤æ–­è§†é¢‘æ˜¯å¦å·²æ‰“å¼€
 	private void CheckVideoStatus() {
 		if(bOnPaused)
 			return;
@@ -119,7 +119,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 	private void InitialSDK() {
 		anychat = new AnyChatCoreSDK();
 		anychat.SetBaseEvent(this);
-		// Æô¶¯AnyChat´«¸ĞÆ÷¼àÌı
+		// å¯åŠ¨AnyChatä¼ æ„Ÿå™¨ç›‘å¬
 		anychat.mSensorHelper.InitSensor(this);
 	}
 
@@ -143,16 +143,16 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 
 	private void InitialLayout() {
 		this.setContentView(R.layout.video_room);
-		this.setTitle("Óë" + anychat.GetUserName(userID) + "ÊÓÆµÍ¨»°");
+		this.setTitle("ä¸" + anychat.GetUserName(userID) + "è§†é¢‘é€šè¯");
 		myView = (SurfaceView) findViewById(R.id.surface_local);
 		otherView = (SurfaceView) findViewById(R.id.surface_remote);
 		
-		// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµ²É¼¯£¬ÔòĞèÒªÉèÖÃSurfaceµÄCallBack
+		// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘é‡‡é›†ï¼Œåˆ™éœ€è¦è®¾ç½®Surfaceçš„CallBack
 		if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
 			myView.getHolder().addCallback(AnyChatCoreSDK.mCameraHelper);			
 		}
 		
-		// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµÏÔÊ¾£¬ÔòĞèÒªÉèÖÃSurfaceµÄCallBack
+		// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘æ˜¾ç¤ºï¼Œåˆ™éœ€è¦è®¾ç½®Surfaceçš„CallBack
 		if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 			int index = anychat.mVideoHelper.bindVideo(otherView.getHolder());
 			anychat.mVideoHelper.SetVideoUser(index, userID);
@@ -183,18 +183,18 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 		if (configEntity.videoOverlay != 0) {
 			myView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		}
-		// ÅĞ¶ÏÊÇ·ñÏÔÊ¾±¾µØÉãÏñÍ·ÇĞ»»Í¼±ê
+		// åˆ¤æ–­æ˜¯å¦æ˜¾ç¤ºæœ¬åœ°æ‘„åƒå¤´åˆ‡æ¢å›¾æ ‡
 		if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
 			if(AnyChatCoreSDK.mCameraHelper.GetCameraNumber() > 1) {
 				mCameraSwitchImage.setVisibility(View.VISIBLE);
-				// Ä¬ÈÏ´ò¿ªÇ°ÖÃÉãÏñÍ·
+				// é»˜è®¤æ‰“å¼€å‰ç½®æ‘„åƒå¤´
 				AnyChatCoreSDK.mCameraHelper.SelectVideoCapture(AnyChatCoreSDK.mCameraHelper.CAMERA_FACING_FRONT);
 			}
 		}else {
 			String[] strVideoCaptures = anychat.EnumVideoCapture();
 			if (strVideoCaptures != null && strVideoCaptures.length > 1) {
 				mCameraSwitchImage.setVisibility(View.VISIBLE);
-				// Ä¬ÈÏ´ò¿ªÇ°ÖÃÉãÏñÍ·
+				// é»˜è®¤æ‰“å¼€å‰ç½®æ‘„åƒå¤´
 				for(int i=0;i<strVideoCaptures.length;i++)
 				{
 					String strDevices=strVideoCaptures[i];
@@ -205,7 +205,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 				}
 			}
 		}
-		// ´ò¿ª±¾µØÒôÆµ¡¢ÊÓÆµÉè±¸	
+		// æ‰“å¼€æœ¬åœ°éŸ³é¢‘ã€è§†é¢‘è®¾å¤‡	
 		anychat.UserCameraControl(-1, 1);
 		anychat.UserSpeakControl(-1, 1);		
 	}
@@ -228,7 +228,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 	protected void onRestart() {
 		super.onRestart();
 		
-		// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµÏÔÊ¾£¬ÔòĞèÒªÉèÖÃSurfaceµÄCallBack
+		// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘æ˜¾ç¤ºï¼Œåˆ™éœ€è¦è®¾ç½®Surfaceçš„CallBack
 		if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 			int index = anychat.mVideoHelper.bindVideo(otherView.getHolder());
 			anychat.mVideoHelper.SetVideoUser(index, userID);
@@ -273,7 +273,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-		// ÍøÂçÁ¬½Ó¶Ï¿ªÖ®ºó£¬ÉÏ²ãĞèÒªÖ÷¶¯¹Ø±ÕÒÑ¾­´ò¿ªµÄÒôÊÓÆµÉè±¸
+		// ç½‘ç»œè¿æ¥æ–­å¼€ä¹‹åï¼Œä¸Šå±‚éœ€è¦ä¸»åŠ¨å…³é—­å·²ç»æ‰“å¼€çš„éŸ³è§†é¢‘è®¾å¤‡
 		if(bOtherVideoOpened)
 		{
 			anychat.UserCameraControl(userID, 0);
@@ -325,7 +325,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 		// TODO Auto-generated method stub
 		if (v == mCameraSwitchImage) {
 			
-			// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµ²É¼¯£¬ÔòÔÚJava²ã½øĞĞÉãÏñÍ·ÇĞ»»
+			// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘é‡‡é›†ï¼Œåˆ™åœ¨Javaå±‚è¿›è¡Œæ‘„åƒå¤´åˆ‡æ¢
 			if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
 				AnyChatCoreSDK.mCameraHelper.SwitchCamera();
 				return;

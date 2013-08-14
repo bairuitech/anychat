@@ -1,13 +1,13 @@
-package com.bairuitech.anychat;
+锘縫ackage com.bairuitech.anychat;
 
-// 数据传输通知接口
+// 鏁版嵁浼犺緭閫氱煡鎺ュ彛
 public interface AnyChatTransDataEvent {
-	// 文件传输回调函数定义
+	// 鏂囦欢浼犺緭鍥炶皟鍑芥暟瀹氫箟
 	public void OnAnyChatTransFile(int dwUserid, String FileName, String TempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId);
-	// 透明通道数据回调函数定义
+	// 閫忔槑閫氶亾鏁版嵁鍥炶皟鍑芥暟瀹氫箟
 	public void OnAnyChatTransBuffer(int dwUserid, byte[] lpBuf, int dwLen);
-	// 扩展透明通道数据回调函数定义
+	// 鎵╁睍閫忔槑閫氶亾鏁版嵁鍥炶皟鍑芥暟瀹氫箟
 	public void OnAnyChatTransBufferEx(int dwUserid, byte[] lpBuf, int dwLen, int wparam, int lparam, int taskid);
-	// SDK Filter 通信数据回调函数定义
+	// SDK Filter 閫氫俊鏁版嵁鍥炶皟鍑芥暟瀹氫箟
 	public void OnAnyChatSDKFilterData(byte[] lpBuf, int dwLen);
 }

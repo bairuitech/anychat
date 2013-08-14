@@ -1,4 +1,4 @@
-package com.bairuitech.demo;
+ï»¿package com.bairuitech.demo;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -26,10 +26,10 @@ public class VideoConfigActivity extends Activity{
 	private Button saveBtn;
 	private ConfigEntity configEntity;
 	
-	private RadioGroup configModeRadioGroup;		// ÅäÖÃÄ£Ê½×é
+	private RadioGroup configModeRadioGroup;		// é…ç½®æ¨¡å¼ç»„
 	
-	RadioButton configModeServerBtn;				// ·şÎñÆ÷ÅäÖÃ
-	RadioButton configModeCustomBtn;				// ×Ô¶¨ÒåÅäÖÃ
+	RadioButton configModeServerBtn;				// æœåŠ¡å™¨é…ç½®
+	RadioButton configModeCustomBtn;				// è‡ªå®šä¹‰é…ç½®
 	
 	TextView resolutionLable;
 	
@@ -52,32 +52,32 @@ public class VideoConfigActivity extends Activity{
 	private Spinner audioRecordDriverSpinner;
 	private Spinner videoCapDriverSpinner;
 
-	private final String[] videoSizeString={"176 x 144", "320 x 240£¨Ä¬ÈÏ£©", "352 x 288", "640 x 480", "720 x 480", "1280 x 720"};
+	private final String[] videoSizeString={"176 x 144", "320 x 240ï¼ˆé»˜è®¤ï¼‰", "352 x 288", "640 x 480", "720 x 480", "1280 x 720"};
 	private final int[] videoWidthValue={176,320,352,640, 720, 1280};
 	private final int[] videoHeightValue={144,240,288,480, 480, 720};
 	
-	private final String[] videoBitrateString={"ÖÊÁ¿ÓÅÏÈÄ£Ê½", "60kbps£¨Ä¬ÈÏ£©", "80kbps", "100kbps", "150kbps", "200kbps", "300kbps", "500kbps", "800kbps", "1Mbps"};
+	private final String[] videoBitrateString={"è´¨é‡ä¼˜å…ˆæ¨¡å¼", "60kbpsï¼ˆé»˜è®¤ï¼‰", "80kbps", "100kbps", "150kbps", "200kbps", "300kbps", "500kbps", "800kbps", "1Mbps"};
 	private final int[]	videoBitrateValue={0,60*1000,80*1000,100*1000,150*1000,200*1000,300*1000,500*1000,800*1000,1000*1000};
 	
-	private final String[] videofpsString={"2 FPS", "4 FPS", "6 FPS", "8 FPS", "10FPS£¨Ä¬ÈÏ£©", "15FPS", "20FPS", "25FPS"};
+	private final String[] videofpsString={"2 FPS", "4 FPS", "6 FPS", "8 FPS", "10FPSï¼ˆé»˜è®¤ï¼‰", "15FPS", "20FPS", "25FPS"};
 	private final int[]	videofpsValue={2,4,6,8,10,15,20,25};
 	
-	private final String[] videoQualityString={"ÆÕÍ¨ÊÓÆµÖÊÁ¿", "ÖĞµÈÊÓÆµÖÊÁ¿£¨Ä¬ÈÏ£©", "½ÏºÃÊÓÆµÖÊÁ¿"};
+	private final String[] videoQualityString={"æ™®é€šè§†é¢‘è´¨é‡", "ä¸­ç­‰è§†é¢‘è´¨é‡ï¼ˆé»˜è®¤ï¼‰", "è¾ƒå¥½è§†é¢‘è´¨é‡"};
 	private final int[] videoQualityValue={2,3,4};
 	
-	private final String[] videoPresetString={"×î¸ßĞ§ÂÊ£¬½ÏµÍÖÊÁ¿","½Ï¸ßĞ§ÂÊ£¬½ÏµÍÖÊÁ¿","ĞÔÄÜ¾ùºâ£¨Ä¬ÈÏ£©","½Ï¸ßÖÊÁ¿£¬½ÏµÍĞ§ÂÊ","×î¸ßÖÊÁ¿£¬½ÏµÍĞ§ÂÊ"};
+	private final String[] videoPresetString={"æœ€é«˜æ•ˆç‡ï¼Œè¾ƒä½è´¨é‡","è¾ƒé«˜æ•ˆç‡ï¼Œè¾ƒä½è´¨é‡","æ€§èƒ½å‡è¡¡ï¼ˆé»˜è®¤ï¼‰","è¾ƒé«˜è´¨é‡ï¼Œè¾ƒä½æ•ˆç‡","æœ€é«˜è´¨é‡ï¼Œè¾ƒä½æ•ˆç‡"};
 	private final int[] videoPresetValue={1,2,3,4,5};
 	
-	private final String[] videoShowDriverString={"ÄÚºËÊÓÆµÏÔÊ¾Çı¶¯", "Android 2.x¼æÈİÄ£Ê½", "JavaÊÓÆµÏÔÊ¾Çı¶¯"};
+	private final String[] videoShowDriverString={"å†…æ ¸è§†é¢‘æ˜¾ç¤ºé©±åŠ¨", "Android 2.xå…¼å®¹æ¨¡å¼", "Javaè§†é¢‘æ˜¾ç¤ºé©±åŠ¨"};
 	private final int[]	videoShowDriverValue={0,4,5};
 	
-	private final String[] audioPlayDriverString={"ÄÚºËÒôÆµ²¥·ÅÇı¶¯", "JavaÒôÆµ²¥·ÅÇı¶¯"};
+	private final String[] audioPlayDriverString={"å†…æ ¸éŸ³é¢‘æ’­æ”¾é©±åŠ¨", "JavaéŸ³é¢‘æ’­æ”¾é©±åŠ¨"};
 	private final int[] audioPlayDriverValue={0,3};
 	
-	private final String[] audioRecordDriverString={"ÄÚºËÒôÆµ²É¼¯Çı¶¯", "JavaÒôÆµ²É¼¯Çı¶¯"};
+	private final String[] audioRecordDriverString={"å†…æ ¸éŸ³é¢‘é‡‡é›†é©±åŠ¨", "JavaéŸ³é¢‘é‡‡é›†é©±åŠ¨"};
 	private final int[] audioRecordDriverValue={0,3};	
 	
-	private final String[] videoCapDriverString={"ÄÚºËÊÓÆµ²É¼¯Çı¶¯", "Video4LinuxÇı¶¯", "JavaÊÓÆµ²É¼¯Çı¶¯"};
+	private final String[] videoCapDriverString={"å†…æ ¸è§†é¢‘é‡‡é›†é©±åŠ¨", "Video4Linuxé©±åŠ¨", "Javaè§†é¢‘é‡‡é›†é©±åŠ¨"};
 	private final int[] videoCapDriverValue={0,1,3};	
 	
     /** Called when the activity is first created. */
@@ -91,7 +91,7 @@ public class VideoConfigActivity extends Activity{
     
     private void InitialLayout()
     {   
-        this.setTitle("ÅäÖÃ");
+        this.setTitle("é…ç½®");
     	fullLayout =  new LinearLayout(this);
     	fullLayout.setBackgroundColor(Color.WHITE);
     	fullLayout.setOrientation(LinearLayout.VERTICAL);
@@ -104,71 +104,71 @@ public class VideoConfigActivity extends Activity{
 	    mainLayout.setOnTouchListener(touchListener);
 	    
 	    enableP2PBox = new CheckBox(this);
-	    enableP2PBox.setText("ÆôÓÃP2PÍøÂçÁ¬½Ó");
+	    enableP2PBox.setText("å¯ç”¨P2Pç½‘ç»œè¿æ¥");
 	    enableP2PBox.setTextColor(Color.BLACK);
 	    mainLayout.addView(enableP2PBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    enableP2PBox.setChecked(configEntity.enableP2P != 0);
 	    
 	    videoOverlayBox = new CheckBox(this);
-	    videoOverlayBox.setText("OverlayÊÓÆµÄ£Ê½");
+	    videoOverlayBox.setText("Overlayè§†é¢‘æ¨¡å¼");
 	    videoOverlayBox.setTextColor(Color.BLACK);
 	    mainLayout.addView(videoOverlayBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    videoOverlayBox.setChecked(configEntity.videoOverlay != 0);  
 	    
 	    videoRotateBox = new CheckBox(this);
-	    videoRotateBox.setText("·­×ªÊÓÆµ");
+	    videoRotateBox.setText("ç¿»è½¬è§†é¢‘");
 	    videoRotateBox.setTextColor(Color.BLACK);
 	    mainLayout.addView(videoRotateBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    videoRotateBox.setChecked(configEntity.videorotatemode != 0); 
 	    
 	    fixColorDeviation = new CheckBox(this);
-	    fixColorDeviation.setText("±¾µØÊÓÆµ²É¼¯Æ«É«ĞŞÕı");
+	    fixColorDeviation.setText("æœ¬åœ°è§†é¢‘é‡‡é›†åè‰²ä¿®æ­£");
 	    fixColorDeviation.setTextColor(Color.BLACK);
 	    mainLayout.addView(fixColorDeviation,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    fixColorDeviation.setChecked(configEntity.fixcolordeviation!=0);  
 	    
 	    videoShowGPURender = new CheckBox(this);
-	    videoShowGPURender.setText("ÆôÓÃÊÓÆµGPUäÖÈ¾");
+	    videoShowGPURender.setText("å¯ç”¨è§†é¢‘GPUæ¸²æŸ“");
 	    videoShowGPURender.setTextColor(Color.BLACK);
 	    mainLayout.addView(videoShowGPURender,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    videoShowGPURender.setChecked(configEntity.videoShowGPURender!=0); 	    
 	    
 	    smoothPlayBox = new CheckBox(this);
-	    smoothPlayBox.setText("ÊÓÆµÆ½»¬²¥·ÅÄ£Ê½");
+	    smoothPlayBox.setText("è§†é¢‘å¹³æ»‘æ’­æ”¾æ¨¡å¼");
 	    smoothPlayBox.setTextColor(Color.BLACK);
 	    mainLayout.addView(smoothPlayBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    smoothPlayBox.setChecked(configEntity.smoothPlayMode != 0);  	    
 	    
 	    useARMv6Box = new CheckBox(this);
-	    useARMv6Box.setText("Ç¿ÖÆÊ¹ÓÃARMv6Ö¸Áî¼¯£¨°²È«Ä£Ê½£©");
+	    useARMv6Box.setText("å¼ºåˆ¶ä½¿ç”¨ARMv6æŒ‡ä»¤é›†ï¼ˆå®‰å…¨æ¨¡å¼ï¼‰");
 	    useARMv6Box.setTextColor(Color.BLACK);
 	    mainLayout.addView(useARMv6Box,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    useARMv6Box.setChecked(configEntity.useARMv6Lib != 0); 
 	    
 	    useAECBox = new CheckBox(this);
-	    useAECBox.setText("ÆôÓÃ»ØÒôÏû³ı£¨AEC£©");
+	    useAECBox.setText("å¯ç”¨å›éŸ³æ¶ˆé™¤ï¼ˆAECï¼‰");
 	    useAECBox.setTextColor(Color.BLACK);
 	    mainLayout.addView(useAECBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    useAECBox.setChecked(configEntity.enableAEC != 0); 
 	    
 	    useHWCodecBox = new CheckBox(this);
-	    useHWCodecBox.setText("ÆôÓÃÆ½Ì¨ÄÚÖÃÓ²¼ş±à½âÂë£¨ĞèÖØÆôÓ¦ÓÃ³ÌĞò£©");
+	    useHWCodecBox.setText("å¯ç”¨å¹³å°å†…ç½®ç¡¬ä»¶ç¼–è§£ç ï¼ˆéœ€é‡å¯åº”ç”¨ç¨‹åºï¼‰");
 	    useHWCodecBox.setTextColor(Color.BLACK);
 	    mainLayout.addView(useHWCodecBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    useHWCodecBox.setChecked(configEntity.useHWCodec != 0);
 	    
-    	// ²åÈëÒôÆµ²¥·ÅÇı¶¯ÉèÖÃ
-    	audioPlayDriverSpinner = InsertSpinnerInterface("ÒôÆµ²¥·ÅÇı¶¯", audioPlayDriverString, audioPlayDriverValue, configEntity.audioPlayDriver);
-    	// ²åÈëÒôÆµ²É¼¯Çı¶¯ÉèÖÃ
-    	audioRecordDriverSpinner = InsertSpinnerInterface("ÒôÆµ²É¼¯Çı¶¯", audioRecordDriverString, audioRecordDriverValue, configEntity.audioRecordDriver);
-     	// ²åÈëÊÓÆµ²É¼¯Çı¶¯ÉèÖÃ
-    	videoCapDriverSpinner = InsertSpinnerInterface("ÊÓÆµ²É¼¯Çı¶¯", videoCapDriverString, videoCapDriverValue, configEntity.videoCapDriver);
-    	//²åÈëÊÓÆµÏÔÊ¾Çı¶¯ÉèÖÃ
-	    videoShowDriverSpinner = InsertSpinnerInterface("ÊÓÆµÏÔÊ¾Çı¶¯", videoShowDriverString, videoShowDriverValue, configEntity.videoShowDriver);
-	    // ²åÈëÅäÖÃÄ£Ê½Ñ¡ÔñÏî
+    	// æ’å…¥éŸ³é¢‘æ’­æ”¾é©±åŠ¨è®¾ç½®
+    	audioPlayDriverSpinner = InsertSpinnerInterface("éŸ³é¢‘æ’­æ”¾é©±åŠ¨", audioPlayDriverString, audioPlayDriverValue, configEntity.audioPlayDriver);
+    	// æ’å…¥éŸ³é¢‘é‡‡é›†é©±åŠ¨è®¾ç½®
+    	audioRecordDriverSpinner = InsertSpinnerInterface("éŸ³é¢‘é‡‡é›†é©±åŠ¨", audioRecordDriverString, audioRecordDriverValue, configEntity.audioRecordDriver);
+     	// æ’å…¥è§†é¢‘é‡‡é›†é©±åŠ¨è®¾ç½®
+    	videoCapDriverSpinner = InsertSpinnerInterface("è§†é¢‘é‡‡é›†é©±åŠ¨", videoCapDriverString, videoCapDriverValue, configEntity.videoCapDriver);
+    	//æ’å…¥è§†é¢‘æ˜¾ç¤ºé©±åŠ¨è®¾ç½®
+	    videoShowDriverSpinner = InsertSpinnerInterface("è§†é¢‘æ˜¾ç¤ºé©±åŠ¨", videoShowDriverString, videoShowDriverValue, configEntity.videoShowDriver);
+	    // æ’å…¥é…ç½®æ¨¡å¼é€‰æ‹©é¡¹
     	TextView configModeLable = new TextView(this);
     	configModeLable.setTextColor(Color.BLACK);
-    	configModeLable.setText("Ñ¡ÔñÅäÖÃÄ£Ê½£º");
+    	configModeLable.setText("é€‰æ‹©é…ç½®æ¨¡å¼ï¼š");
     	mainLayout.addView(configModeLable,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
     	
        	configModeRadioGroup = new RadioGroup(this);
@@ -176,8 +176,8 @@ public class VideoConfigActivity extends Activity{
     	configModeCustomBtn = new RadioButton(this);
        	configModeServerBtn.setTextColor(Color.BLACK);
     	configModeCustomBtn.setTextColor(Color.BLACK);
-    	configModeServerBtn.setText("·şÎñÆ÷ÅäÖÃ²ÎÊı");
-    	configModeCustomBtn.setText("×Ô¶¨ÒåÅäÖÃ²ÎÊı");
+    	configModeServerBtn.setText("æœåŠ¡å™¨é…ç½®å‚æ•°");
+    	configModeCustomBtn.setText("è‡ªå®šä¹‰é…ç½®å‚æ•°");
     	configModeRadioGroup.addView(configModeServerBtn);
     	configModeRadioGroup.addView(configModeCustomBtn);
     	configModeServerBtn.setOnClickListener(listener);
@@ -190,10 +190,10 @@ public class VideoConfigActivity extends Activity{
     	
     	mainLayout.addView(configModeRadioGroup,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
     	    	
-    	//²åÈëÊÓÆµ·Ö±æÂÊ
+    	//æ’å…¥è§†é¢‘åˆ†è¾¨ç‡
     	resolutionLable = new TextView(this);
     	resolutionLable.setTextColor(Color.BLACK);
-    	resolutionLable.setText("Ñ¡ÔñÊÓÆµ·Ö±æÂÊ£º");
+    	resolutionLable.setText("é€‰æ‹©è§†é¢‘åˆ†è¾¨ç‡ï¼š");
     	mainLayout.addView(resolutionLable,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
     	
     	
@@ -217,24 +217,24 @@ public class VideoConfigActivity extends Activity{
     	}
     	videoSizeSpinner.setSelection(iSelectVideoSize);
 
-    	//²åÈëÂëÂÊ
-    	videoBitrateSpinner = InsertSpinnerInterface("Ñ¡ÔñÊÓÆµÂëÂÊ", videoBitrateString, videoBitrateValue, configEntity.videoBitrate);
-    	//²åÈëÖ¡ÂÊ
-    	videoFPSSpinner = InsertSpinnerInterface("Ñ¡ÔñÊÓÆµÖ¡ÂÊ", videofpsString, videofpsValue, configEntity.videoFps); 	
-    	//²åÈëÊÓÆµÖÊÁ¿
-    	videoQualitySpinner = InsertSpinnerInterface("Ñ¡ÔñÊÓÆµÖÊÁ¿", videoQualityString, videoQualityValue, configEntity.videoQuality);
-    	// ²åÈëÊÓÆµÔ¤Éè²ÎÊı
-    	videoPresetSpinner = InsertSpinnerInterface("Ñ¡ÔñÊÓÆµÔ¤Éè²ÎÊı", videoPresetString, videoPresetValue, configEntity.videoPreset);
+    	//æ’å…¥ç ç‡
+    	videoBitrateSpinner = InsertSpinnerInterface("é€‰æ‹©è§†é¢‘ç ç‡", videoBitrateString, videoBitrateValue, configEntity.videoBitrate);
+    	//æ’å…¥å¸§ç‡
+    	videoFPSSpinner = InsertSpinnerInterface("é€‰æ‹©è§†é¢‘å¸§ç‡", videofpsString, videofpsValue, configEntity.videoFps); 	
+    	//æ’å…¥è§†é¢‘è´¨é‡
+    	videoQualitySpinner = InsertSpinnerInterface("é€‰æ‹©è§†é¢‘è´¨é‡", videoQualityString, videoQualityValue, configEntity.videoQuality);
+    	// æ’å…¥è§†é¢‘é¢„è®¾å‚æ•°
+    	videoPresetSpinner = InsertSpinnerInterface("é€‰æ‹©è§†é¢‘é¢„è®¾å‚æ•°", videoPresetString, videoPresetValue, configEntity.videoPreset);
     	
-    	// ¸ù¾İÅäÖÃÄ£Ê½£¬È·¶¨ÊÇ·ñĞèÒªÏÔÊ¾×Ô¶¨ÒåµÄÅäÖÃÏî
+    	// æ ¹æ®é…ç½®æ¨¡å¼ï¼Œç¡®å®šæ˜¯å¦éœ€è¦æ˜¾ç¤ºè‡ªå®šä¹‰çš„é…ç½®é¡¹
     	CustomControlsShow(configEntity.configMode == 0 ? false : true);
     	
-    	//¼ÓÈëµ×²¿°´Å¥
+    	//åŠ å…¥åº•éƒ¨æŒ‰é’®
     	LinearLayout btnLayout =  new LinearLayout(this);
     	btnLayout.setOrientation(LinearLayout.HORIZONTAL);
     	
     	saveBtn = new Button(this);
-    	saveBtn.setText("±£´æÉèÖÃ");
+    	saveBtn.setText("ä¿å­˜è®¾ç½®");
     	btnLayout.addView(saveBtn,new LayoutParams(ScreenInfo.WIDTH,LayoutParams.WRAP_CONTENT));
     	saveBtn.setOnClickListener(listener);
 
@@ -291,7 +291,7 @@ public class VideoConfigActivity extends Activity{
     	configEntity.videorotatemode = videoRotateBox.isChecked() ? 1 : 0;
     	configEntity.fixcolordeviation = fixColorDeviation.isChecked() ? 1 : 0;
     	configEntity.videoShowGPURender = videoShowGPURender.isChecked() ? 1 : 0;
-    	if(configEntity.videoCapDriver==1)			// Video4LinuxÇı¶¯²»Ö§³ÖOverlayÄ£Ê½
+    	if(configEntity.videoCapDriver==1)			// Video4Linuxé©±åŠ¨ä¸æ”¯æŒOverlayæ¨¡å¼
     		configEntity.videoOverlay = 0;
 
     	configEntity.smoothPlayMode = smoothPlayBox.isChecked() ? 1 : 0;
@@ -339,7 +339,7 @@ public class VideoConfigActivity extends Activity{
     private Spinner InsertSpinnerInterface(String caption, String[] context, int[] value, int select) {
     	TextView lable = new TextView(this);
     	lable.setTextColor(Color.BLACK);
-    	lable.setText(caption+"£º");
+    	lable.setText(caption+"ï¼š");
     	mainLayout.addView(lable,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
     	
     	Spinner spinner = new Spinner(this);

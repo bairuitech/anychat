@@ -1,11 +1,11 @@
-package com.bairuitech.anychat;
+ï»¿package com.bairuitech.anychat;
 
-// AnyChatË½ÁÄÏûÏ¢Í¨Öª½Ó¿Ú
+// AnyChatç§èŠæ¶ˆæ¯é€šçŸ¥æ¥å£
 public interface AnyChatPrivateChatEvent {
-	// ÓÃ»§Ë½ÁÄÇëÇóÏûÏ¢£¬dwUserId±íÊ¾·¢ÆğÕßµÄÓÃ»§IDºÅ£¬dwRequestId±íÊ¾Ë½ÁÄÇëÇó±àºÅ£¬±êÊ¶¸ÃÇëÇó
+	// ç”¨æˆ·ç§èŠè¯·æ±‚æ¶ˆæ¯ï¼ŒdwUserIdè¡¨ç¤ºå‘èµ·è€…çš„ç”¨æˆ·IDå·ï¼ŒdwRequestIdè¡¨ç¤ºç§èŠè¯·æ±‚ç¼–å·ï¼Œæ ‡è¯†è¯¥è¯·æ±‚
     public void OnAnyChatPrivateRequestMessage(int dwUserId, int dwRequestId);
-	// ÓÃ»§Ë½ÁÄÇëÇó»Ø¸´ÏûÏ¢£¬dwUserId±íÊ¾»Ø¸´ÕßµÄÓÃ»§IDºÅ£¬dwErrorCodeÎª³ö´í´úÂë
+	// ç”¨æˆ·ç§èŠè¯·æ±‚å›å¤æ¶ˆæ¯ï¼ŒdwUserIdè¡¨ç¤ºå›å¤è€…çš„ç”¨æˆ·IDå·ï¼ŒdwErrorCodeä¸ºå‡ºé”™ä»£ç 
     public void OnAnyChatPrivateEchoMessage(int dwUserId, int dwErrorCode);
-	// ÓÃ»§ÍË³öË½ÁÄÏûÏ¢£¬dwUserId±íÊ¾ÍË³öÕßµÄÓÃ»§IDºÅ£¬dwErrorCodeÎª³ö´í´úÂë
+	// ç”¨æˆ·é€€å‡ºç§èŠæ¶ˆæ¯ï¼ŒdwUserIdè¡¨ç¤ºé€€å‡ºè€…çš„ç”¨æˆ·IDå·ï¼ŒdwErrorCodeä¸ºå‡ºé”™ä»£ç 
     public void OnAnyChatPrivateExitMessage(int dwUserId, int dwErrorCode);	
 }

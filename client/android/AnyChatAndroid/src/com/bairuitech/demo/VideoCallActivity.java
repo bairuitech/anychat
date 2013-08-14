@@ -1,4 +1,4 @@
-package com.bairuitech.demo;
+锘縫ackage com.bairuitech.demo;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-// 可视电话界面
+// 鍙鐢佃瘽鐣岄潰
 public class VideoCallActivity extends Activity implements AnyChatBaseEvent{
 	private LinearLayout fullLayout;
 	private LinearLayout mainLayout;
@@ -53,7 +53,7 @@ public class VideoCallActivity extends Activity implements AnyChatBaseEvent{
     
     private void InitialLayout()
     {   
-    	this.setTitle("视频电话");
+    	this.setTitle("瑙嗛鐢佃瘽");
 
     	fullLayout =  new LinearLayout(this);
     	fullLayout.setBackgroundResource(R.drawable.videophonebk);
@@ -74,7 +74,7 @@ public class VideoCallActivity extends Activity implements AnyChatBaseEvent{
 		tv.setTextColor(Color.WHITE);
 		tv.setPadding(0, 2, 0, 2);
 		tv.setTextSize(18);
-		tv.setText("在线好友");
+		tv.setText("鍦ㄧ嚎濂藉弸");
 		tv.setBackgroundColor(Color.GRAY);
 		mainLayout.addView(tv,new LayoutParams(LayoutParams.FILL_PARENT,ScreenInfo.HEIGHT*1/20));
 

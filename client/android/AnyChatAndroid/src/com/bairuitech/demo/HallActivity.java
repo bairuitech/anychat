@@ -1,4 +1,4 @@
-package com.bairuitech.demo;
+ï»¿package com.bairuitech.demo;
 
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
@@ -22,14 +22,14 @@ import android.widget.ScrollView;
 
 public class HallActivity extends Activity implements AnyChatBaseEvent{
 	
-	public static final int ACTIVITY_ID_VIDEOCONFIG = 1;		// ÊÓÆµÅäÖÃ½çÃæ±êÊ¶
+	public static final int ACTIVITY_ID_VIDEOCONFIG = 1;		// è§†é¢‘é…ç½®ç•Œé¢æ ‡è¯†
 	
 	private LinearLayout fullLayout;
 	private LinearLayout mainLayout;
 	//private Button backBtn;
 	private Button videoConfigBtn;
-	private Button watchTVBtn;			// µçÊÓÖ±²¥
-	private Button selfVideoBtn;		// ¼´ÅÄ¼´´«
+	private Button watchTVBtn;			// ç”µè§†ç›´æ’­
+	private Button selfVideoBtn;		// å³æ‹å³ä¼ 
 	
 	private Button videoChatBtn;
 	private Button videoPhoneBtn;
@@ -75,14 +75,14 @@ public class HallActivity extends Activity implements AnyChatBaseEvent{
 		videoChatBtn  = new Button(this);
 		videoChatBtn.setTag(1);
 		videoChatBtn.setCompoundDrawables( null,image, null, null);
-		videoChatBtn.setText("ÊÓÆµÁÄÌì");
+		videoChatBtn.setText("è§†é¢‘èŠå¤©");
 		videoChatBtn.setOnClickListener(listener);
 		roomLayout1.addView(videoChatBtn,new LayoutParams(ScreenInfo.WIDTH/4,ScreenInfo.WIDTH/4+titleHeight));
 
 		videoPhoneBtn  = new Button(this);
 		videoPhoneBtn.setTag(2);
 		videoPhoneBtn.setCompoundDrawables( null,image, null, null);
-		videoPhoneBtn.setText("¿ÉÊÓµç»°");
+		videoPhoneBtn.setText("å¯è§†ç”µè¯");
 		videoPhoneBtn.setOnClickListener(listener);
 		
 		roomLayout1.addView(videoPhoneBtn,new LayoutParams(ScreenInfo.WIDTH/4,ScreenInfo.WIDTH/4+titleHeight));
@@ -90,14 +90,14 @@ public class HallActivity extends Activity implements AnyChatBaseEvent{
 		watchTVBtn  = new Button(this);
 		watchTVBtn.setTag(3);
 		watchTVBtn.setCompoundDrawables( null,image, null, null);
-		watchTVBtn.setText("µçÊÓÖ±²¥");
+		watchTVBtn.setText("ç”µè§†ç›´æ’­");
 		watchTVBtn.setOnClickListener(listener);
 		roomLayout1.addView(watchTVBtn,new LayoutParams(ScreenInfo.WIDTH/4,ScreenInfo.WIDTH/4+titleHeight));		
 
 		selfVideoBtn  = new Button(this);
 		selfVideoBtn.setTag(4);
 		selfVideoBtn.setCompoundDrawables( null,image, null, null);
-		selfVideoBtn.setText("¼´ÅÄ¼´´«");
+		selfVideoBtn.setText("å³æ‹å³ä¼ ");
 		selfVideoBtn.setOnClickListener(listener);
 		roomLayout1.addView(selfVideoBtn,new LayoutParams(ScreenInfo.WIDTH/4,ScreenInfo.WIDTH/4+titleHeight));
 
@@ -112,7 +112,7 @@ public class HallActivity extends Activity implements AnyChatBaseEvent{
     	videoConfigBtn  = new Button(this);
     	videoConfigBtn.setBackgroundColor(Color.TRANSPARENT);
 		videoConfigBtn.setCompoundDrawables( null,imageConfig, null, null);
-		videoConfigBtn.setText("ÉèÖÃ");
+		videoConfigBtn.setText("è®¾ç½®");
 		videoConfigBtn.setOnClickListener(listener);
 		configLayout.addView(videoConfigBtn,new LayoutParams(ScreenInfo.WIDTH/4,ScreenInfo.WIDTH/4+titleHeight));
 		
@@ -147,7 +147,7 @@ public class HallActivity extends Activity implements AnyChatBaseEvent{
 			{
 				Intent intent = new Intent();  
 				intent.putExtra("RoomID", Integer.parseInt(v.getTag().toString()));
-				intent.putExtra("mode", 1);		// ÏÂÔØÄ£Ê½
+				intent.putExtra("mode", 1);		// ä¸‹è½½æ¨¡å¼
 		        intent.setClass(HallActivity.this, LiveVideoActivity.class); 
 		        startActivity(intent);
 			}
@@ -155,7 +155,7 @@ public class HallActivity extends Activity implements AnyChatBaseEvent{
 			{
 				Intent intent = new Intent();  
 				intent.putExtra("RoomID", Integer.parseInt(v.getTag().toString()));
-				intent.putExtra("mode", 2);		// ÉÏ´«Ä£Ê½
+				intent.putExtra("mode", 2);		// ä¸Šä¼ æ¨¡å¼
 		        intent.setClass(HallActivity.this, LiveVideoActivity.class); 
 		        startActivity(intent);
 			}
@@ -195,7 +195,7 @@ public class HallActivity extends Activity implements AnyChatBaseEvent{
     protected void onDestroy() {
     	anychat.LeaveRoom(-1);
     	anychat.Logout();
-    	anychat.Release();	// ¹Ø±ÕSDK£¬²»ÔÙ·µ»ØµÇÂ¼½çÃæ
+    	anychat.Release();	// å…³é—­SDKï¼Œä¸å†è¿”å›ç™»å½•ç•Œé¢
 
     	if(!IsDisConnect)
     	{
@@ -278,54 +278,54 @@ public class HallActivity extends Activity implements AnyChatBaseEvent{
 		}
 	}
 
-	// ¸ù¾İÅäÖÃÎÄ¼şÅäÖÃÊÓÆµ²ÎÊı
+	// æ ¹æ®é…ç½®æ–‡ä»¶é…ç½®è§†é¢‘å‚æ•°
 	private void ApplyVideoConfig()
 	{
 		ConfigEntity configEntity = ConfigService.LoadConfig(this);
-		if(configEntity.configMode == 1)		// ×Ô¶¨ÒåÊÓÆµ²ÎÊıÅäÖÃ
+		if(configEntity.configMode == 1)		// è‡ªå®šä¹‰è§†é¢‘å‚æ•°é…ç½®
 		{
-			// ÉèÖÃ±¾µØÊÓÆµ±àÂëµÄÂëÂÊ£¨Èç¹ûÂëÂÊÎª0£¬Ôò±íÊ¾Ê¹ÓÃÖÊÁ¿ÓÅÏÈÄ£Ê½£©
+			// è®¾ç½®æœ¬åœ°è§†é¢‘ç¼–ç çš„ç ç‡ï¼ˆå¦‚æœç ç‡ä¸º0ï¼Œåˆ™è¡¨ç¤ºä½¿ç”¨è´¨é‡ä¼˜å…ˆæ¨¡å¼ï¼‰
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_BITRATECTRL, configEntity.videoBitrate);
 			if(configEntity.videoBitrate==0)
 			{
-				// ÉèÖÃ±¾µØÊÓÆµ±àÂëµÄÖÊÁ¿
+				// è®¾ç½®æœ¬åœ°è§†é¢‘ç¼–ç çš„è´¨é‡
 				AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_QUALITYCTRL, configEntity.videoQuality);
 			}
-			// ÉèÖÃ±¾µØÊÓÆµ±àÂëµÄÖ¡ÂÊ
+			// è®¾ç½®æœ¬åœ°è§†é¢‘ç¼–ç çš„å¸§ç‡
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_FPSCTRL, configEntity.videoFps);
-			// ÉèÖÃ±¾µØÊÓÆµ±àÂëµÄ¹Ø¼üÖ¡¼ä¸ô
+			// è®¾ç½®æœ¬åœ°è§†é¢‘ç¼–ç çš„å…³é”®å¸§é—´éš”
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_GOPCTRL, configEntity.videoFps*4);
-			// ÉèÖÃ±¾µØÊÓÆµ²É¼¯·Ö±æÂÊ
+			// è®¾ç½®æœ¬åœ°è§†é¢‘é‡‡é›†åˆ†è¾¨ç‡
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL, configEntity.resolution_width);
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL, configEntity.resolution_height);
-			// ÉèÖÃÊÓÆµ±àÂëÔ¤Éè²ÎÊı£¨ÖµÔ½´ó£¬±àÂëÖÊÁ¿Ô½¸ß£¬Õ¼ÓÃCPU×ÊÔ´Ò²»áÔ½¸ß£©
+			// è®¾ç½®è§†é¢‘ç¼–ç é¢„è®¾å‚æ•°ï¼ˆå€¼è¶Šå¤§ï¼Œç¼–ç è´¨é‡è¶Šé«˜ï¼Œå ç”¨CPUèµ„æºä¹Ÿä¼šè¶Šé«˜ï¼‰
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_PRESETCTRL, configEntity.videoPreset);
 		}
-		// ÈÃÊÓÆµ²ÎÊıÉúĞ§
+		// è®©è§†é¢‘å‚æ•°ç”Ÿæ•ˆ
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_APPLYPARAM, configEntity.configMode);
-		// P2PÉèÖÃ
+		// P2Pè®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_NETWORK_P2PPOLITIC, configEntity.enableP2P);
-		// ±¾µØÊÓÆµOverlayÄ£Ê½ÉèÖÃ
+		// æœ¬åœ°è§†é¢‘Overlayæ¨¡å¼è®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_OVERLAY, configEntity.videoOverlay);
-		// »ØÒôÏû³ıÉèÖÃ
+		// å›éŸ³æ¶ˆé™¤è®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_AUDIO_ECHOCTRL, configEntity.enableAEC);
-		// Æ½Ì¨Ó²¼ş±àÂëÉèÖÃ
+		// å¹³å°ç¡¬ä»¶ç¼–ç è®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_CORESDK_USEHWCODEC, configEntity.useHWCodec);
-		// ÊÓÆµĞı×ªÄ£Ê½ÉèÖÃ
+		// è§†é¢‘æ—‹è½¬æ¨¡å¼è®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_ROTATECTRL, configEntity.videorotatemode);
-		// ÊÓÆµÆ½»¬²¥·ÅÄ£Ê½ÉèÖÃ
+		// è§†é¢‘å¹³æ»‘æ’­æ”¾æ¨¡å¼è®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_STREAM_SMOOTHPLAYMODE, configEntity.smoothPlayMode);
-		// ÊÓÆµ²É¼¯Çı¶¯ÉèÖÃ
+		// è§†é¢‘é‡‡é›†é©±åŠ¨è®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER, configEntity.videoCapDriver);
-		// ±¾µØÊÓÆµ²É¼¯Æ«É«ĞŞÕıÉèÖÃ
+		// æœ¬åœ°è§†é¢‘é‡‡é›†åè‰²ä¿®æ­£è®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA, configEntity.fixcolordeviation);
-		// ÊÓÆµÏÔÊ¾Çı¶¯ÉèÖÃ
+		// è§†é¢‘æ˜¾ç¤ºé©±åŠ¨è®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL, configEntity.videoShowDriver);
-		// ÒôÆµ²¥·ÅÇı¶¯ÉèÖÃ
+		// éŸ³é¢‘æ’­æ”¾é©±åŠ¨è®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_AUDIO_PLAYDRVCTRL, configEntity.audioPlayDriver);
-		// ÒôÆµ²É¼¯Çı¶¯ÉèÖÃ
+		// éŸ³é¢‘é‡‡é›†é©±åŠ¨è®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_AUDIO_RECORDDRVCTRL, configEntity.audioRecordDriver);
-		// ÊÓÆµGPUäÖÈ¾ÉèÖÃ
+		// è§†é¢‘GPUæ¸²æŸ“è®¾ç½®
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER, configEntity.videoShowGPURender);
 	}
 }
