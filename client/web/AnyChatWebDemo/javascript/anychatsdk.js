@@ -95,6 +95,11 @@ var BRAC_TRANSTASK_BITRATE = 				2;	// 传输任务当前传输码率（参数为：int型，单位
 var BRAC_TRANSTASK_STATUS = 				3;	// 传输任务当前状态（参数为：int型）
 var BRAC_TRANSTASK_SAVEASPATH = 			4;	// 文件传输任务另存为路径设置，含文件名（参数为字符串TCHAR类型）
 
+// 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
+var BRAC_RECORD_FLAGS_VIDEO	=				1;	// 录制视频
+var BRAC_RECORD_FLAGS_AUDIO	=				2;	// 录制音频
+var BRAC_RECORD_FLAGS_SERVER =				4;	// 服务器端录制
+
 
 // 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
 var BRAC_USERSTATE_CAMERA = 				1;	// 用户摄像头状态（参数为DWORD型）
