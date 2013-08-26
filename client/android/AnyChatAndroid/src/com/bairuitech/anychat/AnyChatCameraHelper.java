@@ -158,7 +158,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 		}
 	}
 	
-	// 选择摄像头
+	// 根据摄像头的方向选择摄像头（前置、后置）
 	public void SelectVideoCapture(int facing) {
 		for (int i = 0; i < Camera.getNumberOfCameras(); i++) 
 		{
@@ -167,6 +167,33 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			if (info.facing == facing) {
 				iCurrentCameraId = i;
 				break;
+			}
+		}
+	}
+	
+	// 根据摄像头的序号选择摄像头（0 - GetCameraNumber()）
+	public void SelectCamera(int iCameraId) {
+		try {
+			if(iCurrentCameraId==iCameraId || Camera.getNumberOfCameras() <= iCameraId || currentHolder == null)
+				return;
+			iCurrentCameraId = iCameraId;
+			if(null != mCamera)	{
+				mCamera.stopPreview(); 
+				mCamera.setPreviewCallback(null);
+				bIfPreview = false; 
+				mVideoPixfmt = -1;
+				mCamera.release();
+				mCamera = null;     
+			}
+
+			mCamera = Camera.open(iCameraId);
+			mCamera.setPreviewDisplay(currentHolder);
+			initCamera();
+		} catch (Exception ex) {
+			if(null != mCamera) {
+				mCamera.release();
+				mCamera = null; 
+				mVideoPixfmt = -1;
 			}
 		}
 	}
