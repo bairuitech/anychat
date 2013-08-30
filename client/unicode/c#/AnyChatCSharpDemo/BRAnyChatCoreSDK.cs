@@ -232,7 +232,7 @@ namespace ANYCHATAPI
         /// <param name="lParam">附带信息2</param>
         /// <param name="taskId">传输任务编号</param>
         /// <param name="userValue">自定义参数</param>
-        public delegate void TransFileCallBack(int userId, [MarshalAs(UnmanagedType.LPWStr)] string fileName, string filePath, int fileLength, int wParam, int lParam, int taskId, int userValue);
+        public delegate void TransFileCallBack(int userId, [MarshalAs(UnmanagedType.LPWStr)] string fileName, [MarshalAs(UnmanagedType.LPWStr)] string filePath, int fileLength, int wParam, int lParam, int taskId, int userValue);
 
         /// <summary>
         /// 音量变化回调函数定义
