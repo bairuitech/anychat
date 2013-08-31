@@ -147,5 +147,11 @@ public class AnyChatDefine {
 	public static final int BRAC_USERSTATE_SELFUSERSTATUS	=	16;	///< 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
 	public static final int BRAC_USERSTATE_SELFUSERID		=	17;	///< 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
 	
+	// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
+	public static final int BRAC_VIDEOCALLEVENT_REQUEST		=	1;	///< 呼叫请求
+	public static final int BRAC_VIDEOCALLEVENT_REPLY		=	2;	///< 呼叫请求回复J
+	public static final int BRAC_VIDEOCALLEVENT_START		=	3;	///< 视频呼叫会话开始事件
+	public static final int BRAC_VIDEOCALLEVENT_FINISH		=	4;	///< 挂断（结束）呼叫会话
+	
 	
 }

@@ -8,8 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.bairuitech.anychat.*;
-
 
 public class AnyChatCoreSDK
 {
@@ -18,6 +16,7 @@ public class AnyChatCoreSDK
 	AnyChatPrivateChatEvent	privateChatEvent;
 	AnyChatTextMsgEvent		textMsgEvent;
 	AnyChatTransDataEvent	transDataEvent;
+	AnyChatVideoCallEvent	videoCallEvent;
 	
 	static MainHandler mHandler;
 	static AnyChatAudioHelper	mAudioHelper;
@@ -31,6 +30,7 @@ public class AnyChatCoreSDK
 	private static int HANDLE_TYPE_TRANSBUF		= 4;	// 缓冲区传输
 	private static int HANDLE_TYPE_TRANSBUFEX	= 5;	// 扩展缓冲区传输
 	private static int HANDLE_TYPE_SDKFILTER	= 6;	// SDK Filter Data
+	private static int HANDLE_TYPE_VIDEOCALL	= 7;	// 视频呼叫
 	
 	// 设置AnyChat基本事件通知接口
 	public void SetBaseEvent(AnyChatBaseEvent e)
@@ -63,6 +63,13 @@ public class AnyChatCoreSDK
 		RegisterNotify();
 		this.transDataEvent = e;
 	}
+	// 设置视频呼叫事件通知接口
+	public void SetVideoCallEvent(AnyChatVideoCallEvent e)
+	{
+		RegisterNotify();
+		this.videoCallEvent = e;
+	}
+	
 	// 查询SDK主版本号
 	public int GetSDKMainVersion()
 	{
@@ -211,6 +218,9 @@ public class AnyChatCoreSDK
 	public static native int SetInputAudioFormat(int dwChannels, int dwSamplesPerSec, int dwBitsPerSample, int dwFlags);
 	// 外部音频数据输入
 	public static native int InputAudioData(byte[] lpSamples, int dwSize, int dwTimeStamp);
+	
+	// 视频呼叫事件控制（请求、回复、挂断等）
+	public native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int wParam, int lParam, String szUserStr);
     
     // 异步消息通知
     public void OnNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
@@ -380,6 +390,17 @@ public class AnyChatCoreSDK
             	 if(anychat.transDataEvent != null)
             		 anychat.transDataEvent.OnAnyChatSDKFilterData(buf, length); 
              }
+             else if(type == HANDLE_TYPE_VIDEOCALL)
+             {
+            	 int dwEventType = tBundle.getInt("EVENTTYPE");
+            	 int dwUserId = tBundle.getInt("USERID");
+            	 int dwErrorCode = tBundle.getInt("ERRORCODE");
+            	 int wParam = tBundle.getInt("WPARAM");
+            	 int lParam = tBundle.getInt("LPARAM");
+            	 String userStr = tBundle.getString("USERSTR");
+            	 if(anychat.videoCallEvent != null)
+            		 anychat.videoCallEvent.OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, wParam, lParam, userStr);
+             }
         }
      }
    
@@ -468,6 +489,22 @@ public class AnyChatCoreSDK
 	{
 		mVideoHelper.SetVideoFmt(userid, width, height);
 		mVideoHelper.ShowVideo(userid, buf);
+	}
+	
+	// 视频呼叫事件回调函数
+	private void OnVideoCallEventCallBack(int eventtype, int userid, int errorcode, int wparam, int lparam, String userStr)
+	{
+		Message tMsg=new Message();
+        Bundle tBundle=new Bundle();
+        tBundle.putInt("HANDLETYPE", HANDLE_TYPE_VIDEOCALL);
+        tBundle.putInt("EVENTTYPE", eventtype);
+        tBundle.putInt("USERID", userid);
+        tBundle.putInt("ERRORCODE", errorcode);
+        tBundle.putInt("WPARAM", wparam);
+        tBundle.putInt("LPARAM", lparam);
+        tBundle.putString("USERSTR", userStr);
+        tMsg.setData(tBundle);
+        mHandler.sendMessage(tMsg);
 	}
 	
     static {
