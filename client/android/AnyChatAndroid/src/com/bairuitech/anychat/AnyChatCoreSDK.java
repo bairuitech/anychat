@@ -220,7 +220,7 @@ public class AnyChatCoreSDK
 	public static native int InputAudioData(byte[] lpSamples, int dwSize, int dwTimeStamp);
 	
 	// 视频呼叫事件控制（请求、回复、挂断等）
-	public native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int wParam, int lParam, String szUserStr);
+	public native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String szUserStr);
     
     // 异步消息通知
     public void OnNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
@@ -395,11 +395,11 @@ public class AnyChatCoreSDK
             	 int dwEventType = tBundle.getInt("EVENTTYPE");
             	 int dwUserId = tBundle.getInt("USERID");
             	 int dwErrorCode = tBundle.getInt("ERRORCODE");
-            	 int wParam = tBundle.getInt("WPARAM");
-            	 int lParam = tBundle.getInt("LPARAM");
+            	 int dwFlags = tBundle.getInt("FLAGS");
+            	 int dwParam = tBundle.getInt("PARAM");
             	 String userStr = tBundle.getString("USERSTR");
             	 if(anychat.videoCallEvent != null)
-            		 anychat.videoCallEvent.OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, wParam, lParam, userStr);
+            		 anychat.videoCallEvent.OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, userStr);
              }
         }
      }
@@ -492,7 +492,7 @@ public class AnyChatCoreSDK
 	}
 	
 	// 视频呼叫事件回调函数
-	private void OnVideoCallEventCallBack(int eventtype, int userid, int errorcode, int wparam, int lparam, String userStr)
+	private void OnVideoCallEventCallBack(int eventtype, int userid, int errorcode, int flags, int param, String userStr)
 	{
 		Message tMsg=new Message();
         Bundle tBundle=new Bundle();
@@ -500,8 +500,8 @@ public class AnyChatCoreSDK
         tBundle.putInt("EVENTTYPE", eventtype);
         tBundle.putInt("USERID", userid);
         tBundle.putInt("ERRORCODE", errorcode);
-        tBundle.putInt("WPARAM", wparam);
-        tBundle.putInt("LPARAM", lparam);
+        tBundle.putInt("FLAGS", flags);
+        tBundle.putInt("PARAM", param);
         tBundle.putString("USERSTR", userStr);
         tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);
