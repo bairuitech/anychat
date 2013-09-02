@@ -148,10 +148,20 @@ public class AnyChatDefine {
 	public static final int BRAC_USERSTATE_SELFUSERID		=	17;	///< 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
 	
 	// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
-	public static final int BRAC_VIDEOCALLEVENT_REQUEST		=	1;	///< 呼叫请求
-	public static final int BRAC_VIDEOCALLEVENT_REPLY		=	2;	///< 呼叫请求回复J
-	public static final int BRAC_VIDEOCALLEVENT_START		=	3;	///< 视频呼叫会话开始事件
-	public static final int BRAC_VIDEOCALLEVENT_FINISH		=	4;	///< 挂断（结束）呼叫会话
+	public static final int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	///< 呼叫请求
+	public static final int BRAC_VIDEOCALL_EVENT_REPLY		=	2;	///< 呼叫请求回复J
+	public static final int BRAC_VIDEOCALL_EVENT_START		=	3;	///< 视频呼叫会话开始事件
+	public static final int BRAC_VIDEOCALL_EVENT_FINISH		=	4;	///< 挂断（结束）呼叫会话
+	
+	// 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
+	public static final int BRAC_VIDEOCALL_FLAGS_AUDIO		= 0x01;	///< 语音通话
+	public static final int BRAC_VIDEOCALL_FLAGS_VIDEO		= 0x02;	///< 视频通话
+	public static final int BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	= 0x10;	///< 禁止源（呼叫端）音频
+	public static final int BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	= 0x20;	///< 禁止源（呼叫端）视频
+	public static final int BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	= 0x40;	///< 禁止目标（被呼叫端）音频
+	public static final int BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	= 0x80;	///< 禁止目标（被呼叫端）视频
+	
+	
 	
 	
 }
