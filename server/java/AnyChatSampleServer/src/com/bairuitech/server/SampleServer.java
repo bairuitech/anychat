@@ -134,16 +134,37 @@ public class SampleServer implements AnyChatServerEvent{
 		
 	}
 
+	/**
+	 * 文字消息回调，客户端调用文字发送api会触发该回调
+	 */
 	@Override
 	public void OnAnyChatRecvUserTextMsgCallBack(int dwRoomId, int dwSrcUserId, int dwTarUserId, int bSecret, String szTextMessage, int dwLen) {
 		System.out.print(getCurrentTime() + "OnAnyChatRecvUserTextMsgCallBack: " + dwSrcUserId + " to " + dwTarUserId + " " + szTextMessage +"\r\n");
 		
 	}
 
+	/**
+	 * 服务器录像回调函数，由中心录像服务器触发
+	 * 参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=20&extra=page%3D1
+	 */
 	@Override
 	public void OnAnyChatServerRecordCallBack(int dwUserId, int dwParam, int dwRecordServerId, int dwElapse, String szRecordFileName) {
 		// TODO Auto-generated method stub
-		
+		String str = "OnAnyChatServerRecordCallBack: dwUserId" + dwUserId + " szRecordFileName:" + szRecordFileName;
+		System.out.print(getCurrentTime() + str + "\r\n");
+	}
+
+	/**
+	 * 视频呼叫事件回调，客户端调用API：BRAC_VideoCallControl会触发该回调
+	 */
+	@Override
+	public int OnAnyChatVideoCallEventCallBack(int dwEventType,
+			int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags,
+			int dwParam, String lpUserStr) {
+		String str = "OnAnyChatVideoCallEventCallBack: dwEventType:" + dwEventType + " dwSrcUserId:" + dwSrcUserId + 
+			" dwTarUserId:" + dwTarUserId + " dwErrorCode:" + dwErrorCode + " dwFlags:" + dwFlags + " dwParam:" + dwParam + " lpUserStr:" + lpUserStr;
+		System.out.print(getCurrentTime() + str + "\r\n");
+		return 0;
 	}
 
 

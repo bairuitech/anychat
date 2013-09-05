@@ -161,6 +161,22 @@ enum BRAC_VideoShowDriver{
 #define BRAC_USERSTATE_SELFUSERSTATUS		16	///< 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
 #define BRAC_USERSTATE_SELFUSERID			17	///< 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
 
+// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
+#define BRAC_VIDEOCALL_EVENT_REQUEST		1	///< 呼叫请求
+#define BRAC_VIDEOCALL_EVENT_REPLY			2	///< 呼叫请求回复
+#define BRAC_VIDEOCALL_EVENT_START			3	///< 视频呼叫会话开始事件
+#define BRAC_VIDEOCALL_EVENT_FINISH			4	///< 挂断（结束）呼叫会话
+
+// 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
+#define BRAC_VIDEOCALL_FLAGS_AUDIO		0x01	///< 语音通话
+#define BRAC_VIDEOCALL_FLAGS_VIDEO		0x02	///< 视频通话
+#define BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	0x10	///< 禁止源（呼叫端）音频
+#define BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	0x20	///< 禁止源（呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	0x40	///< 禁止目标（被呼叫端）音频
+#define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x80	///< 禁止目标（被呼叫端）视频
+
+
+
 // 视频数据回调函数定义
 typedef void (CALLBACK * BRAC_VideoData_CallBack)(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, BITMAPINFOHEADER bmiHeader, LPVOID lpUserValue);
 // 视频数据扩展回调函数定义（增加时间戳）
@@ -187,6 +203,8 @@ typedef void (CALLBACK * BRAC_RecordSnapShot_CallBack)(DWORD dwUserid, LPCTSTR l
 typedef void (CALLBACK* BRAC_NotifyMessage_CallBack)(DWORD dwNotifyMsg, DWORD wParam, DWORD lParam, LPVOID lpUserValue);
 // 视频屏幕事件回调函数定义
 typedef void (CALLBACK * BRAC_VideoScreenEvent_CallBack)(DWORD dwUserid, DWORD type, DWORD key, DWORD dwFlags, DWORD wParam, DWORD lParam, LPVOID lpUserValue);
+// 视频通话消息通知回调函数定义
+typedef void (CALLBACK * BRAC_VideoCallEvent_CallBack)(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
 
 /**
  *	API方法定义
@@ -228,6 +246,8 @@ BRAC_API DWORD BRAC_SetRecordSnapShotCallBack(BRAC_RecordSnapShot_CallBack lpFun
 BRAC_API DWORD BRAC_SetNotifyMessageCallBack(BRAC_NotifyMessage_CallBack lpFunction, LPVOID lpUserValue=NULL);
 // 设置视频屏幕事件回调函数
 BRAC_API DWORD BRAC_SetScreenEventCallBack(BRAC_VideoScreenEvent_CallBack lpFunction, LPVOID lpUserValue=NULL);
+// 设置视频通话消息通知回调函数
+BRAC_API DWORD BRAC_SetVideoCallEventCallBack(BRAC_VideoCallEvent_CallBack lpFunction, LPVOID lpUserValue=NULL);
 
 
 // 连接服务器
@@ -346,6 +366,9 @@ BRAC_API DWORD BRAC_InputVideoData(LPBYTE lpVideoFrame, DWORD dwSize, DWORD dwTi
 BRAC_API DWORD BRAC_SetInputAudioFormat(DWORD dwChannels, DWORD dwSamplesPerSec, DWORD dwBitsPerSample, DWORD dwFlags);
 // 外部音频数据输入
 BRAC_API DWORD BRAC_InputAudioData(LPBYTE lpSamples, DWORD dwSize, DWORD dwTimeStamp);
+
+// 视频呼叫事件控制（请求、回复、挂断等）
+BRAC_API DWORD BRAC_VideoCallControl(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags=0, DWORD dwParam=0, LPCTSTR lpUserStr=NULL);
 
 
 #endif //BR_ANYCHAT_CORE_SDK_H__INCLUDED_

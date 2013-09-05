@@ -128,6 +128,30 @@ Module BRAnyChatCoreSDK
 	'#define BRAC_USERSTATE_SELFUSERSTATUS		16	///< 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
 	Public Const BRAC_USERSTATE_SELFUSERID As Integer =	17
 	'#define BRAC_USERSTATE_SELFUSERID			17	///< 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
+	
+	'// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
+	'#define BRAC_VIDEOCALL_EVENT_REQUEST		1	///< 呼叫请求
+	Public Const BRAC_VIDEOCALL_EVENT_REQUEST As Integer = 1
+	'#define BRAC_VIDEOCALL_EVENT_REPLY			2	///< 呼叫请求回复
+	Public Const BRAC_VIDEOCALL_EVENT_REPLY As Integer = 2
+	'#define BRAC_VIDEOCALL_EVENT_START			3	///< 视频呼叫会话开始事件
+	Public Const BRAC_VIDEOCALL_EVENT_START As Integer = 3
+	'#define BRAC_VIDEOCALL_EVENT_FINISH			4	///< 挂断（结束）呼叫会话
+	Public Const BRAC_VIDEOCALL_EVENT_FINISH As Integer = 4
+
+	'// 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
+	'#define BRAC_VIDEOCALL_FLAGS_AUDIO		0x01	///< 语音通话
+	Public Const BRAC_VIDEOCALL_FLAGS_AUDIO As Integer = &H1
+	'#define BRAC_VIDEOCALL_FLAGS_VIDEO		0x02	///< 视频通话
+	Public Const BRAC_VIDEOCALL_FLAGS_VIDEO As Integer = &H2
+	'#define BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	0x10	///< 禁止源（呼叫端）音频
+	Public Const BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO As Integer = &H10
+	'#define BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	0x20	///< 禁止源（呼叫端）视频
+	Public Const BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO As Integer = &H20
+	'#define BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	0x40	///< 禁止目标（被呼叫端）音频
+	Public Const BRAC_VIDEOCALL_FLAGS_FBTARAUDIO As Integer = &H40
+	'#define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x80	///< 禁止目标（被呼叫端）视频
+	Public Const BRAC_VIDEOCALL_FLAGS_FBTARVIDEO As Integer = &H80
 
     '注意：所有的BOOL类型都声明为integer类型
 
@@ -200,6 +224,10 @@ Module BRAnyChatCoreSDK
     '// 异步消息通知回调函数定义
     'typedef void (CALLBACK* BRAC_NotifyMessage_CallBack)(DWORD dwNotifyMsg, DWORD wParam, DWORD lParam, LPVOID lpUserValue);
     Public Delegate Sub BRAC_NotifyMessage_CallBack(ByVal dwNotifyMsg As Integer, ByVal wParam As Integer, ByVal lParam As Integer, ByVal lpUserValue As IntPtr)
+	
+	'// 视频通话消息通知回调函数定义
+	'typedef void (CALLBACK * BRAC_VideoCallEvent_CallBack)(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
+	Public Delegate Sub BRAC_VideoCallEvent_CallBack)(ByVal dwEventType As Integer, ByVal dwUserId As Integer, ByVal dwErrorCode As Integer, ByVal dwFlags As Integer, ByVal dwParam As Integer, ByVal lpUserStr As String, ByVal lpUserValue As IntPtr);
 
     '/**
     ' *  API方法定义
@@ -303,6 +331,11 @@ Module BRAnyChatCoreSDK
     Function BRAC_SetNotifyMessageCallBack(ByVal lpFunction As BRAC_NotifyMessage_CallBack, ByVal lpUserValue As IntPtr) As Integer
     End Function
 
+	'// 设置视频通话消息通知回调函数
+	'BRAC_API DWORD BRAC_SetVideoCallEventCallBack(BRAC_VideoCallEvent_CallBack lpFunction, LPVOID lpUserValue=NULL);
+	<DllImport(AnyChatSDKDLL, EntryPoint:="BRAC_SetVideoCallEventCallBack", CallingConvention:=CallingConvention.Cdecl)> _
+    Function BRAC_SetVideoCallEventCallBack(ByVal lpFunction As BRAC_VideoCallEvent_CallBack, ByVal lpUserValue As IntPtr) As Integer
+    End Function
 
 
     '// 连接服务器
@@ -588,4 +621,11 @@ Module BRAnyChatCoreSDK
     <DllImport(AnyChatSDKDLL, EntryPoint:="BRAC_GetSDKOption", CallingConvention:=CallingConvention.Cdecl)> _
     Function BRAC_GetSDKOptionEx(ByVal optname As Integer, ByRef optval As Integer, ByVal optlen As Integer) As Integer
     End Function
+	
+	'// 视频呼叫事件控制（请求、回复、挂断等）
+	'BRAC_API DWORD BRAC_VideoCallControl(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags=0, DWORD dwParam=0, LPCTSTR lpUserStr=NULL);
+	<DllImport(AnyChatSDKDLL, EntryPoint:="BRAC_VideoCallControl", CallingConvention:=CallingConvention.Cdecl)> _
+    Function BRAC_VideoCallControl(ByVal dwEventType As Integer, ByVal dwUserId As Integer, ByVal dwErrorCode As Integer, ByVal dwFlags As Integer, ByVal dwParam As Integer, ByVal lpUserStr As String) As Integer
+    End Function
+	
 End Module

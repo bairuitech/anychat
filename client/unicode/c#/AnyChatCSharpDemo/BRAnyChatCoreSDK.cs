@@ -95,6 +95,20 @@ namespace ANYCHATAPI
 		public const int BRAC_TRANSTASK_BITRATE			=	2;	// 传输任务当前传输码率（参数为：int型，单位：bps）
 		public const int BRAC_TRANSTASK_STATUS			=	3;	// 传输任务当前状态（参数为：int型）
 		public const int BRAC_TRANSTASK_SAVEASPATH		=	4;	// 文件传输任务另存为路径设置（参数为字符串TCHAR类型）
+		
+		// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
+		public const int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	// 呼叫请求
+		public const int BRAC_VIDEOCALL_EVENT_REPLY		=	2;	// 呼叫请求回复
+		public const int BRAC_VIDEOCALL_EVENT_START		=	3;	// 视频呼叫会话开始事件
+		public const int BRAC_VIDEOCALL_EVENT_FINISH	=	4;	// 挂断（结束）呼叫会话
+
+		// 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
+		public const int BRAC_VIDEOCALL_FLAGS_AUDIO		=0x01;	// 语音通话
+		public const int BRAC_VIDEOCALL_FLAGS_VIDEO		=0x02;	// 视频通话
+		public const int BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO=0x10;	// 禁止源（呼叫端）音频
+		public const int BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO=0x20;	// 禁止源（呼叫端）视频
+		public const int BRAC_VIDEOCALL_FLAGS_FBTARAUDIO=0x40;	// 禁止目标（被呼叫端）音频
+		public const int BRAC_VIDEOCALL_FLAGS_FBTARVIDEO=0x80;	// 禁止目标（被呼叫端）视频
 
         // SDK消息定义
         public const int WM_GV = 0x0400 + 200;
@@ -293,6 +307,18 @@ namespace ANYCHATAPI
         /// <param name="lParam"></param>
         /// <param name="userValue"></param>
         public delegate void NotifyMessage_CallBack(int dwNotifyMsg, int wParam, int lParam, int userValue);
+		
+		/// <summary>
+        /// 视频通话消息通知回调函数定义
+        /// </summary>
+        /// <param name="dwEventType"></param>
+        /// <param name="dwUserId"></param>
+        /// <param name="dwErrorCode"></param>
+		/// <param name="dwFlags"></param>
+		/// <param name="dwParam"></param>
+		/// <param name="lpUserStr"></param>
+        /// <param name="userValue"></param>
+        public delegate void VideoCallEvent_CallBack(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue);
 
 			
         /// <summary>
@@ -342,6 +368,15 @@ namespace ANYCHATAPI
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetNotifyMessageCallBack", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
         public static extern int SetNotifyMessageCallBack(NotifyMessage_CallBack function, int userValue);
+		
+		/// <summary>
+        /// 设置视频通话消息通知回调函数
+        /// </summary>
+		/// <param name="function"></param>
+        /// <param name="userValue"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetVideoCallEventCallBack", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetVideoCallEventCallBack(VideoCallEvent_CallBack function, int userValue);
 		
 		
 		/// <summary>
@@ -833,6 +868,12 @@ namespace ANYCHATAPI
         /// </summary>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_InputAudioData", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
         public static extern int InputAudioData(IntPtr lpSamples, int dwSize, int dwTimeStamp);
+		
+		/// <summary>
+        /// 视频呼叫事件控制（请求、回复、挂断等）
+        /// </summary>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_VideoCallControl", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr);
 		
 		
 

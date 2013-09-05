@@ -119,47 +119,54 @@ const
   BRAC_USERSTATE_SELFUSERSTATUS	=16;			///< 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
   BRAC_USERSTATE_SELFUSERID		=17;			///< 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
 
+  // 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
+  BRAC_VIDEOCALL_EVENT_REQUEST	=1;				///< 呼叫请求
+  BRAC_VIDEOCALL_EVENT_REPLY	=2;				///< 呼叫请求回复
+  BRAC_VIDEOCALL_EVENT_START	=3;				///< 视频呼叫会话开始事件
+  BRAC_VIDEOCALL_EVENT_FINISH	=4;				///< 挂断（结束）呼叫会话
+
+  // 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
+  BRAC_VIDEOCALL_FLAGS_AUDIO		=	$01;	///< 语音通话
+  BRAC_VIDEOCALL_FLAGS_VIDEO		=	$02;	///< 视频通话
+  BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	=	$10;	///< 禁止源（呼叫端）音频
+  BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	=	$20;	///< 禁止源（呼叫端）视频
+  BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	=	$40;	///< 禁止目标（被呼叫端）音频
+  BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	=	$80;	///< 禁止目标（被呼叫端）视频
 
 
 type
   // 视频数据回调函数定义
-  BRAC_VideoData_CallBack=procedure(dwUserid:DWORD;lpBuf:Pointer;dwLen:DWORD;
-    bmiHeader:BITMAPINFOHEADER;lpUserValue:Pointer);stdcall;
+  BRAC_VideoData_CallBack=procedure(dwUserid:DWORD;lpBuf:Pointer;dwLen:DWORD; bmiHeader:BITMAPINFOHEADER;lpUserValue:Pointer);stdcall;
     
   // 音频数据回调函数定义
-  BRAC_AudioData_CallBack=procedure(dwUserid:DWORD;lpBuf:Pointer;dwLen:DWORD;
-    waveFormatEx:TWaveFormatEx;lpUserValue:Pointer);stdcall;
+  BRAC_AudioData_CallBack=procedure(dwUserid:DWORD;lpBuf:Pointer;dwLen:DWORD; waveFormatEx:TWaveFormatEx;lpUserValue:Pointer);stdcall;
     
   // 文字消息回调函数定义
-  BRAC_TextMessage_CallBack=procedure(dwFromUserid:DWORD;dwToUserid:DWORD;
-    bSecret:BOOL;lpMsgBuf:LPCTSTR;dwLen:DWORD;lpUserValue:Pointer);stdcall;
+  BRAC_TextMessage_CallBack=procedure(dwFromUserid:DWORD;dwToUserid:DWORD; bSecret:BOOL;lpMsgBuf:LPCTSTR;dwLen:DWORD;lpUserValue:Pointer);stdcall;
     
   // 透明通道数据回调函数定义
-  BRAC_TransBuffer_CallBack=procedure(dwUserid:DWORD;lpBuf:PByte;dwLen:DWORD;
-    lpUserValue:Pointer);stdcall;
+  BRAC_TransBuffer_CallBack=procedure(dwUserid:DWORD;lpBuf:PByte;dwLen:DWORD; lpUserValue:Pointer);stdcall;
 
 // 透明通道数据扩展回调函数定义
-  BRAC_TransBufferEx_CallBack=procedure(dwUserid:DWORD;lpBuf:PByte;dwLen:DWORD;wParam:DWORD;lParam:DWORD;
-    dwTaskId:DWORD;lpUserValue:Pointer);
+  BRAC_TransBufferEx_CallBack=procedure(dwUserid:DWORD;lpBuf:PByte;dwLen:DWORD;wParam:DWORD;lParam:DWORD; dwTaskId:DWORD;lpUserValue:Pointer);stdcall;
     
   // 音量变化回调函数定义
-  BRAC_VolumeChange_CallBack=procedure(device:BRAC_AudioDevice;dwCurrentVolume:DWORD;
-    lpUserValue:Pointer);stdcall;
+  BRAC_VolumeChange_CallBack=procedure(device:BRAC_AudioDevice;dwCurrentVolume:DWORD; lpUserValue:Pointer);stdcall;
 
   // 文件传输回调函数定义
-  BRAC_TransFile_CallBack=procedure(dwUserid:DWORD;lpFileName:LPCTSTR;lpTempFilePath:LPCTSTR;
-    dwFileLength:DWORD;wParam:DWORD;lParam:DWORD;dwTaskId:DWORD;lpUserValue:Pointer);stdcall;
+  BRAC_TransFile_CallBack=procedure(dwUserid:DWORD;lpFileName:LPCTSTR;lpTempFilePath:LPCTSTR; dwFileLength:DWORD;wParam:DWORD;lParam:DWORD;dwTaskId:DWORD;lpUserValue:Pointer);stdcall;
 
   // SDK Filter 通信数据回调函数定义
   BRAC_SDKFilterData_CallBack=procedure(lpBuf:PByte;dwLen:DWORD;lpUserValue:Pointer);stdcall;
   
   // 录像、快照任务完成回调函数定义
-  BRAC_RecordSnapShot_CallBack=procedure(dwUserid:DWORD;lpFileName:LPCTSTR;
-    dwParam:DWORD;bRecordType:BOOL;lpUserValue:Pointer);stdcall;
+  BRAC_RecordSnapShot_CallBack=procedure(dwUserid:DWORD;lpFileName:LPCTSTR; dwParam:DWORD;bRecordType:BOOL;lpUserValue:Pointer);stdcall;
     
   // 异步消息通知回调函数定义
-  BRAC_NotifyMessage_CallBack=procedure(dwNotifyMsg:DWORD;wParam:DWORD;lParam:DWORD;
-    lpUserValue:Pointer);stdcall;
+  BRAC_NotifyMessage_CallBack=procedure(dwNotifyMsg:DWORD;wParam:DWORD;lParam:DWORD; lpUserValue:Pointer);stdcall;
+	
+  // 视频通话消息通知回调函数定义
+  BRAC_VideoCallEvent_CallBack=procedure(dwEventType:DWORD; dwUserId:DWORD; dwErrorCode:DWORD; dwFlags:DWORD; dwParam:DWORD; lpUserStr:LPCTSTR; lpUserValue:Pointer);stdcall;
 
 (**
  *	API方法定义
@@ -198,6 +205,8 @@ type
   function BRAC_SetRecordSnapShotCallBack(lpFunction:BRAC_RecordSnapShot_CallBack;lpUserValue:Pointer=nil):DWORD;cdecl;
   // 设置异步消息通知回调函数
   function BRAC_SetNotifyMessageCallBack(lpFunction:BRAC_NotifyMessage_CallBack;lpUserValue:Pointer=nil):DWORD;cdecl;
+  // 设置视频通话消息通知回调函数
+  function BRAC_SetVideoCallEventCallBack(lpFunction:BRAC_VideoCallEvent_CallBack; lpUserValue:Pointer=nil):DWORD;cdecl;
 
 
   // 连接服务器
@@ -509,4 +518,9 @@ implementation
   function BRAC_GetSDKOption(optname:Integer;optval:Pointer;optlen:Integer):DWORD;cdecl;
            external C_BRAnyChatCoreLibName name 'BRAC_GetSDKOption';                          
             
+  // 视频呼叫事件控制（请求、回复、挂断等）
+  function BRAC_VideoCallControl(dwEventType:DWORD; dwUserId:DWORD; dwErrorCode:DWORD; dwFlags:DWORD; dwParam:DWORD, lpUserStr:LPCTSTR):DWORD;cdecl;
+
+
+
 end.
