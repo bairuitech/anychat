@@ -157,7 +157,7 @@ var GV_ERR_PLUGINOLDVERSION =	1010001;		// 插件版本太低
 
 
 // 插件最低需求版本号
-var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.2";
+var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.5";
 var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.2";
 
 /********************************************
