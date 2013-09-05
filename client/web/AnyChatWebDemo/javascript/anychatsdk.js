@@ -136,6 +136,20 @@ var WM_GV_PRIVATEECHO		=	WM_GV + 22;		// 用户回复私聊请求，wParam（INT）表示回复
 var WM_GV_PRIVATEEXIT		=	WM_GV + 23;		// 用户退出私聊，wParam（INT）表示退出者的用户ID号，lParam（INT）为出错代码
 var WM_GV_SDKWARNING      	=   WM_GV + 41;		// SDK警告信息，当SDK在运行过程中自检发现异常状态时，将向上层发送该消息，wParam（INT）表示警告代码，定义为：GV_ERR_WARNING_XXXX
 
+// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
+var BRAC_VIDEOCALL_EVENT_REQUEST =			1;	// 呼叫请求
+var BRAC_VIDEOCALL_EVENT_REPLY =			2;	// 呼叫请求回复
+var BRAC_VIDEOCALL_EVENT_START =			3;	// 视频呼叫会话开始事件
+var BRAC_VIDEOCALL_EVENT_FINISH =			4;	// 挂断（结束）呼叫会话
+
+// 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
+var BRAC_VIDEOCALL_FLAGS_AUDIO =			1;	// 语音通话
+var BRAC_VIDEOCALL_FLAGS_VIDEO =			2;	// 视频通话
+var BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO =		16;	// 禁止源（呼叫端）音频
+var BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO =		32;	// 禁止源（呼叫端）视频
+var BRAC_VIDEOCALL_FLAGS_FBTARAUDIO =		64;	// 禁止目标（被呼叫端）音频
+var BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	=		128;// 禁止目标（被呼叫端）视频
+
 // 出错代码定义
 var GV_ERR_SUCCESS			=	0;				// 成功
 var GV_ERR_PLUGINNOINSTALL	=	1010000;		// 插件没有安装
@@ -198,6 +212,7 @@ function BRAC_InitSDK(apilevel) {
 				anychat.attachEvent('OnVolumeChange', OnAnyChatVolumeChange);
 				anychat.attachEvent('OnSDKFilterData', OnAnyChatSDKFilterData);
 				anychat.attachEvent('OnRecordSnapShot', OnAnyChatRecordSnapShot);
+				anychat.attachEvent('OnVideoCallEvent', OnAnyChatVideoCallEvent);
 			} else {
 				anychat.OnNotifyMessage = OnAnyChatNotifyMessage;
 				anychat.OnTextMessage = OnAnyChatTextMessage;
@@ -207,6 +222,7 @@ function BRAC_InitSDK(apilevel) {
 				anychat.OnVolumeChange = OnAnyChatVolumeChange;
 				anychat.OnSDKFilterData = OnAnyChatSDKFilterData;
 				anychat.OnRecordSnapShot = OnAnyChatRecordSnapShot;
+				anychat.OnVideoCallEvent = OnAnyChatVideoCallEvent;
 			}
 		} else {
 			document.body.removeChild(insertdiv);
@@ -460,6 +476,11 @@ function BRAC_GetIPCGuid() {
 // 组播功能控制
 function BRAC_MultiCastControl(lpMultiCastAddr, dwPort, lpNicAddr, dwTTL, dwFlags) {
 	return anychat.MultiCastControl(lpMultiCastAddr, dwPort, lpNicAddr, dwTTL, dwFlags);
+}
+
+// 视频呼叫事件控制（请求、回复、挂断等）
+function BRAC_VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr) {
+	return anychat.VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr);
 }
 
 
