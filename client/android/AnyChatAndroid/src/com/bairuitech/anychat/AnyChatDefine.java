@@ -149,7 +149,7 @@ public class AnyChatDefine {
 	
 	// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
 	public static final int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	///< 呼叫请求
-	public static final int BRAC_VIDEOCALL_EVENT_REPLY		=	2;	///< 呼叫请求回复J
+	public static final int BRAC_VIDEOCALL_EVENT_REPLY		=	2;	///< 呼叫请求回复
 	public static final int BRAC_VIDEOCALL_EVENT_START		=	3;	///< 视频呼叫会话开始事件
 	public static final int BRAC_VIDEOCALL_EVENT_FINISH		=	4;	///< 挂断（结束）呼叫会话
 	
