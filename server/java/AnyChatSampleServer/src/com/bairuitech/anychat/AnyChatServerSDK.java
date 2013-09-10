@@ -6,6 +6,14 @@ public class AnyChatServerSDK
 {
 	public static final int BRAS_SERVERAPPMSG_CONNECTED		= 	1;	///< 与AnyChat核心服务器连接成功
 	public static final int BRAS_SERVERAPPMSG_DISCONNECT	=	2;	///< 与AnyChat核心服务器断开连接
+	
+	// 视频呼叫事件类型定义（API：BRAS_VideoCallControl 传入参数、OnVideoCallEvent回调参数）
+	public static final int BRAS_VIDEOCALL_EVENT_REQUEST    =	1;   ///< 呼叫请求
+	public static final int BRAS_VIDEOCALL_EVENT_REPLY      =	2;   ///< 呼叫请求回复
+	public static final int BRAS_VIDEOCALL_EVENT_START      =	3;   ///< 视频呼叫会话开始事件
+	public static final int BRAS_VIDEOCALL_EVENT_FINISH     =	4;   ///< 挂断（结束）呼叫会话
+	
+	
 
 	AnyChatServerEvent event;
 	

@@ -12,9 +12,19 @@ namespace ANYCHATAPI
         public const string AnyChatServerSDKDll = "AnyChatServerSDK.dll";
 
         // #define BRAS_SERVERAPPMSG_CONNECTED		1		///< 连接AnyChat服务器成功
-		public const int BRAS_SERVERAPPMSG_CONNECTED = 1;
+		public const int BRAS_SERVERAPPMSG_CONNECTED 	= 1;
         //#define BRAS_SERVERAPPMSG_DISCONNECT		2		///< 与AnyChat服务器断开连接
-		public const int BRAS_SERVERAPPMSG_DISCONNECT = 2;
+		public const int BRAS_SERVERAPPMSG_DISCONNECT 	= 2;
+		
+		// 视频呼叫事件类型定义（API：BRAS_VideoCallControl 传入参数、OnVideoCallEvent回调参数）
+		//#define BRAS_VIDEOCALL_EVENT_REQUEST    1        ///< 呼叫请求
+		public const int BRAS_VIDEOCALL_EVENT_REQUEST 	= 1;
+		//#define BRAS_VIDEOCALL_EVENT_REPLY      2        ///< 呼叫请求回复
+		public const int BRAS_VIDEOCALL_EVENT_REPLY 	= 2;
+		//#define BRAS_VIDEOCALL_EVENT_START      3        ///< 视频呼叫会话开始事件
+		public const int BRAS_VIDEOCALL_EVENT_START 	= 3;
+		//#define BRAS_VIDEOCALL_EVENT_FINISH     4        ///< 挂断（结束）呼叫会话
+		public const int BRAS_VIDEOCALL_EVENT_FINISH 	= 4;
 
         /**
 		*    回调函数定义

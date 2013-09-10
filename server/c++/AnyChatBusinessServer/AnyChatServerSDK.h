@@ -15,6 +15,12 @@
 #define BRAS_SERVERAPPMSG_CONNECTED		1		///< 连接AnyChat服务器成功
 #define BRAS_SERVERAPPMSG_DISCONNECT	2		///< 与AnyChat服务器断开连接
 
+// 视频呼叫事件类型定义（API：BRAS_VideoCallControl 传入参数、OnVideoCallEvent回调参数）
+#define BRAS_VIDEOCALL_EVENT_REQUEST    1        ///< 呼叫请求
+#define BRAS_VIDEOCALL_EVENT_REPLY      2        ///< 呼叫请求回复
+#define BRAS_VIDEOCALL_EVENT_START      3        ///< 视频呼叫会话开始事件
+#define BRAS_VIDEOCALL_EVENT_FINISH     4        ///< 挂断（结束）呼叫会话
+
 
 // 服务器应用程序消息回调函数定义
 typedef void (CALLBACK* BRAS_OnServerAppMessage_CallBack)(DWORD dwMsg, LPVOID lpUserValue);
