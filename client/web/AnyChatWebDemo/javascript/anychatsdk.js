@@ -157,7 +157,7 @@ var GV_ERR_PLUGINOLDVERSION =	1010001;		// 插件版本太低
 
 
 // 插件最低需求版本号
-var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.5";
+var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
 var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.2";
 
 /********************************************
@@ -482,6 +482,76 @@ function BRAC_MultiCastControl(lpMultiCastAddr, dwPort, lpNicAddr, dwTTL, dwFlag
 function BRAC_VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr) {
 	return anychat.VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr);
 }
+
+// 获取用户好友ID列表（返回一个userid的数组）
+function BRAC_GetUserFriends() {
+	var idarray = new Array();
+	var size = anychat.PrepareFetchUserFriends();
+	if(size) {
+		var idx = 0;
+		while(1) {
+			var userid = anychat.FetchNextUserFriend();
+			if(userid == -1)
+				break;
+			idarray[idx++] = userid;
+		}
+	}
+	return idarray;
+}
+
+// 获取好友在线状态
+function BRAC_GetFriendStatus(dwFriendUserId) {
+	return anychat.GetFriendStatus(dwFriendUserId);
+}
+
+// 获取用户分组ID列表（返回一个GroupId的数组）
+function BRAC_GetUserGroups() {
+	var idarray = new Array();
+	var size = anychat.PrepareFetchUserGroups();
+	if(size) {
+		var idx = 0;
+		while(1) {
+			var groupid = anychat.FetchNextUserGroup();
+			if(groupid == -1)
+				break;
+			idarray[idx++] = groupid;
+		}
+	}
+	return idarray;
+}
+
+// 获取分组下面的好友列表（返回一个userid的数组）
+function BRAC_GetGroupFriends(dwGroupId) {
+	var idarray = new Array();
+	var size = anychat.PrepareFetchGroupFriends(dwGroupId);
+	if(size) {
+		var idx = 0;
+		while(1) {
+			var userid = anychat.FetchNextGroupFriend(dwGroupId);
+			if(userid == -1)
+				break;
+			idarray[idx++] = userid;
+		}
+	}
+	return idarray;
+}
+
+// 获取用户信息
+function BRAC_GetUserInfo(dwUserId, dwInfoId) {
+	return anychat.GetUserInfo(dwUserId, dwInfoId);
+}
+
+// 获取用户分组名称
+function BRAC_GetGroupName(dwGroupId) {
+	return anychat.GetGroupName(dwGroupId);
+}
+
+// 用户信息控制
+function BRAC_UserInfoControl(dwUserId, dwCtrlCode, wParam, lParam, lpStrValue) {
+	return anychat.UserInfoControl(dwUserId, dwCtrlCode, wParam, lParam, lpStrValue);
+}
+
+
 
 
 
