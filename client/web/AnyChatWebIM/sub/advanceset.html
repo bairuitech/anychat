@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>无标题文档</title>
+<script type="text/javascript" src="jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".SetBtn").each(function () {
+            $(this).mouseenter(function () {//设置选项按钮鼠标划进
+                if ($(this).attr("State") == "false")//若设置选项按钮状态不是点击状态，则变换背景颜色
+                    $(this).css("background-color", "#00CCFF");
+            });
+            $(this).mouseout(function () {//设置选项按钮鼠标划出
+                if ($(this).attr("State") == "false")//若设置选项按钮状态不是点击状态，则变换背景颜色
+                    $(this).css("background-color", "White");
+            });
+            $(this).click(function () {//设置选项单击事件
+                $("#userdefined").fadeOut("slow"); //自定义界面隐藏
+                $(".SetBtn").each(function () {//所有设置选项按钮恢复初始状态
+                    $(this).css("background-color", "White");
+                    $(this).attr("State", "false");
+                });
+                if ($(this).attr("subordinate") == "video") {//单击 视频参数设置 设置选项按钮
+                    if ($("#defined").attr("checked") == "checked") {//若 自定义模式 单选框状态为被选中  则自动显示自定义界面
+                        $("#userdefined").fadeIn("slow"); //自定义界面淡入
+                    }
+                }
+                $(this).attr("State", "true"); //设置选项按钮 状态为被点击
+                $(this).css("background-color", "#0066FF"); //改变 设置按钮 背景
+                $(".SettingDiv").each(function () {//所有设置按钮下属div层隐藏
+                    $(this).hide();
+                });
+                $("#" + $(this).attr("subordinate")).show(); //被点击的 设置选项按钮 下属div层显示
+            });
+        });
+
+        $(".networkparameter").click(function () {//视频参数设置 下属选项按钮单击事件
+            $("#userdefined").fadeOut("slow"); //自定义界面隐藏
+            if ($(this).attr("value") == "自定义模式") {
+                $("#userdefined").fadeIn("slow");
+            }
+        });
+
+        $("#SaveSetting").click(function () {
+            $(".networkparameter").each(function () {
+                if ($(this).attr("checked") == "checked") {
+                    if ($(this).attr("TheType") == "average") {
+                    }
+                    else if ($(this).attr("TheType") == "quality") {
+                    }
+                    else if ($(this).attr("TheType") == "userdefined") {
+                    }
+                }
+            });
+            //alert($("#Device1").text() + "======" + $("#Device2").text() + "======" + $("#Device3").text());
+            WebCtrlSelectVideoCapture($("#Device1").text()); //视频采集设备
+            WebCtrlSelectAudioCapture($("#Device2").text()); //音频采集设置
+            WebCtrlSelectAudioPlayback($("#Device3").text()); //音频播放设备
+        });
+        $("#closesettingdiv").click(function () {
+            $('#userdefined').fadeOut("fast", Close);
+        });
+        function Close() {
+            $('#div100').hide("fast");
+        }
+        for (var t = 1; t < 4; t++) {
+            var GetDevice = WebCtrlEnumDevices(t);
+            for (var d = 0; d < GetDevice.length; d++) {
+                var option = document.createElement("option");
+                document.getElementById("Device" + t).appendChild(option);
+                option.value = d;
+                option.text = GetDevice[d];
+            }
+        }
+    });
+</script>
+<style type="text/css">
+#borderdiv{ border-style:solid; border-width:1px; width:370px; height:250px; font-family:微软雅黑; font-size:13px;}
+#userdefined{ display:none; padding:15px 0px 0px 10px; position:absolute; width:325px; height:240px; margin-left:-281px; background-image: url('./sub/123456.png');}
+.TheOption{ line-height:30px; width:40px; float:left;	text-align:left;}
+.TheValue{ line-height:30px;width:90px; float:left; text-align:left;}
+#advanceset{ margin-top:10px; width:150px; float:left; height:28px; line-height:28px; padding-left:10px;}
+#closediv{ margin-top:10px;width:27px; float:right; height:28px;}
+.SetBtn{ border-style:solid; border-width:1px;width:85px; height:25px; float:left; text-align:center; line-height:23px; cursor:pointer;}
+.SettingDiv{ padding-left:50px; height:120px; padding-top:10px; line-height:30px; text-align:left;}
+#SaveSetting{ width:85px; height:25px; line-height:25px; cursor:pointer; margin-left:auto; margin-right:auto; border-style:solid; border-width:1px;}
+#first{ background-color:#0066FF}
+</style>
+</head>
+<body>
+    <div style="margin-top:100px; margin-left:700px;">
+        <div id="borderdiv">
+        <!--自定义模式界面 -->
+            <div id="userdefined">
+                <div style="width:325px;">
+                    <div class="TheOption">码率</div>
+                    <div class="TheValue">
+                        <select id="qualitymode" style="width:80px; margin-top:3px;">
+                            <option>质量模式</option>
+                            <option>40</option>
+                            <option>60</option>
+                            <option>100</option>
+                            <option>150</option>
+                            <option>200</option>
+                            <option>300</option>
+                            <option>400</option>
+                            <option>500</option>
+                            <option>600</option>
+                            <option>800</option>
+                            <option>1000</option>
+                            <option>1200</option>
+                            <option>1500</option>
+                        </select>
+                    </div>
+                    <div class="TheOption">质量</div>
+                    <div class="TheValue">
+                        <select id="qualitydivisor" style="width:80px; margin-top:3px;">
+                            <option>较差质量</option>
+                            <option>一般质量</option>
+                            <option>中等质量</option>
+                            <option>较好质量</option>
+                            <option>最好质量</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="width:325px;">
+                    <div class="TheOption">帧率</div>
+                    <div class="TheValue">
+                        <select id="rate" style="width:80px;margin-top:3px;">
+                            <option>5 FPS</option>
+                            <option>8 FPS</option>
+                            <option>12 FPS</option>
+                            <option>15 FPS</option>
+                            <option>20 FPS</option>
+                            <option>25 FPS</option>
+                            <option>30 FPS</option>
+                        </select>
+                    </div>
+                    <div class="TheOption">预设</div>
+                    <div class="TheValue">
+                        <select id="preinstall" style="width:80px; margin-top:3px;">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="TheOption">分辨率</div>
+                <div class="TheValue">
+                    <select id="videowidth" style="width:80px; margin-top:3px;">
+                        <option>176x144</option>
+                        <option>320x240</option>
+                        <option>352x288</option>
+                        <option>640x480</option>
+                        <option>720x480</option>
+                        <option>720x576</option>
+                        <option>800x600</option>
+                        <option>960x720</option>
+                        <option>1024x576</option>
+                        <option>1280x720</option>
+                        <option>1280x1024</option>
+                        <option>1920x1080</option>
+                    </select>
+                </div>
+            </div>
+        <!-- -->
+            <div style=" height:30px; width:100%; text-align:left;">
+                <div id="advanceset">高级设置</div>
+                <div id="closediv"><img src="./images/dialog/3b.png" alt="关闭" id="closesettingdiv" style="cursor:pointer;"  /></div>
+            </div>
+            <div style="width:370px;height:20px;">
+                <hr style="width:100%; margin-left:-160px;" />
+            </div>
+            <div style="padding-left:50px; height:25px; width:370px;">
+                <div class="SetBtn" State="true" subordinate="local" id="first">本地设备设置</div><div style="float:left; width:5px;">&nbsp</div>
+                <div class="SetBtn" State="false" subordinate="video" id="second">视频参数设置</div><div style="float:left; width:5px;">&nbsp</div>
+                <div class="SetBtn" State="false" subordinate="network">网络参数设置</div>
+            </div>
+
+            <div id="local" class="SettingDiv">
+                <div>请选择或者输入需要设置的设备名称</div>
+                <div>视频采集设备&nbsp&nbsp<select id="Device1" style="width:180px;"></select></div>
+                <div>音频采集设备&nbsp&nbsp<select id="Device2" style="width:180px;"></select></div>
+                <div>音频播放设备&nbsp&nbsp<select id="Device3" style="width:180px;"></select></div>
+            </div>
+
+            <div id="video" class="SettingDiv" style="display:none;">
+                <div>请选择适用的视频参数设置   </div>
+                <div><input type="radio" name="rad" class="networkparameter" TheType="average" value="平均模式,适合互联网" checked="checked" />平均模式,适合互联网</div>
+                <div><input type="radio" name="rad" class="networkparameter" TheType="quality" value="质量因子模式,适合网络允许的情况下" />质量因子模式,适合网络允许的情况下</div>
+                <div><input type="radio" name="rad" class="networkparameter" TheType="userdefined" value="自定义模式" id="defined" />自定义模式</div>
+            </div>
+
+            <div id="network" class="SettingDiv" style="display:none;">
+            
+            </div>
+            <div style="text-align:center;"><div id="SaveSetting">保存设置</div></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="./css/Expression.css" rel="stylesheet" type="text/css" />
+    <script src="./javascript/jquery-1.8.3.min.js" type="text/javascript" charset="GB2312"></script>
+    <script type="text/javascript">
+        var pageNum = 1;
+
+        //加载
+        $(function () {
+            Init();//初始化
+            InitExpression();//弹出选择框
+        })
+
+        //初始化(启动时必须运行一次)
+        function Init() {
+            //$("#div_expression").draggable();
+            
+            $("#btn_expressionclose").click(function () {
+                $("#GetExpression").hide();
+            })
+            $("#div_expressionnext").click(function () {
+                var newpageNum = pageNum + 1;
+                if ($("#div_expressionitems" + newpageNum).length > 0) {
+                    pageNum = newpageNum;
+                    ShowExpression();
+                }
+            })
+            $("#div_expressionprev").click(function () {
+                var newpageNum = pageNum - 1;
+                if ($("#div_expressionitems" + newpageNum).length > 0) {
+                    pageNum = newpageNum;
+                    ShowExpression();
+                }
+            })
+            $(".expressionitems>img").click(function () {
+                ExpressionOnClick($(this).attr("alt"));
+            })
+        }
+
+        //弹出表情选择框（需要呈现时调用）
+        function InitExpression() {
+            pageNum = 1;
+            ShowExpression();
+        }
+        function ShowExpression() {
+            $(".expressionitems").each(function () {
+                $(this).hide();
+            })
+            $("#div_expressionitems" + pageNum).show();
+            $("#div_expression").show();
+        }
+
+        //选中表情时出发函数，str为alt
+        function ExpressionOnClick(str) {
+            for (var j = 0; j < mExpressionArray.length; j++) {
+                if (mExpressionArray[j].split(":")[0] == str) {
+                    InsertExpression("<img class='Phiz' src='./images/emotion/" + mExpressionArray[j].split(":")[1] + ".gif' alt='" + str + "' />");
+                    $("#GetExpression").hide();
+                    $(".Phiz").resize(function () {
+                        $(this).css({ "width": "24px", "height": "24px" });
+                    });
+                }
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <div id="div_expression">
+        <div class="header">
+            <div class="top"></div>
+            <div class="main">
+                <img alt="关闭" id="btn_expressionclose" src="./images/others/closebutton_on.png" />
+            </div>
+        </div>
+        <div class="headertomaingap"></div>
+        <div style=" height:190px;">
+        <div id="div_expressionitems1" class="expressionitems">
+            <img alt="微笑" class="top left" src="./images/emotion/001.gif" />
+            <img alt="撇嘴" class="top" src="./images/emotion/002.gif" />
+            <img alt="色" class="top" src="./images/emotion/003.gif" />
+            <img alt="发呆" class="top" src="./images/emotion/004.gif" />
+            <img alt="得意" class="top" src="./images/emotion/005.gif" />
+            <img alt="流泪" class="top" src="./images/emotion/006.gif" />
+            <img alt="害羞" class="top" src="./images/emotion/007.gif" />
+            <img alt="闭嘴" class="top" src="./images/emotion/008.gif" />
+            <img alt="睡" class="top" src="./images/emotion/009.gif" />
+            <img alt="大哭" class="top" src="./images/emotion/010.gif" />
+            <img alt="尴尬" class="top" src="./images/emotion/011.gif" />
+            <img alt="发怒" class="top" src="./images/emotion/012.gif" />
+            <img alt="调皮" class="left" src="./images/emotion/013.gif" />
+            <img alt="呲牙" class="bottom" src="./images/emotion/014.gif" />
+            <img alt="惊讶" class="bottom" src="./images/emotion/015.gif" />
+            <img alt="难过" class="bottom" src="./images/emotion/016.gif" />
+            <img alt="酷" class="bottom" src="./images/emotion/017.gif" />
+            <img alt="冷汗" class="bottom" src="./images/emotion/018.gif" />
+            <img alt="抓狂" class="bottom" src="./images/emotion/019.gif" />
+            <img alt="吐" class="bottom" src="./images/emotion/020.gif" />
+            <img alt="偷笑" class="bottom" src="./images/emotion/021.gif" />
+            <img alt="可爱" class="bottom" src="./images/emotion/022.gif" />
+            <img alt="白眼" class="bottom" src="./images/emotion/023.gif" />
+            <img alt="傲慢" class="bottom" src="./images/emotion/024.gif" />
+            <img alt="饥饿" class="left" src="./images/emotion/025.gif" />
+            <img alt="困" class="bottom" src="./images/emotion/026.gif" />
+            <img alt="惊恐" class="bottom" src="./images/emotion/027.gif" />
+            <img alt="流汗" class="bottom" src="./images/emotion/028.gif" />
+            <img alt="憨笑" class="bottom" src="./images/emotion/029.gif" />
+            <img alt="大兵" class="bottom" src="./images/emotion/030.gif" />
+            <img alt="奋斗" class="bottom" src="./images/emotion/031.gif" />
+            <img alt="咒骂" class="bottom" src="./images/emotion/032.gif" />
+            <img alt="疑问" class="bottom" src="./images/emotion/033.gif" />
+            <img alt="嘘..." class="bottom" src="./images/emotion/034.gif" />
+            <img alt="晕" class="bottom" src="./images/emotion/035.gif" />
+            <img alt="折磨" class="bottom" src="./images/emotion/036.gif" />
+            <img alt="衰" class="left" src="./images/emotion/037.gif" />
+            <img alt="骷髅" class="bottom" src="./images/emotion/038.gif" />
+            <img alt="敲打" class="bottom" src="./images/emotion/039.gif" />
+            <img alt="再见" class="bottom" src="./images/emotion/040.gif" />
+            <img alt="擦汗" class="bottom" src="./images/emotion/041.gif" />
+            <img alt="抠鼻" class="bottom" src="./images/emotion/042.gif" />
+            <img alt="鼓掌" class="bottom" src="./images/emotion/043.gif" />
+            <img alt="糗大了" class="bottom" src="./images/emotion/044.gif" />
+            <img alt="坏笑" class="bottom" src="./images/emotion/045.gif" />
+            <img alt="左哼哼" class="bottom" src="./images/emotion/046.gif" />
+            <img alt="右哼哼" class="bottom" src="./images/emotion/047.gif" />
+            <img alt="哈欠" class="bottom" src="./images/emotion/048.gif" />
+            <img alt="鄙视" class="left" src="./images/emotion/049.gif" />
+            <img alt="委屈" class="bottom" src="./images/emotion/050.gif" />
+            <img alt="快哭了" class="bottom" src="./images/emotion/051.gif" />
+            <img alt="阴险" class="bottom" src="./images/emotion/052.gif" />
+            <img alt="亲亲" class="bottom" src="./images/emotion/053.gif" />
+            <img alt="吓" class="bottom" src="./images/emotion/054.gif" />
+            <img alt="可怜" class="bottom" src="./images/emotion/055.gif" />
+            <img alt="菜刀" class="bottom" src="./images/emotion/056.gif" />
+            <img alt="西瓜" class="bottom" src="./images/emotion/057.gif" />
+            <img alt="啤酒" class="bottom" src="./images/emotion/058.gif" />
+            <img alt="篮球" class="bottom" src="./images/emotion/059.gif" />
+            <img alt="乒乓球" class="bottom" src="./images/emotion/060.gif" />
+            <img alt="咖啡" class="left" src="./images/emotion/061.gif" />
+            <img alt="饭" class="bottom" src="./images/emotion/062.gif" />
+            <img alt="头" class="bottom" src="./images/emotion/063.gif" />
+            <img alt="玫瑰" class="bottom" src="./images/emotion/064.gif" />
+            <img alt="凋谢" class="bottom" src="./images/emotion/065.gif" />
+            <img alt="示爱" class="bottom" src="./images/emotion/066.gif" />
+            <img alt="爱心" class="bottom" src="./images/emotion/067.gif" />
+            <img alt="心碎" class="bottom" src="./images/emotion/068.gif" />
+            <img alt="蛋糕" class="bottom" src="./images/emotion/069.gif" />
+            <img alt="闪电" class="bottom" src="./images/emotion/070.gif" />
+            <img alt="炸弹" class="bottom" src="./images/emotion/071.gif" />
+            <img alt="刀" class="bottom" src="./images/emotion/072.gif" />
+        </div>
+        <div id="div_expressionitems2" style="display:none;" class="expressionitems">
+ 	    <img alt="足球" class="top left" src="./images/emotion/073.gif" />
+            <img alt="瓢虫" class="top" src="./images/emotion/074.gif" />
+            <img alt="便便" class="top" src="./images/emotion/075.gif" />
+            <img alt="月亮" class="top" src="./images/emotion/076.gif" />
+            <img alt="太阳" class="top" src="./images/emotion/077.gif" />
+            <img alt="礼物" class="top" src="./images/emotion/078.gif" />
+            <img alt="拥抱" class="top" src="./images/emotion/079.gif" />
+            <img alt="强" class="top" src="./images/emotion/080.gif" />
+            <img alt="弱" class="top" src="./images/emotion/081.gif" />
+            <img alt="握手" class="top" src="./images/emotion/082.gif" />
+            <img alt="胜利" class="top" src="./images/emotion/083.gif" />
+            <img alt="抱拳" class="top" src="./images/emotion/084.gif" />
+            <img alt="勾引" class="left" src="./images/emotion/085.gif" />
+            <img alt="拳头" class="bottom" src="./images/emotion/086.gif" />
+            <img alt="差劲" class="bottom" src="./images/emotion/087.gif" />
+            <img alt="爱你" class="bottom" src="./images/emotion/088.gif" />
+            <img alt="NO" class="bottom" src="./images/emotion/089.gif" />
+            <img alt="OK" class="bottom" src="./images/emotion/090.gif" />
+            </div>
+        </div>
+        <!--<div class="maintobottomgap" style="border-style:solid; border-width:1px;"></div>-->
+        <div class="bottom" style="margin-left:10px; height:25px;" >
+            <div id="div_expressiondefault" class="expressiontab">默认</div>
+            <div id="div_expressionnext" class="expressionpage">></div>
+            <div id="div_expressionprev" class="expressionpage"><</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>iCloudSoft即时通讯平台</title>
+<link href="./css/dialogue.css" rel="Stylesheet" />
+<link href="./css/prompt.css" rel="Stylesheet" />
+<link href="./css/hall.css" rel="Stylesheet" />
+<link href="./css/login.css" rel="Stylesheet" />
+<link href="./css/others.css" rel="Stylesheet" />
+<link href="./css/advanceset.css" rel="Stylesheet" />
+<script language="javascript" type="text/javascript" src="./javascript/jquery-1.8.3.min.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/config.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/advanceset.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/videochat.js" charset="GB2312"></script>
+<!-- 加载业务逻辑控制脚本  -->
+<script language="javascript" type="text/javascript" src="./javascript/function.js" charset="GB2312"></script>
+<!-- 加载AnyChat for Web SDK库  -->
+<script language="javascript" type="text/javascript" src="./javascript/anychatsdk.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/anychatevent.js" charset="GB2312"></script>
+<!-- 加载iCloudSoft SDK库  -->
+<script language="javascript" type="text/javascript" src="./javascript/icloudsoftsdk.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/icloudsoftevent.js" charset="GB2312"></script>
+</head>
+<body onload="LogicInit()" style=" font-family:微软雅黑; margin:0 auto;">
+<div id="Rules" style=" text-align:center;">
+    <div id="Logo_Picture"><img src="./images/Hall/DTLOGO.png" alt="佰锐科技" /></div>
+    <div id="LoginHead"></div>
+    <div id="Shade_Div"></div>
+    <div id="VideoShowDiv"></div>
+    <!--安装插件提示层 -->
+    <div id="prompt_div">
+        <div class="close_div">
+            <div id="prompt_div_headline1">插件安装提示</div>
+            <div id="prompt_div_headline2">刷新</div>
+        </div>
+        <div>
+            <div id="prompt_div_line1"></div>
+            <div id="prompt_div_line2">控件安装完成后，请重启浏览器</div>
+            <div id="prompt_div_btn_load" onclick="window.open('http://oss.aliyuncs.com/videosrc/AnyChatWebSetup.exe')">下载安装</div>
+        </div>
+        <div style="height: 85px;">
+            <div id="prompt_div_BR">
+                <a href="http://www.anychat.cn/">AnyChat</a>&nbsp|&nbsp<a href="http://www.bairuitech.com/">佰锐科技</a>
+            </div>
+        </div>
+    </div>
+    <!-- 登陆界面 -->
+    <div id="BodyDIV">
+        <div id="Login_Div">
+            <div id="Login_Div_Logo"></div>
+            <div id="Login_Div_Bounds"></div>
+            <div id="Login_Div_RightSide">
+                <div id="Login_Div_Title">
+                    <div id="Login_Div_Title_Key"><img src="./images/login/Keys.png" /></div>
+                    <div id="Login_Div_Title_Mark">登录</div>
+                </div>
+                <div id="mUser_Info_Div">
+                    <div id="mUser_Info_Div_UserName">账号：<input type="text" id="txtUserName" /></div>
+                    <div id="mUser_Info_Div_PassWord">密码：<input type="password" id="txtPassWord" /></div>
+                    <div id="Login_Div_Btn">
+                        <div id="mAdvanceSetting" onclick="DisplaySettingDiv()">高级设置</div>
+                        <div id="mLoginBtn" onclick="LoginToHall()">登录</div>
+                    </div>
+                </div>
+                <div id="mServer_Info_Div">
+                    <div id="mServer_Info_Div_ServerAddr">地址：<input type="text" id="mDefaultServerAddr" /></div>
+                    <div id="mServer_Info_Div_ServerPort">端口：<input type="text" id="mDefaultServerPort" /></div>
+                    <div id="mSaveBtn" onclick="SaveServerInfo()">保存</div>
+                </div>
+                <div id="prompt_box_div"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 大厅-->
+    <div id="HallDiv">
+        <div id="HallDiv_HeadPart">
+            <div id="HeadPart_MinePhoto"><div id="mSelfPhoto"></div></div>
+            <div id="HeadPart_MineInfo"><div id="mSelfInfo"></div></div>
+            <div id="HeadPart_SearchBar">
+                <input type="text" id="mSearchTarget" /><img src="./images/hall/14.png" alt="搜索好友" />
+            </div>
+        </div>
+        <div id="HallDiv_MainPart">
+            <div id="MainPart_LeftSide">
+                <div id="GroupListScroll"></div>
+                <div id="GroupBaseLine"></div>
+                <div id="GroupSlider" style="margin-top:0px;"> </div>
+                <div id="GroupContent"></div>
+            </div>
+            <div id="MainPart_RightSide">
+                <div id="UserListScroll"></div>
+                <div id="UserListBaseLine"></div>
+                <div id="UserListSlider" style="margin-top:0px;"> </div>
+                <div id="UserListContent"></div>
+            </div>
+        </div>
+        <div id="SessionPrompt_Div"></div>
+    </div>
+    <!-- 聊天视频框 -->
+    <div id="DialogueDiv">
+        <div id="DialogueDiv_MainDiv">
+            <div id="DialogueDiv_HeadPart">
+                <div id="mTargetPhoto"></div>
+                <div id="mTargetInfo"></div>
+                <div id="Finish_Private_Button">
+                    <img src="./images/Dialog/3b.png" alt="关闭" onclick="FinishDialogue()" />
+                    <div class="AskToFinishPrivate" id="Enquire_Div"></div>
+                </div>
+            </div>
+            <div id="DialogueDiv_BodyDiv">
+                <div id="BodyDiv_LeftSide">
+                    <div id="GetExpression"></div>
+                    <div id="DivColor" class="DivColor Box-shadow">
+                       <script type="text/javascript" src="./javascript/other.js" charset="GB2312"></script>
+                    </div>
+                    <div id="ReceiveMsg"></div>
+                    <div id="LeftSide_MiddleButton">
+                       <select id="fontfamily" onchange="SetFontFamily()"></select>
+                       <select id="fontsize" onchange="SetFontSize()"></select>
+                       <img class="ColorImg" src="./images/Dialog/Color.png" alt="颜色面板" onclick="CorrespondingDiv('DivColor','GetExpression')" />
+                       <img class="ColorImg" src="./images/dialog/5.png" alt="表情" onclick="CorrespondingDiv('GetExpression','DivColor')" />
+                       <img class="ColorImg" src="./images/dialog/FileDialog.png" alt="发送文件" onclick="GetFilePath()" />
+                    </div>
+                    <!--高级设置界面 -->
+                    <div id="advanceset_div">
+                        <div id="advanceset_div_close" onclick="$('#advanceset_div').hide();"><div style=" float:right; width:35px; cursor:pointer;">×关闭</div></div>
+                        <div id="advanceset_div_mainpark">
+                            <div id="advanceset_div_Div_Btn">
+                                <div id="Btn_Div_Device" clickstate="true" onclick="SettingBtnClick('Device_Interface','Btn_Div_Device')">设备选择</div>
+                                <div id="Btn_Div_Video" class="Btn_Div" clickstate="false" onclick="SettingBtnClick('Video_Parameter_Interface','Btn_Div_Video')">视频参数</div>
+                                <div id="Btn_Div_Sound" class="Btn_Div" clickstate="false" onclick="SettingBtnClick('Sound_Parameter_Interface','Btn_Div_Sound')">音频参数</div>
+                                <div id="Btn_Div_Other" class="Btn_Div" clickstate="false" onclick="SettingBtnClick('Other_Parameter_Interface','Btn_Div_Other')">其他设置</div>
+                            </div>
+                            <div id="advanceset_div_mainpark_parameter">
+                                <div style="height:10px;"></div>
+                                <div id="Device_Interface">
+                                    视频设备：<select id="DeviceType_VideoCapture" onchange="GetTheValue('DeviceType_VideoCapture')" style=" width:250px;"></select><br />
+                                    录音设备：<select id="DeviceType_AudioCapture" onchange="GetTheValue('DeviceType_AudioCapture')" style=" width:250px;"></select><br />
+                                    放音设备：<select id="DeviceType_AudioPlayBack" onchange="GetTheValue('DeviceType_AudioPlayBack')" style=" width:250px;"></select>
+                                </div>
+                                <div id="Video_Parameter_Interface">
+                                    <div style=" width:200px; margin:3px 3px 3px 30px;"><input type="checkbox" id="ServerSetting" onclick="ChangeTheResult('ServerSetting')" checked="true" />服务器配置参数优先</div>
+                                    <div class="ComboBox_Div"><a>质量：</a><select id="quality" onchange="GetTheValue('quality')" disabled="disabled"></select></div>
+                                    <div class="ComboBox_Div"><a>码率：</a><select id="code_rate" onchange="GetTheValue('code_rate')" disabled="disabled"></select></div>
+                                    <div class="ComboBox_Div"><a>分辨率：</a><select id="distinguishability" onchange="GetTheValue('distinguishability')" disabled="disabled"></select></div>
+                                    <div class="ComboBox_Div"><a>帧率：</a><select id="frame_rate" onchange="GetTheValue('frame_rate')" disabled="disabled"></select></div>
+                                    <div class="ComboBox_Div">(当前分辨率：<label id="current_resolution"></label></div>
+                                    <div class="ComboBox_Div"><a>预设：</a><select id="preinstall" onchange="GetTheValue('preinstall')" disabled="disabled"></select></div>
+                                    <div id="regulate" onclick="BtnAdjust()" onmouseout="Mouseout('regulate')" onmousemove="Mouseover('regulate')">画面调节</div>
+                                    <div id="apply_changes" onclick="BtnApply()" onmouseout="Mouseout('apply_changes')" onmousemove="Mouseover('apply_changes')">应用更改</div>
+                                </div>
+                                <div id="Sound_Parameter_Interface">
+                                    <div style=" height:30px; margin:10px 0px 0px 5px;"><select id="Speak_Mode" style=" width:140px;"></select></div>
+                                    <div class="audio_tabcontrol"><input id="audio_vadctrl" onchange="ChangeTheResult('audio_vadctrl')" type="checkbox" />静音检测</div>
+                                    <div class="audio_tabcontrol"><input id="audio_echoctrl" onchange="ChangeTheResult('audio_echoctrl')" type="checkbox" />回音消除</div>
+                                    <div class="audio_tabcontrol"><input id="audio_nsctrl" onchange="ChangeTheResult('audio_nsctrl')" type="checkbox" />噪音抑制</div>
+                                    <div class="audio_tabcontrol"><input id="audio_agcctrl" onchange="ChangeTheResult('audio_agcctrl')" type="checkbox" />自动增益</div>
+                                </div>
+                                <div id="Other_Parameter_Interface">
+                                    <input id="Checkbox_P2P" onchange="ChangeTheResult('Checkbox_P2P')" type="checkbox" />P2P优先
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="SendMsg" onkeypress="NewLine(event)" contenteditable="true"></div>
+                    <div id="LeftSide_UnderButton">
+                        <div id="Swapping_Button"><input type="button" value="视频模式" id="BtnChange" onclick="ToWideScreen()" /></div>
+                        <div id="Send_Button"><input type="button" value="发送信息" id="BtnSendMsg" onclick="SendMessage()" /></div>
+                    </div>
+                </div>
+                <div id="DialogueDiv_RightSide">
+                    <div id="Video_Show_Target"></div>
+                    <div id="Target_Volume"></div>
+                    <div id="RightSide_MiddleButton">
+                        <a class="video_prompt_a" longrange="true">远程视频</a>
+                        <img src="./images/dialog/video_img.png" videostate="true" />
+                        <img src="./images/dialog/advanceset.png" id="AdvanceBtn" />
+                        <img src="./images/dialog/swapping.png" />
+                    </div>
+                    <div id="RightSide_MineVideoDiv">
+                        <div id="RightSide_VolumeControl"></div>
+                        <div id="Video_Show_MySelf"></div>
+                    </div>
+                    <div id="Mine_Volume"></div>
+                    <div id="RightSide_UnderButton">
+                        <a class="video_prompt_a">本地视频</a>
+                        <img src="./images/dialog/video_img.png" videostate="true" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 主动呼叫等待框 -->
+    <div id="Initiative_Call_Div">
+        <div class="Div_HeadPart">
+            <img alt="取消呼叫" src="./images/Others/close.png" onclick="CancelCall()" />
+        </div>
+        <div id="Initiative_Call_Div_Content" class="Call_Div_Content"></div>
+        <div class="Call_Div_Button">
+            <div id="Initiative_Cancel_Button" onclick="CancelCall()" style="">取消呼叫</div>
+        </div>
+    </div>
+    <!-- 被呼叫询问框 -->
+    <div id="BeCalls_Div">
+        <div class="Div_HeadPart"></div>
+        <div id="BeCalls_Div_Content" class="Call_Div_Content"></div>
+        <div class="Call_Div_Button">
+            <div class="ButtonImg" onclick="javascript:OnAcceptRequestBtnClick()">同意</div>
+            <div class="ButtonImg" onclick="javascript:OnRejectRequestBtnClick()">拒绝</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

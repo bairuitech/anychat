@@ -1,0 +1,234 @@
+#HallDiv
+{
+	display:none;
+	position:absolute;
+	width:770px;
+	height:650px;
+}
+#HallDiv_HeadPart
+{
+	width:770px; 
+	height:90px;
+}
+#HeadPart_MinePhoto
+{
+	margin-left:20px;
+	width:90px; 
+	height:90px; 
+	background:url('../images/hall/0.png') no-repeat; 
+	float:left;
+}
+#HeadPart_MineInfo
+{
+	width:150px; 
+	height:90px; 
+	float:left;
+}
+#HeadPart_SearchBar
+{
+	margin-top:60px;
+	width:200px; 
+	height:31px; 
+	float:right;
+}
+#HeadPart_SearchBar img
+{
+	width:15px;
+}
+#HallDiv_MainPart
+{
+	width:770px; 
+	height:550px; 
+	background:url('../images/hall/dtback.png') no-repeat;
+}
+#MainPart_LeftSide
+{
+	float:left; 
+	height:500px; 
+	width:250px; 
+	margin:30px 0px 10px 25px;
+}
+#MainPart_RightSide
+{
+	float:left; 
+	height:500px; 
+	width:450px; 
+	margin-top:20px;
+}
+#UserListScroll 
+{
+	position:relative;
+	float:right;
+	left:auto;
+	top:auto;
+	width:15px;
+	height:485px;
+}
+#UserListBaseLine
+{
+	border-left:1px solid #C0C0C0; 
+	height:482px; 
+	position:absolute; 
+	z-index:1; 
+	margin: 3px 0px 0px 6px; 
+	display:none;
+}
+#UserListSlider 
+{
+	background:url('../images/Hall/DT_06.png');
+	display:none;
+	margin-top:0px;
+	width:15px;
+	height:30px;
+	cursor:pointer;
+	z-index:12;
+	position:absolute;
+}
+
+#UserListContent 
+{
+	color:#6A2A04;
+	position:relative;
+	width:390px;
+	height:485px;
+	overflow:hidden;
+	font-size:9pt;
+	font-family:arial;
+	padding:10px 10px 10px 15px;
+}
+#UserList
+{
+	padding:10px 10px 10px 15px;
+	width:390px;
+	height:480px;
+	overflow:hidden;
+	position:relative;
+}
+.OnLineUserRow
+{
+	background: url('../images/Hall/05.png');
+	width:165px; 
+	height:40px; 
+	line-height:29px;
+	cursor:pointer;
+	color: #FFFFFF;
+	font-family: Î¢ÈíÑÅºÚ;
+	font-size: 14px;
+}
+.User
+{
+	height:27px;
+	width:27px;
+	padding:0;
+	cursor:pointer;
+}
+.GroupImg
+{
+	height:20px;
+	width:20px;
+	margin-top:5px;
+}
+#GroupListScroll 
+{
+	position:relative;
+	position:absolute;
+	left:auto;
+	top:auto;
+	height:485px;
+	width:15px;
+	margin-left:5px;
+}
+#GroupBaseLine
+{
+	border-left:1px solid #C0C0C0; 
+	height:482px; 
+	position:absolute; 
+	z-index:1; 
+	margin: 3px 0px 0px 6px; 
+	display:none;
+}
+#GroupSlider 
+{
+	background:url('../images/Hall/16.png');
+	z-index:17;
+	margin-top:0px;
+	width:15px;
+	height:30px;
+	display:none;
+	cursor:pointer;
+	position:absolute;
+}
+
+#GroupContent 
+{
+	color:#6A2A04;
+	position:relative;
+	width:247px;
+	height:485px;
+	overflow:hidden;
+	font-size:9pt;
+	font-family:arial;
+	overflow-x:hidden;
+}
+#mSelfPhoto
+{
+	width:88px;
+	height:88px;
+	padding:9px 15px 9px 0px;
+}
+.UserNameMsg
+{
+	color: #FFFFFF;
+	font-family: Î¢ÈíÑÅºÚ;
+	font-size: 12px;
+}
+#mSearchTarget
+{
+	font-family: Î¢ÈíÑÅºÚ;
+	font-size: 12px;
+}
+#MyPhoto
+{
+	width:70px;
+	height:70px;
+}
+.OnLineUser_Div
+{
+	width:160px;
+	height:40px;
+	float:left;
+	padding:0px 15px 5px 15px;
+}
+.UserImg
+{
+	width:45px; 
+	height:100%; 
+	float:left;
+	padding:8px 0px 0px 0px;
+	background:url('../images/Hall/OT_03.png') no-repeat;
+}
+.UserMsg
+{
+	width:90px; 
+	height:100%; 
+	float:left;
+	padding:12px 0px 0px 0px
+}
+#mSelfInfo
+{
+	font-family: Î¢ÈíÑÅºÚ;
+	font-size: 12px;
+	text-align:left;
+}
+#SessionPrompt_Div
+{
+	width: 200px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	position: absolute;
+	display: none;
+	border-style: solid;
+	border-width: 1px;
+	background-color: #666666;
+}
