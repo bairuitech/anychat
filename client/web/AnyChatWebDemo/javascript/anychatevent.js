@@ -19,6 +19,8 @@ function OnAnyChatNotifyMessage(dwNotifyMsg, wParam, lParam) {
 		case WM_GV_PRIVATEREQUEST:	OnAnyChatPrivateRequest(wParam, lParam);	break;
 		case WM_GV_PRIVATEECHO:		OnAnyChatPrivateEcho(wParam, lParam);		break;
 		case WM_GV_PRIVATEEXIT:		OnAnyChatPrivateExit(wParam, lParam);		break;
+		case WM_GV_USERINFOUPDATE:	OnAnyChatUserInfoUpdate(wParam, lParam);	break;
+		case WM_GV_FRIENDSTATUS:	OnAnyChatFriendStatus(wParam, lParam);		break;
 		default:
 			break;
 	}
@@ -188,4 +190,14 @@ function OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dw
 	
 }
 
+// 用户信息更新通知，dwUserId表示用户ID号，dwType表示更新类别
+function OnAnyChatUserInfoUpdate(dwUserId, dwType) {
+	AddLog("OnAnyChatUserInfoUpdate(dwUserId=" + dwUserId + ", dwType=" + dwType + ")", LOG_TYPE_EVENT);
+}
+
+// 好友在线状态变化，dwUserId表示好友用户ID号，dwStatus表示用户的当前活动状态：0 离线， 1 上线
+function OnAnyChatFriendStatus(dwUserId, dwStatus) {
+	AddLog("OnAnyChatFriendStatus(dwUserId=" + dwUserId + ", dwStatus=" + dwStatus + ")", LOG_TYPE_EVENT);
+	
+}
 
