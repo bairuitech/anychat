@@ -150,16 +150,38 @@ function OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dw
 //	AddLog("OnAnyChatVideoCallEvent(dwEventType=" + dwEventType + ", dwUserId=" + dwUserId + ", dwErrorCode=" + dwErrorCode + ", dwFlags=" + dwFlags + ", dwParam=" + dwParam + ", szUserStr=" + szUserStr + ")", LOG_TYPE_EVENT);
 	switch(dwEventType) {
 		case BRAC_VIDEOCALL_EVENT_REQUEST:	// 呼叫请求
-		
+			 $("#Shade_Div").show();
+			$("#BeCalls_Div").show();
+			 $("#BeCalls_Div_Content").html("收到用户  " + BRAC_GetUserName(dwSrcUserId) + "  会话邀请<br />      是否同意?");
+			 mTargetUserId = dwSrcUserId;
 		break;
 		case BRAC_VIDEOCALL_EVENT_REPLY:	// 呼叫请求回复
-		
+				  if (dwErrorCode == ICS_RETCODE_SESSION_REJECT) {
+					 ForSession("对方拒绝会话邀请...");
+				 }
+				 else if (dwErrorCode == ICS_RETCODE_SESSION_BUSY) {
+					ForSession("用户正在会话中...");
+				 }
+				  else if (dwErrorCode == ICS_RETCODE_SESSION_CANCEL) {
+					  ForSession("用户取消会话邀请...");
+					 Getdmo("BeCalls_Div").style.display = "none";
+				}
 		break;
 		case BRAC_VIDEOCALL_EVENT_START:	// 视频呼叫会话开始事件
-		
+			 mMissionQuantity = 0;
+			 Getdmo("ReceiveMsg").innerHTML = "";
+			 Getdmo("Initiative_Call_Div").style.display = "none";
+			Getdmo("HallDiv").style.display = "none";
+			 chatuserid = dwSrcUserId;
+			 $("#VideoShowDiv").show();
+			 $("#mTargetPhoto").html("<img src='" + GetUserImageAddrById(mTargetUserId, 50) + "' alt='用户头像' style='height:65px;width:65px;' />");
+			 $("#mTargetInfo").html("目标的ID：" + mTargetUserId + "<br />目标名称：" + BRAC_GetUserName(mTargetUserId) + "<br />所属分组：" + BRAC_GetGroupName(GetUserGroupIdByUserId(mTargetUserId)) + "<br />");
+    //    ComboboxInint();
+			 InitAdvanced();
+			ReceiveMsgBoxScroll();
 		break;
 		case BRAC_VIDEOCALL_EVENT_FINISH:	// 挂断（结束）呼叫会话
-		
+			 BackToHall();
 		break;
 		default:
 			break;

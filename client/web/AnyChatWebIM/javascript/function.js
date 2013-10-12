@@ -118,7 +118,8 @@ function ImgDBclick(ID) {
     if (mSelfUserId == ID) ForSession("不能呼叫自己...");
     else {
         mTargetUserId = ID;
-        ICS_SessionRequest(ID, 60);   // 向指定的用户发送会话邀请
+		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REQUEST,mTargetUserId,0,0,0,"");  // 向指定的用户发送会话邀请
+      //  ICS_SessionRequest(ID, 60); 
         var GetUserName = ICS_GetUserName(mTargetUserId);
         GetUserName = GetUserName.fontcolor("Red");
         Getdmo("Initiative_Call_Div_Content").innerHTML = "向用户" + GetUserName + "发起邀请<br /><img src='./images/Others/LoadImg.gif' style='width: 145px;height:30px;' />";
@@ -130,17 +131,20 @@ function ImgDBclick(ID) {
 function CancelCall() {
     $("#Shade_Div").hide();
     $("#Initiative_Call_Div").hide();
-    ICS_SessionFinish(mTargetUserId, ICS_RETCODE_SESSION_CANCEL);
+		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,100101,0,0,"");  
+  //  ICS_SessionFinish(mTargetUserId, ICS_RETCODE_SESSION_CANCEL);
     ForSession("取消呼叫...");
 }
 //同意会话
 function OnAcceptRequestBtnClick() {
-    ICS_SessionStart(mTargetUserId);
+		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,0,0,0,"");  
+ //   ICS_SessionStart(mTargetUserId);
     $("#BeCalls_Div").hide();
 }
 //拒绝会话
 function OnRejectRequestBtnClick() {
-    ICS_SessionFinish(mTargetUserId, ICS_RETCODE_SESSION_REJECT);
+		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,100104,0,0,"");  
+ //   ICS_SessionFinish(mTargetUserId, ICS_RETCODE_SESSION_REJECT);
     $("#Shade_Div").hide();
     $("#BeCalls_Div").hide();
     ForSession("拒绝对方请求...");
