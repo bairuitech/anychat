@@ -40,4 +40,7 @@ public interface AnyChatServerEvent {
 	
 	// 视频通话消息通知回调函数定义
 	public int OnAnyChatVideoCallEventCallBack(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, String lpUserStr);
+	
+	// 用户信息控制回调函数定义
+	public int OnAnyChatUserInfoCtrlCallBack(int dwSendUserId, int dwUserId, int dwCtrlCode, int wParam, int lParam, String lpStrValue);
 }

@@ -8,11 +8,20 @@ public class AnyChatServerSDK
 	public static final int BRAS_SERVERAPPMSG_DISCONNECT	=	2;	///< 与AnyChat核心服务器断开连接
 	
 	// 视频呼叫事件类型定义（API：BRAS_VideoCallControl 传入参数、OnVideoCallEvent回调参数）
-	public static final int BRAS_VIDEOCALL_EVENT_REQUEST    =	1;   ///< 呼叫请求
-	public static final int BRAS_VIDEOCALL_EVENT_REPLY      =	2;   ///< 呼叫请求回复
-	public static final int BRAS_VIDEOCALL_EVENT_START      =	3;   ///< 视频呼叫会话开始事件
-	public static final int BRAS_VIDEOCALL_EVENT_FINISH     =	4;   ///< 挂断（结束）呼叫会话
+	public static final int BRAS_VIDEOCALL_EVENT_REQUEST    =	1;  ///< 呼叫请求
+	public static final int BRAS_VIDEOCALL_EVENT_REPLY      =	2;  ///< 呼叫请求回复
+	public static final int BRAS_VIDEOCALL_EVENT_START      =	3;  ///< 视频呼叫会话开始事件
+	public static final int BRAS_VIDEOCALL_EVENT_FINISH     =	4;  ///< 挂断（结束）呼叫会话
 	
+	// 用户信息控制类型定义（API：BRAS_UserInfoControl 传入参数、OnUserInfoControl回调参数）
+	public static final int BRAS_USERINFO_CTRLCODE_KICKOUT	=	1;	///< 将指定用户从系统中踢掉
+	public static final int BRAS_USERINFO_CTRLCODE_SYNCDATA	=	2;	///< 将指定用户的数据同步给客户端
+	public static final int BRAS_USERINFO_CTRLCODE_FUNCCTRL =	3;	///< 客户端功能控制，wParam为功能参数组合
+	public static final int BRAS_USERINFO_CTRLCODE_ADDGROUP	=	20;	///< 添加用户分组，wParam为分组Id，lpStrValue为分组名称
+	public static final int BRAS_USERINFO_CTRLCODE_DELGROUP	=	21;	///< 删除用户分组，wParam为分组Id
+	public static final int BRAS_USERINFO_CTRLCODE_ADDFRIEND=	22;	///< 添加用户好友，wParam为好友Id
+	public static final int BRAS_USERINFO_CTRLCODE_DELFRIEND=	23;	///< 删除用户好友，wParam为好友Id
+	public static final int BRAS_USERINFO_CTRLCODE_SETGROUPRELATION=24;	///< 设置好友与分组的关联关系，wParam为分组Id，lParam为好友Id，表示好友属于某个分组
 	
 
 	AnyChatServerEvent event;
@@ -58,6 +67,18 @@ public class AnyChatServerSDK
 	// 视频呼叫事件控制（请求、回复、挂断等）
 	public static native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String lpUserStr);
 	
+	// 设置用户的详细信息
+	public static native int SetUserInfo(int dwUserId, int dwInfoId, String lpInfoValue, int dwFlags);
+	// 获取用户的详细信息
+	public static native String GetUserInfo(int dwUserId, int dwInfoId);
+	// 用户信息控制
+	public static native int UserInfoControl(int dwUserId, int dwCtrlCode, int wParam, int lParam, String lpStrValue);
+
+	// SDK内核参数设置（整型）
+	public static native int SetSDKOptionInt(int optname, int dwValue);
+	// SDK内核参数设置（字符串）
+	public static native int SetSDKOptionString(int optname, String lpStrValue);
+
 	
 	// 服务器应用程序消息回调函数定义
 	private void OnAnyChatServerAppMessageCallBack(int dwMsg)
@@ -161,6 +182,15 @@ public class AnyChatServerSDK
 	{
 		if(this.event != null)
 			return this.event.OnAnyChatVideoCallEventCallBack(dwEventType, dwSrcUserId, dwTarUserId, dwErrorCode, dwFlags, dwParam, lpUserStr);
+		else
+			return -1;
+	}
+	
+	// 用户信息控制回调函数定义
+	private int OnAnyChatUserInfoCtrlCallBack(int dwSendUserId, int dwUserId, int dwCtrlCode, int wParam, int lParam, String lpStrValue)
+	{
+		if(this.event != null)
+			return this.event.OnAnyChatUserInfoCtrlCallBack(dwSendUserId, dwUserId, dwCtrlCode, wParam, lParam, lpStrValue);
 		else
 			return -1;
 	}

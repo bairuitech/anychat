@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -32,6 +34,10 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	public static final int COLUM_COUNT = 5;
 	public static final int ROOM_INDEX = 3;
 
+	// 在线用户列表
+	public static ArrayList<Integer> onlineusers = new ArrayList<Integer>();
+	
+	
 	public BusinessServer() {
 
 		initView();
@@ -260,7 +266,8 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 			jServerStatus.setText(str);
 		}
 		generateLog(str);
-
+		
+		onlineusers.clear();
 	}
 
 	/**
@@ -272,8 +279,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 		outParam.SetUserLevel(0);
 		outParam.SetNickName(szUserName);
 		iUserIdSeed += 1;
-		String str = "OnVerifyUserCallBack: userid:" + iUserIdSeed
-				+ " username: " + szUserName;
+		String str = "OnVerifyUserCallBack: userid:" + iUserIdSeed + " username: " + szUserName;
 		generateLog(str);
 		return 0;
 	}
@@ -293,10 +299,55 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 		System.out.print("TransBufferEx: ret:" + ret + " taskid: "
 				+ outParam.GetTaskId() + "\r\n");
 */
-		String str = "OnAnyChatUserLoginActionCallBack: userid:" + dwUserId
-				+ " username: " + szUserName + " Ip: " + szIpAddr;
+		String str = "OnAnyChatUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + " Ip: " + szIpAddr;
 		generateLog(str);
 		updateUserData(dwUserId, szUserName, szIpAddr, getCurrentTime());
+		
+		// 添加用户分组
+		int iGroupId = 1;
+		AnyChatServerSDK.UserInfoControl(dwUserId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDGROUP, iGroupId, 0, "我的好友");	// 用户名+密码方式登录的用户
+		iGroupId = 2;
+		AnyChatServerSDK.UserInfoControl(dwUserId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDGROUP, iGroupId, 0, "在线游客");	// 密码为空的用户
+		
+		// 将当前所有在线用户添加为自己的好友
+		for(Integer otheruserid : onlineusers)
+			AnyChatServerSDK.UserInfoControl(dwUserId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDFRIEND, otheruserid, 0, "");
+		
+		// 设置好友与分组的关系（即好友属于哪一个分组）
+		iGroupId = 1;
+		for(Integer otheruserid : onlineusers)
+		{
+			iGroupId = (otheruserid > 0) ? 1 : 2;		// 游客密码为空，userid由核心服务器分配，为负数
+			AnyChatServerSDK.UserInfoControl(dwUserId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_SETGROUPRELATION, iGroupId, otheruserid, "");
+		}
+		
+		// 设置当前用户信息（用户资料，客户端可以通过API：BRAC_GetUserInfo来获取这些信息）
+		int iInfoId = 1;	// InfoId由业务层自己定义
+		AnyChatServerSDK.SetUserInfo(dwUserId, iInfoId, szUserName, 0);
+		iInfoId = 2;
+		AnyChatServerSDK.SetUserInfo(dwUserId, iInfoId, szIpAddr, 0);
+		iInfoId = 3;
+		AnyChatServerSDK.SetUserInfo(dwUserId, iInfoId, "我的签名", 0);
+		iInfoId = 4;
+		AnyChatServerSDK.SetUserInfo(dwUserId, iInfoId, String.valueOf(dwUserId%10 + 1), 0);		// 随机分配一个图像ID
+		
+		// 将本地用户添加为其它用户的好友列表中
+		for(Integer otheruserid : onlineusers)
+		{
+			// 添加好友
+			AnyChatServerSDK.UserInfoControl(otheruserid, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDFRIEND, dwUserId, 0, "");
+			// 关联好友分组
+			iGroupId = (dwUserId > 0) ? 1 : 2;
+			AnyChatServerSDK.UserInfoControl(otheruserid, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_SETGROUPRELATION, iGroupId, dwUserId, "");
+			// 下发同步指令，将新设置的好友同步给客户端
+			AnyChatServerSDK.UserInfoControl(otheruserid, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_SYNCDATA,  0, 0, "");
+		}
+		
+		// 下发同步指令，将前面设置的资料同步给当前客户端
+		AnyChatServerSDK.UserInfoControl(dwUserId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_SYNCDATA,  0, 0, "");
+		
+		// 将本地用户加入在线用户列表
+		onlineusers.add(dwUserId);
 	}
 
 	/**
@@ -307,6 +358,19 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 		String str = "OnUserLogoutActionCallBack: userid:" + dwUserId;
 		generateLog(str);
 		updateUserData(dwUserId);
+		
+		// 从在线用户列表中删除
+	    Iterator<Integer> it = onlineusers.iterator();
+	    while(it.hasNext())
+	    {
+	        if(it.next() == dwUserId)
+	        {
+	        	it.remove();
+	        	break;
+	        }
+	    }
+	    // 核心服务器会通知其它用户（如果是好友），提示好友下线，不需要业务服务器干预
+
 	}
 
 	/**
@@ -461,4 +525,16 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 		return 0;
 	}
 
+	/**
+	 *	用户信息控制回调，客户端调用API：BRAC_UserInfoControl会触发该回调
+	 */
+	@Override
+	public int OnAnyChatUserInfoCtrlCallBack(int dwSendUserId, int dwUserId, int dwCtrlCode, int wParam, int lParam, String lpStrValue) {
+		String str = "OnAnyChatUserInfoCtrlCallBack: dwSendUserId:" + dwSendUserId + " dwUserId:" + dwUserId + " dwCtrlCode:" + 
+			dwCtrlCode + " wParam:" + wParam + " lParam:" + lParam + " lpStrValue:" + lpStrValue;
+		System.out.print(getCurrentTime() + str + "\r\n");
+		return 0;
+	}
+	
+	
 }
