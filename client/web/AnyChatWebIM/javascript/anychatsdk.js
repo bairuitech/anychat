@@ -95,6 +95,11 @@ var BRAC_TRANSTASK_BITRATE = 				2;	// 传输任务当前传输码率（参数为：int型，单位
 var BRAC_TRANSTASK_STATUS = 				3;	// 传输任务当前状态（参数为：int型）
 var BRAC_TRANSTASK_SAVEASPATH = 			4;	// 文件传输任务另存为路径设置，含文件名（参数为字符串TCHAR类型）
 
+// 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
+var BRAC_RECORD_FLAGS_VIDEO	=				1;	// 录制视频
+var BRAC_RECORD_FLAGS_AUDIO	=				2;	// 录制音频
+var BRAC_RECORD_FLAGS_SERVER =				4;	// 服务器端录制
+
 
 // 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
 var BRAC_USERSTATE_CAMERA = 				1;	// 用户摄像头状态（参数为DWORD型）
@@ -130,7 +135,22 @@ var WM_GV_PRIVATEREQUEST	=	WM_GV + 21;		// 用户发起私聊请求，wParam（INT）表示发
 var WM_GV_PRIVATEECHO		=	WM_GV + 22;		// 用户回复私聊请求，wParam（INT）表示回复者的用户ID号，lParam（INT）为出错代码
 var WM_GV_PRIVATEEXIT		=	WM_GV + 23;		// 用户退出私聊，wParam（INT）表示退出者的用户ID号，lParam（INT）为出错代码
 var WM_GV_SDKWARNING      	=   WM_GV + 41;		// SDK警告信息，当SDK在运行过程中自检发现异常状态时，将向上层发送该消息，wParam（INT）表示警告代码，定义为：GV_ERR_WARNING_XXXX
+var WM_GV_USERINFOUPDATE	=	WM_GV + 16;		// 用户信息更新通知，wParam（INT）表示用户ID号，lParam（INT）表示更新类别
+var WM_GV_FRIENDSTATUS		=	WM_GV + 17;		// 好友在线状态变化，wParam（INT）表示好友用户ID号，lParam（INT）表示用户的当前活动状态：0 离线， 1 上线
 
+// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
+var BRAC_VIDEOCALL_EVENT_REQUEST =			1;	// 呼叫请求
+var BRAC_VIDEOCALL_EVENT_REPLY =			2;	// 呼叫请求回复
+var BRAC_VIDEOCALL_EVENT_START =			3;	// 视频呼叫会话开始事件
+var BRAC_VIDEOCALL_EVENT_FINISH =			4;	// 挂断（结束）呼叫会话
+
+// 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
+var BRAC_VIDEOCALL_FLAGS_AUDIO =			1;	// 语音通话
+var BRAC_VIDEOCALL_FLAGS_VIDEO =			2;	// 视频通话
+var BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO =		16;	// 禁止源（呼叫端）音频
+var BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO =		32;	// 禁止源（呼叫端）视频
+var BRAC_VIDEOCALL_FLAGS_FBTARAUDIO =		64;	// 禁止目标（被呼叫端）音频
+var BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	=		128;// 禁止目标（被呼叫端）视频
 
 // 出错代码定义
 var GV_ERR_SUCCESS			=	0;				// 成功
@@ -139,7 +159,7 @@ var GV_ERR_PLUGINOLDVERSION =	1010001;		// 插件版本太低
 
 
 // 插件最低需求版本号
-var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.2";
+var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
 var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.2";
 
 /********************************************
@@ -194,6 +214,7 @@ function BRAC_InitSDK(apilevel) {
 				anychat.attachEvent('OnVolumeChange', OnAnyChatVolumeChange);
 				anychat.attachEvent('OnSDKFilterData', OnAnyChatSDKFilterData);
 				anychat.attachEvent('OnRecordSnapShot', OnAnyChatRecordSnapShot);
+				anychat.attachEvent('OnVideoCallEvent', OnAnyChatVideoCallEvent);
 			} else {
 				anychat.OnNotifyMessage = OnAnyChatNotifyMessage;
 				anychat.OnTextMessage = OnAnyChatTextMessage;
@@ -203,6 +224,7 @@ function BRAC_InitSDK(apilevel) {
 				anychat.OnVolumeChange = OnAnyChatVolumeChange;
 				anychat.OnSDKFilterData = OnAnyChatSDKFilterData;
 				anychat.OnRecordSnapShot = OnAnyChatRecordSnapShot;
+				anychat.OnVideoCallEvent = OnAnyChatVideoCallEvent;
 			}
 		} else {
 			document.body.removeChild(insertdiv);
@@ -457,6 +479,81 @@ function BRAC_GetIPCGuid() {
 function BRAC_MultiCastControl(lpMultiCastAddr, dwPort, lpNicAddr, dwTTL, dwFlags) {
 	return anychat.MultiCastControl(lpMultiCastAddr, dwPort, lpNicAddr, dwTTL, dwFlags);
 }
+
+// 视频呼叫事件控制（请求、回复、挂断等）
+function BRAC_VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr) {
+	return anychat.VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr);
+}
+
+// 获取用户好友ID列表（返回一个userid的数组）
+function BRAC_GetUserFriends() {
+	var idarray = new Array();
+	var size = anychat.PrepareFetchUserFriends();
+	if(size) {
+		var idx = 0;
+		while(1) {
+			var userid = anychat.FetchNextUserFriend();
+			if(userid == -1)
+				break;
+			idarray[idx++] = userid;
+		}
+	}
+	return idarray;
+}
+
+// 获取好友在线状态
+function BRAC_GetFriendStatus(dwFriendUserId) {
+	return anychat.GetFriendStatus(dwFriendUserId);
+}
+
+// 获取用户分组ID列表（返回一个GroupId的数组）
+function BRAC_GetUserGroups() {
+	var idarray = new Array();
+	var size = anychat.PrepareFetchUserGroups();
+	if(size) {
+		var idx = 0;
+		while(1) {
+			var groupid = anychat.FetchNextUserGroup();
+			if(groupid == -1)
+				break;
+			idarray[idx++] = groupid;
+		}
+	}
+	return idarray;
+}
+
+// 获取分组下面的好友列表（返回一个userid的数组）
+function BRAC_GetGroupFriends(dwGroupId) {
+	var idarray = new Array();
+	var size = anychat.PrepareFetchGroupFriends(dwGroupId);
+	if(size) {
+		var idx = 0;
+		while(1) {
+			var userid = anychat.FetchNextGroupFriend(dwGroupId);
+			if(userid == -1)
+				break;
+			idarray[idx++] = userid;
+		}
+	}
+	return idarray;
+}
+
+// 获取用户信息
+function BRAC_GetUserInfo(dwUserId, dwInfoId) {
+	return anychat.GetUserInfo(dwUserId, dwInfoId);
+}
+
+// 获取用户分组名称
+function BRAC_GetGroupName(dwGroupId) {
+	return anychat.GetGroupName(dwGroupId);
+}
+
+// 用户信息控制
+function BRAC_UserInfoControl(dwUserId, dwCtrlCode, wParam, lParam, lpStrValue) {
+	return anychat.UserInfoControl(dwUserId, dwCtrlCode, wParam, lParam, lpStrValue);
+}
+
+
 
 
 

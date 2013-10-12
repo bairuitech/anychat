@@ -19,6 +19,8 @@ function OnAnyChatNotifyMessage(dwNotifyMsg, wParam, lParam) {
 		case WM_GV_PRIVATEREQUEST:	OnAnyChatPrivateRequest(wParam, lParam);	break;
 		case WM_GV_PRIVATEECHO:		OnAnyChatPrivateEcho(wParam, lParam);		break;
 		case WM_GV_PRIVATEEXIT:		OnAnyChatPrivateExit(wParam, lParam);		break;
+		case WM_GV_USERINFOUPDATE:	OnAnyChatUserInfoUpdate(wParam, lParam);	break;
+		case WM_GV_FRIENDSTATUS:	OnAnyChatFriendStatus(wParam, lParam);		break;
 		default:
 			break;
 	}
@@ -141,4 +143,64 @@ function OnAnyChatPrivateEcho(dwUserId, errorcode) {
 // 用户退出私聊，dwUserId表示退出者的用户ID号，errorcode为出错代码
 function OnAnyChatPrivateExit(dwUserId, errorcode) {
 
+}
+
+// 视频通话消息通知回调函数
+function OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr) {
+//	AddLog("OnAnyChatVideoCallEvent(dwEventType=" + dwEventType + ", dwUserId=" + dwUserId + ", dwErrorCode=" + dwErrorCode + ", dwFlags=" + dwFlags + ", dwParam=" + dwParam + ", szUserStr=" + szUserStr + ")", LOG_TYPE_EVENT);
+	switch(dwEventType) {
+		case BRAC_VIDEOCALL_EVENT_REQUEST:	// 呼叫请求
+		
+		break;
+		case BRAC_VIDEOCALL_EVENT_REPLY:	// 呼叫请求回复
+		
+		break;
+		case BRAC_VIDEOCALL_EVENT_START:	// 视频呼叫会话开始事件
+		
+		break;
+		case BRAC_VIDEOCALL_EVENT_FINISH:	// 挂断（结束）呼叫会话
+		
+		break;
+		default:
+			break;
+	}
+	
+	
+	
+}
+
+// 用户信息更新通知，dwUserId表示用户ID号，dwType表示更新类别
+function OnAnyChatUserInfoUpdate(dwUserId, dwType) {
+//	AddLog("OnAnyChatUserInfoUpdate(dwUserId=" + dwUserId + ", dwType=" + dwType + ")", LOG_TYPE_EVENT);
+
+    // 本人头像信息显示
+	var MinePic = document.createElement("img");
+	MinePic.src = GetUserImageAddrById(mSelfUserId, 50);
+	MinePic.alt = "用户图像";
+	MinePic.id = "MyPhoto";
+	Getdmo("mSelfPhoto").appendChild(MinePic);
+	Getdmo("mSelfInfo").innerHTML = "<br />用户ID: " + mSelfUserId +
+								 "<br />用户名: " + ICS_GetUserName(mSelfUserId) +
+								 "<br />所属组: " + ICS_GetGroupName(ICS_GetUserGroupId(mSelfUserId));
+	CreateUserImage("whole");
+
+	// 刷新用户分组
+	UserGroupDiv(0, "在线用户");
+	mGroupList = BRAC_GetUserGroups();
+	for (var i = 0; i < mGroupList.length; i++) {
+		var GroupName = BRAC_GetGroupName(mGroupList[i]);
+		UserGroupDiv(mGroupList[i], GroupName);
+	}
+	OpenGroup(0);
+	StartScroll("GroupListScroll", "GroupSlider", "GroupContent", "GroupBaseLine");
+}
+
+// 好友在线状态变化，dwUserId表示好友用户ID号，dwStatus表示用户的当前活动状态：0 离线， 1 上线
+function OnAnyChatFriendStatus(dwUserId, dwStatus) {
+//	AddLog("OnAnyChatFriendStatus(dwUserId=" + dwUserId + ", dwStatus=" + dwStatus + ")", LOG_TYPE_EVENT);
+	if (dwStatus == 1) {	// 上线
+		DisplayOnLineUser(dwObjectId);
+	} else { 				// 下线
+		Getdmo("UserListContent").removeChild(Getdmo("UserID_" + dwObjectId));
+	}
 }

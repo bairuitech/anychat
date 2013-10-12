@@ -118,7 +118,7 @@ function ImgDBclick(ID) {
     if (mSelfUserId == ID) ForSession("不能呼叫自己...");
     else {
         mTargetUserId = ID;
-        ICS_SessionRequest(ID, 60);   // 向指定的用户发送私聊邀请
+        ICS_SessionRequest(ID, 60);   // 向指定的用户发送会话邀请
         var GetUserName = ICS_GetUserName(mTargetUserId);
         GetUserName = GetUserName.fontcolor("Red");
         Getdmo("Initiative_Call_Div_Content").innerHTML = "向用户" + GetUserName + "发起邀请<br /><img src='./images/Others/LoadImg.gif' style='width: 145px;height:30px;' />";
@@ -133,12 +133,12 @@ function CancelCall() {
     ICS_SessionFinish(mTargetUserId, ICS_RETCODE_SESSION_CANCEL);
     ForSession("取消呼叫...");
 }
-//同意私聊
+//同意会话
 function OnAcceptRequestBtnClick() {
     ICS_SessionStart(mTargetUserId);
     $("#BeCalls_Div").hide();
 }
-//拒绝私聊
+//拒绝会话
 function OnRejectRequestBtnClick() {
     ICS_SessionFinish(mTargetUserId, ICS_RETCODE_SESSION_REJECT);
     $("#Shade_Div").hide();

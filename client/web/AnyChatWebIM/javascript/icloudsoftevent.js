@@ -4,11 +4,27 @@
  *				事件回调部分				*
  *******************************************/
 
+ // 根据用户ID获取其分组序号
+ function GetUserGroupIdByUserId(userid) {
+	var groupid = 0;
+	var grouplist = BRAC_GetUserGroups();
+	for(var i=0; i<grouplist.length; i++) {
+		var friendlist = BRAC_GetGroupFriends(grouplist[i]);
+		for(var j=0; j<friendlist.length; j++) {
+			if(friendlist[j] == userid) {
+				return grouplist[i];
+			}
+		}
+	}
+	return 0;
+ }
+ 
+ 
 // 用户会话请求
 function OnICloudSoftSessionRequest(dwSrcUserId, dwTargetUserId, wParam) {
     $("#Shade_Div").show();
     $("#BeCalls_Div").show();
-    $("#BeCalls_Div_Content").html("收到用户  " + ICS_GetUserName(dwSrcUserId) + "  会话邀请<br />      是否同意?");
+    $("#BeCalls_Div_Content").html("收到用户  " + BRAC_GetUserName(dwSrcUserId) + "  会话邀请<br />      是否同意?");
     mTargetUserId = dwSrcUserId;
 }
 // 用户会话开始
@@ -20,7 +36,7 @@ function OnICloudSoftSessionStart(dwSrcUserId, dwTargetUserId, dwRoomId) {
     chatuserid = dwSrcUserId;
     $("#VideoShowDiv").show();
     $("#mTargetPhoto").html("<img src='" + GetUserImageAddrById(mTargetUserId, 50) + "' alt='用户头像' style='height:65px;width:65px;' />");
-    $("#mTargetInfo").html("目标的ID：" + mTargetUserId + "<br />目标名称：" + ICS_GetUserName(mTargetUserId) + "<br />所属分组：" + ICS_GetGroupName(ICS_GetUserGroupId(mTargetUserId)) + "<br />");
+    $("#mTargetInfo").html("目标的ID：" + mTargetUserId + "<br />目标名称：" + BRAC_GetUserName(mTargetUserId) + "<br />所属分组：" + BRAC_GetGroupName(GetUserGroupIdByUserId(mTargetUserId)) + "<br />");
     //    ComboboxInint();
     InitAdvanced();
     ReceiveMsgBoxScroll();
@@ -42,50 +58,11 @@ function OnICloudSoftSessionFinish(dwSrcUserId, dwTargetUserId, dwErrorCode) {
 }
 // 状态通知
 function OnICloudSoftStatusNotify(dwDataType, dwObjectId, dwStatus, wParam, lParam, sParam) {
-	if(dwDataType == ICS_DATATYPE_ONLINEUSERS) {
-		if(dwStatus == ICS_STATUSTYPE_USERONLINE) {			// 用户在线状态变化
-		    if (wParam == 1) { // 上线
-		        DisplayOnLineUser(dwObjectId);
-		    }
-		    else { // 下线
-		        Getdmo("UserListContent").removeChild(Getdmo("UserID_" + dwObjectId));
-		    }
-		}
-	} else if(dwDataType == ICS_DATATYPE_MEETINGS) {
-		if(dwStatus == ICS_STATUSTYPE_MEETTYPECHG) {		// 会议状态改变
-		
-		} else if(ICS_STATUSTYPE_MEETDELETE) {				// 会议被删除
-		
-		} else if(ICS_STATUSTYPE_MEETSPKMODE) {				// 会议发言模式改变
-		
-		} else if(ICS_STATUSTYPE_MICREFRESH) {				// 会议麦序刷新
-		
-		}
-	}
+
 }
 // 接收数据完成
 function OnICloudSoftRecvDataFinish(dwDataType, dwParam) {
-    if (dwDataType == ICS_DATATYPE_ONLINEUSERS) {//本人头像信息显示
-        var MinePic = document.createElement("img");
-        MinePic.src = GetUserImageAddrById(mSelfUserId, 50);
-        MinePic.alt = "用户图像";
-        MinePic.id = "MyPhoto";
-        Getdmo("mSelfPhoto").appendChild(MinePic);
-        Getdmo("mSelfInfo").innerHTML = "<br />用户ID: " + mSelfUserId +
-                                     "<br />用户名: " + ICS_GetUserName(mSelfUserId) +
-                                     "<br />所属组: " + ICS_GetGroupName(ICS_GetUserGroupId(mSelfUserId));
-        CreateUserImage("whole");
-    }
-    else if (dwDataType == ICS_DATATYPE_GROUPS) {//分组显示  与单击事件
-        UserGroupDiv(0, "在线用户");
-        mGroupList = ICS_GetGroupIds();
-        for (var i = 0; i < mGroupList.length; i++) {
-            var GroupName = ICS_GetGroupName(mGroupList[i]);
-            UserGroupDiv(mGroupList[i], GroupName);
-        }
-        OpenGroup(0);
-        StartScroll("GroupListScroll", "GroupSlider", "GroupContent", "GroupBaseLine");
-    }
+
 }
 // 收到数据
 function OnICloudSoftRecvObjectData(dwDataType, dwObjectId) {
@@ -261,7 +238,7 @@ function OperationFile(szRequestGuid, id) {
 
 // 获取用户图像
 function GetUserImageAddrById(userid, type) {
-    var imageid = ICS_GetUserImageId(userid);
+    var imageid = parseInt(BRAC_GetUserInfo(userid, 4));
     if (type == 20)
         return "./images/avatar/20/" + imageid + ".gif";
     else if (type == 30)
@@ -347,7 +324,7 @@ function UserGroupDiv(group_id, content) {
 //创建在线好友图标
 function CreateUserImage(type) {
     Getdmo("UserListContent").innerHTML = "";
-    var OnLineUserList = ICS_GetOnlineUserIds(); // 获取所有在线用户
+    var OnLineUserList = BRAC_GetUserFriends(); // 获取所有好友
     if (type == "whole") { // 所有在线用户
         DisplayOnLineUser(mSelfUserId); // 在第一个位置创建自己的图标
         for (user_no = 0; user_no < OnLineUserList.length; user_no++) {
@@ -357,7 +334,7 @@ function CreateUserImage(type) {
     }
     else { // 指定用户组在线用户
         for (user_no = 0; user_no < OnLineUserList.length; user_no++) {
-            var UserGroupID = ICS_GetUserGroupId(OnLineUserList[user_no]);
+            var UserGroupID = GetUserGroupIdByUserId(OnLineUserList[user_no]);
             if (UserGroupID == mCurrentGroupNum) {
                 DisplayOnLineUser(OnLineUserList[user_no]);
             }
@@ -367,7 +344,7 @@ function CreateUserImage(type) {
 }
 //显示上线用户
 function DisplayOnLineUser(userid) {
-    var UserName = ICS_GetUserName(userid); // 用户姓名
+    var UserName = BRAC_GetUserName(userid); // 用户姓名
     var main_div = document.createElement("div");
     main_div.id = "UserID_" + userid;
     main_div.className = "OnLineUser_Div";
