@@ -34,7 +34,7 @@ function OnAnyChatTextMessage(dwFromUserId, dwToUserId, bSecret, lpMsgBuf, dwLen
 
     var time_div = document.createElement("div");
     time_div.className = "ReceiveMsgStyle";
-    time_div.innerHTML = ICS_GetUserName(dwFromUserId) + "  " + ShowTime;
+    time_div.innerHTML = BRAC_GetUserName(dwFromUserId) + "  " + ShowTime;
     Getdmo("ReceiveMsg").appendChild(time_div);
     var content_div = document.createElement("div");
     content_div.style.width = "360px";
@@ -96,6 +96,13 @@ function OnAnyChatLoginSystem(dwUserId, errorcode) {
 
 // 客户端进入房间，dwRoomId表示所进入房间的ID号，errorcode表示是否进入房间：0成功进入，否则为出错代码
 function OnAnyChatEnterRoom(dwRoomId, errorcode) {
+	// 打开本地音频、视频
+	BRAC_UserCameraControl(-1, 1);
+	BRAC_UserSpeakControl(-1, 1);
+	// 请求对方音频、视频
+	BRAC_UserCameraControl(mTargetUserId, 1);
+	BRAC_UserSpeakControl(mTargetUserId, 1);
+	
     CreateWideScreen(); // 设置视频显示位置
     $("#GetExpression").load("./sub/emote.html"); //颜色面板加载页面
 }
@@ -107,7 +114,11 @@ function OnAnyChatRoomOnlineUser(dwUserCount, dwRoomId) {
 
 // 用户进入（离开）房间，dwUserId表示用户ID号，bEnterRoom表示该用户是进入（1）或离开（0）房间
 function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
-    
+	if(dwUserId == mTargetUserId && bEnterRoom != 0) {
+		// 请求对方音频、视频
+		BRAC_UserCameraControl(mTargetUserId, 1);
+		BRAC_UserSpeakControl(mTargetUserId, 1);
+	}
 }
 
 // 网络连接已关闭，该消息只有在客户端连接服务器成功之后，网络异常中断之时触发，reason表示连接断开的原因
@@ -152,8 +163,8 @@ function OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dw
 		case BRAC_VIDEOCALL_EVENT_REQUEST:	// 呼叫请求
 			 $("#Shade_Div").show();
 			$("#BeCalls_Div").show();
-			 $("#BeCalls_Div_Content").html("收到用户  " + BRAC_GetUserName(dwSrcUserId) + "  会话邀请<br />      是否同意?");
-			 mTargetUserId = dwSrcUserId;
+			 $("#BeCalls_Div_Content").html("收到用户  " + BRAC_GetUserName(dwUserId) + "  会话邀请<br />      是否同意?");
+			 mTargetUserId = dwUserId;
 		break;
 		case BRAC_VIDEOCALL_EVENT_REPLY:	// 呼叫请求回复
 				  if (dwErrorCode == ICS_RETCODE_SESSION_REJECT) {
@@ -168,20 +179,21 @@ function OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dw
 				}
 		break;
 		case BRAC_VIDEOCALL_EVENT_START:	// 视频呼叫会话开始事件
-			 mMissionQuantity = 0;
-			 Getdmo("ReceiveMsg").innerHTML = "";
-			 Getdmo("Initiative_Call_Div").style.display = "none";
+			BRAC_EnterRoom(dwParam, "", 0);
+			mMissionQuantity = 0;
+			Getdmo("ReceiveMsg").innerHTML = "";
+			Getdmo("Initiative_Call_Div").style.display = "none";
 			Getdmo("HallDiv").style.display = "none";
-			 chatuserid = dwSrcUserId;
-			 $("#VideoShowDiv").show();
-			 $("#mTargetPhoto").html("<img src='" + GetUserImageAddrById(mTargetUserId, 50) + "' alt='用户头像' style='height:65px;width:65px;' />");
-			 $("#mTargetInfo").html("目标的ID：" + mTargetUserId + "<br />目标名称：" + BRAC_GetUserName(mTargetUserId) + "<br />所属分组：" + BRAC_GetGroupName(GetUserGroupIdByUserId(mTargetUserId)) + "<br />");
-    //    ComboboxInint();
-			 InitAdvanced();
+			chatuserid = dwUserId;
+			$("#VideoShowDiv").show();
+			$("#mTargetPhoto").html("<img src='" + GetUserImageAddrById(dwUserId, 50) + "' alt='用户头像' style='height:65px;width:65px;' />");
+			$("#mTargetInfo").html("目标的ID：" + dwUserId + "<br />目标名称：" + BRAC_GetUserName(dwUserId) + "<br />所属分组：" + BRAC_GetGroupName(GetUserGroupIdByUserId(dwUserId)) + "<br />");
+			//    ComboboxInint();
+			InitAdvanced();
 			ReceiveMsgBoxScroll();
 		break;
 		case BRAC_VIDEOCALL_EVENT_FINISH:	// 挂断（结束）呼叫会话
-			 BackToHall();
+			BackToHall();
 		break;
 		default:
 			break;
@@ -191,22 +203,24 @@ function OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dw
 	
 }
 
+var bFirstUserInfoUpdate = true;
 // 用户信息更新通知，dwUserId表示用户ID号，dwType表示更新类别
 function OnAnyChatUserInfoUpdate(dwUserId, dwType) {
-//	AddLog("OnAnyChatUserInfoUpdate(dwUserId=" + dwUserId + ", dwType=" + dwType + ")", LOG_TYPE_EVENT);
-
-    // 本人头像信息显示
-	var MinePic = document.createElement("img");
-	MinePic.src = GetUserImageAddrById(mSelfUserId, 50);
-	MinePic.alt = "用户图像";
-	MinePic.id = "MyPhoto";
-	Getdmo("mSelfPhoto").appendChild(MinePic);
-	Getdmo("mSelfInfo").innerHTML = "<br />用户ID: " + mSelfUserId +
-								 "<br />用户名: " + ICS_GetUserName(mSelfUserId) +
-								 "<br />所属组: " + ICS_GetGroupName(ICS_GetUserGroupId(mSelfUserId));
-	CreateUserImage("whole");
-
+	if(bFirstUserInfoUpdate) {
+		bFirstUserInfoUpdate = false;
+		// 本人头像信息显示
+		var MinePic = document.createElement("img");
+		MinePic.src = GetUserImageAddrById(mSelfUserId, 50);
+		MinePic.alt = "用户图像";
+		MinePic.id = "MyPhoto";
+		Getdmo("mSelfPhoto").appendChild(MinePic);
+		Getdmo("mSelfInfo").innerHTML = "<br />用户ID: " + mSelfUserId +
+								 "<br />用户名: " + BRAC_GetUserName(mSelfUserId) +
+								 "<br />所属组: " + BRAC_GetGroupName(GetUserGroupIdByUserId(mSelfUserId));
+		CreateUserImage("whole");
+	}
 	// 刷新用户分组
+	Getdmo("GroupContent").innerHTML = "";
 	UserGroupDiv(0, "在线用户");
 	mGroupList = BRAC_GetUserGroups();
 	for (var i = 0; i < mGroupList.length; i++) {
@@ -219,10 +233,11 @@ function OnAnyChatUserInfoUpdate(dwUserId, dwType) {
 
 // 好友在线状态变化，dwUserId表示好友用户ID号，dwStatus表示用户的当前活动状态：0 离线， 1 上线
 function OnAnyChatFriendStatus(dwUserId, dwStatus) {
+
 //	AddLog("OnAnyChatFriendStatus(dwUserId=" + dwUserId + ", dwStatus=" + dwStatus + ")", LOG_TYPE_EVENT);
 	if (dwStatus == 1) {	// 上线
-		DisplayOnLineUser(dwObjectId);
+		DisplayOnLineUser(dwUserId);
 	} else { 				// 下线
-		Getdmo("UserListContent").removeChild(Getdmo("UserID_" + dwObjectId));
+		Getdmo("UserListContent").removeChild(Getdmo("UserID_" + dwUserId));
 	}
 }

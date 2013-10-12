@@ -317,12 +317,12 @@ function VideoContainer() {
     // 显示己方名字
     var upper_othername = document.createElement("div");
     upper_othername.className = "ShowName";
-    upper_othername.innerHTML = ICS_GetUserName(mTargetUserId);
+    upper_othername.innerHTML = BRAC_GetUserName(mTargetUserId);
     Getdmo("VideoShowDiv").appendChild(upper_othername);
     // 显示对方名字
     var upper_myname = document.createElement("div");
     upper_myname.className = "ShowName";
-    upper_myname.innerHTML = ICS_GetUserName(mSelfUserId);
+    upper_myname.innerHTML = BRAC_GetUserName(mSelfUserId);
     Getdmo("VideoShowDiv").appendChild(upper_myname);
     // 挂断 按钮
     var under_finish = document.createElement("div");
@@ -334,7 +334,7 @@ function VideoContainer() {
         $("#finishprivate").css("background", "url('./images/dialog/btnfalse_over.png')");
     }
     under_finish.onclick = function () {
-        ICS_SessionFinish(mTargetUserId, 0); // 挂断
+		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_FINISH,mTargetUserId,0,0,0,""); 	// 挂断
     }
     Getdmo("VideoShowDiv").appendChild(under_finish);
     // 切换界面 按钮

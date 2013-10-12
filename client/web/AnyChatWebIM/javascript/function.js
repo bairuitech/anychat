@@ -44,8 +44,10 @@ function LogicInit() {
         //检查是否安装了插件	
         var NEED_ANYCHAT_APILEVEL = "8"; 					// 定义业务层需要的AnyChat API Level
         var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	//初始化插件
-        if (errorcode == GV_ERR_SUCCESS && ICS_InitSDK() == GV_ERR_SUCCESS) $("#BodyDIV").show();
-        else $("#prompt_div").show(); // 没有安装插件，或是插件版本太旧，显示插件下载界面
+        if (errorcode == GV_ERR_SUCCESS)
+			$("#BodyDIV").show();
+        else
+			$("#prompt_div").show(); // 没有安装插件，或是插件版本太旧，显示插件下载界面
     }, 500);
     var VHeight = document.body.offsetHeight; //  (包括边线的宽)
     var VWidth = document.body.offsetWidth; //  (包括边线的宽)
@@ -119,8 +121,7 @@ function ImgDBclick(ID) {
     else {
         mTargetUserId = ID;
 		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REQUEST,mTargetUserId,0,0,0,"");  // 向指定的用户发送会话邀请
-      //  ICS_SessionRequest(ID, 60); 
-        var GetUserName = ICS_GetUserName(mTargetUserId);
+		var GetUserName = BRAC_GetUserName(mTargetUserId);
         GetUserName = GetUserName.fontcolor("Red");
         Getdmo("Initiative_Call_Div_Content").innerHTML = "向用户" + GetUserName + "发起邀请<br /><img src='./images/Others/LoadImg.gif' style='width: 145px;height:30px;' />";
         Getdmo("Shade_Div").style.display = "block";
@@ -131,20 +132,17 @@ function ImgDBclick(ID) {
 function CancelCall() {
     $("#Shade_Div").hide();
     $("#Initiative_Call_Div").hide();
-		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,100101,0,0,"");  
-  //  ICS_SessionFinish(mTargetUserId, ICS_RETCODE_SESSION_CANCEL);
+	BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,ICS_RETCODE_SESSION_CANCEL,0,0,"");  
     ForSession("取消呼叫...");
 }
 //同意会话
 function OnAcceptRequestBtnClick() {
-		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,0,0,0,"");  
- //   ICS_SessionStart(mTargetUserId);
+	BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,0,0,0,"");  
     $("#BeCalls_Div").hide();
 }
 //拒绝会话
 function OnRejectRequestBtnClick() {
-		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,100104,0,0,"");  
- //   ICS_SessionFinish(mTargetUserId, ICS_RETCODE_SESSION_REJECT);
+	BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,ICS_RETCODE_SESSION_REJECT,0,0,"");  
     $("#Shade_Div").hide();
     $("#BeCalls_Div").hide();
     ForSession("拒绝对方请求...");
@@ -152,11 +150,11 @@ function OnRejectRequestBtnClick() {
 //好友搜索按钮
 function BtnSearch(Values){
     var re = /^[1-9]+[0-9]*]*$/;   //判断是否纯数字
-    var UserList = ICS_GetOnlineUserIds(); // 获取所有在线用户
+    var UserList = BRAC_GetUserFriends(); // 获取所有在线用户
 	var SearchResult = false;
 	if (!re.test(Values)) {//不是纯数字  则根据用户名
 	    for (var i = 0; i < UserList.length; i++) {
-	        var UserName = ICS_GetUserName(UserList[i]);
+	        var UserName = BRAC_GetUserName(UserList[i]);
 	        UserName = UserName.toLocaleLowerCase();
 	        if (UserName.indexOf(Values) > -1) {
 	            DisplayResult(i);
@@ -186,7 +184,7 @@ function DisplayResult(No) {
         Getdmo("Group" + mGroupList[j]).style.width = "127px";
     }
     if (No != "NotFound") { // 有相符结果
-        var UserList = ICS_GetOnlineUserIds(); // 获取所有在线用户
+        var UserList = BRAC_GetUserFriends(); // 获取所有在线用户
         DisplayOnLineUser(UserList[No]); // 显示符合条件的在线用户
     }
 }
@@ -242,9 +240,10 @@ function GoToHall() {
     $("#HallDiv").show(); // 显示大厅界面
     $("#LoginHead").hide(); // 隐藏顶部背景层
 }
+
 // 结束会话返回大厅
 function BackToHall() {
-    ICS_SessionFinish(mTargetUserId, 0); // 结束会话
+	BRAC_LeaveRoom(-1);
     Getdmo("HallDiv").style.display = "block"; // 显示大厅
     Getdmo("DialogueDiv").style.display = "none"; // 隐藏会话层
     Getdmo("Shade_Div").style.display = "none"; // 隐藏遮罩层
