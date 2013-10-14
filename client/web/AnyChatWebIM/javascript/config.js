@@ -1,2 +1,2 @@
-var mDefaultServerAddr = "192.168.1.3"; //IP地址
-var mDefaultServerPort = "8906"; //端口号
+var mDefaultServerAddr = "demo.anychat.cn"; //IP地址
+var mDefaultServerPort = "8909"; //端口号
