@@ -123,7 +123,8 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 
 // 网络连接已关闭，该消息只有在客户端连接服务器成功之后，网络异常中断之时触发，reason表示连接断开的原因
 function OnAnyChatLinkClose(reason, errorcode) {
-
+	BRAC_Logout();	// 关闭自动重连
+	GoToLogin();	// 显示登录界面
 }
 
 // 用户的音频设备状态变化消息，dwUserId表示用户ID号，State表示该用户是否已打开音频采集设备（0：关闭，1：打开）

@@ -241,6 +241,27 @@ function GoToHall() {
     $("#LoginHead").hide(); // 隐藏顶部背景层
 }
 
+// 返回登录界面
+function GoToLogin() {
+	ForSession("网络连接已断开..."); // 提示层
+	// 隐藏所有界面
+	$("HallDiv").hide(); // 隐藏大厅
+    $("DialogueDiv").hide(); // 隐藏会话层
+    $("Shade_Div").hide(); // 隐藏遮罩层
+    $("DivColor").hide(); // 隐藏颜色层
+    $("GetExpression").hide(); // 隐藏表情层
+    $("advanceset_div").hide(); // 隐藏高级设置层
+	
+	Getdmo("GroupContent").innerHTML = "";
+	Getdmo("mSelfInfo").innerHTML = "";
+	Getdmo("UserListContent").innerHTML = "";
+	
+	// 显示登录界面
+	$("BodyDIV").show();
+	$("#LoginHead").show();
+	LogicInit();
+}
+
 // 结束会话返回大厅
 function BackToHall() {
 	BRAC_LeaveRoom(-1);
