@@ -327,17 +327,16 @@ function CreateUserImage(type) {
     var OnLineUserList = BRAC_GetUserFriends(); // 获取所有好友
     if (type == "whole") { // 所有在线用户
         DisplayOnLineUser(mSelfUserId); // 在第一个位置创建自己的图标
-        for (user_no = 0; user_no < OnLineUserList.length; user_no++) {
-            if (OnLineUserList[user_no] != mSelfUserId)
-                DisplayOnLineUser(OnLineUserList[user_no]);
+        for (var i = 0; i < OnLineUserList.length; i++) {
+            if (OnLineUserList[i] != mSelfUserId && BRAC_GetFriendStatus(OnLineUserList[i]) != 0)	// 只显示在线用户
+                DisplayOnLineUser(OnLineUserList[i]);
         }
     }
     else { // 指定用户组在线用户
-        for (user_no = 0; user_no < OnLineUserList.length; user_no++) {
-            var UserGroupID = GetUserGroupIdByUserId(OnLineUserList[user_no]);
-            if (UserGroupID == mCurrentGroupNum) {
-                DisplayOnLineUser(OnLineUserList[user_no]);
-            }
+        for (var i = 0; i < OnLineUserList.length; i++) {
+            var UserGroupID = GetUserGroupIdByUserId(OnLineUserList[i]);
+            if (UserGroupID == mCurrentGroupNum && BRAC_GetFriendStatus(OnLineUserList[i]) != 0)	// 只显示在线用户
+                DisplayOnLineUser(OnLineUserList[i]);
         }
     }
     StartScroll("UserListScroll", "UserListSlider", "UserListContent", "UserListBaseLine");
