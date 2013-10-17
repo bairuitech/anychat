@@ -15,6 +15,8 @@ public class AnyChatDefine {
 	static final int WM_GV_ACTIVESTATE		=	WM_GV + 13;
 	static final int WM_GV_P2PCONNECTSTATE	=	WM_GV + 14;
 	static final int WM_GV_VIDEOSIZECHG		=	WM_GV + 15;
+	static final int WM_GV_USERINFOUPDATE	=	WM_GV + 16;
+	static final int WM_GV_FRIENDSTATUS		=	WM_GV + 17;
 	static final int WM_GV_PRIVATEREQUEST	=	WM_GV + 21;
 	static final int WM_GV_PRIVATEECHO		=	WM_GV + 22;
 	static final int WM_GV_PRIVATEEXIT		=	WM_GV + 23;

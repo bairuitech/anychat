@@ -198,7 +198,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 		this.setSize(850, 600);
 		this.setLocation(400, 150); // 设置程序启动默认桌面位置
 		this.setResizable(false);
-		this.setTitle("AnyChat Server SDK for Java 示例");
+		this.setTitle("AnyChat Server SDK for Java 示例 (V4.8.1)");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image image = toolkit.createImage("bairuitech.png");
 		this.setIconImage(image); // 设置图标
@@ -257,11 +257,11 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	public void OnAnyChatServerAppMessageCallBack(int dwMsg) {
 		String str = "";
 		if (dwMsg == 1) {
-			str = "connect core server successed";
+			str = "Connect AnyChatCoreServer successed!";
 			jServerStatus.setForeground(new Color(0, 128, 0));
 			jServerStatus.setText(str);
 		} else {
-			str = "connect core server falied";
+			str = "Connect AnyChatCoreServer failed!";
 			jServerStatus.setForeground(Color.red);
 			jServerStatus.setText(str);
 		}
@@ -532,7 +532,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	public int OnAnyChatUserInfoCtrlCallBack(int dwSendUserId, int dwUserId, int dwCtrlCode, int wParam, int lParam, String lpStrValue) {
 		String str = "OnAnyChatUserInfoCtrlCallBack: dwSendUserId:" + dwSendUserId + " dwUserId:" + dwUserId + " dwCtrlCode:" + 
 			dwCtrlCode + " wParam:" + wParam + " lParam:" + lParam + " lpStrValue:" + lpStrValue;
-		System.out.print(getCurrentTime() + str + "\r\n");
+		generateLog(str);
 		return 0;
 	}
 	

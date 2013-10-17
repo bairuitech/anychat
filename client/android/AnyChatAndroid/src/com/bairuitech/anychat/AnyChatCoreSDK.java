@@ -17,6 +17,7 @@ public class AnyChatCoreSDK
 	AnyChatTextMsgEvent		textMsgEvent;
 	AnyChatTransDataEvent	transDataEvent;
 	AnyChatVideoCallEvent	videoCallEvent;
+	AnyChatUserInfoEvent	userInfoEvent;
 	
 	static MainHandler mHandler;
 	static AnyChatAudioHelper	mAudioHelper;
@@ -68,6 +69,12 @@ public class AnyChatCoreSDK
 	{
 		RegisterNotify();
 		this.videoCallEvent = e;
+	}
+	// 设置用户信息（好友）事件通知接口
+	public void SetUserInfoEvent(AnyChatUserInfoEvent e)
+	{
+		RegisterNotify();
+		this.userInfoEvent = e;
 	}
 	
 	// 查询SDK主版本号
@@ -221,6 +228,21 @@ public class AnyChatCoreSDK
 	
 	// 视频呼叫事件控制（请求、回复、挂断等）
 	public native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String szUserStr);
+	
+	// 获取用户好友ID列表
+	public native int[] GetUserFriends();
+	// 获取好友在线状态
+	public native int GetFriendStatus(int dwFriendUserId);
+	// 获取用户分组ID列表
+	public native int[] GetUserGroups();
+	// 获取分组下面的好友列表
+	public native int[] GetGroupFriends(int dwGroupId);
+	// 获取用户信息
+	public native String GetUserInfo(int dwUserId, int dwInfoId);
+	// 获取用户分组名称
+	public native String GetGroupName(int dwGroupId);
+	// 用户信息控制
+	public native int UserInfoControl(int dwUserId, int dwCtrlCode, int wParam, int lParam, String szStrValue);
     
     // 异步消息通知
     public void OnNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
@@ -285,6 +307,14 @@ public class AnyChatCoreSDK
 		case AnyChatDefine.WM_GV_PRIVATEEXIT:
 			if(privateChatEvent != null)
 				privateChatEvent.OnAnyChatPrivateExitMessage(wParam,lParam);
+			break;
+		case AnyChatDefine.WM_GV_USERINFOUPDATE:
+			if(userInfoEvent != null)
+				userInfoEvent.OnAnyChatUserInfoUpdate(wParam, lParam);
+			break;
+		case AnyChatDefine.WM_GV_FRIENDSTATUS:
+			if(userInfoEvent != null)
+				userInfoEvent.OnAnyChatFriendStatus(wParam, lParam);
 			break;
 		case AnyChatDefine.WM_GV_AUDIOPLAYCTRL:
 			if(wParam == 1) {
