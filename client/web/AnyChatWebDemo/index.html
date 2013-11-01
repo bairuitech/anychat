@@ -195,7 +195,7 @@
                     </table>            
                 </div>
                 <div id="Sound_Parameter_Interface">
-                    <div style=" height:30px; margin:10px 0px 0px 5px;"><select id="Speak_Mode" style=" width:140px;"></select></div>
+                    <div style=" height:30px; margin:10px 0px 0px 5px;"><select id="Speak_Mode" style=" width:140px;" onChange="GetTheValue('Speak_Mode')"></select></div>
                     <div class="audio_tabcontrol"><input id="audio_vadctrl" onchange="ChangeTheResult('audio_vadctrl')" type="checkbox" />静音检测</div>
                     <div class="audio_tabcontrol"><input id="audio_echoctrl" onchange="ChangeTheResult('audio_echoctrl')" type="checkbox" />回音消除</div>
                     <div class="audio_tabcontrol"><input id="audio_nsctrl" onchange="ChangeTheResult('audio_nsctrl')" type="checkbox" />噪音抑制</div>

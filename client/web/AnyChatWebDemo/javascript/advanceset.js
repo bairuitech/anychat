@@ -1,35 +1,41 @@
 
 //视频参数界面下拉框
-var code_rate = ["质量模式", "40", "60", "100", "150", "200", "300", "400", "500", "600", "800", "1000", "1200", "1500"]; // 码率下拉框
-var quality = ["较差质量", "一般质量", "中等质量", "较好质量", "最好质量"]; // 质量下拉框
-var distinguishability = ["176x144", "320x240", "352x288", "640x480", "720x480", "720x576", "800x600", "960x720", "1024x576", "1280x720", "1280x1024", "1920x1080"]; // 分辨率下拉框
-var frame_rate = ["5 FPS", "8 FPS", "12 FPS", "15 FPS", "20 FPS", "25 FPS", "30 FPS"]; // 帧率下拉框
-var preinstall = ["1", "2", "3", "4", "5"]; // 预设下拉框
-var speakmode = ["发言模式(默认)", "放歌模式", "卡拉OK模式", "线路输入模式"]; // 音频模式下拉框
+var code_rate_txt = ["质量模式", "40Kbps", "60Kbps", "100Kbps", "150Kbps", "200Kbps", "300Kbps", "400Kbps", "500Kbps", "600Kbps", "800Kbps", "1000Kbps", "1200Kbps", "1500Kbps"]; // 码率下拉框
+var quality_txt = ["普通视频质量", "中等视频质量", "较好视频质量"]; // 质量下拉框
+var distinguishability_txt = ["176x144", "320x240", "352x288", "640x480", "720x480", "720x576", "800x600", "960x720", "1024x576", "1280x720", "1280x1024", "1920x1080"]; // 分辨率下拉框
+var frame_rate_txt = ["5 FPS", "8 FPS", "12 FPS", "15 FPS", "20 FPS", "25 FPS", "30 FPS"]; // 帧率下拉框
+var preinstall_txt = ["1", "2", "3", "4", "5"]; // 预设下拉框
+var speakmode_txt = ["发言模式(默认)", "放歌模式", "卡拉OK模式", "线路输入模式"]; // 音频模式下拉框
+
+var code_rate_value = [0, 40000, 60000, 100000, 150000, 200000, 300000, 400000, 500000, 600000, 800000, 1000000, 1200000, 1500000]; // 码率值
+var quality_value= [2, 3, 4]; // 质量因子值
+var frame_rate_value= [5, 8, 12, 15 , 20 , 25 , 30 ]; // 帧率值
+var preinstall_value= [1, 2, 3, 4, 5]; // 预设参数值
+var speakmode_value= [0, 1, 2, 3]; // 音频模式值
 
 //填充下拉框值
-function filltheselect(id, theArray) {
+function filltheselect(id, txtArray,valueArray) {
     GetID(id).options.length = 0;
-    for (var j = 0; j < theArray.length; j++) {
+    for (var j = 0; j < txtArray.length; j++) {
         var option = document.createElement("option");
         GetID(id).appendChild(option);
-        option.value = j;
-        option.text = theArray[j];
+        option.value = valueArray[j];
+        option.text = txtArray[j];
     }
 }
 // 初始化高级设置界面所有控件 进行赋值
 function InitAdvanced() {
-    filltheselect("code_rate", code_rate); // 填充码率下拉框
-    filltheselect("quality", quality); // 填充质量下拉框
-    filltheselect("distinguishability", distinguishability); // 填充分辨率下拉框
-    filltheselect("frame_rate", frame_rate); // 填充帧率下拉框
-    filltheselect("preinstall", preinstall); // 填充预设下拉框
-    filltheselect("Speak_Mode", speakmode); // 发言模式下拉框
-    filltheselect("DeviceType_VideoCapture", BRAC_EnumDevices(BRAC_DEVICE_VIDEOCAPTURE)); // 视频采集设备下拉框值
-    filltheselect("DeviceType_AudioCapture", BRAC_EnumDevices(BRAC_DEVICE_AUDIOCAPTURE)); // 音频采集设备下拉框值
-    filltheselect("DeviceType_AudioPlayBack", BRAC_EnumDevices(BRAC_DEVICE_AUDIOPLAYBACK)); // 音频播放设备下拉框值
+    filltheselect("code_rate", code_rate_txt,code_rate_value); // 填充码率下拉框
+    filltheselect("quality", quality_txt,quality_value); // 填充质量下拉框
+    filltheselect("distinguishability", distinguishability_txt,distinguishability_txt); // 填充分辨率下拉框
+    filltheselect("frame_rate", frame_rate_txt,frame_rate_value); // 填充帧率下拉框
+    filltheselect("preinstall", preinstall_txt,preinstall_value); // 填充预设下拉框
+    filltheselect("Speak_Mode", speakmode_txt,speakmode_value); // 发言模式下拉框
+    filltheselect("DeviceType_VideoCapture", BRAC_EnumDevices(BRAC_DEVICE_VIDEOCAPTURE), BRAC_EnumDevices(BRAC_DEVICE_VIDEOCAPTURE)); // 视频采集设备下拉框值
+    filltheselect("DeviceType_AudioCapture", BRAC_EnumDevices(BRAC_DEVICE_AUDIOCAPTURE),BRAC_EnumDevices(BRAC_DEVICE_AUDIOCAPTURE)); // 音频采集设备下拉框值
+    filltheselect("DeviceType_AudioPlayBack", BRAC_EnumDevices(BRAC_DEVICE_AUDIOPLAYBACK), BRAC_EnumDevices(BRAC_DEVICE_AUDIOPLAYBACK)); // 音频播放设备下拉框值
     SetThePos();
-    GetCurrentDevice();
+    initControlSelected();
 }
 // 音视频设备 按钮划出效果
 function SettingBtnMouseout(id) {
@@ -56,7 +62,7 @@ function SettingBtnMouseover(id, dd) {
 
 // 下拉框事件
 function GetTheValue(id) {
-    var value = GetID(id).options[GetID(id).selectedIndex].text;
+    var value = GetID(id).options[GetID(id).selectedIndex].value;
     switch (id) {
         case "DeviceType_VideoCapture": // 视频采集设备
             BRAC_SelectVideoCapture(BRAC_DEVICE_VIDEOCAPTURE, value);
@@ -68,22 +74,17 @@ function GetTheValue(id) {
             BRAC_SelectVideoCapture(BRAC_DEVICE_AUDIOPLAYBACK, value);
             break;
         case "quality": // 质量
-            BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_QUALITYCTRL, value);
+            BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_QUALITYCTRL, parseInt(value));
             break;
         case "code_rate": // 码率
-            if (value == "质量模式")
-                GetID("quality").disabled = "";
-            else {
-                BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_BITRATECTRL, parseInt(value));
-                GetID("quality").disabled = "disabled";
-            }
+			BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_BITRATECTRL, parseInt(value));
             break;
         case "distinguishability": // 分辨率
             var resolution = value.split('x');
             BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_WIDTHCTRL, parseInt(resolution[0]));
             BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_HEIGHTCTRL, parseInt(resolution[1]));
             //GetID("current_resolution").innerHTML = BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_WIDTHCTRL) + "x" + BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_HEIGHTCTRL) + ")";
-            break;
+			break;
         case "frame_rate": // 帧率
             BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_FPSCTRL, parseInt(value));
             break;
@@ -91,14 +92,7 @@ function GetTheValue(id) {
             BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_PRESETCTRL, parseInt(value));
             break;
         case "Speak_Mode": // 音频播放模式
-            if (value == "发言模式(默认)")
-                BRAC_SetSDKOption(BRAC_SO_AUDIO_CAPTUREMODE, 0);
-            if (value == "放歌模式")
-                BRAC_SetSDKOption(BRAC_SO_AUDIO_CAPTUREMODE, 1);
-            if (value == "卡拉OK模式")
-                BRAC_SetSDKOption(BRAC_SO_AUDIO_CAPTUREMODE, 2);
-            if (value == "线路输入模式")
-                BRAC_SetSDKOption(BRAC_SO_AUDIO_CAPTUREMODE, 3);
+            BRAC_SetSDKOption(BRAC_SO_AUDIO_CAPTUREMODE, parseInt(value));
             break;
     }
 }
@@ -116,73 +110,82 @@ function ChangeTheResult(id) {
                     GetAControl[j].style.color = "#999999";
             }
             else {
-                for (var i = 0; i < SelectTag.length; i++) { // 循环标签
-                    if (SelectTag[i].id != "quality") { //质量 下拉框不随复选框选中而启用
+                for (var i = 0; i < SelectTag.length; i++) 
                         SelectTag[i].disabled = "";
-                        if (GetID("code_rate").options[GetID("code_rate").selectedIndex].text == "质量模式")
-                            GetID("quality").disabled = "";
-                    }
-                    for (var j = 0; j < GetAControl.length; j++)
+                for (var j = 0; j < GetAControl.length; j++)
                         GetAControl[j].style.color = "Black";
-                }
             }
             break;
         case "Checkbox_P2P":
-            if (GetID(id).checked == true) BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 1);
-            else BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 0);
+            if (GetID(id).checked == true)
+				BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 1);
+            else 
+				BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 0);
             break;
         case "audio_vadctrl": // 静音检测
-            if (GetID(id).checked == true) BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 1);
-            else BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 0);
+            if (GetID(id).checked == true)
+				BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 1);
+            else 
+				BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 0);
             break;
         case "audio_echoctrl": // 回音消除
-            if (GetID(id).checked == true) BRAC_SetSDKOption(BRAC_SO_AUDIO_ECHOCTRL, 1);
-            else BRAC_SetSDKOption(BRAC_SO_AUDIO_ECHOCTRL, 0);
+            if (GetID(id).checked == true)
+				BRAC_SetSDKOption(BRAC_SO_AUDIO_ECHOCTRL, 1);
+            else 
+				BRAC_SetSDKOption(BRAC_SO_AUDIO_ECHOCTRL, 0);
             break;
         case "audio_nsctrl": // 噪音抑制
-            if (GetID(id).checked == true) BRAC_SetSDKOption(BRAC_SO_AUDIO_NSCTRL, 1);
-            else BRAC_SetSDKOption(BRAC_SO_AUDIO_NSCTRL, 0);
+            if (GetID(id).checked == true)
+			 	BRAC_SetSDKOption(BRAC_SO_AUDIO_NSCTRL, 1);
+            else 
+				BRAC_SetSDKOption(BRAC_SO_AUDIO_NSCTRL, 0);
             break;
         case "audio_agcctrl": // 自动增益
-            if (GetID(id).checked == true) BRAC_SetSDKOption(BRAC_SO_AUDIO_AGCCTRL, 1);
-            else BRAC_SetSDKOption(BRAC_SO_AUDIO_AGCCTRL, 0);
+            if (GetID(id).checked == true)
+				 BRAC_SetSDKOption(BRAC_SO_AUDIO_AGCCTRL, 1);
+            else
+				 BRAC_SetSDKOption(BRAC_SO_AUDIO_AGCCTRL, 0);
             break;
     }
 }
 
 // 获取当前参数值
-function GetCurrentDevice() {
-    GetIndex("DeviceType_VideoCapture", BRAC_GetCurrentDevice(1), "combobox"); // 当前使用的视频采集器
-    GetIndex("DeviceType_AudioCapture", BRAC_GetCurrentDevice(2), "combobox"); // 当前使用的音频采集器
-    GetIndex("DeviceType_AudioPlayBack", BRAC_GetCurrentDevice(3), "combobox"); // 当前使用的音频播放器
-    GetIndex("quality", BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_QUALITYCTRL), "combobox"); // 当前使用的质量参数
-    GetIndex("code_rate", BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_BITRATECTRL), "combobox"); // 当前使用的码率参数
-    GetIndex("distinguishability", BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_WIDTHCTRL) + "x" + BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_HEIGHTCTRL), "combobox"); // 当前使用的的分辨率
-    GetIndex("frame_rate", BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_FPSCTRL), "combobox"); // 当前使用的的帧率参数
-    GetIndex("preinstall", BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_PRESETCTRL), "combobox"); // 当前使用的预设参数
-
-    GetIndex("Speak_Mode", BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_CAPTUREMODE), "combobox"); // 当前使用的音频播放模式
-
-    GetIndex("audio_vadctrl", BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_VADCTRL), "checkbox") // 当前使用的静音检测
-    GetIndex("audio_echoctrl", BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_ECHOCTRL), "checkbox") // 当前使用的回音消除
-    GetIndex("audio_nsctrl", BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_NSCTRL), "checkbox") // 当前使用的噪音抑制
-    GetIndex("audio_agcctrl", BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_AGCCTRL), "checkbox") // 当前使用的自动增益
-
-    GetIndex("Checkbox_P2P", BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_VADCTRL), "checkbox") // P2P
-
+function initControlSelected() {
+    GetIndex("DeviceType_VideoCapture", BRAC_EnumDevices(BRAC_DEVICE_VIDEOCAPTURE),BRAC_GetCurrentDevice(BRAC_DEVICE_VIDEOCAPTURE),"combobox"); // 当前使用的视频采集器
+    GetIndex("DeviceType_AudioCapture", BRAC_EnumDevices(BRAC_DEVICE_AUDIOCAPTURE),BRAC_GetCurrentDevice(BRAC_DEVICE_AUDIOCAPTURE),"combobox"); // 当前使用的音频采集器
+	GetIndex("DeviceType_AudioPlayBack", BRAC_EnumDevices(BRAC_DEVICE_AUDIOPLAYBACK),BRAC_GetCurrentDevice(BRAC_DEVICE_AUDIOPLAYBACK),"combobox"); // 当前使用的音频播放器
+	GetIndex("quality", quality_value,BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_QUALITYCTRL),"combobox"); // 当前使用的质量参数
+	GetIndex("code_rate", code_rate_value,BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_BITRATECTRL),"combobox"); // 当前使用的码率参数
+    GetIndex("distinguishability",distinguishability_txt, BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_WIDTHCTRL) + "x" + 			BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_HEIGHTCTRL), "combobox"); // 当前使用的的分辨率
+    GetIndex("frame_rate",frame_rate_value, BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_FPSCTRL), "combobox"); // 当前使用的的帧率参数
+    GetIndex("preinstall", preinstall_value,BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_PRESETCTRL), "combobox"); // 当前使用的预设参数
+    GetIndex("Speak_Mode",speakmode_value, BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_CAPTUREMODE), "combobox"); // 当前使用的音频播放模式
+	
+    GetIndex("audio_vadctrl", null,BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_VADCTRL), "checkbox");// 当前使用的静音检测
+    GetIndex("audio_echoctrl", null,BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_ECHOCTRL), "checkbox"); // 当前使用的回音消除
+    GetIndex("audio_nsctrl", null,BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_NSCTRL), "checkbox"); // 当前使用的噪音抑制
+    GetIndex("audio_agcctrl", null,BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_AGCCTRL), "checkbox"); // 当前使用的自动增益
+    GetIndex("Checkbox_P2P", null,BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_VADCTRL), "checkbox") ;// P2P
     GetID("current_resolution").innerHTML = BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_WIDTHCTRL) + "x" + BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_HEIGHTCTRL) + ")";
+
+
+
 }
 
+
 // 设置控件初始值
-function GetIndex(control_id, value, type) {
+function GetIndex(control_id,valueArray,value,type) {
     if (type == "combobox") { // 下拉框
-        var slt = GetID(control_id);
-        for (var i = 0; i < slt.length; i++) {
-            if (slt[i].text == value) {
-                GetID(control_id).selectedIndex = i;
-                break;
-            }
-        }
+		var valueIndex=0;
+		for(var i=0;i<valueArray.length;i++)
+		{
+			if(value==valueArray[i])
+			{
+				valueIndex=i;
+				break;
+			}
+		}
+		GetID(control_id).selectedIndex=valueIndex;
     }
     else { // 复选框
         if (value == 1) // 1为打开 
@@ -204,5 +207,5 @@ function BtnAdjust() {
 // 应用设置
 function BtnApply() {
     BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_APPLYPARAM, 1);
-    setTimeout(GetCurrentDevice, 500);
+    setTimeout(initControlSelected, 500);
 }
