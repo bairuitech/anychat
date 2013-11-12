@@ -130,10 +130,12 @@ enum BRAC_VideoShowDriver{
 #define BRAC_TRANSTASK_STATUS				3	///< 传输任务当前状态（参数为：int型）
 #define BRAC_TRANSTASK_SAVEASPATH			4	///< 文件传输任务另存为路径设置（参数为字符串TCHAR类型）
 
-
 // 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
 #define BRAC_RECORD_FLAGS_VIDEO		0x00000001L	///< 录制视频
 #define BRAC_RECORD_FLAGS_AUDIO		0x00000002L	///< 录制音频
+#define BRAC_RECORD_FLAGS_SERVER	0x00000004L	///< 服务器端录制
+#define BRAC_RECORD_FLAGS_MIXAUDIO	0x00000010L	///< 录制音频时，将其它人的声音混音后录制
+#define BRAC_RECORD_FLAGS_MIXVIDEO	0x00000020L	///< 录制视频时，将其它人的视频迭加后录制
 
 // 组播功能标志定义（API：BRAC_MultiCastControl 传入参数）
 #define BRAC_MCFLAGS_JOINGROUP		0x00000001L	///< 加入多播组

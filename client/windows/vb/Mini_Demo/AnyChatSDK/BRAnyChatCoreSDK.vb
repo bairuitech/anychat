@@ -91,6 +91,12 @@ Module BRAnyChatCoreSDK
 	'#define BRAC_RECORD_FLAGS_VIDEO     0x00000001L ///< 录制视频
 	Public Const BRAC_RECORD_FLAGS_AUDIO 	As Integer = &H2
 	'#define BRAC_RECORD_FLAGS_AUDIO     0x00000002L ///< 录制音频
+	Public Const BRAC_RECORD_FLAGS_SERVER 	As Integer = &H4
+	'#define BRAC_RECORD_FLAGS_SERVER	0x00000004L	///< 服务器端录制
+	Public Const BRAC_RECORD_FLAGS_MIXAUDIO As Integer = &H10
+	'#define BRAC_RECORD_FLAGS_MIXAUDIO	0x00000010L	///< 录制音频时，将其它人的声音混音后录制
+	Public Const BRAC_RECORD_FLAGS_MIXVIDEO As Integer = &H20
+	'#define BRAC_RECORD_FLAGS_MIXVIDEO	0x00000020L	///< 录制视频时，将其它人的视频迭加后录制
 	
 	
 	'// 用户状态标志定义

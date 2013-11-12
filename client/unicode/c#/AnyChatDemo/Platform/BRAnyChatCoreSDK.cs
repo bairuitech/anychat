@@ -84,17 +84,24 @@ namespace ANYCHATAPI
 		public const int BRAC_USERSTATE_SELFUSERSTATUS	=	16;	// 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
 		public const int BRAC_USERSTATE_SELFUSERID		=	17;	// 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
 		
-		// 组播功能标志定义，API：BRAC_MultiCastControl 传入参数
+		// 组播功能标志定义（API：BRAC_MultiCastControl 传入参数）
 		public const int BRAC_MCFLAGS_JOINGROUP	= 0x00000001;	// 加入多播组
 		public const int BRAC_MCFLAGS_LEAVEGROUP= 0x00000002;	// 离开多播组
 		public const int BRAC_MCFLAGS_SENDDATA	= 0x00000010;	// 数据发送标志，指示该多播组用于发送数据
 		public const int BRAC_MCFLAGS_RECVDATA	= 0x00000020;	// 数据接收标志，指示该多播组用于接收数据
 		
-		// 传输任务信息参数定义，API：BRAC_QueryTransTaskInfo 传入参数
+		// 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
 		public const int BRAC_TRANSTASK_PROGRESS		=	1;	// 传输任务进度查询（参数为：DOUBLE型，返回值0.0 ~ 100.0， 或参数为：DWORD型，返回值0 ~ 100）
 		public const int BRAC_TRANSTASK_BITRATE			=	2;	// 传输任务当前传输码率（参数为：int型，单位：bps）
 		public const int BRAC_TRANSTASK_STATUS			=	3;	// 传输任务当前状态（参数为：int型）
 		public const int BRAC_TRANSTASK_SAVEASPATH		=	4;	// 文件传输任务另存为路径设置（参数为字符串TCHAR类型）
+		
+		// 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
+		public const int BRAC_RECORD_FLAGS_VIDEO		= 0x01;	// 录制视频
+		public const int BRAC_RECORD_FLAGS_AUDIO		= 0x02;	// 录制音频
+		public const int BRAC_RECORD_FLAGS_SERVER		= 0x04;	// 服务器端录制
+		public const int BRAC_RECORD_FLAGS_MIXAUDIO		= 0x10;	// 录制音频时，将其它人的声音混音后录制
+		public const int BRAC_RECORD_FLAGS_MIXVIDEO		= 0x20;	// 录制视频时，将其它人的视频迭加后录制
 		
 		// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
 		public const int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	// 呼叫请求

@@ -100,7 +100,9 @@ const
   // 录像功能标志定义
   BRAC_RECORD_FLAGS_VIDEO		=$00000001;		///< 录制视频
   BRAC_RECORD_FLAGS_AUDIO		=$00000002;		///< 录制音频
-
+  BRAC_RECORD_FLAGS_SERVER		=$00000004;		///< 服务器端录制
+  BRAC_RECORD_FLAGS_MIXAUDIO	=$00000010;		///< 录制音频时，将其它人的声音混音后录制
+  BRAC_RECORD_FLAGS_MIXVIDEO	=$00000020;		///< 录制视频时，将其它人的视频迭加后录制
 
   // 用户状态标志定义
   BRAC_USERSTATE_CAMERA			=1;				///< 用户摄像头状态（参数为DWORD型）

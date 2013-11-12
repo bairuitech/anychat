@@ -99,7 +99,8 @@ var BRAC_TRANSTASK_SAVEASPATH = 			4;	// ÎÄ¼þ´«ÊäÈÎÎñÁí´æÎªÂ·¾¶ÉèÖÃ£¬º¬ÎÄ¼þÃû£¨²
 var BRAC_RECORD_FLAGS_VIDEO	=				1;	// Â¼ÖÆÊÓÆµ
 var BRAC_RECORD_FLAGS_AUDIO	=				2;	// Â¼ÖÆÒôÆµ
 var BRAC_RECORD_FLAGS_SERVER =				4;	// ·þÎñÆ÷¶ËÂ¼ÖÆ
-
+var BRAC_RECORD_FLAGS_MIXAUDIO =			16;	// Â¼ÖÆÒôÆµÊ±£¬½«ÆäËüÈËµÄÉùÒô»ìÒôºóÂ¼ÖÆ
+var BRAC_RECORD_FLAGS_MIXVIDEO =			32;	// Â¼ÖÆÊÓÆµÊ±£¬½«ÆäËüÈËµÄÊÓÆµµü¼ÓºóÂ¼ÖÆ
 
 // ÓÃ»§×´Ì¬±êÖ¾¶¨Òå£¨API£ºBRAC_QueryUserState ´«Èë²ÎÊý£©
 var BRAC_USERSTATE_CAMERA = 				1;	// ÓÃ»§ÉãÏñÍ·×´Ì¬£¨²ÎÊýÎªDWORDÐÍ£©
