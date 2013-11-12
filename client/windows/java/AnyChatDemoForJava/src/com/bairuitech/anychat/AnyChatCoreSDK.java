@@ -1,7 +1,7 @@
 package com.bairuitech.anychat;		// 不能修改包的名称
 
 import java.awt.Component;
-
+import com.bairuitech.anychat.AnyChatTransTaskOutParam;
 
 
 public class AnyChatCoreSDK
@@ -125,11 +125,11 @@ public class AnyChatCoreSDK
 	// 发送文字消息
 	public native int SendTextMessage(int userid, int secret, String message);
 	// 传送文件
-	public native int TransFile(int userid, String filepath, int wparam, int lparam, int flags);
+	public native int TransFile(int userid, String filepath, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
 	// 透明通道传送缓冲区
 	public native int TransBuffer(int userid, byte[] buf, int len);
 	// 透明通道传送缓冲区扩展
-	public native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags);
+	public native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
 	// 终止传输任务
 	public native int CancelTransTask(int userid, int taskid);
 	// 查询传输任务状态
