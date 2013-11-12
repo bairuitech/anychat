@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 import com.bairuitech.anychat.*;
 
-public class SampleServer implements AnyChatServerEvent{
+public class CallCenterServer implements AnyChatServerEvent{
 
 	public static AnyChatServerSDK anychat;
 	public static int iUserIdSeed = 1;
@@ -25,7 +25,7 @@ public class SampleServer implements AnyChatServerEvent{
 	 */
 	public static void main(String[] args) throws InterruptedException, IOException {
 		anychat = new AnyChatServerSDK();
-		anychat.SetServerEvent(new SampleServer());
+		anychat.SetServerEvent(new CallCenterServer());
 		anychat.InitSDK(0);
 		System.out.print(getCurrentTime() + "Welcome use AnyChat! (" + anychat.GetSDKVersion() + ")\r\n");
 		Reader reader = new InputStreamReader(System.in);
