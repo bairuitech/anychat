@@ -1,99 +1,102 @@
-package com.bairuitech.anychat;		// ²»ÄÜĞŞ¸Ä°üµÄÃû³Æ
+package com.bairuitech.anychat;		// ä¸èƒ½ä¿®æ”¹åŒ…çš„åç§°
 
 import com.bairuitech.anychat.AnyChatTransTaskOutParam;
 
 public class AnyChatServerSDK
 {
-	public static final int BRAS_SERVERAPPMSG_CONNECTED		= 	1;	///< ÓëAnyChatºËĞÄ·şÎñÆ÷Á¬½Ó³É¹¦
-	public static final int BRAS_SERVERAPPMSG_DISCONNECT	=	2;	///< ÓëAnyChatºËĞÄ·şÎñÆ÷¶Ï¿ªÁ¬½Ó
+	public static final int BRAS_SERVERAPPMSG_CONNECTED		= 	1;	///< ä¸AnyChatæ ¸å¿ƒæœåŠ¡å™¨è¿æ¥æˆåŠŸ
+	public static final int BRAS_SERVERAPPMSG_DISCONNECT	=	2;	///< ä¸AnyChatæ ¸å¿ƒæœåŠ¡å™¨æ–­å¼€è¿æ¥
 	
-	// ÊÓÆµºô½ĞÊÂ¼şÀàĞÍ¶¨Òå£¨API£ºBRAS_VideoCallControl ´«Èë²ÎÊı¡¢OnVideoCallEvent»Øµ÷²ÎÊı£©
-	public static final int BRAS_VIDEOCALL_EVENT_REQUEST    =	1;  ///< ºô½ĞÇëÇó
-	public static final int BRAS_VIDEOCALL_EVENT_REPLY      =	2;  ///< ºô½ĞÇëÇó»Ø¸´
-	public static final int BRAS_VIDEOCALL_EVENT_START      =	3;  ///< ÊÓÆµºô½Ğ»á»°¿ªÊ¼ÊÂ¼ş
-	public static final int BRAS_VIDEOCALL_EVENT_FINISH     =	4;  ///< ¹Ò¶Ï£¨½áÊø£©ºô½Ğ»á»°
+	// è§†é¢‘å‘¼å«äº‹ä»¶ç±»å‹å®šä¹‰ï¼ˆAPIï¼šBRAS_VideoCallControl ä¼ å…¥å‚æ•°ã€OnVideoCallEventå›è°ƒå‚æ•°ï¼‰
+	public static final int BRAS_VIDEOCALL_EVENT_REQUEST    =	1;  ///< å‘¼å«è¯·æ±‚
+	public static final int BRAS_VIDEOCALL_EVENT_REPLY      =	2;  ///< å‘¼å«è¯·æ±‚å›å¤
+	public static final int BRAS_VIDEOCALL_EVENT_START      =	3;  ///< è§†é¢‘å‘¼å«ä¼šè¯å¼€å§‹äº‹ä»¶
+	public static final int BRAS_VIDEOCALL_EVENT_FINISH     =	4;  ///< æŒ‚æ–­ï¼ˆç»“æŸï¼‰å‘¼å«ä¼šè¯
 	
-	// ÓÃ»§ĞÅÏ¢¿ØÖÆÀàĞÍ¶¨Òå£¨API£ºBRAS_UserInfoControl ´«Èë²ÎÊı¡¢OnUserInfoControl»Øµ÷²ÎÊı£©
-	public static final int BRAS_USERINFO_CTRLCODE_KICKOUT	=	1;	///< ½«Ö¸¶¨ÓÃ»§´ÓÏµÍ³ÖĞÌßµô
-	public static final int BRAS_USERINFO_CTRLCODE_SYNCDATA	=	2;	///< ½«Ö¸¶¨ÓÃ»§µÄÊı¾İÍ¬²½¸ø¿Í»§¶Ë
-	public static final int BRAS_USERINFO_CTRLCODE_FUNCCTRL =	3;	///< ¿Í»§¶Ë¹¦ÄÜ¿ØÖÆ£¬wParamÎª¹¦ÄÜ²ÎÊı×éºÏ
-	public static final int BRAS_USERINFO_CTRLCODE_ADDGROUP	=	20;	///< Ìí¼ÓÓÃ»§·Ö×é£¬wParamÎª·Ö×éId£¬lpStrValueÎª·Ö×éÃû³Æ
-	public static final int BRAS_USERINFO_CTRLCODE_DELGROUP	=	21;	///< É¾³ıÓÃ»§·Ö×é£¬wParamÎª·Ö×éId
-	public static final int BRAS_USERINFO_CTRLCODE_ADDFRIEND=	22;	///< Ìí¼ÓÓÃ»§ºÃÓÑ£¬wParamÎªºÃÓÑId
-	public static final int BRAS_USERINFO_CTRLCODE_DELFRIEND=	23;	///< É¾³ıÓÃ»§ºÃÓÑ£¬wParamÎªºÃÓÑId
-	public static final int BRAS_USERINFO_CTRLCODE_SETGROUPRELATION=24;	///< ÉèÖÃºÃÓÑÓë·Ö×éµÄ¹ØÁª¹ØÏµ£¬wParamÎª·Ö×éId£¬lParamÎªºÃÓÑId£¬±íÊ¾ºÃÓÑÊôÓÚÄ³¸ö·Ö×é
+	// ç”¨æˆ·ä¿¡æ¯æ§åˆ¶ç±»å‹å®šä¹‰ï¼ˆAPIï¼šBRAS_UserInfoControl ä¼ å…¥å‚æ•°ã€OnUserInfoControlå›è°ƒå‚æ•°ï¼‰
+	public static final int BRAS_USERINFO_CTRLCODE_KICKOUT	=	1;	///< å°†æŒ‡å®šç”¨æˆ·ä»ç³»ç»Ÿä¸­è¸¢æ‰
+	public static final int BRAS_USERINFO_CTRLCODE_SYNCDATA	=	2;	///< å°†æŒ‡å®šç”¨æˆ·çš„æ•°æ®åŒæ­¥ç»™å®¢æˆ·ç«¯
+	public static final int BRAS_USERINFO_CTRLCODE_FUNCCTRL =	3;	///< å®¢æˆ·ç«¯åŠŸèƒ½æ§åˆ¶ï¼ŒwParamä¸ºåŠŸèƒ½å‚æ•°ç»„åˆ
+	public static final int BRAS_USERINFO_CTRLCODE_ADDGROUP	=	20;	///< æ·»åŠ ç”¨æˆ·åˆ†ç»„ï¼ŒwParamä¸ºåˆ†ç»„Idï¼ŒlpStrValueä¸ºåˆ†ç»„åç§°
+	public static final int BRAS_USERINFO_CTRLCODE_DELGROUP	=	21;	///< åˆ é™¤ç”¨æˆ·åˆ†ç»„ï¼ŒwParamä¸ºåˆ†ç»„Id
+	public static final int BRAS_USERINFO_CTRLCODE_ADDFRIEND=	22;	///< æ·»åŠ ç”¨æˆ·å¥½å‹ï¼ŒwParamä¸ºå¥½å‹Id
+	public static final int BRAS_USERINFO_CTRLCODE_DELFRIEND=	23;	///< åˆ é™¤ç”¨æˆ·å¥½å‹ï¼ŒwParamä¸ºå¥½å‹Id
+	public static final int BRAS_USERINFO_CTRLCODE_SETGROUPRELATION=24;	///< è®¾ç½®å¥½å‹ä¸åˆ†ç»„çš„å…³è”å…³ç³»ï¼ŒwParamä¸ºåˆ†ç»„Idï¼ŒlParamä¸ºå¥½å‹Idï¼Œè¡¨ç¤ºå¥½å‹å±äºæŸä¸ªåˆ†ç»„
 	
 
 	AnyChatServerEvent event;
 	
-	// ÉèÖÃÊÂ¼ş»Øµ÷Í¨Öª½Ó¿Ú
+	// è®¾ç½®äº‹ä»¶å›è°ƒé€šçŸ¥æ¥å£
 	public void SetServerEvent(AnyChatServerEvent e)
 	{
 		RegisterNotify();
 		this.event = e;
 	}
 	
-	// ²éÑ¯SDK°æ±¾ĞÅÏ¢¡¢±àÒëÊ±¼äµÈ
+	// æŸ¥è¯¢SDKç‰ˆæœ¬ä¿¡æ¯ã€ç¼–è¯‘æ—¶é—´ç­‰
 	public native String GetSDKVersion();
     
-    // ×¢²áÏûÏ¢Í¨Öª
+    // æ³¨å†Œæ¶ˆæ¯é€šçŸ¥
     public native int RegisterNotify();
     
-    // ³õÊ¼»¯SDK
+    // æ³¨å†Œç”¨æˆ·èº«ä»½éªŒè¯å›è°ƒç±»ï¼ˆéƒ¨ç½²åˆ°Webå®¹å™¨ä¸­éœ€è¦è°ƒç”¨ï¼‰
+    public native int RegisterVerifyUserClass(AnyChatVerifyUserOutParam ParamObject);
+    
+    // åˆå§‹åŒ–SDK
     public native int InitSDK(int flags);
-    // ÊÍ·Å×ÊÔ´
+    // é‡Šæ”¾èµ„æº
     public native int Release();
     
-    // ÉèÖÃSDK¶¨Ê±Æ÷»Øµ÷º¯Êı£¨dwElapse£º¶¨Ê±Æ÷¼ä¸ô£¬µ¥Î»£ºms£©
+    // è®¾ç½®SDKå®šæ—¶å™¨å›è°ƒå‡½æ•°ï¼ˆdwElapseï¼šå®šæ—¶å™¨é—´éš”ï¼Œå•ä½ï¼šmsï¼‰
     public native int SetTimerEventCallBack(int elapse);
     
-	// ´«ËÍÎÄ¼ş
+	// ä¼ é€æ–‡ä»¶
 	public static native int TransFile(int userid, String filepath, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
-	// Í¸Ã÷Í¨µÀ´«ËÍ»º³åÇø
+	// é€æ˜é€šé“ä¼ é€ç¼“å†²åŒº
 	public static native int TransBuffer(int userid, byte[] buf, int len);
-	// Í¸Ã÷Í¨µÀ´«ËÍ»º³åÇøÀ©Õ¹
+	// é€æ˜é€šé“ä¼ é€ç¼“å†²åŒºæ‰©å±•
 	public static native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
-	// ·¢ËÍSDK Filter Í¨ĞÅÊı¾İ
+	// å‘é€SDK Filter é€šä¿¡æ•°æ®
 	public static native int SendSDKFilterData(byte[] buf, int len);
 	
-	// ÏòÖ¸¶¨ÓÃ»§·¢ËÍÊı¾İ
+	// å‘æŒ‡å®šç”¨æˆ·å‘é€æ•°æ®
 	public static native int SendBufToUser(int userid, byte[] buf, int len);
-	// ÏòÖ¸¶¨·¿¼ä·¢ËÍÊı¾İ
+	// å‘æŒ‡å®šæˆ¿é—´å‘é€æ•°æ®
 	public static native int SendBufToRoom(int roomid, byte[] buf, int len);
 	
-	// ÖĞĞÄ¶ËÂ¼Ïñ¿ØÖÆ
+	// ä¸­å¿ƒç«¯å½•åƒæ§åˆ¶
 	public static native int StreamRecordCtrl(int dwUserId, int bStartRecord, int dwFlags, int dwParam, int dwRecordServerId);
 	
-	// ÊÓÆµºô½ĞÊÂ¼ş¿ØÖÆ£¨ÇëÇó¡¢»Ø¸´¡¢¹Ò¶ÏµÈ£©
+	// è§†é¢‘å‘¼å«äº‹ä»¶æ§åˆ¶ï¼ˆè¯·æ±‚ã€å›å¤ã€æŒ‚æ–­ç­‰ï¼‰
 	public static native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String lpUserStr);
 	
-	// ÉèÖÃÓÃ»§µÄÏêÏ¸ĞÅÏ¢
+	// è®¾ç½®ç”¨æˆ·çš„è¯¦ç»†ä¿¡æ¯
 	public static native int SetUserInfo(int dwUserId, int dwInfoId, String lpInfoValue, int dwFlags);
-	// »ñÈ¡ÓÃ»§µÄÏêÏ¸ĞÅÏ¢
+	// è·å–ç”¨æˆ·çš„è¯¦ç»†ä¿¡æ¯
 	public static native String GetUserInfo(int dwUserId, int dwInfoId);
-	// ÓÃ»§ĞÅÏ¢¿ØÖÆ
+	// ç”¨æˆ·ä¿¡æ¯æ§åˆ¶
 	public static native int UserInfoControl(int dwUserId, int dwCtrlCode, int wParam, int lParam, String lpStrValue);
 
-	// SDKÄÚºË²ÎÊıÉèÖÃ£¨ÕûĞÍ£©
+	// SDKå†…æ ¸å‚æ•°è®¾ç½®ï¼ˆæ•´å‹ï¼‰
 	public static native int SetSDKOptionInt(int optname, int dwValue);
-	// SDKÄÚºË²ÎÊıÉèÖÃ£¨×Ö·û´®£©
+	// SDKå†…æ ¸å‚æ•°è®¾ç½®ï¼ˆå­—ç¬¦ä¸²ï¼‰
 	public static native int SetSDKOptionString(int optname, String lpStrValue);
 
 	
-	// ·şÎñÆ÷Ó¦ÓÃ³ÌĞòÏûÏ¢»Øµ÷º¯Êı¶¨Òå
+	// æœåŠ¡å™¨åº”ç”¨ç¨‹åºæ¶ˆæ¯å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatServerAppMessageCallBack(int dwMsg)
 	{
 		if(this.event != null)
 			this.event.OnAnyChatServerAppMessageCallBack(dwMsg);
 	}
-	// SDK¶¨Ê±Æ÷»Øµ÷º¯Êı¶¨Òå
+	// SDKå®šæ—¶å™¨å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatTimerEventCallBack()
 	{
 		if(this.event != null)
 			this.event.OnAnyChatTimerEventCallBack();
 	}
 	
-	// ÓÃ»§Éí·İÑéÖ¤»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·èº«ä»½éªŒè¯å›è°ƒå‡½æ•°å®šä¹‰
 	private int OnAnyChatVerifyUserCallBack(String szUserName, String szPassword, AnyChatVerifyUserOutParam outParam)
 	{
 		int ret = -1;
@@ -102,20 +105,20 @@ public class AnyChatServerSDK
 		return ret;
 	}
 	
-	// ÓÃ»§µÇÂ¼³É¹¦»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·ç™»å½•æˆåŠŸå›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr)
 	{
 		if(this.event != null)
 			this.event.OnAnyChatUserLoginActionCallBack(dwUserId, szUserName, dwLevel, szIpAddr);
 	}
-	// ÓÃ»§×¢Ïú»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·æ³¨é”€å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatUserLogoutActionCallBack(int dwUserId)
 	{
 		if(this.event != null)
 			this.event.OnAnyChatUserLogoutActionCallBack(dwUserId);
 	}
 	
-	// ÓÃ»§ÉêÇë½øÈë·¿¼ä»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·ç”³è¯·è¿›å…¥æˆ¿é—´å›è°ƒå‡½æ•°å®šä¹‰
 	private int OnAnyChatPrepareEnterRoomCallBack(int dwUserId, int dwRoomId, String szRoomName, String szPassword)
 	{
 		int errorcode = -1;
@@ -124,60 +127,60 @@ public class AnyChatServerSDK
 		return errorcode;
 	}
 	
-	// ÓÃ»§½øÈë·¿¼ä»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·è¿›å…¥æˆ¿é—´å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatUserEnterRoomActionCallBack(int dwUserId, int dwRoomId)
 	{
 		if(this.event != null)
 			this.event.OnAnyChatUserEnterRoomActionCallBack(dwUserId, dwRoomId);
 	}
 	
-	// ÓÃ»§Àë¿ª·¿¼ä»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·ç¦»å¼€æˆ¿é—´å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatUserLeaveRoomActionCallBack(int dwUserId, int dwRoomId)
 	{
 		if(this.event != null)
 			this.event.OnAnyChatUserLeaveRoomActionCallBack(dwUserId, dwRoomId);
 	}
   
-    // ÎÄ¼ş´«Êä»Øµ÷º¯Êı¶¨Òå
+    // æ–‡ä»¶ä¼ è¾“å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatTransFileCallBack(int dwUserId, String szFileName, String szTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId)
     {
 		if(this.event != null)
 			this.event.OnAnyChatTransFile(dwUserId, szFileName, szTempFilePath, dwFileLength, wParam, lParam, dwTaskId);
     }
-    // »º³åÇø»Øµ÷º¯Êı¶¨Òå
+    // ç¼“å†²åŒºå›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatTransBufferCallBack(int dwUserId, byte[] lpBuf, int dwLen)
     {
 		if(this.event != null)
 			this.event.OnAnyChatTransBuffer(dwUserId, lpBuf, dwLen);
     }
-    // »º³åÇøÀ©Õ¹»Øµ÷º¯Êı¶¨Òå
+    // ç¼“å†²åŒºæ‰©å±•å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatTransBufferExCallBack(int dwUserId, byte[] lpBuf, int dwLen, int wParam, int lParam, int dwTaskId)
     {
 		if(this.event != null)
 			this.event.OnAnyChatTransBufferEx(dwUserId, lpBuf, dwLen, wParam, lParam, dwTaskId);
     }
-    // ·şÎñÆ÷·¢ËÍµÄSDK Filter DataÊı¾İ»Øµ÷º¯Êı¶¨Òå
+    // æœåŠ¡å™¨å‘é€çš„SDK Filter Dataæ•°æ®å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatSDKFilterDataCallBack(int dwUserId, byte[] buf, int len)
     {
 		if(this.event != null)
 			this.event.OnAnyChatSDKFilterData(dwUserId, buf, len);
     }
 	
-	// ÊÕµ½ÓÃ»§ÎÄ×ÖÁÄÌìÍ¨ĞÅÊı¾İ»Øµ÷º¯Êı¶¨Òå
+	// æ”¶åˆ°ç”¨æˆ·æ–‡å­—èŠå¤©é€šä¿¡æ•°æ®å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatRecvUserTextMsgCallBack(int dwRoomId, int dwSrcUserId, int dwTarUserId, int bSecret, String szTextMessage, int dwLen)
 	{
 		if(this.event != null)
 			this.event.OnAnyChatRecvUserTextMsgCallBack(dwRoomId, dwSrcUserId, dwTarUserId, bSecret, szTextMessage, dwLen);
 	}
 	
-	// ·şÎñÆ÷Â¼Ïñ»Øµ÷º¯Êı¶¨Òå
+	// æœåŠ¡å™¨å½•åƒå›è°ƒå‡½æ•°å®šä¹‰
 	private void OnAnyChatServerRecordCallBack(int dwUserId, int dwParam, int dwRecordServerId, int dwElapse, String szRecordFileName)
 	{
 		if(this.event != null)
 			this.event.OnAnyChatServerRecordCallBack(dwUserId, dwParam, dwRecordServerId, dwElapse, szRecordFileName);
 	}
 	
-	// ÊÓÆµÍ¨»°ÏûÏ¢Í¨Öª»Øµ÷º¯Êı¶¨Òå
+	// è§†é¢‘é€šè¯æ¶ˆæ¯é€šçŸ¥å›è°ƒå‡½æ•°å®šä¹‰
 	private int OnAnyChatVideoCallEventCallBack(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, String lpUserStr)
 	{
 		if(this.event != null)
@@ -186,7 +189,7 @@ public class AnyChatServerSDK
 			return -1;
 	}
 	
-	// ÓÃ»§ĞÅÏ¢¿ØÖÆ»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·ä¿¡æ¯æ§åˆ¶å›è°ƒå‡½æ•°å®šä¹‰
 	private int OnAnyChatUserInfoCtrlCallBack(int dwSendUserId, int dwUserId, int dwCtrlCode, int wParam, int lParam, String lpStrValue)
 	{
 		if(this.event != null)

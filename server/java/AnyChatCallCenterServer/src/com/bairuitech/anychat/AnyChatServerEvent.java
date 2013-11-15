@@ -2,45 +2,45 @@ package com.bairuitech.anychat;
 
 import com.bairuitech.anychat.AnyChatVerifyUserOutParam;
 
-// Êı¾İ´«ÊäÍ¨Öª½Ó¿Ú
+// æ•°æ®ä¼ è¾“é€šçŸ¥æ¥å£
 public interface AnyChatServerEvent {
 	
-	// ·şÎñÆ÷Ó¦ÓÃ³ÌĞòÏûÏ¢»Øµ÷º¯Êı¶¨Òå
+	// æœåŠ¡å™¨åº”ç”¨ç¨‹åºæ¶ˆæ¯å›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatServerAppMessageCallBack(int dwMsg);
-	// SDK¶¨Ê±Æ÷»Øµ÷º¯Êı¶¨Òå
+	// SDKå®šæ—¶å™¨å›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatTimerEventCallBack();
 	
-	// ÓÃ»§Éí·İÑéÖ¤»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·èº«ä»½éªŒè¯å›è°ƒå‡½æ•°å®šä¹‰
 	public int OnAnyChatVerifyUserCallBack(String szUserName, String szPassword, AnyChatVerifyUserOutParam outParam);
-	// ÓÃ»§µÇÂ¼³É¹¦»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·ç™»å½•æˆåŠŸå›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr);
-	// ÓÃ»§×¢Ïú»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·æ³¨é”€å›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatUserLogoutActionCallBack(int dwUserId);
 	
-	// ÓÃ»§ÉêÇë½øÈë·¿¼ä»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·ç”³è¯·è¿›å…¥æˆ¿é—´å›è°ƒå‡½æ•°å®šä¹‰
 	public int OnAnyChatPrepareEnterRoomCallBack(int dwUserId, int dwRoomId, String szRoomName, String szPassword);
-	// ÓÃ»§½øÈë·¿¼ä»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·è¿›å…¥æˆ¿é—´å›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatUserEnterRoomActionCallBack(int dwUserId, int dwRoomId);
-	// ÓÃ»§Àë¿ª·¿¼ä»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·ç¦»å¼€æˆ¿é—´å›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatUserLeaveRoomActionCallBack(int dwUserId, int dwRoomId);
 	
-	// ÎÄ¼ş´«Êä»Øµ÷º¯Êı¶¨Òå
+	// æ–‡ä»¶ä¼ è¾“å›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatTransFile(int dwUserId, String szFileName, String szTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId);
-	// Í¸Ã÷Í¨µÀÊı¾İ»Øµ÷º¯Êı¶¨Òå
+	// é€æ˜é€šé“æ•°æ®å›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatTransBuffer(int dwUserId, byte[] lpBuf, int dwLen);
-	// À©Õ¹Í¸Ã÷Í¨µÀÊı¾İ»Øµ÷º¯Êı¶¨Òå
+	// æ‰©å±•é€æ˜é€šé“æ•°æ®å›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatTransBufferEx(int dwUserId, byte[] lpBuf, int dwLen, int wParam, int lParam, int dwTaskId);
-	// SDK Filter Í¨ĞÅÊı¾İ»Øµ÷º¯Êı¶¨Òå
+	// SDK Filter é€šä¿¡æ•°æ®å›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatSDKFilterData(int dwUserId, byte[] lpBuf, int dwLen);
 	
-	// ÊÕµ½ÓÃ»§ÎÄ×ÖÁÄÌìÍ¨ĞÅÊı¾İ»Øµ÷º¯Êı¶¨Òå
+	// æ”¶åˆ°ç”¨æˆ·æ–‡å­—èŠå¤©é€šä¿¡æ•°æ®å›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatRecvUserTextMsgCallBack(int dwRoomId, int dwSrcUserId, int dwTarUserId, int bSecret, String szTextMessage, int dwLen);
-	// ·şÎñÆ÷Â¼Ïñ»Øµ÷º¯Êı¶¨Òå
+	// æœåŠ¡å™¨å½•åƒå›è°ƒå‡½æ•°å®šä¹‰
 	public void OnAnyChatServerRecordCallBack(int dwUserId, int dwParam, int dwRecordServerId, int dwElapse, String szRecordFileName);
 	
-	// ÊÓÆµÍ¨»°ÏûÏ¢Í¨Öª»Øµ÷º¯Êı¶¨Òå
+	// è§†é¢‘é€šè¯æ¶ˆæ¯é€šçŸ¥å›è°ƒå‡½æ•°å®šä¹‰
 	public int OnAnyChatVideoCallEventCallBack(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, String lpUserStr);
 	
-	// ÓÃ»§ĞÅÏ¢¿ØÖÆ»Øµ÷º¯Êı¶¨Òå
+	// ç”¨æˆ·ä¿¡æ¯æ§åˆ¶å›è°ƒå‡½æ•°å®šä¹‰
 	public int OnAnyChatUserInfoCtrlCallBack(int dwSendUserId, int dwUserId, int dwCtrlCode, int wParam, int lParam, String lpStrValue);
 }
