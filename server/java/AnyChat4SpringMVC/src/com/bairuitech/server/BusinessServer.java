@@ -16,62 +16,15 @@ import com.bairuitech.anychat.AnyChatVerifyUserOutParam;
  * AnyChat Platform Core SDK ---- Business Server
  */
 public class BusinessServer implements AnyChatServerEvent {
-	public AnyChatServerSDK anyChatSDK;
+	public AnyChatServerSDK anychatserver;
 	public StringBuilder message = new StringBuilder();
-	public Vector<String> tableTitles = new Vector<String>();
 	public static int iUserIdSeed = 1;
-	public static final int COLUM_COUNT = 5;
-	public static final int ROOM_INDEX = 3;
 
 	// 在线用户列表
 	public static ArrayList<Integer> onlineusers = new ArrayList<Integer>();
 	
 	public BusinessServer() {
 
-	}
-
-	/**
-	 * 插入登录记录
-	 */
-	private void updateUserData(int userId, String name, String ip, String time) {
-		// 添加
-		if (userId != 0) {
-			Vector<Object> verctor = new Vector<Object>();
-			verctor.addElement(userId);
-			verctor.addElement(name);
-			verctor.addElement(ip);
-			verctor.addElement("");
-			verctor.addElement(time);
-		}
-
-	}
-
-	/**
-	 * 删除登录记录
-	 */
-	private void updateUserData(int userId) {
-
-		int index = -1;
-		if ((index = findUserDataById(userId)) != -1) {
-		}
-	}
-
-	/**
-	 * 更新用户登录房间状态讯息
-	 */
-	@SuppressWarnings("unchecked")
-	private void updateUserData(int userId, int roomId) {
-		int index = -1;
-		if ((index = findUserDataById(userId)) != -1) {
-		}
-	}
-
-	/**
-	 * 根据userid查找用户讯息的相关列
-	 */
-	private int findUserDataById(int userId) {
-		int index = -1;
-		return -1;
 	}
 
 	/**
@@ -95,11 +48,11 @@ public class BusinessServer implements AnyChatServerEvent {
 	 * 初始化AnyChat Sdk
 	 */
 	public void initSdk() {
-		anyChatSDK = new AnyChatServerSDK();
-		anyChatSDK.SetServerEvent(this); // 设置回调
-		anyChatSDK.InitSDK(0); // 初始化SDK
-		anyChatSDK.RegisterVerifyUserClass(new AnyChatVerifyUserOutParam());
-		String sdkVersion = anyChatSDK.GetSDKVersion();
+		anychatserver = new AnyChatServerSDK();
+		anychatserver.SetServerEvent(this); // 设置回调
+		anychatserver.InitSDK(0); // 初始化SDK
+		anychatserver.RegisterVerifyUserClass(new AnyChatVerifyUserOutParam());
+		String sdkVersion = anychatserver.GetSDKVersion();
 		message.append(sdkVersion + "\r\n");
 		System.out.println(message);
 	}
@@ -145,19 +98,13 @@ public class BusinessServer implements AnyChatServerEvent {
 	 */
 	@Override
 	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr) {
-		System.out.print("OnUserLoginActionCallBack: userid:" + dwUserId
-				+ " username: " + szUserName + "\r\n");
-		// 测试扩展透明通道发送数据
-		AnyChatTransTaskOutParam outParam = new AnyChatTransTaskOutParam();
-		byte[] sendbuf = new byte[100];
-		int ret = AnyChatServerSDK.TransBufferEx(dwUserId, sendbuf,
-				sendbuf.length, 0, 0, 0, outParam);
-		System.out.print("TransBufferEx: ret:" + ret + " taskid: "
-				+ outParam.GetTaskId() + "\r\n");
+		System.out.print("OnUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + "\r\n");
 
+		// 将本地用户加入在线用户列表
+		onlineusers.add(dwUserId);	
+		
 		String str = "OnAnyChatUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + " Ip: " + szIpAddr;
 		generateLog(str);
-		updateUserData(dwUserId, szUserName, szIpAddr, getCurrentTime());	
 	}
 
 	/**
@@ -167,7 +114,6 @@ public class BusinessServer implements AnyChatServerEvent {
 	public void OnAnyChatUserLogoutActionCallBack(int dwUserId) {
 		String str = "OnUserLogoutActionCallBack: userid:" + dwUserId;
 		generateLog(str);
-		updateUserData(dwUserId);
 		
 		// 从在线用户列表中删除
 	    Iterator<Integer> it = onlineusers.iterator();
@@ -179,18 +125,14 @@ public class BusinessServer implements AnyChatServerEvent {
 	        	break;
 	        }
 	    }
-	    // 核心服务器会通知其它用户（如果是好友），提示好友下线，不需要业务服务器干预
-
 	}
 
 	/**
 	 * 用户退出登录回调
 	 */
 	@Override
-	public int OnAnyChatPrepareEnterRoomCallBack(int dwUserId, int dwRoomId,
-			String szRoomName, String szPassword) {
-		String str = "OnPrepareEnterRoomCallBack: userid:" + dwUserId
-				+ " roomid: " + dwRoomId;
+	public int OnAnyChatPrepareEnterRoomCallBack(int dwUserId, int dwRoomId, String szRoomName, String szPassword) {
+		String str = "OnPrepareEnterRoomCallBack: userid:" + dwUserId + " roomid: " + dwRoomId;
 		generateLog(str);
 		return 0;
 	}
@@ -200,10 +142,8 @@ public class BusinessServer implements AnyChatServerEvent {
 	 */
 	@Override
 	public void OnAnyChatUserEnterRoomActionCallBack(int dwUserId, int dwRoomId) {
-		String str = "OnUserEnterRoomActionCallBack: userid:" + dwUserId
-				+ " roomid: " + dwRoomId;
+		String str = "OnUserEnterRoomActionCallBack: userid:" + dwUserId + " roomid: " + dwRoomId;
 		generateLog(str);
-		updateUserData(dwUserId, dwRoomId);
 	}
 
 	/**
@@ -211,10 +151,8 @@ public class BusinessServer implements AnyChatServerEvent {
 	 */
 	@Override
 	public void OnAnyChatUserLeaveRoomActionCallBack(int dwUserId, int dwRoomId) {
-		String str = "OnAnyChatUserLeaveRoomActionCallBack: userid:" + dwUserId
-				+ " roomid: " + dwRoomId;
+		String str = "OnAnyChatUserLeaveRoomActionCallBack: userid:" + dwUserId	+ " roomid: " + dwRoomId;
 		generateLog(str);
-		updateUserData(dwUserId, -1);
 	}
 
 	/**
@@ -222,12 +160,9 @@ public class BusinessServer implements AnyChatServerEvent {
 	 */
 
 	@Override
-	public void OnAnyChatTransFile(int dwUserId, String szFileName,
-			String szTempFilePath, int dwFileLength, int wParam, int lParam,
-			int dwTaskId) {
+	public void OnAnyChatTransFile(int dwUserId, String szFileName, String szTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId) {
 		// TODO Auto-generated method stub
-		String str = "OnAnyChatTransFile->" + "from:" + dwUserId + ";filename:"
-				+ szFileName + "path:" + szTempFilePath;
+		String str = "OnAnyChatTransFile->" + "from:" + dwUserId + ";filename:" + szFileName + "path:" + szTempFilePath;
 		generateLog(str);
 	}
 
@@ -252,8 +187,7 @@ public class BusinessServer implements AnyChatServerEvent {
 	 * 接收扩展透明头道数据回调，
 	 */
 	@Override
-	public void OnAnyChatTransBufferEx(int dwUserId, byte[] lpBuf, int dwLen,
-			int wParam, int lParam, int dwTaskId) {
+	public void OnAnyChatTransBufferEx(int dwUserId, byte[] lpBuf, int dwLen, int wParam, int lParam, int dwTaskId) {
 		// TODO Auto-generated method stub
 
 		String str = "";
@@ -264,8 +198,7 @@ public class BusinessServer implements AnyChatServerEvent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		message.append("OnAnyChatTransBufferEx:" + " fromUserid:" + dwUserId
-				+ str);
+		message.append("OnAnyChatTransBufferEx:" + " fromUserid:" + dwUserId + str);
 		generateLog("OnAnyChatTransBufferEx:" + " fromUserid:" + dwUserId + str);
 	}
 
@@ -283,10 +216,8 @@ public class BusinessServer implements AnyChatServerEvent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		message.append("OnAnyChatSDKFilterData:" + " fromUserid:" + dwUserId
-				+ str);
+		message.append("OnAnyChatSDKFilterData:" + " fromUserid:" + dwUserId + str);
 		generateLog("OnAnyChatSDKFilterData:" + " fromUserid:" + dwUserId + str);
-
 	}
 
 	@Override
@@ -299,12 +230,9 @@ public class BusinessServer implements AnyChatServerEvent {
 	 * 文字消息回调，客户端调用文字发送api会触发该回调
 	 */
 	@Override
-	public void OnAnyChatRecvUserTextMsgCallBack(int dwRoomId, int dwSrcUserId,
-			int dwTarUserId, int bSecret, String szTextMessage, int dwLen) {
-		String str = "OnAnyChatRecvUserTextMsgCallBack: " + dwSrcUserId
-				+ " to " + dwTarUserId + " " + szTextMessage;
+	public void OnAnyChatRecvUserTextMsgCallBack(int dwRoomId, int dwSrcUserId,	int dwTarUserId, int bSecret, String szTextMessage, int dwLen) {
+		String str = "OnAnyChatRecvUserTextMsgCallBack: " + dwSrcUserId	+ " to " + dwTarUserId + " " + szTextMessage;
 		generateLog(str);
-
 	}
 
 	/**
@@ -312,10 +240,8 @@ public class BusinessServer implements AnyChatServerEvent {
 	 * 参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=20&extra=page%3D1
 	 */
 	@Override
-	public void OnAnyChatServerRecordCallBack(int dwUserId, int dwParam,
-			int dwRecordServerId, int dwElapse, String szRecordFileName) {
+	public void OnAnyChatServerRecordCallBack(int dwUserId, int dwParam, int dwRecordServerId, int dwElapse, String szRecordFileName) {
 		// TODO Auto-generated method stub
-
 		String str = "OnAnyChatServerRecordCallBack: dwUserId" + dwUserId + " szRecordFileName:" + szRecordFileName;
 		generateLog(str);
 	}
@@ -324,9 +250,7 @@ public class BusinessServer implements AnyChatServerEvent {
 	 * 视频呼叫事件回调，客户端调用API：BRAC_VideoCallControl会触发该回调
 	 */
 	@Override
-	public int OnAnyChatVideoCallEventCallBack(int dwEventType,
-			int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags,
-			int dwParam, String lpUserStr) {
+	public int OnAnyChatVideoCallEventCallBack(int dwEventType,	int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, String lpUserStr) {
 		String str = "OnAnyChatVideoCallEventCallBack: dwEventType:" + dwEventType + " dwSrcUserId:" + dwSrcUserId + 
 			" dwTarUserId:" + dwTarUserId + " dwErrorCode:" + dwErrorCode + " dwFlags:" + dwFlags + " dwParam:" + dwParam + " lpUserStr:" + lpUserStr;
 		generateLog(str);
