@@ -1,0 +1,348 @@
+package com.bairuitech.server;
+
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Vector;
+
+import com.bairuitech.anychat.AnyChatServerEvent;
+import com.bairuitech.anychat.AnyChatServerSDK;
+import com.bairuitech.anychat.AnyChatTransTaskOutParam;
+import com.bairuitech.anychat.AnyChatVerifyUserOutParam;
+
+/**
+ * AnyChat Platform Core SDK ---- Business Server
+ */
+public class BusinessServer implements AnyChatServerEvent {
+	public AnyChatServerSDK anyChatSDK;
+	public StringBuilder message = new StringBuilder();
+	public Vector<String> tableTitles = new Vector<String>();
+	public static int iUserIdSeed = 1;
+	public static final int COLUM_COUNT = 5;
+	public static final int ROOM_INDEX = 3;
+
+	// 在线用户列表
+	public static ArrayList<Integer> onlineusers = new ArrayList<Integer>();
+	
+	public BusinessServer() {
+
+	}
+
+	/**
+	 * 插入登录记录
+	 */
+	private void updateUserData(int userId, String name, String ip, String time) {
+		// 添加
+		if (userId != 0) {
+			Vector<Object> verctor = new Vector<Object>();
+			verctor.addElement(userId);
+			verctor.addElement(name);
+			verctor.addElement(ip);
+			verctor.addElement("");
+			verctor.addElement(time);
+		}
+
+	}
+
+	/**
+	 * 删除登录记录
+	 */
+	private void updateUserData(int userId) {
+
+		int index = -1;
+		if ((index = findUserDataById(userId)) != -1) {
+		}
+	}
+
+	/**
+	 * 更新用户登录房间状态讯息
+	 */
+	@SuppressWarnings("unchecked")
+	private void updateUserData(int userId, int roomId) {
+		int index = -1;
+		if ((index = findUserDataById(userId)) != -1) {
+		}
+	}
+
+	/**
+	 * 根据userid查找用户讯息的相关列
+	 */
+	private int findUserDataById(int userId) {
+		int index = -1;
+		return -1;
+	}
+
+	/**
+	 * 获取当前时间
+	 */
+	private String getCurrentTime() {
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm:ss:SS");
+		String strTime = "";
+		try {
+			strTime = sdf.format(date);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return strTime;
+
+	}
+
+	/**
+	 * 初始化AnyChat Sdk
+	 */
+	public void initSdk() {
+		anyChatSDK = new AnyChatServerSDK();
+		anyChatSDK.SetServerEvent(this); // 设置回调
+		anyChatSDK.InitSDK(0); // 初始化SDK
+		anyChatSDK.RegisterVerifyUserClass(new AnyChatVerifyUserOutParam());
+		String sdkVersion = anyChatSDK.GetSDKVersion();
+		message.append(sdkVersion + "\r\n");
+		System.out.println(message);
+	}
+
+	private void generateLog(String str) {
+		message.append(getCurrentTime() + "  ");
+		message.append(str);
+		message.append("\n");
+		System.out.println(message);
+	}
+
+	/**
+	 * 连接核心服务器回调消息
+	 */
+	@Override
+	public void OnAnyChatServerAppMessageCallBack(int dwMsg) {
+		String str = "";
+		if (dwMsg == 1) {
+			str = "Connect AnyChatCoreServer successed!";
+		} else {
+			str = "Connect AnyChatCoreServer failed!";
+		}
+		generateLog(str);
+		onlineusers.clear();
+	}
+
+	/**
+	 * 用户登录验证函数，可以在此函数中进行验证登录，赋值客户端userid等操作
+	 */
+	@Override
+	public int OnAnyChatVerifyUserCallBack(String szUserName, String szPassword, AnyChatVerifyUserOutParam outParam) {
+		outParam.SetUserId(iUserIdSeed);
+		outParam.SetUserLevel(0);
+		outParam.SetNickName(szUserName);
+		iUserIdSeed += 1;
+		String str = "OnVerifyUserCallBack: userid:" + iUserIdSeed + " username: " + szUserName;
+		generateLog(str);
+		return 0;
+	}
+
+	/**
+	 * 用户登录成功回调
+	 */
+	@Override
+	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr) {
+		System.out.print("OnUserLoginActionCallBack: userid:" + dwUserId
+				+ " username: " + szUserName + "\r\n");
+		// 测试扩展透明通道发送数据
+		AnyChatTransTaskOutParam outParam = new AnyChatTransTaskOutParam();
+		byte[] sendbuf = new byte[100];
+		int ret = AnyChatServerSDK.TransBufferEx(dwUserId, sendbuf,
+				sendbuf.length, 0, 0, 0, outParam);
+		System.out.print("TransBufferEx: ret:" + ret + " taskid: "
+				+ outParam.GetTaskId() + "\r\n");
+
+		String str = "OnAnyChatUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + " Ip: " + szIpAddr;
+		generateLog(str);
+		updateUserData(dwUserId, szUserName, szIpAddr, getCurrentTime());	
+	}
+
+	/**
+	 * 用户退出登录回调
+	 */
+	@Override
+	public void OnAnyChatUserLogoutActionCallBack(int dwUserId) {
+		String str = "OnUserLogoutActionCallBack: userid:" + dwUserId;
+		generateLog(str);
+		updateUserData(dwUserId);
+		
+		// 从在线用户列表中删除
+	    Iterator<Integer> it = onlineusers.iterator();
+	    while(it.hasNext())
+	    {
+	        if(it.next() == dwUserId)
+	        {
+	        	it.remove();
+	        	break;
+	        }
+	    }
+	    // 核心服务器会通知其它用户（如果是好友），提示好友下线，不需要业务服务器干预
+
+	}
+
+	/**
+	 * 用户退出登录回调
+	 */
+	@Override
+	public int OnAnyChatPrepareEnterRoomCallBack(int dwUserId, int dwRoomId,
+			String szRoomName, String szPassword) {
+		String str = "OnPrepareEnterRoomCallBack: userid:" + dwUserId
+				+ " roomid: " + dwRoomId;
+		generateLog(str);
+		return 0;
+	}
+
+	/**
+	 * 用户进入房间验证回调，可以在此函数中验证登录房间
+	 */
+	@Override
+	public void OnAnyChatUserEnterRoomActionCallBack(int dwUserId, int dwRoomId) {
+		String str = "OnUserEnterRoomActionCallBack: userid:" + dwUserId
+				+ " roomid: " + dwRoomId;
+		generateLog(str);
+		updateUserData(dwUserId, dwRoomId);
+	}
+
+	/**
+	 * 用户进入房间验证回调，可以在此函数中验证登录房间
+	 */
+	@Override
+	public void OnAnyChatUserLeaveRoomActionCallBack(int dwUserId, int dwRoomId) {
+		String str = "OnAnyChatUserLeaveRoomActionCallBack: userid:" + dwUserId
+				+ " roomid: " + dwRoomId;
+		generateLog(str);
+		updateUserData(dwUserId, -1);
+	}
+
+	/**
+	 * 接收文件回调
+	 */
+
+	@Override
+	public void OnAnyChatTransFile(int dwUserId, String szFileName,
+			String szTempFilePath, int dwFileLength, int wParam, int lParam,
+			int dwTaskId) {
+		// TODO Auto-generated method stub
+		String str = "OnAnyChatTransFile->" + "from:" + dwUserId + ";filename:"
+				+ szFileName + "path:" + szTempFilePath;
+		generateLog(str);
+	}
+
+	/**
+	 * 接收透明头道数据回调，
+	 */
+	@Override
+	public void OnAnyChatTransBuffer(int dwUserId, byte[] lpBuf, int dwLen) {
+		// TODO Auto-generated method stub
+		String str = "";
+		try {
+			str = new String(lpBuf, "GB2312");
+			System.out.println(str);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		generateLog("OnAnyChatTransBuffer:" + " fromUserid:" + dwUserId + str);
+	}
+
+	/**
+	 * 接收扩展透明头道数据回调，
+	 */
+	@Override
+	public void OnAnyChatTransBufferEx(int dwUserId, byte[] lpBuf, int dwLen,
+			int wParam, int lParam, int dwTaskId) {
+		// TODO Auto-generated method stub
+
+		String str = "";
+		try {
+			str = new String(lpBuf, "GB2312");
+			System.out.println(str);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		message.append("OnAnyChatTransBufferEx:" + " fromUserid:" + dwUserId
+				+ str);
+		generateLog("OnAnyChatTransBufferEx:" + " fromUserid:" + dwUserId + str);
+	}
+
+	/**
+	 * 接收SDKfilter数据回调
+	 */
+	@Override
+	public void OnAnyChatSDKFilterData(int dwUserId, byte[] lpBuf, int dwLen) {
+
+		String str = "";
+		try {
+			str = new String(lpBuf, "GB2312");
+			System.out.println(str);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		message.append("OnAnyChatSDKFilterData:" + " fromUserid:" + dwUserId
+				+ str);
+		generateLog("OnAnyChatSDKFilterData:" + " fromUserid:" + dwUserId + str);
+
+	}
+
+	@Override
+	public void OnAnyChatTimerEventCallBack() {
+		System.out.print("OnTimerEventCallBack\r\n");
+
+	}
+
+	/**
+	 * 文字消息回调，客户端调用文字发送api会触发该回调
+	 */
+	@Override
+	public void OnAnyChatRecvUserTextMsgCallBack(int dwRoomId, int dwSrcUserId,
+			int dwTarUserId, int bSecret, String szTextMessage, int dwLen) {
+		String str = "OnAnyChatRecvUserTextMsgCallBack: " + dwSrcUserId
+				+ " to " + dwTarUserId + " " + szTextMessage;
+		generateLog(str);
+
+	}
+
+	/**
+	 * 服务器录像回调函数，由中心录像服务器触发
+	 * 参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=20&extra=page%3D1
+	 */
+	@Override
+	public void OnAnyChatServerRecordCallBack(int dwUserId, int dwParam,
+			int dwRecordServerId, int dwElapse, String szRecordFileName) {
+		// TODO Auto-generated method stub
+
+		String str = "OnAnyChatServerRecordCallBack: dwUserId" + dwUserId + " szRecordFileName:" + szRecordFileName;
+		generateLog(str);
+	}
+
+	/**
+	 * 视频呼叫事件回调，客户端调用API：BRAC_VideoCallControl会触发该回调
+	 */
+	@Override
+	public int OnAnyChatVideoCallEventCallBack(int dwEventType,
+			int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags,
+			int dwParam, String lpUserStr) {
+		String str = "OnAnyChatVideoCallEventCallBack: dwEventType:" + dwEventType + " dwSrcUserId:" + dwSrcUserId + 
+			" dwTarUserId:" + dwTarUserId + " dwErrorCode:" + dwErrorCode + " dwFlags:" + dwFlags + " dwParam:" + dwParam + " lpUserStr:" + lpUserStr;
+		generateLog(str);
+		return 0;
+	}
+
+	/**
+	 *	用户信息控制回调，客户端调用API：BRAC_UserInfoControl会触发该回调
+	 */
+	@Override
+	public int OnAnyChatUserInfoCtrlCallBack(int dwSendUserId, int dwUserId, int dwCtrlCode, int wParam, int lParam, String lpStrValue) {
+		String str = "OnAnyChatUserInfoCtrlCallBack: dwSendUserId:" + dwSendUserId + " dwUserId:" + dwUserId + " dwCtrlCode:" + 
+			dwCtrlCode + " wParam:" + wParam + " lParam:" + lParam + " lpStrValue:" + lpStrValue;
+		generateLog(str);
+		return 0;
+	}
+	
+	
+}

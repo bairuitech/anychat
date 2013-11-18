@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	       http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+           
+    <context:annotation-config/>
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/login.do">loginController</prop>   <!-- key 浏览器的访问URL地址 -->
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="loginController" class="com.login.controler.LoginConller">
+		<!-- 引用方法名解析器
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver"/>
+		</property>
+		-->
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver"/>
+		</property>
+	</bean>
+	
+	<!-- 方法名解析器，这种比较常用 -->
+	<bean id="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/login.do">onSub</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 参数方法名解析器，这种通过前台传参数的方式指定请求的方法名，action代表参数名 -->
+	<bean id="paraMethodResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName">
+			<value>action</value>
+		</property>
+	</bean>
+	
+	
+	<!--：对模型视图名称的解析，即在模型视图名称添加前后缀 -->	
+	<!-- 定义视及路径，prefix="/"表示jsp都放在"/"根目录下面，suffix=".jsp"表示JSP页面的后缀都是.jsp -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"  p:prefix="/" p:suffix=".jsp"/>
+    
+     <!-- 4：Controller层异常处理-->
+	<bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView">
+			<value>error</value>
+		</property>
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframework.dao.DataAccessException" >error</prop>
+			</props>
+		</property>
+	</bean>
+	<!--：加载anychat业务服务器 -->	
+	<bean id="anyChat" lazy-init="false" class="com.bairuitech.server.BusinessServer" init-method="initSdk"/>
+    
+</beans>
