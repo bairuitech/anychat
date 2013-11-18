@@ -21,6 +21,21 @@
 #define BRAS_VIDEOCALL_EVENT_START      3        ///< 视频呼叫会话开始事件
 #define BRAS_VIDEOCALL_EVENT_FINISH     4        ///< 挂断（结束）呼叫会话
 
+// 用户信息控制类型定义（API：BRAS_UserInfoControl 传入参数、OnUserInfoControl回调参数）
+#define BRAS_USERINFO_CTRLCODE_KICKOUT		1	///< 将指定用户从系统中踢掉
+#define BRAS_USERINFO_CTRLCODE_SYNCDATA		2	///< 将指定用户的数据同步给客户端
+#define BRAS_USERINFO_CTRLCODE_FUNCCTRL		3	///< 客户端功能控制，wParam为功能参数组合
+#define BRAS_USERINFO_CTRLCODE_BLOCKIP		4	///< 阻止IP地址连接服务器，lpStrValue为IP地址字符串，支持通配符“*”
+#define BRAS_USERINFO_CTRLCODE_UNBLOCKIP	5	///< 允许IP地址连接服务器，lpStrValue为IP地址字符串，支持通配符“*”
+
+#define BRAS_USERINFO_CTRLCODE_ADDGROUP		20	///< 添加用户分组，wParam为分组Id，lpStrValue为分组名称
+#define BRAS_USERINFO_CTRLCODE_DELGROUP		21	///< 删除用户分组，wParam为分组Id
+#define BRAS_USERINFO_CTRLCODE_ADDFRIEND	22	///< 添加用户好友，wParam为好友Id
+#define BRAS_USERINFO_CTRLCODE_DELFRIEND	23	///< 删除用户好友，wParam为好友Id
+#define BRAS_USERINFO_CTRLCODE_SETGROUPRELATION	24	///< 设置好友与分组的关联关系，wParam为分组Id，lParam为好友Id，表示好友属于某个分组
+
+#define BRAS_USERINFO_CTRLCODE_APPDEFINE	100	///< 应用层自定义起始指令
+
 
 // 服务器应用程序消息回调函数定义
 typedef void (CALLBACK* BRAS_OnServerAppMessage_CallBack)(DWORD dwMsg, LPVOID lpUserValue);
@@ -53,7 +68,8 @@ typedef void (CALLBACK * BRAS_OnTransFile_CallBack)(DWORD dwUserId, LPCTSTR lpFi
 typedef void (CALLBACK * BRAS_OnServerRecord_CallBack)(DWORD dwUserId, DWORD dwParam, DWORD dwRecordServerId, DWORD dwElapse, LPCTSTR lpRecordFileName, LPVOID lpUserValue);
 // 视频通话消息通知回调函数定义
 typedef DWORD (CALLBACK * BRAS_OnVideoCallEvent_CallBack)(DWORD dwEventType, DWORD dwSrcUserId, DWORD dwTarUserId, DWORD dwErrorCode, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
-
+// 用户信息控制回调函数定义
+typedef DWORD (CALLBACK * BRAS_OnUserInfoControl_CallBack)(DWORD dwSendUserId, DWORD dwUserId, DWORD dwCtrlCode, DWORD wParam, DWORD lParam, LPCTSTR lpStrValue, LPVOID lpUserValue); 
 
 /**
  *	API 方法定义
@@ -89,7 +105,8 @@ BRAS_API DWORD BRAS_SetOnTransFileCallBack(BRAS_OnTransFile_CallBack lpFunction,
 BRAS_API DWORD BRAS_SetOnServerRecordCallBack(BRAS_OnServerRecord_CallBack lpFunction, LPVOID lpUserValue=NULL);
 // 设置视频通话消息通知回调函数
 BRAS_API DWORD BRAS_SetOnVideoCallEventCallBack(BRAS_OnVideoCallEvent_CallBack lpFunction, LPVOID lpUserValue=NULL);
-
+// 设置用户信息控制回调函数
+BRAS_API DWORD BRAS_SetOnUserInfoControlCallBack(BRAS_OnUserInfoControl_CallBack lpFunction, LPVOID lpUserValue=NULL);
 
 
 // 获取SDK版本信息
@@ -116,6 +133,17 @@ BRAS_API DWORD BRAS_StreamRecordCtrl(DWORD dwUserId, BOOL bStartRecord, DWORD dw
 
 // 视频呼叫事件控制（请求、回复、挂断等）
 BRAS_API DWORD BRAS_VideoCallControl(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags=0, DWORD dwParam=0, LPCTSTR lpUserStr=NULL);
+
+// 设置用户的详细信息
+BRAS_API DWORD BRAS_SetUserInfo(DWORD dwUserId, DWORD dwInfoId, LPCTSTR lpInfoValue, DWORD dwFlags=0);
+// 获取用户的详细信息
+BRAS_API DWORD BRAS_GetUserInfo(DWORD dwUserId, DWORD dwInfoId, TCHAR* lpInfoValue, DWORD dwSize);
+// 用户信息控制
+BRAS_API DWORD BRAS_UserInfoControl(DWORD dwUserId, DWORD dwCtrlCode, DWORD wParam=0, DWORD lParam=0, LPCTSTR lpStrValue=NULL);
+
+// SDK内核参数设置
+BRAS_API DWORD BRAS_SetSDKOption(DWORD optname, CHAR* optval, DWORD optlen);
+
 
 
 #endif //BR_ANYCHAT_SERVER_SDK_H__INCLUDED_

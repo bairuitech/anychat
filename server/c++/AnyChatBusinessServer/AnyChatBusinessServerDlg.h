@@ -20,6 +20,7 @@ public:
 
 public:
 	CString		m_strLogInfo;			///< 保存日志信息
+	DWORD		m_dwOnlineUsers;		///< 在线用户数
 
 
 	// 显示日志信息
@@ -31,6 +32,7 @@ public:
 	CEdit	m_ctrlEditLog;
 	CComboBox	m_ComboStyle;
 	int		m_iTargetId;
+	BOOL	m_bShowUserLog;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
@@ -50,9 +52,15 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnDestroy();
 	afx_msg void OnButtonSendbuf();
-	afx_msg void OnButtonTransBuffer();
-	afx_msg void OnButtonTransBufferEx();
 	afx_msg void OnButtonTransFile();
+	afx_msg void OnButtonTransBufferEx();
+	afx_msg void OnButtonTransBuffer();
+	afx_msg void OnButtonStartRecord();
+	afx_msg void OnButtonStopRecord();
+	afx_msg void OnCheckShowLog();
+	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnButtonKickOut();
+	afx_msg void OnButtonHangUp();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

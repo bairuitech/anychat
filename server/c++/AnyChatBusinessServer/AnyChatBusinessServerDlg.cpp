@@ -8,7 +8,6 @@
 #include "AnyChatServerSDK.h"
 #pragma comment(lib,"AnyChatServerSDK.lib")
 
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -20,6 +19,8 @@ static char THIS_FILE[] = __FILE__;
 #define SENDBUF_STYLE_ROOM		1		///< 房间广播
 #define SENDBUF_STYLE_USER		2		///< 指定用户
 
+#define TIMER_REFRESH_ONLINES	1		///< 刷新在线用户数定时器
+
 
 
 // 服务器应用程序消息回调函数定义
@@ -27,13 +28,19 @@ void CALLBACK OnServerAppMessageCallBack(DWORD dwMsg, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
 	if(dwMsg == BRAS_SERVERAPPMSG_CONNECTED)
+	{
+		lpServerDlg->m_dwOnlineUsers = 0;
 		lpServerDlg->AppendLogString("与AnyChat服务器连接成功！");
+	}
 	else if(dwMsg == BRAS_SERVERAPPMSG_DISCONNECT)
+	{
+		lpServerDlg->m_dwOnlineUsers = 0;
 		lpServerDlg->AppendLogString("与AnyChat服务器断开连接！");
+	}
 	else
 	{
 		CString strMsg;
-		strMsg.Format("收到服务器应用程序消息：%d",dwMsg);
+		strMsg.Format(_T("收到服务器应用程序消息：%d"),dwMsg);
 		lpServerDlg->AppendLogString(strMsg);
 	}
 }
@@ -59,10 +66,10 @@ DWORD CALLBACK VerifyUserCallBack(IN LPCTSTR lpUserName,IN LPCTSTR lpPassword, O
 	*lpUserID = dwUserIdSeed++;
 
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
-	if(lpServerDlg)
+	if(lpServerDlg && lpServerDlg->m_bShowUserLog)
 	{
 		CString strMsg;
-		strMsg.Format("VerifyUser(%s - %s) --> userid(%d)",lpUserName,lpPassword,(int)*lpUserID);
+		strMsg.Format(_T("VerifyUser(%s - %s) --> userid(%d)"),lpUserName,lpPassword,(int)*lpUserID);
 		lpServerDlg->AppendLogString(strMsg);
 	}
 	return 0;
@@ -71,10 +78,10 @@ DWORD CALLBACK VerifyUserCallBack(IN LPCTSTR lpUserName,IN LPCTSTR lpPassword, O
 DWORD CALLBACK PrepareEnterRoomCallBack(DWORD dwUserId, DWORD dwRoomId, LPCTSTR lpRoomName,LPCTSTR lpPassword, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
-	if(lpServerDlg)
+	if(lpServerDlg && lpServerDlg->m_bShowUserLog)
 	{
 		CString strMsg;
-		strMsg.Format("PrepareEnterRoom(dwUserId:%d - dwRoomId:%d)",(int)dwUserId,(int)dwRoomId);
+		strMsg.Format(_T("PrepareEnterRoom(dwUserId:%d - dwRoomId:%d)"),(int)dwUserId,(int)dwRoomId);
 		lpServerDlg->AppendLogString(strMsg);
 	}
 	return 0;
@@ -85,9 +92,13 @@ void CALLBACK OnUserLoginActionCallBack(DWORD dwUserId, LPCTSTR szUserName, DWOR
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
 	if(lpServerDlg)
 	{
-		CString strMsg;
-		strMsg.Format("OnUserLoginAction(dwUserId:%d - Name:%s)",(int)dwUserId,szUserName);
-		lpServerDlg->AppendLogString(strMsg);
+		lpServerDlg->m_dwOnlineUsers++;
+		if(lpServerDlg->m_bShowUserLog)
+		{
+			CString strMsg;
+			strMsg.Format(_T("OnUserLoginAction(dwUserId:%d - Name:%s)"),(int)dwUserId,szUserName);
+			lpServerDlg->AppendLogString(strMsg);
+		}
 	}
 }
 // 用户注销回调函数定义
@@ -96,19 +107,23 @@ void CALLBACK OnUserLogoutActionCallBack(DWORD dwUserId, LPVOID lpUserValue)
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
 	if(lpServerDlg)
 	{
-		CString strMsg;
-		strMsg.Format("OnUserLogoutAction(dwUserId:%d)",(int)dwUserId);
-		lpServerDlg->AppendLogString(strMsg);
+		lpServerDlg->m_dwOnlineUsers--;
+		if(lpServerDlg->m_bShowUserLog)
+		{
+			CString strMsg;
+			strMsg.Format(_T("OnUserLogoutAction(dwUserId:%d)"),(int)dwUserId);
+			lpServerDlg->AppendLogString(strMsg);
+		}
 	}
 }
 // 用户进入房间回调函数定义
 void CALLBACK OnUserEnterRoomActionCallBack(DWORD dwUserId, DWORD dwRoomId, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
-	if(lpServerDlg)
+	if(lpServerDlg && lpServerDlg->m_bShowUserLog)
 	{
 		CString strMsg;
-		strMsg.Format("OnUserEnterRoomAction(dwUserId:%d - dwRoomId:%d)",(int)dwUserId,(int)dwRoomId);
+		strMsg.Format(_T("OnUserEnterRoomAction(dwUserId:%d - dwRoomId:%d)"),(int)dwUserId,(int)dwRoomId);
 		lpServerDlg->AppendLogString(strMsg);
 	}
 }
@@ -116,21 +131,21 @@ void CALLBACK OnUserEnterRoomActionCallBack(DWORD dwUserId, DWORD dwRoomId, LPVO
 void CALLBACK OnUserLeaveRoomActionCallBack(DWORD dwUserId, DWORD dwRoomId, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
-	if(lpServerDlg)
+	if(lpServerDlg && lpServerDlg->m_bShowUserLog)
 	{
 		CString strMsg;
-		strMsg.Format("OnUserLeaveRoomAction(dwUserId:%d - dwRoomId:%d)",(int)dwUserId,(int)dwRoomId);
+		strMsg.Format(_T("OnUserLeaveRoomAction(dwUserId:%d - dwRoomId:%d)"),(int)dwUserId,(int)dwRoomId);
 		lpServerDlg->AppendLogString(strMsg);
 	}
 }
 // 上层业务自定义数据回调函数定义
-void CALLBACK OnRecvUserFilterDataCallBack(DWORD dwUserId, LPBYTE lpBuf, DWORD dwLen, LPVOID lpUserValue)
+void CALLBACK OnRecvUserFilterDataCallBack(DWORD dwUserId, BYTE* lpBuf, DWORD dwLen, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
-	if(lpServerDlg)
+	if(lpServerDlg && lpServerDlg->m_bShowUserLog)
 	{
 		CString strMsg;
-		strMsg.Format("OnRecvUserFilterData(dwUserId:%d - Buf:%s)",(int)dwUserId,lpBuf);
+		strMsg.Format(_T("OnRecvUserFilterData(dwUserId:%d - Buf:%s)"),(int)dwUserId,lpBuf);
 		lpServerDlg->AppendLogString(strMsg);
 	}
 }
@@ -139,10 +154,10 @@ void CALLBACK OnRecvUserFilterDataCallBack(DWORD dwUserId, LPBYTE lpBuf, DWORD d
 void CALLBACK OnRecvUserTextMsgCallBack(DWORD dwRoomId, DWORD dwSrcUserId, DWORD dwTarUserId, BOOL bSecret, LPCTSTR lpTextMessage, DWORD dwLen, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
-	if(lpServerDlg)
+	if(lpServerDlg && lpServerDlg->m_bShowUserLog)
 	{
 		CString strMsg;
-		strMsg.Format("OnRecvUserTextMsg(dwRoomId:%d, dwSrcUserId:%d, dwTarUserId:%d - Buf:%s)",(int)dwRoomId,(int)dwSrcUserId,(int)dwTarUserId,lpTextMessage);
+		strMsg.Format(_T("OnRecvUserTextMsg(dwRoomId:%d, dwSrcUserId:%d, dwTarUserId:%d - Buf:%s)"),(int)dwRoomId,(int)dwSrcUserId,(int)dwTarUserId,lpTextMessage);
 		lpServerDlg->AppendLogString(strMsg);
 	}
 }
@@ -151,7 +166,7 @@ void CALLBACK OnRecvUserTextMsgCallBack(DWORD dwRoomId, DWORD dwSrcUserId, DWORD
 void CALLBACK OnTransBufferCallBack(DWORD dwUserId, LPBYTE lpBuf, DWORD dwLen, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
-	if(lpServerDlg)
+	if(lpServerDlg && lpServerDlg->m_bShowUserLog)
 	{
 		CString strMsg;
 		strMsg.Format(_T("OnTransBufferCallBack(dwUserId:%d - BufLen:%d)"),(int)dwUserId,dwLen);
@@ -163,7 +178,7 @@ void CALLBACK OnTransBufferCallBack(DWORD dwUserId, LPBYTE lpBuf, DWORD dwLen, L
 void CALLBACK OnTransBufferExCallBack(DWORD dwUserId, LPBYTE lpBuf, DWORD dwLen, DWORD wParam, DWORD lParam, DWORD dwTaskId, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
-	if(lpServerDlg)
+	if(lpServerDlg && lpServerDlg->m_bShowUserLog)
 	{
 		CString strMsg;
 		strMsg.Format(_T("OnTransBufferExCallBack(dwUserId:%d - BufLen:%d - wParam:%d - lParam:%d - dwTaskId:%d)"),(int)dwUserId,dwLen, wParam, lParam, dwTaskId);
@@ -174,7 +189,7 @@ void CALLBACK OnTransBufferExCallBack(DWORD dwUserId, LPBYTE lpBuf, DWORD dwLen,
 void CALLBACK OnTransFileCallBack(DWORD dwUserId, LPCTSTR lpFileName, LPCTSTR lpTempFilePath, DWORD dwFileLength, DWORD wParam, DWORD lParam, DWORD dwTaskId, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
-	if(lpServerDlg)
+	if(lpServerDlg && lpServerDlg->m_bShowUserLog)
 	{
 		CString strMsg;
 		strMsg.Format(_T("OnTransFileCallBack(dwUserId:%d, PathName:%s - wParam:%d - lParam:%d - dwTaskId:%d)"),(int)dwUserId, lpFileName, wParam, lParam, dwTaskId);
@@ -182,11 +197,25 @@ void CALLBACK OnTransFileCallBack(DWORD dwUserId, LPCTSTR lpFileName, LPCTSTR lp
 	}
 }
 
+// 服务器录像回调函数定义
+void CALLBACK OnServerRecord_CallBack(DWORD dwUserId, DWORD dwParam, DWORD dwRecordServerId, DWORD dwElapse, LPCTSTR lpRecordFileName, LPVOID lpUserValue)
+{
+	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
+	if(lpServerDlg)
+	{
+		CString strMsg;
+		strMsg.Format(_T("OnServerRecordCallBack(dwUserId:%d, FileName:%s)"),(int)dwUserId, lpRecordFileName);
+		lpServerDlg->AppendLogString(strMsg);
+	}
+}
+
+
 CAnyChatBusinessServerDlg::CAnyChatBusinessServerDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CAnyChatBusinessServerDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CAnyChatBusinessServerDlg)
 	m_iTargetId = 0;
+	m_bShowUserLog = FALSE;
 	//}}AFX_DATA_INIT
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -198,6 +227,7 @@ void CAnyChatBusinessServerDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_LOG, m_ctrlEditLog);
 	DDX_Control(pDX, IDC_COMBO_STYLE, m_ComboStyle);
 	DDX_Text(pDX, IDC_EDIT_TARGETID, m_iTargetId);
+	DDX_Check(pDX, IDC_CHECK_SHOWLOG, m_bShowUserLog);
 	//}}AFX_DATA_MAP
 }
 
@@ -207,9 +237,15 @@ BEGIN_MESSAGE_MAP(CAnyChatBusinessServerDlg, CDialog)
 	ON_WM_QUERYDRAGICON()
 	ON_WM_DESTROY()
 	ON_BN_CLICKED(IDC_BUTTON_SENDBUF, OnButtonSendbuf)
+	ON_BN_CLICKED(IDC_BUTTONTRANSFILE, OnButtonTransFile)
+	ON_BN_CLICKED(IDC_BUTTONTRANSBUFFEREX, OnButtonTransBufferEx)
 	ON_BN_CLICKED(IDC_BUTTON_TRANSBUFFER, OnButtonTransBuffer)
-	ON_BN_CLICKED(IDC_BUTTON_TRANSBUFFEREX, OnButtonTransBufferEx)
-	ON_BN_CLICKED(IDC_BUTTON_TRANSFILE, OnButtonTransFile)
+	ON_BN_CLICKED(IDC_BUTTON_STARTRECORD, OnButtonStartRecord)
+	ON_BN_CLICKED(IDC_BUTTON_STOPRECORD, OnButtonStopRecord)
+	ON_BN_CLICKED(IDC_CHECK_SHOWLOG, OnCheckShowLog)
+	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_BUTTON_KICKOUT, OnButtonKickOut)
+	ON_BN_CLICKED(IDC_BUTTON_HANGUP, OnButtonHangUp)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -222,13 +258,16 @@ BOOL CAnyChatBusinessServerDlg::OnInitDialog()
 
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
+
+	m_bShowUserLog = TRUE;
+	UpdateData(FALSE);
 	
-	DWORD dwIndex = m_ComboStyle.AddString("所有用户广播");
+	DWORD dwIndex = m_ComboStyle.AddString(_T("所有用户广播"));
 	m_ComboStyle.SetItemData(dwIndex,SENDBUF_STYLE_SYSTEM);
 	m_ComboStyle.SetCurSel(dwIndex);
-	dwIndex = m_ComboStyle.AddString("指定房间广播");
+	dwIndex = m_ComboStyle.AddString(_T("指定房间广播"));
 	m_ComboStyle.SetItemData(dwIndex,SENDBUF_STYLE_ROOM);
-	dwIndex = m_ComboStyle.AddString("指定用户发送");
+	dwIndex = m_ComboStyle.AddString(_T("指定用户发送"));
 	m_ComboStyle.SetItemData(dwIndex,SENDBUF_STYLE_USER);
 
 	
@@ -258,9 +297,12 @@ BOOL CAnyChatBusinessServerDlg::OnInitDialog()
 	BRAS_SetOnTransBufferExCallBack(OnTransBufferExCallBack, this);
 	// 设置文件传输回调函数
 	BRAS_SetOnTransFileCallBack(OnTransFileCallBack, this);
+	// 设置服务器录像回调函数
+	BRAS_SetOnServerRecordCallBack(OnServerRecord_CallBack, this);
 	
 	BRAS_InitSDK(0);
 
+	SetTimer(TIMER_REFRESH_ONLINES, 1000, NULL);
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -332,45 +374,6 @@ void CAnyChatBusinessServerDlg::AppendLogString(CString logstr)
 	m_ctrlEditLog.LineScroll(m_ctrlEditLog.GetLineCount());
 }
 
-// 使用透明通道函数向指定用户发送缓冲区
-void CAnyChatBusinessServerDlg::OnButtonTransBuffer() 
-{
-	UpdateData(TRUE);
-	CString strBuffer;
-	GetDlgItemText(IDC_EDIT_SENDBUF,strBuffer);
-	if(strBuffer.IsEmpty())
-		return;
-	if(m_iTargetId == -1)
-	{
-		AppendLogString("BRAS_TransBuffer 方法目标用户不能为-1");
-		return;
-	}
-	BRAS_TransBuffer(m_iTargetId,(LPBYTE)strBuffer.GetBuffer(0),strBuffer.GetLength());
-}
-// 使用透明通道扩展函数向指定用户发送大数据块缓冲区
-void CAnyChatBusinessServerDlg::OnButtonTransBufferEx() 
-{
-	UpdateData(TRUE);
-	if(m_iTargetId == -1)
-	{
-		AppendLogString("BRAS_TransBufferEx 方法目标用户不能为-1");
-		return;
-	}
-	BYTE szBuf[1024*10] = {0};		// 实验，传一个空缓冲区给目标用户，判断是否能接收到
-	DWORD wParam = 1;				// wParam、lParam是附带参数，便于上层应用扩展
-	DWORD lParam = 2;
-	DWORD dwFlags = 0;
-	DWORD dwTaskId = 0;
-	szBuf[1000] = 'Y';			// 演示的需要，为了验证收到的数据是否正确，在缓冲区中间某个位置设置一个标志，对方接收后，可判断该标志是否为设定值
-	DWORD ret = BRAS_TransBufferEx(m_iTargetId, szBuf, sizeof(szBuf), wParam, lParam, dwFlags, dwTaskId);
-	CString strLog;
-	if(ret == 0)
-		strLog.Format("BRAS_TransBufferEx 任务提交成功，TaskId:%d", dwTaskId);
-	else
-		strLog.Format("BRAS_TransBufferEx 任务提交失败，ErrorCode:%d", ret);
-	AppendLogString(strLog);
-}
-// 向指定用户传输文件
 void CAnyChatBusinessServerDlg::OnButtonTransFile() 
 {
 	UpdateData(TRUE);
@@ -390,9 +393,119 @@ void CAnyChatBusinessServerDlg::OnButtonTransFile()
 		DWORD ret = BRAS_TransFile(m_iTargetId, dlg.GetPathName(), wParam, lParam, dwFlags, dwTaskId);
 		CString strLog;
 		if(ret == 0)
-			strLog.Format("BRAS_TransFile 任务提交成功，TaskId:%d", dwTaskId);
+			strLog.Format(_T("BRAS_TransFile 任务提交成功，TaskId:%d"), dwTaskId);
 		else
-			strLog.Format("BRAS_TransFile 任务提交失败，ErrorCode:%d", ret);
+			strLog.Format(_T("BRAS_TransFile 任务提交失败，ErrorCode:%d"), ret);
 		AppendLogString(strLog);
-	}	
+	}
+}
+
+// 使用透明通道扩展函数向指定用户发送大数据块缓冲区
+void CAnyChatBusinessServerDlg::OnButtonTransBufferEx() 
+{
+	UpdateData(TRUE);
+	if(m_iTargetId == -1)
+	{
+		AppendLogString("BRAS_TransBufferEx 方法目标用户不能为-1");
+		return;
+	}
+	BYTE szBuf[1024*10] = {0};		// 实验，传一个空缓冲区给目标用户，判断是否能接收到
+	DWORD wParam = 1;				// wParam、lParam是附带参数，便于上层应用扩展
+	DWORD lParam = 2;
+	DWORD dwFlags = 0;
+	DWORD dwTaskId = 0;
+	DWORD ret = BRAS_TransBufferEx(m_iTargetId, szBuf, sizeof(szBuf), wParam, lParam, dwFlags, dwTaskId);
+	CString strLog;
+	if(ret == 0)
+		strLog.Format(_T("BRAS_TransBufferEx 任务提交成功，TaskId:%d"), dwTaskId);
+	else
+		strLog.Format(_T("BRAS_TransBufferEx 任务提交失败，ErrorCode:%d"), ret);
+	AppendLogString(strLog);
+}
+// 使用透明通道函数向指定用户发送缓冲区
+void CAnyChatBusinessServerDlg::OnButtonTransBuffer() 
+{
+	UpdateData(TRUE);
+	CString strBuffer;
+	GetDlgItemText(IDC_EDIT_SENDBUF,strBuffer);
+	if(strBuffer.IsEmpty())
+		return;
+	if(m_iTargetId == -1)
+	{
+		AppendLogString("BRAS_TransBuffer 方法目标用户不能为-1");
+		return;
+	}
+	BRAS_TransBuffer(m_iTargetId,(LPBYTE)strBuffer.GetBuffer(0),strBuffer.GetLength());	
+}
+
+void CAnyChatBusinessServerDlg::OnButtonStartRecord() 
+{
+	UpdateData(TRUE);
+	if(m_iTargetId == 0)
+	{
+		MessageBox("请输入目标用户编号", "警告", MB_OK);
+		GetDlgItem(IDC_EDIT_TARGETID)->SetFocus();
+		return;
+	}
+	BRAS_StreamRecordCtrl(m_iTargetId, TRUE, 0, 0, -1);
+}
+
+void CAnyChatBusinessServerDlg::OnButtonStopRecord() 
+{
+	UpdateData(TRUE);
+	if(m_iTargetId == 0)
+	{
+		MessageBox("请输入目标用户编号", "警告", MB_OK);
+		GetDlgItem(IDC_EDIT_TARGETID)->SetFocus();
+		return;
+	}
+	BRAS_StreamRecordCtrl(m_iTargetId, FALSE, 0, 0, -1);
+}
+/**
+ *	用户选择是否显示用户活动日志
+ *	当并发用户量大时，显示用户活动日志会影响到服务器程序的性能
+ */
+void CAnyChatBusinessServerDlg::OnCheckShowLog() 
+{
+
+	
+}
+
+void CAnyChatBusinessServerDlg::OnTimer(UINT nIDEvent) 
+{
+	if(nIDEvent == TIMER_REFRESH_ONLINES)
+	{
+		CString strNotify;
+		strNotify.Format("在线用户数：%d", m_dwOnlineUsers);
+		SetDlgItemText(IDC_STATIC_ACTIVEINFO, strNotify);
+	}
+	CDialog::OnTimer(nIDEvent);
+}
+/**
+ *	将目标用户从系统中踢掉，目标用户将会强制下线
+ */
+void CAnyChatBusinessServerDlg::OnButtonKickOut() 
+{
+	UpdateData(TRUE);
+	if(m_iTargetId == 0)
+	{
+		MessageBox("请输入目标用户编号", "警告", MB_OK);
+		GetDlgItem(IDC_EDIT_TARGETID)->SetFocus();
+		return;
+	}
+	BRAS_UserInfoControl(m_iTargetId, BRAS_USERINFO_CTRLCODE_KICKOUT);
+}
+/**
+ *	挂断目标用户的视频呼叫会话，视频呼叫会话为客户端采用API：BRAC_VideoCallControl建立的会话业务
+ */
+void CAnyChatBusinessServerDlg::OnButtonHangUp() 
+{
+	UpdateData(TRUE);
+	if(m_iTargetId == 0)
+	{
+		MessageBox("请输入目标用户编号", "警告", MB_OK);
+		GetDlgItem(IDC_EDIT_TARGETID)->SetFocus();
+		return;
+	}
+	BRAS_VideoCallControl(BRAS_VIDEOCALL_EVENT_FINISH, m_iTargetId, 0);
 }
