@@ -33,7 +33,7 @@ public class SampleServer implements AnyChatServerEvent{
 		char ch = 0;
 		do{
 			if(ch != '\r')
-				System.out.print(getCurrentTime() + "Business server(Java) still running, press 'q' to exit...\r\n");
+				System.out.print(getCurrentTime() + "Business server(Java) still running, press 'q' to exit...(Online users: " + onlineusers.size() + ")\r\n");
 			Thread.sleep(100);
 		}while((ch=(char)reader.read()) != 'q');
 		anychat.Release();
@@ -105,9 +105,7 @@ public class SampleServer implements AnyChatServerEvent{
 	        	it.remove();
 	        	break;
 	        }
-	    }
-	    // 核心服务器会通知其它用户（如果是好友），提示好友下线，不需要业务服务器干预
-	    
+	    }    
 	}
 
 	// 用户准备进入房间验证，如果允许用户进入房间，则必须返回0，则否返回出错代码
