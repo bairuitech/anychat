@@ -27,6 +27,7 @@ public class CallCenterServer implements AnyChatServerEvent{
 		anychat = new AnyChatServerSDK();
 		anychat.SetServerEvent(new CallCenterServer());
 		anychat.InitSDK(0);
+		anychat.RegisterVerifyUserClass(new AnyChatVerifyUserOutParam());
 		System.out.print(getCurrentTime() + "Welcome use AnyChat! (" + anychat.GetSDKVersion() + ")\r\n");
 		Reader reader = new InputStreamReader(System.in);
 		char ch = 0;

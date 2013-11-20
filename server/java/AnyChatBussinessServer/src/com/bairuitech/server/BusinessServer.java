@@ -18,7 +18,7 @@ import com.bairuitech.anychat.*;
  */
 public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	private static final long serialVersionUID = 1L;
-	public AnyChatServerSDK anyChatSDK;
+	public AnyChatServerSDK anychat;
 	public StringBuilder message = new StringBuilder();
 	public JTextArea showMessage;
 	public JScrollPane jPanlMsg;
@@ -211,10 +211,11 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 * 初始化AnyChat Sdk
 	 */
 	private void initSdk() {
-		anyChatSDK = new AnyChatServerSDK();
-		anyChatSDK.SetServerEvent(this); // 设置回调
-		anyChatSDK.InitSDK(0); // 初始化SDK
-		String sdkVersion = anyChatSDK.GetSDKVersion();
+		anychat = new AnyChatServerSDK();
+		anychat.SetServerEvent(this); // 设置回调
+		anychat.InitSDK(0); // 初始化SDK
+		anychat.RegisterVerifyUserClass(new AnyChatVerifyUserOutParam());
+		String sdkVersion = anychat.GetSDKVersion();
 		message.append(sdkVersion + "\r\n");
 		showMessage.setText(message.toString());
 	}
@@ -231,8 +232,8 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 */
 	public static void main(String[] args) {
 
-		BusinessServer anychat = new BusinessServer();
-		anychat.initSdk();
+		BusinessServer server = new BusinessServer();
+		server.initSdk();
 	}
 
 	/**
@@ -243,7 +244,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 		public void windowClosing(WindowEvent e) {
 			try {
 				// 退出程序 释放SDK占用资源
-				anyChatSDK.Release();
+				anychat.Release();
 			} catch (Exception exception) {
 				exception.printStackTrace();
 			}
@@ -289,8 +290,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 */
 	@Override
 	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr) {
-		System.out.print("OnUserLoginActionCallBack: userid:" + dwUserId
-				+ " username: " + szUserName + "\r\n");
+		System.out.print("OnUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + "\r\n");
 		// 测试扩展透明通道发送数据
 /*		AnyChatTransTaskOutParam outParam = new AnyChatTransTaskOutParam();
 		byte[] sendbuf = new byte[100];
@@ -331,10 +331,8 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 * 用户退出登录回调
 	 */
 	@Override
-	public int OnAnyChatPrepareEnterRoomCallBack(int dwUserId, int dwRoomId,
-			String szRoomName, String szPassword) {
-		String str = "OnPrepareEnterRoomCallBack: userid:" + dwUserId
-				+ " roomid: " + dwRoomId;
+	public int OnAnyChatPrepareEnterRoomCallBack(int dwUserId, int dwRoomId, String szRoomName, String szPassword) {
+		String str = "OnPrepareEnterRoomCallBack: userid:" + dwUserId + " roomid: " + dwRoomId;
 		generateLog(str);
 		return 0;
 	}
@@ -344,8 +342,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 */
 	@Override
 	public void OnAnyChatUserEnterRoomActionCallBack(int dwUserId, int dwRoomId) {
-		String str = "OnUserEnterRoomActionCallBack: userid:" + dwUserId
-				+ " roomid: " + dwRoomId;
+		String str = "OnUserEnterRoomActionCallBack: userid:" + dwUserId + " roomid: " + dwRoomId;
 		generateLog(str);
 		updateUserData(dwUserId, dwRoomId);
 	}
@@ -355,8 +352,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 */
 	@Override
 	public void OnAnyChatUserLeaveRoomActionCallBack(int dwUserId, int dwRoomId) {
-		String str = "OnAnyChatUserLeaveRoomActionCallBack: userid:" + dwUserId
-				+ " roomid: " + dwRoomId;
+		String str = "OnAnyChatUserLeaveRoomActionCallBack: userid:" + dwUserId + " roomid: " + dwRoomId;
 		generateLog(str);
 		updateUserData(dwUserId, -1);
 	}
@@ -366,9 +362,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 */
 
 	@Override
-	public void OnAnyChatTransFile(int dwUserId, String szFileName,
-			String szTempFilePath, int dwFileLength, int wParam, int lParam,
-			int dwTaskId) {
+	public void OnAnyChatTransFile(int dwUserId, String szFileName, String szTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId) {
 		// TODO Auto-generated method stub
 		String str = "OnAnyChatTransFile->" + "from:" + dwUserId + ";filename:"
 				+ szFileName + "path:" + szTempFilePath;
@@ -398,8 +392,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 * 接收扩展透明头道数据回调，
 	 */
 	@Override
-	public void OnAnyChatTransBufferEx(int dwUserId, byte[] lpBuf, int dwLen,
-			int wParam, int lParam, int dwTaskId) {
+	public void OnAnyChatTransBufferEx(int dwUserId, byte[] lpBuf, int dwLen, int wParam, int lParam, int dwTaskId) {
 		// TODO Auto-generated method stub
 
 		String str = "";
@@ -410,8 +403,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		message.append("OnAnyChatTransBufferEx:" + " fromUserid:" + dwUserId
-				+ str);
+		message.append("OnAnyChatTransBufferEx:" + " fromUserid:" + dwUserId + str);
 		generateLog("OnAnyChatTransBufferEx:" + " fromUserid:" + dwUserId + str);
 	}
 
@@ -429,9 +421,8 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		message.append("OnAnyChatSDKFilterData:" + " fromUserid:" + dwUserId
-				+ str);
-		generateLog("OnAnyChatSDKFilterData:" + " fromUserid:" + dwUserId + str);
+		message.append("OnanychatFilterData:" + " fromUserid:" + dwUserId + str);
+		generateLog("OnanychatFilterData:" + " fromUserid:" + dwUserId + str);
 
 	}
 
@@ -445,10 +436,8 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 * 文字消息回调，客户端调用文字发送api会触发该回调
 	 */
 	@Override
-	public void OnAnyChatRecvUserTextMsgCallBack(int dwRoomId, int dwSrcUserId,
-			int dwTarUserId, int bSecret, String szTextMessage, int dwLen) {
-		String str = "OnAnyChatRecvUserTextMsgCallBack: " + dwSrcUserId
-				+ " to " + dwTarUserId + " " + szTextMessage;
+	public void OnAnyChatRecvUserTextMsgCallBack(int dwRoomId, int dwSrcUserId, int dwTarUserId, int bSecret, String szTextMessage, int dwLen) {
+		String str = "OnAnyChatRecvUserTextMsgCallBack: " + dwSrcUserId + " to " + dwTarUserId + " " + szTextMessage;
 		generateLog(str);
 
 	}
@@ -458,8 +447,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 * 参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=20&extra=page%3D1
 	 */
 	@Override
-	public void OnAnyChatServerRecordCallBack(int dwUserId, int dwParam,
-			int dwRecordServerId, int dwElapse, String szRecordFileName) {
+	public void OnAnyChatServerRecordCallBack(int dwUserId, int dwParam, int dwRecordServerId, int dwElapse, String szRecordFileName) {
 		// TODO Auto-generated method stub
 
 		String str = "OnAnyChatServerRecordCallBack: dwUserId" + dwUserId + " szRecordFileName:" + szRecordFileName;
