@@ -14,6 +14,7 @@ public class SampleServer implements AnyChatServerEvent{
 
 	public static AnyChatServerSDK anychat;
 	public static int iUserIdSeed = 1;
+	public static boolean bShowActionLog = true;			// 是否显示用户活动日志信息
 	
 	// 在线用户列表
 	public static ArrayList<Integer> onlineusers = new ArrayList<Integer>();
@@ -32,7 +33,9 @@ public class SampleServer implements AnyChatServerEvent{
 		Reader reader = new InputStreamReader(System.in);
 		char ch = 0;
 		do{
-			if(ch != '\r')
+			if(ch == 'd')
+				bShowActionLog = !bShowActionLog;
+			else if(ch != '\r')
 				System.out.print(getCurrentTime() + "Business server(Java) still running, press 'q' to exit...(Online users: " + onlineusers.size() + ")\r\n");
 			Thread.sleep(100);
 		}while((ch=(char)reader.read()) != 'q');
@@ -73,29 +76,23 @@ public class SampleServer implements AnyChatServerEvent{
 		outParam.SetUserId(iUserIdSeed);		// 若身份验证成功，必须分配一个唯一的userid
 		outParam.SetUserLevel(0);
 		outParam.SetNickName(szUserName);
-		
-		System.out.print(getCurrentTime() + "OnVerifyUserCallBack: userid:" + iUserIdSeed + " username: " + szUserName + "\r\n");
+		if(bShowActionLog)
+			System.out.print(getCurrentTime() + "OnVerifyUserCallBack: userid:" + iUserIdSeed + " username: " + szUserName + "\r\n");
 		iUserIdSeed += 1;
 		return 0;
 	}
 	
 	@Override
 	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr) {
-		System.out.print(getCurrentTime() + "OnUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + "\r\n");
-		// 演示如何使用TransBufferEx获取taskid
-		/*AnyChatTransTaskOutParam outParam = new AnyChatTransTaskOutParam();
-		byte[] sendbuf = new byte[100];
-		int ret = AnyChatServerSDK.TransBufferEx(dwUserId, sendbuf, sendbuf.length, 0, 0, 0, outParam);
-		System.out.print(getCurrentTime() + "TransBufferEx: ret:" + ret + " taskid: " + outParam.GetTaskId() + "\r\n");
-		*/
+		if(bShowActionLog)
+			System.out.print(getCurrentTime() + "OnUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + "ip: " + szIpAddr + "\r\n");
 
 		// 将本地用户加入在线用户列表
-		onlineusers.add(dwUserId);	
+		onlineusers.add(dwUserId);
 	}
 	
 	@Override
 	public void OnAnyChatUserLogoutActionCallBack(int dwUserId) {
-		System.out.print(getCurrentTime() + "OnUserLogoutActionCallBack: userid:" + dwUserId + "\r\n");	
 		// 从在线用户列表中删除
 	    Iterator<Integer> it = onlineusers.iterator();
 	    while(it.hasNext())
@@ -105,24 +102,29 @@ public class SampleServer implements AnyChatServerEvent{
 	        	it.remove();
 	        	break;
 	        }
-	    }    
+	    }
+	    if(bShowActionLog)
+			System.out.print(getCurrentTime() + "OnAnyChatUserLogoutActionCallBack: userid:" + dwUserId + "\r\n");
 	}
 
 	// 用户准备进入房间验证，如果允许用户进入房间，则必须返回0，则否返回出错代码
 	@Override
 	public int OnAnyChatPrepareEnterRoomCallBack(int dwUserId, int dwRoomId, String szRoomName, String szPassword) {
-		System.out.print(getCurrentTime() + "OnPrepareEnterRoomCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
+		if(bShowActionLog)
+			System.out.print(getCurrentTime() + "OnPrepareEnterRoomCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
 		return 0;
 	}
 	
 	@Override
 	public void OnAnyChatUserEnterRoomActionCallBack(int dwUserId, int dwRoomId) {
-		System.out.print(getCurrentTime() + "OnUserEnterRoomActionCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
+		if(bShowActionLog)
+			System.out.print(getCurrentTime() + "OnUserEnterRoomActionCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
 	}
 
 	@Override
 	public void OnAnyChatUserLeaveRoomActionCallBack(int dwUserId, int dwRoomId) {
-		System.out.print(getCurrentTime() + "OnUserLeaveRoomActionCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
+		if(bShowActionLog)
+			System.out.print(getCurrentTime() + "OnUserLeaveRoomActionCallBack: userid:" + dwUserId + " roomid: " + dwRoomId + "\r\n");
 	}
 	
 	@Override
@@ -160,7 +162,8 @@ public class SampleServer implements AnyChatServerEvent{
 	 */
 	@Override
 	public void OnAnyChatRecvUserTextMsgCallBack(int dwRoomId, int dwSrcUserId, int dwTarUserId, int bSecret, String szTextMessage, int dwLen) {
-		System.out.print(getCurrentTime() + "OnAnyChatRecvUserTextMsgCallBack: " + dwSrcUserId + " to " + dwTarUserId + " " + szTextMessage +"\r\n");
+		if(bShowActionLog)
+			System.out.print(getCurrentTime() + "OnAnyChatRecvUserTextMsgCallBack: " + dwSrcUserId + " to " + dwTarUserId + " " + szTextMessage +"\r\n");
 		
 	}
 
@@ -172,7 +175,8 @@ public class SampleServer implements AnyChatServerEvent{
 	public void OnAnyChatServerRecordCallBack(int dwUserId, int dwParam, int dwRecordServerId, int dwElapse, String szRecordFileName) {
 		// TODO Auto-generated method stub
 		String str = "OnAnyChatServerRecordCallBack: dwUserId" + dwUserId + " szRecordFileName:" + szRecordFileName;
-		System.out.print(getCurrentTime() + str + "\r\n");
+		if(bShowActionLog)
+			System.out.print(getCurrentTime() + str + "\r\n");
 	}
 
 	/**
@@ -182,7 +186,8 @@ public class SampleServer implements AnyChatServerEvent{
 	public int OnAnyChatVideoCallEventCallBack(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, String lpUserStr) {
 		String str = "OnAnyChatVideoCallEventCallBack: dwEventType:" + dwEventType + " dwSrcUserId:" + dwSrcUserId + 
 			" dwTarUserId:" + dwTarUserId + " dwErrorCode:" + dwErrorCode + " dwFlags:" + dwFlags + " dwParam:" + dwParam + " lpUserStr:" + lpUserStr;
-		System.out.print(getCurrentTime() + str + "\r\n");
+		if(bShowActionLog)
+			System.out.print(getCurrentTime() + str + "\r\n");
 		return 0;
 	}
 
@@ -193,7 +198,8 @@ public class SampleServer implements AnyChatServerEvent{
 	public int OnAnyChatUserInfoCtrlCallBack(int dwSendUserId, int dwUserId, int dwCtrlCode, int wParam, int lParam, String lpStrValue) {
 		String str = "OnAnyChatUserInfoCtrlCallBack: dwSendUserId:" + dwSendUserId + " dwUserId:" + dwUserId + " dwCtrlCode:" + 
 			dwCtrlCode + " wParam:" + wParam + " lParam:" + lParam + " lpStrValue:" + lpStrValue;
-		System.out.print(getCurrentTime() + str + "\r\n");
+		if(bShowActionLog)
+			System.out.print(getCurrentTime() + str + "\r\n");
 		return 0;
 	}
 
