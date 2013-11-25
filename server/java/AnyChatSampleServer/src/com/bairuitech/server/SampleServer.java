@@ -136,7 +136,9 @@ public class SampleServer implements AnyChatServerEvent{
 	@Override
 	public void OnAnyChatTransBuffer(int dwUserId, byte[] lpBuf, int dwLen) {
 		// TODO Auto-generated method stub
-		
+		if(bShowActionLog)
+			System.out.print(getCurrentTime() + "OnAnyChatTransBuffer: userid:" + dwUserId + "len: " + dwLen + " timestamp: " + 
+				anychat.SetSDKOptionInt(AnyChatServerSDK.BRAS_SO_GETTRANSBUFTIMESTAMP, dwUserId) + "\r\n");
 	}
 
 	@Override
