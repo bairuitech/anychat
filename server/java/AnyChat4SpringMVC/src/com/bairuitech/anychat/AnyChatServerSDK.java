@@ -23,6 +23,8 @@ public class AnyChatServerSDK
 	public static final int BRAS_USERINFO_CTRLCODE_DELFRIEND=	23;	///< 删除用户好友，wParam为好友Id
 	public static final int BRAS_USERINFO_CTRLCODE_SETGROUPRELATION=24;	///< 设置好友与分组的关联关系，wParam为分组Id，lParam为好友Id，表示好友属于某个分组
 	
+	// 内核参数控制（API：SetSDKOption 传入参数）
+	public static final int BRAS_SO_GETTRANSBUFTIMESTAMP	=	1;	///< 获取透明通道时间戳（传入参数为userid）
 
 	AnyChatServerEvent event;
 	
@@ -66,6 +68,8 @@ public class AnyChatServerSDK
 	
 	// 中心端录像控制
 	public static native int StreamRecordCtrl(int dwUserId, int bStartRecord, int dwFlags, int dwParam, int dwRecordServerId);
+	// 发送透明通道数据给录像服务器
+	public static native int TransBuffer2RecordServer(int dwUserId, byte[] buf, int len, int dwParam, int dwRecordServerId);
 	
 	// 视频呼叫事件控制（请求、回复、挂断等）
 	public static native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String lpUserStr);
