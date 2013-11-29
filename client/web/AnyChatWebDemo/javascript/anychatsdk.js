@@ -406,7 +406,7 @@ function BRAC_TransBuffer(dwUserId, lpBuf) {
 }
 // 透明通道传送缓冲区扩展
 function BRAC_TransBufferEx(dwUserId, lpBuf, wParam, lParam, dwFlags) {
-	return anychat.TransBufferEx(dwUserId, lpBuf, 0, wParam, lParam, dwFlags);
+	return anychat.TransBufferEx(dwUserId, lpBuf, wParam, lParam, dwFlags);
 }
 // 传送文件
 function BRAC_TransFile(dwUserId, lpLocalPathName, wParam, lParam, dwFlags) {
