@@ -102,7 +102,7 @@ void CALLBACK OnUserLoginActionCallBack(DWORD dwUserId, LPCTSTR szUserName, DWOR
 	}
 }
 // 用户注销回调函数定义
-void CALLBACK OnUserLogoutActionCallBack(DWORD dwUserId, LPVOID lpUserValue)
+void CALLBACK OnUserLogoutActionExCallBack(DWORD dwUserId, DWORD dwErrorCode, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
 	if(lpServerDlg)
@@ -111,7 +111,7 @@ void CALLBACK OnUserLogoutActionCallBack(DWORD dwUserId, LPVOID lpUserValue)
 		if(lpServerDlg->m_bShowUserLog)
 		{
 			CString strMsg;
-			strMsg.Format(_T("OnUserLogoutAction(dwUserId:%d)"),(int)dwUserId);
+			strMsg.Format(_T("OnUserLogoutAction(dwUserId:%d, dwErrorCode)"),(int)dwUserId, dwErrorCode);
 			lpServerDlg->AppendLogString(strMsg);
 		}
 	}
@@ -281,8 +281,8 @@ BOOL CAnyChatBusinessServerDlg::OnInitDialog()
 	BRAS_SetPrepareEnterRoomCallBack(PrepareEnterRoomCallBack, this);
 	// 设置用户登录成功回调函数
 	BRAS_SetOnUserLoginActionCallBack(OnUserLoginActionCallBack, this);
-	// 设置用户注销回调函数
-	BRAS_SetOnUserLogoutActionCallBack(OnUserLogoutActionCallBack, this);
+	// 设置用户注销回调函数（扩展）
+	BRAS_SetOnUserLogoutActionExCallBack(OnUserLogoutActionExCallBack, this);
 	// 设置用户进入房间回调函数
 	BRAS_SetOnUserEnterRoomActionCallBack(OnUserEnterRoomActionCallBack, this);
 	// 设置用户离开房间回调函数
@@ -302,6 +302,7 @@ BOOL CAnyChatBusinessServerDlg::OnInitDialog()
 	
 	BRAS_InitSDK(0);
 
+	m_dwOnlineUsers = 0;
 	SetTimer(TIMER_REFRESH_ONLINES, 1000, NULL);
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -467,8 +468,7 @@ void CAnyChatBusinessServerDlg::OnButtonStopRecord()
  */
 void CAnyChatBusinessServerDlg::OnCheckShowLog() 
 {
-
-	
+	UpdateData(TRUE);
 }
 
 void CAnyChatBusinessServerDlg::OnTimer(UINT nIDEvent) 

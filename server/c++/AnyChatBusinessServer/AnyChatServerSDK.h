@@ -36,6 +36,11 @@
 
 #define BRAS_USERINFO_CTRLCODE_APPDEFINE	100	///< 应用层自定义起始指令
 
+#define BRAS_SO_GETTRANSBUFTIMESTAMP		1	///< 获取透明通道时间戳
+
+// 初始化标志（API：BRAS_InitSDK 传入参数）
+#define BRAS_INITFLAGS_MULTITHREADS		0x01	///< 多线程模式
+
 
 // 服务器应用程序消息回调函数定义
 typedef void (CALLBACK* BRAS_OnServerAppMessage_CallBack)(DWORD dwMsg, LPVOID lpUserValue);
@@ -50,6 +55,8 @@ typedef DWORD (CALLBACK* BRAS_PrepareEnterRoom_CallBack)(DWORD dwUserId, DWORD d
 typedef void (CALLBACK* BRAS_OnUserLoginAction_CallBack)(DWORD dwUserId, LPCTSTR szUserName, DWORD dwLevel, LPCTSTR szIpAddr, LPVOID lpUserValue);
 // 用户注销回调函数定义
 typedef void (CALLBACK* BRAS_OnUserLogoutAction_CallBack)(DWORD dwUserId, LPVOID lpUserValue);
+// 用户注销扩展回调函数定义（增加注销的错误代码）
+typedef void (CALLBACK* BRAS_OnUserLogoutActionEx_CallBack)(DWORD dwUserId, DWORD dwErrorCode, LPVOID lpUserValue);
 // 用户进入房间回调函数定义
 typedef void (CALLBACK* BRAS_OnUserEnterRoomAction_CallBack)(DWORD dwUserId, DWORD dwRoomId, LPVOID lpUserValue);
 // 用户离开房间回调函数定义
@@ -87,6 +94,8 @@ BRAS_API DWORD BRAS_SetPrepareEnterRoomCallBack(BRAS_PrepareEnterRoom_CallBack l
 BRAS_API DWORD BRAS_SetOnUserLoginActionCallBack(BRAS_OnUserLoginAction_CallBack lpFunction, LPVOID lpUserValue=NULL);
 // 设置用户注销回调函数
 BRAS_API DWORD BRAS_SetOnUserLogoutActionCallBack(BRAS_OnUserLogoutAction_CallBack lpFunction, LPVOID lpUserValue=NULL);
+// 设置用户注销扩展回调函数
+BRAS_API DWORD BRAS_SetOnUserLogoutActionExCallBack(BRAS_OnUserLogoutActionEx_CallBack lpFunction, LPVOID lpUserValue=NULL);
 // 设置用户进入房间回调函数
 BRAS_API DWORD BRAS_SetOnUserEnterRoomActionCallBack(BRAS_OnUserEnterRoomAction_CallBack lpFunction, LPVOID lpUserValue=NULL);
 // 设置用户离开房间回调函数
@@ -130,6 +139,8 @@ BRAS_API DWORD BRAS_TransFile(DWORD dwUserId, LPCTSTR lpLocalPathName, DWORD wPa
 
 // 中心端录像控制
 BRAS_API DWORD BRAS_StreamRecordCtrl(DWORD dwUserId, BOOL bStartRecord, DWORD dwFlags, DWORD dwParam, DWORD dwRecordServerId);
+// 发送透明通道数据给录像服务器
+BRAS_API DWORD BRAS_TransBuffer2RecordServer(DWORD dwUserId, LPBYTE lpBuf, DWORD dwLen, DWORD dwParam, DWORD dwRecordServerId);
 
 // 视频呼叫事件控制（请求、回复、挂断等）
 BRAS_API DWORD BRAS_VideoCallControl(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags=0, DWORD dwParam=0, LPCTSTR lpUserStr=NULL);
