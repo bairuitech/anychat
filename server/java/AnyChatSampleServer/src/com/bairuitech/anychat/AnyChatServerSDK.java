@@ -25,7 +25,10 @@ public class AnyChatServerSDK
 	
 	// 内核参数控制（API：SetSDKOption 传入参数）
 	public static final int BRAS_SO_GETTRANSBUFTIMESTAMP	=	1;	///< 获取透明通道时间戳（传入参数为userid）
-
+	
+	// 初始化标志（API：BRAS_InitSDK 传入参数）
+	public static final int BRAS_INITFLAGS_MULTITHREADS		=	1;	///< 多线程模式
+	
 	AnyChatServerEvent event;
 	
 	// 设置事件回调通知接口
@@ -116,10 +119,10 @@ public class AnyChatServerSDK
 			this.event.OnAnyChatUserLoginActionCallBack(dwUserId, szUserName, dwLevel, szIpAddr);
 	}
 	// 用户注销回调函数定义
-	private void OnAnyChatUserLogoutActionCallBack(int dwUserId)
+	private void OnAnyChatUserLogoutActionExCallBack(int dwUserId, int dwErrorCode)
 	{
 		if(this.event != null)
-			this.event.OnAnyChatUserLogoutActionCallBack(dwUserId);
+			this.event.OnAnyChatUserLogoutActionExCallBack(dwUserId, dwErrorCode);
 	}
 	
 	// 用户申请进入房间回调函数定义
