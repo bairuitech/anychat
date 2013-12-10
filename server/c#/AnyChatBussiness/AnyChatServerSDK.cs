@@ -25,10 +25,14 @@ namespace ANYCHATAPI
 		public const int BRAS_VIDEOCALL_EVENT_START 	= 3;
 		//#define BRAS_VIDEOCALL_EVENT_FINISH     4        ///< 挂断（结束）呼叫会话
 		public const int BRAS_VIDEOCALL_EVENT_FINISH 	= 4;
-
+		
+		// 初始化标志（API：BRAS_InitSDK 传入参数）
+		public const int BRAS_INITFLAGS_MULTITHREADS	= 1;	///< 多线程模式
+		
+		
         /**
-		*    回调函数定义
-		*/
+		 *    回调函数定义
+		 */
 
         // 服务器应用程序消息回调函数定义
         //typedef void (CALLBACK* BRAS_OnServerAppMessage_CallBack)(DWORD dwMsg, LPVOID lpUserValue);
@@ -53,6 +57,10 @@ namespace ANYCHATAPI
         // 用户注销回调函数定义
         //typedef void (CALLBACK* BRAS_OnUserLogoutAction_CallBack)(DWORD dwUserId, LPVOID lpUserValue);
         public delegate void OnUserLogoutActionCallBack(int userId, int userValue);
+		
+		// 用户注销回调函数定义（扩展）
+        //typedef void (CALLBACK* BRAS_OnUserLogoutActionEx_CallBack)(DWORD dwUserId, DWORD dwErrorCode, LPVOID lpUserValue);
+        public delegate void OnUserLogoutActionExCallBack(int userId, int errorcode, int userValue);
 
         // 用户进入房间回调函数定义
         //typedef void (CALLBACK* BRAS_OnUserEnterRoomAction_CallBack)(DWORD dwUserId, DWORD dwRoomId, LPVOID lpUserValue);
@@ -124,6 +132,11 @@ namespace ANYCHATAPI
         //BRAS_API DWORD BRAS_SetOnUserLogoutActionCallBack(BRAS_OnUserLogoutAction_CallBack lpFunction, LPVOID lpUserValue=NULL);
         [DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetOnUserLogoutActionCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern int BRAS_SetOnUserLogoutActionCallBack(OnUserLogoutActionCallBack function, int userValue);
+		
+		// 设置用户注销回调函数（扩展）
+        //BRAS_API DWORD BRAS_SetOnUserLogoutActionExCallBack(BRAS_OnUserLogoutActionEx_CallBack lpFunction, LPVOID lpUserValue=NULL);
+        [DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetOnUserLogoutActionExCallBack", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BRAS_SetOnUserLogoutActionExCallBack(OnUserLogoutActionExCallBack function, int userValue);
 
         // 设置用户进入房间回调函数
         //BRAS_API DWORD BRAS_SetOnUserEnterRoomActionCallBack(BRAS_OnUserEnterRoomAction_CallBack lpFunction, LPVOID lpUserValue=NULL);
@@ -216,6 +229,11 @@ namespace ANYCHATAPI
 		//BRAS_API DWORD BRAS_StreamRecordCtrl(DWORD dwUserId, BOOL bStartRecord, DWORD dwFlags, DWORD dwParam, DWORD dwRecordServerId);
 		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_StreamRecordCtrl", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int BRAS_StreamRecordCtrl(int dwUserId, int bStartRecord, int dwFlags, int dwParam, int dwRecordServerId);
+		
+		// 发送透明通道数据给录像服务器
+		//BRAS_API DWORD BRAS_TransBuffer2RecordServer(DWORD dwUserId, LPBYTE lpBuf, DWORD dwLen, DWORD dwParam, DWORD dwRecordServerId);
+		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_TransBuffer2RecordServer", CallingConvention = CallingConvention.Cdecl)]
+		public static extern int BRAS_TransBuffer2RecordServer(int dwUserId, byte[] lpBuf, int dwLen, int dwParam, int dwRecordServerId);
 		
 		// 视频呼叫事件控制（请求、回复、挂断等）
 		//BRAS_API DWORD BRAS_VideoCallControl(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags=0, DWORD dwParam=0, LPCTSTR lpUserStr=NULL);

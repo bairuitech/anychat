@@ -308,8 +308,8 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 * 用户退出登录回调
 	 */
 	@Override
-	public void OnAnyChatUserLogoutActionCallBack(int dwUserId) {
-		String str = "OnUserLogoutActionCallBack: userid:" + dwUserId;
+	public void OnAnyChatUserLogoutActionExCallBack(int dwUserId, int dwErrorCode) {
+		String str = "OnUserLogoutActionExCallBack: userid:" + dwUserId + " errorcode:" + dwErrorCode;
 		generateLog(str);
 		updateUserData(dwUserId);
 		

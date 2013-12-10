@@ -111,8 +111,8 @@ public class BusinessServer implements AnyChatServerEvent {
 	 * 用户退出登录回调
 	 */
 	@Override
-	public void OnAnyChatUserLogoutActionCallBack(int dwUserId) {
-		String str = "OnUserLogoutActionCallBack: userid:" + dwUserId;
+	public void OnAnyChatUserLogoutActionExCallBack(int dwUserId, int dwErrorCode) {
+		String str = "OnUserLogoutActionExCallBack: userid:" + dwUserId + " errorcode:" + dwErrorCode;
 		generateLog(str);
 		
 		// 从在线用户列表中删除

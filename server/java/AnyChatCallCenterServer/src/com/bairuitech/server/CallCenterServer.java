@@ -137,8 +137,8 @@ public class CallCenterServer implements AnyChatServerEvent{
 	}
 	
 	@Override
-	public void OnAnyChatUserLogoutActionCallBack(int dwUserId) {
-		System.out.print(getCurrentTime() + "OnUserLogoutActionCallBack: userid:" + dwUserId + "\r\n");	
+	public void OnAnyChatUserLogoutActionExCallBack(int dwUserId, int dwErrorCode) {
+		System.out.print(getCurrentTime() + "OnUserLogoutActionExCallBack: userid:" + dwUserId + " errorcode:" + dwErrorCode + "\r\n");	
 		// 从在线用户列表中删除
 	    Iterator<Integer> it = onlineusers.iterator();
 	    while(it.hasNext())

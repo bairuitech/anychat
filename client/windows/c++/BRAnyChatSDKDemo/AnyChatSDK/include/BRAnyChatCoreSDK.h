@@ -52,7 +52,10 @@ enum BRAC_VideoShowDriver{
 #define BRAC_FUNC_AUDIO_AUTOVOLUME	0x00000100L	///< 允许SDK自动控制Mic录音音量
 #define BRAC_FUNC_NET_SUPPORTUPNP	0x00000200L	///< 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
 #define BRAC_FUNC_DISABLEDECODE		0x00000400L	///< 禁止对收到的数据进行解码和播放，为了提高代理客户端的数据转发性能，可设置该标志，否则不能设置该标志
-
+#define BRAC_FUNC_AUDIO_FORBIDCFGHW	0x00001000L	///< 禁止修改音频硬件配置
+#define BRAC_FUNC_CORE_FORBIDWINMSG	0x00002000L	///< 禁止使用windows消息循环
+#define BRAC_FUNC_AUDIO_LARGEBUFFER	0x00004000L	///< 音频大缓冲区模式，适合音乐播放类应用
+#define BRAC_FUNC_NET_LARGEDELAY	0x00010000L	///< 网络高延迟模式，适用于卫星网络环境
 
 // 内核参数定义（API：BRAC_SetSDKOption、BRAC_GetSDKOption 传入参数）
 #define BRAC_SO_AUDIO_VADCTRL				1	///< 音频静音检测控制（参数为：int型：1打开，0关闭）

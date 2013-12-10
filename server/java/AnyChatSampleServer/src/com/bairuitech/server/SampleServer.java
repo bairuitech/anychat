@@ -92,7 +92,7 @@ public class SampleServer implements AnyChatServerEvent{
 	}
 	
 	@Override
-	public void OnAnyChatUserLogoutActionCallBack(int dwUserId) {
+	public void OnAnyChatUserLogoutActionExCallBack(int dwUserId, int dwErrorCode) {
 		// 从在线用户列表中删除
 	    Iterator<Integer> it = onlineusers.iterator();
 	    while(it.hasNext())
@@ -104,7 +104,7 @@ public class SampleServer implements AnyChatServerEvent{
 	        }
 	    }
 	    if(bShowActionLog)
-			System.out.print(getCurrentTime() + "OnAnyChatUserLogoutActionCallBack: userid:" + dwUserId + "\r\n");
+			System.out.print(getCurrentTime() + "OnUserLogoutActionExCallBack: userid:" + dwUserId + " errorcode:" + dwErrorCode + "\r\n");
 	}
 
 	// 用户准备进入房间验证，如果允许用户进入房间，则必须返回0，则否返回出错代码

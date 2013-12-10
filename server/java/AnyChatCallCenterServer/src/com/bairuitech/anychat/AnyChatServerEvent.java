@@ -15,7 +15,7 @@ public interface AnyChatServerEvent {
 	// 用户登录成功回调函数定义
 	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr);
 	// 用户注销回调函数定义
-	public void OnAnyChatUserLogoutActionCallBack(int dwUserId);
+	public void OnAnyChatUserLogoutActionExCallBack(int dwUserId, int dwErrorCode);
 	
 	// 用户申请进入房间回调函数定义
 	public int OnAnyChatPrepareEnterRoomCallBack(int dwUserId, int dwRoomId, String szRoomName, String szPassword);
