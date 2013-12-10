@@ -3,6 +3,7 @@ package com.bairuitech.demo;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -52,6 +53,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 	private TimerTask mTimerTask;
 	private Handler handler;
 
+	@SuppressLint("HandlerLeak")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
