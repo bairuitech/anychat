@@ -34,10 +34,6 @@
 
         ret = -1
         ret = BRAC_EnterRoom(CInt(Room.Text), "", 0)
-        If (ret <> 0) Then
-            MsgBox("进入房间失败！")
-            Exit Sub
-        End If
 
         Me.Hide()
         MainWnd.Show()

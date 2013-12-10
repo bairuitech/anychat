@@ -132,6 +132,7 @@ Module MainFunc
                 End If
             Case WM_GV_ENTERROOM
                 If (lParam = 0) Then
+                    PrintInfo("进入房间成功")
                     ret = -1
                     ret = BRAC_SetVideoPos(-1, MainWnd.LocalVideo.Handle, 0, 0, MainWnd.LocalVideo.Width, MainWnd.LocalVideo.Height)
                     If (ret <> 0) Then

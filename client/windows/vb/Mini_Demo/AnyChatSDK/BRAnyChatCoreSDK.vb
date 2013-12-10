@@ -233,7 +233,7 @@ Module BRAnyChatCoreSDK
 	
 	'// 视频通话消息通知回调函数定义
 	'typedef void (CALLBACK * BRAC_VideoCallEvent_CallBack)(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
-	Public Delegate Sub BRAC_VideoCallEvent_CallBack)(ByVal dwEventType As Integer, ByVal dwUserId As Integer, ByVal dwErrorCode As Integer, ByVal dwFlags As Integer, ByVal dwParam As Integer, ByVal lpUserStr As String, ByVal lpUserValue As IntPtr);
+    Public Delegate Sub BRAC_VideoCallEvent_CallBack(ByVal dwEventType As Integer, ByVal dwUserId As Integer, ByVal dwErrorCode As Integer, ByVal dwFlags As Integer, ByVal dwParam As Integer, ByVal lpUserStr As String, ByVal lpUserValue As IntPtr)
 
     '/**
     ' *  API方法定义
