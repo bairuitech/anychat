@@ -272,7 +272,7 @@ public class AnyChatCoreSDK
 			break;
 		case AnyChatDefine.WM_GV_LINKCLOSE:
 			if(baseEvent != null)
-				baseEvent.OnAnyChatLinkCloseMessage(wParam);
+				baseEvent.OnAnyChatLinkCloseMessage(lParam);
 			break;
 		case AnyChatDefine.WM_GV_ONLINEUSER:
 			if(baseEvent != null)
