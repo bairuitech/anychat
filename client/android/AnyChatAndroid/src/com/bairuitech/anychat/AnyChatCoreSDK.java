@@ -124,6 +124,11 @@ public class AnyChatCoreSDK
     public native int UserSpeakControl(int userid, int bopen);
 	// 用户音、视频录制（中心服务器录像）
 	public native int StreamRecordCtrl(int userid, int bstartrecord, int flags, int param);
+	
+	// 获取指定音频设备的当前音量
+	public native int AudioGetVolume(int device);
+	// 设置指定音频设备的音量
+	public native int AudioSetVolume(int device, int volume);
     
     // 获取指定用户的字符串类型状态
     public native String QueryUserStateString(int userid, int infoname);
