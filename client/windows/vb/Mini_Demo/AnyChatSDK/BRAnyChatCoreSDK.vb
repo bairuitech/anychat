@@ -466,7 +466,7 @@ Module BRAnyChatCoreSDK
     '// 枚举本地音频采集设备
     'BRAC_API DWORD BRAC_EnumAudioCapture(CHAR** lpDeviceName, DWORD& dwDeviceNum);
     <DllImport(AnyChatSDKDLL, EntryPoint:="BRAC_EnumAudioCapture", CallingConvention:=CallingConvention.Cdecl)> _
-    Function BRAC_EnumAudioCapture(ByRef lpDeviceName As Integer, ByRef dwDeviceNum As Integer) As Integer
+    Function BRAC_EnumAudioCapture(ByRef lpDeviceName As IntPtr, ByRef dwDeviceNum As Integer) As Integer
     End Function
 
     '// 选择指定的音频采集设备
