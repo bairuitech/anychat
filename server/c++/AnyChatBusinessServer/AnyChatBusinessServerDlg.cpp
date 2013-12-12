@@ -111,7 +111,7 @@ void CALLBACK OnUserLogoutActionExCallBack(DWORD dwUserId, DWORD dwErrorCode, LP
 		if(lpServerDlg->m_bShowUserLog)
 		{
 			CString strMsg;
-			strMsg.Format(_T("OnUserLogoutAction(dwUserId:%d, dwErrorCode)"),(int)dwUserId, dwErrorCode);
+			strMsg.Format(_T("OnUserLogoutAction(dwUserId:%d, dwErrorCode:%d)"),(int)dwUserId, dwErrorCode);
 			lpServerDlg->AppendLogString(strMsg);
 		}
 	}
