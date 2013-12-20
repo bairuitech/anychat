@@ -291,9 +291,9 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 		outParam.SetUserId(iUserIdSeed);
 		outParam.SetUserLevel(0);
 		outParam.SetNickName(szUserName);
-		iUserIdSeed += 1;
 		String str = "OnVerifyUserCallBack: userid:" + iUserIdSeed + " username: " + szUserName;
 		generateLog(str);
+		iUserIdSeed += 1;
 		return 0;
 	}
 
