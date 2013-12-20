@@ -4,8 +4,11 @@ import com.bairuitech.anychat.AnyChatTransTaskOutParam;
 
 public class AnyChatServerSDK
 {
-	public static final int BRAS_SERVERAPPMSG_CONNECTED		= 	1;	///< 与AnyChat核心服务器连接成功
-	public static final int BRAS_SERVERAPPMSG_DISCONNECT	=	2;	///< 与AnyChat核心服务器断开连接
+	public static final int BRAS_MESSAGE_CORESERVERCONN		=	10;	///< 与核心服务器的连接消息，wParam为errorcode
+	public static final int BRAS_MESSAGE_RECORDSERVERCONN	=	11;	///< 与录像服务器的连接消息，wParam为errorcode，lParam为recordserverid
+	public static final int BRAS_MESSAGE_LOGINSERVERCONN	=	12;	///< 与登录服务器的连接消息，wParam为errorcode，lParam为loginserverid
+	public static final int BRAS_MESSAGE_ROOMSERVERCONN		=	13;	///< 与房间服务器的连接消息，wParam为errorcode，lParam为roomserverid
+	public static final int BRAS_MESSAGE_MEDIASERVERCONN	=	14;	///< 与流媒体服务器的连接消息，wParam为errorcode，lParam为mediaserverid
 	
 	// 视频呼叫事件类型定义（API：BRAS_VideoCallControl 传入参数、OnVideoCallEvent回调参数）
 	public static final int BRAS_VIDEOCALL_EVENT_REQUEST    =	1;  ///< 呼叫请求
@@ -91,10 +94,10 @@ public class AnyChatServerSDK
 
 	
 	// 服务器应用程序消息回调函数定义
-	private void OnAnyChatServerAppMessageCallBack(int dwMsg)
+	private void OnAnyChatServerAppMessageExCallBack(int dwNotifyMessage, int wParam, int lParam)
 	{
 		if(this.event != null)
-			this.event.OnAnyChatServerAppMessageCallBack(dwMsg);
+			this.event.OnAnyChatServerAppMessageExCallBack(dwNotifyMessage, wParam, lParam);
 	}
 	// SDK定时器回调函数定义
 	private void OnAnyChatTimerEventCallBack()

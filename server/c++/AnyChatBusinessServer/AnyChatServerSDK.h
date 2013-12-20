@@ -15,6 +15,13 @@
 #define BRAS_SERVERAPPMSG_CONNECTED		1		///< 连接AnyChat服务器成功
 #define BRAS_SERVERAPPMSG_DISCONNECT	2		///< 与AnyChat服务器断开连接
 
+// 服务器消息类型定义（回调事件：BRAS_OnServerAppMessageEx_CallBack 参数）
+#define BRAS_MESSAGE_CORESERVERCONN			10	///< 与核心服务器的连接消息，wParam为errorcode
+#define BRAS_MESSAGE_RECORDSERVERCONN		11	///< 与录像服务器的连接消息，wParam为errorcode，lParam为recordserverid
+#define BRAS_MESSAGE_LOGINSERVERCONN		12	///< 与登录服务器的连接消息，wParam为errorcode，lParam为loginserverid
+#define BRAS_MESSAGE_ROOMSERVERCONN			13	///< 与房间服务器的连接消息，wParam为errorcode，lParam为roomserverid
+#define BRAS_MESSAGE_MEDIASERVERCONN		14	///< 与流媒体服务器的连接消息，wParam为errorcode，lParam为mediaserverid
+
 // 视频呼叫事件类型定义（API：BRAS_VideoCallControl 传入参数、OnVideoCallEvent回调参数）
 #define BRAS_VIDEOCALL_EVENT_REQUEST    1        ///< 呼叫请求
 #define BRAS_VIDEOCALL_EVENT_REPLY      2        ///< 呼叫请求回复
@@ -44,6 +51,8 @@
 
 // 服务器应用程序消息回调函数定义
 typedef void (CALLBACK* BRAS_OnServerAppMessage_CallBack)(DWORD dwMsg, LPVOID lpUserValue);
+// 服务器应用程序消息（扩展）回调函数定义
+typedef void (CALLBACK* BRAS_OnServerAppMessageEx_CallBack)(DWORD dwNotifyMessage, DWORD wParam, DWORD lParam, LPVOID lpUserValue);
 // SDK定时器回调函数定义（上层应用可以在该回调中处理定时任务，而不需要额外开启线程，或是定时器）
 typedef void (CALLBACK* BRAS_OnTimerEvent_CallBack)(LPVOID lpUserValue);
 
@@ -83,6 +92,8 @@ typedef DWORD (CALLBACK * BRAS_OnUserInfoControl_CallBack)(DWORD dwSendUserId, D
  */
 // 设置服务器应用程序消息回调函数
 BRAS_API DWORD BRAS_SetOnServerAppMessageCallBack(BRAS_OnServerAppMessage_CallBack lpFunction, LPVOID lpUserValue=NULL);
+// 设置服务器应用程序消息（扩展）回调函数
+BRAS_API DWORD BRAS_SetOnServerAppMessageExCallBack(BRAS_OnServerAppMessageEx_CallBack lpFunction, LPVOID lpUserValue=NULL);
 // 设置SDK定时器回调函数（dwElapse：定时器间隔，单位：ms）
 BRAS_API DWORD BRAS_SetTimerEventCallBack(DWORD dwElapse, BRAS_OnTimerEvent_CallBack lpFunction, LPVOID lpUserValue=NULL);
 

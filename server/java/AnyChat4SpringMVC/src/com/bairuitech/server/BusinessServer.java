@@ -68,15 +68,26 @@ public class BusinessServer implements AnyChatServerEvent {
 	 * 连接核心服务器回调消息
 	 */
 	@Override
-	public void OnAnyChatServerAppMessageCallBack(int dwMsg) {
+	public void OnAnyChatServerAppMessageExCallBack(int dwNotifyMessage, int wParam, int lParam) {
 		String str = "";
-		if (dwMsg == 1) {
-			str = "Connect AnyChatCoreServer successed!";
-		} else {
-			str = "Connect AnyChatCoreServer failed!";
+		if(dwNotifyMessage == AnyChatServerSDK.BRAS_MESSAGE_CORESERVERCONN)
+		{
+			if(wParam == 0)
+				str = "Success connected with anychatcoreserver...";
+			else
+				str = "ERROR: Disconnected from the anychatcoreserver, errorcode:" + wParam;
+			onlineusers.clear();
 		}
+		else if(dwNotifyMessage == AnyChatServerSDK.BRAS_MESSAGE_RECORDSERVERCONN)
+		{
+			if(wParam == 0)
+				str = "Success connected with anychatrecordserver(id:" + lParam + ") ...";
+			else
+				str = "ERROR: Disconnected from the anychatrecordserver, errorcode:" + wParam;
+		}
+		else
+			str = "OnServerAppMessageExCallBack, dwNotifyMessage:" + dwNotifyMessage + " wParam:" + wParam + " lParam:" + lParam;
 		generateLog(str);
-		onlineusers.clear();
 	}
 
 	/**

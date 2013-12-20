@@ -6,7 +6,7 @@ import com.bairuitech.anychat.AnyChatVerifyUserOutParam;
 public interface AnyChatServerEvent {
 	
 	// 服务器应用程序消息回调函数定义
-	public void OnAnyChatServerAppMessageCallBack(int dwMsg);
+	public void OnAnyChatServerAppMessageExCallBack(int dwNotifyMessage, int wParam, int lParam);
 	// SDK定时器回调函数定义
 	public void OnAnyChatTimerEventCallBack();
 	

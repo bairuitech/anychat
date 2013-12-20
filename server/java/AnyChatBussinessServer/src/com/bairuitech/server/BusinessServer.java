@@ -120,7 +120,6 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	/**
 	 * 更新用户登录房间状态讯息
 	 */
-	@SuppressWarnings("unchecked")
 	private void updateUserData(int userId, int roomId) {
 		int index = -1;
 		if ((index = findUserDataById(userId)) != -1) {
@@ -255,21 +254,34 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 * 连接核心服务器回调消息
 	 */
 	@Override
-	public void OnAnyChatServerAppMessageCallBack(int dwMsg) {
+	public void OnAnyChatServerAppMessageExCallBack(int dwNotifyMessage, int wParam, int lParam) {
 		String str = "";
-		if (dwMsg == 1) {
-			str = "Connect AnyChatCoreServer successed!";
-			jServerStatus.setForeground(new Color(0, 128, 0));
-			jServerStatus.setText(str);
-		} else {
-			str = "Connect AnyChatCoreServer failed!";
-			jServerStatus.setForeground(Color.red);
-			jServerStatus.setText(str);
+		if(dwNotifyMessage == AnyChatServerSDK.BRAS_MESSAGE_CORESERVERCONN)
+		{
+			if(wParam == 0) {
+				str = "Connect AnyChatCoreServer successed!";
+				jServerStatus.setForeground(new Color(0, 128, 0));
+				jServerStatus.setText(str);
+			}
+			else {
+				str = "Connect AnyChatCoreServer failed!(errorcode:" + wParam + ")";
+				jServerStatus.setForeground(Color.red);
+				jServerStatus.setText(str);
+			}
+			onlineusers.clear();
 		}
+		else if(dwNotifyMessage == AnyChatServerSDK.BRAS_MESSAGE_RECORDSERVERCONN)
+		{
+			if(wParam == 0)
+				str = "Success connected with anychatrecordserver(id:" + lParam + ") ...";
+			else
+				str = "ERROR: Disconnected from the anychatrecordserver, errorcode:" + wParam;
+		}
+		else
+			str = "OnServerAppMessageExCallBack, dwNotifyMessage:" + dwNotifyMessage + " wParam:" + wParam + " lParam:" + lParam;
 		generateLog(str);
-		
-		onlineusers.clear();
 	}
+	
 
 	/**
 	 * 用户登录验证函数，可以在此函数中进行验证登录，赋值客户端userid等操作

@@ -56,15 +56,24 @@ public class CallCenterServer implements AnyChatServerEvent{
 	}
 	
 	@Override
-	public void OnAnyChatServerAppMessageCallBack(int dwMsg) {
-		if(dwMsg == AnyChatServerSDK.BRAS_SERVERAPPMSG_CONNECTED)
-			System.out.print(getCurrentTime() + "Success connected with anychatcoreserver...\r\n");
-		else if(dwMsg == AnyChatServerSDK.BRAS_SERVERAPPMSG_DISCONNECT)
-			System.out.print(getCurrentTime() + "ERROR: Disconnected from the anychatcoreserver, it may be the anychatcoreserver is closed!\r\n");
+	public void OnAnyChatServerAppMessageExCallBack(int dwNotifyMessage, int wParam, int lParam) {
+		if(dwNotifyMessage == AnyChatServerSDK.BRAS_MESSAGE_CORESERVERCONN)
+		{
+			if(wParam == 0)
+				System.out.print(getCurrentTime() + "Success connected with anychatcoreserver...\r\n");
+			else
+				System.out.print(getCurrentTime() + "ERROR: Disconnected from the anychatcoreserver, errorcode:" + wParam + "\r\n");
+			onlineusers.clear();
+		}
+		else if(dwNotifyMessage == AnyChatServerSDK.BRAS_MESSAGE_RECORDSERVERCONN)
+		{
+			if(wParam == 0)
+				System.out.print(getCurrentTime() + "Success connected with anychatrecordserver(id:" + lParam + ") ...\r\n");
+			else
+				System.out.print(getCurrentTime() + "ERROR: Disconnected from the anychatrecordserver, errorcode:" + wParam + "\r\n");
+		}
 		else
-			System.out.print(getCurrentTime() + "OnServerAppMessageCallBack: " + dwMsg + "\r\n");
-		
-		onlineusers.clear();
+			System.out.print(getCurrentTime() + "OnServerAppMessageExCallBack, dwNotifyMessage:" + dwNotifyMessage + " wParam:" + wParam + " lParam:" + lParam + "\r\n");
 	}
 	
 	// 用户身份验证，若验证成功，则必须返回0，且分配一个唯一的userid，若验证失败，则返回出错代码，不用分配userid
