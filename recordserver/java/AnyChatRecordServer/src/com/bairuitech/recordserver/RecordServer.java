@@ -54,7 +54,7 @@ public class RecordServer implements AnyChatRecordServerEvent{
 		if(dwMsg == AnyChatRecordServerSDK.BRRS_SERVERAPPMSG_CONNECTED)
 			System.out.print(getCurrentTime() + "Success connected with anychatcoreserver...\r\n");
 		else if(dwMsg == AnyChatRecordServerSDK.BRRS_SERVERAPPMSG_DISCONNECT)
-			System.out.print(getCurrentTime() + "ERROR: Disconnected from the anychatcoreserver, it may be the anychatcoreserver is closed!(errorcode:" + wParam + ")\r\n");
+			System.out.print(getCurrentTime() + "ERROR: Disconnected from the anychatcoreserver, errorcode:" + wParam + ")\r\n");
 		else
 			System.out.print(getCurrentTime() + "OnServerAppMessageCallBack: " + dwMsg + "\r\n");
 	}
