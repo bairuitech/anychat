@@ -24,24 +24,37 @@ static char THIS_FILE[] = __FILE__;
 
 
 // 服务器应用程序消息回调函数定义
-void CALLBACK OnServerAppMessageCallBack(DWORD dwMsg, LPVOID lpUserValue)
+void CALLBACK OnServerAppMessageExCallBack(DWORD dwNotifyMessage, DWORD wParam, DWORD lParam, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
-	if(dwMsg == BRAS_SERVERAPPMSG_CONNECTED)
+	if(dwNotifyMessage == BRAS_MESSAGE_CORESERVERCONN)
 	{
 		lpServerDlg->m_dwOnlineUsers = 0;
-		lpServerDlg->AppendLogString("与AnyChat服务器连接成功！");
+		if(wParam == 0)
+			lpServerDlg->AppendLogString("Success connected with AnyChatCoreServer...");
+		else
+			lpServerDlg->AppendLogString("Disconnected from the AnyChatCoreServer");
 	}
-	else if(dwMsg == BRAS_SERVERAPPMSG_DISCONNECT)
+	else if(dwNotifyMessage == BRAS_MESSAGE_RECORDSERVERCONN)
 	{
-		lpServerDlg->m_dwOnlineUsers = 0;
-		lpServerDlg->AppendLogString("与AnyChat服务器断开连接！");
+		if(wParam == 0)
+		{
+			CString strNotify;
+			strNotify.Format("Success connected with AnyChatRecordServer...(serverid:%d)", lParam);
+			lpServerDlg->AppendLogString(strNotify);
+		}
+		else
+		{
+			CString strNotify;
+			strNotify.Format("Disconnected from the AnyChatRecordServer...(errorcode:%d, serverid:%d)", wParam, lParam);
+			lpServerDlg->AppendLogString(strNotify);
+		}
 	}
 	else
 	{
-		CString strMsg;
-		strMsg.Format(_T("收到服务器应用程序消息：%d"),dwMsg);
-		lpServerDlg->AppendLogString(strMsg);
+		CString strNotify;
+		strNotify.Format("OnServerAppMessageExCallBack(dwNotifyMessage:%d, wParam:%d, lParam:%d)", dwNotifyMessage, wParam, lParam);
+		lpServerDlg->AppendLogString(strNotify);
 	}
 }
 
@@ -272,7 +285,7 @@ BOOL CAnyChatBusinessServerDlg::OnInitDialog()
 
 	
 	// 设置服务器应用程序消息回调函数
-	BRAS_SetOnServerAppMessageCallBack(OnServerAppMessageCallBack,this);
+	BRAS_SetOnServerAppMessageExCallBack(OnServerAppMessageExCallBack,this);
 	// 设置SDK定时器回调函数
 	BRAS_SetTimerEventCallBack(1000,OnTimerEventCallBack,this);
 	// 设置用户身份验证回调函数
