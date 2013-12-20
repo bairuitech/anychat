@@ -20,6 +20,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 	private int iCurrentCameraId = 0;
 	private SurfaceHolder currentHolder = null;
 	private int mVideoPixfmt = -1;
+	private final int iCaptureBuffers = 3;
 	
 	public final int CAMERA_FACING_BACK = 0;
 	public final int CAMERA_FACING_FRONT = 1;
@@ -32,7 +33,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 		try {
 			if (bIfPreview) {
 				mCamera.stopPreview();// stopCamera();
-				mCamera.setPreviewCallback(null);
+				mCamera.setPreviewCallbackWithBuffer(null);
 			}
 			/* Camera Service settings */
 			Camera.Parameters parameters = mCamera.getParameters();
@@ -56,7 +57,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			// 指定的分辩率不支持时，用默认的分辩率替代
 			if(!bSetPreviewSize)
 				parameters.setPreviewSize(320, 240);
-			
+
 			// 设置视频数据格式
 			parameters.setPreviewFormat(ImageFormat.NV21);
 			// 参数设置生效
@@ -65,12 +66,18 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			} catch(Exception e){
 				
 			}
+			Camera.Size captureSize = mCamera.getParameters().getPreviewSize();
+			int bufSize = captureSize.width * captureSize.height * ImageFormat.getBitsPerPixel(ImageFormat.NV21) / 8;
+			for (int i = 0; i < iCaptureBuffers; i++) {
+				mCamera.addCallbackBuffer(new byte[bufSize]);
+			}
 			// 设置视频输出回调函数，通过AnyChat的外部视频输入接口传入AnyChat内核进行处理
-			mCamera.setPreviewCallback(new Camera.PreviewCallback() {
+			mCamera.setPreviewCallbackWithBuffer(new Camera.PreviewCallback() {
 				@Override
 				public void onPreviewFrame(byte[] data, Camera camera) {
 					if(data.length !=0 && bNeedCapture)
 			 			AnyChatCoreSDK.InputVideoData(data, data.length, 0);
+					mCamera.addCallbackBuffer(data);
 				}
 			});
 			mCamera.startPreview(); // 打开预览画面
@@ -139,7 +146,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			iCurrentCameraId = (iCurrentCameraId==0) ? 1 : 0;
 			if(null != mCamera)	{
 				mCamera.stopPreview(); 
-				mCamera.setPreviewCallback(null);
+				mCamera.setPreviewCallbackWithBuffer(null);
 				bIfPreview = false; 
 				mVideoPixfmt = -1;
 				mCamera.release();
@@ -179,7 +186,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			iCurrentCameraId = iCameraId;
 			if(null != mCamera)	{
 				mCamera.stopPreview(); 
-				mCamera.setPreviewCallback(null);
+				mCamera.setPreviewCallbackWithBuffer(null);
 				bIfPreview = false; 
 				mVideoPixfmt = -1;
 				mCamera.release();
@@ -224,7 +231,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 		if(null != mCamera)	{
 			try {
 				mCamera.stopPreview();
-				mCamera.setPreviewCallback(null);
+				mCamera.setPreviewCallbackWithBuffer(null);
 				bIfPreview = false; 
 				mCamera.release();
 				mCamera = null;
