@@ -5,6 +5,9 @@ package com.bairuitech.anychat;
 import java.nio.ByteBuffer;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
@@ -52,11 +55,11 @@ public class AnyChatVideoHelper {
 		return 0;
 	}
 	
-	public void ShowVideo(int userid, byte [] mPixel) {
+	public void ShowVideo(int userid, byte [] mPixel, int rotation, int mirror) {
 		VideoRenderer r = GetRenderByUserId(userid);
 		if(r == null)
 			return;
-		r.DrawByteBuffer(mPixel);
+		r.DrawByteBuffer(mPixel, rotation, mirror);
 	}
 	
 	private VideoRenderer GetRenderByUserId(int userid) {
@@ -161,26 +164,32 @@ class VideoRenderer implements Callback {
         dstBottomScale = bottom;
     }
 
-    public void DrawByteBuffer(byte [] mPixel) {
+    public void DrawByteBuffer(byte [] mPixel, int rotation, int mirror) {
         if(bitmap == null)
             return;
         ByteBuffer byteBuffer = ByteBuffer.wrap( mPixel );		// 将 byte 数组包装到缓冲区中
         byteBuffer.rewind();
-       
         bitmap.copyPixelsFromBuffer(byteBuffer);
         Canvas canvas = surfaceHolder.lockCanvas();
         if(canvas != null) {
-            canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+        	if(rotation != 0 || mirror != 0)
+        	{
+        		Paint paint = new Paint();
+        		paint.setAntiAlias(true);		// 抗锯齿
+        		Matrix matrix = canvas.getMatrix();
+        		matrix.setRotate(rotation, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
+        		if(mirror != 0) {
+        			matrix.postScale(-1.0f, 1.0f);
+        			matrix.postTranslate(bitmap.getWidth(), 0);
+        		}
+        		canvas.drawColor(Color.BLACK);
+        		canvas.drawBitmap(bitmap, matrix, paint);
+        	}
+        	else {
+        		canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+        	}
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
-
-	
-	
-	
-	
-	
-	
-	
-	
+    
 }

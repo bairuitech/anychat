@@ -3,6 +3,8 @@ package com.bairuitech.anychat;		// 不能修改包的名称
 import java.lang.ref.WeakReference;
 
 import android.view.Surface;
+import android.view.WindowManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,6 +35,21 @@ public class AnyChatCoreSDK
 	private static int HANDLE_TYPE_SDKFILTER	= 6;	// SDK Filter Data
 	private static int HANDLE_TYPE_VIDEOCALL	= 7;	// 视频呼叫
 	
+	// 设置父窗口句柄
+	public void SetContext(Context ctx) {
+		mCameraHelper.SetContext(ctx);
+		
+		WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
+		int rotation = wm.getDefaultDisplay ().getRotation ();
+		int degrees = 0 ;
+		switch ( rotation ) {
+			case Surface.ROTATION_0 : degrees = 0 ; break ;
+			case Surface.ROTATION_90 : degrees = 90 ; break ;
+			case Surface.ROTATION_180 : degrees = 180 ; break ;
+			case Surface.ROTATION_270 : degrees = 270 ; break ;
+		}
+		SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_SURFACEROTATION, degrees);
+	}
 	// 设置AnyChat基本事件通知接口
 	public void SetBaseEvent(AnyChatBaseEvent e)
 	{
@@ -523,7 +540,9 @@ public class AnyChatCoreSDK
 	private void OnVideoDataCallBack(int userid, byte[] buf, int len, int width, int height)
 	{
 		mVideoHelper.SetVideoFmt(userid, width, height);
-		mVideoHelper.ShowVideo(userid, buf);
+		int degree = QueryUserStateInt(userid, AnyChatDefine.BRAC_USERSTATE_VIDEOROTATION);
+		int mirror = QueryUserStateInt(userid, AnyChatDefine.BRAC_USERSTATE_VIDEOMIRRORED);
+		mVideoHelper.ShowVideo(userid, buf, degree, mirror);
 	}
 	
 	// 视频呼叫事件回调函数

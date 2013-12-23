@@ -3,12 +3,15 @@ package com.bairuitech.anychat;
 
 import java.util.List;
 
+import android.content.Context;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Size;
 import android.util.Log;
+import android.view.Surface;
 import android.view.SurfaceHolder;
+import android.view.WindowManager;
 
 
 // AnyChat Camera包装类，实现本地视频采集
@@ -22,8 +25,16 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 	private int mVideoPixfmt = -1;
 	private final int iCaptureBuffers = 3;
 	
+	private Context mContext = null;
+	private int mCameraOrientation = 0;
+    private int mCameraFacing = 0;
+    private int mDeviceOrientation = 0;
+	
 	public final int CAMERA_FACING_BACK = 0;
 	public final int CAMERA_FACING_FRONT = 1;
+	
+	// 设置父窗口句柄
+	public void SetContext(Context ctx)	{	mContext = ctx;	}
 	
 	// 初始化摄像机，在surfaceCreated中调用
 	private void initCamera()
@@ -35,6 +46,15 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 				mCamera.stopPreview();// stopCamera();
 				mCamera.setPreviewCallbackWithBuffer(null);
 			}
+			Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+            Camera.getCameraInfo(iCurrentCameraId, cameraInfo);
+            mCameraOrientation = cameraInfo.orientation;
+            mCameraFacing = cameraInfo.facing;
+            mDeviceOrientation = getDeviceOrientation();
+            Log.i(TAG, "allocate: device orientation=" + mDeviceOrientation + ", camera orientation=" + mCameraOrientation + ", facing=" + mCameraFacing);
+            
+            setCameraDisplayOrientation();
+            
 			/* Camera Service settings */
 			Camera.Parameters parameters = mCamera.getParameters();
 			
@@ -75,8 +95,9 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			mCamera.setPreviewCallbackWithBuffer(new Camera.PreviewCallback() {
 				@Override
 				public void onPreviewFrame(byte[] data, Camera camera) {
-					if(data.length !=0 && bNeedCapture)
-			 			AnyChatCoreSDK.InputVideoData(data, data.length, 0);
+					if(data.length !=0 && bNeedCapture) {
+						AnyChatCoreSDK.InputVideoData(data, data.length, 0);
+					}
 					mCamera.addCallbackBuffer(data);
 				}
 			});
@@ -244,6 +265,55 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 		mVideoPixfmt = -1;
 	}
 
+	private int getDeviceOrientation() {
+        int orientation = 0;
+        if (mContext != null) {
+            WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+            //Log.i(TAG, "wm.getDefaultDisplay().getRotation():" + wm.getDefaultDisplay().getRotation());
+            switch(wm.getDefaultDisplay().getRotation()) {
+                case Surface.ROTATION_90:
+                    orientation = 90;
+                    break;
+                case Surface.ROTATION_180:
+                    orientation = 180;
+                    break;
+                case Surface.ROTATION_270:
+                    orientation = 270;
+                    break;
+                case Surface.ROTATION_0:
+                default:
+                    orientation = 0;
+                    break;
+            }
+        }
+        return orientation;
+    }
+	
+	private void setCameraDisplayOrientation () {
+		if(mContext == null)
+			return;
+		Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+		Camera.getCameraInfo(iCurrentCameraId, cameraInfo);
+    
+		WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+		int rotation = wm.getDefaultDisplay ().getRotation ();
+		int degrees = 0 ;
+		switch ( rotation ) {
+			case Surface.ROTATION_0 : degrees = 0 ; break ;
+			case Surface.ROTATION_90 : degrees = 90 ; break ;
+			case Surface.ROTATION_180 : degrees = 180 ; break ;
+			case Surface.ROTATION_270 : degrees = 270 ; break ;
+		}
+
+		int result;
+		if ( cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT ) {
+			result = ( cameraInfo.orientation + degrees ) % 360 ;
+			result = ( 360 - result ) % 360 ;   // compensate the mirror
+		} else {   // back-facing
+			result = ( cameraInfo.orientation - degrees + 360 ) % 360 ;
+		}
+		mCamera.setDisplayOrientation ( result );
+	 }
 	
 	
 

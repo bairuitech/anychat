@@ -85,7 +85,7 @@ class AnyChatOrientationEventListener extends OrientationEventListener{
 	   
 	@Override public void onOrientationChanged(int degree) {
 		int ANYCHAT_DEVICEORIENTATION_UNKNOW 			= 0;
-//		int ANYCHAT_DEVICEORIENTATION_FACEUP			= 1;		// Device oriented flat, face up
+		int ANYCHAT_DEVICEORIENTATION_FACEUP			= 1;		// Device oriented flat, face up
 //		int ANYCHAT_DEVICEORIENTATION_FACEDOWN			= 2;		// Device oriented flat, face down
 		int ANYCHAT_DEVICEORIENTATION_LANDSCAPELEFT		= 3;		// Device oriented horizontally, home button on the right
 		int ANYCHAT_DEVICEORIENTATION_LANDSCAPERIGHT	= 4;		// Device oriented horizontally, home button on the left
@@ -94,7 +94,9 @@ class AnyChatOrientationEventListener extends OrientationEventListener{
 		
 		//确定由角度与屏幕方向的对应范围  
 		int orientation = ANYCHAT_DEVICEORIENTATION_UNKNOW;
-        if(degree > 325 || degree <= 45){  
+		if(degree == -1)
+			orientation = ANYCHAT_DEVICEORIENTATION_FACEUP;
+		else if(degree > 325 || degree <= 45){  
         	orientation = ANYCHAT_DEVICEORIENTATION_PORTRAIT;  
         }else if(degree > 45 && degree <= 135){  
         	orientation = ANYCHAT_DEVICEORIENTATION_LANDSCAPERIGHT;
@@ -102,7 +104,8 @@ class AnyChatOrientationEventListener extends OrientationEventListener{
         	orientation = ANYCHAT_DEVICEORIENTATION_PORTRAITUPSIDE; 
         }else {  
         	orientation = ANYCHAT_DEVICEORIENTATION_LANDSCAPELEFT;
-        } 
+        }		
+        //Log.i("ANYCHAT", "onOrientationChanged: " + degree + "orientation:" +orientation );
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_ORIENTATION, orientation);
 	}
 }

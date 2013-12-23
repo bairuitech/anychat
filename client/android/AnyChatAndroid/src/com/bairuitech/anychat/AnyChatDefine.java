@@ -96,6 +96,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA=	96;	///< 修正视频采集颜色偏色（参数为int型，0表示关闭[默认]，1 开启）
 	public static final int BRAC_SO_LOCALVIDEO_ORIENTATION	=	97;	///< 本地视频设备方向（参数为：int型，定义为常量：ANYCHAT_DEVICEORIENTATION_XXXX）
 	public static final int BRAC_SO_LOCALVIDEO_AUTOROTATION	=	98;	///< 本地视频自动旋转控制（参数为int型， 0表示关闭[默认]， 1 开启，视频旋转时需要参考本地视频设备方向参数）
+	public static final int BRAC_SO_LOCALVIDEO_SURFACEROTATION=	99;	///< 设置本地视频预览显示旋转角度（参数为int型，角度）
 	
 	public static final int BRAC_SO_NETWORK_P2PPOLITIC		=	40;	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 	public static final int BRAC_SO_NETWORK_P2PCONNECT		=	41;	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -148,6 +149,8 @@ public class AnyChatDefine {
 	public static final int BRAC_USERSTATE_DEVICETYPE		=	15;	///< 查询指定用户的终端类型（参数为DWORD类型，返回值：0 Unknow， 1 Windows，2 Android，3 iOS，4 Web，5 Linux，6 Mac，7 Win Phone，8 WinCE）
 	public static final int BRAC_USERSTATE_SELFUSERSTATUS	=	16;	///< 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
 	public static final int BRAC_USERSTATE_SELFUSERID		=	17;	///< 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
+	public static final int BRAC_USERSTATE_VIDEOROTATION	=	18;	///< 查询指定用户的当前视频旋转角度（参数为DWORD类型，返回角度值）
+	public static final int BRAC_USERSTATE_VIDEOMIRRORED	=	19;	///< 查询指定用户的视频是否需要镜像翻转
 	
 	// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
 	public static final int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	///< 呼叫请求
