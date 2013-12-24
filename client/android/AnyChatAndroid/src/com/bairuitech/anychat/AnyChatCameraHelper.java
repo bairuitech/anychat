@@ -121,6 +121,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_CORESDK_EXTVIDEOINPUT, 1);
 			AnyChatCoreSDK.SetInputVideoFormat(mVideoPixfmt, previewSize.width, previewSize.height, mCamera.getParameters().getPreviewFrameRate(), 0);
+			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAMERAFACE, cameraInfo.facing);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	

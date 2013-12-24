@@ -53,7 +53,7 @@ public class AnyChatSensorHelper implements SensorEventListener{
         }	
 		float X = event.values[0]; // 水平x方向加速度 ，物体静止时在（0--1之间）
 		float Y = event.values[1]; // 水平Y方向加速度 ，物体静止时在（0--1之间）
-		float Z = event.values[1]; // 竖直Z方向加速度 ，物体静止时在（9.5--10之间）
+		float Z = event.values[2]; // 竖直Z方向加速度 ，物体静止时在（9.5--10之间）
 
 		if ((Math.abs(X - LastXSpead) <= 0.5) && (Math.abs(Y - LastYSpead) <= 0.5) && (Math.abs(Z - LastZSpead) <= 0.5)) // 静止状态
 		{
