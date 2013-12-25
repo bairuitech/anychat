@@ -119,7 +119,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 
 	private void InitialSDK() {
 		anychat = new AnyChatCoreSDK();
-		anychat.SetContext(this);
 		anychat.SetBaseEvent(this);
 		// 启动AnyChat传感器监听
 		anychat.mSensorHelper.InitSensor(this);

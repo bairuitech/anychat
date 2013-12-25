@@ -4,7 +4,10 @@ package com.bairuitech.anychat;
 import java.util.Date;
 
 import android.view.OrientationEventListener;
+import android.view.Surface;
+import android.view.WindowManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,6 +20,24 @@ public class AnyChatSensorHelper implements SensorEventListener{
 	private AnyChatOrientationEventListener orientationListener = null;
 	
 	public void InitSensor(Context context) {
+		// 获取设备类型
+		int iDeviceType = ((context.getResources().getConfiguration().screenLayout
+				& Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) ? 2 : 1;
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_DEVICEMODE, iDeviceType);
+		// 设置屏幕旋转方向
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		int rotation = wm.getDefaultDisplay ().getRotation ();
+		int degrees = 0 ;
+		switch ( rotation ) {
+			case Surface.ROTATION_0 : degrees = 0 ; break ;
+			case Surface.ROTATION_90 : degrees = 90 ; break ;
+			case Surface.ROTATION_180 : degrees = 180 ; break ;
+			case Surface.ROTATION_270 : degrees = 270 ; break ;
+		}
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_SURFACEROTATION, degrees);
+		
+		AnyChatCoreSDK.mCameraHelper.SetContext(context);
+		
 		if(orientationListener == null) {
 			orientationListener = new AnyChatOrientationEventListener(context, SensorManager.SENSOR_DELAY_NORMAL);
 			orientationListener.enable();

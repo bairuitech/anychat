@@ -98,6 +98,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_LOCALVIDEO_AUTOROTATION	=	98;	///< 本地视频自动旋转控制（参数为int型， 0表示关闭[默认]， 1 开启，视频旋转时需要参考本地视频设备方向参数）
 	public static final int BRAC_SO_LOCALVIDEO_SURFACEROTATION=	99;	///< 设置本地视频预览显示旋转角度（参数为int型，角度）
 	public static final int BRAC_SO_LOCALVIDEO_CAMERAFACE	=	100;///< 本地摄像头方向（前置、后置）
+	public static final int BRAC_SO_LOCALVIDEO_DEVICEMODE	=	103;///< 设备类型
 	
 	public static final int BRAC_SO_NETWORK_P2PPOLITIC		=	40;	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 	public static final int BRAC_SO_NETWORK_P2PCONNECT		=	41;	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效

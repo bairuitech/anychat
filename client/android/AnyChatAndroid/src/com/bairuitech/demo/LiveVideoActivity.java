@@ -8,6 +8,7 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -48,7 +49,8 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
 	private boolean bShowQuitBtn = true;			// 是否已显示退出按钮
 	private Date mLastShowQuitBtnTime = new Date();	// 开始显示退出按钮的时间
 
-    @Override
+    @SuppressLint("HandlerLeak")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configEntity = ConfigService.LoadConfig(this);
@@ -142,7 +144,6 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
     private void InitialSDK()
     {
         anychat = new AnyChatCoreSDK();
-        anychat.SetContext(this);
         anychat.SetBaseEvent(this);
         
         // 启动AnyChat传感器监听
