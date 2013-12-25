@@ -28,12 +28,12 @@ public class ConfigEntity {
 	public int videoCapDriver = 3;							// 本地视频采集驱动（0 默认， 1 Linux驱动，3 Java驱动
 	public int fixcolordeviation = 0;						// 修正本地视频采集偏色：0 关闭(默认）， 1 开启
 	public int videoShowGPURender = 0;						// 视频数据通过GPU直接渲染：0  关闭(默认)， 1 开启
+	public int videoAutoRotation = 1;						// 本地视频自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
 	
 	public int enableP2P = 1;
 	public int useARMv6Lib = 0;								// 是否强制使用ARMv6指令集，默认是内核自动判断
 	public int enableAEC = 1;								// 是否使用回音消除功能
 	public int useHWCodec = 0;								// 是否使用平台内置硬件编解码器
-	public int smoothPlayMode = 0;							// 是否使用平滑播放模式
 	public int videoShowDriver = 5;							// 视频显示驱动（0 默认， 4 Android 2.x兼容模式，5 Java驱动）
 	public int audioPlayDriver = 3;							// 音频播放驱动（0 默认，3 Java驱动）
 	public int audioRecordDriver = 3;						// 音频采集驱动（0默认，3 Java驱动）

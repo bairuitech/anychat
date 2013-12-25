@@ -95,7 +95,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_LOCALVIDEO_CAPDRIVER	=	95;	///< 本地视频采集驱动设置（参数为int型，0表示自动选择[默认]， 1 Video4Linux, 2 DirectShow, 3 Java采集[Android平台使用]）
 	public static final int BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA=	96;	///< 修正视频采集颜色偏色（参数为int型，0表示关闭[默认]，1 开启）
 	public static final int BRAC_SO_LOCALVIDEO_ORIENTATION	=	97;	///< 本地视频设备方向（参数为：int型，定义为常量：ANYCHAT_DEVICEORIENTATION_XXXX）
-	public static final int BRAC_SO_LOCALVIDEO_AUTOROTATION	=	98;	///< 本地视频自动旋转控制（参数为int型， 0表示关闭[默认]， 1 开启，视频旋转时需要参考本地视频设备方向参数）
+	public static final int BRAC_SO_LOCALVIDEO_AUTOROTATION	=	98;	///< 本地视频自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
 	public static final int BRAC_SO_LOCALVIDEO_SURFACEROTATION=	99;	///< 设置本地视频预览显示旋转角度（参数为int型，角度）
 	public static final int BRAC_SO_LOCALVIDEO_CAMERAFACE	=	100;///< 本地摄像头方向（前置、后置）
 	public static final int BRAC_SO_LOCALVIDEO_DEVICEMODE	=	103;///< 设备类型
@@ -121,6 +121,8 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_VIDEOSHOW_DRIVERCTRL	=	83;	///< 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL, 4 Android2X, 5 Android Java）
 	public static final int BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER =	84;	///< 视频数据经过GPU直接渲染，将解码后的视频数据直接传输到GPU的物理地址（参数为：int型， 0 关闭[默认]， 1 打开），与硬件平台相关
 
+	public static final int BRAC_SO_CORESDK_DEVICEMODE		=	130;///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+	
 	// 传输任务信息参数定义
 	public static final int BRAC_TRANSTASK_PROGRESS			=	1;	///< 传输任务进度查询（参数为：int型（0 ~ 100））
 	public static final int BRAC_TRANSTASK_BITRATE			=	2;	///< 传输任务当前传输码率（参数为：int型，单位：bps）

@@ -41,7 +41,7 @@ public class VideoConfigActivity extends Activity{
 	private CheckBox videoRotateBox;
 	private CheckBox fixColorDeviation;
 	private CheckBox videoShowGPURender;
-	private CheckBox smoothPlayBox;
+	private CheckBox videoAutoRotation;
 	private Spinner videoSizeSpinner;
 	private Spinner videoBitrateSpinner;
 	private Spinner videoFPSSpinner;
@@ -133,11 +133,11 @@ public class VideoConfigActivity extends Activity{
 	    mainLayout.addView(videoShowGPURender,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    videoShowGPURender.setChecked(configEntity.videoShowGPURender!=0); 	    
 	    
-	    smoothPlayBox = new CheckBox(this);
-	    smoothPlayBox.setText("视频平滑播放模式");
-	    smoothPlayBox.setTextColor(Color.BLACK);
-	    mainLayout.addView(smoothPlayBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-	    smoothPlayBox.setChecked(configEntity.smoothPlayMode != 0);  	    
+	    videoAutoRotation = new CheckBox(this);
+	    videoAutoRotation.setText("本地视频跟随设备自动旋转");
+	    videoAutoRotation.setTextColor(Color.BLACK);
+	    mainLayout.addView(videoAutoRotation,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+	    videoAutoRotation.setChecked(configEntity.videoAutoRotation != 0);  	    
 	    
 	    useARMv6Box = new CheckBox(this);
 	    useARMv6Box.setText("强制使用ARMv6指令集（安全模式）");
@@ -294,7 +294,7 @@ public class VideoConfigActivity extends Activity{
     	if(configEntity.videoCapDriver==1)			// Video4Linux驱动不支持Overlay模式
     		configEntity.videoOverlay = 0;
 
-    	configEntity.smoothPlayMode = smoothPlayBox.isChecked() ? 1 : 0;
+    	configEntity.videoAutoRotation = videoAutoRotation.isChecked() ? 1 : 0;
     	
     	configEntity.enableP2P = enableP2PBox.isChecked() ? 1 : 0;
     	configEntity.useARMv6Lib = useARMv6Box.isChecked() ? 1 : 0;

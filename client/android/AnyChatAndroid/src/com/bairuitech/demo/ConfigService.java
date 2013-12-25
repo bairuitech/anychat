@@ -2,10 +2,12 @@ package com.bairuitech.demo;
 
 import com.bairuitech.anychat.AnyChatDefine;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+@SuppressLint("WorldWriteableFiles")
 public class ConfigService {
 
 	public static ConfigEntity LoadConfig(Context context)
@@ -32,12 +34,12 @@ public class ConfigService {
         configEntity.videoCapDriver = share.getInt("VideoCapDriver", AnyChatDefine.VIDEOCAP_DRIVER_JAVA);
         configEntity.fixcolordeviation = share.getInt("FixColorDeviation", 0);
         configEntity.videoShowGPURender = share.getInt("videoShowGPURender", 0);
+        configEntity.videoAutoRotation = share.getInt("videoAutoRotation", 1);
 
         configEntity.enableP2P = share.getInt("enableP2P", 1);
         configEntity.useARMv6Lib = share.getInt("useARMv6Lib", 0);
         configEntity.enableAEC = share.getInt("enableAEC", 1);
         configEntity.useHWCodec = share.getInt("useHWCodec", 0);
-        configEntity.smoothPlayMode = share.getInt("smoothPlayMode", 0);
         configEntity.videoShowDriver = share.getInt("videoShowDriver", AnyChatDefine.VIDEOSHOW_DRIVER_JAVA);
         configEntity.audioPlayDriver = share.getInt("audioPlayDriver", AnyChatDefine.AUDIOPLAY_DRIVER_JAVA);   
         configEntity.audioRecordDriver = share.getInt("audioRecordDriver", AnyChatDefine.AUDIOREC_DRIVER_JAVA);
@@ -69,12 +71,12 @@ public class ConfigService {
         editor.putInt("VideoCapDriver", configEntity.videoCapDriver);
         editor.putInt("FixColorDeviation", configEntity.fixcolordeviation);
         editor.putInt("videoShowGPURender", configEntity.videoShowGPURender);
+        editor.putInt("videoAutoRotation", configEntity.videoAutoRotation);
         
         editor.putInt("enableP2P", configEntity.enableP2P);
         editor.putInt("useARMv6Lib", configEntity.useARMv6Lib);
         editor.putInt("enableAEC", configEntity.enableAEC);
         editor.putInt("useHWCodec", configEntity.useHWCodec);
-        editor.putInt("smoothPlayMode", configEntity.smoothPlayMode);
         editor.putInt("videoShowDriver", configEntity.videoShowDriver);
         editor.putInt("audioPlayDriver", configEntity.audioPlayDriver); 
         editor.putInt("audioRecordDriver", configEntity.audioRecordDriver);         
