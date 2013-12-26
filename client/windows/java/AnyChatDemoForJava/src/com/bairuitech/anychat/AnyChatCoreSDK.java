@@ -1,7 +1,6 @@
 package com.bairuitech.anychat;		// 不能修改包的名称
 
 import java.awt.Component;
-import com.bairuitech.anychat.AnyChatTransTaskOutParam;
 
 
 public class AnyChatCoreSDK
@@ -11,8 +10,8 @@ public class AnyChatCoreSDK
 	AnyChatPrivateChatEvent	privateChatEvent;
 	AnyChatTextMsgEvent		textMsgEvent;
 	AnyChatTransDataEvent	transDataEvent;
-	
-//	static MainHandler mHandler;
+	AnyChatVideoCallEvent	videoCallEvent;
+	AnyChatUserInfoEvent	userInfoEvent;
 	
 	private final int HANDLE_TYPE_NOTIFYMSG = 1;		// 消息通知
 	private final int HANDLE_TYPE_TEXTMSG 	= 2;		// 文字信息
@@ -24,7 +23,6 @@ public class AnyChatCoreSDK
 	// 设置AnyChat基本事件通知接口
 	public void SetBaseEvent(AnyChatBaseEvent e)
 	{
-//		mHandler=new MainHandler();
 		RegisterNotify();
 		this.baseEvent = e;
 	}
@@ -52,6 +50,19 @@ public class AnyChatCoreSDK
 		RegisterNotify();
 		this.transDataEvent = e;
 	}
+	// 设置视频呼叫事件通知接口
+	public void SetVideoCallEvent(AnyChatVideoCallEvent e)
+	{
+		RegisterNotify();
+		this.videoCallEvent = e;
+	}
+	// 设置用户信息（好友）事件通知接口
+	public void SetUserInfoEvent(AnyChatUserInfoEvent e)
+	{
+		RegisterNotify();
+		this.userInfoEvent = e;
+	}
+		
 	// 查询SDK主版本号
 	public int GetSDKMainVersion()
 	{
@@ -97,6 +108,8 @@ public class AnyChatCoreSDK
     public native int UserCameraControl(int userid, int bopen);
     // 用户音频控制
     public native int UserSpeakControl(int userid, int bopen);
+    // 用户音、视频录制（中心服务器录像）
+	public native int StreamRecordCtrl(int userid, int bstartrecord, int flags, int param);
     
     // 获取指定用户的字符串类型状态
     public native String QueryUserStateString(int userid, int infoname);
@@ -136,6 +149,9 @@ public class AnyChatCoreSDK
 	public native int QueryTransTaskInfo(int userid, int taskid, int infoname);
 	// 发送SDK Filter 通信数据
 	public native int SendSDKFilterData(byte[] buf, int len);
+	
+	// 获取音频播放数据
+	public static native byte[] FetchAudioPlayBuffer(int size);
 	
 	// 本地视频自动对焦
 	public void CameraAutoFocus()
@@ -185,6 +201,34 @@ public class AnyChatCoreSDK
 	// 退出与某用户的私聊，或者将某用户从自己的私聊列表中清除
 	public native int PrivateChatExit(int userid);
     
+	// 设置外部输入视频格式
+	public static native int SetInputVideoFormat(int pixFmt, int dwWidth, int dwHeight, int dwFps, int dwFlags);
+	// 外部视频数据输入
+	public static native int InputVideoData(byte[] lpVideoFrame, int dwSize, int dwTimeStamp);
+	// 设置外部输入音频格式
+	public static native int SetInputAudioFormat(int dwChannels, int dwSamplesPerSec, int dwBitsPerSample, int dwFlags);
+	// 外部音频数据输入
+	public static native int InputAudioData(byte[] lpSamples, int dwSize, int dwTimeStamp);
+	
+	// 视频呼叫事件控制（请求、回复、挂断等）
+	public native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String szUserStr);
+	
+	// 获取用户好友ID列表
+	public native int[] GetUserFriends();
+	// 获取好友在线状态
+	public native int GetFriendStatus(int dwFriendUserId);
+	// 获取用户分组ID列表
+	public native int[] GetUserGroups();
+	// 获取分组下面的好友列表
+	public native int[] GetGroupFriends(int dwGroupId);
+	// 获取用户信息
+	public native String GetUserInfo(int dwUserId, int dwInfoId);
+	// 获取用户分组名称
+	public native String GetGroupName(int dwGroupId);
+	// 用户信息控制
+	public native int UserInfoControl(int dwUserId, int dwCtrlCode, int wParam, int lParam, String szStrValue);
+	
+	
     // 异步消息通知
     public void OnNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
     {
@@ -407,6 +451,13 @@ public class AnyChatCoreSDK
          tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);*/
     }
+	
+	// 视频呼叫事件回调函数
+	private void OnVideoCallEventCallBack(int eventtype, int userid, int errorcode, int flags, int param, String userStr)
+	{
+		if(AnyChatCoreSDK.this.videoCallEvent != null)
+			AnyChatCoreSDK.this.videoCallEvent.OnAnyChatVideoCallEvent(eventtype, userid, errorcode, flags, param, userStr);
+	}
     
     static {
     	System.loadLibrary("anychatcore4java");
