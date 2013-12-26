@@ -126,6 +126,9 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_VIDEOSHOW_SETOVERLAYUSER	82	///< 设置迭加显示用户编号（参数为：int型，用户ID号）
 #define BRAC_SO_VIDEOSHOW_DRIVERCTRL		83	///< 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL）
 
+#define BRAC_SO_CORESDK_TICKOUTUSER			110	///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
+#define BRAC_SO_CORESDK_DEVICEMODE			130	///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+
 
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
 #define BRAC_TRANSTASK_PROGRESS				1	///< 传输任务进度查询（参数为：DOUBLE型，返回值0.0 ~ 100.0， 或参数为：DWORD型，返回值0 ~ 100）
@@ -374,6 +377,21 @@ BRAC_API DWORD BRAC_InputAudioData(LPBYTE lpSamples, DWORD dwSize, DWORD dwTimeS
 
 // 视频呼叫事件控制（请求、回复、挂断等）
 BRAC_API DWORD BRAC_VideoCallControl(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags=0, DWORD dwParam=0, LPCTSTR lpUserStr=NULL);
+
+// 获取用户好友ID列表
+BRAC_API DWORD BRAC_GetUserFriends(LPDWORD lpUserIDArray, DWORD& dwUserNum);
+// 获取好友在线状态
+BRAC_API DWORD BRAC_GetFriendStatus(DWORD dwFriendUserId, DWORD& dwStatus);
+// 获取用户分组ID列表
+BRAC_API DWORD BRAC_GetUserGroups(LPDWORD lpGroupIDArray, DWORD& dwGroupNum);
+// 获取分组下面的好友列表
+BRAC_API DWORD BRAC_GetGroupFriends(DWORD dwGroupId, LPDWORD lpUserIDArray, DWORD& dwUserNum);
+// 获取用户信息
+BRAC_API DWORD BRAC_GetUserInfo(DWORD dwUserId, DWORD dwInfoId, TCHAR* lpInfoName, DWORD dwLen);
+// 获取用户分组名称
+BRAC_API DWORD BRAC_GetGroupName(DWORD dwGroupId, TCHAR* lpGroupName, DWORD dwLen);
+// 用户信息控制
+BRAC_API DWORD BRAC_UserInfoControl(DWORD dwUserId, DWORD dwCtrlCode, DWORD wParam=0, DWORD lParam=0, LPCTSTR lpStrValue=NULL);
 
 
 #endif //BR_ANYCHAT_CORE_SDK_H__INCLUDED_
