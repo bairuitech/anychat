@@ -1,4 +1,4 @@
-﻿namespace VideoChat
+﻿namespace VideoChatClient
 {
     partial class Hall
     {
@@ -134,7 +134,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackgroundImage = global::VideoChat.Properties.Resources._03;
+            this.panel1.BackgroundImage = global::VideoChatClient.Properties.Resources._03;
             this.panel1.Controls.Add(this.pic_tuserVideo);
             this.panel1.Controls.Add(this.pic_tuserSound);
             this.panel1.Controls.Add(this.pic_suserSound);
@@ -149,7 +149,7 @@
             // pic_tuserVideo
             // 
             this.pic_tuserVideo.BackColor = System.Drawing.Color.Orange;
-            this.pic_tuserVideo.BackgroundImage = global::VideoChat.Properties.Resources.videobk;
+            this.pic_tuserVideo.BackgroundImage = global::VideoChatClient.Properties.Resources.videobk;
             this.pic_tuserVideo.Location = new System.Drawing.Point(24, 19);
             this.pic_tuserVideo.Name = "pic_tuserVideo";
             this.pic_tuserVideo.Size = new System.Drawing.Size(473, 344);
@@ -189,7 +189,7 @@
             // pic_suserVideo
             // 
             this.pic_suserVideo.BackColor = System.Drawing.Color.Orange;
-            this.pic_suserVideo.BackgroundImage = global::VideoChat.Properties.Resources.videobk;
+            this.pic_suserVideo.BackgroundImage = global::VideoChatClient.Properties.Resources.videobk;
             this.pic_suserVideo.Location = new System.Drawing.Point(521, 19);
             this.pic_suserVideo.Name = "pic_suserVideo";
             this.pic_suserVideo.Size = new System.Drawing.Size(471, 344);

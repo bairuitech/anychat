@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using System.Media;
 using System.Threading;
 
-namespace VideoChat
+namespace VideoChatClient
 {
     public partial class Hall : Form
     {

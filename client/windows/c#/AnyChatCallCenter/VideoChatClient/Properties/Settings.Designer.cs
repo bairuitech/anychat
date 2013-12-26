@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VideoChat.Properties
+namespace VideoChatClient.Properties
 {
 
 

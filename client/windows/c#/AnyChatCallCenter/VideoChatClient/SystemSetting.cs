@@ -70,9 +70,6 @@ namespace ANYCHATAPI
             AnyChatCoreSDK.Release();
         }
 
-        //static AnyChatCoreSDK.SDKFilterDataCallBack filterData_callback =
-            //new AnyChatCoreSDK.SDKFilterDataCallBack(SDKFilter_DataCallBack);
-
         static AnyChatCoreSDK.TransBufferCallBack transBuff_Callback =
             new AnyChatCoreSDK.TransBufferCallBack(TransBuffer_CallBack);
 

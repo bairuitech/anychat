@@ -12,7 +12,7 @@ using System.Xml;
 using System.Threading;
 using System.IO;
 
-namespace VideoChat
+namespace VideoChatClient
 {
     public partial class Login : Form
     {

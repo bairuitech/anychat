@@ -1,4 +1,4 @@
-﻿namespace VideoChat
+﻿namespace VideoChatClient
 {
     partial class Login
     {
