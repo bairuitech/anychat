@@ -92,10 +92,10 @@ public class CallCenterServer implements AnyChatServerEvent{
 	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr) {
 		System.out.print(getCurrentTime() + "OnUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + "\r\n");
 		// 演示如何使用TransBufferEx获取taskid
-		/*AnyChatTransTaskOutParam outParam = new AnyChatTransTaskOutParam();
+		/*AnyChatOutParam outParam = new AnyChatOutParam();
 		byte[] sendbuf = new byte[100];
 		int ret = AnyChatServerSDK.TransBufferEx(dwUserId, sendbuf, sendbuf.length, 0, 0, 0, outParam);
-		System.out.print(getCurrentTime() + "TransBufferEx: ret:" + ret + " taskid: " + outParam.GetTaskId() + "\r\n");
+		System.out.print(getCurrentTime() + "TransBufferEx: ret:" + ret + " taskid: " + outParam.GetIntValue() + "\r\n");
 		*/
 		
 		// 添加用户分组

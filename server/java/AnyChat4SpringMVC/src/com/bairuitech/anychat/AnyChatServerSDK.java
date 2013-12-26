@@ -1,7 +1,5 @@
 package com.bairuitech.anychat;		// 不能修改包的名称
 
-import com.bairuitech.anychat.AnyChatTransTaskOutParam;
-
 public class AnyChatServerSDK
 {
 	public static final int BRAS_MESSAGE_CORESERVERCONN		=	10;	///< 与核心服务器的连接消息，wParam为errorcode
@@ -59,11 +57,11 @@ public class AnyChatServerSDK
     public native int SetTimerEventCallBack(int elapse);
     
 	// 传送文件
-	public static native int TransFile(int userid, String filepath, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
+	public static native int TransFile(int userid, String filepath, int wparam, int lparam, int flags, AnyChatOutParam outParam);
 	// 透明通道传送缓冲区
 	public static native int TransBuffer(int userid, byte[] buf, int len);
 	// 透明通道传送缓冲区扩展
-	public static native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
+	public static native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags, AnyChatOutParam outParam);
 	// 发送SDK Filter 通信数据
 	public static native int SendSDKFilterData(byte[] buf, int len);
 	

@@ -9,7 +9,6 @@ import java.util.Vector;
 
 import com.bairuitech.anychat.AnyChatServerEvent;
 import com.bairuitech.anychat.AnyChatServerSDK;
-import com.bairuitech.anychat.AnyChatTransTaskOutParam;
 import com.bairuitech.anychat.AnyChatVerifyUserOutParam;
 
 /**

@@ -197,7 +197,7 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 		this.setSize(850, 600);
 		this.setLocation(400, 150); // 设置程序启动默认桌面位置
 		this.setResizable(false);
-		this.setTitle("AnyChat Server SDK for Java 示例 (V4.8.1)");
+		this.setTitle("AnyChat Server SDK for Java 示例 (V4.9.0)");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image image = toolkit.createImage("bairuitech.png");
 		this.setIconImage(image); // 设置图标
@@ -302,15 +302,6 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	 */
 	@Override
 	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr) {
-		System.out.print("OnUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + "\r\n");
-		// 测试扩展透明通道发送数据
-/*		AnyChatTransTaskOutParam outParam = new AnyChatTransTaskOutParam();
-		byte[] sendbuf = new byte[100];
-		int ret = AnyChatServerSDK.TransBufferEx(dwUserId, sendbuf,
-				sendbuf.length, 0, 0, 0, outParam);
-		System.out.print("TransBufferEx: ret:" + ret + " taskid: "
-				+ outParam.GetTaskId() + "\r\n");
-*/
 		String str = "OnAnyChatUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + " Ip: " + szIpAddr;
 		generateLog(str);
 		updateUserData(dwUserId, szUserName, szIpAddr, getCurrentTime());	
