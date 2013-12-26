@@ -159,15 +159,15 @@ public class AnyChatCoreSDK
 	// 发送文字消息
 	public native int SendTextMessage(int userid, int secret, String message);
 	// 传送文件
-	public native int TransFile(int userid, String filepath, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
+	public native int TransFile(int userid, String filepath, int wparam, int lparam, int flags, AnyChatOutParam outParam);
 	// 透明通道传送缓冲区
 	public native int TransBuffer(int userid, byte[] buf, int len);
 	// 透明通道传送缓冲区扩展
-	public native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags, AnyChatTransTaskOutParam outParam);
+	public native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags, AnyChatOutParam outParam);
 	// 终止传输任务
 	public native int CancelTransTask(int userid, int taskid);
 	// 查询传输任务状态
-	public native int QueryTransTaskInfo(int userid, int taskid, int infoname);
+	public native int QueryTransTaskInfo(int userid, int taskid, int infoname, AnyChatOutParam outParam);
 	// 发送SDK Filter 通信数据
 	public native int SendSDKFilterData(byte[] buf, int len);
 	
@@ -235,17 +235,17 @@ public class AnyChatCoreSDK
 	public native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String szUserStr);
 	
 	// 获取用户好友ID列表
-	public native int[] GetUserFriends();
+	public native int GetUserFriends(AnyChatOutParam outParam);
 	// 获取好友在线状态
-	public native int GetFriendStatus(int dwFriendUserId);
+	public native int GetFriendStatus(int dwFriendUserId, AnyChatOutParam outParam);
 	// 获取用户分组ID列表
-	public native int[] GetUserGroups();
+	public native int GetUserGroups(AnyChatOutParam outParam);
 	// 获取分组下面的好友列表
-	public native int[] GetGroupFriends(int dwGroupId);
+	public native int GetGroupFriends(int dwGroupId, AnyChatOutParam outParam);
 	// 获取用户信息
-	public native String GetUserInfo(int dwUserId, int dwInfoId);
+	public native int GetUserInfo(int dwUserId, int dwInfoId, AnyChatOutParam outParam);
 	// 获取用户分组名称
-	public native String GetGroupName(int dwGroupId);
+	public native int GetGroupName(int dwGroupId, AnyChatOutParam outParam);
 	// 用户信息控制
 	public native int UserInfoControl(int dwUserId, int dwCtrlCode, int wParam, int lParam, String szStrValue);
     
