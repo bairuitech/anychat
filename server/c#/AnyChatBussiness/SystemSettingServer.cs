@@ -12,7 +12,7 @@ namespace AnyChatBussiness
         public static void Init()
         {
             // 设置服务器应用程序消息回调函数
-            AnyChatServerSDK.BRAS_SetOnServerAppMessageCallBack(mServerAppMessageCallBack, 0);
+            AnyChatServerSDK.BRAS_SetOnServerAppMessageExCallBack(mServerAppMessageExCallBack, 0);
             // 设置SDK定时器回调函数
             AnyChatServerSDK.BRAS_SetTimerEventCallBack(1000, mTimerEventCallBack, 0);
             // 设置用户身份验证回调函数
@@ -22,7 +22,7 @@ namespace AnyChatBussiness
             // 设置用户登录成功回调函数
             AnyChatServerSDK.BRAS_SetOnUserLoginActionCallBack(mUserLoginActionCallBack, 0);
             // 设置用户注销回调函数
-            AnyChatServerSDK.BRAS_SetOnUserLogoutActionCallBack(mUserLogoutActionCallBack, 0);
+            AnyChatServerSDK.BRAS_SetOnUserLogoutActionExCallBack(mUserLogoutActionExCallBack, 0);
             // 设置用户进入房间回调函数
             AnyChatServerSDK.BRAS_SetOnUserEnterRoomActionCallBack(mUserEnterRoomActionCallBack, 0);
             // 设置用户离开房间回调函数
@@ -40,7 +40,7 @@ namespace AnyChatBussiness
         }
 
         // 服务器应用程序消息回调函数定义
-        private static AnyChatServerSDK.OnServerAppMessageCallBack mServerAppMessageCallBack = OnServerAppMessageCallBack;
+        private static AnyChatServerSDK.OnServerAppMessageExCallBack mServerAppMessageExCallBack = OnServerAppMessageExCallBack;
         // SDK定时器回调函数定义（上层应用可以在该回调中处理定时任务，而不需要额外开启线程，或是定时器）
         private static AnyChatServerSDK.OnTimerEventCallBack mTimerEventCallBack = OnTimerEventCallBack;
         // 用户身份验证回调函数定义
@@ -50,7 +50,7 @@ namespace AnyChatBussiness
         // 用户登录成功回调函数定义
         private static AnyChatServerSDK.OnUserLoginActionCallBack mUserLoginActionCallBack = OnUserLoginActionCallBack;
         // 用户注销回调函数定义
-        private static AnyChatServerSDK.OnUserLogoutActionCallBack mUserLogoutActionCallBack = OnUserLogoutActionCallBack;
+        private static AnyChatServerSDK.OnUserLogoutActionExCallBack mUserLogoutActionExCallBack = OnUserLogoutActionExCallBack;
         // 用户进入房间回调函数定义
         private static AnyChatServerSDK.OnUserEnterRoomActionCallBack mUserEnterRoomActionCallBack = OnUserEnterRoomActionCallBack;
         // 用户离开房间回调函数定义
@@ -68,7 +68,7 @@ namespace AnyChatBussiness
 
 
         // 服务器应用程序消息回调函数定义
-        public delegate void OnServerAppMessage_Received(int msg, int userValue);
+        public delegate void OnServerAppMessageEx_Received(int msg, int wParam, int lParam, int userValue);
         // SDK定时器回调函数定义（上层应用可以在该回调中处理定时任务，而不需要额外开启线程，或是定时器）
         public delegate void OnTimerEvent_Received(int userValue);
         // 用户身份验证回调函数定义
@@ -78,7 +78,7 @@ namespace AnyChatBussiness
         // 用户登录成功回调函数定义
         public delegate void OnUserLoginAction_Received(int userId, string userName, int level, string addr, int userValue);
         // 用户注销回调函数定义  
-        public delegate void OnUserLogoutAction_Received(int userId, int userValue);
+        public delegate void OnUserLogoutActionEx_Received(int userId, int errorcode, int userValue);
         //用户进入房间回调函数定义
         public delegate void OnUserEnterRoomAction_Received(int userId, int roomId, int userValue);
         // 用户离开房间回调函数定义
@@ -95,13 +95,13 @@ namespace AnyChatBussiness
         public delegate void OnTransFile_Received(int dwUserId, string lpFileName, string lpTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId, int lpUserValue);
 
 
-        public static OnServerAppMessage_Received OnServerAppMessageReceived = null;
+        public static OnServerAppMessageEx_Received OnServerAppMessageExReceived = null;
         // 服务器应用程序消息回调函数定义
-        public static void OnServerAppMessageCallBack(int msg, int userValue)
+        public static void OnServerAppMessageExCallBack(int msg, int wParam, int lParam, int userValue)
         {
-            if (OnServerAppMessageReceived != null)
+            if (OnServerAppMessageExReceived != null)
             {
-                OnServerAppMessageReceived(msg, userValue);
+                OnServerAppMessageExReceived(msg, wParam, lParam, userValue);
             }
         }
 
@@ -149,13 +149,13 @@ namespace AnyChatBussiness
             }
         }
 
-        public static OnUserLogoutAction_Received OnUserLogoutActionReceived = null;
+        public static OnUserLogoutActionEx_Received OnUserLogoutActionExReceived = null;
         // 用户注销回调函数定义  
-        public static void OnUserLogoutActionCallBack(int userId, int userValue)
+        public static void OnUserLogoutActionExCallBack(int userId, int errorcode, int userValue)
         {
-            if (OnUserLogoutActionReceived != null)
+            if (OnUserLogoutActionExReceived != null)
             {
-                OnUserLogoutActionReceived(userId, userValue);
+                OnUserLogoutActionExReceived(userId, errorcode, userValue);
             }
         }
 

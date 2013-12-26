@@ -54,51 +54,64 @@ namespace VideoChatServer
         // 用户注销回调函数定义  
         public static SystemSettingServer.OnUserLogoutActionEx_Received OnUserLogoutActionEx_Received_main = null;
         // 服务器应用程序消息回调函数定义
-        public static SystemSettingServer.OnServerAppMessage_Received OnServerAppMessage_Received_main = null;
+        public static SystemSettingServer.OnServerAppMessageEx_Received OnServerAppMessageEx_Received_main = null;
 
         string[] str;                       //用户信息集(业务服务器在线列表显示)
 
         // 服务器应用程序消息回调函数定义
-        void OnServerAppMessageCallBack(int msg, int userValue)
+        void OnServerAppMessageExCallBack(int msg, int wParam, int lParam, int userValue)
         {
             try
             {
-                OnServerAppMessage_Received_main = new SystemSettingServer.OnServerAppMessage_Received(OnServerAppMessageCallBack_main);
-                this.rtb_message.Invoke(OnServerAppMessage_Received_main, msg, userValue);
+                OnServerAppMessageEx_Received_main = new SystemSettingServer.OnServerAppMessageEx_Received(OnServerAppMessageExCallBack_main);
+                this.rtb_message.Invoke(OnServerAppMessageEx_Received_main, msg, wParam, lParam, userValue);
             }
             catch (Exception ex)
             {
-                Log.SetLog("OnServerAppMessageCallBack                 " + ex.Message.ToString());
+                Log.SetLog("OnServerAppMessageExCallBack                 " + ex.Message.ToString());
             }
         }
         // 服务器应用程序消息回调函数定义
-        void OnServerAppMessageCallBack_main(int msg, int userValue)
+        void OnServerAppMessageExCallBack_main(int msg, int wParam, int lParam, int userValue)
         {
             try
             {
-                this.rtb_message.AppendText("服务器应用程序消息:OnServerAppMessage(" + "msg:" + msg.ToString() + ",userValue:" + userValue.ToString() + ")\n");
-                if (msg == 1)
+                if (msg == ANYCHATAPI.AnyChatServerSDK.BRAS_MESSAGE_CORESERVERCONN)
                 {
-                    //显示版本
-                    string version = GetVersion();
-                    lb_version.Text = "与SDK核心服务器连接成功";
-                    lb_version.ForeColor = Color.Green;
-                }
-                else if (msg == 2)
-                {
+                    if (wParam == 0)
+                    {
+                        //显示版本
+                        string version = GetVersion();
+                        lb_version.Text = "与AnyChat核心服务器连接成功";
+                        lb_version.ForeColor = Color.Green;
+                        this.rtb_message.AppendText("与AnyChat核心服务器连接成功\n");
+                    }
+                    else
+                    {
+                        lb_version.Text = "与AnyChat核心服务器连接失败";
+                        lb_version.ForeColor = Color.Red;
+                        this.rtb_message.AppendText("与AnyChat核心服务器连接失败(errorcode:" + wParam.ToString() + ")\n");
+                    }
+                    Log.SetLog(lb_version.Text);
                     //清空在线用户列表中的项
                     lv_onlineUsers.Items.Clear();
-                    lb_version.Text = "与SDK核心服务器断开连接";
-                    lb_version.ForeColor = Color.Red;
                 }
-                Log.SetLog(lb_version.Text);
+                else if (msg == ANYCHATAPI.AnyChatServerSDK.BRAS_MESSAGE_RECORDSERVERCONN)
+                {
+                    if (wParam == 0)
+                        this.rtb_message.AppendText("与AnyChat录像服务器连接成功(serverid:" + lParam.ToString() + ")\n");
+                    else
+                        this.rtb_message.AppendText("与AnyChat录像服务器连接失败(errorcode:" + wParam.ToString() + ")\n");
+                }
+                else
+                    this.rtb_message.AppendText("服务器应用程序消息:OnServerAppMessageEx(" + "msg:" + msg.ToString() + ",wParam:" + wParam.ToString() + ",lParam:" + lParam.ToString() + ")\n");
 
                 rtb_message.Focus();
                 rtb_message.SelectionStart = rtb_message.TextLength;
             }
             catch (Exception ex)
             {
-                Log.SetLog("OnServerAppMessageCallBack         服务器应用程序消息" + ex.Message.ToString());
+                Log.SetLog("OnServerAppMessageExCallBack         服务器应用程序消息" + ex.Message.ToString());
             }
         }
 
@@ -366,7 +379,7 @@ namespace VideoChatServer
 
 
                 // 服务器应用程序消息回调函数定义
-                SystemSettingServer.OnServerAppMessageReceived = new SystemSettingServer.OnServerAppMessage_Received(OnServerAppMessageCallBack);
+                SystemSettingServer.OnServerAppMessageExReceived = new SystemSettingServer.OnServerAppMessageEx_Received(OnServerAppMessageExCallBack);
                 //用户登录成功回调函数
                 SystemSettingServer.OnUserLoginActionReceived = new SystemSettingServer.OnUserLoginAction_Received(OnUserLoginAction_CallBack);
                 //用户登录成功回调函数
@@ -386,8 +399,11 @@ namespace VideoChatServer
                 //文件传输回调函数
                 SystemSettingServer.OnTransFileReceived = new SystemSettingServer.OnTransFile_Received(OnTransFileCallBack);
 
-                lb_version.Text = "与SDK核心服务器连接失败";
+                lb_version.Text = "与AnyChat核心服务器连接失败";
                 lb_version.ForeColor = Color.Red;
+
+                // 显示版本信息
+                this.rtb_message.AppendText(GetVersion()+"\n");
 
                 //初始化SDK
                 SystemSettingServer.Init();

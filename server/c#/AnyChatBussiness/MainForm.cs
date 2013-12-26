@@ -21,9 +21,9 @@ namespace AnyChatBussiness
         // 用户离开房间回调函数定义
         public static SystemSettingServer.OnUserLeaveRoomAction_Received OnUserLeaveRoomAction_Received_main = null;
         // 用户注销回调函数定义  
-        public static SystemSettingServer.OnUserLogoutAction_Received OnUserLogoutAction_Received_main = null;
+        public static SystemSettingServer.OnUserLogoutActionEx_Received OnUserLogoutActionEx_Received_main = null;
         // 服务器应用程序消息回调函数定义
-        public static SystemSettingServer.OnServerAppMessage_Received OnServerAppMessage_Received_main = null;
+        public static SystemSettingServer.OnServerAppMessageEx_Received OnServerAppMessageEx_Received_main = null;
 
         public MainForm()
         {
@@ -32,16 +32,31 @@ namespace AnyChatBussiness
         }
 
         // 服务器应用程序消息回调函数定义
-        void OnServerAppMessageCallBack(int msg, int userValue)
+        void OnServerAppMessageExCallBack(int msg, int wParam, int lParam, int userValue)
         {
-            OnServerAppMessage_Received_main = new SystemSettingServer.OnServerAppMessage_Received(OnServerAppMessageCallBack_main);
-            this.rtb_message.Invoke(OnServerAppMessage_Received_main, msg, userValue);
+            OnServerAppMessageEx_Received_main = new SystemSettingServer.OnServerAppMessageEx_Received(OnServerAppMessageExCallBack_main);
+            this.rtb_message.Invoke(OnServerAppMessageEx_Received_main, msg, wParam, lParam, userValue);
         }
 
         // 服务器应用程序消息回调函数定义
-        void OnServerAppMessageCallBack_main(int msg, int userValue)
+        void OnServerAppMessageExCallBack_main(int msg, int wParam, int lParam, int userValue)
         {
-            this.rtb_message.AppendText("服务器应用程序消息:OnServerAppMessage(" + "msg:" + msg.ToString() + ",userValue:" + userValue.ToString() + ")\n");
+            if(msg == ANYCHATAPI.AnyChatServerSDK.BRAS_MESSAGE_CORESERVERCONN)
+            {
+                if(wParam == 0)
+                    this.rtb_message.AppendText("与AnyChat核心服务器连接成功\n");
+                else
+                    this.rtb_message.AppendText("与AnyChat核心服务器连接失败(errorcode:" + wParam.ToString() + ")\n");
+            }
+            else if(msg == ANYCHATAPI.AnyChatServerSDK.BRAS_MESSAGE_RECORDSERVERCONN)
+            {
+                if (wParam == 0)
+                    this.rtb_message.AppendText("与AnyChat录像服务器连接成功(serverid:" + lParam.ToString() + ")\n");
+                else
+                    this.rtb_message.AppendText("与AnyChat录像服务器连接失败(errorcode:" + wParam.ToString() + ")\n");
+            }
+            else
+               this.rtb_message.AppendText("服务器应用程序消息:OnServerAppMessageEx(" + "msg:" + msg.ToString() + ",wParam:" + wParam.ToString() + ",lParam:" + lParam.ToString() + ")\n");
         }
 
         // 用户登录成功回调函数
@@ -102,23 +117,23 @@ namespace AnyChatBussiness
         }
 
         // 用户注销回调函数定义  
-        void OnUserLogoutActionCallBack(int userId, int userValue)
+        void OnUserLogoutActionExCallBack(int userId, int errorcode, int userValue)
         {
-            OnUserLogoutAction_Received_main = new SystemSettingServer.OnUserLogoutAction_Received(OnUserLogoutActionCallBack_main);
-            this.rtb_message.Invoke(OnUserLogoutAction_Received_main, userId, userValue);
+            OnUserLogoutActionEx_Received_main = new SystemSettingServer.OnUserLogoutActionEx_Received(OnUserLogoutActionExCallBack_main);
+            this.rtb_message.Invoke(OnUserLogoutActionEx_Received_main, userId, errorcode, userValue);
         }
 
         // 用户注销回调函数定义  
-        void OnUserLogoutActionCallBack_main(int userId, int userValue)
+        void OnUserLogoutActionExCallBack_main(int userId, int errorcode, int userValue)
         {
-            this.rtb_message.AppendText("用户注销:OnUserLogoutAction(" + "userId:" + userId.ToString() + ",userValue:" + userValue.ToString() + ")\n");
+            this.rtb_message.AppendText("用户注销:OnUserLogoutAction(" + "userId:" + userId.ToString() + ",errorcode:" + errorcode.ToString() + ")\n");
         }
 
         //窗体加载
         private void MainForm_Load(object sender, EventArgs e)
         {
             // 服务器应用程序消息回调函数定义
-            SystemSettingServer.OnServerAppMessageReceived = new SystemSettingServer.OnServerAppMessage_Received(OnServerAppMessageCallBack);
+            SystemSettingServer.OnServerAppMessageExReceived = new SystemSettingServer.OnServerAppMessageEx_Received(OnServerAppMessageExCallBack);
             //用户登录成功回调函数
             SystemSettingServer.OnUserLoginActionReceived = new SystemSettingServer.OnUserLoginAction_Received(OnUserLoginAction_CallBack);
             //用户登录成功回调函数
@@ -128,7 +143,7 @@ namespace AnyChatBussiness
             // 用户离开房间回调函数定义
             SystemSettingServer.OnUserLeaveRoomActionReceived = new SystemSettingServer.OnUserLeaveRoomAction_Received(OnUserLeaveRoomActionCallBack);
             // 用户注销回调函数定义 
-            SystemSettingServer.OnUserLogoutActionReceived = new SystemSettingServer.OnUserLogoutAction_Received(OnUserLogoutActionCallBack);
+            SystemSettingServer.OnUserLogoutActionExReceived = new SystemSettingServer.OnUserLogoutActionEx_Received(OnUserLogoutActionExCallBack);
 
             SystemSettingServer.Init();
 

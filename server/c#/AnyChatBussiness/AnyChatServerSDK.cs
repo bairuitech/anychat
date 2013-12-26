@@ -11,7 +11,7 @@ namespace ANYCHATAPI
     {
         public const string AnyChatServerSDKDll = "AnyChatServerSDK.dll";
 
-        // #define BRAS_SERVERAPPMSG_CONNECTED		1		///< 连接AnyChat服务器成功
+        //#define BRAS_SERVERAPPMSG_CONNECTED		1		///< 连接AnyChat服务器成功
 		public const int BRAS_SERVERAPPMSG_CONNECTED 	= 1;
         //#define BRAS_SERVERAPPMSG_DISCONNECT		2		///< 与AnyChat服务器断开连接
 		public const int BRAS_SERVERAPPMSG_DISCONNECT 	= 2;
@@ -38,6 +38,29 @@ namespace ANYCHATAPI
 		//#define BRAS_VIDEOCALL_EVENT_FINISH     4        ///< 挂断（结束）呼叫会话
 		public const int BRAS_VIDEOCALL_EVENT_FINISH 	= 4;
 		
+        // 用户信息控制类型定义（API：BRAS_UserInfoControl 传入参数、OnUserInfoControl回调参数）
+        //#define BRAS_USERINFO_CTRLCODE_KICKOUT		1	///< 将指定用户从系统中踢掉
+        public const int BRAS_USERINFO_CTRLCODE_KICKOUT =   1;
+        //#define BRAS_USERINFO_CTRLCODE_SYNCDATA		2	///< 将指定用户的数据同步给客户端
+        public const int BRAS_USERINFO_CTRLCODE_SYNCDATA=	2;
+        //#define BRAS_USERINFO_CTRLCODE_BLOCKIP		4	///< 阻止IP地址连接服务器，lpStrValue为IP地址字符串，支持通配符“*”
+        public const int BRAS_USERINFO_CTRLCODE_BLOCKIP	=	4;
+        //#define BRAS_USERINFO_CTRLCODE_UNBLOCKIP	    5	///< 允许IP地址连接服务器，lpStrValue为IP地址字符串，支持通配符“*”
+        public const int BRAS_USERINFO_CTRLCODE_UNBLOCKIP=  5;
+        //#define BRAS_USERINFO_CTRLCODE_ADDGROUP		20	///< 添加用户分组，wParam为分组Id，lpStrValue为分组名称
+        public const int BRAS_USERINFO_CTRLCODE_ADDGROUP=   20;
+        //#define BRAS_USERINFO_CTRLCODE_DELGROUP		21	///< 删除用户分组，wParam为分组Id
+        public const int BRAS_USERINFO_CTRLCODE_DELGROUP=   21;
+        //#define BRAS_USERINFO_CTRLCODE_ADDFRIEND	    22	///< 添加用户好友，wParam为好友Id
+        public const int BRAS_USERINFO_CTRLCODE_ADDFRIEND=  22;
+        //#define BRAS_USERINFO_CTRLCODE_DELFRIEND	    23	///< 删除用户好友，wParam为好友Id
+        public const int BRAS_USERINFO_CTRLCODE_DELFRIEND=  23;
+        //#define BRAS_USERINFO_CTRLCODE_SETGROUPRELATION	24	///< 设置好友与分组的关联关系，wParam为分组Id，lParam为好友Id，表示好友属于某个分组
+        public const int BRAS_USERINFO_CTRLCODE_SETGROUPRELATION=   24;
+        //#define BRAS_USERINFO_CTRLCODE_APPDEFINE	    100	///< 应用层自定义起始指令
+        public const int BRAS_USERINFO_CTRLCODE_APPDEFINE = 100;
+
+
 		// 初始化标志（API：BRAS_InitSDK 传入参数）
 		public const int BRAS_INITFLAGS_MULTITHREADS	= 1;	///< 多线程模式
 		
@@ -261,5 +284,26 @@ namespace ANYCHATAPI
 		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_VideoCallControl", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int BRAS_VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr);
 		
+
+        // 设置用户的详细信息
+		//BRAS_API DWORD BRAS_SetUserInfo(DWORD dwUserId, DWORD dwInfoId, LPCTSTR lpInfoValue, DWORD dwFlags=0);
+		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetUserInfo", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BRAS_SetUserInfo(int dwUserId, int dwInfoId, string lpInfoValue, int dwFlags);
+
+        // 获取用户的详细信息
+		//BRAS_API DWORD BRAS_GetUserInfo(DWORD dwUserId, DWORD dwInfoId, TCHAR* lpInfoValue, DWORD dwSize);
+		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_GetUserInfo", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BRAS_GetUserInfo(int dwUserId, int dwInfoId, StringBuilder lpInfoValue, int dwSize);
+
+        // 用户信息控制
+		//BRAS_API DWORD BRAS_UserInfoControl(DWORD dwUserId, DWORD dwCtrlCode, DWORD wParam=0, DWORD lParam=0, LPCTSTR lpStrValue=NULL);
+		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_UserInfoControl", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BRAS_UserInfoControl(int dwUserId, int dwCtrlCode, int wParam, int lParam, string lpStrValue);
+
+        // SDK内核参数设置
+		//BRAS_API DWORD BRAS_SetSDKOption(DWORD optname, CHAR* optval, DWORD optlen);
+		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetSDKOption", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BRAS_SetSDKOption(int optname, StringBuilder optval, int optlen);
+
     }
 }

@@ -10,7 +10,7 @@ namespace ANYCHATAPI
         public static void Init()
         {
             // 设置服务器应用程序消息回调函数
-            AnyChatServerSDK.BRAS_SetOnServerAppMessageCallBack(mServerAppMessageCallBack, 0);
+            AnyChatServerSDK.BRAS_SetOnServerAppMessageExCallBack(mServerAppMessageExCallBack, 0);
             // 设置SDK定时器回调函数
             AnyChatServerSDK.BRAS_SetTimerEventCallBack(1000, mTimerEventCallBack, 0);
             // 设置用户身份验证回调函数
@@ -38,7 +38,7 @@ namespace ANYCHATAPI
         }
 
         // 服务器应用程序消息回调函数定义
-        private static AnyChatServerSDK.OnServerAppMessageCallBack mServerAppMessageCallBack = OnServerAppMessageCallBack;
+        private static AnyChatServerSDK.OnServerAppMessageExCallBack mServerAppMessageExCallBack = OnServerAppMessageExCallBack;
         // SDK定时器回调函数定义（上层应用可以在该回调中处理定时任务，而不需要额外开启线程，或是定时器）
         private static AnyChatServerSDK.OnTimerEventCallBack mTimerEventCallBack = OnTimerEventCallBack;
         // 用户身份验证回调函数定义
@@ -66,7 +66,7 @@ namespace ANYCHATAPI
 
 
         // 服务器应用程序消息回调函数定义
-        public delegate void OnServerAppMessage_Received(int msg, int userValue);
+        public delegate void OnServerAppMessageEx_Received(int msg, int wParam, int lParam, int userValue);
         // SDK定时器回调函数定义（上层应用可以在该回调中处理定时任务，而不需要额外开启线程，或是定时器）
         public delegate void OnTimerEvent_Received(int userValue);
         // 用户身份验证回调函数定义
@@ -93,13 +93,13 @@ namespace ANYCHATAPI
         public delegate void OnTransFile_Received(int dwUserId, string lpFileName, string lpTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId, int lpUserValue);
 
 
-        public static OnServerAppMessage_Received OnServerAppMessageReceived = null;
+        public static OnServerAppMessageEx_Received OnServerAppMessageExReceived = null;
         // 服务器应用程序消息回调函数定义
-        public static void OnServerAppMessageCallBack(int msg, int userValue)
+        public static void OnServerAppMessageExCallBack(int msg, int wParam, int lParam, int userValue)
         {
-            if (OnServerAppMessageReceived != null)
+            if (OnServerAppMessageExReceived != null)
             {
-                OnServerAppMessageReceived(msg, userValue);
+                OnServerAppMessageExReceived(msg, wParam, lParam, userValue);
             }
         }
 
