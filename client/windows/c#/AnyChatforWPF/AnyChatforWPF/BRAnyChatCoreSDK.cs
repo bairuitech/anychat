@@ -883,7 +883,47 @@ namespace ANYCHATAPI
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_VideoCallControl", CallingConvention = CallingConvention.Cdecl)]
         public static extern int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr);
 		
+		/// <summary>
+        /// 获取用户好友ID列表
+        /// </summary>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetUserFriends", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetUserFriends(int[] lpUserIDArray, ref int dwUserNum);
 
+		/// <summary>
+        /// 获取好友在线状态
+        /// </summary>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetFriendStatus", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetFriendStatus(int dwFriendUserId, ref int dwStatus);
+
+		/// <summary>
+        /// 获取用户分组ID列表
+        /// </summary>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetUserGroups", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetUserGroups(int[] lpGroupIDArray, ref int dwGroupNum);
+
+		/// <summary>
+        /// 获取分组下面的好友列表
+        /// </summary>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetGroupFriends", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetGroupFriends(int dwGroupId, int[] lpUserIDArray, ref int dwUserNum);
+		
+		/// <summary>
+        /// 获取用户信息
+        /// </summary>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetUserInfo", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetUserInfo(int dwUserId, int dwInfoId, StringBuilder lpInfoName, int dwLen);
+		
+		/// <summary>
+        /// 获取用户分组名称
+        /// </summary>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetGroupName", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetGroupName(int dwGroupId, StringBuilder lpGroupName, int dwLen);
+
+		/// <summary>
+        /// 用户信息控制
+        /// </summary>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_UserInfoControl", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int UserInfoControl(int dwUserId, int dwCtrlCode, int wParam, int lParam, string lpStrValue);
 
         #endregion
     }
