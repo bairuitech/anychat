@@ -52,7 +52,7 @@ namespace VideoChatServer
         // 用户离开房间回调函数定义
         public static SystemSettingServer.OnUserLeaveRoomAction_Received OnUserLeaveRoomAction_Received_main = null;
         // 用户注销回调函数定义  
-        public static SystemSettingServer.OnUserLogoutAction_Received OnUserLogoutAction_Received_main = null;
+        public static SystemSettingServer.OnUserLogoutActionEx_Received OnUserLogoutActionEx_Received_main = null;
         // 服务器应用程序消息回调函数定义
         public static SystemSettingServer.OnServerAppMessage_Received OnServerAppMessage_Received_main = null;
 
@@ -230,7 +230,7 @@ namespace VideoChatServer
         }
 
         // 用户注销回调函数定义
-        void OnUserLogoutActionCallBack(int userId, int userValue)
+        void OnUserLogoutActionExCallBack(int userId, int errorcode, int userValue)
         {
             try
             {
@@ -257,8 +257,8 @@ namespace VideoChatServer
                         new ParamInfo(CommandHelp.ParamEnum.WPARAM.ToString(), Promise.ICS_STATUSTYPE_USERONLINE_FONLINE.ToString()));//用户离线
                 }
 
-                OnUserLogoutAction_Received_main = new SystemSettingServer.OnUserLogoutAction_Received(OnUserLogoutActionCallBack_main);
-                this.rtb_message.Invoke(OnUserLogoutAction_Received_main, userId, userValue);
+                OnUserLogoutActionEx_Received_main = new SystemSettingServer.OnUserLogoutActionEx_Received(OnUserLogoutActionExCallBack_main);
+                this.rtb_message.Invoke(OnUserLogoutActionEx_Received_main, userId, errorcode, userValue);
             }
             catch (Exception ex)
             {
@@ -266,7 +266,7 @@ namespace VideoChatServer
             }
         }
         // 用户注销回调函数定义  
-        void OnUserLogoutActionCallBack_main(int userId, int userValue)
+        void OnUserLogoutActionExCallBack_main(int userId, int errorcode, int userValue)
         {
             try
             {
@@ -291,7 +291,7 @@ namespace VideoChatServer
         // 用户身份验证回调函数定义
         // 根据函数返回值决定是否验证身份成功，当返回0时，必须分配一个唯一的userid
         int uid = 1;
-        int OnVerifyUserCallBack(string userName, string password, ref int userID, ref int userLevel, ref string nickName, int len, int userValue)
+        int OnVerifyUserCallBack(string userName, string password, ref int userID, ref int userLevel, IntPtr nickName, int len, int userValue)
         {
             try
             {
@@ -376,7 +376,7 @@ namespace VideoChatServer
                 // 用户离开房间回调函数定义
                 SystemSettingServer.OnUserLeaveRoomActionReceived = new SystemSettingServer.OnUserLeaveRoomAction_Received(OnUserLeaveRoomActionCallBack);
                 // 用户注销回调函数定义 
-                SystemSettingServer.OnUserLogoutActionReceived = new SystemSettingServer.OnUserLogoutAction_Received(OnUserLogoutActionCallBack);
+                SystemSettingServer.OnUserLogoutActionExReceived = new SystemSettingServer.OnUserLogoutActionEx_Received(OnUserLogoutActionExCallBack);
                 // 透明通道数据回调函数定义
                 SystemSettingServer.OnTransBufferReceived = new SystemSettingServer.OnTransBuffer_Received(TransBuffer_CallBack);
                 // 用户身份验证回调函数定义

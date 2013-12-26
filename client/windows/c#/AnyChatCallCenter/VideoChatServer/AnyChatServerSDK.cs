@@ -12,17 +12,47 @@ namespace ANYCHATAPI
         public const string AnyChatServerSDKDll = "AnyChatServerSDK.dll";
 
         // #define BRAS_SERVERAPPMSG_CONNECTED		1		///< 连接AnyChat服务器成功
-		public const int BRAS_SERVERAPPMSG_CONNECTED = 1;
+		public const int BRAS_SERVERAPPMSG_CONNECTED 	= 1;
         //#define BRAS_SERVERAPPMSG_DISCONNECT		2		///< 与AnyChat服务器断开连接
-		public const int BRAS_SERVERAPPMSG_DISCONNECT = 2;
-
+		public const int BRAS_SERVERAPPMSG_DISCONNECT 	= 2;
+		
+		// 服务器消息类型定义（回调事件：BRAS_OnServerAppMessageEx_CallBack 参数）
+		// #define BRAS_MESSAGE_CORESERVERCONN		10		///< 与核心服务器的连接消息，wParam为errorcode
+		public const int BRAS_MESSAGE_CORESERVERCONN	= 10;
+		// #define BRAS_MESSAGE_RECORDSERVERCONN	11		///< 与录像服务器的连接消息，wParam为errorcode，lParam为recordserverid
+		public const int BRAS_MESSAGE_RECORDSERVERCONN	= 11;
+		// #define BRAS_MESSAGE_LOGINSERVERCONN		12		///< 与登录服务器的连接消息，wParam为errorcode，lParam为loginserverid
+		public const int BRAS_MESSAGE_LOGINSERVERCONN	= 12;
+		// #define BRAS_MESSAGE_ROOMSERVERCONN		13		///< 与房间服务器的连接消息，wParam为errorcode，lParam为roomserverid
+		public const int BRAS_MESSAGE_ROOMSERVERCONN	= 13;
+		// #define BRAS_MESSAGE_MEDIASERVERCONN		14		///< 与流媒体服务器的连接消息，wParam为errorcode，lParam为mediaserverid
+		public const int BRAS_MESSAGE_MEDIASERVERCONN	= 14;
+		
+		// 视频呼叫事件类型定义（API：BRAS_VideoCallControl 传入参数、OnVideoCallEvent回调参数）
+		//#define BRAS_VIDEOCALL_EVENT_REQUEST    1        ///< 呼叫请求
+		public const int BRAS_VIDEOCALL_EVENT_REQUEST 	= 1;
+		//#define BRAS_VIDEOCALL_EVENT_REPLY      2        ///< 呼叫请求回复
+		public const int BRAS_VIDEOCALL_EVENT_REPLY 	= 2;
+		//#define BRAS_VIDEOCALL_EVENT_START      3        ///< 视频呼叫会话开始事件
+		public const int BRAS_VIDEOCALL_EVENT_START 	= 3;
+		//#define BRAS_VIDEOCALL_EVENT_FINISH     4        ///< 挂断（结束）呼叫会话
+		public const int BRAS_VIDEOCALL_EVENT_FINISH 	= 4;
+		
+		// 初始化标志（API：BRAS_InitSDK 传入参数）
+		public const int BRAS_INITFLAGS_MULTITHREADS	= 1;	///< 多线程模式
+		
+		
         /**
-		*    回调函数定义
-		*/
+		 *    回调函数定义
+		 */
 
         // 服务器应用程序消息回调函数定义
         //typedef void (CALLBACK* BRAS_OnServerAppMessage_CallBack)(DWORD dwMsg, LPVOID lpUserValue);
         public delegate void OnServerAppMessageCallBack(int msg, int userValue);
+		
+		// 服务器应用程序消息（扩展）回调函数定义
+        //typedef void (CALLBACK* BRAS_OnServerAppMessageEx_CallBack)(DWORD dwNotifyMessage, DWORD wParam, DWORD lParam, LPVOID lpUserValue);
+        public delegate void OnServerAppMessageExCallBack(int dwNotifyMessage, int wParam, int lParam, int userValue);
 
 		// SDK定时器回调函数定义（上层应用可以在该回调中处理定时任务，而不需要额外开启线程，或是定时器）
 		//typedef void (CALLBACK* BRAS_OnTimerEvent_CallBack)(LPVOID lpUserValue);
@@ -30,7 +60,7 @@ namespace ANYCHATAPI
 
 		// 用户身份验证回调函数定义
 		// typedef DWORD (CALLBACK* BRAS_VerifyUser_CallBack)(IN LPCTSTR lpUserName,IN LPCTSTR lpPassword, OUT LPDWORD lpUserID, OUT LPDWORD lpUserLevel, OUT LPTSTR lpNickName,IN DWORD dwNCLen, LPVOID lpUserValue);
-        public delegate int VerifyUserCallBack(string userName, string password, ref int userID, ref int userLevel, ref string nickName, int len,int userValue);
+        public delegate int VerifyUserCallBack(string userName, string password, ref int userID, ref int userLevel, IntPtr nickName, int len,int userValue);
 
         // 用户申请进入房间回调函数定义
         //typedef DWORD (CALLBACK* BRAS_PrepareEnterRoom_CallBack)(DWORD dwUserId, DWORD dwRoomId, LPCTSTR lpRoomName,LPCTSTR lpPassword, LPVOID lpUserValue);
@@ -43,6 +73,10 @@ namespace ANYCHATAPI
         // 用户注销回调函数定义
         //typedef void (CALLBACK* BRAS_OnUserLogoutAction_CallBack)(DWORD dwUserId, LPVOID lpUserValue);
         public delegate void OnUserLogoutActionCallBack(int userId, int userValue);
+		
+		// 用户注销回调函数定义（扩展）
+        //typedef void (CALLBACK* BRAS_OnUserLogoutActionEx_CallBack)(DWORD dwUserId, DWORD dwErrorCode, LPVOID lpUserValue);
+        public delegate void OnUserLogoutActionExCallBack(int userId, int errorcode, int userValue);
 
         // 用户进入房间回调函数定义
         //typedef void (CALLBACK* BRAS_OnUserEnterRoomAction_CallBack)(DWORD dwUserId, DWORD dwRoomId, LPVOID lpUserValue);
@@ -72,15 +106,28 @@ namespace ANYCHATAPI
 		//typedef void (CALLBACK * BRAS_OnTransFile_CallBack)(DWORD dwUserId, LPCTSTR lpFileName, LPCTSTR lpTempFilePath, DWORD dwFileLength, DWORD wParam, DWORD lParam, DWORD dwTaskId, LPVOID lpUserValue);
 		public delegate void OnTransFileCallBack(int dwUserId, string lpFileName, string lpTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId, int lpUserValue);
 
+		// 服务器录像回调函数定义
+		//typedef void (CALLBACK * BRAS_OnServerRecord_CallBack)(DWORD dwUserId, DWORD dwParam, DWORD dwRecordServerId, DWORD dwElapse, LPCTSTR lpRecordFileName, LPVOID lpUserValue);
+		public delegate void OnServerRecordCallBack(int dwUserId, int dwParam, int dwRecordServerId, int dwElapse, string lpRecordFileName, int lpUserValue);
+		
+		// 视频通话消息通知回调函数定义
+		//typedef DWORD (CALLBACK * BRAS_OnVideoCallEvent_CallBack)(DWORD dwEventType, DWORD dwSrcUserId, DWORD dwTarUserId, DWORD dwErrorCode, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
+		public delegate int OnVideoCallEventCallBack(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue);
+		
 
 		/**
-		*    API 方法定义
-		*/
+		 *    API 方法定义
+		 */
 
         // 设置服务器应用程序消息回调函数
         //BRAS_API DWORD BRAS_SetOnServerAppMessageCallBack(BRAS_OnServerAppMessage_CallBack lpFunction, LPVOID lpUserValue=NULL);
         [DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetOnServerAppMessageCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern int BRAS_SetOnServerAppMessageCallBack(OnServerAppMessageCallBack function, int userValue);
+		
+		// 设置服务器应用程序消息（扩展）回调函数
+        //BRAS_API DWORD BRAS_SetOnServerAppMessageExCallBack(BRAS_OnServerAppMessageEx_CallBack lpFunction, LPVOID lpUserValue=NULL);
+        [DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetOnServerAppMessageExCallBack", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BRAS_SetOnServerAppMessageExCallBack(OnServerAppMessageExCallBack function, int userValue);
 
         // 设置SDK定时器回调函数（dwElapse：定时器间隔，单位：ms）
         // BRAS_API DWORD BRAS_SetTimerEventCallBack(DWORD dwElapse, BRAS_OnTimerEvent_CallBack lpFunction, LPVOID lpUserValue=NULL);
@@ -106,6 +153,11 @@ namespace ANYCHATAPI
         //BRAS_API DWORD BRAS_SetOnUserLogoutActionCallBack(BRAS_OnUserLogoutAction_CallBack lpFunction, LPVOID lpUserValue=NULL);
         [DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetOnUserLogoutActionCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern int BRAS_SetOnUserLogoutActionCallBack(OnUserLogoutActionCallBack function, int userValue);
+		
+		// 设置用户注销回调函数（扩展）
+        //BRAS_API DWORD BRAS_SetOnUserLogoutActionExCallBack(BRAS_OnUserLogoutActionEx_CallBack lpFunction, LPVOID lpUserValue=NULL);
+        [DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetOnUserLogoutActionExCallBack", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BRAS_SetOnUserLogoutActionExCallBack(OnUserLogoutActionExCallBack function, int userValue);
 
         // 设置用户进入房间回调函数
         //BRAS_API DWORD BRAS_SetOnUserEnterRoomActionCallBack(BRAS_OnUserEnterRoomAction_CallBack lpFunction, LPVOID lpUserValue=NULL);
@@ -142,7 +194,17 @@ namespace ANYCHATAPI
 		//BRAS_API DWORD BRAS_SetOnTransFileCallBack(BRAS_OnTransFile_CallBack lpFunction, LPVOID lpUserValue=NULL);
 		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetOnTransFileCallBack", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int BRAS_SetOnTransFileCallBack(OnTransFileCallBack function, int lpUserValue);
+		
+		// 设置服务器录像通知回调函数
+		//BRAS_API DWORD BRAS_SetOnServerRecordCallBack(BRAS_OnServerRecord_CallBack lpFunction, LPVOID lpUserValue=NULL);
+		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetOnServerRecordCallBack", CallingConvention = CallingConvention.Cdecl)]
+		public static extern int BRAS_SetOnServerRecordCallBack(OnServerRecordCallBack function, int lpUserValue);
 
+		// 设置视频通话消息通知回调函数
+		//BRAS_API DWORD BRAS_SetOnVideoCallEventCallBack(BRAS_OnVideoCallEvent_CallBack lpFunction, LPVOID lpUserValue=NULL);
+		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetOnVideoCallEventCallBack", CallingConvention = CallingConvention.Cdecl)]
+		public static extern int BRAS_SetOnVideoCallEventCallBack(OnVideoCallEventCallBack function, int lpUserValue);
+		
 		
 		// 获取SDK版本信息
 		//BRAS_API DWORD BRAS_GetSDKVersion(DWORD& dwMainVer, DWORD& dwSubVer, TCHAR* lpCompileTime, DWORD dwBufLen);
@@ -184,6 +246,20 @@ namespace ANYCHATAPI
 		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_TransFile", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int BRAS_TransFile(int dwUserId, string lpLocalPathName, int wParam, int lParam, int dwFlags, ref int dwTaskId);
 		
+		// 中心端录像控制
+		//BRAS_API DWORD BRAS_StreamRecordCtrl(DWORD dwUserId, BOOL bStartRecord, DWORD dwFlags, DWORD dwParam, DWORD dwRecordServerId);
+		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_StreamRecordCtrl", CallingConvention = CallingConvention.Cdecl)]
+		public static extern int BRAS_StreamRecordCtrl(int dwUserId, int bStartRecord, int dwFlags, int dwParam, int dwRecordServerId);
+		
+		// 发送透明通道数据给录像服务器
+		//BRAS_API DWORD BRAS_TransBuffer2RecordServer(DWORD dwUserId, LPBYTE lpBuf, DWORD dwLen, DWORD dwParam, DWORD dwRecordServerId);
+		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_TransBuffer2RecordServer", CallingConvention = CallingConvention.Cdecl)]
+		public static extern int BRAS_TransBuffer2RecordServer(int dwUserId, byte[] lpBuf, int dwLen, int dwParam, int dwRecordServerId);
+		
+		// 视频呼叫事件控制（请求、回复、挂断等）
+		//BRAS_API DWORD BRAS_VideoCallControl(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags=0, DWORD dwParam=0, LPCTSTR lpUserStr=NULL);
+		[DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_VideoCallControl", CallingConvention = CallingConvention.Cdecl)]
+		public static extern int BRAS_VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr);
 		
     }
 }

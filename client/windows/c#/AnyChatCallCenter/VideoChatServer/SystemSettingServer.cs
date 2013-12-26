@@ -20,7 +20,7 @@ namespace ANYCHATAPI
             // 设置用户登录成功回调函数
             AnyChatServerSDK.BRAS_SetOnUserLoginActionCallBack(mUserLoginActionCallBack, 0);
             // 设置用户注销回调函数
-            AnyChatServerSDK.BRAS_SetOnUserLogoutActionCallBack(mUserLogoutActionCallBack, 0);
+            AnyChatServerSDK.BRAS_SetOnUserLogoutActionExCallBack(mUserLogoutActionExCallBack, 0);
             // 设置用户进入房间回调函数
             AnyChatServerSDK.BRAS_SetOnUserEnterRoomActionCallBack(mUserEnterRoomActionCallBack, 0);
             // 设置用户离开房间回调函数
@@ -48,7 +48,7 @@ namespace ANYCHATAPI
         // 用户登录成功回调函数定义
         private static AnyChatServerSDK.OnUserLoginActionCallBack mUserLoginActionCallBack = OnUserLoginActionCallBack;
         // 用户注销回调函数定义
-        private static AnyChatServerSDK.OnUserLogoutActionCallBack mUserLogoutActionCallBack = OnUserLogoutActionCallBack;
+        private static AnyChatServerSDK.OnUserLogoutActionExCallBack mUserLogoutActionExCallBack = OnUserLogoutActionExCallBack;
         // 用户进入房间回调函数定义
         private static AnyChatServerSDK.OnUserEnterRoomActionCallBack mUserEnterRoomActionCallBack = OnUserEnterRoomActionCallBack;
         // 用户离开房间回调函数定义
@@ -70,13 +70,13 @@ namespace ANYCHATAPI
         // SDK定时器回调函数定义（上层应用可以在该回调中处理定时任务，而不需要额外开启线程，或是定时器）
         public delegate void OnTimerEvent_Received(int userValue);
         // 用户身份验证回调函数定义
-        public delegate int OnVerifyUser_Received(string userName, string password, ref int userID, ref int userLevel, ref string nickName, int len, int userValue);
+        public delegate int OnVerifyUser_Received(string userName, string password, ref int userID, ref int userLevel, IntPtr nickName, int len, int userValue);
         // 用户申请进入房间回调函数定义
         public delegate int OnPrepareEnterRoom_Received(int userId, int roomId, string roomName, string password, int userValue);
         // 用户登录成功回调函数定义
         public delegate void OnUserLoginAction_Received(int userId, string userName, int level, string addr, int userValue);
         // 用户注销回调函数定义  
-        public delegate void OnUserLogoutAction_Received(int userId, int userValue);
+        public delegate void OnUserLogoutActionEx_Received(int userId, int errorcode, int userValue);
         //用户进入房间回调函数定义
         public delegate void OnUserEnterRoomAction_Received(int userId, int roomId, int userValue);
         // 用户离开房间回调函数定义
@@ -113,9 +113,9 @@ namespace ANYCHATAPI
         public static OnVerifyUser_Received OnVerifyUserReceived = null;
         // 用户身份验证回调函数定义
         // 根据函数返回值决定是否验证身份成功，当返回0时，必须分配一个唯一的userid
-        public static int OnVerifyUserCallBack(string userName, string password, ref int userID, ref int userLevel, ref string nickName, int len, int userValue)
+        public static int OnVerifyUserCallBack(string userName, string password, ref int userID, ref int userLevel, IntPtr nickName, int len, int userValue)
         {
-            return OnVerifyUserReceived(userName, password, ref userID, ref userLevel, ref nickName, len, userValue);
+            return OnVerifyUserReceived(userName, password, ref userID, ref userLevel, nickName, len, userValue);
         }
 
 
@@ -141,13 +141,13 @@ namespace ANYCHATAPI
             }
         }
 
-        public static OnUserLogoutAction_Received OnUserLogoutActionReceived = null;
+        public static OnUserLogoutActionEx_Received OnUserLogoutActionExReceived = null;
         // 用户注销回调函数定义  
-        public static void OnUserLogoutActionCallBack(int userId, int userValue)
+        public static void OnUserLogoutActionExCallBack(int userId, int errorcode, int userValue)
         {
-            if (OnUserLogoutActionReceived != null)
+            if (OnUserLogoutActionExReceived != null)
             {
-                OnUserLogoutActionReceived(userId, userValue);
+                OnUserLogoutActionExReceived(userId, errorcode, userValue);
             }
         }
 

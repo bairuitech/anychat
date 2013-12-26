@@ -24,6 +24,7 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_AUDIO_STEREOBITRATE	=	9;	// 设置双声道模式下音频编码目标码率（参数为：int型，单位：bps）
 		public const int BRAC_SO_AUDIO_PLAYDRVCTRL		=	70;	// 音频播放驱动选择（参数为：int型，0默认驱动， 1 DSound驱动， 2 WaveOut驱动）
 		public const int BRAC_SO_AUDIO_SOFTVOLMODE		=	73;	// 设置软件音量模式控制（参数为int型，1打开，0关闭[默认]），使用软件音量模式，将不会改变系统的音量设置
+		public const int BRAC_SO_AUDIO_RECORDDRVCTRL	=	74;	// 音频采集驱动控制（参数为int型，0默认驱动， 1 DSound驱动， 2 WaveIn驱动， 3 Java采集[Android平台使用]）
 
         public const int BRAC_SO_RECORD_VIDEOBR			=	10;	// 录像视频码率设置（参数为：int型，单位：bps）
         public const int BRAC_SO_RECORD_AUDIOBR			=	11;	// 录像音频码率设置（参数为：int型，单位：bps）
@@ -79,18 +80,42 @@ namespace ANYCHATAPI
         public const int BRAC_USERSTATE_NETWORKSTATUS   =   12;	// 查询指定用户的网络状态（参数为DWORD类型，返回值：0 优良，1 较好，2 一般，3 较差，4 非常差），注：查询间隔需要>1s
 		public const int BRAC_USERSTATE_VIDEOSIZE		=	13;	// 查询指定用户的视频分辨率（参数为DWORD类型，返回值：低16位表示宽度，高16位表示高度）
 		public const int BRAC_USERSTATE_PACKLOSSRATE	=	14;	// 查询指定用户的网络流媒体数据丢包率（参数为DWORD类型，返回值：0 - 100，如：返回值为5，表示丢包率为5%）
+		public const int BRAC_USERSTATE_DEVICETYPE		=	15; // 查询指定用户的终端类型（参数为DWORD类型，返回值：0 Unknow， 1 Windows，2 Android，3 iOS，4 Web，5 Linux，6 Mac，7 Win Phone，8 WinCE）
+		public const int BRAC_USERSTATE_SELFUSERSTATUS	=	16;	// 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
+		public const int BRAC_USERSTATE_SELFUSERID		=	17;	// 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
 		
-		// 组播功能标志定义
+		// 组播功能标志定义（API：BRAC_MultiCastControl 传入参数）
 		public const int BRAC_MCFLAGS_JOINGROUP	= 0x00000001;	// 加入多播组
 		public const int BRAC_MCFLAGS_LEAVEGROUP= 0x00000002;	// 离开多播组
 		public const int BRAC_MCFLAGS_SENDDATA	= 0x00000010;	// 数据发送标志，指示该多播组用于发送数据
 		public const int BRAC_MCFLAGS_RECVDATA	= 0x00000020;	// 数据接收标志，指示该多播组用于接收数据
 		
-		// 传输任务信息参数定义，API：BRAC_QueryTransTaskInfo传入参数
+		// 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
 		public const int BRAC_TRANSTASK_PROGRESS		=	1;	// 传输任务进度查询（参数为：DOUBLE型，返回值0.0 ~ 100.0， 或参数为：DWORD型，返回值0 ~ 100）
 		public const int BRAC_TRANSTASK_BITRATE			=	2;	// 传输任务当前传输码率（参数为：int型，单位：bps）
 		public const int BRAC_TRANSTASK_STATUS			=	3;	// 传输任务当前状态（参数为：int型）
 		public const int BRAC_TRANSTASK_SAVEASPATH		=	4;	// 文件传输任务另存为路径设置（参数为字符串TCHAR类型）
+		
+		// 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
+		public const int BRAC_RECORD_FLAGS_VIDEO		= 0x01;	// 录制视频
+		public const int BRAC_RECORD_FLAGS_AUDIO		= 0x02;	// 录制音频
+		public const int BRAC_RECORD_FLAGS_SERVER		= 0x04;	// 服务器端录制
+		public const int BRAC_RECORD_FLAGS_MIXAUDIO		= 0x10;	// 录制音频时，将其它人的声音混音后录制
+		public const int BRAC_RECORD_FLAGS_MIXVIDEO		= 0x20;	// 录制视频时，将其它人的视频迭加后录制
+		
+		// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
+		public const int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	// 呼叫请求
+		public const int BRAC_VIDEOCALL_EVENT_REPLY		=	2;	// 呼叫请求回复
+		public const int BRAC_VIDEOCALL_EVENT_START		=	3;	// 视频呼叫会话开始事件
+		public const int BRAC_VIDEOCALL_EVENT_FINISH	=	4;	// 挂断（结束）呼叫会话
+
+		// 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
+		public const int BRAC_VIDEOCALL_FLAGS_AUDIO		=0x01;	// 语音通话
+		public const int BRAC_VIDEOCALL_FLAGS_VIDEO		=0x02;	// 视频通话
+		public const int BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO=0x10;	// 禁止源（呼叫端）音频
+		public const int BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO=0x20;	// 禁止源（呼叫端）视频
+		public const int BRAC_VIDEOCALL_FLAGS_FBTARAUDIO=0x40;	// 禁止目标（被呼叫端）音频
+		public const int BRAC_VIDEOCALL_FLAGS_FBTARVIDEO=0x80;	// 禁止目标（被呼叫端）视频
 
         // SDK消息定义
         public const int WM_GV = 0x0400 + 200;
@@ -290,6 +315,18 @@ namespace ANYCHATAPI
         /// <param name="lParam"></param>
         /// <param name="userValue"></param>
         public delegate void NotifyMessage_CallBack(int dwNotifyMsg, int wParam, int lParam, int userValue);
+		
+		/// <summary>
+        /// 视频通话消息通知回调函数定义
+        /// </summary>
+        /// <param name="dwEventType"></param>
+        /// <param name="dwUserId"></param>
+        /// <param name="dwErrorCode"></param>
+		/// <param name="dwFlags"></param>
+		/// <param name="dwParam"></param>
+		/// <param name="lpUserStr"></param>
+        /// <param name="userValue"></param>
+        public delegate void VideoCallEvent_CallBack(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue);
 
 			
         /// <summary>
@@ -311,12 +348,7 @@ namespace ANYCHATAPI
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetSDKFilterDataCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetSDKFilterDataCallBack(SDKFilterDataCallBack function, int userValue);
 
-
-        // 获取SDK版本信息
-        //BRAS_API DWORD BRAC_GetSDKVersion(DWORD& dwMainVer, DWORD& dwSubVer, TCHAR* lpCompileTime, DWORD dwBufLen);
-        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetSDKVersion", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int BRAC_GetSDKVersion(ref int dwMainVer, ref int dwSubVer, StringBuilder lpCompileTime, int bufLen);
-
+      
         /// <summary>
         /// 声音事件注册
         /// </summary>
@@ -344,6 +376,15 @@ namespace ANYCHATAPI
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetNotifyMessageCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetNotifyMessageCallBack(NotifyMessage_CallBack function, int userValue);
+		
+		/// <summary>
+        /// 设置视频通话消息通知回调函数
+        /// </summary>
+		/// <param name="function"></param>
+        /// <param name="userValue"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetVideoCallEventCallBack", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetVideoCallEventCallBack(VideoCallEvent_CallBack function, int userValue);
 		
 		
 		/// <summary>
@@ -573,6 +614,16 @@ namespace ANYCHATAPI
         /// <returns>0为成功，否则失败</returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetVideoPos", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetVideoPos(int userid, IntPtr hWnd, int left, int top, int right, int bottom);
+		
+		/// <summary>
+		/// 重绘指定用户的视频
+		/// </summary>
+		/// <param name="userid">用户ID</param>
+		/// <param name="hDC">画布句柄，可为NULL</param>
+		/// <returns>0为成功，否则失败</returns>
+		[DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_RepaintVideo", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int RepaintVideo(int userid, IntPtr hDC);
+		// BRAC_API DWORD BRAC_RepaintVideo(DWORD dwUserId, HDC hDC);
 
         /// <summary>
         /// 获取指定音频设备的当前音量
@@ -742,7 +793,7 @@ namespace ANYCHATAPI
         /// <param name="length"></param>
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetCurVideoCapture", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetCurVideoCapture(byte[] deviceName, int length);
+        public static extern int GetCurVideoCapture(StringBuilder deviceName, int length);
 
         /// <summary>
         /// 枚举音频录音设备
@@ -768,7 +819,7 @@ namespace ANYCHATAPI
         /// <param name="length"></param>
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetCurAudioCapture", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetCurAudioCapture(byte[] deviceName, int length);
+        public static extern int GetCurAudioCapture(StringBuilder deviceName, int length);
 		
 		/// <summary>
         /// 枚举音频播放设备
@@ -794,7 +845,7 @@ namespace ANYCHATAPI
         /// <param name="length"></param>
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetCurAudioPlayback", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetCurAudioPlayback(byte[] deviceName, int length);
+        public static extern int GetCurAudioPlayback(StringBuilder deviceName, int length);
 		
 		/// <summary>
         /// 组播功能控制
@@ -826,6 +877,11 @@ namespace ANYCHATAPI
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_InputAudioData", CallingConvention = CallingConvention.Cdecl)]
         public static extern int InputAudioData(IntPtr lpSamples, int dwSize, int dwTimeStamp);
 		
+		/// <summary>
+        /// 视频呼叫事件控制（请求、回复、挂断等）
+        /// </summary>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_VideoCallControl", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr);
 		
 
 

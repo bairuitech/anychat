@@ -8,8 +8,8 @@
     <ProjectGuid>{2E764709-2C15-44D1-9509-731D693B10B7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VideoChat</RootNamespace>
-    <AssemblyName>VideoChat</AssemblyName>
+    <RootNamespace>VideoChatClient</RootNamespace>
+    <AssemblyName>VideoChatClient</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
