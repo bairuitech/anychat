@@ -914,7 +914,7 @@ namespace ANYCHATAPI
         /// 获取用户信息
         /// </summary>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetUserInfo", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetUserInfo(int dwUserId, int dwInfoId, StringBuilder lpInfoName, int dwLen);
+        public static extern int GetUserInfo(int dwUserId, int dwInfoId, StringBuilder lpInfoValue, int dwLen);
 		
 		/// <summary>
         /// 获取用户分组名称
