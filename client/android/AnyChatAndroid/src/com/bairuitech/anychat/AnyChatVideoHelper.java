@@ -178,15 +178,19 @@ class VideoRenderer implements Callback {
         		paint.setAntiAlias(true);		// 抗锯齿
         		Matrix matrix = canvas.getMatrix();
         		matrix.setRotate(rotation, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
-        		if(mirror != 0) {
-        			matrix.postScale(-1.0f, 1.0f);
-        			matrix.postTranslate(bitmap.getWidth(), 0);
+        		float fScalex = (float)canvas.getWidth()/(float)bitmap.getWidth();
+        		float fScaley = (float)canvas.getHeight()/(float)bitmap.getHeight();
+        		if(mirror != 0) {			
+        			matrix.postScale(-fScalex, fScaley);
+        			matrix.postTranslate((float)canvas.getWidth(), 0);
+        		} else {
+        			matrix.postScale(fScalex, fScaley);
         		}
         		canvas.drawColor(Color.BLACK);
         		canvas.drawBitmap(bitmap, matrix, paint);
         	}
-        	else {
-        		canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+        	else {   
+        		canvas.drawBitmap(bitmap, null, dstRect, null);
         	}
             surfaceHolder.unlockCanvasAndPost(canvas);
         }

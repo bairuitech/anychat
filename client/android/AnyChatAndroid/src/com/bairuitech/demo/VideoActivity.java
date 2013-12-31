@@ -95,9 +95,11 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 		if (!bOtherVideoOpened) {
 			if (anychat.GetCameraState(userID) == 2 && anychat.GetUserVideoWidth(userID) != 0) {
 				SurfaceHolder holder = otherView.getHolder();
-				holder.setFormat(PixelFormat.RGB_565);
-				holder.setFixedSize(anychat.GetUserVideoWidth(userID),
-						anychat.GetUserVideoHeight(userID));
+				// 如果是采用内核视频显示（非Java驱动），则需要设置Surface的参数
+				if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) != AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
+					holder.setFormat(PixelFormat.RGB_565);
+					holder.setFixedSize(anychat.GetUserVideoWidth(userID), anychat.GetUserVideoHeight(userID));
+				}
 				Surface s = holder.getSurface();
 				anychat.SetVideoPos(userID, s, 0, 0, 0, 0);
 				bOtherVideoOpened = true;
@@ -106,9 +108,11 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 		if (!bSelfVideoOpened) {
 			if (anychat.GetCameraState(-1) == 2 && anychat.GetUserVideoWidth(-1) != 0) {
 				SurfaceHolder holder = myView.getHolder();
-				holder.setFormat(PixelFormat.RGB_565);
-				holder.setFixedSize(anychat.GetUserVideoWidth(-1),
-						anychat.GetUserVideoHeight(-1));
+				// 如果是采用内核视频显示（非Java驱动），则需要设置Surface的参数
+				if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) != AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
+					holder.setFormat(PixelFormat.RGB_565);
+					holder.setFixedSize(anychat.GetUserVideoWidth(-1), anychat.GetUserVideoHeight(-1));
+				}
 				Surface s = holder.getSurface();
 				anychat.SetVideoPos(-1, s, 0, 0, 0, 0);
 				bSelfVideoOpened = true;

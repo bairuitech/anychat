@@ -110,8 +110,11 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
 	   			{
 	   				userID = uid;
 	   				SurfaceHolder holder=videoView.getHolder();
-	   				holder.setFormat(PixelFormat.RGB_565);
-	   				holder.setFixedSize(anychat.GetUserVideoWidth(userID), anychat.GetUserVideoHeight(userID));
+	   				// 如果是采用内核视频显示（非Java驱动），则需要设置Surface的参数
+					if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) != AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
+						holder.setFormat(PixelFormat.RGB_565);
+		   				holder.setFixedSize(anychat.GetUserVideoWidth(userID), anychat.GetUserVideoHeight(userID));
+					}
 	   				Surface s=holder.getSurface();
 	   				anychat.SetVideoPos(userID, s, 0, 0, 0, 0);
 	   				anychat.UserCameraControl(userID, 1);
