@@ -146,8 +146,7 @@ namespace VideoChatClient
         {
             if (m.Msg == AnyChatCoreSDK.WM_GV_CONNECT)
             {
-                try
-                {
+             
                     ///连接
                     int succed = m.WParam.ToInt32();
                     if (succed == 1)
@@ -162,24 +161,19 @@ namespace VideoChatClient
                         ShowMessage("连接AnyChat服务器失败");
                         Log.SetLog("WM_GV_CONNECT      连接AnyChat服务器失败");
                     }
-                }
-                catch (Exception ex)
-                {
-                    Log.SetLog("WM_GV_CONNECT              连接核心服务器，错误：" + ex.Message.ToString());
-                }
+                
+                
             }
             else if (m.Msg == AnyChatCoreSDK.WM_GV_LOGINSYSTEM)
             {
-                try
-                {
+             
                     ///登录系统
                     if (m.LParam.ToInt32() == 0)
                     {
                         ShowMessage("登录AnyChat系统成功");
                         m_userId = m.WParam.ToInt32();//保存当前ID
-
                         RecordLoginTrace();
-
+                        hallForm = null;
                         hallForm = new Hall(m_userId, tb_name.Text);
                         this.Hide();
                         hallForm.Show();
@@ -189,65 +183,47 @@ namespace VideoChatClient
                         ShowMessage("登录失败：Error=" + m.LParam.ToString());
                         Log.SetLog("WM_GV_LOGINSYSTEM          登录失败：Error=" + m.LParam.ToString());
                     }
-                }
-                catch (Exception ex)
-                {
-                    Log.SetLog("WM_GV_LOGINSYSTEM          登录消息，错误：" + ex.Message.ToString());
-                }
+               
             }
             else if (m.Msg == AnyChatCoreSDK.WM_GV_ENTERROOM)
             {
-                try
-                {
+            
                     //进入房间
                     int lparam = m.LParam.ToInt32();
                     if (lparam == 0)
                     {
+                         hallForm.EnterRoomSuccess();//通知大厅进入房间成功
                     }
                     else
                     {
                         Log.SetLog("WM_GV_ENTERROOM                进入房间，失败，Error：" + lparam.ToString());
                     }
-                }
-                catch (Exception ex)
-                {
-                    Log.SetLog("WM_GV_ENTERROOM                进入房间，错误：" + ex.Message.ToString());
-                }
+              
             }
             else if (m.Msg == AnyChatCoreSDK.WM_GV_ONLINEUSER)
             {
-                try
-                {
-                    hallForm.EnterRoomSuccess();//通知大厅进入房间成功
-                }
-                catch (Exception ex)
-                {
-                    Log.SetLog("WM_GV_ONLINEUSER               进入房间成功，错误：" + ex.Message.ToString());
-                }
+
+                     hallForm.OpenCameraAndSpeak(hallForm.getOtherInSession(),true);//打开视频呼叫对象的视频
+
+            
             }
             //用户进入或者离开房间
             else if (m.Msg == AnyChatCoreSDK.WM_GV_USERATROOM)
             {
-                try
-                {
+              
                     int lparam = m.LParam.ToInt32();
                     int wparam = m.WParam.ToInt32();
                     if (lparam == 0)
                     {
-                        hallForm.OpenCameraAndSpeak(false);//关闭双方音视频
-                        hallForm.UserLeaveRoom(wparam);
+                        hallForm.OpenCameraAndSpeak(hallForm.getOtherInSession(),false);//关闭视频呼叫对象的视频
                         Log.SetLog("WM_GV_USERATROOM           用户" + wparam.ToString() + "离开房间");
                     }
                     else
                     {
-                        hallForm.OpenCameraAndSpeak(true);//打开双方音视频
+                        hallForm.OpenCameraAndSpeak(hallForm.getOtherInSession(), true);//打开视频呼叫对象的视频
                         Log.SetLog("WM_GV_USERATROOM           用户" + wparam.ToString() + "进入房间");
                     }
-                }
-                catch (Exception ex)
-                {
-                    Log.SetLog("WM_GV_USERATROOM               用户进入或者离开房间，错误：" + ex.Message.ToString());
-                }
+                
             }
             //摄像头打开状态
             else if (m.Msg == AnyChatCoreSDK.WM_GV_CAMERASTATE)
@@ -257,18 +233,35 @@ namespace VideoChatClient
             //网络断开
             else if (m.Msg == AnyChatCoreSDK.WM_GV_LINKCLOSE)
             {
-                try
-                {
+   
                     AnyChatCoreSDK.LeaveRoom(-1);
                     int wparam = m.WParam.ToInt32();
+                    int lparam = m.LParam.ToInt32();
                     ShowMessage("网络断开，ErrorCode：" + wparam.ToString());
                     hallForm.Hide();
                     this.Show();
-                }
-                catch (Exception ex)
+                    Log.SetLog("WM_GV_LINKCLOSE            响应网络断开,errorcode:=" + lparam );
+            }
+            //好友用户在线状态变化
+            else if (m.Msg == AnyChatCoreSDK.WM_GV_FRIENDSTATUS)
+            {
+                int userId = m.WParam.ToInt32();
+                int onlineStatus = m.LParam.ToInt32();
+                hallForm.OnUserOnlineStatusChange(userId, onlineStatus);
+                string strOnlineStatus=onlineStatus>=1? "上线":"下线";
+                Log.SetLog("WM_GV_FRIENDSTATUS:  useId: " + userId + "onlineStatus:  " + strOnlineStatus);
+            }
+            //好友数据更新变化通知
+            else if (m.Msg == AnyChatCoreSDK.WM_GV_USERINFOUPDATE)
+            {
+                int userId=m.WParam.ToInt32();
+                int type=m.LParam.ToInt32();
+                if(userId==0&&type==0)
                 {
-                    Log.SetLog("WM_GV_LINKCLOSE            响应网络断开失败，错误：" + ex.Message.ToString());
+                    hallForm.getOnlineFriendInfos();
+
                 }
+                Log.SetLog("WM_GV_FRIENDSTATUS:  useId: " + userId + "type:  " + type);
             }
             base.WndProc(ref m);
         }

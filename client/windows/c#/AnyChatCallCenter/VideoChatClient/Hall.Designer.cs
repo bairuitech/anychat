@@ -36,7 +36,6 @@
             this.pan_call = new System.Windows.Forms.Panel();
             this.lb_call = new System.Windows.Forms.Label();
             this.pic_call = new System.Windows.Forms.PictureBox();
-            this.timer_call = new System.Windows.Forms.Timer(this.components);
             this.pan_conversation = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pic_tuserVideo = new System.Windows.Forms.PictureBox();
@@ -47,6 +46,7 @@
             this.lb_tuserName = new System.Windows.Forms.Label();
             this.btn_hungUp = new System.Windows.Forms.Button();
             this.timer_speak = new System.Windows.Forms.Timer(this.components);
+            this.timer_call = new System.Windows.Forms.Timer(this.components);
             this.pan_top.SuspendLayout();
             this.pan_call.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_call)).BeginInit();
@@ -116,11 +116,6 @@
             this.pic_call.Size = new System.Drawing.Size(128, 128);
             this.pic_call.TabIndex = 1;
             this.pic_call.TabStop = false;
-            // 
-            // timer_call
-            // 
-            this.timer_call.Interval = 500;
-            this.timer_call.Tick += new System.EventHandler(this.timer_call_Tick);
             // 
             // pan_conversation
             // 
@@ -225,6 +220,11 @@
             this.timer_speak.Interval = 50;
             this.timer_speak.Tick += new System.EventHandler(this.timer_speak_Tick);
             // 
+            // timer_call
+            // 
+            this.timer_call.Interval = 500;
+            this.timer_call.Tick += new System.EventHandler(this.timer_call_Tick);
+            // 
             // Hall
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -269,7 +269,6 @@
         private System.Windows.Forms.Panel pan_call;
         private System.Windows.Forms.Label lb_call;
         private System.Windows.Forms.PictureBox pic_call;
-        private System.Windows.Forms.Timer timer_call;
         private System.Windows.Forms.Panel pan_conversation;
         private System.Windows.Forms.PictureBox pic_suserVideo;
         private System.Windows.Forms.PictureBox pic_tuserVideo;
@@ -280,5 +279,6 @@
         private System.Windows.Forms.Button btn_hungUp;
         private System.Windows.Forms.Timer timer_speak;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Timer timer_call;
     }
 }

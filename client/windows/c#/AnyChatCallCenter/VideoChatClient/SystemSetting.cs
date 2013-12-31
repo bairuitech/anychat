@@ -57,6 +57,8 @@ namespace ANYCHATAPI
             AnyChatCoreSDK.SetRecordCallBack(RecordCallBack_Callback, hWnd.ToInt32());
             //设置音量变化回调函数
             AnyChatCoreSDK.SetVolumeChangeCallBack(VolumeChange_callBack, hWnd.ToInt32());
+            //设置视频呼叫事件回调函数
+            AnyChatCoreSDK.SetVideoCallEventCallBack(VideoCallEvent_callBack, hWnd.ToInt32());
 
             return isok;
         }
@@ -90,6 +92,8 @@ namespace ANYCHATAPI
 
         static AnyChatCoreSDK.VolumeChangeCallBack VolumeChange_callBack = new
          AnyChatCoreSDK.VolumeChangeCallBack(SetVolumeChange_CallBack);
+
+        static AnyChatCoreSDK.VideoCallEvent_CallBack VideoCallEvent_callBack = new AnyChatCoreSDK.VideoCallEvent_CallBack(VideoCallEvent_CallBack);
 
 
 
@@ -214,6 +218,16 @@ namespace ANYCHATAPI
         {
             if (Vidio_OnCallBack != null)
                 Vidio_OnCallBack(userId, buf, len, bitMap, userValue);
+        }
+        public delegate void VideoCallEventCallBack(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr);
+        public static VideoCallEventCallBack VideoCallEvent_Handler;
+        private static void VideoCallEvent_CallBack(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue)
+        {
+            if(VideoCallEvent_Handler!=null)
+            {
+
+                VideoCallEvent_Handler( dwEventType,  dwUserId,  dwErrorCode,  dwFlags,  dwParam,  lpUserStr);
+            }
         }
     }
 }
