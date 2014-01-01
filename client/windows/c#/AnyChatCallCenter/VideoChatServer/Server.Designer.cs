@@ -79,7 +79,7 @@
             this.gb_onlineEquipment.Size = new System.Drawing.Size(516, 474);
             this.gb_onlineEquipment.TabIndex = 4;
             this.gb_onlineEquipment.TabStop = false;
-            this.gb_onlineEquipment.Text = "Online Devices";
+            this.gb_onlineEquipment.Text = "Online users";
             // 
             // lv_onlineUsers
             // 
@@ -126,7 +126,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(964, 522);
+            this.ClientSize = new System.Drawing.Size(972, 526);
             this.Controls.Add(this.lb_version);
             this.Controls.Add(this.gb_serverLogs);
             this.Controls.Add(this.gb_onlineEquipment);

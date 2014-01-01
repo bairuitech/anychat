@@ -57,7 +57,7 @@ namespace VideoChatClient
                 else
                 {
                     tb_serveradd.Text = "demo.anychat.cn";
-                    tb_port.Text = "8909";
+                    tb_port.Text = "8906";
                 }
 
                 //初始化log日志文件
