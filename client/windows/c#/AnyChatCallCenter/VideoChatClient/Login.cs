@@ -50,7 +50,6 @@ namespace VideoChatClient
                 if (File.Exists(mPath))
                 {
                     mXmlDoc.Load(mPath);
-
                     Thread rThr = new Thread(new ThreadStart(LoadRecordTrace));
                     rThr.Start();
                 }
@@ -301,17 +300,21 @@ namespace VideoChatClient
                 RecordValue("ips", "ip", tb_serveradd.Text);
                 RecordValue("ports", "port", tb_port.Text);
                 RecordValue("names", "name", tb_name.Text);
+                PreviousRecordValue("previousreocrd", "ip", tb_serveradd.Text);
+                PreviousRecordValue("previousreocrd", "port", tb_port.Text);
+                PreviousRecordValue("previousreocrd", "name", tb_name.Text);
+                
+              
             }
             catch (Exception ex)
             {
             }
         }
-        private void RecordValue(string rAttribute,string rN, string rValue)
+        private void RecordValue(string rAttribute, string rN, string rValue)
         {
             XmlNode rMainNode = mXmlDoc.SelectSingleNode("settings");
             XmlNode rNode = rMainNode.SelectSingleNode(rAttribute);
             XmlNodeList rList = rNode.ChildNodes;
-
             int i = 0;
             foreach (XmlNode x in rList)
             {
@@ -337,14 +340,44 @@ namespace VideoChatClient
             if (i == 0)
             {
                 rNode = rMainNode.SelectSingleNode(rAttribute);
-
                 XmlElement rElement = mXmlDoc.CreateElement(rN);
                 rElement.SetAttribute("value", rValue);
                 rNode.AppendChild(rElement);
-
                 mXmlDoc.Save(mPath);
             }
         }
+        private void PreviousRecordValue(string rAttribute, string rN, string rValue)
+        {
+            XmlNode rMainNode = mXmlDoc.SelectSingleNode("settings");
+            XmlNode rNode = rMainNode.SelectSingleNode(rAttribute);
+            XmlNodeList rList = rNode.ChildNodes;
+            bool bExists=false;
+            XmlElement rElem=null;
+            foreach (XmlNode x in rList)
+            {
+                rElem = (XmlElement)x;
+                string rVal = rElem.GetAttribute("value");
+                if (rElem.Name.Equals(rN))
+                {
+                    bExists=true;
+                    break;
+                }
+            }
+            if (bExists && rElem!=null)
+            {
+
+                rElem.SetAttribute("value", rValue);
+            }
+            else
+            {
+                XmlElement rElement = mXmlDoc.CreateElement(rN);
+                rElement.SetAttribute("value", rValue);
+                rNode.AppendChild(rElement);
+            }
+           
+            mXmlDoc.Save(mPath); 
+        }
+
 
         private int ValueExists(string rAttribute)
         {
@@ -357,9 +390,49 @@ namespace VideoChatClient
 
         private void LoadRecordTrace()
         {
+         
             DisplayVal(tb_serveradd, "ips");
             DisplayVal(tb_port, "ports");
             DisplayVal(tb_name, "names");
+            string[] record = getPreviousRecord("previousreocrd");
+            if (record != null)
+            {
+                tb_serveradd.Text = record[0];
+                tb_port.Text = record[1];
+                tb_name.Text = record[2];
+            }
+            
+
+        }
+        private String[] getPreviousRecord(string rAttribute)
+        {
+            string[] record = new string[3];
+            XmlNode rMainNode = mXmlDoc.SelectSingleNode("settings");
+            XmlNode rNode = rMainNode.SelectSingleNode(rAttribute);
+            XmlNodeList rList = rNode.ChildNodes;
+            bool bExists = false;
+            XmlElement rElem = null;
+            foreach (XmlNode x in rList)
+            {
+                bExists = true;
+                rElem = (XmlElement)x;
+                string rVal = rElem.GetAttribute("value");
+                switch (rElem.Name)
+                {
+                    case "ip":
+                        record[0] = rVal;
+                        break;
+                    case "port":
+                        record[1] = rVal;
+                        break;
+                    case "name":
+                        record[2] = rVal;
+                        break;
+                }
+            }
+            if (bExists)
+                return record;
+            return null;
         }
 
         private void DisplayVal(ComboBox rCBB,string rAttribute)
@@ -403,6 +476,11 @@ namespace VideoChatClient
                 XmlElement rName = xmldoc.CreateElement("", "names", "");
                 rName.IsEmpty = false;
                 rMainNode.AppendChild(rName);
+
+
+                XmlElement rPreviousRecord = xmldoc.CreateElement("", "previousreocrd", "");
+                rPreviousRecord.IsEmpty = false;
+                rMainNode.AppendChild(rPreviousRecord);
 
                 xmldoc.Save(mPath);
             }
