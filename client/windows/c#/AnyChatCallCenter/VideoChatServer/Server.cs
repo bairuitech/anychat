@@ -31,13 +31,6 @@ namespace VideoChatServer
         /// </summary>
         List<UserInfo> users = new List<UserInfo>();
         /// <summary>
-        /// 会话场次集合
-        /// </summary>
-        List<ConversationInfo> converstations = new List<ConversationInfo>();
-        /// <summary>
-        /// 已占用的房间集合
-        /// </summary>
-        List<RoomInfo> rooms = new List<RoomInfo>();
 
         #endregion
 
@@ -120,12 +113,52 @@ namespace VideoChatServer
         {
             try
             {
+                 // 添加用户分组
+                int iGroupId = 1;
+                AnyChatServerSDK.BRAS_UserInfoControl(userId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDGROUP, iGroupId, 0, "我的好友");
+                iGroupId= 2;
+                AnyChatServerSDK.BRAS_UserInfoControl(userId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDGROUP, iGroupId, 0, "在线游客");
+                // 将当前所有在线用户添加为自己的好友
+                foreach (UserInfo userInfo in users)
+                {
+                    int iUserId = userInfo.Id;
+                    AnyChatServerSDK.BRAS_UserInfoControl(userId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDFRIEND, iUserId, 0, "");
+                }
+                // 设置好友与分组的关系（即好友属于哪一个分组）
+                iGroupId = 1;
+                foreach (UserInfo userInfo in users)
+                {
+                    int iUserId = userInfo.Id;
+                    iGroupId = (iUserId > 0) ? 1 : 2;		// 游客密码为空，userid由核心服务器分配，为负数
+                    AnyChatServerSDK.BRAS_UserInfoControl(userId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_SETGROUPRELATION, iGroupId, iUserId, "");
+                }
+                // 设置当前用户信息（用户资料，客户端可以通过API：BRAC_GetUserInfo来获取这些信息）
+                int iInfoId = 1;	// InfoId由业务层自己定义
+                AnyChatServerSDK.BRAS_SetUserInfo(userId, iInfoId, userName, 0);
+                iInfoId = 2;	// InfoId由业务层自己定义
+                AnyChatServerSDK.BRAS_SetUserInfo(userId, iInfoId, addr, 0);
+                iInfoId = 3;	// InfoId由业务层自己定义
+                AnyChatServerSDK.BRAS_SetUserInfo(userId, iInfoId, "我的签名", 0);
+                iInfoId = 4;	// InfoId由业务层自己定义
+                AnyChatServerSDK.BRAS_SetUserInfo(userId, iInfoId, Convert.ToString(userId%10 + 1), 0);// 随机分配一个图像ID
+                // 将本地用户添加为其它用户的好友列表中
+                foreach (UserInfo userInfo in users)
+                {
+                    int otherUserid = userInfo.Id;
+                    AnyChatServerSDK.BRAS_UserInfoControl(otherUserid, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDFRIEND, userId, 0, "");
+                    // 关联好友分组
+			        iGroupId = (userId > 0) ? 1 : 2;
+                    AnyChatServerSDK.BRAS_UserInfoControl(otherUserid, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_SETGROUPRELATION, iGroupId, userId, "");
+                    // 下发同步指令，将新设置的好友同步给客户端
+                     AnyChatServerSDK.BRAS_UserInfoControl(otherUserid, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_SYNCDATA, 0, 0, "");
+                }
+                // 下发同步指令，将前面设置的资料同步给当前客户端
+                AnyChatServerSDK.BRAS_UserInfoControl(userId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_SYNCDATA, 0, 0, "");
                 //加入用户对象集合
                 UserInfo mode = new UserInfo();
                 mode.Id = userId;
                 mode.Name = userName;
                 mode.Ip = addr;
-                SendNowOnlineUsers(mode);//通知其他在线用户
                 users.Add(mode);
 
                 str = new string[] { userId.ToString(), userName, "游客", addr.ToString(), DateTime.Now.ToShortDateString() };
@@ -190,7 +223,6 @@ namespace VideoChatServer
         {
             try
             {
-                EnterRoomInfoHandle(roomId);//房间分配处理(进入部分)
                 OnUserEnterRoomAction_Received_main = new SystemSettingServer.OnUserEnterRoomAction_Received(OnUserEnterRoomActionCallBack_main);
                 this.rtb_message.Invoke(OnUserEnterRoomAction_Received_main, userId, roomId, userValue);
             }
@@ -214,17 +246,10 @@ namespace VideoChatServer
         // 用户离开房间回调函数定义
         void OnUserLeaveRoomActionCallBack(int userId, int roomId, int userValue)
         {
-            try
-            {
-                OutRoomInfoHandle(roomId);//房间分配处理(离开部分)
-                RemoveConversationInfoByUserId(userId, Promise.ICS_RETCODE_SESSION_SUCCESS);//离开会话，移除会话场次
+          
                 OnUserLeaveRoomAction_Received_main = new SystemSettingServer.OnUserLeaveRoomAction_Received(OnUserLeaveRoomActionCallBack_main);
                 this.rtb_message.Invoke(OnUserLeaveRoomAction_Received_main, userId, roomId, userValue);
-            }
-            catch (Exception ex)
-            {
-                Log.SetLog("OnUserLeaveRoomActionCallBack          用户离开房间回调函数，错误：" + ex.Message.ToString());
-            }
+         
         }
         // 用户离开房间回调函数定义
         void OnUserLeaveRoomActionCallBack_main(int userId, int roomId, int userValue)
@@ -247,9 +272,7 @@ namespace VideoChatServer
         {
             try
             {
-                //从会话场次中移除
-                RemoveConversationInfoByUserId(userId, Promise.ICS_RETCODE_SESSION_OFFLINE);
-
+             
                 //从用户对象集中移除
                 foreach (UserInfo u in users)
                 {
@@ -259,17 +282,7 @@ namespace VideoChatServer
                         break;
                     }
                 }
-
-                foreach (UserInfo u in users)
-                {
-                    //发送指令通知其他用户注销登录
-                   TranBuff(u.Id, Promise.ICS_CMD_STATUSNOTIFY,
-                        new ParamInfo(CommandHelp.ParamEnum.DATATYPE.ToString(), Promise.ICS_DATATYPE_ONLINEUSERS.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.OBJECTID.ToString(), userId.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.STATUS.ToString(), Promise.ICS_STATUSTYPE_USERONLINE.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.WPARAM.ToString(), Promise.ICS_STATUSTYPE_USERONLINE_FONLINE.ToString()));//用户离线
-                }
-
+                // 核心服务器会通知其它用户（如果是好友），提示好友下线，不需要业务服务器干预
                 OnUserLogoutActionEx_Received_main = new SystemSettingServer.OnUserLogoutActionEx_Received(OnUserLogoutActionExCallBack_main);
                 this.rtb_message.Invoke(OnUserLogoutActionEx_Received_main, userId, errorcode, userValue);
             }
@@ -321,45 +334,23 @@ namespace VideoChatServer
         // 收到用户文字聊天通信数据回调函数定义
         void OnRecvUserTextMsgCallBack(int roomId, int srcUserId, int tarUserId, bool bSecret, string textMessage, int len, int userValue)
         {
+
         }
 
         // 文件传输回调函数定义
         public void OnTransFileCallBack(int dwUserId, string lpFileName, string lpTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId, int lpUserValue)
         {
         }
+        public void OnVideoCall_Received(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue)
+        {
+
+        }
 
         //透明通道回调函数
         public void TransBuffer_CallBack(int userId, IntPtr buf, int len, int userValue)
         {
-            try
-            {
                 string str = Marshal.PtrToStringAnsi(buf);                                  //获取命令字符串
-                int cmd = Convert.ToInt32(CommandHelp.ResolveCommand(str));        //解析命令字符串头部
-                List<ParamInfo> os = CommandHelp.ResolveCommand(cmd, str);      //根据头部命令解析命令内容(得到参数)
-                switch (cmd)
-                {
-                    //请求数据
-                    case Promise.ICS_CMD_DATAREQUEST:
-                        GetUsersData(userId, os);
-                        break;
-                    //请求会话
-                    case Promise.ICS_CMD_SESSIONREQUEST:
-                        UserCall(userId, os);
-                        break;
-                    //会话结束
-                    case Promise.ICS_CMD_SESSIONFINISH:
-                        EndCall(userId, os);
-                        break;
-                    //接受邀请(开始会话)
-                    case Promise.ICS_CMD_SESSIONSTART:
-                        StartConversation(userId);
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.SetLog("VideoChatServer.Server.TransBuffer_CallBack       TransBuffer_CallBack：" + ex.Message.ToString());
-            }
+              
         }
 
         #endregion
@@ -398,6 +389,8 @@ namespace VideoChatServer
                 SystemSettingServer.OnRecvUserTextMsgReceived = new SystemSettingServer.OnRecvUserTextMsg_Received(OnRecvUserTextMsgCallBack);
                 //文件传输回调函数
                 SystemSettingServer.OnTransFileReceived = new SystemSettingServer.OnTransFile_Received(OnTransFileCallBack);
+                //视频呼叫回调函数
+                SystemSettingServer.OnVideoCallReceived = new SystemSettingServer.OnVideoCall_Received(OnVideoCall_Received);
 
                 lb_version.Text = "与AnyChat核心服务器连接失败";
                 lb_version.ForeColor = Color.Red;
@@ -432,239 +425,6 @@ namespace VideoChatServer
                 Log.SetLog("GetVersion         获取版本错误：" + ex.Message.ToString());
             }
             return version;
-        }
-
-        #endregion
-
-        #region 登录
-
-        /// <summary>
-        /// 登录成功时
-        /// 向当前在线用户发送该用户的数据
-        /// </summary>
-        /// <param name="id"></param>
-        private void SendNowOnlineUsers(UserInfo userMode)
-        {
-            try
-            {
-                foreach (UserInfo u in users)
-                {
-                    //向当前在线用户发送该用户的数据
-                    TranBuff(u.Id, Promise.ICS_CMD_DATAITEM,
-                        new ParamInfo(CommandHelp.ParamEnum.DATATYPE.ToString(), Promise.ICS_DATATYPE_ONLINEUSERS.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.DATA.ToString(), CommandHelp.GenerateMarkCommand(
-                            new ParamInfo(CommandHelp.ParamEnum.DATA_USERID.ToString(), userMode.Id.ToString()),
-                            new ParamInfo(CommandHelp.ParamEnum.DATA_USERIP.ToString(), userMode.Ip),
-                            new ParamInfo(CommandHelp.ParamEnum.DATA_USERNAME.ToString(), userMode.Name)
-                            )));
-                    //发送指令通知其他用户该用户上线
-                    TranBuff(u.Id, Promise.ICS_CMD_STATUSNOTIFY,
-                        new ParamInfo(CommandHelp.ParamEnum.DATATYPE.ToString(), Promise.ICS_DATATYPE_ONLINEUSERS.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.OBJECTID.ToString(), userMode.Id.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.STATUS.ToString(), Promise.ICS_STATUSTYPE_USERONLINE.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.WPARAM.ToString(), Promise.ICS_STATUSTYPE_USERONLINE.ToString()));//用户上线
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.SetLog("SendNowOnlineUsers             登录成功时：向当前在线用户发送该用户的数据;  发生错误：" + ex.Message.ToString());
-            }
-        }
-
-        #endregion
-
-        #region 呼叫
-
-        //某用户申请呼叫
-        private void UserCall(int userId, List<ParamInfo> os)
-        {
-            try
-            {
-                int tid = Convert.ToInt32(CommandHelp.GetParamInfoByParams(os, CommandHelp.ParamEnum.TUSERID.ToString()).Value);//目标用户ID
-                bool isOnline = false;//是否在线
-
-                foreach (UserInfo u in users)
-                {
-                    if (u.Id == tid)
-                    {
-                        isOnline = true;
-                        bool isBusy = false;
-                        foreach (ConversationInfo c in converstations)
-                        {
-                            if (c.SuserId == tid || c.TuserId == tid)//不在会话场景中
-                            {
-                                isBusy = true;
-                                break;
-                            }
-                        }
-                        if (isBusy)//用户正忙
-                        {
-                            TranBuff(userId, Promise.ICS_CMD_SESSIONFINISH,
-                                new ParamInfo(CommandHelp.ParamEnum.SUSERID.ToString(), userId.ToString()),
-                                new ParamInfo(CommandHelp.ParamEnum.TUSERID.ToString(), tid.ToString()),
-                                new ParamInfo(CommandHelp.ParamEnum.RETCODE.ToString(), Promise.ICS_RETCODE_SESSION_BUSY.ToString()));//目标用户忙
-                        }
-                        else
-                        {
-                            //请求成功
-                            ConversationInfo mode = new ConversationInfo();
-                            mode.SuserId = userId;
-                            mode.TuserId = tid;
-                            converstations.Add(mode);
-                            //通知被呼叫用户
-                            TranBuff(tid, Promise.ICS_CMD_SESSIONREQUEST,
-                                new ParamInfo(CommandHelp.ParamEnum.SUSERID.ToString(), userId.ToString()),
-                                new ParamInfo(CommandHelp.ParamEnum.TUSERID.ToString(), tid.ToString()));
-
-                            //请求回复-呼叫等待
-                            TranBuff(userId, Promise.ICS_CMD_CONTROL,
-        new ParamInfo(CommandHelp.ParamEnum.SUSERID.ToString(), userId.ToString()),
-        new ParamInfo(CommandHelp.ParamEnum.TUSERID.ToString(), tid.ToString()),
-        new ParamInfo(CommandHelp.ParamEnum.CTRLCODE.ToString(), Promise.ICS_CONTROL_SESSIONWAIT.ToString()),
-        new ParamInfo(CommandHelp.ParamEnum.WPARAM.ToString(), tid.ToString()));
-                        }
-                        break;
-                    }
-                }
-                if (!isOnline)
-                {
-                    TranBuff(userId, Promise.ICS_CMD_SESSIONFINISH,
-                        new ParamInfo(CommandHelp.ParamEnum.SUSERID.ToString(), userId.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.TUSERID.ToString(), tid.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.RETCODE.ToString(), Promise.ICS_RETCODE_SESSION_OFFLINE.ToString()));//目标用户不在线
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.SetLog("VideoChatServer.Server.UserCall       UserCall：" + ex.Message.ToString());
-            }
-        }
-
-        /// <summary>
-        /// 根据用户ID移除会话场次
-        /// </summary>
-        private void RemoveConversationInfoByUserId(int userid,int error)
-        {
-            try
-            {
-                foreach (ConversationInfo c in converstations)
-                {
-                    if (c.SuserId == userid || c.TuserId == userid)
-                    {
-                        //通知用户会话解散
-                        TranBuff(c.SuserId, Promise.ICS_CMD_SESSIONFINISH,
-                                    new ParamInfo(CommandHelp.ParamEnum.SUSERID.ToString(), c.SuserId.ToString()),
-                                    new ParamInfo(CommandHelp.ParamEnum.TUSERID.ToString(), c.TuserId.ToString()),
-                                    new ParamInfo(CommandHelp.ParamEnum.RETCODE.ToString(), error.ToString()));
-                        TranBuff(c.TuserId, Promise.ICS_CMD_SESSIONFINISH,
-                                    new ParamInfo(CommandHelp.ParamEnum.SUSERID.ToString(), c.SuserId.ToString()),
-                                    new ParamInfo(CommandHelp.ParamEnum.TUSERID.ToString(), c.TuserId.ToString()),
-                                    new ParamInfo(CommandHelp.ParamEnum.RETCODE.ToString(), error.ToString()));
-                        converstations.Remove(c);
-                        RemoveConversationInfoByUserId(userid, error);
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.SetLog("VideoChatServer.Server.RemoveConversationInfoByUserId       RemoveConversationInfoByUserId：" + ex.Message.ToString());
-            }
-        }
-
-        //通话结束
-        private void EndCall(int userId, List<ParamInfo> os)
-        {
-            try
-            {
-                int error = Convert.ToInt32(CommandHelp.GetParamInfoByParams(os, CommandHelp.ParamEnum.RETCODE.ToString()).Value);
-                RemoveConversationInfoByUserId(userId, error);
-            }
-            catch (Exception ex)
-            {
-                Log.SetLog("VideoChatServer.Server.EndCall       EndCall：" + ex.Message.ToString());
-            }
-        }
-
-        //接受邀请(开始会话)
-        private void StartConversation(int userId)
-        {
-            try
-            {
-                bool isOnline = false;
-                foreach (ConversationInfo c in converstations)
-                {
-                    if (c.SuserId == userId || c.TuserId == userId)
-                    {
-                        UserInfo smode = GetUserInfoById(c.SuserId);
-                        UserInfo tmode = GetUserInfoById(c.TuserId);
-
-                        if (smode != null && tmode != null)
-                        {
-                            isOnline = true;
-                            int roomid = GetRoomId(1);
-
-                            //通知双方用户开始会话
-                            TranBuff(c.SuserId, Promise.ICS_CMD_SESSIONSTART,
-                            new ParamInfo(CommandHelp.ParamEnum.SUSERID.ToString(), c.SuserId.ToString()),
-                            new ParamInfo(CommandHelp.ParamEnum.TUSERID.ToString(), c.TuserId.ToString()),
-                            new ParamInfo(CommandHelp.ParamEnum.ROOMID.ToString(), roomid.ToString()));
-                            TranBuff(c.TuserId, Promise.ICS_CMD_SESSIONSTART,
-                            new ParamInfo(CommandHelp.ParamEnum.SUSERID.ToString(), c.SuserId.ToString()),
-                            new ParamInfo(CommandHelp.ParamEnum.TUSERID.ToString(), c.TuserId.ToString()),
-                            new ParamInfo(CommandHelp.ParamEnum.ROOMID.ToString(), roomid.ToString()));
-
-                            break;
-                        }
-                    }
-                }
-                if (!isOnline)
-                {
-                    RemoveConversationInfoByUserId(userId, Promise.ICS_RETCODE_SESSION_OFFLINE);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.SetLog("VideoChatServer.Server.StartConversation       StartConversation：" + ex.Message.ToString());
-            }
-        }
-
-        #endregion
-
-        #region 数据请求
-
-        //请求数据
-        public void GetUsersData(int sid, List<ParamInfo> os)
-        {
-            try
-            {
-                if (CommandHelp.GetParamInfoByParams(os, CommandHelp.ParamEnum.DATATYPE.ToString()).Value == Promise.ICS_DATATYPE_ONLINEUSERS.ToString())//请求在线用户数据
-                {
-                    foreach (UserInfo u in users)
-                    {
-                        if (u.Id != sid)
-                        {
-                            TranBuff(sid, Promise.ICS_CMD_DATAITEM,
-                        new ParamInfo(CommandHelp.ParamEnum.DATATYPE.ToString(), Promise.ICS_DATATYPE_ONLINEUSERS.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.DATA.ToString(), CommandHelp.GenerateMarkCommand(
-                        new ParamInfo(CommandHelp.ParamEnum.DATA_USERID.ToString(), u.Id.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.DATA_USERIP.ToString(), u.Ip.ToString()),
-                        new ParamInfo(CommandHelp.ParamEnum.DATA_USERNAME.ToString(), u.Name)
-                        )));//向该用户发送当前在线用户的数据
-                        }
-                    }
-                }
-
-                TranBuff(sid, Promise.ICS_CMD_CONTROL,
-                    new ParamInfo(CommandHelp.ParamEnum.SUSERID.ToString(), "0"),
-                    new ParamInfo(CommandHelp.ParamEnum.TUSERID.ToString(), sid.ToString()),
-                    new ParamInfo(CommandHelp.ParamEnum.CTRLCODE.ToString(), Promise.ICS_CONTROL_DATAFINISH.ToString()),
-                    new ParamInfo(CommandHelp.ParamEnum.WPARAM.ToString(), CommandHelp.GetParamInfoByParams(os, CommandHelp.ParamEnum.DATATYPE.ToString()).Value));//回复结束指令
-            }
-            catch (Exception ex)
-            {
-                Log.SetLog("GetUsersData             请求用户数据（C-S），  发生错误：" + ex.Message.ToString());
-            }
         }
 
         #endregion
@@ -717,80 +477,6 @@ namespace VideoChatServer
             }
             return mode;
         }
-
-        //分配房间
-        private int GetRoomId(int roomid)
-        {
-            try
-            {
-                foreach (RoomInfo r in rooms)
-                {
-                    if (r.Id == roomid)
-                    {
-                        roomid++;
-                        roomid = GetRoomId(roomid);
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.SetLog("GetRoomId                      分配房间，错误：" + ex.Message.ToString());
-            }
-            return roomid;
-        }
-        //进入房间分配处理
-        void EnterRoomInfoHandle(int roomId)
-        {
-            try
-            {
-                bool isHave = false;//房间是否已经被分配
-                foreach (RoomInfo r in rooms)
-                {
-                    if (r.Id == roomId)
-                    {
-                        isHave = true;
-                        r.Count++;
-                        break;
-                    }
-                }
-                if (!isHave)//房间未被分配
-                {
-                    RoomInfo room = new RoomInfo();
-                    room.Id = roomId;
-                    room.Count = 1;
-                    rooms.Add(room);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.SetLog("EnterRoomInfoHandle                        进入房间分配处理，错误：" + ex.Message.ToString());
-            }
-        }
-        //离开房间分配处理
-        private void OutRoomInfoHandle(int roomId)
-        {
-            try
-            {
-                foreach (RoomInfo r in rooms)
-                {
-                    if (r.Id == roomId)
-                    {
-                        r.Count--;
-                        if (r.Count == 0)
-                        {
-                            rooms.Remove(r);
-                        }
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.SetLog("OutRoomInfoHandle                  离开房间分配处理，错误：" + ex.Message.ToString());
-            }
-        }
-
         #endregion
     }
 }

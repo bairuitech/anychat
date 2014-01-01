@@ -35,6 +35,8 @@ namespace ANYCHATAPI
             AnyChatServerSDK.BRAS_SetOnTransBufferExCallBack(mTransBufferExCallBack, 0);
             // 设置文件传输回调函数
             AnyChatServerSDK.BRAS_SetOnTransFileCallBack(mTransFileCallBack, 0);
+            //设置视频呼叫事件回调函数
+            AnyChatServerSDK.BRAS_SetOnVideoCallEventCallBack(mVideoVideoCallEventCallBack, 0);
         }
 
         // 服务器应用程序消息回调函数定义
@@ -63,7 +65,8 @@ namespace ANYCHATAPI
         private static AnyChatServerSDK.OnTransBufferExCallBack mTransBufferExCallBack = OnTransBufferExCallBack;
         // 文件传输回调函数定义
         private static AnyChatServerSDK.OnTransFileCallBack mTransFileCallBack = OnTransFileCallBack;
-
+        //视频呼叫回调函数定义
+        private static AnyChatServerSDK.OnVideoCallEventCallBack mVideoVideoCallEventCallBack = onVideoVideoCallEventCallBack;
 
         // 服务器应用程序消息回调函数定义
         public delegate void OnServerAppMessageEx_Received(int msg, int wParam, int lParam, int userValue);
@@ -91,7 +94,9 @@ namespace ANYCHATAPI
         public delegate void OnTransBufferEx_Received(int dwUserId, IntPtr lpBuf, int dwLen, int wParam, int lParam, int dwTaskId, int lpUserValue);
         // 文件传输回调函数定义
         public delegate void OnTransFile_Received(int dwUserId, string lpFileName, string lpTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId, int lpUserValue);
-
+        //视频呼叫回调函数定义
+        public delegate void OnVideoCall_Received(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue);
+        
 
         public static OnServerAppMessageEx_Received OnServerAppMessageExReceived = null;
         // 服务器应用程序消息回调函数定义
@@ -211,6 +216,14 @@ namespace ANYCHATAPI
             {
                 OnTransFileReceived(dwUserId, lpFileName, lpTempFilePath, dwFileLength, wParam, lParam, dwTaskId, lpUserValue);
             }
+        }
+        public static OnVideoCall_Received OnVideoCallReceived=null;
+        //视频呼叫时间回调函数定义
+        public static int onVideoVideoCallEventCallBack(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue)
+        {
+            if(OnVideoCallReceived!=null)
+                 OnVideoCallReceived(dwEventType,dwSrcUserId,dwTarUserId,dwErrorCode, dwFlags, dwParam,  lpUserStr,  lpUserValue);
+            return 0;
         }
     }
 }
