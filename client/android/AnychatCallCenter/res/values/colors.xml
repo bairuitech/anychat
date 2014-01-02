@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="txt_general_bg">#333333</color>  
+    <color name="bg1">#CCCCCC</color>
+    <color name="t_bg1">#333333</color>
+    <color name="hall_b_s">#00F6D9AF</color>
+ 	<color name="hall_b_e">#00D9AF6D</color>
+ 	<color name="hall_top_s">#5A555A</color>
+ 	<color name="chat_target">#FF8000</color>
+ 	<color name="menu_bg">#ff54acea</color>
+ 	<color name="menu_select">#ffffff</color>
+ 	<color name="txt_addion_hasmsg">#ffffff</color>
+ 	<color name="txt_addion_nomsg">#000000</color>
+ 	<color name="list_divider_meetingcreate">#999999</color>
+ 	 <color name="solid_black">#ff000000</color>
+    <color name="solid_white">#ffffffff</color>
+    <color name="bg_blue">#FF1BA1E2</color>
+    <color name="toolbox_bg">#99aaaaaa</color>
+    <color name="solid_red">#f00</color>
+    <color name="solid_blue">#0000ff</color>
+    <color name="solid_green">#f0f0</color>
+    <color name="solid_yellow">#ffffff00</color>
+    <color name="dancen">#CCCC33</color>
+ 	<drawable name="user_moble_click">#E099CCFF</drawable>
+ 	<drawable name="user_moble_normal">#E0efefef</drawable>
+ 	<drawable name="user_addiontion_normal">#00000000</drawable>
+ 	<drawable name="meeting_tab_normal">#B3DBF8</drawable>
+ 	<drawable name="meeting_tab_pressed">#FF9933</drawable>
+ 	<drawable name="main_head">#6699CC</drawable>
+ 	
+</resources>

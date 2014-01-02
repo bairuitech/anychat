@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/function_list_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_head"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dip" >
+
+        <Button
+            android:id="@+id/btn_endsession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:background="@drawable/end_session_bg"
+            android:gravity="center"
+            android:padding="10dip"
+            android:text="@string/end_session"
+            android:textColor="@color/dancen"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" >
+
+            <TextView
+                android:id="@+id/txt_time"
+                style="@style/common_txt_style" />
+
+            <TextView
+                android:id="@+id/txt_target"
+                style="@style/common_txt_style"
+                android:layout_marginLeft="10dip" />
+            <Button 
+                android:id="@+id/btn_swtich"
+                style="@style/common_txt_style"
+                android:background="@drawable/com_index_btn"
+                android:text="切换"
+                />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dip"
+            android:visibility="invisible"
+            android:background="@drawable/btn_switchvideo_background"
+            android:src="@drawable/switchvideo"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/video_session" />
+    </LinearLayout>
+
+</LinearLayout>

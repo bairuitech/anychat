@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/video_session"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center" >
+
+    <RelativeLayout
+        android:id="@+id/video_area"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <SurfaceView
+            android:id="@+id/surface_remote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true" />
+
+        <SurfaceView
+            android:id="@+id/surface_local"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/video_bg" />
+
+        <ProgressBar
+            android:id="@+id/progress_remote"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="5dip"
+            android:layout_below="@+id/surface_remote"
+            android:layout_alignLeft="@+id/surface_remote"
+            android:max="100" />
+
+        <ProgressBar
+            android:id="@+id/progress_local"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="5dip"
+            android:layout_toRightOf="@+id/progress_remote"
+            android:layout_below="@+id/surface_local"
+            android:layout_alignLeft="@+id/surface_local"
+            android:max="100" />
+    </RelativeLayout>
+
+</LinearLayout>
