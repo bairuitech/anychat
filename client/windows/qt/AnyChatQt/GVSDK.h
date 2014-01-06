@@ -24,7 +24,8 @@ typedef enum GV_STATE_TYPE_DEFINE
 	GV_STATE_TYPE_ACTIVE = 0,					///< 客户端活动类型状态
 	GV_STATE_TYPE_CAMERA,						///< 客户端摄像机状态
 	GV_STATE_TYPE_AUDIO,						///< 客户端音频设备状态
-	GV_STATE_TYPE_CHATMODE						///< 客户端聊天模式
+	GV_STATE_TYPE_CHATMODE,						///< 客户端聊天模式
+	GV_STATE_TYPE_P2P_POLITIC,					///< 客户端P2P策略
 }GV_STATE_TYPE;
 
 
