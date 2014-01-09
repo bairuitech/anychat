@@ -38,7 +38,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:layout_marginRight="5dip"
-        android:background="@drawable/com_index_btn"
+        android:background="@drawable/com_btn"
         android:text="@string/str_back"
         android:textColor="@color/t_bg1"
         android:textSize="18sp" />

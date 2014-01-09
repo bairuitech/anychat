@@ -5,6 +5,7 @@ import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.bussinesscenter.BussinessCenter;
 import com.bairuitech.callcenter.R;
 
+import com.bairuitech.util.BaseConst;
 import com.bairuitech.util.BaseMethod;
 import com.bairuitech.util.ConfigEntity;
 import com.bairuitech.util.ConfigHelper;
@@ -64,9 +65,33 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 	@Override
 	protected void onRestart() {
 		// TODO Auto-generated method stub
-		Log.i("loginactivyt_onrestart", "onRestart");
-		this.finish();
+		Log.i("ANYCHAT", "onRestart");
 		super.onRestart();
+	}
+	
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		// TODO Auto-generated method stub
+		super.onNewIntent(intent);
+		int tag=intent.getIntExtra("INTENT", BaseConst.AGAIGN_LOGIN);
+		if(tag==BaseConst.AGAIGN_LOGIN)
+		{
+			
+			if(anychat!=null)
+			{
+				anychat.Logout();
+				anychat.SetBaseEvent(this);
+			}
+			
+			Log.e("ANYCHAT", "AGAIGN_LOGIN");
+		}
+		else if(tag==BaseConst.APP_EXIT)
+		{
+			this.finish();
+			Log.e("ANYCHAT", "APP_EXIT");
+		}
+		Log.i("ANYCHAT", "onNewIntent");
 	}
 
 	@Override
@@ -142,7 +167,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 					this.getString(R.string.str_account_input_hint), this);
 			return;
 		}
-//		this.anychat.Logout();
 		this.anychat.Connect(configEntity.ip, configEntity.port);
 		this.anychat.Login(strSelfName, "123");
 		loginBtn.setClickable(false);
@@ -150,7 +174,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 	}
 
 	protected void onDestroy() {
-		Log.i("loginactivity", "onDestroy");
+		Log.i("ANYCHAT", "onDestroy");
 		super.onDestroy();
 		if (bReased) {
 			anychat.Logout();

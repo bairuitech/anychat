@@ -1,6 +1,6 @@
 package com.bairuitech.callcenter;
 
-import android.app.ActivityGroup;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bairuitech.anychat.AnyChatBaseEvent;
@@ -31,12 +30,12 @@ import com.bairuitech.util.BaseMethod;
 import com.bairuitech.util.ConfigHelper;
 import com.bairuitech.util.DialogFactory;
 
-public class HallActivity extends ActivityGroup implements OnItemClickListener,
-		OnClickListener, AnyChatBaseEvent, AnyChatVideoCallEvent,AnyChatUserInfoEvent {
+public class HallActivity extends Activity implements OnItemClickListener,
+		OnClickListener, AnyChatBaseEvent, AnyChatVideoCallEvent,
+		AnyChatUserInfoEvent {
 	private AnyChatCoreSDK anychat;
-	private Button mBtnBack;
+	private Button mBtnSetting;
 	private GridView mGridUsers;
-	private ImageView mImgHead;
 	private TextView mTxtVersion;
 	private Dialog dialog;
 	private UserAdapter mUserAdapter;
@@ -78,9 +77,7 @@ public class HallActivity extends ActivityGroup implements OnItemClickListener,
 	protected void onRestart() {
 		// TODO Auto-generated method stub
 		super.onRestart();
-		initSdk();
-		if (mUserAdapter != null)
-			mUserAdapter.notifyDataSetChanged();
+	
 
 	}
 
@@ -94,6 +91,9 @@ public class HallActivity extends ActivityGroup implements OnItemClickListener,
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		BussinessCenter.mContext = HallActivity.this;
+		initSdk();
+		if (mUserAdapter != null)
+			mUserAdapter.notifyDataSetChanged();
 		Log.i("ANYCHAT", "HallA" + "onResume");
 		super.onResume();
 	}
@@ -102,8 +102,6 @@ public class HallActivity extends ActivityGroup implements OnItemClickListener,
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		anychat.Logout();
-		anychat.Release();
 		BussinessCenter.getBussinessCenter().realseData();
 	}
 
@@ -130,22 +128,26 @@ public class HallActivity extends ActivityGroup implements OnItemClickListener,
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		Intent intent = new Intent();
-		intent.setClass(this, VideoConfigActivity.class);
-		this.startActivityForResult(intent, 1000);
+		if (v == mBtnSetting) {
+			Intent intent = new Intent();
+			intent.setClass(this, VideoConfigActivity.class);
+			this.startActivityForResult(intent, 1000);
+		}
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		UserItem item = BussinessCenter.getBussinessCenter().getUserItemByIndex(arg2);
+		UserItem item = BussinessCenter.getBussinessCenter()
+				.getUserItemByIndex(arg2);
 		if (item != null) {
 			if (item.getUserId() == BussinessCenter.selfUserId) {
 				BaseMethod.showToast(this.getString(R.string.str_targetwrong),
 						this);
 				return;
 			}
-			BussinessCenter.sessionItem = new SessionItem(0, item.getUserId(), BussinessCenter.selfUserId);
+			BussinessCenter.sessionItem = new SessionItem(0, item.getUserId(),
+					BussinessCenter.selfUserId);
 			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_CALLRESUME,
 					item.getUserId(), this);
 			dialog.show();
@@ -153,13 +155,11 @@ public class HallActivity extends ActivityGroup implements OnItemClickListener,
 	}
 
 	private void initView() {
-		this.setContentView(R.layout.hall_mobile);
-		mBtnBack = (Button) findViewById(R.id.btn_back);
-		mImgHead = (ImageView) findViewById(R.id.image_head);
+		this.setContentView(R.layout.hall_layout);
+		mBtnSetting = (Button) findViewById(R.id.btn_back);
 		mGridUsers = (GridView) findViewById(R.id.grid_user);
-		mBtnBack.setText(this.getString(R.string.str_setting));
-		mBtnBack.setOnClickListener(this);
-		mImgHead.setOnClickListener(this);
+		mBtnSetting.setText(this.getString(R.string.str_setting));
+		mBtnSetting.setOnClickListener(this);
 		mTxtVersion = (TextView) findViewById(R.id.txt_system_version);
 
 		mTxtVersion.setText(BaseMethod.getVersion(this)
@@ -168,7 +168,6 @@ public class HallActivity extends ActivityGroup implements OnItemClickListener,
 		mGridUsers.setAdapter(mUserAdapter);
 		mGridUsers.setOnItemClickListener(this);
 	}
-
 
 	private void initSdk() {
 		if (anychat == null) {
@@ -218,13 +217,16 @@ public class HallActivity extends ActivityGroup implements OnItemClickListener,
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
 		// TODO Auto-generated method stub
 
+		if(dwErrorCode==0)
+		{
+			BussinessCenter.selfUserId = dwUserId;
+			BussinessCenter.selfUserName=anychat.GetUserName(dwUserId);
+		}
 	}
 
 	@Override
 	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
 		// TODO Auto-generated method stub
-		if (BussinessCenter.sessionItem == null)
-			return;
 		if (dwErrorCode == 0) {
 			Intent intent = new Intent();
 			intent.setClass(this, VideoActivity.class);
@@ -254,19 +256,23 @@ public class HallActivity extends ActivityGroup implements OnItemClickListener,
 		// TODO Auto-generated method stub
 
 		if (dwErrorCode == 0) {
-			if (dialog == null || (dialog != null && !dialog.isShowing())) {
-				dialog = DialogFactory.getDialog(DialogFactory.DIALOG_NETCLOSE,
-						DialogFactory.DIALOG_NETCLOSE, this);
-				dialog.show();
-			}
+			if (dialog != null && dialog.isShowing())
+				dialog.dismiss();
+			dialog = DialogFactory.getDialog(DialogFactory.DIALOG_NETCLOSE,
+					DialogFactory.DIALOG_NETCLOSE, this);
+			dialog.show();
+		} else {
+			BaseMethod.showToast(this.getString(R.string.str_serverlink_close),
+					this);
+			Intent intent = new Intent();
+			intent.putExtra("INTENT", BaseConst.AGAIGN_LOGIN);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.setClass(this, LoginActivity.class);
+			this.startActivity(intent);
+			this.finish();
 		}
-
+		Log.i("ANYCHAT", "OnAnyChatLinkCloseMessage:" + dwErrorCode);
 	}
-
-
-
-
-
 
 	@Override
 	public void OnAnyChatVideoCallEvent(int dwEventType, int dwUserId,
@@ -301,10 +307,12 @@ public class HallActivity extends ActivityGroup implements OnItemClickListener,
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_START:
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
-			BussinessCenter.getBussinessCenter().VideoCall_SessionStart(dwUserId, dwFlags, dwParam, userStr);
+			BussinessCenter.getBussinessCenter().VideoCall_SessionStart(
+					dwUserId, dwFlags, dwParam, userStr);
 			break;
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
-			BussinessCenter.getBussinessCenter().VideoCall_SessionEnd(dwUserId, dwFlags, dwParam, userStr);
+			BussinessCenter.getBussinessCenter().VideoCall_SessionEnd(dwUserId,
+					dwFlags, dwParam, userStr);
 			break;
 		}
 	}
@@ -312,11 +320,10 @@ public class HallActivity extends ActivityGroup implements OnItemClickListener,
 	@Override
 	public void OnAnyChatUserInfoUpdate(int dwUserId, int dwType) {
 		// TODO Auto-generated method stub
-		//同步完成服务器中的所有好友数据，可以在此时获取数据
-		if(dwUserId==0&&dwType==0)
-		{
+		// 同步完成服务器中的所有好友数据，可以在此时获取数据
+		if (dwUserId == 0 && dwType == 0) {
 			BussinessCenter.getBussinessCenter().getOnlineFriendDatas();
-			if(mUserAdapter!=null)
+			if (mUserAdapter != null)
 				mUserAdapter.notifyDataSetChanged();
 			Log.i("ANYCHAT", "OnAnyChatUserInfoUpdate");
 		}

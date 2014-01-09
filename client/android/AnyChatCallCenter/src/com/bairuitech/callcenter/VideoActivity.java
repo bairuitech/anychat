@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ import com.bairuitech.anychat.AnyChatUserInfoEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
 import com.bairuitech.bussinesscenter.BussinessCenter;
 import com.bairuitech.callcenter.R;
+import com.bairuitech.util.BaseConst;
+import com.bairuitech.util.BaseMethod;
 import com.bairuitech.util.ConfigEntity;
 import com.bairuitech.util.ConfigHelper;
 import com.bairuitech.util.DialogFactory;
@@ -78,6 +81,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	int dwTargetUserId;
 	int videoIndex = 0;
 	boolean bNormal = true;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -378,12 +382,10 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				}
 				Surface s = holder.getSurface();
 				if (AnyChatCoreSDK
-						.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA)
-				{
+						.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 					anychat.mVideoHelper.SetVideoUser(videoIndex,
 							dwTargetUserId);
-				}
-				else
+				} else
 					anychat.SetVideoPos(dwTargetUserId, s, 0, 0, 0, 0);
 				bOtherVideoOpened = true;
 			}
@@ -424,7 +426,10 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	@Override
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
 		// TODO Auto-generated method stub
-
+		if (dwErrorCode == 0) {
+			BussinessCenter.selfUserId = dwUserId;
+			BussinessCenter.selfUserName = anychat.GetUserName(dwUserId);
+		}
 	}
 
 	@Override
@@ -457,13 +462,28 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		// TODO Auto-generated method stub
+		anychat.UserCameraControl(-1, 0);
+		anychat.UserSpeakControl(-1, 0);
+		anychat.UserSpeakControl(dwTargetUserId, 0);
+		anychat.UserCameraControl(dwTargetUserId, 0);
 		if (dwErrorCode == 0) {
-			if (dialog == null || (dialog != null && !dialog.isShowing())) {
-				dialog = DialogFactory.getDialog(DialogFactory.DIALOG_NETCLOSE,
-						DialogFactory.DIALOG_NETCLOSE, this);
-				dialog.show();
-			}
+			if (dialog != null && dialog.isShowing())
+				dialog.dismiss();
+			BaseMethod.showToast(this.getString(R.string.session_end), this);
+			dialog = DialogFactory.getDialog(DialogFactory.DIALOG_NETCLOSE,
+					DialogFactory.DIALOG_NETCLOSE, this);
+			dialog.show();
+		} else {
+			BaseMethod.showToast(this.getString(R.string.str_serverlink_close),
+					this);
+			Intent intent = new Intent();
+			intent.putExtra("INTENT", BaseConst.AGAIGN_LOGIN);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.setClass(this, LoginActivity.class);
+			this.startActivity(intent);
+			this.finish();
 		}
+		Log.i("ANYCHAT", "OnAnyChatLinkCloseMessage:" + dwErrorCode);
 	}
 
 	@Override
@@ -509,6 +529,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			anychat.UserCameraControl(dwTargetUserId, 0);
 			anychat.LeaveRoom(-1);
 			this.finish();
+		
 		}
 	}
 
