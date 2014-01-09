@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.bussinesscenter.BussinessCenter;
 import com.bairuitech.bussinesscenter.UserItem;
-import com.bairuitech.bussinesscenter.VideoCallContrlHandler;
 import com.bairuitech.callcenter.LoginActivity;
 import com.bairuitech.callcenter.R;
 
@@ -153,7 +152,7 @@ public class DialogFactory {
 				}
 				configEntity.ip = strServerIP;
 				configEntity.port = Integer.valueOf(strPort);
-				ConfigHelper.getConfigHelper().SaveConfig(mContext,
+				ConfigService.SaveConfig(mContext,
 						configEntity);
 				dialog.dismiss();
 

@@ -1,6 +1,8 @@
 package com.bairuitech.callcenter;
 
-import com.bairuitech.util.*;
+import com.bairuitech.util.ConfigService;
+import com.bairuitech.util.ConfigEntity;
+import com.bairuitech.util.ScreenInfo;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -87,7 +89,7 @@ public class VideoConfigActivity extends Activity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        configEntity = ConfigHelper.getConfigHelper().LoadConfig(this);
+        configEntity = ConfigService.LoadConfig(this);
         getScrennInfo();
         InitialLayout();
     }
@@ -313,7 +315,7 @@ public class VideoConfigActivity extends Activity{
      	configEntity.audioPlayDriver = audioPlayDriverValue[audioPlayDriverSpinner.getSelectedItemPosition()];     	
      	configEntity.audioRecordDriver = audioRecordDriverValue[audioRecordDriverSpinner.getSelectedItemPosition()];
      	configEntity.videoCapDriver = videoCapDriverValue[videoCapDriverSpinner.getSelectedItemPosition()];     	
-     	ConfigHelper.getConfigHelper().SaveConfig(this, configEntity);
+    	ConfigService.SaveConfig(this, configEntity);
 		
 		this.setResult(RESULT_OK);
 		this.finish();

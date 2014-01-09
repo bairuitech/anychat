@@ -23,11 +23,11 @@ import com.bairuitech.anychat.AnyChatVideoCallEvent;
 import com.bairuitech.bussinesscenter.BussinessCenter;
 import com.bairuitech.bussinesscenter.SessionItem;
 import com.bairuitech.bussinesscenter.UserItem;
-import com.bairuitech.bussinesscenter.VideoCallContrlHandler;
 import com.bairuitech.callcenter.R;
 import com.bairuitech.util.BaseConst;
 import com.bairuitech.util.BaseMethod;
-import com.bairuitech.util.ConfigHelper;
+import com.bairuitech.util.ConfigEntity;
+import com.bairuitech.util.ConfigService;
 import com.bairuitech.util.DialogFactory;
 
 public class HallActivity extends Activity implements OnItemClickListener,
@@ -48,6 +48,7 @@ public class HallActivity extends Activity implements OnItemClickListener,
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		initSdk();
+		ApplyVideoConfig();
 		BussinessCenter.getBussinessCenter().getOnlineFriendDatas();
 		initView();
 		startBackServce();
@@ -121,10 +122,60 @@ public class HallActivity extends Activity implements OnItemClickListener,
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		if (resultCode == RESULT_OK) {
-			ConfigHelper.getConfigHelper().ApplyVideoConfig(this);
+			ApplyVideoConfig();
 		}
 	}
 
+	// 根据配置文件配置视频参数
+	private void ApplyVideoConfig()
+	{
+		ConfigEntity configEntity = ConfigService.LoadConfig(this);
+		if(configEntity.configMode == 1)		// 自定义视频参数配置
+		{
+			// 设置本地视频编码的码率（如果码率为0，则表示使用质量优先模式）
+			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_BITRATECTRL, configEntity.videoBitrate);
+			if(configEntity.videoBitrate==0)
+			{
+				// 设置本地视频编码的质量
+				AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_QUALITYCTRL, configEntity.videoQuality);
+			}
+			// 设置本地视频编码的帧率
+			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_FPSCTRL, configEntity.videoFps);
+			// 设置本地视频编码的关键帧间隔
+			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_GOPCTRL, configEntity.videoFps*4);
+			// 设置本地视频采集分辨率
+			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL, configEntity.resolution_width);
+			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL, configEntity.resolution_height);
+			// 设置视频编码预设参数（值越大，编码质量越高，占用CPU资源也会越高）
+			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_PRESETCTRL, configEntity.videoPreset);
+		}
+		// 让视频参数生效
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_APPLYPARAM, configEntity.configMode);
+		// P2P设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_NETWORK_P2PPOLITIC, configEntity.enableP2P);
+		// 本地视频Overlay模式设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_OVERLAY, configEntity.videoOverlay);
+		// 回音消除设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_AUDIO_ECHOCTRL, configEntity.enableAEC);
+		// 平台硬件编码设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_CORESDK_USEHWCODEC, configEntity.useHWCodec);
+		// 视频旋转模式设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_ROTATECTRL, configEntity.videorotatemode);
+		// 视频采集驱动设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER, configEntity.videoCapDriver);
+		// 本地视频采集偏色修正设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA, configEntity.fixcolordeviation);
+		// 视频显示驱动设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL, configEntity.videoShowDriver);
+		// 音频播放驱动设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_AUDIO_PLAYDRVCTRL, configEntity.audioPlayDriver);
+		// 音频采集驱动设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_AUDIO_RECORDDRVCTRL, configEntity.audioRecordDriver);
+		// 视频GPU渲染设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER, configEntity.videoShowGPURender);
+		// 本地视频自动旋转设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_AUTOROTATION, configEntity.videoAutoRotation);
+	}
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -281,7 +332,7 @@ public class HallActivity extends Activity implements OnItemClickListener,
 		switch (dwEventType) {
 
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST:
-			BussinessCenter.getBussinessCenter().VideoCall_SessionRequest(
+			BussinessCenter.getBussinessCenter().onVideoCallRequest(
 					dwUserId, dwFlags, dwParam, userStr);
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
@@ -290,7 +341,7 @@ public class HallActivity extends Activity implements OnItemClickListener,
 			dialog.show();
 			break;
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY:
-			BussinessCenter.getBussinessCenter().VideoCall_SessionReply(
+			BussinessCenter.getBussinessCenter().onVideoCallReply(
 					dwUserId, dwErrorCode, dwFlags, dwParam, userStr);
 			if (dwErrorCode == AnyChatDefine.BRAC_ERRORCODE_SUCCESS) {
 				dialog = DialogFactory.getDialog(
@@ -307,11 +358,11 @@ public class HallActivity extends Activity implements OnItemClickListener,
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_START:
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
-			BussinessCenter.getBussinessCenter().VideoCall_SessionStart(
+			BussinessCenter.getBussinessCenter().onVideoCallStart(
 					dwUserId, dwFlags, dwParam, userStr);
 			break;
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
-			BussinessCenter.getBussinessCenter().VideoCall_SessionEnd(dwUserId,
+			BussinessCenter.getBussinessCenter().onVideoCallEnd(dwUserId,
 					dwFlags, dwParam, userStr);
 			break;
 		}

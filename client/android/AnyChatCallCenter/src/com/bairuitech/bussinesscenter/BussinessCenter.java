@@ -18,7 +18,7 @@ import com.bairuitech.util.BaseConst;
 import com.bairuitech.util.BaseMethod;
 import com.bairuitech.util.ScreenInfo;
 
-public class BussinessCenter implements VideoCallContrlHandler {
+public class BussinessCenter{
 
 	public static AnyChatCoreSDK anychat;
 	private static BussinessCenter mBussinessCenter;
@@ -148,8 +148,7 @@ public class BussinessCenter implements VideoCallContrlHandler {
 				dwParam, szUserStr);
 	}
 
-	@Override
-	public void VideoCall_SessionRequest(int dwUserId, int dwFlags,
+	public void onVideoCallRequest(int dwUserId, int dwFlags,
 			int dwParam, String szUserStr) {
 		// TODO Auto-generated method stub
 		playCallReceivedMusic(mContext);
@@ -173,8 +172,7 @@ public class BussinessCenter implements VideoCallContrlHandler {
 		}
 	}
 
-	@Override
-	public void VideoCall_SessionReply(int dwUserId, int dwErrorCode,
+	public void onVideoCallReply(int dwUserId, int dwErrorCode,
 			int dwFlags, int dwParam, String szUserStr) {
 		// TODO Auto-generated method stub
 		String strMessage = null;
@@ -218,8 +216,7 @@ public class BussinessCenter implements VideoCallContrlHandler {
 
 	}
 
-	@Override
-	public void VideoCall_SessionStart(int dwUserId, int dwFlags, int dwParam,
+	public void onVideoCallStart(int dwUserId, int dwFlags, int dwParam,
 			String szUserStr) {
 		// TODO Auto-generated method stub
 		stopSessionMis();
@@ -230,8 +227,7 @@ public class BussinessCenter implements VideoCallContrlHandler {
 		mContext.startActivity(intent);
 	}
 
-	@Override
-	public void VideoCall_SessionEnd(int dwUserId, int dwFlags, int dwParam,
+	public void onVideoCallEnd(int dwUserId, int dwFlags, int dwParam,
 			String szUserStr) {
 		// TODO Auto-generated method stub
 		sessionItem = null;

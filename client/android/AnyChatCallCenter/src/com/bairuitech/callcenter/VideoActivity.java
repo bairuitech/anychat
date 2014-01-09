@@ -39,7 +39,7 @@ import com.bairuitech.callcenter.R;
 import com.bairuitech.util.BaseConst;
 import com.bairuitech.util.BaseMethod;
 import com.bairuitech.util.ConfigEntity;
-import com.bairuitech.util.ConfigHelper;
+import com.bairuitech.util.ConfigService;
 import com.bairuitech.util.DialogFactory;
 
 public class VideoActivity extends Activity implements AnyChatBaseEvent,
@@ -231,7 +231,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mBtnEndSession.setOnClickListener(this);
 		mImgSwitch.setOnClickListener(this);
 		mSurfaceRemote.setTag(dwTargetUserId);
-		configEntity = ConfigHelper.getConfigHelper().LoadConfig(this);
+		configEntity =ConfigService.LoadConfig(this);
 		if (configEntity.videoOverlay != 0) {
 			mSurfaceSelf.getHolder().setType(
 					SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);

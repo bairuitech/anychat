@@ -1,8 +1,10 @@
 package com.bairuitech.demo;
 
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -85,10 +87,16 @@ public class VideoConfigActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configEntity = ConfigService.LoadConfig(this);
-   
+        getScrennInfo();
         InitialLayout();
     }
-    
+    private void getScrennInfo()
+    {
+    	DisplayMetrics dMetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dMetrics);
+		ScreenInfo.WIDTH=dMetrics.widthPixels;
+		ScreenInfo.HEIGHT=dMetrics.heightPixels;
+    }
     private void InitialLayout()
     {   
         this.setTitle("配置");
@@ -306,7 +314,7 @@ public class VideoConfigActivity extends Activity{
      	configEntity.videoCapDriver = videoCapDriverValue[videoCapDriverSpinner.getSelectedItemPosition()];     	
     	ConfigService.SaveConfig(this, configEntity);
 		
-		this.setResult(HallActivity.ACTIVITY_ID_VIDEOCONFIG);
+		this.setResult(RESULT_OK);
 		this.finish();
     }
     

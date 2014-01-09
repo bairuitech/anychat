@@ -272,7 +272,7 @@ public class HallActivity extends Activity implements AnyChatBaseEvent{
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		if(resultCode == ACTIVITY_ID_VIDEOCONFIG)
+		if(resultCode == RESULT_OK)
 		{
 			ApplyVideoConfig();
 		}

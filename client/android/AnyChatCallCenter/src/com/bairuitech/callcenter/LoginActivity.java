@@ -8,7 +8,7 @@ import com.bairuitech.callcenter.R;
 import com.bairuitech.util.BaseConst;
 import com.bairuitech.util.BaseMethod;
 import com.bairuitech.util.ConfigEntity;
-import com.bairuitech.util.ConfigHelper;
+import com.bairuitech.util.ConfigService;
 import com.bairuitech.util.DialogFactory;
 
 import android.app.Activity;
@@ -58,7 +58,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 	}
 
 	protected void intParams() {
-		configEntity = ConfigHelper.getConfigHelper().LoadConfig(this);
+		configEntity = ConfigService.LoadConfig(this);
 		BussinessCenter.getBussinessCenter();
 	}
 
@@ -111,7 +111,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 		if (anychat == null) {
 			anychat = new AnyChatCoreSDK();
 			anychat.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
-			ConfigHelper.getConfigHelper().ApplyVideoConfig(this);
 			bReased = true;
 		}
 		anychat.SetBaseEvent(this);
@@ -161,7 +160,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 		} else {
 			configEntity.IsSaveNameAndPw = false;
 		}
-		ConfigHelper.getConfigHelper().SaveConfig(this, configEntity);
+		ConfigService.SaveConfig(this, configEntity);
 		if (mEditAccount.getText().length() == 0) {
 			BaseMethod.showToast(
 					this.getString(R.string.str_account_input_hint), this);
