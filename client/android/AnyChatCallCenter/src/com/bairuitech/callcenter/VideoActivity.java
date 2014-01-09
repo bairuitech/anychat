@@ -380,7 +380,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				if (AnyChatCoreSDK
 						.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA)
 				{
-					anychat.mVideoHelper.setCutImgScale(dwTargetUserId, 1/3f);
 					anychat.mVideoHelper.SetVideoUser(videoIndex,
 							dwTargetUserId);
 				}

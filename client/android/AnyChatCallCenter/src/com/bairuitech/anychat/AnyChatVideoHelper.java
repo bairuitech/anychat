@@ -11,7 +11,6 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
-import android.widget.Toast;
 
 //AnyChat 视频显示包装类，实现Java层面的视频播放
 public class AnyChatVideoHelper {
@@ -26,10 +25,10 @@ public class AnyChatVideoHelper {
 	 * 设置最大裁剪图片的比例。比例越大，当需要裁剪的时候丢失的数据越多，surfaceview占的屏幕也更满
 	 * @param scale 比例
 	 */
-	public void setCutImgScale(int userId,float scale)
+	public void setMaxCutScale(int userId,float scale)
 	{
 		VideoRenderer r = GetRenderByUserId(userId);
-		r.setCutImgScale(scale);
+		r.setMaxCutScale(scale);
 	}
 	
 	public int bindVideo(SurfaceHolder holder) {
@@ -98,7 +97,7 @@ class VideoRenderer implements Callback {
 	// private float dstLeftScale = 0;
 	private float dstRightScale = 1;
 	
-	private float max_cut_imgscale=1f/3;//最大能裁剪视频的比例
+	private float max_cut_imgscale = 1.0f/3;		//最大能裁剪视频的比例
 
 	private int mUserid = -1;
 
@@ -113,10 +112,10 @@ class VideoRenderer implements Callback {
 	 * 设置最大裁剪图片的比例
 	 * @param scale 比例
 	 */
-	public void setCutImgScale(float scale)
+	public void setMaxCutScale(float scale)
 	{
-		if(scale>1)
-			scale=1;
+		if(scale>1.0)
+			scale=1.0f;
 		this.max_cut_imgscale=scale;
 	}
 
@@ -212,43 +211,31 @@ class VideoRenderer implements Callback {
 			int temp_b_w = b_w;
 			int temp_b_h = b_h;
 			if (rotation != 0) {
-				
-				// 旋转偏移
-				matrix.postRotate(rotation, (float) bitmap.getWidth() / 2,
-						(float) bitmap.getHeight() / 2);
+				matrix.postRotate(rotation, (float)bitmap.getWidth()/2, (float)bitmap.getHeight()/2);
 				if (rotation == 90 || rotation == 270) {
 					temp_b_w = b_h;
 					temp_b_h = b_w;
-					matrix.postTranslate((float) 1 / 2 * (b_h - b_w), (float) 1
-							/ 2 * (b_w - b_h));
+					matrix.postTranslate((float)(1.0f/2)*(b_h - b_w), (float)(1.0f/2)*(b_w - b_h));
 				}
-				Log.i("ANYCHAT", "旋转");
 			}
 			if (c_h * temp_b_w > c_w * temp_b_h) {
 				float cutX=temp_b_w - (float) c_w*temp_b_h/c_h;
-				if(cutX>temp_b_w*max_cut_imgscale)
-				{
+				if(cutX>temp_b_w*max_cut_imgscale) {
 					cutX=temp_b_w*max_cut_imgscale;
 					transY = (c_h - (float) temp_b_h * c_w / (temp_b_w-cutX)) / 2;
-					
-					
 				}
 				transX=-cutX*c_w/(2*(temp_b_w-cutX));
-				Log.i("ANYCHAT", "transX:"+transX);
 				fScalex=(float)c_w/(temp_b_w-cutX);
 				fScaley=fScalex;
-				Log.i("ANYCHAT", "WWWWW");
 			} else {
-				float cutY=temp_b_h - (float) c_h*temp_b_w/c_w;
-				if(cutY>temp_b_h*max_cut_imgscale)
-				{
+				float cutY = temp_b_h - (float) c_h*temp_b_w/c_w;
+				if(cutY>temp_b_h*max_cut_imgscale) {
 					cutY=(float)temp_b_h*max_cut_imgscale;
 					transX = (c_w - (float) temp_b_w * c_h /( temp_b_h-cutY)) / 2;;
 				}
 				transY=-cutY*c_h/(2*(temp_b_h-cutY));
 				fScaley = (float) c_h / (temp_b_h-cutY);
 				fScalex = fScaley;
-				Log.i("ANYCHAT", "HHHHH");
 			}
 			if(mirror != 0) {			
     			matrix.postScale(-fScalex, fScaley);
@@ -256,11 +243,12 @@ class VideoRenderer implements Callback {
     		} else {
     			matrix.postScale(fScalex, fScaley);
     		}
-			Log.i("ANYCHAT", "mirror:"+mirror);
 			matrix.postTranslate(transX, transY);
 			canvas.drawColor(Color.BLACK);
 			canvas.drawBitmap(bitmap, matrix, paint);
 			surfaceHolder.unlockCanvasAndPost(canvas);
+		} else {
+			Log.i("ANYCHAT", "Invalid canvas!");
 		}
 	}
 
