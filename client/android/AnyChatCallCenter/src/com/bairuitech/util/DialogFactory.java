@@ -88,7 +88,6 @@ public class DialogFactory {
 		switch (dwDialogId) {
 		case DIALOGID_CALLING:
 			initCallingDialog(mDialog, object);
-
 			break;
 		case DIALOGID_CALLRESUME:
 			initCallResume(mDialog, object);
@@ -177,13 +176,11 @@ public class DialogFactory {
 			}
 		});
 
-		dialog.setContentView(view, new LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT));
+		dialog.setContentView(view, new LayoutParams(LayoutParams.WRAP_CONTENT,	LayoutParams.WRAP_CONTENT));
 	}
 
 	/***
 	 * 初始化呼叫对话框
-	 * 
 	 * @param dialog
 	 * @param object
 	 */
@@ -196,8 +193,7 @@ public class DialogFactory {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				BussinessCenter
-						.VideoCallContrl(
+				BussinessCenter.VideoCallControl(
 								AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY,
 								userId,
 								AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT,
@@ -221,21 +217,15 @@ public class DialogFactory {
 		View view = mLayoutInlater.inflate(R.layout.dialog_call_resume, null);
 		Button btnCall = (Button) view.findViewById(R.id.btn_call);
 		btnCall.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generate)d method stub
-
-				BussinessCenter.VideoCallContrl(
-						AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST, userId, 0,
-						0, 0, "");
+				BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST, userId, 0,	0, 0, "");
 				mDialog.dismiss();
-
 			}
 		});
 		String strTitle = "";
-		UserItem userItem = BussinessCenter.getBussinessCenter()
-				.getUserItemByUserId(userId);
+		UserItem userItem = BussinessCenter.getBussinessCenter().getUserItemByUserId(userId);
 		if (userItem != null)
 			strTitle = "准备向" + userItem.getUserName() + "发起视频会话";
 		initDialogTitle(view, strTitle);
@@ -260,8 +250,7 @@ public class DialogFactory {
 				Intent intent;
 				switch (dwTag) {
 				case DIALOG_AGAINLOGIN:
-					mContext.stopService(new Intent(
-							BaseConst.ACTION_BACKSERVICE));
+					mContext.stopService(new Intent(BaseConst.ACTION_BACK_SERVICE));
 					intent = new Intent();
 					intent.putExtra("INTENT", BaseConst.APP_EXIT);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -269,8 +258,7 @@ public class DialogFactory {
 					mContext.startActivity(intent);
 					break;
 				case DIALOG_SERCLOSE:
-					mContext.stopService(new Intent(
-							BaseConst.ACTION_BACKSERVICE));
+					mContext.stopService(new Intent(BaseConst.ACTION_BACK_SERVICE));
 					intent = new Intent();
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					intent.setClass(mContext, LoginActivity.class);
@@ -278,11 +266,11 @@ public class DialogFactory {
 					break;
 				case DIALOG_NETCLOSE:
 					Intent intentSetting = new Intent();
-					intentSetting
-							.setAction(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+					intentSetting.setAction(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
 					mContext.startActivity(intentSetting);
 					break;
-
+				default:
+					break;
 				}
 				dialog.dismiss();
 			}
@@ -297,6 +285,8 @@ public class DialogFactory {
 			break;
 		case DIALOG_NETCLOSE:
 			strTitle = mContext.getString(R.string.str_networkcheck);
+			break;
+		default:
 			break;
 		}
 		initDialogTitle(view, strTitle);
@@ -314,49 +304,42 @@ public class DialogFactory {
 		View view = mLayoutInlater.inflate(R.layout.dialog_requesting, null);
 		ImageView buttonAccept = (ImageView) view.findViewById(R.id.btn_accept);
 		ImageView buttonRefuse = (ImageView) view.findViewById(R.id.btn_refuse);
+		
 		// buttonAccept.setText(mContext.getString(R.string.str_resume));
 		buttonAccept.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generate)d method stub
-				BussinessCenter.VideoCallContrl(
-						AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
+				BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
 						AnyChatDefine.BRAC_ERRORCODE_SUCCESS, 0, 0, "");
 				dialog.dismiss();
-
 			}
-
 		});
+		
 		buttonRefuse.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				BussinessCenter.VideoCallContrl(
+				BussinessCenter.VideoCallControl(
 						AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
 						AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE, 0, 0,
 						"");
 				dialog.dismiss();
 				BussinessCenter.sessionItem = null;
-				BussinessCenter.getBussinessCenter().stopSessionMis();
-
+				BussinessCenter.getBussinessCenter().stopSessionMusic();
 			}
 		});
-		UserItem userItem = BussinessCenter.getBussinessCenter()
-				.getUserItemByUserId(userId);
+		UserItem userItem = BussinessCenter.getBussinessCenter().getUserItemByUserId(userId);
 		String strTitle = "";
 		if (userItem != null)
-			strTitle = userItem.getUserName()
-					+ mContext.getString(R.string.sessioning_reqite);
-
+			strTitle = userItem.getUserName() + mContext.getString(R.string.sessioning_reqite);
 		initDialogTitle(view, strTitle, userId);
 		dialog.setContentView(view);
 	}
 
 	/***
 	 * 初始化退出程序对话框
-	 * 
 	 * @param dialog
 	 */
 	public void initQuitResumeDialg(final Dialog dialog) {
@@ -372,7 +355,7 @@ public class DialogFactory {
 			public void onClick(View v) {
 				// TODO Auto-generate)d method stub
 				Intent intent = new Intent();
-				intent.setAction(BaseConst.ACTION_BACKSERVICE);
+				intent.setAction(BaseConst.ACTION_BACK_SERVICE);
 				mContext.stopService(intent);
 				intent = new Intent();
 				intent.putExtra("INTENT", BaseConst.APP_EXIT);
@@ -384,14 +367,12 @@ public class DialogFactory {
 			}
 		});
 		buttonCancel.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				dialog.dismiss();
 			}
 		});
-
 		String strTitle = mContext.getString(R.string.str_exitresume);
 		initDialogTitle(view, strTitle);
 		dialog.setContentView(view);
@@ -415,12 +396,10 @@ public class DialogFactory {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generate)d method stub
-				BussinessCenter.VideoCallContrl(
-						AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userId, 0,
+				BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userId, 0,
 						0, BussinessCenter.selfUserId, "");
 				if (BussinessCenter.mContext != null)
 					BussinessCenter.mContext.finish();
-			
 			}
 		});
 		buttonCancel.setOnClickListener(new OnClickListener() {
@@ -469,17 +448,17 @@ public class DialogFactory {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (mCurrentDialogId == DIALOGID_CALLING) {
-					BussinessCenter.VideoCallContrl(
+					BussinessCenter.VideoCallControl(
 							AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
 							AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT, 0,
 							0, "");
 				} else if (mCurrentDialogId == DIALOGID_REQUEST) {
-					BussinessCenter.VideoCallContrl(
+					BussinessCenter.VideoCallControl(
 							AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
 							AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE, 0,
 							0, "");
 					BussinessCenter.sessionItem = null;
-					BussinessCenter.getBussinessCenter().stopSessionMis();
+					BussinessCenter.getBussinessCenter().stopSessionMusic();
 				}
 				mDialog.dismiss();
 			}

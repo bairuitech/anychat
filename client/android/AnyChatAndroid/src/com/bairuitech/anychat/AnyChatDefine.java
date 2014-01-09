@@ -170,6 +170,14 @@ public class AnyChatDefine {
 	public static final int BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	= 0x40;	///< 禁止目标（被呼叫端）音频
 	public static final int BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	= 0x80;	///< 禁止目标（被呼叫端）视频
 	
+	// 常见出错代码定义
+    public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< 没有错误
+    public static final int BRAC_ERRORCODE_SESSION_QUIT		= 100101;///< 源用户主动放弃会话
+    public static final int BRAC_ERRORCODE_SESSION_OFFLINE	= 100102;///< 目标用户不在线
+    public static final int BRAC_ERRORCODE_SESSION_BUSY		= 100103;///< 目标用户忙
+    public static final int BRAC_ERRORCODE_SESSION_REFUSE	= 100104;///< 目标用户拒绝会话
+    public static final int BRAC_ERRORCODE_SESSION_TIMEOUT	= 100105;///< 会话请求超时
+    public static final int BRAC_ERRORCODE_SESSION_DISCONNECT=100106;///< 网络断线
 	
 	
 	

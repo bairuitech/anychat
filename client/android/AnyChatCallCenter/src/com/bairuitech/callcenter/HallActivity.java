@@ -232,7 +232,7 @@ public class HallActivity extends Activity implements OnItemClickListener,
 
 	protected void startBackServce() {
 		Intent intent = new Intent();
-		intent.setAction(BaseConst.ACTION_BACKSERVICE);
+		intent.setAction(BaseConst.ACTION_BACK_SERVICE);
 		this.startService(intent);
 	}
 

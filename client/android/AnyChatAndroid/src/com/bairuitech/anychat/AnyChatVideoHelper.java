@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 
@@ -55,6 +56,16 @@ public class AnyChatVideoHelper {
 		return 0;
 	}
 	
+	/***
+	 * 设置最大裁剪图片的比例。比例越大，当需要裁剪的时候丢失的数据越多，surfaceview占的屏幕也更满
+	 * @param scale 比例
+	 */
+	public void setMaxCutScale(int userId,float scale)
+	{
+		VideoRenderer r = GetRenderByUserId(userId);
+		r.setMaxCutScale(scale);
+	}
+	
 	public void ShowVideo(int userid, byte [] mPixel, int rotation, int mirror) {
 		VideoRenderer r = GetRenderByUserId(userid);
 		if(r == null)
@@ -90,6 +101,8 @@ class VideoRenderer implements Callback {
     // private float dstLeftScale = 0;
     private float dstRightScale = 1;
     
+    private float max_cut_imgscale = 1.0f/3;		//最大能裁剪视频的比例
+    
     private int mUserid = -1;
 	
 	
@@ -105,6 +118,12 @@ class VideoRenderer implements Callback {
     public int GetUserId() 				{		return mUserid;			}
     // 设置用户ID
     public void SetUserId(int userid)	{		mUserid = userid;   	}
+    // 设置最大裁剪图片的比例
+	public void setMaxCutScale(float scale) {
+		if(scale>1.0)
+			scale=1.0f;
+		this.max_cut_imgscale=scale;
+	}
     
     // surfaceChanged and surfaceCreated share this function
     private void changeDestRect(int dstWidth, int dstHeight) {
@@ -167,33 +186,65 @@ class VideoRenderer implements Callback {
     public void DrawByteBuffer(byte [] mPixel, int rotation, int mirror) {
         if(bitmap == null)
             return;
-        ByteBuffer byteBuffer = ByteBuffer.wrap( mPixel );		// 将 byte 数组包装到缓冲区中
-        byteBuffer.rewind();
-        bitmap.copyPixelsFromBuffer(byteBuffer);
-        Canvas canvas = surfaceHolder.lockCanvas();
-        if(canvas != null) {
-        	if(rotation != 0 || mirror != 0)
-        	{
-        		Paint paint = new Paint();
-        		paint.setAntiAlias(true);		// 抗锯齿
-        		Matrix matrix = canvas.getMatrix();
-        		matrix.setRotate(rotation, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
-        		float fScalex = (float)canvas.getWidth()/(float)bitmap.getWidth();
-        		float fScaley = (float)canvas.getHeight()/(float)bitmap.getHeight();
-        		if(mirror != 0) {			
-        			matrix.postScale(-fScalex, fScaley);
-        			matrix.postTranslate((float)canvas.getWidth(), 0);
-        		} else {
-        			matrix.postScale(fScalex, fScaley);
-        		}
-        		canvas.drawColor(Color.BLACK);
-        		canvas.drawBitmap(bitmap, matrix, paint);
-        	}
-        	else {   
-        		canvas.drawBitmap(bitmap, null, dstRect, null);
-        	}
-            surfaceHolder.unlockCanvasAndPost(canvas);
-        }
+        ByteBuffer byteBuffer = ByteBuffer.wrap(mPixel); // 将 byte 数组包装到缓冲区中
+		byteBuffer.rewind();
+		bitmap.copyPixelsFromBuffer(byteBuffer);
+		Canvas canvas = surfaceHolder.lockCanvas();
+		if (canvas != null) {
+			
+			Paint paint = new Paint();
+			paint.setAntiAlias(true); // 抗锯齿
+			Matrix matrix = new Matrix();
+			float fScalex = 0;
+			float fScaley = 0;
+			float transX = 0;
+			float transY = 0;
+			int c_w = canvas.getWidth();
+			int c_h = canvas.getHeight();
+			int b_w = bitmap.getWidth();
+			int b_h = bitmap.getHeight();
+			int temp_b_w = b_w;
+			int temp_b_h = b_h;
+			if (rotation != 0) {
+				matrix.postRotate(rotation, (float)bitmap.getWidth()/2, (float)bitmap.getHeight()/2);
+				if (rotation == 90 || rotation == 270) {
+					temp_b_w = b_h;
+					temp_b_h = b_w;
+					matrix.postTranslate((float)(1.0f/2)*(b_h - b_w), (float)(1.0f/2)*(b_w - b_h));
+				}
+			}
+			if (c_h * temp_b_w > c_w * temp_b_h) {
+				float cutX=temp_b_w - (float) c_w*temp_b_h/c_h;
+				if(cutX>temp_b_w*max_cut_imgscale) {
+					cutX=temp_b_w*max_cut_imgscale;
+					transY = (c_h - (float) temp_b_h * c_w / (temp_b_w-cutX)) / 2;
+				}
+				transX=-cutX*c_w/(2*(temp_b_w-cutX));
+				fScalex=(float)c_w/(temp_b_w-cutX);
+				fScaley=fScalex;
+			} else {
+				float cutY = temp_b_h - (float) c_h*temp_b_w/c_w;
+				if(cutY>temp_b_h*max_cut_imgscale) {
+					cutY=(float)temp_b_h*max_cut_imgscale;
+					transX = (c_w - (float) temp_b_w * c_h /( temp_b_h-cutY)) / 2;
+				}
+				transY=-cutY*c_h/(2*(temp_b_h-cutY));
+				fScaley = (float) c_h / (temp_b_h-cutY);
+				fScalex = fScaley;
+			}
+			if(mirror != 0) {			
+    			matrix.postScale(-fScalex, fScaley);
+    			matrix.postTranslate(fScalex*temp_b_w, 0);
+    		} else {
+    			matrix.postScale(fScalex, fScaley);
+    		}
+			matrix.postTranslate(transX, transY);
+			canvas.drawColor(Color.BLACK);
+			canvas.drawBitmap(bitmap, matrix, paint);
+			surfaceHolder.unlockCanvasAndPost(canvas);
+		} else {
+			Log.i("ANYCHAT", "Invalid canvas!");
+		}
     }
     
 }

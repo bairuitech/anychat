@@ -51,9 +51,7 @@ public class BussinessCenter{
 
 	/***
 	 * 播放接收到呼叫音乐提示
-	 * 
-	 * @param context
-	 *            上下文
+	 * @param context	上下文    
 	 */
 	private void playCallReceivedMusic(Context context) {
 		mMediaPlaer = MediaPlayer.create(context, R.raw.call);
@@ -66,13 +64,12 @@ public class BussinessCenter{
 			}
 		});
 		mMediaPlaer.start();
-
 	}
 
 	/***
 	 * 停止播放
 	 */
-	public void stopSessionMis() {
+	public void stopSessionMusic() {
 		if (mMediaPlaer == null)
 			return;
 		try {
@@ -83,15 +80,11 @@ public class BussinessCenter{
 		} catch (Exception e) {
 			Log.i("media-stop", "er");
 		}
-
 	}
 
 	/***
-	 * 
-	 * @param userId
-	 *            用户id
-	 * @param status
-	 *            用户在线状态，1是上线，0是下线
+	 * @param userId 用户id
+	 * @param status 用户在线状态，1是上线，0是下线  
 	 */
 	public void onUserOnlineStatusNotify(int userId, int status) {
 		// TODO Auto-generated method stub
@@ -128,24 +121,15 @@ public class BussinessCenter{
 
 	/***
 	 * 发送呼叫事件
-	 * 
-	 * @param dwEventType
-	 *            视频呼叫事件类型
-	 * @param dwUserId
-	 *            目标userid
-	 * @param dwErrorCode
-	 *            原因
-	 * @param dwFlags
-	 *            功能标志
-	 * @param dwParam
-	 *            自定义参数，传给对方
-	 * @param szUserStr
-	 *            自定义参数，传给对方
+	 * @param dwEventType	视频呼叫事件类型       
+	 * @param dwUserId		目标userid       
+	 * @param dwErrorCode	出错代码       
+	 * @param dwFlags		功能标志        
+	 * @param dwParam		自定义参数，传给对方        
+	 * @param szUserStr		自定义参数，传给对方         
 	 */
-	public static void VideoCallContrl(int dwEventType, int dwUserId,
-			int dwErrorCode, int dwFlags, int dwParam, String szUserStr) {
-		anychat.VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags,
-				dwParam, szUserStr);
+	public static void VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String szUserStr) {
+		anychat.VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr);
 	}
 
 	public void onVideoCallRequest(int dwUserId, int dwFlags,
@@ -154,21 +138,15 @@ public class BussinessCenter{
 		playCallReceivedMusic(mContext);
 		// 如果程序在后台，通知有呼叫请求
 		if (bBack) {
-
 			UserItem item = getUserItemByUserId(dwUserId);
 			Bundle bundle = new Bundle();
 			if (item != null) {
-				bundle.putString(
-						"USERNAME",
-						item.getUserName()
-								+ mContext
-										.getString(R.string.sessioning_reqite));
+				bundle.putString("USERNAME", item.getUserName()	+ mContext.getString(R.string.sessioning_reqite));
 			} else {
 				bundle.putString("USERNAME", "some one call you");
 			}
 			bundle.putInt("USERID", dwUserId);
-			BaseMethod.sendBroadCast(mContext,
-					BaseConst.ACTION_BACK_EQUESTSESSION, bundle);
+			BaseMethod.sendBroadCast(mContext, BaseConst.ACTION_BACK_EQUESTSESSION, bundle);
 		}
 	}
 
@@ -181,15 +159,13 @@ public class BussinessCenter{
 			strMessage = mContext.getString(R.string.str_returncode_bussiness);
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE:
-			strMessage = mContext
-					.getString(R.string.str_returncode_requestrefuse);
+			strMessage = mContext.getString(R.string.str_returncode_requestrefuse);
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_OFFLINE:
 			strMessage = mContext.getString(R.string.str_returncode_offline);
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT:
-			strMessage = mContext
-					.getString(R.string.str_returncode_requestcancel);
+			strMessage = mContext.getString(R.string.str_returncode_requestcancel);
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_TIMEOUT:
 			strMessage = mContext.getString(R.string.str_returncode_timeout);
@@ -211,15 +187,14 @@ public class BussinessCenter{
 				BaseMethod.sendBroadCast(mContext,
 						BaseConst.ACTION_BACK_CANCELSESSION, null);
 			}
-			stopSessionMis();
+			stopSessionMusic();
 		}
-
 	}
 
 	public void onVideoCallStart(int dwUserId, int dwFlags, int dwParam,
 			String szUserStr) {
 		// TODO Auto-generated method stub
-		stopSessionMis();
+		stopSessionMusic();
 		sessionItem = new SessionItem(dwFlags, selfUserId, dwUserId);
 		sessionItem.setRoomId(dwParam);
 		Intent intent = new Intent();
@@ -253,7 +228,6 @@ public class BussinessCenter{
 	}
 
 	public UserItem getUserItemByIndex(int index) {
-
 		try {
 			return mOnlineFriendItems.get(index);
 		} catch (Exception e) {
@@ -299,9 +273,7 @@ public class BussinessCenter{
 				userItem.setIp(strIp);
 			mOnlineFriendItems.add(userItem);
 			mOnlineFriendIds.add(friendUserId);
-
 		}
-
 	}
 
 }

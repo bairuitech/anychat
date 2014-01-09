@@ -2,6 +2,7 @@ package com.bairuitech.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
@@ -40,56 +41,45 @@ public class BaseMethod {
 
 	public static String getVersion(Context context) {
 		try {
-			return "Version:"
-					+ context.getPackageManager().getPackageInfo(
-							"com.bairuitech.icloundsoft", 0).versionName;
-
+			return "Version:" + context.getPackageManager().getPackageInfo("com.bairuitech.callcenter", 0).versionName;
 		} catch (NameNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			return "";
-
 		}
 	}
 
-	/***
+	/**
 	 * 发送广播
-	 * 
-	 * @param context
-	 *            上下文
-	 * @param strAction
-	 *            动作
-	 * @param bundle
-	 *            数据
+	 * @param context	上下文
+	 * @param strAction	动作
+	 * @param bundle	数据 
 	 */
-	public static void sendBroadCast(Context context, String strAction,
-			Bundle bundle) {
+	public static void sendBroadCast(Context context, String strAction,	Bundle bundle) {
 		Intent intent = new Intent();
 		if (bundle != null)
 			intent.putExtras(bundle);
 		intent.setAction(strAction);
 		context.sendBroadcast(intent);
-
 	}
 
 	public static String getStrTime(final Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		SimpleDateFormat tm = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
 		String strTime = "";
 		try {
-			strTime = sdf.format(date);
+			strTime = tm.format(date);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return strTime;
-
 	}
 
 	public static Date getDateTime(final String strTime) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		SimpleDateFormat tm = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
 		Date date = null;
 		try {
-			date = sdf.parse(strTime);
+			date = tm.parse(strTime);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
