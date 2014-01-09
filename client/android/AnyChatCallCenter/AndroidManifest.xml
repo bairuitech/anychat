@@ -33,17 +33,14 @@
         </activity>
         <activity
             android:name="HallActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:launchMode="singleTask" >
+            android:configChanges="orientation|keyboardHidden|navigation" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".VideoActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:launchMode="singleTask"
-            >
+            android:configChanges="orientation|keyboardHidden|navigation" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

@@ -264,6 +264,7 @@ public class DialogFactory {
 					mContext.stopService(new Intent(
 							BaseConst.ACTION_BACKSERVICE));
 					intent = new Intent();
+					intent.putExtra("INTENT", BaseConst.APP_EXIT);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					intent.setClass(mContext, LoginActivity.class);
 					mContext.startActivity(intent);
@@ -294,7 +295,6 @@ public class DialogFactory {
 			strTitle = mContext.getString(R.string.str_againlogin);
 			break;
 		case DIALOG_SERCLOSE:
-			strTitle = mContext.getString(R.string.str_servercolse);
 			break;
 		case DIALOG_NETCLOSE:
 			strTitle = mContext.getString(R.string.str_networkcheck);
@@ -376,6 +376,7 @@ public class DialogFactory {
 				intent.setAction(BaseConst.ACTION_BACKSERVICE);
 				mContext.stopService(intent);
 				intent = new Intent();
+				intent.putExtra("INTENT", BaseConst.APP_EXIT);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent.setClass(mContext, LoginActivity.class);
 				mContext.startActivity(intent);
@@ -418,6 +419,9 @@ public class DialogFactory {
 				BussinessCenter.VideoCallContrl(
 						AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userId, 0,
 						0, BussinessCenter.selfUserId, "");
+				if (BussinessCenter.mContext != null)
+					BussinessCenter.mContext.finish();
+			
 			}
 		});
 		buttonCancel.setOnClickListener(new OnClickListener() {

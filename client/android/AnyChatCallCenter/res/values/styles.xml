@@ -35,18 +35,6 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="menu_tab">
-        <item name="android:textSize">10sp</item>
-        <item name="android:textColor">@color/t_bg1</item>
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:background">@drawable/meeting_tab_item</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:button">@null</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:layout_weight">1.0</item>
-    </style>
     
     <style name="common_view">
         <item name="android:layout_width">wrap_content</item>

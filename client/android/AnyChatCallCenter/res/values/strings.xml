@@ -44,8 +44,8 @@
     <string name="str_targetwrong">不能呼叫自己！</string>
     <string name="str_endsession">是否想要结束当前通话</string>
     <string name="end_session">结束通话</string>
-    <string name="str_servercolse">当前业务服务器关闭，请稍后登陆</string>
     <string name="str_networkcheck">当前网络连接有异常，请检查网络</string>
+    <string name="str_serverlink_close">与服务器断开连接，错误代码是</string>
     <string name="str_exitresume">是否想要退出整个应用程序</string>
     <string name="str_msgchatlist">文字聊天消息列表</string>
     <string name="str_notifitcation">iCloudSoft正在运行中</string>

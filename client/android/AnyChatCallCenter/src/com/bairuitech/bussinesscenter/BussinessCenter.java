@@ -21,7 +21,7 @@ import com.bairuitech.util.ScreenInfo;
 public class BussinessCenter implements VideoCallContrlHandler {
 
 	public static AnyChatCoreSDK anychat;
-	private static BussinessCenter mBussinessCenter = new BussinessCenter();;
+	private static BussinessCenter mBussinessCenter;
 	private MediaPlayer mMediaPlaer;
 	public static SessionItem sessionItem;
 	public static ScreenInfo mScreenInfo;
@@ -38,6 +38,8 @@ public class BussinessCenter implements VideoCallContrlHandler {
 	}
 
 	public static BussinessCenter getBussinessCenter() {
+		if (mBussinessCenter == null)
+			mBussinessCenter = new BussinessCenter();
 		return mBussinessCenter;
 	}
 
@@ -95,6 +97,8 @@ public class BussinessCenter implements VideoCallContrlHandler {
 		// TODO Auto-generated method stub
 		String strMsg = "";
 		UserItem userItem = getUserItemByUserId(userId);
+		if (userItem == null)
+			return;
 		if (status == UserItem.USERSTATUS_OFFLINE) {
 			if (mOnlineFriendIds.indexOf(userId) >= 0) {
 				mOnlineFriendItems.remove(userItem);
@@ -219,7 +223,7 @@ public class BussinessCenter implements VideoCallContrlHandler {
 			String szUserStr) {
 		// TODO Auto-generated method stub
 		stopSessionMis();
-		sessionItem=new SessionItem(dwFlags, selfUserId, dwUserId);
+		sessionItem = new SessionItem(dwFlags, selfUserId, dwUserId);
 		sessionItem.setRoomId(dwParam);
 		Intent intent = new Intent();
 		intent.setClass(mContext, VideoActivity.class);
@@ -303,7 +307,5 @@ public class BussinessCenter implements VideoCallContrlHandler {
 		}
 
 	}
-
-
 
 }

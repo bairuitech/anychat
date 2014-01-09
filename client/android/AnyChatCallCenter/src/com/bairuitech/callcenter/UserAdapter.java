@@ -70,7 +70,7 @@ public class UserAdapter extends BaseAdapter {
 			if(userId==BussinessCenter.selfUserId)
 				convertView.setBackgroundResource(R.drawable.user_self_bg);
 			else
-				convertView.setBackgroundResource(R.drawable.com_click_index);
+				convertView.setBackgroundResource(R.drawable.com_btn_click);
 			viewHolder.textId.setText("userId: "+String.valueOf(userId));
 			viewHolder.textName.setText(userItem.getUserName());
 			viewHolder.textAddress.setText(userItem.getIp());
