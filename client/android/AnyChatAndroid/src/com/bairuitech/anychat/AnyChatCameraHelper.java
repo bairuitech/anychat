@@ -290,30 +290,35 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
         return orientation;
     }
 	
-	private void setCameraDisplayOrientation () {
+	public void setCameraDisplayOrientation () {
 		if(mContext == null)
 			return;
-		Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
-		Camera.getCameraInfo(iCurrentCameraId, cameraInfo);
+		try {
+			Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+			Camera.getCameraInfo(iCurrentCameraId, cameraInfo);
     
-		WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-		int rotation = wm.getDefaultDisplay ().getRotation ();
-		int degrees = 0 ;
-		switch ( rotation ) {
-			case Surface.ROTATION_0 : degrees = 0 ; break ;
-			case Surface.ROTATION_90 : degrees = 90 ; break ;
-			case Surface.ROTATION_180 : degrees = 180 ; break ;
-			case Surface.ROTATION_270 : degrees = 270 ; break ;
-		}
+			WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+			int rotation = wm.getDefaultDisplay ().getRotation ();
+			int degrees = 0 ;
+			switch ( rotation ) {
+				case Surface.ROTATION_0 : degrees = 0 ; break ;
+				case Surface.ROTATION_90 : degrees = 90 ; break ;
+				case Surface.ROTATION_180 : degrees = 180 ; break ;
+				case Surface.ROTATION_270 : degrees = 270 ; break ;
+			}
 
-		int result;
-		if ( cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT ) {
-			result = ( cameraInfo.orientation + degrees ) % 360 ;
-			result = ( 360 - result ) % 360 ;   // compensate the mirror
-		} else {   // back-facing
-			result = ( cameraInfo.orientation - degrees + 360 ) % 360 ;
+			int result;
+			if ( cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT ) {
+				result = ( cameraInfo.orientation + degrees ) % 360 ;
+				result = ( 360 - result ) % 360 ;   // compensate the mirror
+			} else {   // back-facing
+				result = ( cameraInfo.orientation - degrees + 360 ) % 360 ;
+			}
+		
+			mCamera.setDisplayOrientation ( result );
+		} catch (Exception ex) {
+			
 		}
-		mCamera.setDisplayOrientation ( result );
 	 }
 	
 	
