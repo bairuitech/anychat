@@ -179,27 +179,27 @@ public class BussinessCenter implements VideoCallContrlHandler {
 		// TODO Auto-generated method stub
 		String strMessage = null;
 		switch (dwErrorCode) {
-		case VideoCallContrlHandler.ERRORCODE_SESSION_BUSY:
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_BUSY:
 			strMessage = mContext.getString(R.string.str_returncode_bussiness);
 			break;
-		case VideoCallContrlHandler.ERRORCODE_SESSION_REFUSE:
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE:
 			strMessage = mContext
 					.getString(R.string.str_returncode_requestrefuse);
 			break;
-		case VideoCallContrlHandler.ERRORCODE_SESSION_OFFLINE:
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_OFFLINE:
 			strMessage = mContext.getString(R.string.str_returncode_offline);
 			break;
-		case VideoCallContrlHandler.ERRORCODE_SESSION_QUIT:
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT:
 			strMessage = mContext
 					.getString(R.string.str_returncode_requestcancel);
 			break;
-		case VideoCallContrlHandler.ERRORCODE_SESSION_TIMEOUT:
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_TIMEOUT:
 			strMessage = mContext.getString(R.string.str_returncode_timeout);
 			break;
-		case VideoCallContrlHandler.ERRORCODE_SESSION_DISCONNECT:
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_DISCONNECT:
 			strMessage = mContext.getString(R.string.str_returncode_disconnect);
 			break;
-		case VideoCallContrlHandler.ERRORCODE_SUCCESS:
+		case AnyChatDefine.BRAC_ERRORCODE_SUCCESS:
 			break;
 		default:
 			break;

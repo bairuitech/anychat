@@ -201,7 +201,7 @@ public class DialogFactory {
 						.VideoCallContrl(
 								AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY,
 								userId,
-								VideoCallContrlHandler.ERRORCODE_SESSION_QUIT,
+								AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT,
 								0, 0, "");
 				dialog.dismiss();
 			}
@@ -323,7 +323,7 @@ public class DialogFactory {
 				// TODO Auto-generate)d method stub
 				BussinessCenter.VideoCallContrl(
 						AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
-						VideoCallContrlHandler.ERRORCODE_SUCCESS, 0, 0, "");
+						AnyChatDefine.BRAC_ERRORCODE_SUCCESS, 0, 0, "");
 				dialog.dismiss();
 
 			}
@@ -336,7 +336,7 @@ public class DialogFactory {
 				// TODO Auto-generated method stub
 				BussinessCenter.VideoCallContrl(
 						AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
-						VideoCallContrlHandler.ERRORCODE_SESSION_REFUSE, 0, 0,
+						AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE, 0, 0,
 						"");
 				dialog.dismiss();
 				BussinessCenter.sessionItem = null;
@@ -472,12 +472,12 @@ public class DialogFactory {
 				if (mCurrentDialogId == DIALOGID_CALLING) {
 					BussinessCenter.VideoCallContrl(
 							AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
-							VideoCallContrlHandler.ERRORCODE_SESSION_QUIT, 0,
+							AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT, 0,
 							0, "");
 				} else if (mCurrentDialogId == DIALOGID_REQUEST) {
 					BussinessCenter.VideoCallContrl(
 							AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
-							VideoCallContrlHandler.ERRORCODE_SESSION_REFUSE, 0,
+							AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE, 0,
 							0, "");
 					BussinessCenter.sessionItem = null;
 					BussinessCenter.getBussinessCenter().stopSessionMis();

@@ -41,7 +41,6 @@ import com.bairuitech.util.BaseMethod;
 import com.bairuitech.util.ConfigEntity;
 import com.bairuitech.util.ConfigHelper;
 import com.bairuitech.util.DialogFactory;
-import com.bairuitech.util.TimeShowHelper;
 
 public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		OnClickListener, OnTouchListener, AnyChatVideoCallEvent,
@@ -80,6 +79,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	int videoAreaHeight = 0;
 	int dwTargetUserId;
 	int videoIndex = 0;
+	int videocallSeconds = 0;
 	boolean bNormal = true;
 
 	@Override
@@ -92,7 +92,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		initView();
 
 		anychat.EnterRoom(BussinessCenter.sessionItem.roomId, "");
-		TimeShowHelper.initTimer();
 		mHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
@@ -103,8 +102,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					updateVolume();
 					break;
 				case MSG_TIMEUPDATE:
-					TimeShowHelper.handleShowTime();
-					mTxtTime.setText(TimeShowHelper.getTimeShowString());
+					mTxtTime.setText(BaseMethod.getTimeShowString(videocallSeconds++));
 					break;
 				}
 

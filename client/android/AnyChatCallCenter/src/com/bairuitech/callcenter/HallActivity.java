@@ -292,7 +292,7 @@ public class HallActivity extends Activity implements OnItemClickListener,
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY:
 			BussinessCenter.getBussinessCenter().VideoCall_SessionReply(
 					dwUserId, dwErrorCode, dwFlags, dwParam, userStr);
-			if (dwErrorCode == VideoCallContrlHandler.ERRORCODE_SUCCESS) {
+			if (dwErrorCode == AnyChatDefine.BRAC_ERRORCODE_SUCCESS) {
 				dialog = DialogFactory.getDialog(
 						DialogFactory.DIALOGID_CALLING, dwUserId,
 						HallActivity.this);
