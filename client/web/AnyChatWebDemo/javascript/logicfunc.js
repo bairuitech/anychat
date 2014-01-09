@@ -24,8 +24,8 @@ var NOTIFY_TYPE_SYSTEM = 1;
 function LogicInit() {
     setTimeout(function () {
         //检查是否安装了插件	
-        var NEED_ANYCHAT_APILEVEL = "0"; 					// 定义业务层需要的AnyChat API Level
-        var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	//初始化插件
+        var NEED_ANYCHAT_APILEVEL = "0"; 						// 定义业务层需要的AnyChat API Level
+        var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	// 初始化插件
         AddLog("BRAC_InitSDK(" + NEED_ANYCHAT_APILEVEL + ")=" + errorcode, LOG_TYPE_API);
         if (errorcode == GV_ERR_SUCCESS) {
             ShowLoginDiv(true);
@@ -40,7 +40,13 @@ function LogicInit() {
             else if (errorcode == GV_ERR_PLUGINOLDVERSION)
                 GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";
         }
+		
+		InitInterfaceUI();
     }, 500);
+}
+
+// 初始化界面元素
+function InitInterfaceUI() {
     //设置按钮
     GetID("setting").onclick = function () {
         if (GetID("setting_div").style.display == "block")
@@ -50,6 +56,8 @@ function LogicInit() {
     }
     //登录按钮
     GetID("loginbtn").onclick = function () {
+		if(GetID("password").value == "密码可为空")
+			GetID("password").value = "";
         if (GetID("username").value != "") {
             DisplayLoadingDiv(true);
             var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //连接服务器
@@ -78,7 +86,7 @@ function LogicInit() {
         AddLog("BRAC_LeaveRoom(" + -1 + ")=" + errorcode, LOG_TYPE_API);
         clearInterval(mRefreshVolumeTimer); 	// 清除实时音量显示计时器
         ShowRoomDiv(false); 					// 隐藏房间界面
-        ShowHallDiv(true); 					// 显示大厅界面
+        ShowHallDiv(true); 						// 显示大厅界面
         mTargetUserId = -1;
     }
     //进入自定义房间
@@ -142,6 +150,19 @@ function LogicInit() {
             InitAdvanced();
         }
     }
+}
+
+function PasswordFocus(obj,color){
+	// 判断文本框中的内容是否是默认内容
+	if(obj.value=="密码可为空")
+		obj.value="";
+	obj.type="password";
+	// 设置文本框获取焦点时候背景颜色变换
+	obj.style.backgroundColor=color;
+}
+// 当鼠标离开时候改变文本框背景颜色
+function myblur(obj,color){
+	obj.style.background=color;
 }
 
 //计算高度并设置界面位置

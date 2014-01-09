@@ -124,6 +124,13 @@ function OnAnyChatRoomOnlineUser(dwUserCount, dwRoomId) {
 	for (var i = 0; i < useridlist.length; i++) {
 		RoomUserListControl(useridlist[i], true);
     }
+	// 请求其中一个用户的音视频
+	for (var k=0; k<useridlist.length; k++) {
+		if(useridlist[k] == mSelfUserId)
+			continue;
+		RequestOtherUserVideo(useridlist[k]);
+		break;
+	}
 }
 
 // 用户进入（离开）房间，dwUserId表示用户ID号，bEnterRoom表示该用户是进入（1）或离开（0）房间
@@ -131,13 +138,26 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 	AddLog("OnAnyChatUserAtRoom(userid=" + dwUserId + ", benter=" + bEnterRoom + ")", LOG_TYPE_EVENT);
 	RoomUserListControl(dwUserId, bEnterRoom ? true : false);
     if (bEnterRoom == 1) {
-		ShowNotifyMessage(BRAC_GetUserName(dwUserId) +"&nbspenter room!", NOTIFY_TYPE_NORMAL);								
+		ShowNotifyMessage(BRAC_GetUserName(dwUserId) +"&nbspenter room!", NOTIFY_TYPE_NORMAL);
+		if(mTargetUserId == -1)						// 默认打开一个用户的音视频
+			RequestOtherUserVideo(dwUserId);
     }
     else {
 		ShowNotifyMessage(BRAC_GetUserName(dwUserId) +"&nbspleave room!", NOTIFY_TYPE_NORMAL);
-        if (dwUserId == mTargetUserId) {
-			mTargetUserId = -1;
-			BRAC_SetVideoPos(0, GetID("AnyChatRemoteVideoDiv"), "ANYCHAT_VIDEO_REMOTE");
+        if (dwUserId == mTargetUserId) {			// 当前被请求的用户离开房间，默认请求房间中其它用户的音视频
+			var bRequestOtherUser = false;
+			var useridlist = BRAC_GetOnlineUser();
+			for (var k=0; k<useridlist.length; k++) {
+				if(useridlist[k] == mSelfUserId)
+				continue;
+				RequestOtherUserVideo(useridlist[k]);
+				bRequestOtherUser = true;
+				break;
+			}
+			if(!bRequestOtherUser) {				// 如果没有其它用户在线，则清除状态
+				mTargetUserId = -1;
+				BRAC_SetVideoPos(0, GetID("AnyChatRemoteVideoDiv"), "ANYCHAT_VIDEO_REMOTE");
+			}
 		}
     }
     DisplayScroll("room_div_userlist");
