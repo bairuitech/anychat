@@ -57,7 +57,7 @@
 
         <service android:name="com.bairuitech.bgservice.BackService" >
             <intent-filter>
-                <action android:name="com.bairuitech.callcenter.backserveric" />
+                <action android:name="com.bairuitech.callcenter.backserveice" />
             </intent-filter>
         </service>
     </application>
