@@ -33,6 +33,7 @@
         </activity>
         <activity
             android:name="HallActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden|navigation" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -40,6 +41,7 @@
         </activity>
         <activity
             android:name=".VideoActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden|navigation" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
