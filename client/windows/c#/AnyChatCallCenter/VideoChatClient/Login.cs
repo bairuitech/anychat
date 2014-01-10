@@ -97,6 +97,13 @@ namespace VideoChatClient
                     {
                         ShowMessage("配置有误");
                     }
+                    if (hallForm != null && !hallForm.bReleased)
+                    {
+                        AnyChatCoreSDK.Logout();
+                        AnyChatCoreSDK.Release();
+                      
+                    }
+                    SystemSetting.Init(this.Handle);
                     AnyChatCoreSDK.Connect(addr, port);
                 }
                 else

@@ -30,6 +30,7 @@ namespace VideoChatClient
         public const int USERDATA_USERADRESSIP = 2;       ///< 用户地址
         public const int USER_OFFLINE = 0; ///< 用户离线                                                  ///
         public const int USER_ONLINE = 1; ///< 用户上线
+        public bool bReleased = false;
         /// <summary>
         /// 当前会话
         /// </summary>
@@ -73,6 +74,7 @@ namespace VideoChatClient
                 AnyChatCoreSDK.Logout();
                 AnyChatCoreSDK.Release();
                 Application.Exit();
+                bReleased = true;
                 //Login loginForm = new Login();
                 //loginForm.Close();
             
