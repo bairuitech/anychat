@@ -8,7 +8,8 @@ var mDefaultServerAddr = "demo.anychat.cn";		// 默认服务器地址
 var mDefaultServerPort = 8906;					// 默认服务器端口号
 var mSelfUserId = -1; 							// 本地用户ID
 var mTargetUserId = -1;							// 目标用户ID（请求了对方的音视频）
-var mRefreshVolumeTimer; 						// 实时音量大小定时器
+var mRefreshVolumeTimer = -1; 					// 实时音量大小定时器
+var mRefreshPluginTimer = -1;					// 检查插件是否安装完成定时器
 
 // 日志记录类型，在日志信息栏内显示不同的颜色
 var LOG_TYPE_NORMAL = 0;
@@ -28,10 +29,16 @@ function LogicInit() {
         var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	// 初始化插件
         AddLog("BRAC_InitSDK(" + NEED_ANYCHAT_APILEVEL + ")=" + errorcode, LOG_TYPE_API);
         if (errorcode == GV_ERR_SUCCESS) {
+			if(mRefreshPluginTimer != -1)
+				clearInterval(mRefreshPluginTimer); 			// 清除插件安装检测定时器
             ShowLoginDiv(true);
             AddLog("AnyChat Plugin Version:" + BRAC_GetVersion(0), LOG_TYPE_NORMAL);
             AddLog("AnyChat SDK Version:" + BRAC_GetVersion(1), LOG_TYPE_NORMAL);
             AddLog("Build Time:" + BRAC_GetSDKOptionString(BRAC_SO_CORESDK_BUILDTIME), LOG_TYPE_NORMAL);
+			
+			GetID("prompt_div").style.display = "none"; 		// 隐藏插件安装提示界面
+			// 初始化界面元素
+			InitInterfaceUI();
         } else { 						// 没有安装插件，或是插件版本太旧，显示插件下载界面
             GetID("prompt_div").style.display = "block";
             SetDivTop("prompt_div", 300);
@@ -39,9 +46,11 @@ function LogicInit() {
                 GetID("prompt_div_line1").innerHTML = "首次进入需要安装插件，请点击下载按钮进行安装！";
             else if (errorcode == GV_ERR_PLUGINOLDVERSION)
                 GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";
-        }
-		
-		InitInterfaceUI();
+				
+			if(mRefreshPluginTimer == -1) {
+				mRefreshPluginTimer = setInterval(function(){ LogicInit(); }, 1000);
+			}
+		}
     }, 500);
 }
 
@@ -84,7 +93,8 @@ function InitInterfaceUI() {
     GetID("leaveroom").onclick = function () {
         var errorcode = BRAC_LeaveRoom(-1);
         AddLog("BRAC_LeaveRoom(" + -1 + ")=" + errorcode, LOG_TYPE_API);
-        clearInterval(mRefreshVolumeTimer); 	// 清除实时音量显示计时器
+		if(mRefreshVolumeTimer != -1)
+			clearInterval(mRefreshVolumeTimer); // 清除实时音量显示计时器
         ShowRoomDiv(false); 					// 隐藏房间界面
         ShowHallDiv(true); 						// 显示大厅界面
         mTargetUserId = -1;
