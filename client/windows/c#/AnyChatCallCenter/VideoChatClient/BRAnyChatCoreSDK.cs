@@ -48,6 +48,7 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_LOCALVIDEO_HEIGHTCTRL	=	39;	// 本地视频采集分辨率高度控制（参数为int型，同服务器配置：VideoHeight）
 		public const int BRAC_SO_LOCALVIDEO_FOCUSCTRL	=	90;	// 本地视频摄像头对焦控制（参数为int型，1表示自动对焦， 0表示手动对焦）
 		public const int BRAC_SO_LOCALVIDEO_PIXFMTCTRL	=	91;	// 本地视频采集优先格式控制（参数为int型，-1表示智能匹配，否则优先采用指定格式，参考：BRAC_PixelFormat）
+		public const int BRAC_SO_LOCALVIDEO_TVFORMAT	=	104;// 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
 		
         public const int BRAC_SO_NETWORK_P2PPOLITIC		=	40;	// 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
         public const int BRAC_SO_NETWORK_P2PCONNECT		=	41;	// 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
