@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>AnyChat Web CallCenter</title>
+<!-- 加载AnyChat for Web SDK库  -->
+<script language="javascript" type="text/javascript" src="./javascript/anychatsdk.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/anychatevent.js" charset="GB2312"></script>
+<!-- 加载业务逻辑控制脚本  -->
+<script language="javascript" type="text/javascript" src="./javascript/logicfunc.js" charset="GB2312"></script>
+<link href="./css/index.css" rel="stylesheet" type="text/css" />	
+</head>
+<body onload="LogicInit()" style=" background-color: #C4CEDD; font-family:微软雅黑; margin:0 auto;">
+
+<!--系统日志信息层-->
+<div id="LOG_DIV_BODY">
+    <div id="LOG_DIV_TITLE">系统日志</div>
+    <div id="LOG_DIV_CONTENT"></div>
+</div>
+
+<!--操作等待层 -->
+<div id="LOADING_DIV"><img src="./images/LoadImg.gif" alt="请等待..." style=" height:50px;" /></div>
+
+<!--灰色背景透明层 -->
+<div id="LOADING_GREY_DIV"></div>
+
+<!--所有界面与浏览器顶部距离层 -->
+<div id="margintop""></div>
+
+<div id="MAIN_DIV">
+    <!--安装插件提示层 -->
+    <div id="prompt_div">
+        <div class="close_div">
+            <div id="prompt_div_headline1">插件安装提示</div>
+            <div id="prompt_div_headline2">刷新</div>
+        </div>
+        <div>
+            <div id="prompt_div_line1"></div>
+            <div id="prompt_div_line2">控件安装完成后，请重启浏览器</div>
+            <div id="prompt_div_btn_load" onclick="window.open('http://anychat.oss.aliyuncs.com/AnyChatWebSetup.exe')">下载安装</div>
+        </div>
+        <div style="height: 85px;">
+            <div id="prompt_div_BR">
+                <a href="http://www.anychat.cn/">AnyChat</a>&nbsp|&nbsp<a href="http://www.bairuitech.com/">佰锐科技</a>
+            </div>
+        </div>
+    </div>
+
+    <!--登录层 -->
+    <div id="login_div">
+        <div style=" height:55px;">
+        <div style=" height:35px; line-height:35px; text-align:left; margin:10px 5px 0px 5px; text-align:center;">AnyChat Web CallCenter</div>
+            <div id="cutoff_div"></div>
+        </div>
+        <div class="wordage">帐号：<input type="text" id="username" /><a id="a_error_user" style=" color:#FAFADD; font-size:15px;">&nbsp×</a></div>
+        <div class="wordage">密码：<input type="text" id="password" onfocus="myFocus(this,'white')" onblur="myblur(this,'white')" value="密码可为空" style="color:#CDCDCD"/><a id="a_error_password" style=" color:#FAFADD; font-size:15px;">&nbsp×</a></div>
+        <div id="Btn_div">
+            <div id="setting" class="Btn" onmouseout="Mouseout('setting')" onmousemove="Mouseover('setting')" style=" float:left;">设置</div>
+            <div id="loginbtn" class="Btn" onmouseout="Mouseout('loginbtn')" onmousemove="Mouseover('loginbtn')" onclick="LoginToHall()" style=" float:right;">登录</div>
+        </div>
+        <div id="setting_div">
+            <div id="setting_div_input">
+                服务器:&nbsp<input type="text" id="ServerAddr" style="width:120px;" />&nbsp&nbsp&nbsp
+                 端口:&nbsp<input type="text" id="ServerPort" style="width:40px;" />
+            </div>
+        </div>
+    </div>
+
+    <!--大厅层 -->
+    <div id="hall_div">
+        <div style="width:610px; height:25px;"><div id="ExitSystemBtn">×关闭</div></div>
+        <div id="hall_div_userinfo">
+            <!--显示在线好友列表-->
+        </div>
+    </div>
+
+    <!--房间界面 -->
+    <div id="room_div">
+        <div id="room_div_close"><div id="leaveroom">×关闭</div></div>
+        <div style="padding:10px 20px 10px 20px;">
+            <div id="room_div_left">
+                <div id="room_div_userlist"></div>
+                <div id="room_div_myobject">
+                    <div id="AnyChatLocalVideoDiv" style="height:147px;"></div>
+                    <div style=" text-align:left; width:193px; height:4px;">
+                        <div id="LocalAudioVolume"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="room_div_right">
+                <div id="room_div_otherobject">
+                    <div id="AnyChatRemoteVideoDiv"></div>
+                    <div style="width:502px; height:4px; text-align:left;">
+                        <div id="RemoteAudioVolume"></div>
+                    </div>
+                </div>
+                <div id="room_div_msgimg">
+                    <div id="ReceiveMsgDiv"></div>
+                    <div style=" width:464px; height:55px;">
+                        <div id="room_div_right_MsgTxt"">发言:<input type="text" id="MessageInput" style="width:280px;" /></div>
+                        <div id="SendMsg" class="Btn" onmouseout="Mouseout('SendMsg')" onmousemove="Mouseover('SendMsg')" style="float:left;">发送信息</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

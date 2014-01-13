@@ -1,0 +1,64 @@
+﻿#LOADING_GREY_DIV{ display:none; background:rgba(0, 0, 0, 0.4) none repeat scroll 0 0 !important;filter:Alpha(opacity=40); width:100%; height:100%; background-color: #999999; position:absolute; z-index:44;}
+#LOADING_DIV{ position:absolute; display:none; z-index:45;}
+#MAIN_DIV{ text-align:center; width:100%;}
+
+#LOG_DIV_BODY{ z-index:-1; width:400px; height:200px; right:20px; bottom:0; position:fixed; display:none;}
+#LOG_DIV_CONTENT{ padding:10px 10px 10px 10px; background-color:#C4CEDD; font-size:12px; width:400px; height:155px; text-align:right;}
+#LOG_DIV_TITLE{ height:15px; margin-left:10px; font-size:12px; line-height:15px;text-align:right;}
+
+#prompt_div{ background-color:White; border:1px solid black; width:500px; height:300px; margin-left: auto; margin-right:auto; margin-top:35%; display:none;}
+.close_div{ height:45px; width:480px; margin:0px 10px 0px 10px;border-bottom:1px solid #CCCCCC;}
+#prompt_div_BR{ border-top:1px solid #CCCCCC;height: 45px; margin:40px 10px 10px 10px; width:480px; text-align:right;}
+#prompt_div_BR a{ font-size:12px; color:Blue;}
+#prompt_div_btn_load{ width:110px; height:35px; line-height:35px; color:White; border:1px solid #915700; background-color:#ff8100; margin-left:auto; margin-right:auto; cursor:pointer;}
+#prompt_div_line1{ height:70px; line-height:70px; font-size:12px; color: #999999; text-align:center;}
+#prompt_div_line2{ height:60px; line-height:50px; color: #FF9900; font-size:14px; font-weight: bolder;}
+#prompt_div_headline1{ font-size:15px; width:100px; height:50px; line-height:60px; text-align:center; float:left;}
+#prompt_div_headline2{ font-size:12px; width:38px; height:50px; line-height:60px; text-align:center; float:right; cursor:pointer;}
+
+#login_div{ display:none; border:1px solid black; width:320px; background-color: #FAFADD; margin-left: auto; margin-right:auto;}
+.wordage{ font-size:15px; width:320px; height:40px; line-height:40px;}
+#Btn_div{ width:320px; height:55px;}
+#cutoff_div{ height:5px; border-bottom:1px solid black; margin:0px 5px 0px 5px;}
+.Btn{ background-color:#E6E6E6; margin:10px 20px 20px 20px; width:80px; height:25px; line-height:25px; text-align:center; font-size:15px; border:1px solid black; cursor:pointer;}
+#setting_div{ width:320px; height:55px; display:none;}
+#setting_div_input{ font-size:13px; text-align:center; padding-top:18px; border-top:1px solid black;}
+
+#hall_div{ background-color:#9CAAC1; border:1px solid black; width:610px; height:400px; margin-left: auto; margin-right:auto; display:none;}
+
+.hall_div_center{ text-align:center; width:65%;}
+.hall_div_left{ text-align:right; width:35%;}
+.hall_div_table_room{  background-color:#E6E6E6; width:50px; height:50px; float:left; cursor:pointer; line-height:50px; font-family: 华文楷体; border:1px solid black; margin:10px 5px 10px 11px;}
+#hall_div_table{ background-color:White; margin-right:20px; border:1px solid black; width:350px; height:355px; float:right;}
+#hall_div_operation{ width:350px; height:200px;}
+#EnterRoomBtn{ width:40px; text-align:center; cursor:pointer; border:1px solid black; background-color:#E6E6E6;}
+#advancedsetting{ cursor:pointer; background-color:#E6E6E6; height:25px; width:80px; border:1px solid black; text-align:center; margin:10px auto 0px auto;}
+#ExitSystemBtn{ float:right; margin-right:15px; margin-top:3px; cursor:pointer; font-size:13px;}
+#hall_div_operation_div1{ height:30px; width:350px; margin-top:170px;}
+#hall_div_operation_div2{ width:350px; margin-left:20px; font-size:14px;}
+#hall_div_customroomdiv{ text-align:left; float:left; width:250px;}
+#hall_div_customroomdiv_btn{ float:left; width:95px; text-align:left;}
+
+#room_div{ display:none; z-index:20; margin-left:500px; border:1px solid black; height: 610px; width: 750px; background-color:#9CAAC1; margin-left: auto; margin-right:auto;}
+#room_div_left{ width:200px; height:550px; float:left;}
+#room_div_right{ width:500px; height:560px; float:right;}
+#room_div_userlist{ overflow:hidden; background-color:White; width:200px; height:346px; border:1px solid black;}
+#room_div_myobject{ width:195px; height:155px; overflow:hidden; margin:10px 0px 0px 3px;}
+#room_div_msgimg{ background:no-repeat; width:500px; height:202px; padding:11px 0px 0px 20px;}
+#room_div_otherobject{ width:500px; height:356px; overflow:hidden;}
+#ANYCHAT-VIDEO-LOCAL { width:195px; height:147px; float:left;margin:0 auto;}
+#ANYCHAT-VIDEO-REMOTE { width:464px; height:348px; margin-right:auto; margin-left:auto;}
+#AnyChatRemoteVideoDiv{ width:502px; height:348px; text-align:center;}
+#leaveroom{ float:right; font-size:13px; margin-right:15px; margin-top:10px; cursor:pointer;}
+#ReceiveMsgDiv{ background-color:White; width:464px; height:137px; border:1px solid #7884ac; overflow-y:hidden}
+#room_div_close{ width:750px; height:25px;}
+#room_div_right_MsgTxt{ width:325px; height:40px; padding-top:10px; float:left;}
+#RemoteAudioVolume{ width:0px; height:6px; background-color:#00FF00;}
+#LocalAudioVolume{ width:0px; height:6px; background-color:#00FF00;}
+#room_div_userlist a{ margin-left:5px;}
+#room_div_userlist img{ margin-top:2px;}
+
+
+
+.TheMsgStyle{ text-align:left; font-size:12px; padding-left:15px;}
+.UserListStyle{ text-align:left; font-size:12px; padding-left:15px; height:20px; overflow:hidden;}
