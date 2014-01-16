@@ -2,12 +2,22 @@
 <html>
 <head>
 <title>AnyChat Web CallCenter</title>
+<script language="javascript" type="text/javascript" src="./javascript/jquery-1.8.3.min.js" charset="GB2312"></script>
 <!-- 加载AnyChat for Web SDK库  -->
 <script language="javascript" type="text/javascript" src="./javascript/anychatsdk.js" charset="GB2312"></script>
 <script language="javascript" type="text/javascript" src="./javascript/anychatevent.js" charset="GB2312"></script>
+
 <!-- 加载业务逻辑控制脚本  -->
-<script language="javascript" type="text/javascript" src="./javascript/logicfunc.js" charset="GB2312"></script>
-<link href="./css/index.css" rel="stylesheet" type="text/css" />	
+<script language="javascript" type="text/javascript" src="./javascript/function.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/onVideoCallControl.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/onFriendDataHander.js" charset="GB2312"></script>
+
+<link href="./css/index.css" rel="stylesheet" type="text/css" />
+<link href="./css/dialogue.css" rel="Stylesheet" />
+<link href="./css/prompt.css" rel="Stylesheet" />
+<link href="./css/hall.css" rel="Stylesheet" />
+<link href="./css/login.css" rel="Stylesheet" />
+<link href="./css/others.css" rel="Stylesheet" />
 </head>
 <body onload="LogicInit()" style=" background-color: #C4CEDD; font-family:微软雅黑; margin:0 auto;">
 
@@ -25,7 +35,8 @@
 
 <!--所有界面与浏览器顶部距离层 -->
 <div id="margintop""></div>
-
+<div id="VideoShowDiv"></div>
+ <div id="Shade_Div"></div>
 <div id="MAIN_DIV">
     <!--安装插件提示层 -->
     <div id="prompt_div">
@@ -70,38 +81,31 @@
         <div style="width:610px; height:25px;"><div id="ExitSystemBtn">×关闭</div></div>
         <div id="hall_div_userinfo">
             <!--显示在线好友列表-->
+			 <div id="UserListContent">
+			 </div>
+			
         </div>
+        <div id="SessionPrompt_Div"></div>
     </div>
 
-    <!--房间界面 -->
-    <div id="room_div">
-        <div id="room_div_close"><div id="leaveroom">×关闭</div></div>
-        <div style="padding:10px 20px 10px 20px;">
-            <div id="room_div_left">
-                <div id="room_div_userlist"></div>
-                <div id="room_div_myobject">
-                    <div id="AnyChatLocalVideoDiv" style="height:147px;"></div>
-                    <div style=" text-align:left; width:193px; height:4px;">
-                        <div id="LocalAudioVolume"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="room_div_right">
-                <div id="room_div_otherobject">
-                    <div id="AnyChatRemoteVideoDiv"></div>
-                    <div style="width:502px; height:4px; text-align:left;">
-                        <div id="RemoteAudioVolume"></div>
-                    </div>
-                </div>
-                <div id="room_div_msgimg">
-                    <div id="ReceiveMsgDiv"></div>
-                    <div style=" width:464px; height:55px;">
-                        <div id="room_div_right_MsgTxt"">发言:<input type="text" id="MessageInput" style="width:280px;" /></div>
-                        <div id="SendMsg" class="Btn" onmouseout="Mouseout('SendMsg')" onmousemove="Mouseover('SendMsg')" style="float:left;">发送信息</div>
-                    </div>
-                </div>
-            </div>
+    
+      <!-- 主动呼叫等待框 -->
+    <div id="Initiative_Call_Div">
+        <div class="Div_HeadPart">
+            <img alt="取消呼叫" src="./images/others/close.png" onclick="CancelCall()" />
+        </div>
+        <div id="Initiative_Call_Div_Content" class="Call_Div_Content"></div>
+        <div class="Call_Div_Button">
+            <div id="Initiative_Cancel_Button" onclick="CancelCall()" style="">取消呼叫</div>
+        </div>
+    </div>
+  <!-- 被呼叫询问框 -->
+    <div id="BeCalls_Div">
+        <div class="Div_HeadPart"></div>
+        <div id="BeCalls_Div_Content" class="Call_Div_Content"></div>
+        <div class="Call_Div_Button">
+            <div class="ButtonImg" onclick="AcceptRequestBtnClick()">同意</div>
+            <div class="ButtonImg" onclick="RejectRequestBtnClick()">拒绝</div>
         </div>
     </div>
 

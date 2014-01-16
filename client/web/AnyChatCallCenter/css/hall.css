@@ -1,0 +1,81 @@
+#UserListScroll 
+{
+	position:relative;
+	float:right;
+	left:auto;
+	top:auto;
+	width:15px;
+	height:485px;
+}
+#UserListSlider 
+{
+	background:url('../images/Hall/DT_06.png');
+	display:none;
+	margin-top:0px;
+	width:15px;
+	height:30px;
+	cursor:pointer;
+	z-index:12;
+	position:absolute;
+}
+
+#UserListContent 
+{
+	color:#6A2A04;
+	position:relative;
+	width:535px;
+	height:485px;
+	overflow:hidden;
+	font-size:9pt;
+	font-family:arial;
+	padding:10px 10px 10px 15px;
+}
+.UserImg_Holder
+{
+	height:50px;
+	width:50px;
+}
+.UserImg
+{
+	width:50px; 
+	height:50px; 
+	padding:0px;
+	cursor:pointer;
+}
+.UserInfo
+{
+	width:30px; 
+	height:30px;
+}
+.OnLineUser_Div
+{
+	width:200px;
+	height:60px;
+	float:left;
+	padding:0px;
+}
+.UserInfo_Holder
+{
+	width:90px; 
+	height:60px; 
+	float:left;
+	padding:0px;
+}
+#mSelfInfo
+{
+	font-family: Î¢ÈíÑÅºÚ;
+	font-size: 12px;
+	text-align:left;
+}
+#SessionPrompt_Div
+{
+	width: 200px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	position: absolute;
+	display: none;
+	border-style: solid;
+	border-width: 1px;
+	background-color: #666666;
+}

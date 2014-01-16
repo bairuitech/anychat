@@ -84,6 +84,7 @@ function OnAnyChatLoginSystem(dwUserId, errorcode) {
     if (errorcode == 0) {
 		mSelfUserId = dwUserId;	
 		ShowHallDiv(true);
+		initialize();
     } else {
 		ShowHallDiv(false);
     }
@@ -92,55 +93,35 @@ function OnAnyChatLoginSystem(dwUserId, errorcode) {
 // 客户端进入房间，dwRoomId表示所进入房间的ID号，errorcode表示是否进入房间：0成功进入，否则为出错代码
 function OnAnyChatEnterRoom(dwRoomId, errorcode) {
     DisplayLoadingDiv(false);
-	AddLog("OnAnyChatEnterRoom(roomid=" + dwRoomId + ", errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
     if (errorcode == 0) {
-        ShowRoomDiv(true);
-		RoomUserListControl(mSelfUserId, true);		// 将自己插入用户列表
-        BRAC_UserCameraControl(mSelfUserId, 1); 	// 打开本地视频
-        BRAC_UserSpeakControl(mSelfUserId, 1); 		// 打开本地语音
-
-		ShowNotifyMessage("Welcome use AnyChat, successfully enter the room:" + dwRoomId, NOTIFY_TYPE_SYSTEM);
-        // 设置本地视频显示位置
-        BRAC_SetVideoPos(mSelfUserId, GetID("AnyChatLocalVideoDiv"), "ANYCHAT_VIDEO_LOCAL");
-        // 设置远程视频显示位置（没有关联到用户，只是占位置）
-        BRAC_SetVideoPos(0, GetID("AnyChatRemoteVideoDiv"), "ANYCHAT_VIDEO_REMOTE");
-
-        mRefreshVolumeTimer = setInterval(function () {
-            GetID("LocalAudioVolume").style.width = GetID("AnyChatLocalVideoDiv").offsetHeight * BRAC_QueryUserStateInt(mSelfUserId, BRAC_USERSTATE_SPEAKVOLUME) / 100 + "px";
-			if(mTargetUserId != -1)
-				GetID("RemoteAudioVolume").style.width = GetID("AnyChatRemoteVideoDiv").offsetHeight * BRAC_QueryUserStateInt(mTargetUserId, BRAC_USERSTATE_SPEAKVOLUME) / 100 + "px";
-			else
-				GetID("RemoteAudioVolume").style.width = "0px";
-        }, 100);
+      	// 打开本地音频、视频
+	       BRAC_UserCameraControl(-1, 1);
+	       BRAC_UserSpeakControl(-1, 1);
+           showVideoSessionScreen(); // 设置视频显示位置
     } else {
 
     }
+	AddLog("OnAnyChatEnterRoom(roomid=" + dwRoomId + ", errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
 }
 
 // 收到当前房间的在线用户信息，进入房间后触发一次，dwUserCount表示在线用户数（包含自己），dwRoomId表示房间ID
 function OnAnyChatRoomOnlineUser(dwUserCount, dwRoomId) {
-	AddLog("OnAnyChatRoomOnlineUser(count=" + dwUserCount + ", roomid=" + dwRoomId + ")", LOG_TYPE_EVENT);
-	var useridlist = BRAC_GetOnlineUser();
-	for (var i = 0; i < useridlist.length; i++) {
-		RoomUserListControl(useridlist[i], true);
-    }
+
+		// 请求对方音频、视频
+	BRAC_UserCameraControl(mTargetUserId, 1);
+	BRAC_UserSpeakControl(mTargetUserId, 1);
+		AddLog("OnAnyChatRoomOnlineUser(count=" + dwUserCount + ", roomid=" + dwRoomId + ")", LOG_TYPE_EVENT);
+	
 }
 
 // 用户进入（离开）房间，dwUserId表示用户ID号，bEnterRoom表示该用户是进入（1）或离开（0）房间
 function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 	AddLog("OnAnyChatUserAtRoom(userid=" + dwUserId + ", benter=" + bEnterRoom + ")", LOG_TYPE_EVENT);
-	RoomUserListControl(dwUserId, bEnterRoom ? true : false);
-    if (bEnterRoom == 1) {
-		ShowNotifyMessage(BRAC_GetUserName(dwUserId) +"&nbspenter room!", NOTIFY_TYPE_NORMAL);								
-    }
-    else {
-		ShowNotifyMessage(BRAC_GetUserName(dwUserId) +"&nbspleave room!", NOTIFY_TYPE_NORMAL);
-        if (dwUserId == mTargetUserId) {
-			mTargetUserId = -1;
-			BRAC_SetVideoPos(0, GetID("AnyChatRemoteVideoDiv"), "ANYCHAT_VIDEO_REMOTE");
-		}
-    }
-    DisplayScroll("room_div_userlist");
+	if(dwUserId == mTargetUserId && bEnterRoom != 0) {
+		// 请求对方音频、视频
+		BRAC_UserCameraControl(mTargetUserId, 1);
+		BRAC_UserSpeakControl(mTargetUserId, 1);
+	}
 }
 
 // 网络连接已关闭，该消息只有在客户端连接服务器成功之后，网络异常中断之时触发，reason表示连接断开的原因
@@ -186,26 +167,40 @@ function OnAnyChatPrivateExit(dwUserId, errorcode) {
 
 // 视频通话消息通知回调函数
 function OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr) {
+	switch(dwEventType)
+	{
+		case BRAC_VIDEOCALL_EVENT_REQUEST:
+			onVideoCallControlRequest(dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr);
+			break;
+		case BRAC_VIDEOCALL_EVENT_REPLY:
+		    onVideoCallControlReply(dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr);
+			break;
+		case BRAC_VIDEOCALL_EVENT_START:
+			onVideoCallControlStart(dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr);
+			break;
+		case BRAC_VIDEOCALL_EVENT_FINISH:
+		     onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr);
+			break; 
+		
+	}
 	AddLog("OnAnyChatVideoCallEvent(dwEventType=" + dwEventType + ", dwUserId=" + dwUserId + ", dwErrorCode=" + dwErrorCode + ", dwFlags=" + dwFlags + ", dwParam=" + dwParam + ", szUserStr=" + szUserStr + ")", LOG_TYPE_EVENT);
 	
 }
 
 // 用户信息更新通知，dwUserId表示用户ID号，dwType表示更新类别
 function OnAnyChatUserInfoUpdate(dwUserId, dwType) {
-	AddLog("OnAnyChatUserInfoUpdate(dwUserId=" + dwUserId + ", dwType=" + dwType + ")", LOG_TYPE_EVENT);
-	// 刷新在线好友列表
-	var iFriendIds = BRAC_GetUserFriends();
-	for(var i=0; i<iFriendIds.length; i++) {
-		var dwFriendUserId = iFriendIds[i];
-		if(BRAC_GetFriendStatus(dwFriendUserId)  <= 0)	// 只显示在线用户，离线用户不显示
-			continue;
-		
-	}
+
+	if(dwUserId==0&&dwType==0)
+		CreateUserImage("whole");
+
 }
 
 // 好友在线状态变化，dwUserId表示好友用户ID号，dwStatus表示用户的当前活动状态：0 离线， 1 上线
 function OnAnyChatFriendStatus(dwUserId, dwStatus) {
-	AddLog("OnAnyChatFriendStatus(dwUserId=" + dwUserId + ", dwStatus=" + dwStatus + ")", LOG_TYPE_EVENT);
-	
+
+//	AddLog("OnAnyChatFriendStatus(dwUserId=" + dwUserId + ", dwStatus=" + dwStatus + ")", LOG_TYPE_EVENT);
+	if (dwStatus == USER_OFFLINE_STATUS) {				// 下线
+		removeOfflineUser(dwUserId);
+	}
 }
 

@@ -1,3 +1,4 @@
+// JavaScript Document
 // AnyChat for Web SDK
 
 /********************************************
@@ -6,8 +7,6 @@
  
 var mDefaultServerAddr = "demo.anychat.cn";		// 默认服务器地址
 var mDefaultServerPort = 8906;					// 默认服务器端口号
-var mSelfUserId = -1; 							// 本地用户ID
-var mTargetUserId = -1;							// 目标用户ID（请求了对方的音视频）
 var mRefreshVolumeTimer; 						// 实时音量大小定时器
 
 // 日志记录类型，在日志信息栏内显示不同的颜色
@@ -19,6 +18,8 @@ var LOG_TYPE_ERROR = 3;
 // 通知类型，在文字消息栏内显示不同的颜色
 var NOTIFY_TYPE_NORMAL = 0;
 var NOTIFY_TYPE_SYSTEM = 1;
+
+var mRefreshVolumeTimer; // 实时音量大小定时器
 
 function myFocus(obj,color){
 	//判断文本框中的内容是否是默认内容
@@ -400,3 +401,131 @@ function MicrophoneOnclick(userid) {
         }
     }
 }
+
+
+
+function Getdmo(element) {
+    if (document.getElementById) {
+        return document.getElementById(element);
+    } else if (window[element]) {
+        return window[element];
+    }
+    return null;
+}
+//初始化所有界面位置
+function initialize() {
+    var mBrowserWidth = document.body.offsetWidth; // 网页可见区域宽
+    var mBrowserHeight = document.documentElement.clientHeight; //  网页可见区域高
+    CenterPosition(mBrowserWidth, mBrowserHeight, "Initiative_Call_Div", 300, 170); //主动呼叫层垂直水平居中
+    CenterPosition(mBrowserWidth, mBrowserHeight, "BeCalls_Div", 300, 170); //被呼叫层垂直水平居中
+	CenterPosition(mBrowserWidth, mBrowserHeight, "SessionPrompt_Div", 300, 170); //会话消息层垂直水平居中
+	
+ //   CenterPosition(mBrowserWidth, mBrowserHeight, "InquityEnd", 300, 170); //结束会话询问层垂直水平居中
+    CenterPosition(mBrowserWidth, mBrowserHeight, "hall_div", 770, 650); //结束会话询问层垂直水平居中
+    if (mBrowserHeight < 650) $("#hall_div").css("top", "0px");
+}
+
+// DIV层垂直居中和水平居中  浏览器可视区域宽度  浏览器可视区域高度  DIV层ID DIV层的高度 DIV层的宽度
+function CenterPosition(VWidth, VHeight, DivID, DivWidth, DivHeight) {
+    $("#" + DivID).css("left", (VWidth - DivWidth) / 2 + "px"); // 设置X坐标
+    $("#" + DivID).css("top", (VHeight - DivHeight) / 2 + "px"); // 设置Y坐标
+}
+
+// 开始视频会话第一界面 宽屏视频
+function showVideoSessionScreen() {
+    //网页可见区域宽：
+    var VWidth = document.body.offsetWidth; // (包括边线的宽) 
+    //网页可见区域高：
+    var VHeight = document.body.offsetHeight; //  (包括边线的高)
+    CenterPosition(VWidth, 730, "VideoShowDiv", 1020, 450);
+    createVideoContainer(); // 动态生成宽屏视频容器
+    setVideoShow("videoshow2", "videoshow1");
+	mRefreshVolumeTimer = setInterval(updateCurrentVolume, 200); // 获取显示语音音量
+}
+// 设置显示视频位置
+function setVideoShow(firVideo, secVideo) {
+    BRAC_SetVideoPos(mSelfUserId, Getdmo(firVideo), "ANYCHAT_VIDEO_LOCAL");
+    BRAC_SetVideoPos(mTargetUserId, Getdmo(secVideo), "ANYCHAT_VIDEO_REMOTE");
+}
+
+// 双方音量条
+function updateCurrentVolume() {
+    Getdmo("Mine_Volume").style.width = Getdmo("videoshow2").offsetWidth / 100 * BRAC_QueryUserStateInt(mSelfUserId,                   	BRAC_USERSTATE_SPEAKVOLUME) + "px";
+    Getdmo("Target_Volume").style.width = Getdmo("videoshow1").offsetWidth / 100 * BRAC_QueryUserStateInt(mTargetUserId,        BRAC_USERSTATE_SPEAKVOLUME) + "px";
+}
+
+//动态生成宽屏视频容器
+function createVideoContainer() {
+    Getdmo("VideoShowDiv").innerHTML = "";
+    // 左边视频框
+    var upper_video1 = document.createElement("div");
+    upper_video1.id = "videoshow1";
+    upper_video1.className = "videoshow";
+    Getdmo("VideoShowDiv").appendChild(upper_video1);
+    // 右边视频框
+    var upper_video2 = document.createElement("div");
+    upper_video2.id = "videoshow2";
+    upper_video2.className = "videoshow";
+    upper_video2.style.marginLeft = "6px";
+    Getdmo("VideoShowDiv").appendChild(upper_video2);
+	//左边音量条框
+	var volume_other_Holder = document.createElement("div");
+    volume_other_Holder.id = "Target_Volume_Holder";
+	Getdmo("VideoShowDiv").appendChild(volume_other_Holder);
+	
+	//右边音量条框
+	var volume_self_Holder = document.createElement("div");
+    volume_self_Holder.id = "Mine_Volume_Holder";
+    Getdmo("VideoShowDiv").appendChild(volume_self_Holder);
+	
+		//左边音量条
+	var volume_other = document.createElement("div");
+    volume_other.id = "Target_Volume";
+	Getdmo("Target_Volume_Holder").appendChild(volume_other);
+	
+	//右边音量条
+	var volume_self = document.createElement("div");
+    volume_self.id = "Mine_Volume";
+    Getdmo("Mine_Volume_Holder").appendChild(volume_self);
+	  
+    // 显示己方名字
+    var upper_othername = document.createElement("div");
+    upper_othername.className = "ShowName";
+    upper_othername.innerHTML = BRAC_GetUserInfo(mTargetUserId,USERINFO_NAME);
+    Getdmo("VideoShowDiv").appendChild(upper_othername);
+    // 显示对方名字
+    var upper_myname = document.createElement("div");
+    upper_myname.className = "ShowName";
+    upper_myname.innerHTML = BRAC_GetUserName(mSelfUserId);
+    Getdmo("VideoShowDiv").appendChild(upper_myname);
+    // 挂断 按钮
+    var under_finish = document.createElement("div");
+    under_finish.id = "finishprivate";
+    under_finish.onmouseout = function () {
+        $("#finishprivate").css("background", "url('./images/dialog/btnfalse_move.png')");
+    }
+    under_finish.onmouseover = function () {
+        $("#finishprivate").css("background", "url('./images/dialog/btnfalse_over.png')");
+    }
+    under_finish.onclick = function () {
+		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_FINISH,mTargetUserId,0,0,0,""); 	// 挂断
+    }
+    Getdmo("VideoShowDiv").appendChild(under_finish);
+    // 切换界面 按钮
+    var under_change = document.createElement("div");
+    under_change.id = "SwappingDiv";
+    under_change.className = "Buttons";
+    under_change.onmouseout = function () {
+        $("#SwappingDiv").css("background", "url('./images/dialog/btntrue_move.png')");
+    }
+    under_change.onmouseover = function () {
+        $("#SwappingDiv").css("background", "url('./images/dialog/btntrue_over.png')");
+    }
+    under_change.onclick = function () {
+        SwappingVideo(true);
+    }
+    under_change.innerHTML = "文字模式";
+    Getdmo("VideoShowDiv").appendChild(under_change);
+}
+
+
