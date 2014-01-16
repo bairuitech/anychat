@@ -110,7 +110,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		};
 		initTimerCheckAv();
 		initTimerShowTime();
-		Log.i("ANYCHAT", "VIDEO" + "onCreate");
 
 	}
 
@@ -136,7 +135,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			anychat.mVideoHelper.SetVideoUser(videoIndex, dwTargetUserId);
 		}
 
-		Log.i("ANYCHAT", "VIDEO" + "onRestart");
 	}
 
 	@Override
@@ -144,7 +142,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		// TODO Auto-generated method stub
 		super.onResume();
 		BussinessCenter.mContext = this;
-		Log.i("ANYCHAT", "VIDEO" + "onResume");
 	}
 
 	@Override
@@ -155,7 +152,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		anychat.UserSpeakControl(-1, 0);
 		anychat.UserSpeakControl(dwTargetUserId, 0);
 		anychat.UserCameraControl(dwTargetUserId, 0);
-		Log.i("ANYCHAT", "VideoActivity" + "onStop");
 
 	}
 
@@ -293,10 +289,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		// 根据屏幕方向改变本地surfaceview的宽高比
 		if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			adjustLocalVideo(true);
-			Log.i("info", "landscape");
 		} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 			adjustLocalVideo(false);
-			Log.i("info", "portrait");
 		}
 
 	}
@@ -356,7 +350,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			adjustLocalVideo(true);
 			AnyChatCoreSDK.mCameraHelper.setCameraDisplayOrientation();
-			Log.i("ANYCHAT", "onConfigurationChanged");
 		} else {
 			adjustLocalVideo(false);
 			AnyChatCoreSDK.mCameraHelper.setCameraDisplayOrientation();

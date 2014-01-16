@@ -19,7 +19,6 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -53,7 +52,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 		intParams();
 		initView();
 		initLoginProgress();
-		Log.i("LoginActivity", "onCreate");
 
 	}
 
@@ -65,7 +63,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 	@Override
 	protected void onRestart() {
 		// TODO Auto-generated method stub
-		Log.i("ANYCHAT", "onRestart");
 		super.onRestart();
 	}
 	
@@ -84,14 +81,11 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 				anychat.SetBaseEvent(this);
 			}
 			
-			Log.e("ANYCHAT", "AGAIGN_LOGIN");
 		}
 		else if(tag==BaseConst.APP_EXIT)
 		{
 			this.finish();
-			Log.e("ANYCHAT", "APP_EXIT");
 		}
-		Log.i("ANYCHAT", "onNewIntent");
 	}
 
 	@Override
@@ -173,7 +167,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 	}
 
 	protected void onDestroy() {
-		Log.i("ANYCHAT", "onDestroy");
 		super.onDestroy();
 		if (bReased) {
 			anychat.Logout();
@@ -235,7 +228,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
-		Log.i("logincativity-onpuase", "onpuase");
 		super.onPause();
 	}
 

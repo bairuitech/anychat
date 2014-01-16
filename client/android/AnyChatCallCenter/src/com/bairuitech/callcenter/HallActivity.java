@@ -52,7 +52,6 @@ public class HallActivity extends Activity implements OnItemClickListener,
 		BussinessCenter.getBussinessCenter().getOnlineFriendDatas();
 		initView();
 		startBackServce();
-		Log.i("HallMobileActivity+onCreate", "onCreate");
 
 	}
 
@@ -69,7 +68,6 @@ public class HallActivity extends Activity implements OnItemClickListener,
 			/*
 			 * if (dialog != null && dialog.isShowing()) dialog.dismiss();
 			 */
-			Log.i("ANYCHAT", "onConfigurationChanged");
 		}
 
 	}
@@ -95,7 +93,6 @@ public class HallActivity extends Activity implements OnItemClickListener,
 		initSdk();
 		if (mUserAdapter != null)
 			mUserAdapter.notifyDataSetChanged();
-		Log.i("ANYCHAT", "HallA" + "onResume");
 		super.onResume();
 	}
 
