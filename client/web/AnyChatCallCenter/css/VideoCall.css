@@ -1,0 +1,74 @@
+@charset "GB2312";
+/* CSS Document */
+
+#Initiative_Call_Div
+{
+	z-index:25;
+	width:300px;
+	height:170px;
+	position:absolute;
+	background: url('../images/dialog/PrivateChat.png');
+	display:none;
+}
+#Initiative_Cancel_Button
+{
+	cursor:pointer; 
+	background:url('../images/others/CancelBtn.png'); 
+	width:80px; 
+	height:30px;
+	line-height:30px;
+	font-family:微软雅黑;
+	font-size:13px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#BeCalls_Div
+{
+	z-index:25;
+	position:absolute;
+	width:300px;
+	height:170px;
+	background: url('../images/dialog/PrivateChat.png');
+	display:none;
+}
+.Div_HeadPart
+{
+	width:285px; 
+	height:40px; 
+	margin:10px 10px 0px 5px;
+}
+.Div_HeadPart img
+{
+	cursor:pointer; 
+	margin:10px 0px 0px 250px
+}
+.Call_Div_Content
+{
+	text-align:center;	
+	width:285px; 
+	height:70px; 
+	margin:0px 10px 0px 5px;
+	font-family:微软雅黑;
+	font-size:13px;
+
+}
+.Call_Div_Button
+{
+	width:285px; 
+	height:30px; 
+	margin:0px 10px 0px 5px;
+}
+.ButtonImg
+{
+	height: 30px; 
+	width:80px; 
+	background: url('../images/others/Button1.png'); 
+	text-align:center; 
+	line-height:30px; 
+	cursor:pointer;
+	color:#000000;
+	font-family:微软雅黑;
+	font-size:13px;
+	float:left;
+	margin-left:40px;
+}

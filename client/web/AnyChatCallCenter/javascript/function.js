@@ -89,39 +89,6 @@ function LogicInit() {
         ShowHallDiv(false);
         ShowLoginDiv(true);
     }
-    //退出房间
-    GetID("leaveroom").onclick = function () {
-        var errorcode = BRAC_LeaveRoom(-1);
-        AddLog("BRAC_LeaveRoom(" + -1 + ")=" + errorcode, LOG_TYPE_API);
-        clearInterval(mRefreshVolumeTimer); 	// 清除实时音量显示计时器
-        ShowRoomDiv(false); 					// 隐藏房间界面
-        ShowHallDiv(true); 					// 显示大厅界面
-        mTargetUserId = -1;
-    }
-    //进入自定义房间
-    GetID("EnterRoomBtn").onclick = function () {
-        if (GetID("customroomid").value != "") {
-            var re = /^[1-9]+[0-9]*]*$/;   //判断是否纯数字
-            if (re.test(GetID("customroomid").value)) {//纯数字
-                EnterRoomRequest(parseInt(GetID("customroomid").value));
-            } else {
-                AddLog("Room ID must be number!", LOG_TYPE_ERROR);
-                GetID("customroomid").value = "";
-                GetID("customroomid").focus();
-            }
-        }
-    }
-    //发送信息按钮
-    GetID("SendMsg").onclick = function () {
-        SendMessage();
-    }
-    //回车键发送信息
-    GetID("MessageInput").onkeydown = function (e) {
-        e = e ? e : window.event; //键盘事件
-        if (e.keyCode == 13 && GetID("MessageInput").value != "") {//回车键被点击且发送信息框不为空
-            SendMessage();
-        }
-    }
     //下载插件按钮鼠标划入划出时间
     GetID("prompt_div_btn_load").onmouseover = function () {
         GetID("prompt_div_btn_load").style.backgroundColor = "#ffc200";
@@ -145,6 +112,16 @@ function LogicInit() {
         GetID("LOG_DIV_CONTENT").style.backgroundColor = "#C4CEDD";
         GetID("LOG_DIV_CONTENT").style.border = "";
     }
+	//关闭设置界面
+	Getdmo("advanceset_div_close").onclick = function () {
+    if (Getdmo("advanceset_div").style.display == "block")
+        Getdmo("advanceset_div").style.display = "none";
+     else {
+        Getdmo("advanceset_div").style.display = "block"; // 显示高级设置界面
+            // 初始化高级设置界面
+        InitAdvanced();
+        }
+    }
 }
 
 //计算高度并设置界面位置
@@ -165,46 +142,6 @@ function DisplayScroll(id) {
 	}
 	else
 		GetID(id).style.overflowY = "hidden";//隐藏滚动条
-}
-//发送信息
-function SendMessage() {
-    if (GetID("MessageInput").value != "") {//发送信息框不为空
-        var Msg = GetID("MessageInput").value;
-        BRAC_SendTextMessage(0, 0, Msg); //调用发送信息函数
-		DisplayTextMessage(mSelfUserId, Msg);
-		GetID("MessageInput").value = "";
-		GetID("MessageInput").focus();
-	}
-}
-
-// 显示文字消息
-function DisplayTextMessage(fromuserid, message) {
-	var namestr = BRAC_GetUserName(fromuserid) + "&nbsp" + GetTheTime();
-	if(fromuserid==mSelfUserId)
-		namestr = namestr.fontcolor("#008000");
-	else
-		namestr = namestr.fontcolor("#000080");
-	message = message.fontcolor("#333333");
-
-	var msgdiv = document.createElement("div");
-	msgdiv.setAttribute("class", "TheMsgStyle");
-	msgdiv.innerHTML = namestr + "：&nbsp&nbsp" + message;
-	GetID("ReceiveMsgDiv").appendChild(msgdiv);
-	DisplayScroll("ReceiveMsgDiv");
-}
-
-// 在文字消息区域显示通知信息
-function ShowNotifyMessage(message, type) {
-    if (type == NOTIFY_TYPE_SYSTEM) {
-        message = message.fontcolor("#FF0000");
-    } else {
-        message = message.fontcolor("#333333");
-    }
-	var msgdiv = document.createElement("div");
-    msgdiv.setAttribute("class", "TheMsgStyle");
-	msgdiv.innerHTML = message + "&nbsp(" + GetTheTime().fontcolor("#999999") + ")";
-    GetID("ReceiveMsgDiv").appendChild(msgdiv);
-    DisplayScroll("ReceiveMsgDiv");
 }
 
 // 显示登录界面
@@ -232,27 +169,6 @@ function ShowHallDiv(bShow) {
 	}
 }
 
-// 显示房间界面
-function ShowRoomDiv(bShow) {
-    if (bShow) {
-        GetID("hall_div").style.display = "none"; //隐藏大厅界面
-        GetID("room_div").style.display = "block"; 	//显示房间界面
-        SetDivTop("room_div", 610); 				//房间界面垂直居中
-        GetID("MessageInput").focus();
-    } else {
-        GetID("ReceiveMsgDiv").innerHTML = ""; 		//清空房间界面信息接收框
-        GetID("room_div").style.display = "none"; 	//隐藏房间界面
-    }
-}
-
-// 请求进入指定的房间
-function EnterRoomRequest(roomid) {
-	var errorcode = BRAC_EnterRoom(roomid, "", 0); //进入房间
-	AddLog("BRAC_EnterRoom(" + roomid + ")=" + errorcode, LOG_TYPE_API);
-	if(errorcode == 0)
-		DisplayLoadingDiv(true);
-}
-
 function GetID(id) {
 	if (document.getElementById) {
 		return document.getElementById(id);
@@ -261,76 +177,7 @@ function GetID(id) {
 	}
 	return null;
 }
-// 打开指定用户的音视频
-function RequestOtherUserVideo(userid) {
-    var userlist = GetID("room_div_userlist");
-    // 获得用户列表中所有<a>标签
-    var userdivobj = userlist.getElementsByTagName("div");
-    for (var i = 0; i < userdivobj.length; i++) {
-        userdivobj[i].style.backgroundColor = "White"; 
-    }
-    // 获取用户列表中所有<img>标签
-    var userimgobj = userlist.getElementsByTagName("img");
-    for (var j = 0; j < userimgobj.length; j++) {
-        if (userimgobj[j].getAttribute("class") == "MicrophoneTag") { // 该图片为 话筒 图片
-            userimgobj[j].src = "./images/advanceset/microphone_false.png";
-            userimgobj[j].onclick = ""; // 删除话筒按钮点击事件
-            userimgobj[j].style.cursor = "";
-        }
-    }
-    // 判断是否需要关闭之前已请求的用户音视频数据
-    if (mTargetUserId != -1) {
-        BRAC_UserCameraControl(mTargetUserId, 0);
-        BRAC_UserSpeakControl(mTargetUserId, 0);
-    }
-    GetID(userid + "_MicrophoneTag").src = "./images/advanceset/microphone_true.png"; // 点亮话筒图片
-    GetID(userid + "_UserDiv").style.backgroundColor = "#E6E6E6"; //设置被点击<a>元素的字体颜色
 
-    mTargetUserId = userid; 					//设置被点用户ID为全局变量
-    BRAC_UserCameraControl(userid, 1); 		// 请求对方视频
-    BRAC_UserSpeakControl(userid, 1); 		// 请求对方语音
-    // 设置远程视频显示位置
-    BRAC_SetVideoPos(userid, GetID("AnyChatRemoteVideoDiv"), "ANYCHAT_VIDEO_REMOTE");
-    MicrophoneOnclick(userid); // 为当前视频会话用户话筒按钮添加点击事件
-}
-
-// 对列表中的用户进行添加、删除操作
-function RoomUserListControl(userid, bInsert) {
-    var userlist = GetID("room_div_userlist");
-    if (bInsert) {
-        var itemdiv = document.createElement("div");
-        itemdiv.setAttribute("class", "UserListStyle");
-        itemdiv.id = userid + "_UserDiv";
-
-        // 判断用户摄像头状态
-        if (BRAC_GetCameraState(userid) == 0)
-            AddImage(itemdiv, userid + "_CameraTag", "CameraTag", "", userid); // 添加摄像头图片<img>标签
-        if (BRAC_GetCameraState(userid) == 1)
-            AddImage(itemdiv, userid + "_CameraTag", "CameraTag", "./images/advanceset/camera_false.png", userid); // 添加摄像头图片<img>标签
-        if (BRAC_GetCameraState(userid) == 2)
-            AddImage(itemdiv, userid + "_CameraTag", "CameraTag", "./images/advanceset/camera_true.png", userid); // 添加摄像头图片<img>标签
-        // 判断当前ID是否为自己
-        if (userid == mSelfUserId) {
-            AddImage(itemdiv, mSelfUserId + "_MicrophoneTag", "mSelfMicrophoneTag", "./images/advanceset/microphone_true.png", userid); // 添加话筒图片<img>标签
-            itemdiv.innerHTML += "&nbsp" + BRAC_GetUserName(mSelfUserId) + "(自己)";
-        } else {
-            AddImage(itemdiv, userid + "_MicrophoneTag", "MicrophoneTag", "./images/advanceset/microphone_false.png", userid); // 添加话筒图片<img>标签
-            // 添加用户姓名<a>标签
-            var a = document.createElement("a");
-            a.id = userid + "_UserTag";
-            a.title = BRAC_GetUserName(userid);
-            a.innerHTML = BRAC_GetUserName(userid);
-            a.href = "javascript:RequestOtherUserVideo(" + userid + ")";
-            itemdiv.appendChild(a);
-        }
-        GetID("room_div_userlist").appendChild(itemdiv);
-        MicrophoneOnclick(mSelfUserId);
-    } else {
-        var my = GetID(userid + "_UserDiv");
-        userlist.removeChild(my);
-    }
-    DisplayScroll("room_div_userlist");
-}
 //div按钮鼠标划入划出效果
 function Mouseover(id) {
 	GetID(id).style.backgroundColor = "#FFFFCC";
@@ -375,35 +222,6 @@ function DisplayLoadingDiv(bShow) {
         GetID("LOADING_GREY_DIV").style.display = "none";
     }
 }
-
-//好友 摄像头  话筒  图标
-function AddImage(parent_id, img_id, img_class, fir_img, userid) {
-    var imgs = document.createElement("img");
-    imgs.id = img_id;
-    imgs.className = img_class;
-    imgs.src = fir_img;
-    imgs.style.width = "15px";
-    imgs.style.height = "15px";
-    parent_id.appendChild(imgs);
-}
-// 为被点击用户话筒按钮添加点击事件
-function MicrophoneOnclick(userid) {
-    GetID(userid + "_MicrophoneTag").style.cursor = "pointer"; // 鼠标形状
-    GetID(userid + "_MicrophoneTag").onclick = function () { // 话筒点击事件
-        var ImgPath = GetID(userid + "_MicrophoneTag").src.split('/');
-        if (ImgPath[ImgPath.length - 1] == "microphone_true.png") {
-            GetID(userid + "_MicrophoneTag").src = "./images/advanceset/microphone_false.png";
-            BRAC_UserSpeakControl(userid, 0); // 关闭语音
-        }
-        else {
-            GetID(userid + "_MicrophoneTag").src = "./images/advanceset/microphone_true.png";
-            BRAC_UserSpeakControl(userid, 1); // 开启语音
-        }
-    }
-}
-
-
-
 function Getdmo(element) {
     if (document.getElementById) {
         return document.getElementById(element);
@@ -419,8 +237,7 @@ function initialize() {
     CenterPosition(mBrowserWidth, mBrowserHeight, "Initiative_Call_Div", 300, 170); //主动呼叫层垂直水平居中
     CenterPosition(mBrowserWidth, mBrowserHeight, "BeCalls_Div", 300, 170); //被呼叫层垂直水平居中
 	CenterPosition(mBrowserWidth, mBrowserHeight, "SessionPrompt_Div", 300, 170); //会话消息层垂直水平居中
-	
- //   CenterPosition(mBrowserWidth, mBrowserHeight, "InquityEnd", 300, 170); //结束会话询问层垂直水平居中
+	CenterPosition(mBrowserWidth, mBrowserHeight, "advanceset_div", 1500, -350); //会话消息层垂直水平居中
     CenterPosition(mBrowserWidth, mBrowserHeight, "hall_div", 770, 650); //结束会话询问层垂直水平居中
     if (mBrowserHeight < 650) $("#hall_div").css("top", "0px");
 }
@@ -468,7 +285,7 @@ function createVideoContainer() {
     upper_video2.className = "videoshow";
     upper_video2.style.marginLeft = "6px";
     Getdmo("VideoShowDiv").appendChild(upper_video2);
-	//左边音量条框
+	/*//左边音量条框
 	var volume_other_Holder = document.createElement("div");
     volume_other_Holder.id = "Target_Volume_Holder";
 	Getdmo("VideoShowDiv").appendChild(volume_other_Holder);
@@ -486,7 +303,7 @@ function createVideoContainer() {
 	//右边音量条
 	var volume_self = document.createElement("div");
     volume_self.id = "Mine_Volume";
-    Getdmo("Mine_Volume_Holder").appendChild(volume_self);
+    Getdmo("Mine_Volume_Holder").appendChild(volume_self);*/
 	  
     // 显示己方名字
     var upper_othername = document.createElement("div");
@@ -512,20 +329,21 @@ function createVideoContainer() {
     }
     Getdmo("VideoShowDiv").appendChild(under_finish);
     // 切换界面 按钮
-    var under_change = document.createElement("div");
-    under_change.id = "SwappingDiv";
-    under_change.className = "Buttons";
-    under_change.onmouseout = function () {
-        $("#SwappingDiv").css("background", "url('./images/dialog/btntrue_move.png')");
+    var video_paramers_config = document.createElement("div");
+    video_paramers_config.id = "video_paramers_config";
+    video_paramers_config.className = "Buttons";
+    //高级设置
+   video_paramers_config.onclick = function () {
+        if (Getdmo("advanceset_div").style.display == "block")
+            Getdmo("advanceset_div").style.display = "none";
+        else {
+            Getdmo("advanceset_div").style.display = "block"; // 显示高级设置界面
+            // 初始化高级设置界面
+            InitAdvanced();
+        }
     }
-    under_change.onmouseover = function () {
-        $("#SwappingDiv").css("background", "url('./images/dialog/btntrue_over.png')");
-    }
-    under_change.onclick = function () {
-        SwappingVideo(true);
-    }
-    under_change.innerHTML = "文字模式";
-    Getdmo("VideoShowDiv").appendChild(under_change);
+    video_paramers_config.innerHTML = "设置";
+    Getdmo("VideoShowDiv").appendChild(video_paramers_config);
 }
 
 

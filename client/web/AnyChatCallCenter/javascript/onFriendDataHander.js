@@ -1,6 +1,6 @@
 // JavaScript Document
 var mSelfUserId = -1; 							// 本地用户ID
-var mTargetUserId = -1;							// 目标用户ID（请求了对方的音视频）
+var mTargetUserId = 0;							// 目标用户ID（请求了对方的音视频）
 
 var USER_ONLINE_STATUS=1;//用户上线
 var USER_OFFLINE_STATUS=0;//用户下线
@@ -30,6 +30,7 @@ function CreateUserImage(type) {
 //显示上线用户
 function DisplayOnLineUser(userid) {
     var UserName = BRAC_GetUserInfo(userid,USERINFO_NAME); // 用户姓名
+	var UserIp=BRAC_GetUserInfo(userid,USERINFO_IP); // 用户IP地址;
     var main_div = document.createElement("div");
     main_div.id = "UserID_" + userid;
     main_div.className = "OnLineUser_Div";
@@ -49,10 +50,20 @@ function DisplayOnLineUser(userid) {
     right_div.className = "UserInfo_Holder";
     main_div.appendChild(right_div);
 
-    var right_a = document.createElement("div");
-    right_a.className = "UserInfo";
-    right_a.innerHTML = UserName;
-    right_div.appendChild(right_a);
+    var right_name= document.createElement("div");
+    right_name.className = "UserInfo";
+    right_name.innerHTML = UserName;
+    right_div.appendChild(right_name);
+	
+	var right_ip = document.createElement("div");
+    right_ip.className = "UserInfo";
+    right_ip.innerHTML = UserIp;
+    right_div.appendChild(right_ip);
+	
+	var right_userId= document.createElement("div");
+    right_userId.className = "UserInfo";
+    right_userId.innerHTML = userid;
+    right_div.appendChild(right_userId);
 
     Getdmo("UserListContent").appendChild(main_div);
 }

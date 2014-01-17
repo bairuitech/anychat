@@ -11,13 +11,14 @@
 <script language="javascript" type="text/javascript" src="./javascript/function.js" charset="GB2312"></script>
 <script language="javascript" type="text/javascript" src="./javascript/onVideoCallControl.js" charset="GB2312"></script>
 <script language="javascript" type="text/javascript" src="./javascript/onFriendDataHander.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/advanceset.js" charset="GB2312"></script>
+
 
 <link href="./css/index.css" rel="stylesheet" type="text/css" />
-<link href="./css/dialogue.css" rel="Stylesheet" />
-<link href="./css/prompt.css" rel="Stylesheet" />
+<link href="./css/VideoFace.css" rel="Stylesheet" />
 <link href="./css/hall.css" rel="Stylesheet" />
-<link href="./css/login.css" rel="Stylesheet" />
-<link href="./css/others.css" rel="Stylesheet" />
+<link href="./css/VideoCall.css" rel="Stylesheet" />
+<link href="./css/advanceset.css" rel="Stylesheet" />
 </head>
 <body onload="LogicInit()" style=" background-color: #C4CEDD; font-family:微软雅黑; margin:0 auto;">
 
@@ -28,7 +29,7 @@
 </div>
 
 <!--操作等待层 -->
-<div id="LOADING_DIV"><img src="./images/LoadImg.gif" alt="请等待..." style=" height:50px;" /></div>
+<div id="LOADING_DIV"><img src="./images/others/LoadImg.gif" alt="请等待..." style=" height:50px;" /></div>
 
 <!--灰色背景透明层 -->
 <div id="LOADING_GREY_DIV"></div>
@@ -66,7 +67,7 @@
         <div class="wordage">密码：<input type="text" id="password" onfocus="myFocus(this,'white')" onblur="myblur(this,'white')" value="密码可为空" style="color:#CDCDCD"/><a id="a_error_password" style=" color:#FAFADD; font-size:15px;">&nbsp×</a></div>
         <div id="Btn_div">
             <div id="setting" class="Btn" onmouseout="Mouseout('setting')" onmousemove="Mouseover('setting')" style=" float:left;">设置</div>
-            <div id="loginbtn" class="Btn" onmouseout="Mouseout('loginbtn')" onmousemove="Mouseover('loginbtn')" onclick="LoginToHall()" style=" float:right;">登录</div>
+            <div id="loginbtn" class="Btn" onmouseout="Mouseout('loginbtn')" onmousemove="Mouseover('loginbtn')" style=" float:right;">登录</div>
         </div>
         <div id="setting_div">
             <div id="setting_div_input">
@@ -78,7 +79,7 @@
 
     <!--大厅层 -->
     <div id="hall_div">
-        <div style="width:610px; height:25px;"><div id="ExitSystemBtn">×关闭</div></div>
+        <div style="width:750px; height:25px;"><div id="ExitSystemBtn">×关闭</div></div>
         <div id="hall_div_userinfo">
             <!--显示在线好友列表-->
 			 <div id="UserListContent">
@@ -106,6 +107,68 @@
         <div class="Call_Div_Button">
             <div class="ButtonImg" onclick="AcceptRequestBtnClick()">同意</div>
             <div class="ButtonImg" onclick="RejectRequestBtnClick()">拒绝</div>
+        </div>
+    </div>
+     <!--高级设置界面 -->
+    <div id="advanceset_div">
+        <div id="advanceset_div_close">×关闭</div>
+        <div id="advanceset_div_mainpark">
+            <div id="advanceset_div_Div_Btn">
+                <div id="Btn_Div_Device" clickstate="true" onclick="AdvancedSetup('Device_Interface','Btn_Div_Device')" onmouseout="SettingBtnMouseout('Btn_Div_Device')" onmousemove="SettingBtnMouseover('Device_Interface','Btn_Div_Device')">设备选择</div>
+                <div id="Btn_Div_Video" class="Btn_Div" clickstate="false" onclick="AdvancedSetup('Video_Parameter_Interface','Btn_Div_Video')" onmouseout="SettingBtnMouseout('Btn_Div_Video')" onmousemove="SettingBtnMouseover('Video_Parameter_Interface','Btn_Div_Video')">视频参数</div>
+                <div id="Btn_Div_Sound" class="Btn_Div" clickstate="false" onclick="AdvancedSetup('Sound_Parameter_Interface','Btn_Div_Sound')" onmouseout="SettingBtnMouseout('Btn_Div_Sound')" onmousemove="SettingBtnMouseover('Sound_Parameter_Interface','Btn_Div_Sound')">音频参数</div>
+                <div id="Btn_Div_Other" class="Btn_Div" clickstate="false" onclick="AdvancedSetup('Other_Parameter_Interface','Btn_Div_Other')" onmouseout="SettingBtnMouseout('Btn_Div_Other')" onmousemove="SettingBtnMouseover('Other_Parameter_Interface','Btn_Div_Other')">其他设置</div>
+            </div>
+            <div id="advanceset_div_mainpark_parameter">
+                <div style="height:10px;"></div>
+                <div id="Device_Interface">
+                    视频设备：<select id="DeviceType_VideoCapture" onchange="GetTheValue('DeviceType_VideoCapture')" style=" width:250px;"></select><br />
+                    录音设备：<select id="DeviceType_AudioCapture" onchange="GetTheValue('DeviceType_AudioCapture')" style=" width:250px;"></select><br />
+                    放音设备：<select id="DeviceType_AudioPlayBack" onchange="GetTheValue('DeviceType_AudioPlayBack')" style=" width:250px;"></select>
+                </div>
+                <div id="Video_Parameter_Interface">
+                    <table id="advanceset_div_Tab">
+                        <tr>
+                            <td class="td_input"><input type="checkbox" id="ServerSetting" onclick="ChangeTheResult('ServerSetting')" checked="checked" /></td>
+                            <td>服务器配置参数优先</td>
+                            <td></td>
+                            <td class="td_input"><a>质量：</a></td>
+                            <td><select id="quality" onchange="GetTheValue('quality')" disabled="disabled" style=" width:80px;"></select></td>
+                        </tr>
+                        <tr>
+                            <td class="td_input"><a>码率：</a></td>
+                            <td><select id="code_rate" onchange="GetTheValue('code_rate')" disabled="disabled" style=" width:80px;"></select></td>
+                            <td></td>
+                            <td class="td_input"><a>分辨率：</a></td>
+                            <td><select id="distinguishability" onchange="GetTheValue('distinguishability')" disabled="disabled" style=" width:80px;"></select></td>
+                        </tr>
+                        <tr>
+                            <td class="td_input"><a>帧率：</a></td>
+                            <td><select id="frame_rate" onchange="GetTheValue('frame_rate')" disabled="disabled" style=" width:80px;"></select></td>
+                            <td></td>
+                            <td class="td_input"">(当前分辨率：</td>
+                            <td id="current_resolution"></td>
+                        </tr>
+                        <tr>
+                            <td class="td_input"><a>预设：</a></td>
+                            <td><select id="preinstall" onchange="GetTheValue('preinstall')" disabled="disabled" style=" width:80px;"></select></td>
+                            <td></td>
+                            <td><div id="regulate" onclick="BtnAdjust()" onmouseout="Mouseout('regulate')" onmousemove="Mouseover('regulate')">画面调节</div></td>
+                            <td><div id="apply_changes" onclick="BtnApply()" onmouseout="Mouseout('apply_changes')" onmousemove="Mouseover('apply_changes')">应用更改</div></td>
+                        </tr>
+                    </table>            
+                </div>
+                <div id="Sound_Parameter_Interface">
+                    <div style=" height:30px; margin:10px 0px 0px 5px;"><select id="Speak_Mode" style=" width:140px;" onChange="GetTheValue('Speak_Mode')"></select></div>
+                    <div class="audio_tabcontrol"><input id="audio_vadctrl" onchange="ChangeTheResult('audio_vadctrl')" type="checkbox" />静音检测</div>
+                    <div class="audio_tabcontrol"><input id="audio_echoctrl" onchange="ChangeTheResult('audio_echoctrl')" type="checkbox" />回音消除</div>
+                    <div class="audio_tabcontrol"><input id="audio_nsctrl" onchange="ChangeTheResult('audio_nsctrl')" type="checkbox" />噪音抑制</div>
+                    <div class="audio_tabcontrol"><input id="audio_agcctrl" onchange="ChangeTheResult('audio_agcctrl')" type="checkbox" />自动增益</div>
+                </div>
+                <div id="Other_Parameter_Interface">
+                    <input id="Checkbox_P2P" onchange="ChangeTheResult('Checkbox_P2P')" type="checkbox" />P2P优先
+                </div>
+            </div>
         </div>
     </div>
 

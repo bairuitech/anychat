@@ -1,0 +1,94 @@
+@charset "GB2312";
+/* CSS Document */
+
+#VideoShowDiv
+{
+	 width:1020px; 
+	 height:465px; 
+	 position:absolute; 
+	 display:none; 
+	 z-index:200;
+	 background-image:url('../images/dialog/03.png');
+}
+#videoshow1
+{
+	float:left;
+	width:480px; 
+	height:357px;
+	margin:18px 10px 10px 21px;
+}
+#videoshow2
+{
+	float:left;
+	width:480px; 
+	height:357px;
+	margin:18px 10px 10px 2px;
+}
+.ShowName
+{
+	margin-left:20px;
+	font-weight: bold;
+	color:White;
+	font-family:Î¢ÈíÑÅºÚ; 
+	font-size:22px;
+	text-align:center;
+	height:55px; 
+	float:left;
+	width:480px; 
+}
+#finishprivate
+{
+	width:120px; 
+	height:50px; 
+	font-family:Î¢ÈíÑÅºÚ; 
+	font-size:12px;
+	cursor:pointer;
+	float:right; 
+	margin-top:20px;
+	background-image: url('../images/dialog/btnfalse_move.png');
+}
+.Buttons
+{
+	width:120px; 
+	height:50px; 
+	float:right; 
+	text-align:center;
+	line-height:50px;
+	color:White;
+	font-family:Î¢ÈíÑÅºÚ; 
+	font-size:17px;
+	cursor:pointer;
+	margin-top:20px;
+	background-image:url('../images/dialog/btntrue_move.png');
+}
+/*#Target_Volume_Holder
+{
+	float:left;
+	width:480px; 
+	height:5px; 
+	margin:5px 10px 5px 21px;
+	background-color:#FFFFFF;
+}
+
+#Target_Volume
+{
+	float:left;
+	width:0px; 
+	height:5px; 
+	background-color:#00FF00;
+}
+#Mine_Volume_Holder
+{
+	width:480px; 
+	height:5px; 
+	margin:5px 10px 5px 6px; 
+	background-color:#FFFFFF; 
+	float:left;
+}
+#Mine_Volume
+{
+	width:0px; 
+	height:5px; 
+	background-color:#00FF00; 
+	float:left;
+}*/

@@ -126,9 +126,13 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 
 // 网络连接已关闭，该消息只有在客户端连接服务器成功之后，网络异常中断之时触发，reason表示连接断开的原因
 function OnAnyChatLinkClose(reason, errorcode) {
-	AddLog("OnAnyChatLinkClose(reason=" + reason + ", errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
+	var message="OnAnyChatLinkClose(reason=" + reason + ", errorcode=" + errorcode + ")";
+	AddLog(message, LOG_TYPE_EVENT);
 	DisplayLoadingDiv(false);
-	ShowRoomDiv(false);
+	if(mTargetUserId!=0)
+	{
+		ForSession(message);
+	}
 	ShowHallDiv(false);
 	ShowLoginDiv(true);
 }

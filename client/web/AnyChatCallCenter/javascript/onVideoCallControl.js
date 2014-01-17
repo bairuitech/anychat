@@ -10,11 +10,15 @@
     var BRAC_ERRORCODE_SESSION_DISCONNECT=100106;///< 网络断线
 //会话提示信息
 function ForSession(message) {
-    var VHeight = document.body.clientHeight; //  (包括边线的高)
-    $("#SessionPrompt_Div").css("top", "255px"); //设置提示层垂直位置
+    var mBrowserWidth = document.body.offsetWidth; // 网页可见区域宽
+    var mBrowserHeight = document.documentElement.clientHeight; //  网页可见区域高
+    CenterPosition(mBrowserWidth, mBrowserHeight, "SessionPrompt_Div", 300, 170); //主动呼叫层垂直水平居中
     Getdmo("Shade_Div").style.display = "none";
-    Getdmo("Initiative_Call_Div").style.display = "none";
-	Getdmo("BeCalls_Div").style.display = "none";
+    Getdmo("Initiative_Call_Div").style.display = "none";// 隐藏正在呼叫层
+	Getdmo("BeCalls_Div").style.display = "none";// 隐藏被呼叫层
+	Getdmo("advanceset_div").style.display = "none"; // 隐藏设置层
+    Getdmo("VideoShowDiv").style.display = "none"; // 隐藏设置层
+	mTargetUserId=0;
     Getdmo("SessionPrompt_Div").style.color = "White";
     Getdmo("SessionPrompt_Div").innerHTML = message;
     $("#SessionPrompt_Div").fadeTo("slow", 1);
@@ -104,17 +108,9 @@ function onVideoCallControlStart(dwUserId, dwErrorCode, dwFlags, dwParam, szUser
 function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr)
 {
 	BRAC_LeaveRoom(-1);
-    Getdmo("hall_div").style.display = "block"; // 显示大厅
-    //Getdmo("DialogueDiv").style.display = "none"; // 隐藏会话层
-    Getdmo("Shade_Div").style.display = "none"; // 隐藏遮罩层
-    //Getdmo("DivColor").style.display = "none"; // 隐藏颜色层
-    //Getdmo("GetExpression").style.display = "none"; // 隐藏表情层
-    //Getdmo("advanceset_div").style.display = "none"; // 隐藏高级设置层
-    //$("#SendMsg").html(""); // 清空发送信息框内容
-    //$("#Enquire_Div").hide(); // 隐藏结束会话询问框
-    $("#VideoShowDiv").hide(); // 隐藏宽频层
     ForSession("会话结束..."); // 提示层
-    clearInterval(mRefreshVolumeTimer); // 关闭语音音量显示
+	ShowHallDiv(true); // 显示大厅
+    //clearInterval(mRefreshVolumeTimer); // 关闭语音音量显示
 }
 
 //视频呼叫请求发送成功
