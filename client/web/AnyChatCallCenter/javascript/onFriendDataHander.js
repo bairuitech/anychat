@@ -41,8 +41,8 @@ function DisplayOnLineUser(userid) {
 
     var left_img = document.createElement("img");
     left_img.id = userid;
-    left_img.src = "./images/head/head.gif";
-    left_img.onclick = function () { VideoCallRequest(userid); }
+	var img_value=Math.abs(userid)%10;
+    left_img.src = "./images/head/"+img_value+".gif";
     left_img.className = "UserImg";
     left_div.appendChild(left_img);
 
@@ -64,7 +64,15 @@ function DisplayOnLineUser(userid) {
     right_userId.className = "UserInfo";
     right_userId.innerHTML = userid;
     right_div.appendChild(right_userId);
-
+    
+	   //下载插件按钮鼠标划入划出时间
+    main_div.onmouseover = function () {
+       main_div.style.backgroundColor = "#8FBC8B";
+    }
+    main_div.onmouseout = function () {
+       main_div.style.backgroundColor = "#FAFADD";
+    }
+	main_div.onclick=function () { VideoCallRequest(userid); }
     Getdmo("UserListContent").appendChild(main_div);
 }
 
