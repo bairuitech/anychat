@@ -75,6 +75,7 @@ const
   BRAC_SO_LOCALVIDEO_DEINTERLACE	=37;		///< 本地视频反交织参数控制（参数为int型： 0 不进行反交织处理[默认]；1 反交织处理），当输入视频源是隔行扫描源（如电视信号）时通过反交织处理可以提高画面质量
   BRAC_SO_LOCALVIDEO_WIDTHCTRL		=38;		///< 本地视频采集分辨率宽度控制（参数为int型，同服务器配置：VideoWidth）
   BRAC_SO_LOCALVIDEO_HEIGHTCTRL		=39;		///< 本地视频采集分辨率高度控制（参数为int型，同服务器配置：VideoHeight）
+  BRAC_SO_LOCALVIDEO_TVFORMAT		=104;		///< 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
 
   BRAC_SO_NETWORK_P2PPOLITIC		=40;		///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
   BRAC_SO_NETWORK_P2PCONNECT		=41;		///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -270,10 +271,8 @@ type
   // 设置指定音频设备的音量
   function BRAC_AudioSetVolume(device:BRAC_AudioDevice;dwVolume:DWORD):DWORD;cdecl;
 
-  
   // 用户音、视频录制
   function BRAC_StreamRecordCtrl(dwUserId:DWORD;bStartRecord:BOOL;dwFlags:DWORD;dwParam:DWORD):DWORD;cdecl;
-
   // 对用户的视频进行抓拍（快照）
   function BRAC_SnapShot(dwUserId:DWORD;dwFlags:DWORD;dwParam:DWORD):DWORD;cdecl;
   
@@ -313,6 +312,9 @@ type
   function  BRAC_SetSDKOption(optname:Integer;optval:Pointer;optlen:Integer):DWORD;cdecl;
   // SDK内核参数状态查询
   function BRAC_GetSDKOption(optname:Integer;optval:Pointer;optlen:Integer):DWORD;cdecl;  
+  
+  // 视频呼叫事件控制（请求、回复、挂断等）
+  function BRAC_VideoCallControl(dwEventType:DWORD; dwUserId:DWORD; dwErrorCode:DWORD; dwFlags:DWORD; dwParam:DWORD; lpUserStr:LPCTSTR):DWORD;cdecl;
 
 implementation
 
@@ -366,48 +368,53 @@ implementation
 
   // 设置异步消息通知回调函数
   function BRAC_SetNotifyMessageCallBack(lpFunction:BRAC_NotifyMessage_CallBack;lpUserValue:Pointer=nil):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_SetNotifyMessageCallBack';                          
-                        
+           external C_BRAnyChatCoreLibName name 'BRAC_SetNotifyMessageCallBack';
+
+  // 设置视频通话消息通知回调函数
+  function BRAC_SetVideoCallEventCallBack(lpFunction:BRAC_VideoCallEvent_CallBack; lpUserValue:Pointer=nil):DWORD;cdecl;
+			external C_BRAnyChatCoreLibName name 'BRAC_SetVideoCallEventCallBack';
+
+
   // 连接服务器
   function BRAC_Connect(lpServerAddr:LPCTSTR;dwPort:DWORD):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_Connect';
+			external C_BRAnyChatCoreLibName name 'BRAC_Connect';
   // 登录系统
   function BRAC_Login(lpUserName:LPCTSTR;lpPassword:LPCTSTR;dwPassEncType:DWORD):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_Login';
+			external C_BRAnyChatCoreLibName name 'BRAC_Login';
   // 进入房间
   function BRAC_EnterRoom(dwRoomid:DWORD;lpRoomPass:LPCTSTR;dwPassEncType:DWORD):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_EnterRoom';
+			external C_BRAnyChatCoreLibName name 'BRAC_EnterRoom';
   // 进入房间
   function BRAC_EnterRoomEx(lpRoomName:LPCTSTR;lpRoomPass:LPCTSTR):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_EnterRoomEx';  
+			external C_BRAnyChatCoreLibName name 'BRAC_EnterRoomEx';  
   // 离开房间
   function BRAC_LeaveRoom(dwRoomid:DWORD):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_LeaveRoom';
+			external C_BRAnyChatCoreLibName name 'BRAC_LeaveRoom';
   // 注销系统
   function BRAC_Logout():DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_Logout';
+			external C_BRAnyChatCoreLibName name 'BRAC_Logout';
   // 释放所有资源
   function BRAC_Release():DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_Release';  
+			external C_BRAnyChatCoreLibName name 'BRAC_Release';  
 
   // 获取当前房间在线用户列表
   function BRAC_GetOnlineUser(lpUserIDArray:LPDWORD;var dwUserNum:DWORD):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_GetOnlineUser';
+			external C_BRAnyChatCoreLibName name 'BRAC_GetOnlineUser';
   // 查询用户摄像头的状态
   function BRAC_GetCameraState(dwUserid:DWORD;var dwState:DWORD):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_GetCameraState'; 
+			external C_BRAnyChatCoreLibName name 'BRAC_GetCameraState'; 
   // 查询用户发言状态
   function BRAC_GetSpeakState(dwUserid:DWORD;var dwState:DWORD):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_GetSpeakState';
+			external C_BRAnyChatCoreLibName name 'BRAC_GetSpeakState';
   // 查询用户级别
   function BRAC_GetUserLevel(dwUserid:DWORD;var dwLevel:DWORD):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_GetUserLevel';
+			external C_BRAnyChatCoreLibName name 'BRAC_GetUserLevel';
   // 查询用户名称
   function BRAC_GetUserName(dwUserid:DWORD;lpUserName:PChar;dwLen:DWORD):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_GetUserName';
+			external C_BRAnyChatCoreLibName name 'BRAC_GetUserName';
   // 查询房间名称
   function BRAC_GetRoomName(dwRoomId:DWORD;lpRoomName:PChar;dwLen:DWORD):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_GetRoomName';  
+			external C_BRAnyChatCoreLibName name 'BRAC_GetRoomName';  
 
   // 显示本地视频画面调节对话框
   function BRAC_ShowLVProperty(hParent:THandle;szCaption:LPCTSTR;dwX:DWORD;dwY:DWORD):DWORD;cdecl;
@@ -521,8 +528,8 @@ implementation
            external C_BRAnyChatCoreLibName name 'BRAC_GetSDKOption';                          
             
   // 视频呼叫事件控制（请求、回复、挂断等）
-  function BRAC_VideoCallControl(dwEventType:DWORD; dwUserId:DWORD; dwErrorCode:DWORD; dwFlags:DWORD; dwParam:DWORD, lpUserStr:LPCTSTR):DWORD;cdecl;
-
+  function BRAC_VideoCallControl(dwEventType:DWORD; dwUserId:DWORD; dwErrorCode:DWORD; dwFlags:DWORD; dwParam:DWORD; lpUserStr:LPCTSTR):DWORD;cdecl;
+			external C_BRAnyChatCoreLibName name 'BRAC_VideoCallControl';     
 
 
 end.
