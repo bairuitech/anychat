@@ -7,7 +7,10 @@
  
 var mDefaultServerAddr = "demo.anychat.cn";		// 默认服务器地址
 var mDefaultServerPort = 8906;					// 默认服务器端口号
-var mRefreshVolumeTimer; 						// 实时音量大小定时器
+var mSelfUserId = -1; 							// 本地用户ID
+var mTargetUserId = 0;							// 目标用户ID（请求了对方的音视频）
+var mRefreshVolumeTimer = -1; 					// 实时音量大小定时器
+var mRefreshPluginTimer = -1;					// 检查插件是否安装完成定时器
 
 // 日志记录类型，在日志信息栏内显示不同的颜色
 var LOG_TYPE_NORMAL = 0;
@@ -19,34 +22,23 @@ var LOG_TYPE_ERROR = 3;
 var NOTIFY_TYPE_NORMAL = 0;
 var NOTIFY_TYPE_SYSTEM = 1;
 
-var mRefreshVolumeTimer; // 实时音量大小定时器
-
-function myFocus(obj,color){
-	//判断文本框中的内容是否是默认内容
-
-	if(obj.value=="密码可为空"){
-	obj.value="";
-	}
-	//设置文本框获取焦点时候背景颜色变换
-	obj.style.backgroundColor=color;
-}
-
-function myblur(obj,color){
-	//当鼠标离开时候改变文本框背景颜色
-	obj.style.background=color;
-}
-
 function LogicInit() {
     setTimeout(function () {
         //检查是否安装了插件	
-        var NEED_ANYCHAT_APILEVEL = "0"; 					// 定义业务层需要的AnyChat API Level
-        var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	//初始化插件
+        var NEED_ANYCHAT_APILEVEL = "0"; 						// 定义业务层需要的AnyChat API Level
+        var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	// 初始化插件
         AddLog("BRAC_InitSDK(" + NEED_ANYCHAT_APILEVEL + ")=" + errorcode, LOG_TYPE_API);
         if (errorcode == GV_ERR_SUCCESS) {
+			if(mRefreshPluginTimer != -1)
+				clearInterval(mRefreshPluginTimer); 			// 清除插件安装检测定时器
             ShowLoginDiv(true);
             AddLog("AnyChat Plugin Version:" + BRAC_GetVersion(0), LOG_TYPE_NORMAL);
             AddLog("AnyChat SDK Version:" + BRAC_GetVersion(1), LOG_TYPE_NORMAL);
             AddLog("Build Time:" + BRAC_GetSDKOptionString(BRAC_SO_CORESDK_BUILDTIME), LOG_TYPE_NORMAL);
+			
+			GetID("prompt_div").style.display = "none"; 		// 隐藏插件安装提示界面
+			// 初始化界面元素
+			InitInterfaceUI();
         } else { 						// 没有安装插件，或是插件版本太旧，显示插件下载界面
             GetID("prompt_div").style.display = "block";
             SetDivTop("prompt_div", 300);
@@ -54,8 +46,16 @@ function LogicInit() {
                 GetID("prompt_div_line1").innerHTML = "首次进入需要安装插件，请点击下载按钮进行安装！";
             else if (errorcode == GV_ERR_PLUGINOLDVERSION)
                 GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";
-        }
+				
+			if(mRefreshPluginTimer == -1) {
+				mRefreshPluginTimer = setInterval(function(){ LogicInit(); }, 1000);
+			}
+		}
     }, 500);
+}
+
+// 初始化界面元素
+function InitInterfaceUI() {
     //设置按钮
     GetID("setting").onclick = function () {
         if (GetID("setting_div").style.display == "block")
@@ -114,14 +114,28 @@ function LogicInit() {
     }
 	//关闭设置界面
 	Getdmo("advanceset_div_close").onclick = function () {
-    if (Getdmo("advanceset_div").style.display == "block")
-        Getdmo("advanceset_div").style.display = "none";
-     else {
-        Getdmo("advanceset_div").style.display = "block"; // 显示高级设置界面
+		if (Getdmo("advanceset_div").style.display == "block")
+			Getdmo("advanceset_div").style.display = "none";
+		else {
+			Getdmo("advanceset_div").style.display = "block"; // 显示高级设置界面
             // 初始化高级设置界面
-        InitAdvanced();
+			InitAdvancedSettingsDlg();
         }
     }
+}
+
+function PasswordFocus(obj,color){
+	// 判断文本框中的内容是否是默认内容
+	if(obj.value=="密码可为空")
+		obj.value="";
+	obj.type="password";
+	// 设置文本框获取焦点时候背景颜色变换
+	obj.style.backgroundColor=color;
+}
+
+// 当鼠标离开时候改变文本框背景颜色
+function myblur(obj,color){
+	obj.style.background=color;
 }
 
 //计算高度并设置界面位置
@@ -339,7 +353,7 @@ function createVideoContainer() {
         else {
             Getdmo("advanceset_div").style.display = "block"; // 显示高级设置界面
             // 初始化高级设置界面
-            InitAdvanced();
+            InitAdvancedSettingsDlg();
         }
     }
     video_paramers_config.innerHTML = "设置";

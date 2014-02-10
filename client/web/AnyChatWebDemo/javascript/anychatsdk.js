@@ -157,6 +157,12 @@ var BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	=		128;// 禁止目标（被呼叫端）视频
 var GV_ERR_SUCCESS			=	0;				// 成功
 var GV_ERR_PLUGINNOINSTALL	=	1010000;		// 插件没有安装
 var GV_ERR_PLUGINOLDVERSION =	1010001;		// 插件版本太低
+var GV_ERR_SESSION_QUIT		= 	100101;			// 源用户主动放弃会话
+var GV_ERR_SESSION_OFFLINE	= 	100102;			// 目标用户不在线
+var GV_ERR_SESSION_BUSY		= 	100103;			// 目标用户忙
+var GV_ERR_SESSION_REFUSE	= 	100104;			// 目标用户拒绝会话
+var GV_ERR_SESSION_TIMEOUT	= 	100105;			// 会话请求超时
+var GV_ERR_SESSION_DISCONNECT=	100106;			// 网络断线
 
 
 // 插件最低需求版本号
@@ -174,26 +180,28 @@ function BRAC_InitSDK(apilevel) {
 	try {
 		// 创建AnyChat SDK插件
 		var anychatobj = document.createElement("object")
-	    anychatobj.id = "AnyChatSDKPlugin";
-		anychatobj.width = "1 px";
-		anychatobj.height = "1 px";
-	    if (window.ActiveXObject)
+	    if (window.ActiveXObject  || "ActiveXObject" in window)
 	        anychatobj.classid = "clsid:91CC58C4-BA8A-400D-A176-856EDF42CB57";
 	    else
 	        anychatobj.type = "application/anychat-plugin";
+		anychatobj.id = "AnyChatSDKPlugin";
+		
 	    // 创建视频显示插件
 	    var videoobj = document.createElement("object")
-	    videoobj.id = "AnyChatVideoPlugin";
-	    if (window.ActiveXObject)
+
+	    if (window.ActiveXObject || "ActiveXObject" in window)
 	        videoobj.classid = "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7";
 	    else
 	        videoobj.type = "application/anychat-video";
+		videoobj.id = "AnyChatVideoPlugin";		
 	    // 创建一个测试层
 	    var insertdiv = document.createElement("div");
 	    insertdiv.id = anychatsdkdiv;
 		insertdiv.appendChild(anychatobj);
 	    insertdiv.appendChild(videoobj);
 	    document.body.appendChild(insertdiv);
+		anychatobj.width = "1 px";
+		anychatobj.height = "1 px";
 	    // 测试插件是否安装
 	    var anychatpluginver = anychatobj.GetVersion(0);
 	    var videopluginver = videoobj.GetVersion(0);
@@ -206,16 +214,28 @@ function BRAC_InitSDK(apilevel) {
 			insertdiv.removeChild(videoobj);
 			anychat = anychatobj;
 			// 关联回调事件
-			if(window.ActiveXObject) {
-				anychat.attachEvent('OnNotifyMessage', OnAnyChatNotifyMessage);
-				anychat.attachEvent('OnTextMessage', OnAnyChatTextMessage);
-				anychat.attachEvent('OnTransBuffer', OnAnyChatTransBuffer);
-				anychat.attachEvent('OnTransBufferEx', OnAnyChatTransBufferEx);
-				anychat.attachEvent('OnTransFile', OnAnyChatTransFile);
-				anychat.attachEvent('OnVolumeChange', OnAnyChatVolumeChange);
-				anychat.attachEvent('OnSDKFilterData', OnAnyChatSDKFilterData);
-				anychat.attachEvent('OnRecordSnapShot', OnAnyChatRecordSnapShot);
-				anychat.attachEvent('OnVideoCallEvent', OnAnyChatVideoCallEvent);
+			if(window.ActiveXObject || "ActiveXObject" in window) {
+				if(window.ActiveXObject && anychat.attachEvent) {
+					anychat.attachEvent('OnNotifyMessage', OnAnyChatNotifyMessage);
+					anychat.attachEvent('OnTextMessage', OnAnyChatTextMessage);
+					anychat.attachEvent('OnTransBuffer', OnAnyChatTransBuffer);
+					anychat.attachEvent('OnTransBufferEx', OnAnyChatTransBufferEx);
+					anychat.attachEvent('OnTransFile', OnAnyChatTransFile);
+					anychat.attachEvent('OnVolumeChange', OnAnyChatVolumeChange);
+					anychat.attachEvent('OnSDKFilterData', OnAnyChatSDKFilterData);
+					anychat.attachEvent('OnRecordSnapShot', OnAnyChatRecordSnapShot);
+					anychat.attachEvent('OnVideoCallEvent', OnAnyChatVideoCallEvent);
+				} else {
+					BRAC_AttachIE11Event(anychat, 'OnNotifyMessage', OnAnyChatNotifyMessage);
+					BRAC_AttachIE11Event(anychat, 'OnTextMessage', OnAnyChatTextMessage);
+					BRAC_AttachIE11Event(anychat, 'OnTransBuffer', OnAnyChatTransBuffer);
+					BRAC_AttachIE11Event(anychat, 'OnTransBufferEx', OnAnyChatTransBufferEx);
+					BRAC_AttachIE11Event(anychat, 'OnTransFile', OnAnyChatTransFile);
+					BRAC_AttachIE11Event(anychat, 'OnVolumeChange', OnAnyChatVolumeChange);
+					BRAC_AttachIE11Event(anychat, 'OnSDKFilterData', OnAnyChatSDKFilterData);
+					BRAC_AttachIE11Event(anychat, 'OnRecordSnapShot', OnAnyChatRecordSnapShot);
+					BRAC_AttachIE11Event(anychat, 'OnVideoCallEvent', OnAnyChatVideoCallEvent);
+				}
 			} else {
 				anychat.OnNotifyMessage = OnAnyChatNotifyMessage;
 				anychat.OnTextMessage = OnAnyChatTextMessage;
@@ -250,6 +270,24 @@ function BRAC_GetDmoObject(id) {
 	return null;
 }
 
+function BRAC_AttachIE11Event(obj, _strEventId, _functionCallback) {
+	var nameFromToStringRegex = /^function\s?([^\s(]*)/;
+	var paramsFromToStringRegex = /\(\)|\(.+\)/;
+	var params = _functionCallback.toString().match(paramsFromToStringRegex)[0];
+	var functionName = _functionCallback.name || _functionCallback.toString().match(nameFromToStringRegex)[1];
+	var handler;
+	try {
+		handler = document.createElement("script");
+		handler.setAttribute("for", obj.id);
+	}
+	catch(ex) {
+		handler = document.createElement('<script for="' + obj.id + '">');
+	}
+	handler.event = _strEventId + params;
+	handler.appendChild(document.createTextNode(functionName + params + ";"));
+	document.body.appendChild(handler);
+}
+
 // 设置视频显示位置
 function BRAC_SetVideoPos(userid, parentobj, id) {
 	var videoobj = BRAC_GetDmoObject(id);
@@ -259,14 +297,14 @@ function BRAC_SetVideoPos(userid, parentobj, id) {
 	} else {
 		// 创建视频显示插件
 	    videoobj = document.createElement("object")
-	    videoobj.id = id;
-		videoobj.width = "100%";
-		videoobj.height = "100%";
-	    if (window.ActiveXObject)
+	    if (window.ActiveXObject || "ActiveXObject" in window)
 	        videoobj.classid = "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7";
 	    else
 	        videoobj.type = "application/anychat-video";
+		videoobj.id = id;
 		parentobj.appendChild(videoobj);
+		videoobj.width = "100%";
+		videoobj.height = "100%";
 		// 关联到AnyChat SDK
 		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
 		videoobj.SetUserId(userid);

@@ -1,17 +1,4 @@
 // JavaScript Document
-
-// 常见出错代码定义
-var BRAC_ERRORCODE_SUCCESS			= 0;	 	///< 没有错误
-var BRAC_ERRORCODE_SESSION_QUIT		= 100101;	///< 源用户主动放弃会话
-var BRAC_ERRORCODE_SESSION_OFFLINE	= 100102;	///< 目标用户不在线
-var BRAC_ERRORCODE_SESSION_BUSY		= 100103;	///< 目标用户忙
-var BRAC_ERRORCODE_SESSION_REFUSE	= 100104;	///< 目标用户拒绝会话
-var BRAC_ERRORCODE_SESSION_TIMEOUT	= 100105;	///< 会话请求超时
-var BRAC_ERRORCODE_SESSION_DISCONNECT=100106;	///< 网络断线
-
-var mSelfUserId = -1; 							// 本地用户ID
-var mTargetUserId = 0;							// 目标用户ID（请求了对方的音视频）
-
 var USER_ONLINE_STATUS=1;						// 用户上线
 var USER_OFFLINE_STATUS=0;						// 用户下线
 
@@ -112,7 +99,7 @@ function ForSession(message) {
 function CancelCall() {
     $("#Shade_Div").hide();
     $("#Initiative_Call_Div").hide();
-	BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,BRAC_ERRORCODE_SESSION_QUIT,0,0,"");  
+	BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,GV_ERR_SESSION_QUIT,0,0,"");  
     ForSession("取消呼叫...");
 }
 //呼叫用户双击
@@ -131,7 +118,7 @@ function AcceptRequestBtnClick() {
 }
 //拒绝会话
 function RejectRequestBtnClick() {
-	BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,BRAC_ERRORCODE_SESSION_REFUSE,0,0,"");  
+	BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,GV_ERR_SESSION_REFUSE,0,0,"");  
     $("#Shade_Div").hide();
     $("#BeCalls_Div").hide();
     ForSession("拒绝对方请求...");
@@ -151,25 +138,25 @@ function onVideoCallControlReply(dwUserId, dwErrorCode, dwFlags, dwParam, szUser
 {
 	switch(dwErrorCode)
 	{
-		case BRAC_ERRORCODE_SUCCESS:
+		case GV_ERR_SUCCESS:
 		    onSendVideoCallRequestSucess(dwUserId);
 			break;
-		case BRAC_ERRORCODE_SESSION_QUIT:
+		case GV_ERR_SESSION_QUIT:
 			ForSession("源用户主动放弃会话");
 			break;
-		case BRAC_ERRORCODE_SESSION_OFFLINE:
+		case GV_ERR_SESSION_OFFLINE:
 		    ForSession("目标用户不在线");
 			break;
-		case BRAC_ERRORCODE_SESSION_BUSY:
+		case GV_ERR_SESSION_BUSY:
 			ForSession("目标用户忙");
 			break; 
-		case BRAC_ERRORCODE_SESSION_REFUSE:
+		case GV_ERR_SESSION_REFUSE:
 		 	ForSession("目标用户拒绝会话");
 			break; 
-		case BRAC_ERRORCODE_SESSION_TIMEOUT:
+		case GV_ERR_SESSION_TIMEOUT:
 		 	ForSession("会话请求超时");
 			break; 
-		case BRAC_ERRORCODE_SESSION_DISCONNECT:
+		case GV_ERR_SESSION_DISCONNECT:
 			ForSession("网络断线");
 			break; 
 		default:
@@ -192,7 +179,8 @@ function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUse
 	BRAC_LeaveRoom(-1);
     ForSession("会话结束..."); // 提示层
 	ShowHallDiv(true); // 显示大厅
-    //clearInterval(mRefreshVolumeTimer); // 关闭语音音量显示
+	if(mRefreshVolumeTimer != -1)
+		clearInterval(mRefreshVolumeTimer); // 清除实时音量显示计时器
 }
 
 //视频呼叫请求发送成功

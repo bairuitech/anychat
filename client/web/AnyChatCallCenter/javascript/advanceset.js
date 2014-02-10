@@ -24,7 +24,7 @@ function filltheselect(id, txtArray,valueArray) {
     }
 }
 // 初始化高级设置界面所有控件 进行赋值
-function InitAdvanced() {
+function InitAdvancedSettingsDlg() {
     filltheselect("code_rate", code_rate_txt,code_rate_value); // 填充码率下拉框
     filltheselect("quality", quality_txt,quality_value); // 填充质量下拉框
     filltheselect("distinguishability", distinguishability_txt,distinguishability_txt); // 填充分辨率下拉框
