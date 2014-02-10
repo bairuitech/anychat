@@ -305,9 +305,12 @@ function BRAC_SetVideoPos(userid, parentobj, id) {
 		parentobj.appendChild(videoobj);
 		videoobj.width = "100%";
 		videoobj.height = "100%";
-		// 关联到AnyChat SDK
-		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
-		videoobj.SetUserId(userid);
+		
+		setTimeout(function () {
+			// 关联到AnyChat SDK
+			videoobj.SetIPCGuid(BRAC_GetIPCGuid());
+			videoobj.SetUserId(userid);
+		}, 100);
 	}	
 }
 
