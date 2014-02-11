@@ -167,7 +167,7 @@ var GV_ERR_SESSION_DISCONNECT=	100106;			// 网络断线
 
 // 插件最低需求版本号
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
-var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.2";
+var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.4";
 
 /********************************************
  *				方法定义部分				*
@@ -305,12 +305,9 @@ function BRAC_SetVideoPos(userid, parentobj, id) {
 		parentobj.appendChild(videoobj);
 		videoobj.width = "100%";
 		videoobj.height = "100%";
-		
-		setTimeout(function () {
-			// 关联到AnyChat SDK
-			videoobj.SetIPCGuid(BRAC_GetIPCGuid());
-			videoobj.SetUserId(userid);
-		}, 100);
+		// 关联到AnyChat SDK
+		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
+		videoobj.SetUserId(userid);
 	}	
 }
 
