@@ -117,6 +117,15 @@ namespace ANYCHATAPI
 		public const int BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO=0x20;	// 禁止源（呼叫端）视频
 		public const int BRAC_VIDEOCALL_FLAGS_FBTARAUDIO=0x40;	// 禁止目标（被呼叫端）音频
 		public const int BRAC_VIDEOCALL_FLAGS_FBTARVIDEO=0x80;	// 禁止目标（被呼叫端）视频
+		
+		// 远程视频方向修正标志定义
+		public const int BRAC_ROTATION_FLAGS_MIRRORED	=0x1000;// 图像需要镜像翻转
+		public const int BRAC_ROTATION_FLAGS_ROTATION90	=0x2000;// 顺时针旋转90度
+		public const int BRAC_ROTATION_FLAGS_ROTATION180=0x4000;// 顺时针旋转180度
+		public const int BRAC_ROTATION_FLAGS_ROTATION270=0x8000;// 顺时针旋转270度
+
+		// 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
+		public const int BRAC_USERINFO_CTRLCODE_ROTATION=	8;	// 让指定的用户视频在显示时旋转，wParam为旋转角度参数
 
         // SDK消息定义
         public const int WM_GV = 0x0400 + 200;
