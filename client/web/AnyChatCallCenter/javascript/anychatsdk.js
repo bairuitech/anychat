@@ -164,6 +164,15 @@ var GV_ERR_SESSION_REFUSE	= 	100104;			// 目标用户拒绝会话
 var GV_ERR_SESSION_TIMEOUT	= 	100105;			// 会话请求超时
 var GV_ERR_SESSION_DISCONNECT=	100106;			// 网络断线
 
+// 远程视频方向修正标志定义
+var BRAC_ROTATION_FLAGS_MIRRORED	=	0x1000;	// 图像需要镜像翻转
+var BRAC_ROTATION_FLAGS_ROTATION90	=	0x2000;	// 顺时针旋转90度
+var BRAC_ROTATION_FLAGS_ROTATION180	=	0x4000;	// 顺时针旋转180度
+var BRAC_ROTATION_FLAGS_ROTATION270	=	0x8000;	// 顺时针旋转270度
+
+// 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
+var BRAC_USERINFO_CTRLCODE_ROTATION	=		8;	// 让指定的用户视频在显示时旋转，wParam为旋转角度参数
+
 
 // 插件最低需求版本号
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
