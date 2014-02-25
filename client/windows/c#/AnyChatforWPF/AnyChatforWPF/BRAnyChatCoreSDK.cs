@@ -57,6 +57,7 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_NETWORK_UDPSERVICEPORT	=	44;	// 设置本地UDP服务端口（参数为int型），连接服务器之前设置有效
 		public const int BRAC_SO_NETWORK_MULTICASTPOLITIC=	45;	// 组播策略控制（参数为int型：0 执行服务器路由策略，禁止组播发送[默认]， 1 忽略服务器路由策略，只向组播组广播媒体流， 2 执行服务器路由策略，同时组播）
 		public const int BRAC_SO_NETWORK_TRANSBUFMAXBITRATE=46;	// 传输缓冲区、文件最大码率控制（参数为int型，0 不限制，以最快速率传输[默认]， 否则表示限制码率，单位为：bps）
+		public const int BRAC_SO_NETWORK_AUTORECONNECT	=	47;	// 网络掉线自动重连功能控制（参数为int型，0 关闭， 1 开启[默认]）
 		
 		public const int BRAC_SO_STREAM_MAXBUFFERTIME	=	60;	// 最大流缓冲时间（参数为int型，单位：毫秒，取值范围：500 ~ 5000，默认：800），发言模式设置值，歌曲模式会自动增加一倍
 		public const int BRAC_SO_STREAM_SMOOTHPLAYMODE	=	61;	// 平滑播放模式（参数为int型，0 关闭[默认], 1 打开），打开状态下遇到视频丢帧时会继续播放（可能出现马赛克），不会卡住
