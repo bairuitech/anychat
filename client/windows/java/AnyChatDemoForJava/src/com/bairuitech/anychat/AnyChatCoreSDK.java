@@ -393,12 +393,14 @@ public class AnyChatCoreSDK
         tBundle.putString("MESSAGE", message);
         tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);*/
-		AnyChatCoreSDK.this.textMsgEvent.OnAnyChatTextMessage(dwFromUserid, dwToUserid, bSecret!=0?true:false, message);
+		if(AnyChatCoreSDK.this.textMsgEvent!=null)
+			AnyChatCoreSDK.this.textMsgEvent.OnAnyChatTextMessage(dwFromUserid, dwToUserid, bSecret!=0?true:false, message);
     }
     // 文件传输回调函数定义
 	private void OnTransFileCallBack(int userid, String filename, String tempfilepath, int filelength, int wparam, int lparam, int taskid)
     {
-		AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransFile(userid, filename, tempfilepath, filelength, wparam, lparam, taskid);
+		if(AnyChatCoreSDK.this.transDataEvent!=null)
+			AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransFile(userid, filename, tempfilepath, filelength, wparam, lparam, taskid);
     /*	Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TRANSFILE);       
@@ -415,7 +417,8 @@ public class AnyChatCoreSDK
     // 缓冲区回调函数定义
 	private void OnTransBufferCallBack(int userid, byte[] buf, int len)
     {
-		 AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransBuffer(userid, buf, len);
+		if(AnyChatCoreSDK.this.transDataEvent!=null)
+		 	AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransBuffer(userid, buf, len);
     /*	Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TRANSBUF);       
