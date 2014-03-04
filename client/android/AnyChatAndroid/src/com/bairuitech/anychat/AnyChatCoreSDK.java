@@ -144,6 +144,11 @@ public class AnyChatCoreSDK
 	public native int GetUserVideoWidth(int userid);
 	// 获取指定用户的视频分辨率高度
 	public native int GetUserVideoHeight(int userid);
+	
+	// 获取指定房间的字符串类型状态
+    public native String QueryRoomStateString(int roomid, int infoname);
+	// 获取指定房间的整型状态
+    public native int QueryRoomStateInt(int roomid, int infoname);
 
 	// 设置服务器认证密码
 	public native int SetServerAuthPass(String Password);
@@ -248,6 +253,9 @@ public class AnyChatCoreSDK
 	public native String GetGroupName(int dwGroupId);
 	// 用户信息控制
 	public native int UserInfoControl(int dwUserId, int dwCtrlCode, int wParam, int lParam, String szStrValue);
+	
+	// IP组播功能控制
+	public native int MultiCastControl(String lpMultiCastAddr, int dwPort, String lpNicAddr, int dwTTL, int dwFlags);
     
     // 异步消息通知
     public void OnNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
