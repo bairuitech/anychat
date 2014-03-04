@@ -150,8 +150,10 @@ namespace AnyChatforWPF
             // 将图像进行翻转
             TransformedBitmap RotateBitmap = new TransformedBitmap();
             RotateBitmap.BeginInit();
-            RotateBitmap.Source = bs;
-            RotateBitmap.Transform = new RotateTransform(180);
+            RotateBitmap.Source = bs;                    
+            ScaleTransform scaleTransform = new ScaleTransform();
+            scaleTransform.ScaleY = -1;
+            RotateBitmap.Transform = scaleTransform;
             RotateBitmap.EndInit();
             RotateBitmap.Freeze();
 
