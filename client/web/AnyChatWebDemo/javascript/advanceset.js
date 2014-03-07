@@ -13,6 +13,13 @@ var frame_rate_value= [5, 8, 12, 15 , 20 , 25 , 30 ]; // 帧率值
 var preinstall_value= [1, 2, 3, 4, 5]; // 预设参数值
 var speakmode_value= [0, 1, 2, 3]; // 音频模式值
 
+var distinguishability=[320,240];
+var bitrate=90000;
+var framerate=12;
+var videoquality=3;
+var prevideoencode=3;
+
+
 //填充下拉框值
 function filltheselect(id, txtArray,valueArray) {
     GetID(id).options.length = 0;
@@ -74,22 +81,21 @@ function GetTheValue(id) {
             BRAC_SelectVideoCapture(BRAC_DEVICE_AUDIOPLAYBACK, value);
             break;
         case "quality": // 质量
-            BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_QUALITYCTRL, parseInt(value));
+			videoquality= parseInt(value);
             break;
         case "code_rate": // 码率
-			BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_BITRATECTRL, parseInt(value));
+		    bitrate=parseInt(value);
             break;
         case "distinguishability": // 分辨率
             var resolution = value.split('x');
-            BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_WIDTHCTRL, parseInt(resolution[0]));
-            BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_HEIGHTCTRL, parseInt(resolution[1]));
-            //GetID("current_resolution").innerHTML = BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_WIDTHCTRL) + "x" + BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_HEIGHTCTRL) + ")";
+			distinguishability[0]= parseInt(resolution[0]);
+			distinguishability[1]=parseInt(resolution[1]);
 			break;
         case "frame_rate": // 帧率
-            BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_FPSCTRL, parseInt(value));
+			framerate=parseInt(value);
             break;
         case "preinstall": // 预设
-            BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_PRESETCTRL, parseInt(value));
+			prevideoencode=parseInt(value);
             break;
         case "Speak_Mode": // 音频播放模式
             BRAC_SetSDKOption(BRAC_SO_AUDIO_CAPTUREMODE, parseInt(value));
@@ -206,6 +212,20 @@ function BtnAdjust() {
 }
 // 应用设置
 function BtnApply() {
+	// 设置本地视频编码的码率（如果码率为0，则表示使用质量优先模式）
+	BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_BITRATECTRL,bitrate);
+	// 设置本地视频编码的质量
+	BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_QUALITYCTRL,videoquality);
+	// 设置本地视频采集分辨率
+	BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_WIDTHCTRL,distinguishability[0]);
+    BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_HEIGHTCTRL, distinguishability[1]);
+	// 设置本地视频编码的帧率
+	BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_FPSCTRL,framerate);
+	// 设置本地视频编码的关键帧间隔
+	BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_GOPCTRL, framerate*4);
+	// 设置视频编码预设参数（值越大，编码质量越高，占用CPU资源也会越高）
+	BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_PRESETCTRL,prevideoencode);
+	// 让视频参数生效
     BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_APPLYPARAM, 1);
     setTimeout(initControlSelected, 500);
 }
