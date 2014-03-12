@@ -89,6 +89,9 @@ var BRAC_SO_VIDEOSHOW_SETPRIMARYUSER = 		81;	// ÉèÖÃÖ÷ÏÔÊ¾ÓÃ»§±àºÅ£¨²ÎÊýÎª£ºintÐ
 var BRAC_SO_VIDEOSHOW_SETOVERLAYUSER = 		82;	// ÉèÖÃµü¼ÓÏÔÊ¾ÓÃ»§±àºÅ£¨²ÎÊýÎª£ºintÐÍ£¬ÓÃ»§IDºÅ£©
 var BRAC_SO_VIDEOSHOW_DRIVERCTRL = 			83;	// ÊÓÆµÏÔÊ¾Çý¶¯¿ØÖÆ£¨²ÎÊýÎª£ºintÐÍ£¬0 Ä¬ÈÏÇý¶¯£¬ 1 Windows DirectShow£¬2 Windows GDI£¬3 SDL, 4 Android2X£©
 
+var BRAC_SO_CORESDK_TICKOUTUSER	=			110;// ´Ó·þÎñÆ÷ÉÏÌßµôÖ¸¶¨ÓÃ»§£¨²ÎÊýÎªintÐÍ£¬±íÊ¾Ä¿±êÓÃ»§ID£©
+var BRAC_SO_CORESDK_DEVICEMODE	=			130;// Éè±¸Ä£Ê½¿ØÖÆ£¨¾ÖÓòÍøÉè±¸Ö®¼ä¿ÉÒÔ»¥ÏàÍ¨ÐÅ£¬²»ÒÀÀµ·þÎñÆ÷£»²ÎÊýÎªintÐÍ£¬0 ¹Ø±Õ[Ä¬ÈÏ]£¬1 ¿ªÆô£©
+var BRAC_SO_CORESDK_SCREENCAMERACTRL =		131;// ×ÀÃæ¹²Ïí¹¦ÄÜ¿ØÖÆ£¨²ÎÊýÎª£ºintÐÍ£¬ 0 ¹Ø±Õ£¬ 1 ¿ªÆô[Ä¬ÈÏ]£©
 
 // ´«ÊäÈÎÎñÐÅÏ¢²ÎÊý¶¨Òå£¨API£ºBRAC_QueryTransTaskInfo ´«Èë²ÎÊý£©
 var BRAC_TRANSTASK_PROGRESS = 				1;	// ´«ÊäÈÎÎñ½ø¶È²éÑ¯£¨²ÎÊýÎª£ºDOUBLEÐÍ£¬·µ»ØÖµ0.0 ~ 100.0£¬ »ò²ÎÊýÎª£ºDWORDÐÍ£¬·µ»ØÖµ0 ~ 100£©

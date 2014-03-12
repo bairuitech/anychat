@@ -67,15 +67,22 @@ Module BRAnyChatCoreSDK
     '#define BRAC_SO_PROXY_FUNCTIONCTRL			50	///< 本地用户代理功能控制，（参数为：int型，1启动代理，0关闭代理[默认]）
 
     Public Const BRAC_SO_PROXY_VIDEOCTRL 	As Integer = 51
-    '#define BRAC_SO_PROXY_VIDEOCTRL				51	///< 本地用户代理视频控制，将本地视频变为指定用户的视频对外发布（参数为int型，表示其它用户的userid）
+    '#define BRAC_SO_PROXY_VIDEOCTRL			51	///< 本地用户代理视频控制，将本地视频变为指定用户的视频对外发布（参数为int型，表示其它用户的userid）
 
     Public Const BRAC_SO_PROXY_AUDIOCTRL 	As Integer = 52
-    '#define BRAC_SO_PROXY_AUDIOCTRL				52	///< 本地用户代理音频控制，将本地音频变为指定用户的音频对外发布（参数同BRAC_SO_PROXY_VIDEOCTRL）
+    '#define BRAC_SO_PROXY_AUDIOCTRL			52	///< 本地用户代理音频控制，将本地音频变为指定用户的音频对外发布（参数同BRAC_SO_PROXY_VIDEOCTRL）
 
     Public Const BRAC_SO_STREAM_BUFFERTIME 	As Integer = 60
     '#define BRAC_SO_STREAM_BUFFERTIME			60	///< 流缓冲时间（参数为int型，单位：毫秒，取值范围：500 ~ 5000，默认：800）
 	Public Const BRAC_SO_STREAM_SMOOTHPLAYMODE As Integer = 61
 	'#define BRAC_SO_STREAM_SMOOTHPLAYMODE		61	///< 平滑播放模式（参数为int型，0 关闭[默认], 1 打开），打开状态下遇到视频丢帧时会继续播放（可能出现马赛克），不会卡住
+	
+	Public Const BRAC_SO_CORESDK_TICKOUTUSER 	As Integer = 110
+	'#define BRAC_SO_CORESDK_TICKOUTUSER		110	///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
+	Public Const BRAC_SO_CORESDK_DEVICEMODE 	As Integer = 130
+	'#define BRAC_SO_CORESDK_DEVICEMODE			130	///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+	Public Const BRAC_SO_CORESDK_SCREENCAMERACTRL 	As Integer = 131
+	'#define BRAC_SO_CORESDK_SCREENCAMERACTRL	131	///< 桌面共享功能控制（参数为：int型， 0 关闭， 1 开启[默认]）
 
 	'// 传输任务信息参数定义
 	Public Const BRAC_TRANSTASK_PROGRESS 	As Short = 1

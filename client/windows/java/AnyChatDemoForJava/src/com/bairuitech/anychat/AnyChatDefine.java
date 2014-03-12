@@ -85,6 +85,10 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_VIDEOSHOW_SETPRIMARYUSER=	81;	///< 设置主显示用户编号（参数为：int型，用户ID号）
 	public static final int BRAC_SO_VIDEOSHOW_SETOVERLAYUSER=	82;	///< 设置迭加显示用户编号（参数为：int型，用户ID号）
 	public static final int BRAC_SO_VIDEOSHOW_DRIVERCTRL	=	83;	///< 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL）
+	
+	public static final int BRAC_SO_CORESDK_TICKOUTUSER		=	110;///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
+	public static final int BRAC_SO_CORESDK_DEVICEMODE		=	130;///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+	public static final int BRAC_SO_CORESDK_SCREENCAMERACTRL=	131;///< 桌面共享功能控制（参数为：int型， 0 关闭， 1 开启[默认]）
 
 	// 传输任务信息参数定义
 	public static final int BRAC_TRANSTASK_PROGRESS			=	1;	///< 传输任务进度查询（参数为：int型（0 ~ 100））

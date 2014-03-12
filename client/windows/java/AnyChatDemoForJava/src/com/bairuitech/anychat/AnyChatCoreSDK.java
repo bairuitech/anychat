@@ -214,17 +214,17 @@ public class AnyChatCoreSDK
 	public native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String szUserStr);
 	
 	// 获取用户好友ID列表
-	public native int[] GetUserFriends();
+	public native int GetUserFriends(AnyChatOutParam outParam);
 	// 获取好友在线状态
-	public native int GetFriendStatus(int dwFriendUserId);
+	public native int GetFriendStatus(int dwFriendUserId, AnyChatOutParam outParam);
 	// 获取用户分组ID列表
-	public native int[] GetUserGroups();
+	public native int GetUserGroups(AnyChatOutParam outParam);
 	// 获取分组下面的好友列表
-	public native int[] GetGroupFriends(int dwGroupId);
+	public native int GetGroupFriends(int dwGroupId, AnyChatOutParam outParam);
 	// 获取用户信息
-	public native String GetUserInfo(int dwUserId, int dwInfoId);
+	public native int GetUserInfo(int dwUserId, int dwInfoId, AnyChatOutParam outParam);
 	// 获取用户分组名称
-	public native String GetGroupName(int dwGroupId);
+	public native int GetGroupName(int dwGroupId, AnyChatOutParam outParam);
 	// 用户信息控制
 	public native int UserInfoControl(int dwUserId, int dwCtrlCode, int wParam, int lParam, String szStrValue);
 	
@@ -393,14 +393,12 @@ public class AnyChatCoreSDK
         tBundle.putString("MESSAGE", message);
         tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);*/
-		if(AnyChatCoreSDK.this.textMsgEvent!=null)
-			AnyChatCoreSDK.this.textMsgEvent.OnAnyChatTextMessage(dwFromUserid, dwToUserid, bSecret!=0?true:false, message);
+		AnyChatCoreSDK.this.textMsgEvent.OnAnyChatTextMessage(dwFromUserid, dwToUserid, bSecret!=0?true:false, message);
     }
     // 文件传输回调函数定义
 	private void OnTransFileCallBack(int userid, String filename, String tempfilepath, int filelength, int wparam, int lparam, int taskid)
     {
-		if(AnyChatCoreSDK.this.transDataEvent!=null)
-			AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransFile(userid, filename, tempfilepath, filelength, wparam, lparam, taskid);
+		AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransFile(userid, filename, tempfilepath, filelength, wparam, lparam, taskid);
     /*	Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TRANSFILE);       
@@ -417,8 +415,7 @@ public class AnyChatCoreSDK
     // 缓冲区回调函数定义
 	private void OnTransBufferCallBack(int userid, byte[] buf, int len)
     {
-		if(AnyChatCoreSDK.this.transDataEvent!=null)
-		 	AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransBuffer(userid, buf, len);
+		 AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransBuffer(userid, buf, len);
     /*	Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TRANSBUF);       

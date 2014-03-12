@@ -92,6 +92,10 @@ const
   BRAC_SO_STREAM_MAXBUFFERTIME	=60;			///< 最大流缓冲时间（参数为int型，单位：毫秒，取值范围：500 ~ 5000，默认：800），发言模式设置值，歌曲模式会自动增加一倍
   BRAC_SO_STREAM_SMOOTHPLAYMODE =61;			///< 平滑播放模式（参数为int型，0 关闭[默认], 1 打开），打开状态下遇到视频丢帧时会继续播放（可能出现马赛克），不会卡住
   
+  BRAC_SO_CORESDK_TICKOUTUSER		=110;		///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
+  BRAC_SO_CORESDK_DEVICEMODE		=130;		///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+  BRAC_SO_CORESDK_SCREENCAMERACTRL	=131;		///< 桌面共享功能控制（参数为：int型， 0 关闭， 1 开启[默认]）
+  
   // 传输任务信息参数定义
   BRAC_TRANSTASK_PROGRESS		=1;	   			///< 传输任务进度查询（参数为：DOUBLE型（0.0 ~ 100.0））
   BRAC_TRANSTASK_BITRATE		=2;				///< 传输任务当前传输码率（参数为：int型，单位：bps）
