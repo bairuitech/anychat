@@ -66,6 +66,10 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_VIDEOSHOW_SETOVERLAYUSER=	82;	// 设置迭加显示用户编号（参数为：int型，用户ID号）
 		public const int BRAC_SO_VIDEOSHOW_DRIVERCTRL	=	83;	// 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL）
 		
+		public const int BRAC_SO_CORESDK_TICKOUTUSER	=	110;// 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
+		public const int BRAC_SO_CORESDK_DEVICEMODE		=	130;// 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+		public const int BRAC_SO_CORESDK_SCREENCAMERACTRL =	131;// 桌面共享功能控制（参数为：int型， 0 关闭， 1 开启[默认]）
+		
         // 用户状态标志定义，API：BRAC_QueryUserState 传入参数
         public const int BRAC_USERSTATE_CAMERA		    =	1;	// 用户摄像头状态（参数为DWORD型）
         public const int BRAC_USERSTATE_HOLDMIC		    =	2;	// 用户音频设备状态（参数为DWORD型，返回值：0 音频采集关闭， 1 音频采集开启）

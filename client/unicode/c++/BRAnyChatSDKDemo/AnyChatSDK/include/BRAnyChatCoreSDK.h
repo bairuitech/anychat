@@ -52,7 +52,10 @@ enum BRAC_VideoShowDriver{
 #define BRAC_FUNC_AUDIO_AUTOVOLUME	0x00000100L	///< 允许SDK自动控制Mic录音音量
 #define BRAC_FUNC_NET_SUPPORTUPNP	0x00000200L	///< 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
 #define BRAC_FUNC_DISABLEDECODE		0x00000400L	///< 禁止对收到的数据进行解码和播放，为了提高代理客户端的数据转发性能，可设置该标志，否则不能设置该标志
-
+#define BRAC_FUNC_AUDIO_FORBIDCFGHW	0x00001000L	///< 禁止修改音频硬件配置
+#define BRAC_FUNC_CORE_FORBIDWINMSG	0x00002000L	///< 禁止使用windows消息循环
+#define BRAC_FUNC_AUDIO_LARGEBUFFER	0x00004000L	///< 音频大缓冲区模式，适合音乐播放类应用
+#define BRAC_FUNC_NET_LARGEDELAY	0x00010000L	///< 网络高延迟模式，适用于卫星网络环境
 
 // 内核参数定义（API：BRAC_SetSDKOption、BRAC_GetSDKOption 传入参数）
 #define BRAC_SO_AUDIO_VADCTRL				1	///< 音频静音检测控制（参数为：int型：1打开，0关闭）
@@ -102,6 +105,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_LOCALVIDEO_PIXFMTCTRL		91	///< 本地视频采集优先格式控制（参数为int型，-1表示智能匹配，否则优先采用指定格式，参考：BRAC_PixelFormat）
 #define BRAC_SO_LOCALVIDEO_OVERLAY			92	///< 本地视频采用Overlay模式（参数为int型，1表示采用Overlay模式， 0表示普通模式[默认]）
 #define BRAC_SO_LOCALVIDEO_CODECID			93	///< 本地视频编码器ID设置（参数为int型，-1表示默认，如果设置的编码器ID不存在，则内核会采用默认的编码器）
+#define BRAC_SO_LOCALVIDEO_TVFORMAT			104	///< 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
 
 #define BRAC_SO_NETWORK_P2PPOLITIC			40	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 #define BRAC_SO_NETWORK_P2PCONNECT			41	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -110,6 +114,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_NETWORK_UDPSERVICEPORT		44	///< 设置本地UDP服务端口（参数为int型），连接服务器之前设置有效
 #define BRAC_SO_NETWORK_MULTICASTPOLITIC	45	///< 组播策略控制（参数为int型：0 执行服务器路由策略，禁止组播发送[默认]， 1 忽略服务器路由策略，只向组播组广播媒体流， 2 执行服务器路由策略，同时组播）
 #define BRAC_SO_NETWORK_TRANSBUFMAXBITRATE	46	///< 传输缓冲区、文件最大码率控制（参数为int型，0 不限制，以最快速率传输[默认]， 否则表示限制码率，单位为：bps）
+#define BRAC_SO_NETWORK_AUTORECONNECT		47	///< 网络掉线自动重连功能控制（参数为int型，0 关闭， 1 开启[默认]）
 
 #define BRAC_SO_PROXY_FUNCTIONCTRL			50	///< 本地用户代理功能控制，（参数为：int型，1启动代理，0关闭代理[默认]）
 #define BRAC_SO_PROXY_VIDEOCTRL				51	///< 本地用户代理视频控制，将本地视频变为指定用户的视频对外发布（参数为int型，表示其它用户的userid）
@@ -123,6 +128,10 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_VIDEOSHOW_SETOVERLAYUSER	82	///< 设置迭加显示用户编号（参数为：int型，用户ID号）
 #define BRAC_SO_VIDEOSHOW_DRIVERCTRL		83	///< 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL）
 
+#define BRAC_SO_CORESDK_TICKOUTUSER			110	///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
+#define BRAC_SO_CORESDK_DEVICEMODE			130	///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+#define BRAC_SO_CORESDK_SCREENCAMERACTRL	131	///< 桌面共享功能控制（参数为：int型， 0 关闭， 1 开启[默认]）
+
 
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
 #define BRAC_TRANSTASK_PROGRESS				1	///< 传输任务进度查询（参数为：DOUBLE型，返回值0.0 ~ 100.0， 或参数为：DWORD型，返回值0 ~ 100）
@@ -130,10 +139,12 @@ enum BRAC_VideoShowDriver{
 #define BRAC_TRANSTASK_STATUS				3	///< 传输任务当前状态（参数为：int型）
 #define BRAC_TRANSTASK_SAVEASPATH			4	///< 文件传输任务另存为路径设置（参数为字符串TCHAR类型）
 
-
 // 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
 #define BRAC_RECORD_FLAGS_VIDEO		0x00000001L	///< 录制视频
 #define BRAC_RECORD_FLAGS_AUDIO		0x00000002L	///< 录制音频
+#define BRAC_RECORD_FLAGS_SERVER	0x00000004L	///< 服务器端录制
+#define BRAC_RECORD_FLAGS_MIXAUDIO	0x00000010L	///< 录制音频时，将其它人的声音混音后录制
+#define BRAC_RECORD_FLAGS_MIXVIDEO	0x00000020L	///< 录制视频时，将其它人的视频迭加后录制
 
 // 组播功能标志定义（API：BRAC_MultiCastControl 传入参数）
 #define BRAC_MCFLAGS_JOINGROUP		0x00000001L	///< 加入多播组
@@ -174,6 +185,15 @@ enum BRAC_VideoShowDriver{
 #define BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	0x20	///< 禁止源（呼叫端）视频
 #define BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	0x40	///< 禁止目标（被呼叫端）音频
 #define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x80	///< 禁止目标（被呼叫端）视频
+
+// 远程视频方向修正标志定义
+#define BRAC_ROTATION_FLAGS_MIRRORED	0x1000;	///< 图像需要镜像翻转
+#define BRAC_ROTATION_FLAGS_ROTATION90	0x2000;	///< 顺时针旋转90度
+#define BRAC_ROTATION_FLAGS_ROTATION180	0x4000;	///< 顺时针旋转180度
+#define BRAC_ROTATION_FLAGS_ROTATION270	0x8000;	///< 顺时针旋转270度
+
+// 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
+#define BRAC_USERINFO_CTRLCODE_ROTATION		8	///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
 
 
 
@@ -369,6 +389,21 @@ BRAC_API DWORD BRAC_InputAudioData(LPBYTE lpSamples, DWORD dwSize, DWORD dwTimeS
 
 // 视频呼叫事件控制（请求、回复、挂断等）
 BRAC_API DWORD BRAC_VideoCallControl(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags=0, DWORD dwParam=0, LPCTSTR lpUserStr=NULL);
+
+// 获取用户好友ID列表
+BRAC_API DWORD BRAC_GetUserFriends(LPDWORD lpUserIDArray, DWORD& dwUserNum);
+// 获取好友在线状态
+BRAC_API DWORD BRAC_GetFriendStatus(DWORD dwFriendUserId, DWORD& dwStatus);
+// 获取用户分组ID列表
+BRAC_API DWORD BRAC_GetUserGroups(LPDWORD lpGroupIDArray, DWORD& dwGroupNum);
+// 获取分组下面的好友列表
+BRAC_API DWORD BRAC_GetGroupFriends(DWORD dwGroupId, LPDWORD lpUserIDArray, DWORD& dwUserNum);
+// 获取用户信息
+BRAC_API DWORD BRAC_GetUserInfo(DWORD dwUserId, DWORD dwInfoId, TCHAR* lpInfoValue, DWORD dwLen);
+// 获取用户分组名称
+BRAC_API DWORD BRAC_GetGroupName(DWORD dwGroupId, TCHAR* lpGroupName, DWORD dwLen);
+// 用户信息控制
+BRAC_API DWORD BRAC_UserInfoControl(DWORD dwUserId, DWORD dwCtrlCode, DWORD wParam=0, DWORD lParam=0, LPCTSTR lpStrValue=NULL);
 
 
 #endif //BR_ANYCHAT_CORE_SDK_H__INCLUDED_
