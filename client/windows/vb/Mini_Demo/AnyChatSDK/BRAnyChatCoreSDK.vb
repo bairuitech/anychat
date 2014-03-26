@@ -82,7 +82,7 @@ Module BRAnyChatCoreSDK
 	Public Const BRAC_SO_CORESDK_DEVICEMODE 	As Integer = 130
 	'#define BRAC_SO_CORESDK_DEVICEMODE			130	///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
 	Public Const BRAC_SO_CORESDK_SCREENCAMERACTRL 	As Integer = 131
-	'#define BRAC_SO_CORESDK_SCREENCAMERACTRL	131	///< 桌面共享功能控制（参数为：int型， 0 关闭， 1 开启[默认]）
+	'#define BRAC_SO_CORESDK_SCREENCAMERACTRL	131	///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
 
 	'// 传输任务信息参数定义
 	Public Const BRAC_TRANSTASK_PROGRESS 	As Short = 1
@@ -104,6 +104,8 @@ Module BRAnyChatCoreSDK
 	'#define BRAC_RECORD_FLAGS_MIXAUDIO	0x00000010L	///< 录制音频时，将其它人的声音混音后录制
 	Public Const BRAC_RECORD_FLAGS_MIXVIDEO As Integer = &H20
 	'#define BRAC_RECORD_FLAGS_MIXVIDEO	0x00000020L	///< 录制视频时，将其它人的视频迭加后录制
+	Public Const BRAC_RECORD_FLAGS_ABREAST As Integer = &H100
+	'#define BRAC_RECORD_FLAGS_ABREAST	0x00000100L	///< 录制视频时，将其它人的视频并列录制
 	
 	
 	'// 用户状态标志定义

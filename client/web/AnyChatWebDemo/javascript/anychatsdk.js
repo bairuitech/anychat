@@ -91,7 +91,7 @@ var BRAC_SO_VIDEOSHOW_DRIVERCTRL = 			83;	// 视频显示驱动控制（参数为：int型，0 
 
 var BRAC_SO_CORESDK_TICKOUTUSER	=			110;// 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
 var BRAC_SO_CORESDK_DEVICEMODE	=			130;// 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
-var BRAC_SO_CORESDK_SCREENCAMERACTRL =		131;// 桌面共享功能控制（参数为：int型， 0 关闭， 1 开启[默认]）
+var BRAC_SO_CORESDK_SCREENCAMERACTRL =		131;// 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
 
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
 var BRAC_TRANSTASK_PROGRESS = 				1;	// 传输任务进度查询（参数为：DOUBLE型，返回值0.0 ~ 100.0， 或参数为：DWORD型，返回值0 ~ 100）
@@ -100,11 +100,12 @@ var BRAC_TRANSTASK_STATUS = 				3;	// 传输任务当前状态（参数为：int型）
 var BRAC_TRANSTASK_SAVEASPATH = 			4;	// 文件传输任务另存为路径设置，含文件名（参数为字符串TCHAR类型）
 
 // 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
-var BRAC_RECORD_FLAGS_VIDEO	=				1;	// 录制视频
-var BRAC_RECORD_FLAGS_AUDIO	=				2;	// 录制音频
-var BRAC_RECORD_FLAGS_SERVER =				4;	// 服务器端录制
-var BRAC_RECORD_FLAGS_MIXAUDIO =			16;	// 录制音频时，将其它人的声音混音后录制
-var BRAC_RECORD_FLAGS_MIXVIDEO =			32;	// 录制视频时，将其它人的视频迭加后录制
+var BRAC_RECORD_FLAGS_VIDEO		=	0x00000001;	// 录制视频
+var BRAC_RECORD_FLAGS_AUDIO		=	0x00000002;	// 录制音频
+var BRAC_RECORD_FLAGS_SERVER	=	0x00000004;	// 服务器端录制
+var BRAC_RECORD_FLAGS_MIXAUDIO 	=	0x00000010;	// 录制音频时，将其它人的声音混音后录制
+var BRAC_RECORD_FLAGS_MIXVIDEO	=	0x00000020;	// 录制视频时，将其它人的视频迭加后录制
+var BRAC_RECORD_FLAGS_ABREAST	=	0x00000100;	// 录制视频时，将其它人的视频并列录制
 
 // 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
 var BRAC_USERSTATE_CAMERA = 				1;	// 用户摄像头状态（参数为DWORD型）

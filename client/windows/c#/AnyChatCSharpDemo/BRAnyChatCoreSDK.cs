@@ -69,7 +69,7 @@ namespace ANYCHATAPI
 		
 		public const int BRAC_SO_CORESDK_TICKOUTUSER	=	110;// 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
 		public const int BRAC_SO_CORESDK_DEVICEMODE		=	130;// 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
-		public const int BRAC_SO_CORESDK_SCREENCAMERACTRL =	131;// 桌面共享功能控制（参数为：int型， 0 关闭， 1 开启[默认]）
+		public const int BRAC_SO_CORESDK_SCREENCAMERACTRL =	131;// 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
 		
         // 用户状态标志定义，API：BRAC_QueryUserState 传入参数
         public const int BRAC_USERSTATE_CAMERA		    =	1;	// 用户摄像头状态（参数为DWORD型）
@@ -108,6 +108,7 @@ namespace ANYCHATAPI
 		public const int BRAC_RECORD_FLAGS_SERVER		= 0x04;	// 服务器端录制
 		public const int BRAC_RECORD_FLAGS_MIXAUDIO		= 0x10;	// 录制音频时，将其它人的声音混音后录制
 		public const int BRAC_RECORD_FLAGS_MIXVIDEO		= 0x20;	// 录制视频时，将其它人的视频迭加后录制
+		public const int BRAC_RECORD_FLAGS_ABREAST		= 0x100;// 录制视频时，将其它人的视频并列录制
 		
 		// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
 		public const int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	// 呼叫请求

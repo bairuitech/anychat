@@ -94,7 +94,7 @@ const
   
   BRAC_SO_CORESDK_TICKOUTUSER		=110;		///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
   BRAC_SO_CORESDK_DEVICEMODE		=130;		///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
-  BRAC_SO_CORESDK_SCREENCAMERACTRL	=131;		///< 桌面共享功能控制（参数为：int型， 0 关闭， 1 开启[默认]）
+  BRAC_SO_CORESDK_SCREENCAMERACTRL	=131;		///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
   
   // 传输任务信息参数定义
   BRAC_TRANSTASK_PROGRESS		=1;	   			///< 传输任务进度查询（参数为：DOUBLE型（0.0 ~ 100.0））
@@ -108,6 +108,7 @@ const
   BRAC_RECORD_FLAGS_SERVER		=$00000004;		///< 服务器端录制
   BRAC_RECORD_FLAGS_MIXAUDIO	=$00000010;		///< 录制音频时，将其它人的声音混音后录制
   BRAC_RECORD_FLAGS_MIXVIDEO	=$00000020;		///< 录制视频时，将其它人的视频迭加后录制
+  BRAC_RECORD_FLAGS_ABREAST		=$00000100;		///< 录制视频时，将其它人的视频并列录制
 
   // 用户状态标志定义
   BRAC_USERSTATE_CAMERA			=1;				///< 用户摄像头状态（参数为DWORD型）

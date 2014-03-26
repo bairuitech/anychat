@@ -130,7 +130,7 @@ enum BRAC_VideoShowDriver{
 
 #define BRAC_SO_CORESDK_TICKOUTUSER			110	///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
 #define BRAC_SO_CORESDK_DEVICEMODE			130	///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
-#define BRAC_SO_CORESDK_SCREENCAMERACTRL	131	///< 桌面共享功能控制（参数为：int型， 0 关闭， 1 开启[默认]）
+#define BRAC_SO_CORESDK_SCREENCAMERACTRL	131	///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
 
 
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
@@ -145,6 +145,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_RECORD_FLAGS_SERVER	0x00000004L	///< 服务器端录制
 #define BRAC_RECORD_FLAGS_MIXAUDIO	0x00000010L	///< 录制音频时，将其它人的声音混音后录制
 #define BRAC_RECORD_FLAGS_MIXVIDEO	0x00000020L	///< 录制视频时，将其它人的视频迭加后录制
+#define BRAC_RECORD_FLAGS_ABREAST	0x00000100L	///< 录制视频时，将其它人的视频并列录制
 
 // 组播功能标志定义（API：BRAC_MultiCastControl 传入参数）
 #define BRAC_MCFLAGS_JOINGROUP		0x00000001L	///< 加入多播组
