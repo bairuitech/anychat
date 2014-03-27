@@ -5,9 +5,10 @@
     <Grid Height="343" Width="473">
         <Button Height="23" HorizontalAlignment="Left" Margin="30,20,0,0" Name="buttonStart" VerticalAlignment="Top" Width="75" Click="buttonStart_Click">Start</Button>
         <Label Height="28" Margin="127,18.582,21,0" Name="msglabel" VerticalAlignment="Top">状态提示</Label>
-        <Image Margin="12,131,0,62" Name="localVideoImage" Stretch="Fill" HorizontalAlignment="Left" Width="200" />
-        <Image HorizontalAlignment="Right" Margin="0,131,33,62" Name="remoteVideoImage" Stretch="Fill" Width="200" />
+        <Image Height="150" HorizontalAlignment="Left" Margin="20,131,0,0" Name="localVideoImage" VerticalAlignment="Top" Width="198" />
+        <Image Height="150" HorizontalAlignment="Left" Margin="254,131,0,0" Name="remoteVideoImage" VerticalAlignment="Top" Width="198" />
         <Label Height="28" HorizontalAlignment="Left" Margin="62,0,0,28" Name="label1" VerticalAlignment="Bottom" Width="120" HorizontalContentAlignment="Center">本地视频</Label>
         <Label Height="28" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Margin="0,0,66,28" Name="label2" VerticalAlignment="Bottom" Width="120">远程视频</Label>
+       
     </Grid>
 </Window>

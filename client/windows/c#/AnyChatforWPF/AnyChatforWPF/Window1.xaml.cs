@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using ANYCHATAPI;
 using System.IO;
 using System.Threading;
+using System.Windows.Interop;
 
 namespace AnyChatforWPF
 {
@@ -47,7 +48,7 @@ namespace AnyChatforWPF
             AnyChatCoreSDK.SetNotifyMessageCallBack(OnNotifyMessageCallback, 0);
             AnyChatCoreSDK.SetVideoDataCallBack(AnyChatCoreSDK.PixelFormat.BRAC_PIX_FMT_RGB24, OnVideoDataCallback, 0);
 
-            ulong dwFuncMode = AnyChatCoreSDK.BRAC_FUNC_VIDEO_CBDATA | AnyChatCoreSDK.BRAC_FUNC_AUDIO_AUTOPLAY  | AnyChatCoreSDK.BRAC_FUNC_CHKDEPENDMODULE
+            ulong dwFuncMode = AnyChatCoreSDK.BRAC_FUNC_VIDEO_CBDATA | AnyChatCoreSDK.BRAC_FUNC_VIDEO_AUTODISP | AnyChatCoreSDK.BRAC_FUNC_AUDIO_AUTOPLAY | AnyChatCoreSDK.BRAC_FUNC_CHKDEPENDMODULE
                 | AnyChatCoreSDK.BRAC_FUNC_AUDIO_VOLUMECALC | AnyChatCoreSDK.BRAC_FUNC_NET_SUPPORTUPNP | AnyChatCoreSDK.BRAC_FUNC_FIREWALL_OPEN
                 | AnyChatCoreSDK.BRAC_FUNC_AUDIO_AUTOVOLUME | AnyChatCoreSDK.BRAC_FUNC_CONFIG_LOCALINI;
 
@@ -104,6 +105,13 @@ namespace AnyChatforWPF
                     if (lParam == 0)
                     {
                         msglabel.Content = "进入房间成功";
+                        //获取控件的句柄
+                        IntPtr mHandle = ((HwndSource)PresentationSource.FromVisual(this.localVideoImage)).Handle;
+                        //获取控件的位置
+                        Window window = Window.GetWindow(this.localVideoImage);
+                        Point point = this.localVideoImage.TransformToAncestor(window).Transform(new Point(0, 0));
+                        //显示视频
+                        AnyChatCoreSDK.SetVideoPos(-1, mHandle, (int)point.X, (int)point.Y, (int)(this.localVideoImage.Width + point.X), (int)(this.localVideoImage.Height + point.Y));
                         AnyChatCoreSDK.UserSpeakControl(-1, true);
                         AnyChatCoreSDK.UserCameraControl(-1, true);
                     }
@@ -145,30 +153,30 @@ namespace AnyChatforWPF
         // 静态委托
         public void VideoDataCallbackDelegate(int userId, IntPtr buf, int len, AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int userValue)
         {
-            int stride = bitMap.biWidth * 3;
-            BitmapSource bs = BitmapSource.Create(bitMap.biWidth, bitMap.biHeight, 96, 96, PixelFormats.Bgr24, null, buf, len, stride);
-            // 将图像进行翻转
-            TransformedBitmap RotateBitmap = new TransformedBitmap();
-            RotateBitmap.BeginInit();
-            RotateBitmap.Source = bs;                    
-            ScaleTransform scaleTransform = new ScaleTransform();
-            scaleTransform.ScaleY = -1;
-            RotateBitmap.Transform = scaleTransform;
-            RotateBitmap.EndInit();
-            RotateBitmap.Freeze();
+            //int stride = bitMap.biWidth * 3;
+            //BitmapSource bs = BitmapSource.Create(bitMap.biWidth, bitMap.biHeight, 96, 96, PixelFormats.Bgr24, null, buf, len, stride);
+            //// 将图像进行翻转
+            //TransformedBitmap RotateBitmap = new TransformedBitmap();
+            //RotateBitmap.BeginInit();
+            //RotateBitmap.Source = bs;                    
+            //ScaleTransform scaleTransform = new ScaleTransform();
+            //scaleTransform.ScaleY = -1;
+            //RotateBitmap.Transform = scaleTransform;
+            //RotateBitmap.EndInit();
+            //RotateBitmap.Freeze();
 
-            // 异步操作
-            Action action = new Action(delegate()
-            {
-                Dispatcher.BeginInvoke(new Action(delegate()
-                {
-                    if (userId == g_selfUserId)
-                        localVideoImage.Source = RotateBitmap;
-                    else if (userId == g_otherUserId)
-                        remoteVideoImage.Source = RotateBitmap;
-                }), null);
-            });
-            action.BeginInvoke(null, null);
+            //// 异步操作
+            //Action action = new Action(delegate()
+            //{
+            //    Dispatcher.BeginInvoke(new Action(delegate()
+            //    {
+            //        if (userId == g_selfUserId)
+            //            localVideoImage.Source = RotateBitmap;
+            //        else if (userId == g_otherUserId)
+            //            remoteVideoImage.Source = RotateBitmap;
+            //    }), null);
+            //});
+            //action.BeginInvoke(null, null);
         }
 
         // 打开远程用户的音频、视频
@@ -191,9 +199,16 @@ namespace AnyChatforWPF
                         continue;
                     if(usercamerastatus == 2)
                     {
-                        AnyChatCoreSDK.UserSpeakControl(useridarray[i], true);
-                        AnyChatCoreSDK.UserCameraControl(useridarray[i], true);
                         g_otherUserId = useridarray[i];
+                        //获取控件的句柄
+                        IntPtr mHandle = ((HwndSource)PresentationSource.FromVisual(this.remoteVideoImage)).Handle;
+                        //获取控件的位置
+                        Window window = Window.GetWindow(this.remoteVideoImage);
+                        Point point = this.remoteVideoImage.TransformToAncestor(window).Transform(new Point(0, 0));
+                        //显示视频
+                        AnyChatCoreSDK.SetVideoPos(g_otherUserId, mHandle, (int)point.X, (int)point.Y, (int)(this.remoteVideoImage.Width + point.X), (int)(this.remoteVideoImage.Height + point.Y));
+                        AnyChatCoreSDK.UserSpeakControl(g_otherUserId, true);
+                        AnyChatCoreSDK.UserCameraControl(g_otherUserId, true);
                         break;
                     }
                 }
