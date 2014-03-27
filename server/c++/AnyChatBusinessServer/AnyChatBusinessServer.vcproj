@@ -76,7 +76,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../../WIN32/Release/AnyChatBusinessServer.exe"
+				OutputFile="./Release/AnyChatBusinessServer.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				ProgramDatabaseFile=".\Release/AnyChatBusinessServer.pdb"
@@ -170,7 +170,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../../WIN32/Release/AnyChatBusinessServerU.exe"
+				OutputFile="./Release/AnyChatBusinessServerU.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				ProgramDatabaseFile=".\Release_Unicode/AnyChatBusinessServerU.pdb"
@@ -265,7 +265,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../../WIN32/Debug/AnyChatBusinessServer.exe"
+				OutputFile="./Debug/AnyChatBusinessServer.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
@@ -360,7 +360,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../../WIN32/Debug/AnyChatBusinessServerU.exe"
+				OutputFile="./Debug/AnyChatBusinessServerU.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
