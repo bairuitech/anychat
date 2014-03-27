@@ -48,7 +48,7 @@ namespace AnyChatforWPF
             AnyChatCoreSDK.SetNotifyMessageCallBack(OnNotifyMessageCallback, 0);
             AnyChatCoreSDK.SetVideoDataCallBack(AnyChatCoreSDK.PixelFormat.BRAC_PIX_FMT_RGB24, OnVideoDataCallback, 0);
 
-            ulong dwFuncMode = AnyChatCoreSDK.BRAC_FUNC_VIDEO_CBDATA | AnyChatCoreSDK.BRAC_FUNC_VIDEO_AUTODISP | AnyChatCoreSDK.BRAC_FUNC_AUDIO_AUTOPLAY | AnyChatCoreSDK.BRAC_FUNC_CHKDEPENDMODULE
+            ulong dwFuncMode = /*AnyChatCoreSDK.BRAC_FUNC_VIDEO_CBDATA | */AnyChatCoreSDK.BRAC_FUNC_VIDEO_AUTODISP | AnyChatCoreSDK.BRAC_FUNC_AUDIO_AUTOPLAY | AnyChatCoreSDK.BRAC_FUNC_CHKDEPENDMODULE
                 | AnyChatCoreSDK.BRAC_FUNC_AUDIO_VOLUMECALC | AnyChatCoreSDK.BRAC_FUNC_NET_SUPPORTUPNP | AnyChatCoreSDK.BRAC_FUNC_FIREWALL_OPEN
                 | AnyChatCoreSDK.BRAC_FUNC_AUDIO_AUTOVOLUME | AnyChatCoreSDK.BRAC_FUNC_CONFIG_LOCALINI;
 
@@ -153,30 +153,35 @@ namespace AnyChatforWPF
         // 静态委托
         public void VideoDataCallbackDelegate(int userId, IntPtr buf, int len, AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int userValue)
         {
-            //int stride = bitMap.biWidth * 3;
-            //BitmapSource bs = BitmapSource.Create(bitMap.biWidth, bitMap.biHeight, 96, 96, PixelFormats.Bgr24, null, buf, len, stride);
-            //// 将图像进行翻转
-            //TransformedBitmap RotateBitmap = new TransformedBitmap();
-            //RotateBitmap.BeginInit();
-            //RotateBitmap.Source = bs;                    
-            //ScaleTransform scaleTransform = new ScaleTransform();
-            //scaleTransform.ScaleY = -1;
-            //RotateBitmap.Transform = scaleTransform;
-            //RotateBitmap.EndInit();
-            //RotateBitmap.Freeze();
+            // 由于采用自动显示（在AnyChatCoreSDK.InitSDK时设置了AnyChatCoreSDK.BRAC_FUNC_VIDEO_AUTODISP），所以屏蔽通过回调的方式显示视频，效率更高
+            // 如果希望对视频进行处理，则可以设置AnyChatCoreSDK.BRAC_FUNC_VIDEO_CBDATA，去掉AnyChatCoreSDK.BRAC_FUNC_VIDEO_AUTODISP，然后开放下面的代码即可
+            // 有关AnyChat自动显示和回调显示的区别可参考：http://www.anychat.cn/faq/index.php?action=artikel&cat=2&id=196&artlang=zh
+/*
+            int stride = bitMap.biWidth * 3;
+            BitmapSource bs = BitmapSource.Create(bitMap.biWidth, bitMap.biHeight, 96, 96, PixelFormats.Bgr24, null, buf, len, stride);
+            // 将图像进行翻转
+            TransformedBitmap RotateBitmap = new TransformedBitmap();
+            RotateBitmap.BeginInit();
+            RotateBitmap.Source = bs;                    
+            ScaleTransform scaleTransform = new ScaleTransform();
+            scaleTransform.ScaleY = -1;
+            RotateBitmap.Transform = scaleTransform;
+            RotateBitmap.EndInit();
+            RotateBitmap.Freeze();
 
             //// 异步操作
-            //Action action = new Action(delegate()
-            //{
-            //    Dispatcher.BeginInvoke(new Action(delegate()
-            //    {
-            //        if (userId == g_selfUserId)
-            //            localVideoImage.Source = RotateBitmap;
-            //        else if (userId == g_otherUserId)
-            //            remoteVideoImage.Source = RotateBitmap;
-            //    }), null);
-            //});
-            //action.BeginInvoke(null, null);
+            Action action = new Action(delegate()
+            {
+               Dispatcher.BeginInvoke(new Action(delegate()
+               {
+                   if (userId == g_selfUserId)
+                       localVideoImage.Source = RotateBitmap;
+                   else if (userId == g_otherUserId)
+                       remoteVideoImage.Source = RotateBitmap;
+               }), null);
+            });
+            action.BeginInvoke(null, null);
+*/
         }
 
         // 打开远程用户的音频、视频
