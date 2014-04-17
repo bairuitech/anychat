@@ -10,7 +10,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
    <script type="text/javascript">
    		function quxiao(){
-   			
    			document.forms[0].action="<%=path%>/reset.do?param=123";
    			document.forms[0].submit();
 			}
