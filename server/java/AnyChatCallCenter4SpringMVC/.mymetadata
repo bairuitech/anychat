@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="AnyChatCallCenter4SpringMVC"
+  id="myeclipse.1397634132635"
+  context-root="/AnyChatCallCenter4SpringMVC"
+  j2ee-spec="5.0"
+  archive="AnyChatCallCenter4SpringMVC.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+
