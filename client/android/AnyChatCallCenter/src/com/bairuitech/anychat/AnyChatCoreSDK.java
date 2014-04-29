@@ -18,6 +18,7 @@ public class AnyChatCoreSDK
 	AnyChatTransDataEvent	transDataEvent;
 	AnyChatVideoCallEvent	videoCallEvent;
 	AnyChatUserInfoEvent	userInfoEvent;
+	AnyChatDataEncDecEvent	encdecEvent;
 	
 	static MainHandler mHandler;
 	static AnyChatAudioHelper	mAudioHelper;
@@ -75,6 +76,12 @@ public class AnyChatCoreSDK
 	{
 		RegisterNotify();
 		this.userInfoEvent = e;
+	}
+	// 设置数据加密、解密回调事件接口
+	public void SetDataEncDecEvent(AnyChatDataEncDecEvent e)
+	{
+		RegisterNotify();
+		this.encdecEvent = e;
 	}
 	
 	// 查询SDK主版本号
@@ -550,6 +557,15 @@ public class AnyChatCoreSDK
         tBundle.putString("USERSTR", userStr);
         tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);
+	}
+	
+	// 数据加密、解密回调函数
+	private int OnDataEncDecCallBack(int userid, int flags, byte[] buf, int len, AnyChatOutParam outParam)
+	{
+		if(encdecEvent != null)
+			return encdecEvent.OnAnyChatDataEncDec(userid, flags, buf, len, outParam);
+		else
+			return -1;
 	}
 	
     static {
