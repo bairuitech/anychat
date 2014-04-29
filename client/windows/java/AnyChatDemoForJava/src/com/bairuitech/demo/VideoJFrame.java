@@ -62,7 +62,7 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 	private Hashtable<String, Integer> hashtable;
 	private int dwRemoteUserid = 0;
 	private JFrame jRoomListFrame;
-	private AnychatDemo mMainInstance;
+	private AnyChatDemo mMainInstance;
 	private static Timer mTimer;
 	private static TimerTask mTimerTask;
 
@@ -208,7 +208,7 @@ public class VideoJFrame extends JFrame implements AnyChatBaseEvent,
 				}
 				anychat.LeaveRoom(-1);
 				jRoomListFrame.setVisible(true);
-				AnychatDemo.initSdk();
+				AnyChatDemo.initSdk();
 				VideoJFrame.this.dispose();
 //				initTimeTask();
 			} else {

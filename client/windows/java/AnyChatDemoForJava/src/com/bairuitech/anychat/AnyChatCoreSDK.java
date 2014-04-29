@@ -12,6 +12,7 @@ public class AnyChatCoreSDK
 	AnyChatTransDataEvent	transDataEvent;
 	AnyChatVideoCallEvent	videoCallEvent;
 	AnyChatUserInfoEvent	userInfoEvent;
+	AnyChatDataEncDecEvent	encdecEvent;
 	
 	private final int HANDLE_TYPE_NOTIFYMSG = 1;		// 消息通知
 	private final int HANDLE_TYPE_TEXTMSG 	= 2;		// 文字信息
@@ -61,6 +62,12 @@ public class AnyChatCoreSDK
 	{
 		RegisterNotify();
 		this.userInfoEvent = e;
+	}
+	// 设置数据加密、解密回调事件接口
+	public void SetDataEncDecEvent(AnyChatDataEncDecEvent e)
+	{
+		RegisterNotify();
+		this.encdecEvent = e;
 	}
 		
 	// 查询SDK主版本号
@@ -214,19 +221,22 @@ public class AnyChatCoreSDK
 	public native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String szUserStr);
 	
 	// 获取用户好友ID列表
-	public native int GetUserFriends(AnyChatOutParam outParam);
+	public native int[] GetUserFriends();
 	// 获取好友在线状态
-	public native int GetFriendStatus(int dwFriendUserId, AnyChatOutParam outParam);
+	public native int GetFriendStatus(int dwFriendUserId);
 	// 获取用户分组ID列表
-	public native int GetUserGroups(AnyChatOutParam outParam);
+	public native int[] GetUserGroups();
 	// 获取分组下面的好友列表
-	public native int GetGroupFriends(int dwGroupId, AnyChatOutParam outParam);
+	public native int[] GetGroupFriends(int dwGroupId);
 	// 获取用户信息
-	public native int GetUserInfo(int dwUserId, int dwInfoId, AnyChatOutParam outParam);
+	public native String GetUserInfo(int dwUserId, int dwInfoId);
 	// 获取用户分组名称
-	public native int GetGroupName(int dwGroupId, AnyChatOutParam outParam);
+	public native String GetGroupName(int dwGroupId);
 	// 用户信息控制
 	public native int UserInfoControl(int dwUserId, int dwCtrlCode, int wParam, int lParam, String szStrValue);
+	
+	// IP组播功能控制
+	public native int MultiCastControl(String lpMultiCastAddr, int dwPort, String lpNicAddr, int dwTTL, int dwFlags);
 	
 	
     // 异步消息通知
@@ -252,7 +262,7 @@ public class AnyChatCoreSDK
 			break;
 		case AnyChatDefine.WM_GV_LINKCLOSE:
 			if(baseEvent != null)
-				baseEvent.OnAnyChatLinkCloseMessage(wParam);
+				baseEvent.OnAnyChatLinkCloseMessage(lParam);
 			break;
 		case AnyChatDefine.WM_GV_ONLINEUSER:
 			if(baseEvent != null)
@@ -457,6 +467,15 @@ public class AnyChatCoreSDK
 	{
 		if(AnyChatCoreSDK.this.videoCallEvent != null)
 			AnyChatCoreSDK.this.videoCallEvent.OnAnyChatVideoCallEvent(eventtype, userid, errorcode, flags, param, userStr);
+	}
+	
+	// 数据加密、解密回调函数
+	private int OnDataEncDecCallBack(int userid, int flags, byte[] buf, int len, AnyChatOutParam outParam)
+	{
+		if(encdecEvent != null)
+			return encdecEvent.OnAnyChatDataEncDec(userid, flags, buf, len, outParam);
+		else
+			return -1;
 	}
     
     static {

@@ -15,11 +15,35 @@ public class AnyChatDefine {
 	static final int WM_GV_ACTIVESTATE		=	WM_GV + 13;
 	static final int WM_GV_P2PCONNECTSTATE	=	WM_GV + 14;
 	static final int WM_GV_VIDEOSIZECHG		=	WM_GV + 15;
+	static final int WM_GV_USERINFOUPDATE	=	WM_GV + 16;
+	static final int WM_GV_FRIENDSTATUS		=	WM_GV + 17;
 	static final int WM_GV_PRIVATEREQUEST	=	WM_GV + 21;
 	static final int WM_GV_PRIVATEECHO		=	WM_GV + 22;
 	static final int WM_GV_PRIVATEEXIT		=	WM_GV + 23;
+	static final int WM_GV_AUDIOPLAYCTRL	=	WM_GV + 100;
+	static final int WM_GV_AUDIORECCTRL		=	WM_GV + 101;
+	static final int WM_GV_VIDEOCAPCTRL		=	WM_GV + 102;
 	
+	// 视频图像格式定义
+	public static final int BRAC_PIX_FMT_RGB24		= 	0;	///< Packed RGB 8:8:8, 24bpp, RGBRGB...（MEDIASUBTYPE_RGB24）
+	public static final int BRAC_PIX_FMT_RGB32		=	1;	///< 对应于：MEDIASUBTYPE_RGB32，Packed RGB 8:8:8, 32bpp, (msb)8A 8R 8G 8B(lsb), in cpu endianness
+	public static final int BRAC_PIX_FMT_YV12		=	2;	///< 对应于：MEDIASUBTYPE_YV12，Planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
+	public static final int BRAC_PIX_FMT_YUY2		=	3;	///< 对应于：MEDIASUBTYPE_YUY2，Packed YUV 4:2:2, 16bpp, Y0 Cb Y1 Cr
+	public static final int BRAC_PIX_FMT_YUV420P	=	4;	///< Planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
+	public static final int BRAC_PIX_FMT_RGB565		=	5;	///< 对应于：MEDIASUBTYPE_RGB565
+	public static final int BRAC_PIX_FMT_RGB555		=	6;	///< 对应于：MEDIASUBTYPE_RGB555
+	public static final int BRAC_PIX_FMT_NV12		=	7;	///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is U and V
+	public static final int BRAC_PIX_FMT_NV21		=	8;	///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is V and U
+	public static final int BRAC_PIX_FMT_NV16		=	9;	///< YUV422SP
 	
+	// 视频采集驱动
+	public static final int VIDEOCAP_DRIVER_JAVA	=	3;	///< Java视频采集驱动
+	// 视频显示驱动
+	public static final int VIDEOSHOW_DRIVER_JAVA	=	5;	///< Java视频显示驱动
+	// 音频采集驱动
+	public static final int AUDIOREC_DRIVER_JAVA	=	3;	///< Java音频采集驱动
+	// 音频播放驱动
+	public static final int AUDIOPLAY_DRIVER_JAVA	=	3;	///< Java音频播放驱动
 	
 	// 内核参数定义
 	public static final int BRAC_SO_AUDIO_VADCTRL			=	1;	///< 音频静音检测控制（参数为：int型：1打开，0关闭）
@@ -32,10 +56,10 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_AUDIO_MONOBITRATE		=	8;	///< 设置单声道模式下音频编码目标码率（参数为：int型，单位：bps）
 	public static final int BRAC_SO_AUDIO_STEREOBITRATE		=	9;	///< 设置双声道模式下音频编码目标码率（参数为：int型，单位：bps）
 	public static final int BRAC_SO_AUDIO_PLAYDRVCTRL		=	70;	///< 音频播放驱动选择（参数为：int型，0默认驱动， 1 DSound驱动， 2 WaveOut驱动， 3 Java播放[Android平台使用]）
-	public static final int BRAC_SO_AUDIO_CNGCTRL			=	71;	///< 舒适噪音生成控制（参数为：int型：1打开，0关闭）
-	public static final int BRAC_SO_AUDIO_SOFTVOLMODE		=	73;	///< 设置软件音量模式控制（参数为int型，1打开[默认]，0关闭），使用软件音量模式，将不会改变系统的音量设置
+	public static final int BRAC_SO_AUDIO_SOFTVOLMODE		=	73;	///< 设置软件音量模式控制（参数为int型，1打开，0关闭[默认]），使用软件音量模式，将不会改变系统的音量设置
 	public static final int BRAC_SO_AUDIO_RECORDDRVCTRL		=	74;	///< 音频采集驱动控制（参数为int型，0默认驱动， 1 DSound驱动， 2 WaveIn驱动， 3 Java采集[Android平台使用]）
-
+	public static final int BRAC_SO_AUDIO_ECHODELAY			=	75;	///< 音频回声消除延迟参数设置（参数为int型，单位：ms）
+	
 	public static final int BRAC_SO_RECORD_VIDEOBR			=	10;	///< 录像视频码率设置（参数为：int型，单位：bps）
 	public static final int BRAC_SO_RECORD_AUDIOBR			=	11;	///< 录像音频码率设置（参数为：int型，单位：bps）
 	public static final int BRAC_SO_RECORD_TMPDIR			=	12;	///< 录像文件临时目录设置（参数为字符串TCHAR类型，必须是完整的绝对路径）
@@ -50,6 +74,8 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_CORESDK_MAINVERSION		=	22;	///< 查询SDK主版本号号（参数为int型）
 	public static final int BRAC_SO_CORESDK_SUBVERSION		=	23;	///< 查询SDK从版本号（参数为int型）
 	public static final int BRAC_SO_CORESDK_BUILDTIME		=	24;	///< 查询SDK编译时间（参数为字符串TCHAR类型）
+	public static final int BRAC_SO_CORESDK_EXTVIDEOINPUT	=	26;	///< 外部扩展视频输入控制（参数为int型， 0 关闭外部视频输入[默认]， 1 启用外部视频输入）
+	public static final int BRAC_SO_CORESDK_EXTAUDIOINPUT	=	27;	///< 外部扩展音频输入控制（参数为int型， 0 关闭外部音频输入[默认]， 1 启用外部音频输入）
 	
 	public static final int BRAC_SO_LOCALVIDEO_BITRATECTRL	=	30;	///< 本地视频编码码率设置（参数为int型，单位bps，同服务器配置：VideoBitrate）
 	public static final int BRAC_SO_LOCALVIDEO_QUALITYCTRL	=	31;	///< 本地视频编码质量因子控制（参数为int型，同服务器配置：VideoQuality）
@@ -66,6 +92,13 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_LOCALVIDEO_OVERLAY		=	92;	///< 本地视频采用Overlay模式（参数为int型，1表示采用Overlay模式， 0表示普通模式[默认]）
 	public static final int BRAC_SO_LOCALVIDEO_CODECID		=	93;	///< 本地视频编码器ID设置（参数为int型，-1表示默认，如果设置的编码器ID不存在，则内核会采用默认的编码器）
 	public static final int BRAC_SO_LOCALVIDEO_ROTATECTRL	=	94;	///< 本地视频旋转控制（参数为int型，0表示不进行旋转，1表示垂直翻转）
+	public static final int BRAC_SO_LOCALVIDEO_CAPDRIVER	=	95;	///< 本地视频采集驱动设置（参数为int型，0表示自动选择[默认]， 1 Video4Linux, 2 DirectShow, 3 Java采集[Android平台使用]）
+	public static final int BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA=	96;	///< 修正视频采集颜色偏色（参数为int型，0表示关闭[默认]，1 开启）
+	public static final int BRAC_SO_LOCALVIDEO_ORIENTATION	=	97;	///< 本地视频设备方向（参数为：int型，定义为常量：ANYCHAT_DEVICEORIENTATION_XXXX）
+	public static final int BRAC_SO_LOCALVIDEO_AUTOROTATION	=	98;	///< 本地视频自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
+	public static final int BRAC_SO_LOCALVIDEO_SURFACEROTATION=	99;	///< 设置本地视频预览显示旋转角度（参数为int型，角度）
+	public static final int BRAC_SO_LOCALVIDEO_CAMERAFACE	=	100;///< 本地摄像头方向（前置、后置）
+	public static final int BRAC_SO_LOCALVIDEO_DEVICEMODE	=	103;///< 设备类型
 	
 	public static final int BRAC_SO_NETWORK_P2PPOLITIC		=	40;	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 	public static final int BRAC_SO_NETWORK_P2PCONNECT		=	41;	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -74,36 +107,38 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_NETWORK_UDPSERVICEPORT	=	44;	///< 设置本地UDP服务端口（参数为int型），连接服务器之前设置有效
 	public static final int BRAC_SO_NETWORK_MULTICASTPOLITIC=	45;	///< 组播策略控制（参数为int型：0 执行服务器路由策略，禁止组播发送[默认]， 1 忽略服务器路由策略，只向组播组广播媒体流， 2 执行服务器路由策略，同时组播）
 	public static final int BRAC_SO_NETWORK_TRANSBUFMAXBITRATE=	46;	///< 传输缓冲区、文件最大码率控制（参数为int型，0 不限制，以最快速率传输[默认]， 否则表示限制码率，单位为：bps）
+	public static final int BRAC_SO_NETWORK_AUTORECONNECT	=	47;	///< 网络掉线自动重连功能控制（参数为int型，0 关闭， 1 开启[默认]）
 
 	public static final int BRAC_SO_PROXY_FUNCTIONCTRL		=	50;	///< 本地用户代理功能控制，（参数为：int型，1启动代理，0关闭代理[默认]）
 	public static final int BRAC_SO_PROXY_VIDEOCTRL			=	51;	///< 本地用户代理视频控制，将本地视频变为指定用户的视频对外发布（参数为int型，表示其它用户的userid）
 	public static final int BRAC_SO_PROXY_AUDIOCTRL			=	52;	///< 本地用户代理音频控制，将本地音频变为指定用户的音频对外发布（参数同BRAC_SO_PROXY_VIDEOCTRL）
 
 	public static final int BRAC_SO_STREAM_BUFFERTIME		=	60;	///< 流缓冲时间（参数为int型，单位：毫秒，取值范围：500 ~ 5000，默认：800）
-
+	public static final int BRAC_SO_STREAM_SMOOTHPLAYMODE	=	61;	///< 平滑播放模式（参数为int型，0 关闭[默认], 1 打开），打开状态下遇到视频丢帧时会继续播放（可能出现马赛克），不会卡住
+	
 	public static final int BRAC_SO_VIDEOSHOW_MODECTRL		=	80;	///< 视频显示模式控制（参数为：int型，0 单画面显示，1 视频迭加显示）
 	public static final int BRAC_SO_VIDEOSHOW_SETPRIMARYUSER=	81;	///< 设置主显示用户编号（参数为：int型，用户ID号）
 	public static final int BRAC_SO_VIDEOSHOW_SETOVERLAYUSER=	82;	///< 设置迭加显示用户编号（参数为：int型，用户ID号）
-	public static final int BRAC_SO_VIDEOSHOW_DRIVERCTRL	=	83;	///< 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL）
-	
-	public static final int BRAC_SO_CORESDK_TICKOUTUSER		=	110;///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
+	public static final int BRAC_SO_VIDEOSHOW_DRIVERCTRL	=	83;	///< 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL, 4 Android2X, 5 Android Java）
+	public static final int BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER =	84;	///< 视频数据经过GPU直接渲染，将解码后的视频数据直接传输到GPU的物理地址（参数为：int型， 0 关闭[默认]， 1 打开），与硬件平台相关
+
 	public static final int BRAC_SO_CORESDK_DEVICEMODE		=	130;///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
 	public static final int BRAC_SO_CORESDK_SCREENCAMERACTRL=	131;///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
-
+	public static final int BRAC_SO_CORESDK_DATAENCRYPTION	=	132;///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
+	
 	// 传输任务信息参数定义
 	public static final int BRAC_TRANSTASK_PROGRESS			=	1;	///< 传输任务进度查询（参数为：int型（0 ~ 100））
 	public static final int BRAC_TRANSTASK_BITRATE			=	2;	///< 传输任务当前传输码率（参数为：int型，单位：bps）
 	public static final int BRAC_TRANSTASK_STATUS			=	3;	///< 传输任务当前状态（参数为：int型）
 
-	// 录像功能标志定义
-	public static final int BRAC_RECORD_FLAGS_VIDEO			=0x01;	///< 录制视频
-	public static final int BRAC_RECORD_FLAGS_AUDIO			=0x02;	///< 录制音频
-	public static final int BRAC_RECORD_FLAGS_SERVER		=0x04;	///< 服务器端录制
-	public static final int BRAC_RECORD_FLAGS_MIXAUDIO		=0x10;	///< 录制音频时，将其它人的声音混音后录制
-	public static final int BRAC_RECORD_FLAGS_MIXVIDEO		=0x20;	///< 录制视频时，将其它人的视频迭加后录制
-	public static final int BRAC_RECORD_FLAGS_ABREAST		=0x100;	///< 录制视频时，将其它人的视频并列录制
 
-	// 用户状态标志定义
+	// 录像功能标志定义（API：StreamRecordCtrl传入参数，目前Android平台暂时只支持服务器端录制）
+	public static final int BRAC_RECORD_FLAGS_VIDEO			=	0x00000001;	///< 录制视频
+	public static final int BRAC_RECORD_FLAGS_AUDIO			=	0x00000002;	///< 录制音频
+	public static final int BRAC_RECORD_FLAGS_SERVER		=	0x00000004;	///< 服务器端录制
+
+
+	// 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
 	public static final int BRAC_USERSTATE_CAMERA			=	1;	///< 用户摄像头状态（参数为DWORD型）
 	public static final int BRAC_USERSTATE_HOLDMIC			=	2;	///< 用户音频设备状态（参数为DWORD型，返回值：0 音频采集关闭， 1 音频采集开启）
 	public static final int BRAC_USERSTATE_SPEAKVOLUME		=	3;	///< 用户当前说话音量（参数为DOUBLE类型（0.0 ~ 100.0））
@@ -118,9 +153,15 @@ public class AnyChatDefine {
 	public static final int BRAC_USERSTATE_NETWORKSTATUS	=	12;	///< 查询指定用户的网络状态（参数为DWORD类型，返回值：0 优良，1 较好，2 一般，3 较差，4 非常差），注：查询间隔需要>1s
 	public static final int BRAC_USERSTATE_VIDEOSIZE		=	13;	///< 查询指定用户的视频分辨率（参数为DWORD类型，返回值：低16位表示宽度，高16位表示高度）
 	public static final int BRAC_USERSTATE_PACKLOSSRATE		=	14;	///< 查询指定用户的网络流媒体数据丢包率（参数为DWORD类型，返回值：0 - 100，如：返回值为5，表示丢包率为5%）
-	public static final int BRAC_USERSTATE_DEVICETYPE		=	15; ///< 查询指定用户的终端类型（参数为DWORD类型，返回值：0 Unknow， 1 Windows，2 Android，3 iOS，4 Web，5 Linux，6 Mac，7 Win Phone，8 WinCE）
+	public static final int BRAC_USERSTATE_DEVICETYPE		=	15;	///< 查询指定用户的终端类型（参数为DWORD类型，返回值：0 Unknow， 1 Windows，2 Android，3 iOS，4 Web，5 Linux，6 Mac，7 Win Phone，8 WinCE）
 	public static final int BRAC_USERSTATE_SELFUSERSTATUS	=	16;	///< 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
 	public static final int BRAC_USERSTATE_SELFUSERID		=	17;	///< 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
+	public static final int BRAC_USERSTATE_VIDEOROTATION	=	18;	///< 查询指定用户的当前视频旋转角度（参数为DWORD类型，返回角度值）
+	public static final int BRAC_USERSTATE_VIDEOMIRRORED	=	19;	///< 查询指定用户的视频是否需要镜像翻转
+	
+	// 房间状态标志定义（API：BRAC_QueryRoomState 传入参数）
+	public static final int BRAC_ROOMSTATE_ROOMNAME			=	1;	///< 房间名称（参数为字符串TCHAR类型）
+	public static final int BRAC_ROOMSTATE_ONLINEUSERS		=	2;	///< 房间在线用户数（参数为DWORD型，不包含自己）
 	
 	// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
 	public static final int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	///< 呼叫请求
@@ -135,5 +176,25 @@ public class AnyChatDefine {
 	public static final int BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	= 0x20;	///< 禁止源（呼叫端）视频
 	public static final int BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	= 0x40;	///< 禁止目标（被呼叫端）音频
 	public static final int BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	= 0x80;	///< 禁止目标（被呼叫端）视频
+	
+	// 视频方向修正标志定义
+	public static final int BRAC_ROTATION_FLAGS_MIRRORED	= 0x1000;///< 图像需要镜像翻转
+	public static final int BRAC_ROTATION_FLAGS_ROTATION90	= 0x2000;///< 顺时针旋转90度
+	public static final int BRAC_ROTATION_FLAGS_ROTATION180	= 0x4000;///< 顺时针旋转180度
+	public static final int BRAC_ROTATION_FLAGS_ROTATION270	= 0x8000;///< 顺时针旋转270度
+
+	// 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
+	public static final int BRAC_USERINFO_CTRLCODE_ROTATION	=	8;	///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
+	
+	// 常见出错代码定义
+    public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< 没有错误
+    public static final int BRAC_ERRORCODE_SESSION_QUIT		= 100101;///< 源用户主动放弃会话
+    public static final int BRAC_ERRORCODE_SESSION_OFFLINE	= 100102;///< 目标用户不在线
+    public static final int BRAC_ERRORCODE_SESSION_BUSY		= 100103;///< 目标用户忙
+    public static final int BRAC_ERRORCODE_SESSION_REFUSE	= 100104;///< 目标用户拒绝会话
+    public static final int BRAC_ERRORCODE_SESSION_TIMEOUT	= 100105;///< 会话请求超时
+    public static final int BRAC_ERRORCODE_SESSION_DISCONNECT=100106;///< 网络断线
+	
+	
 	
 }
