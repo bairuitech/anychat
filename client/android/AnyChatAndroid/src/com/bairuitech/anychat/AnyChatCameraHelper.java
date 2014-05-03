@@ -138,6 +138,8 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			} catch (Exception ex) {
 
 			}
+		} else {
+			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_CORESDK_EXTVIDEOINPUT, 0);
 		}
 	}
 

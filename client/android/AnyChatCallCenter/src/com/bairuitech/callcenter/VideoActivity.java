@@ -173,6 +173,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		anychat.SetVideoCallEvent(this);
 		anychat.SetUserInfoEvent(this);
 		anychat.mSensorHelper.InitSensor(this);
+		// 初始化Camera上下文句柄
+		AnyChatCoreSDK.mCameraHelper.SetContext(this);
 	}
 
 	private void initTimerShowTime() {

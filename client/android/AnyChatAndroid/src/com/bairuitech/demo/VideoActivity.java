@@ -126,6 +126,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 		anychat.SetBaseEvent(this);
 		// 启动AnyChat传感器监听
 		anychat.mSensorHelper.InitSensor(this);
+		// 初始化Camera上下文句柄
+		AnyChatCoreSDK.mCameraHelper.SetContext(this);
 	}
 
 	private void adjuestVideoSize(int width, int height) {
