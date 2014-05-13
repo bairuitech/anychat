@@ -95,6 +95,7 @@ const
   BRAC_SO_CORESDK_TICKOUTUSER		=110;		///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
   BRAC_SO_CORESDK_DEVICEMODE		=130;		///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
   BRAC_SO_CORESDK_SCREENCAMERACTRL	=131;		///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
+  BRAC_SO_CORESDK_DATAENCRYPTION	=132;		///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
   
   // 传输任务信息参数定义
   BRAC_TRANSTASK_PROGRESS		=1;	   			///< 传输任务进度查询（参数为：DOUBLE型（0.0 ~ 100.0））
@@ -140,6 +141,23 @@ const
   BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	=	$20;	///< 禁止源（呼叫端）视频
   BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	=	$40;	///< 禁止目标（被呼叫端）音频
   BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	=	$80;	///< 禁止目标（被呼叫端）视频
+  
+  // 远程视频方向修正标志定义
+  BRAC_ROTATION_FLAGS_MIRRORED		=	$1000;	///< 图像需要镜像翻转
+  BRAC_ROTATION_FLAGS_ROTATION90	=	$2000;	///< 顺时针旋转90度
+  BRAC_ROTATION_FLAGS_ROTATION180	=	$4000;	///< 顺时针旋转180度
+  BRAC_ROTATION_FLAGS_ROTATION270	=	$8000;	///< 顺时针旋转270度
+
+  // 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
+  BRAC_USERINFO_CTRLCODE_ROTATION	=	8;		///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
+
+  // 数据加（解）密标志定义（DataEncDec回调参数）
+  BRAC_DATAENCDEC_FLAGS_ENCMODE		=	$01;	///< 加密模式
+  BRAC_DATAENCDEC_FLAGS_DECMODE		=	$02;	///< 解密模式
+  BRAC_DATAENCDEC_FLAGS_AUDIO		=	$10;	///< 音频编码数据
+  BRAC_DATAENCDEC_FLAGS_VIDEO		=	$20;	///< 视频编码数据
+  BRAC_DATAENCDEC_FLAGS_BUFFER		=	$40;	///< 透明通道数据
+  BRAC_DATAENCDEC_FLAGS_TXTMSG		=	$80;	///< 文字聊天数据
 
 
 type
@@ -175,6 +193,9 @@ type
 	
   // 视频通话消息通知回调函数定义
   BRAC_VideoCallEvent_CallBack=procedure(dwEventType:DWORD; dwUserId:DWORD; dwErrorCode:DWORD; dwFlags:DWORD; dwParam:DWORD; lpUserStr:LPCTSTR; lpUserValue:Pointer);stdcall;
+  
+  // 数据加密、解密回调函数定义
+  BRAC_DataEncDec_CallBack=procedure(dwUserId:DWORD; dwFlags:DWORD; lpInBuf:PByte; dwInSize:DWORD; lpOutBuf:PByte; lpOutSize:Pointer; lpUserValue:Pointer);stdcall;
 
 (**
  *	API方法定义
@@ -215,6 +236,8 @@ type
   function BRAC_SetNotifyMessageCallBack(lpFunction:BRAC_NotifyMessage_CallBack;lpUserValue:Pointer=nil):DWORD;cdecl;
   // 设置视频通话消息通知回调函数
   function BRAC_SetVideoCallEventCallBack(lpFunction:BRAC_VideoCallEvent_CallBack; lpUserValue:Pointer=nil):DWORD;cdecl;
+  // 设置数据加密、解密回调函数
+  function BRAC_SetDataEncDecCallBack(lpFunction:BRAC_DataEncDec_CallBack; lpUserValue:Pointer=nil):DWORD;cdecl;
 
 
   // 连接服务器

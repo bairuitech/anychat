@@ -83,6 +83,8 @@ Module BRAnyChatCoreSDK
 	'#define BRAC_SO_CORESDK_DEVICEMODE			130	///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
 	Public Const BRAC_SO_CORESDK_SCREENCAMERACTRL 	As Integer = 131
 	'#define BRAC_SO_CORESDK_SCREENCAMERACTRL	131	///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
+	Public Const BRAC_SO_CORESDK_DATAENCRYPTION As Integer = 132
+	'#define BRAC_SO_CORESDK_DATAENCRYPTION		132	///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
 
 	'// 传输任务信息参数定义
 	Public Const BRAC_TRANSTASK_PROGRESS 	As Short = 1
@@ -167,6 +169,35 @@ Module BRAnyChatCoreSDK
 	Public Const BRAC_VIDEOCALL_FLAGS_FBTARAUDIO As Integer = &H40
 	'#define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x80	///< 禁止目标（被呼叫端）视频
 	Public Const BRAC_VIDEOCALL_FLAGS_FBTARVIDEO As Integer = &H80
+	
+	'// 远程视频方向修正标志定义
+	'#define BRAC_ROTATION_FLAGS_MIRRORED	0x1000	///< 图像需要镜像翻转
+	Public Const BRAC_ROTATION_FLAGS_MIRRORED As Integer = &H1000
+	'#define BRAC_ROTATION_FLAGS_ROTATION90	0x2000	///< 顺时针旋转90度
+	Public Const BRAC_ROTATION_FLAGS_ROTATION90 As Integer = &H2000
+	'#define BRAC_ROTATION_FLAGS_ROTATION180	0x4000	///< 顺时针旋转180度
+	Public Const BRAC_ROTATION_FLAGS_ROTATION180 As Integer = &H4000
+	'#define BRAC_ROTATION_FLAGS_ROTATION270	0x8000	///< 顺时针旋转270度
+	Public Const BRAC_ROTATION_FLAGS_ROTATION270 As Integer = &H8000
+
+	'// 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
+	'#define BRAC_USERINFO_CTRLCODE_ROTATION		8	///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
+	Public Const BRAC_USERINFO_CTRLCODE_ROTATION As Integer = 8
+
+	'// 数据加（解）密标志定义（DataEncDec回调参数）
+	'#define BRAC_DATAENCDEC_FLAGS_ENCMODE	0x01	///< 加密模式
+	Public Const BRAC_DATAENCDEC_FLAGS_ENCMODE As Integer = &H1
+	'#define BRAC_DATAENCDEC_FLAGS_DECMODE	0x02	///< 解密模式
+	Public Const BRAC_DATAENCDEC_FLAGS_DECMODE As Integer = &H2
+	'#define BRAC_DATAENCDEC_FLAGS_AUDIO		0x10	///< 音频编码数据
+	Public Const BRAC_DATAENCDEC_FLAGS_AUDIO As Integer = &H10
+	'#define BRAC_DATAENCDEC_FLAGS_VIDEO		0x20	///< 视频编码数据
+	Public Const BRAC_DATAENCDEC_FLAGS_VIDEO As Integer = &H20
+	'#define BRAC_DATAENCDEC_FLAGS_BUFFER	0x40	///< 透明通道数据
+	Public Const BRAC_DATAENCDEC_FLAGS_BUFFER As Integer = &H40
+	'#define BRAC_DATAENCDEC_FLAGS_TXTMSG	0x80	///< 文字聊天数据
+	Public Const BRAC_DATAENCDEC_FLAGS_TXTMSG As Integer = &H80
+	
 
     '注意：所有的BOOL类型都声明为integer类型
 
@@ -243,6 +274,10 @@ Module BRAnyChatCoreSDK
 	'// 视频通话消息通知回调函数定义
 	'typedef void (CALLBACK * BRAC_VideoCallEvent_CallBack)(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
     Public Delegate Sub BRAC_VideoCallEvent_CallBack(ByVal dwEventType As Integer, ByVal dwUserId As Integer, ByVal dwErrorCode As Integer, ByVal dwFlags As Integer, ByVal dwParam As Integer, ByVal lpUserStr As String, ByVal lpUserValue As IntPtr)
+	
+	'// 数据加密、解密回调函数定义
+	'typedef DWORD (CALLBACK * BRAC_DataEncDec_CallBack)(DWORD dwUserId, DWORD dwFlags, LPBYTE lpInBuf, DWORD dwInSize, LPBYTE lpOutBuf, LPDWORD lpOutSize, LPVOID lpUserValue);
+	Public Delegate Sub BRAC_DataEncDec_CallBack(ByVal dwUserId As Integer, ByVal dwFlags As Integer, ByVal lpInBuf As Byte(), ByVal dwInSize As Integer, ByVal lpOutBuf As As Byte(), ByVal lpOutSize As IntPtr, ByVal lpUserValue As IntPtr)
 
     '/**
     ' *  API方法定义
@@ -350,6 +385,12 @@ Module BRAnyChatCoreSDK
 	'BRAC_API DWORD BRAC_SetVideoCallEventCallBack(BRAC_VideoCallEvent_CallBack lpFunction, LPVOID lpUserValue=NULL);
 	<DllImport(AnyChatSDKDLL, EntryPoint:="BRAC_SetVideoCallEventCallBack", CallingConvention:=CallingConvention.Cdecl)> _
     Function BRAC_SetVideoCallEventCallBack(ByVal lpFunction As BRAC_VideoCallEvent_CallBack, ByVal lpUserValue As IntPtr) As Integer
+    End Function
+	
+	'// 设置数据加密、解密回调函数
+	'BRAC_API DWORD BRAC_SetDataEncDecCallBack(BRAC_DataEncDec_CallBack lpFunction, LPVOID lpUserValue=NULL);
+	<DllImport(AnyChatSDKDLL, EntryPoint:="BRAC_SetDataEncDecCallBack", CallingConvention:=CallingConvention.Cdecl)> _
+    Function BRAC_SetDataEncDecCallBack(ByVal lpFunction As BRAC_DataEncDec_CallBack, ByVal lpUserValue As IntPtr) As Integer
     End Function
 
 

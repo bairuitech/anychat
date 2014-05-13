@@ -472,8 +472,8 @@ public class AnyChatCoreSDK
 	// 数据加密、解密回调函数
 	private int OnDataEncDecCallBack(int userid, int flags, byte[] buf, int len, AnyChatOutParam outParam)
 	{
-		if(encdecEvent != null)
-			return encdecEvent.OnAnyChatDataEncDec(userid, flags, buf, len, outParam);
+		if(AnyChatCoreSDK.this.encdecEvent != null)
+			return AnyChatCoreSDK.this.encdecEvent.OnAnyChatDataEncDec(userid, flags, buf, len, outParam);
 		else
 			return -1;
 	}

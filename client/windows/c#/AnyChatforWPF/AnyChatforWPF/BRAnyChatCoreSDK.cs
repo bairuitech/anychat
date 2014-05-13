@@ -70,6 +70,7 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_CORESDK_TICKOUTUSER	=	110;// 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
 		public const int BRAC_SO_CORESDK_DEVICEMODE		=	130;// 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
 		public const int BRAC_SO_CORESDK_SCREENCAMERACTRL =	131;// 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
+		public const int BRAC_SO_CORESDK_DATAENCRYPTION	=	132;// 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
 		
         // 用户状态标志定义，API：BRAC_QueryUserState 传入参数
         public const int BRAC_USERSTATE_CAMERA		    =	1;	// 用户摄像头状态（参数为DWORD型）
@@ -132,6 +133,15 @@ namespace ANYCHATAPI
 
 		// 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
 		public const int BRAC_USERINFO_CTRLCODE_ROTATION=	8;	// 让指定的用户视频在显示时旋转，wParam为旋转角度参数
+		
+		// 数据加（解）密标志定义（DataEncDec回调参数）
+		public const int BRAC_DATAENCDEC_FLAGS_ENCMODE	=	0x01;// 加密模式
+		public const int BRAC_DATAENCDEC_FLAGS_DECMODE	=	0x02;// 解密模式
+		public const int BRAC_DATAENCDEC_FLAGS_AUDIO	=	0x10;// 音频编码数据
+		public const int BRAC_DATAENCDEC_FLAGS_VIDEO	=	0x20;// 视频编码数据
+		public const int BRAC_DATAENCDEC_FLAGS_BUFFER	=	0x40;// 透明通道数据
+		public const int BRAC_DATAENCDEC_FLAGS_TXTMSG	=	0x80;// 文字聊天数据
+
 
         // SDK消息定义
         public const int WM_GV = 0x0400 + 200;
@@ -347,6 +357,19 @@ namespace ANYCHATAPI
         /// <param name="userValue"></param>
         public delegate void VideoCallEvent_CallBack(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue);
 
+		/// <summary>
+        /// 数据加密、解密回调函数定义
+        /// </summary>
+        /// <param name="dwUserId"></param>
+        /// <param name="dwFlags"></param>
+        /// <param name="lpInBuf"></param>
+		/// <param name="dwFlags"></param>
+		/// <param name="dwInSize"></param>
+		/// <param name="lpOutBuf"></param>
+        /// <param name="lpOutSize"></param>
+		/// <param name="lpUserValue"></param>
+        public delegate void DataEncDec_CallBack(int dwUserId, int dwFlags, IntPtr lpInBuf, int dwInSize, IntPtr lpOutBuf, ref int lpOutSize, int lpUserValue);
+
 			
         /// <summary>
         /// 视频事件注册
@@ -486,9 +509,19 @@ namespace ANYCHATAPI
         /// </summary>
         /// <param name="function"></param>
         /// <param name="userValue"></param>
-        /// <returns></returns>
+        /// <returns>0为成功，否则失败</returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetRecordSnapShotCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetRecordCallBack(RecordCallBack function, int userValue);
+		
+		/// <summary>
+        /// 设置数据加密、解密回调函数
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="userValue"></param>
+        /// <returns>0为成功，否则失败</returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetDataEncDecCallBack", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetDataEncDecCallBack(DataEncDec_CallBack function, int userValue);
+
 
         /// <summary>
         /// 连接服务器
