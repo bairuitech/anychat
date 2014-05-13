@@ -11,6 +11,7 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -31,7 +32,9 @@ import android.widget.TextView;
 
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
+import com.bairuitech.anychat.AnyChatDataEncDecEvent;
 import com.bairuitech.anychat.AnyChatDefine;
+import com.bairuitech.anychat.AnyChatOutParam;
 import com.bairuitech.anychat.AnyChatUserInfoEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
 import com.bairuitech.bussinesscenter.BussinessCenter;
@@ -44,7 +47,7 @@ import com.bairuitech.util.DialogFactory;
 
 public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		OnClickListener, OnTouchListener, AnyChatVideoCallEvent,
-		AnyChatUserInfoEvent {
+		AnyChatUserInfoEvent,AnyChatDataEncDecEvent {
 	private SurfaceView mSurfaceSelf;
 	private SurfaceView mSurfaceRemote;
 	private ProgressBar mProgressSelf;
@@ -102,7 +105,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					updateVolume();
 					break;
 				case MSG_TIMEUPDATE:
-					mTxtTime.setText(BaseMethod.getTimeShowString(videocallSeconds++));
+					mTxtTime.setText(BaseMethod
+							.getTimeShowString(videocallSeconds++));
 					break;
 				}
 
@@ -152,6 +156,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		anychat.UserSpeakControl(-1, 0);
 		anychat.UserSpeakControl(dwTargetUserId, 0);
 		anychat.UserCameraControl(dwTargetUserId, 0);
+		anychat.LeaveRoom(-1);
 
 	}
 
@@ -175,6 +180,11 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		anychat.mSensorHelper.InitSensor(this);
 		// 初始化Camera上下文句柄
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
+
+		// 开启加密功能，并设置接收数据
+		AnyChatCoreSDK.SetSDKOptionInt(
+				AnyChatDefine.BRAC_SO_CORESDK_DATAENCRYPTION, 1);
+		anychat.SetDataEncDecEvent(this);
 	}
 
 	private void initTimerShowTime() {
@@ -229,7 +239,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mBtnEndSession.setOnClickListener(this);
 		mImgSwitch.setOnClickListener(this);
 		mSurfaceRemote.setTag(dwTargetUserId);
-		configEntity =ConfigService.LoadConfig(this);
+		configEntity = ConfigService.LoadConfig(this);
 		if (configEntity.videoOverlay != 0) {
 			mSurfaceSelf.getHolder().setType(
 					SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -522,7 +532,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			anychat.UserCameraControl(dwTargetUserId, 0);
 			anychat.LeaveRoom(-1);
 			this.finish();
-		
+
 		}
 	}
 
@@ -545,6 +555,35 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	/***
+	 * 处理音视频数据加密和解码，这里用的Base64算法来测试
+	 */
+	@Override
+	public int OnAnyChatDataEncDec(int userid, int flags, byte[] lpBuf,
+			int dwLen, AnyChatOutParam outParam) {
+		// TODO Auto-generated method stub
+		if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_ENCMODE) != 0) {
+			if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_AUDIO) != 0) { // 对音频数据进行加密处理
+				// 对lpBuf中的数据进行加密，并将加密之后的数据保存到outarray数组中
+				// 最后将加密之后的数据通过outParam返回给AnyChat内核
+				outParam.SetByteArray(Base64.encode(lpBuf, Base64.DEFAULT));
+				Log.i("ANYCHAT", "AUDIO___EN");
+			} else if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_VIDEO) != 0) { // 对视频数据进行加密处理
+				outParam.SetByteArray(Base64.encode(lpBuf, Base64.DEFAULT));
+				Log.i("ANYCHAT", "VIDEO___EN");
+			}
+		} else if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_DECMODE) != 0) {
+			if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_AUDIO) != 0) { // 对音频数据进行解密处理
+				outParam.SetByteArray(Base64.decode(lpBuf,  Base64.DEFAULT));
+				Log.i("ANYCHAT", "AUDIO___DE");
+			} else if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_VIDEO) != 0) { // 对视频数据进行解密处理
+				outParam.SetByteArray(Base64.decode(lpBuf,  Base64.DEFAULT));
+				Log.i("ANYCHAT", "VIDEO___DE");
+			}
+		}
+		return 0;
 	}
 
 }
