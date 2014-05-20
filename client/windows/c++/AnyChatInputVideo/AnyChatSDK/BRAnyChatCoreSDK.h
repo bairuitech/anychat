@@ -131,6 +131,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_TICKOUTUSER			110	///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
 #define BRAC_SO_CORESDK_DEVICEMODE			130	///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
 #define BRAC_SO_CORESDK_SCREENCAMERACTRL	131	///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
+#define BRAC_SO_CORESDK_DATAENCRYPTION		132	///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
 
 
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
@@ -196,6 +197,13 @@ enum BRAC_VideoShowDriver{
 // 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
 #define BRAC_USERINFO_CTRLCODE_ROTATION		8	///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
 
+// 数据加（解）密标志定义（DataEncDec回调参数）
+#define BRAC_DATAENCDEC_FLAGS_ENCMODE	0x01	///< 加密模式
+#define BRAC_DATAENCDEC_FLAGS_DECMODE	0x02	///< 解密模式
+#define BRAC_DATAENCDEC_FLAGS_AUDIO		0x10	///< 音频编码数据
+#define BRAC_DATAENCDEC_FLAGS_VIDEO		0x20	///< 视频编码数据
+#define BRAC_DATAENCDEC_FLAGS_BUFFER	0x40	///< 透明通道数据
+#define BRAC_DATAENCDEC_FLAGS_TXTMSG	0x80	///< 文字聊天数据
 
 
 // 视频数据回调函数定义
@@ -226,6 +234,8 @@ typedef void (CALLBACK* BRAC_NotifyMessage_CallBack)(DWORD dwNotifyMsg, DWORD wP
 typedef void (CALLBACK * BRAC_VideoScreenEvent_CallBack)(DWORD dwUserid, DWORD type, DWORD key, DWORD dwFlags, DWORD wParam, DWORD lParam, LPVOID lpUserValue);
 // 视频通话消息通知回调函数定义
 typedef void (CALLBACK * BRAC_VideoCallEvent_CallBack)(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
+// 数据加密、解密回调函数定义
+typedef DWORD (CALLBACK * BRAC_DataEncDec_CallBack)(DWORD dwUserId, DWORD dwFlags, LPBYTE lpInBuf, DWORD dwInSize, LPBYTE lpOutBuf, LPDWORD lpOutSize, LPVOID lpUserValue);
 
 /**
  *	API方法定义
@@ -269,6 +279,8 @@ BRAC_API DWORD BRAC_SetNotifyMessageCallBack(BRAC_NotifyMessage_CallBack lpFunct
 BRAC_API DWORD BRAC_SetScreenEventCallBack(BRAC_VideoScreenEvent_CallBack lpFunction, LPVOID lpUserValue=NULL);
 // 设置视频通话消息通知回调函数
 BRAC_API DWORD BRAC_SetVideoCallEventCallBack(BRAC_VideoCallEvent_CallBack lpFunction, LPVOID lpUserValue=NULL);
+// 设置数据加密、解密回调函数
+BRAC_API DWORD BRAC_SetDataEncDecCallBack(BRAC_DataEncDec_CallBack lpFunction, LPVOID lpUserValue=NULL);
 
 
 // 连接服务器
