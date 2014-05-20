@@ -47,7 +47,7 @@ import com.bairuitech.util.DialogFactory;
 
 public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		OnClickListener, OnTouchListener, AnyChatVideoCallEvent,
-		AnyChatUserInfoEvent,AnyChatDataEncDecEvent {
+		AnyChatUserInfoEvent {
 	private SurfaceView mSurfaceSelf;
 	private SurfaceView mSurfaceRemote;
 	private ProgressBar mProgressSelf;
@@ -181,10 +181,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		// 初始化Camera上下文句柄
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
 
-		// 开启加密功能，并设置接收数据
-		AnyChatCoreSDK.SetSDKOptionInt(
-				AnyChatDefine.BRAC_SO_CORESDK_DATAENCRYPTION, 1);
-		anychat.SetDataEncDecEvent(this);
 	}
 
 	private void initTimerShowTime() {
@@ -557,33 +553,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		return false;
 	}
 
-	/***
-	 * 处理音视频数据加密和解码，这里用的Base64算法来测试
-	 */
-	@Override
-	public int OnAnyChatDataEncDec(int userid, int flags, byte[] lpBuf,
-			int dwLen, AnyChatOutParam outParam) {
-		// TODO Auto-generated method stub
-		if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_ENCMODE) != 0) {
-			if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_AUDIO) != 0) { // 对音频数据进行加密处理
-				// 对lpBuf中的数据进行加密，并将加密之后的数据保存到outarray数组中
-				// 最后将加密之后的数据通过outParam返回给AnyChat内核
-				outParam.SetByteArray(Base64.encode(lpBuf, Base64.DEFAULT));
-				Log.i("ANYCHAT", "AUDIO___EN");
-			} else if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_VIDEO) != 0) { // 对视频数据进行加密处理
-				outParam.SetByteArray(Base64.encode(lpBuf, Base64.DEFAULT));
-				Log.i("ANYCHAT", "VIDEO___EN");
-			}
-		} else if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_DECMODE) != 0) {
-			if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_AUDIO) != 0) { // 对音频数据进行解密处理
-				outParam.SetByteArray(Base64.decode(lpBuf,  Base64.DEFAULT));
-				Log.i("ANYCHAT", "AUDIO___DE");
-			} else if ((flags & AnyChatDataEncDecEvent.BRAC_DATAENCDEC_FLAGS_VIDEO) != 0) { // 对视频数据进行解密处理
-				outParam.SetByteArray(Base64.decode(lpBuf,  Base64.DEFAULT));
-				Log.i("ANYCHAT", "VIDEO___DE");
-			}
-		}
-		return 0;
-	}
+	
 
 }
