@@ -104,10 +104,11 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 	private void initSdk() {
 		if (anychat == null) {
 			anychat = new AnyChatCoreSDK();
+			anychat.SetBaseEvent(this);
 			anychat.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
 			bReased = true;
 		}
-		anychat.SetBaseEvent(this);
+		
 	}
 
 	private void initView() {
