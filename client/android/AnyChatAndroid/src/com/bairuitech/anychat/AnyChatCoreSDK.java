@@ -37,7 +37,8 @@ public class AnyChatCoreSDK
 	// 设置AnyChat基本事件通知接口
 	public void SetBaseEvent(AnyChatBaseEvent e)
 	{
-		mHandler = new MainHandler(this);
+		if(mHandler == null)
+			mHandler = new MainHandler(this);
 		RegisterNotify();
 		this.baseEvent = e;
 	}

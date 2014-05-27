@@ -40,9 +40,6 @@ public class HallActivity extends Activity implements OnItemClickListener,
 	private Dialog dialog;
 	private UserAdapter mUserAdapter;
 
-	public static final int ACTIVITY_ID_VIDEOCONFIG = 1;
-	public static final String INTENT_ACTION_SESSION_ON = "android.intent.action.hallmobileactivity.sessionon";
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -52,7 +49,6 @@ public class HallActivity extends Activity implements OnItemClickListener,
 		BussinessCenter.getBussinessCenter().getOnlineFriendDatas();
 		initView();
 		startBackServce();
-
 	}
 
 	@Override
@@ -264,11 +260,12 @@ public class HallActivity extends Activity implements OnItemClickListener,
 	@Override
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
 		// TODO Auto-generated method stub
-
 		if(dwErrorCode==0)
 		{
 			BussinessCenter.selfUserId = dwUserId;
 			BussinessCenter.selfUserName=anychat.GetUserName(dwUserId);
+		} else {
+			BaseMethod.showToast(this.getString(R.string.str_login_failed) + "(ErrorCode:" + dwErrorCode + ")",	this);
 		}
 	}
 

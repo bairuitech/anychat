@@ -11,7 +11,6 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -30,24 +29,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bairuitech.anychat.AnyChatBaseEvent;
-import com.bairuitech.anychat.AnyChatCoreSDK;
-import com.bairuitech.anychat.AnyChatDataEncDecEvent;
-import com.bairuitech.anychat.AnyChatDefine;
-import com.bairuitech.anychat.AnyChatOutParam;
-import com.bairuitech.anychat.AnyChatUserInfoEvent;
-import com.bairuitech.anychat.AnyChatVideoCallEvent;
+import com.bairuitech.anychat.*;
 import com.bairuitech.bussinesscenter.BussinessCenter;
 import com.bairuitech.callcenter.R;
-import com.bairuitech.util.BaseConst;
-import com.bairuitech.util.BaseMethod;
-import com.bairuitech.util.ConfigEntity;
-import com.bairuitech.util.ConfigService;
-import com.bairuitech.util.DialogFactory;
+import com.bairuitech.util.*;
 
 public class VideoActivity extends Activity implements AnyChatBaseEvent,
-		OnClickListener, OnTouchListener, AnyChatVideoCallEvent,
-		AnyChatUserInfoEvent {
+		OnClickListener, OnTouchListener, AnyChatVideoCallEvent, AnyChatUserInfoEvent {
 	private SurfaceView mSurfaceSelf;
 	private SurfaceView mSurfaceRemote;
 	private ProgressBar mProgressSelf;
@@ -60,30 +48,20 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private AnyChatCoreSDK anychat;
 	private Handler mHandler;
 	private Timer mTimerCheckAv;
-	private Timer mTImerShowVidoTime;
+	private Timer mTimerShowVideoTime;
 	private TimerTask mTimerTask;
 	private ConfigEntity configEntity;
 
 	boolean bSelfVideoOpened = false;
 	boolean bOtherVideoOpened = false;
-
 	boolean bVideoViewLoaded = false;
 	public static final int MSG_CHECKAV = 1;
 	public static final int MSG_TIMEUPDATE = 2;
-	public static final int MSG_CHAT_GONE = 33;
-	public static final int MSG_SESSIONEND = 34;
 	public static final int PROGRESSBAR_HEIGHT = 5;
-	boolean mIsFirst = true;
-	float mOriginalLength = 0;
-	float mCurrentLength = 0;
-	float mCurrentRate = 1;
 
-	int videoAreaWidth = 0;
-	int videoAreaHeight = 0;
 	int dwTargetUserId;
 	int videoIndex = 0;
 	int videocallSeconds = 0;
-	boolean bNormal = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +143,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		mTimerCheckAv.cancel();
-		mTImerShowVidoTime.cancel();
+		mTimerShowVideoTime.cancel();
 		if (dialog != null && dialog.isShowing())
 			dialog.dismiss();
 
@@ -184,8 +162,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	}
 
 	private void initTimerShowTime() {
-		if (mTImerShowVidoTime == null)
-			mTImerShowVidoTime = new Timer();
+		if (mTimerShowVideoTime == null)
+			mTimerShowVideoTime = new Timer();
 		mTimerTask = new TimerTask() {
 
 			@Override
@@ -194,7 +172,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				mHandler.sendEmptyMessage(MSG_TIMEUPDATE);
 			}
 		};
-		mTImerShowVidoTime.schedule(mTimerTask, 100, 1000);
+		mTimerShowVideoTime.schedule(mTimerTask, 100, 1000);
 	}
 
 	private void initTimerCheckAv() {
@@ -241,18 +219,15 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		}
 		mSurfaceSelf.setZOrderOnTop(true);
-		// 如果是采用Java视频采集，则�?��设置Surface的CallBack
-		if (AnyChatCoreSDK
-				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
+		// 如果是采用Java视频采集，则设置Surface的CallBack
+		if (AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
 			mSurfaceSelf.getHolder().addCallback(AnyChatCoreSDK.mCameraHelper);
 			Log.i("ANYCHAT", "VIDEOCAPTRUE---" + "JAVA");
 		}
 
-		// 如果是采用Java视频显示，则�?��设置Surface的CallBack
-		if (AnyChatCoreSDK
-				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
-			videoIndex = anychat.mVideoHelper.bindVideo(mSurfaceRemote
-					.getHolder());
+		// 如果是采用Java视频显示，则设置Surface的CallBack
+		if (AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
+			videoIndex = anychat.mVideoHelper.bindVideo(mSurfaceRemote.getHolder());
 			anychat.mVideoHelper.SetVideoUser(videoIndex, dwTargetUserId);
 			Log.i("ANYCHAT", "VIDEOSHOW---" + "JAVA");
 		}
@@ -267,7 +242,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 						// TODO Auto-generated method stub
 						if (!bVideoViewLoaded) {
 							bVideoViewLoaded = true;
-							videoAreaWidth = layoutLocal.getWidth();
 						}
 					}
 				});
@@ -277,8 +251,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			if (AnyChatCoreSDK.mCameraHelper.GetCameraNumber() > 1) {
 				mImgSwitch.setVisibility(View.VISIBLE);
 				// 默认打开前置摄像头
-				AnyChatCoreSDK.mCameraHelper
-						.SelectVideoCapture(AnyChatCoreSDK.mCameraHelper.CAMERA_FACING_FRONT);
+				AnyChatCoreSDK.mCameraHelper.SelectVideoCapture(AnyChatCoreSDK.mCameraHelper.CAMERA_FACING_FRONT);
 			}
 		} else {
 			String[] strVideoCaptures = anychat.EnumVideoCapture();
@@ -323,30 +296,21 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				.getLayoutParams();
 		if (bLandScape) {
 
-			if (AnyChatCoreSDK
-					.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL) != 0)
-				height = width
-						* AnyChatCoreSDK
-								.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL)
-						/ AnyChatCoreSDK
-								.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL)
+			if (AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL) != 0)
+				height = width * AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL)
+						/ AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL)
 						+ PROGRESSBAR_HEIGHT;
 			else
 				height = (float) 3 / 4 * width + PROGRESSBAR_HEIGHT;
 		} else {
 
-			if (AnyChatCoreSDK
-					.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL) != 0)
-				height = width
-						* AnyChatCoreSDK
-								.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL)
-						/ AnyChatCoreSDK
-								.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL)
+			if (AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL) != 0)
+				height = width * AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL)
+						/ AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL)
 						+ PROGRESSBAR_HEIGHT;
 			else
 				height = (float) 4 / 3 * width + PROGRESSBAR_HEIGHT;
 		}
-
 		layoutParams.width = (int) width;
 		layoutParams.height = (int) height;
 		layoutLocal.setLayoutParams(layoutParams);
@@ -361,7 +325,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		} else {
 			adjustLocalVideo(false);
 			AnyChatCoreSDK.mCameraHelper.setCameraDisplayOrientation();
-
 		}
 
 	}
@@ -373,38 +336,30 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					&& anychat.GetUserVideoWidth(dwTargetUserId) != 0) {
 				SurfaceHolder holder = mSurfaceRemote.getHolder();
 				// 如果是采用内核视频显示（非Java驱动），则需要设置Surface的参数
-				if (AnyChatCoreSDK
-						.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) != AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
+				if (AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) != AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 					holder.setFormat(PixelFormat.RGB_565);
-					holder.setFixedSize(anychat.GetUserVideoWidth(-1),
-							anychat.GetUserVideoHeight(-1));
+					holder.setFixedSize(anychat.GetUserVideoWidth(-1), anychat.GetUserVideoHeight(-1));
 				}
 				Surface s = holder.getSurface();
-				if (AnyChatCoreSDK
-						.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
-					anychat.mVideoHelper.SetVideoUser(videoIndex,
-							dwTargetUserId);
+				if (AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
+					anychat.mVideoHelper.SetVideoUser(videoIndex, dwTargetUserId);
 				} else
 					anychat.SetVideoPos(dwTargetUserId, s, 0, 0, 0, 0);
 				bOtherVideoOpened = true;
 			}
 		}
 		if (!bSelfVideoOpened) {
-			if (anychat.GetCameraState(-1) == 2
-					&& anychat.GetUserVideoWidth(-1) != 0) {
+			if (anychat.GetCameraState(-1) == 2 && anychat.GetUserVideoWidth(-1) != 0) {
 				SurfaceHolder holder = mSurfaceSelf.getHolder();
-				if (AnyChatCoreSDK
-						.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) != AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
+				if (AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) != AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 					holder.setFormat(PixelFormat.RGB_565);
-					holder.setFixedSize(anychat.GetUserVideoWidth(-1),
-							anychat.GetUserVideoHeight(-1));
+					holder.setFixedSize(anychat.GetUserVideoWidth(-1), anychat.GetUserVideoHeight(-1));
 				}
 				Surface s = holder.getSurface();
 				anychat.SetVideoPos(-1, s, 0, 0, 0, 0);
 				bSelfVideoOpened = true;
 			}
 		}
-
 	}
 
 	private void updateVolume() {
@@ -500,9 +455,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				AnyChatCoreSDK.mCameraHelper.SwitchCamera();
 				return;
 			}
-
 			String strVideoCaptures[] = anychat.EnumVideoCapture();
-			;
 			String temp = anychat.GetCurVideoCapture();
 			for (int i = 0; i < strVideoCaptures.length; i++) {
 				if (!temp.equals(strVideoCaptures[i])) {
@@ -513,7 +466,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					break;
 				}
 			}
-
 		}
 	}
 
@@ -528,7 +480,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			anychat.UserCameraControl(dwTargetUserId, 0);
 			anychat.LeaveRoom(-1);
 			this.finish();
-
 		}
 	}
 
@@ -543,8 +494,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	@Override
 	public void OnAnyChatFriendStatus(int dwUserId, int dwStatus) {
 		// TODO Auto-generated method stub
-		BussinessCenter.getBussinessCenter().onUserOnlineStatusNotify(dwUserId,
-				dwStatus);
+		BussinessCenter.getBussinessCenter().onUserOnlineStatusNotify(dwUserId, dwStatus);
 	}
 
 	@Override

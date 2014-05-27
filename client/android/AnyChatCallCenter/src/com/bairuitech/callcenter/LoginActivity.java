@@ -5,11 +5,7 @@ import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.bussinesscenter.BussinessCenter;
 import com.bairuitech.callcenter.R;
 
-import com.bairuitech.util.BaseConst;
-import com.bairuitech.util.BaseMethod;
-import com.bairuitech.util.ConfigEntity;
-import com.bairuitech.util.ConfigService;
-import com.bairuitech.util.DialogFactory;
+import com.bairuitech.util.*;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -32,17 +28,13 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 		 OnClickListener {
 	private Button configBtn;
 	private Button loginBtn;
-	private CheckBox mCheckRember;
+	private CheckBox mCheckRemember;
 	private ConfigEntity configEntity;
 	private EditText mEditAccount;
 	private ProgressDialog mProgressLogin;
 	private Dialog dialog;
 	private AnyChatCoreSDK anychat;
-	private boolean bReased = false;
-
-	String strSelfName = "";
-
-	private static final int DIALOGID_CONFIG = 7;
+	private boolean bNeedRelease = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -74,13 +66,11 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 		int tag=intent.getIntExtra("INTENT", BaseConst.AGAIGN_LOGIN);
 		if(tag==BaseConst.AGAIGN_LOGIN)
 		{
-			
 			if(anychat!=null)
 			{
 				anychat.Logout();
 				anychat.SetBaseEvent(this);
 			}
-			
 		}
 		else if(tag==BaseConst.APP_EXIT)
 		{
@@ -106,9 +96,8 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 			anychat = new AnyChatCoreSDK();
 			anychat.SetBaseEvent(this);
 			anychat.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
-			bReased = true;
+			bNeedRelease = true;
 		}
-		
 	}
 
 	private void initView() {
@@ -117,19 +106,18 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		this.setContentView(R.layout.login_layout);
 		mEditAccount = (EditText) findViewById(R.id.edit_account);
-		mCheckRember = (CheckBox) findViewById(R.id.check_issavepass);
-		mCheckRember.setTextColor(Color.BLACK);
+		mCheckRemember = (CheckBox) findViewById(R.id.check_issavepass);
+		mCheckRemember.setTextColor(Color.BLACK);
 		loginBtn = (Button) findViewById(R.id.btn_login);
 		loginBtn.setOnClickListener(this);
 		configBtn = (Button) findViewById(R.id.btn_setting);
 		configBtn.setOnClickListener(this);
 		if (configEntity.IsSaveNameAndPw) {
-			mCheckRember.setChecked(true);
+			mCheckRemember.setChecked(true);
 			if (configEntity.name != null)
 				mEditAccount.setText(configEntity.name);
 		} else
-			mCheckRember.setChecked(false);
-
+			mCheckRemember.setChecked(false);
 	}
 
 
@@ -147,29 +135,27 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 	}
 
 	private void Login() {
-		strSelfName = mEditAccount.getEditableText().toString();
-		if (mCheckRember.isChecked()) {
+		String strUserName = mEditAccount.getEditableText().toString();
+		if (mCheckRemember.isChecked()) {
 			configEntity.IsSaveNameAndPw = true;
-			configEntity.name = strSelfName;
-
+			configEntity.name = strUserName;
 		} else {
 			configEntity.IsSaveNameAndPw = false;
 		}
 		ConfigService.SaveConfig(this, configEntity);
 		if (mEditAccount.getText().length() == 0) {
-			BaseMethod.showToast(
-					this.getString(R.string.str_account_input_hint), this);
+			BaseMethod.showToast(this.getString(R.string.str_account_input_hint), this);
 			return;
 		}
 		this.anychat.Connect(configEntity.ip, configEntity.port);
-		this.anychat.Login(strSelfName, "123");
+		this.anychat.Login(strUserName, "123");
 		loginBtn.setClickable(false);
 		mProgressLogin.show();
 	}
 
 	protected void onDestroy() {
 		super.onDestroy();
-		if (bReased) {
+		if (bNeedRelease) {
 			anychat.Logout();
 			anychat.Release();
 			android.os.Process.killProcess(android.os.Process.myPid());
@@ -184,8 +170,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 	@Override
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
 		if (!bSuccess) {
-			BaseMethod
-					.showToast(getString(R.string.server_connect_error), this);
+			BaseMethod.showToast(getString(R.string.server_connect_error), this);
 			mProgressLogin.dismiss();
 		} else {
 		}
@@ -252,9 +237,10 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 			Login();
 			break;
 		case R.id.btn_setting:
-			dialog = DialogFactory.getDialog(DIALOGID_CONFIG, configEntity,
-					this);
+			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_CONFIG, configEntity,this);
 			dialog.show();
+			break;
+		default:
 			break;
 		}
 	}

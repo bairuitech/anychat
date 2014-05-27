@@ -15,6 +15,7 @@
     <string name="str_serveripinput">请输入服务器地址! </string>
     <string name="str_serverportinput">请输入服务器端口号!</string>
     <string name="str_againlogin">账号在异处登陆，请重新登录</string>
+    <string name="str_login_failed">登录系统失败</string>
     <string name="str_enterroom_failed">进入房间失败</string>
     <string name="str_lggin_failed">登录失败</string>
     <string name="str_exit">退出</string>

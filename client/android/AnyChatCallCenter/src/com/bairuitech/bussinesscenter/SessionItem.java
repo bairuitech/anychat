@@ -9,11 +9,11 @@ package com.bairuitech.bussinesscenter;
  */
 public class SessionItem  {
 
-	public int sourceUserId;//通话发起者userid
-	public int targetUserId;//通话目标userid
-	public int roomId;//通话房间Id
-	public int sessionStatus;//通话状态
-	public int sessionType;//通话类型
+	public int sourceUserId;		// 通话发起者userid
+	public int targetUserId;		// 通话目标userid
+	public int roomId;				// 通话房间Id
+	public int sessionStatus;		// 通话状态
+	public int sessionType;			// 通话类型
 	public SessionItem(int sessionType,int sUserId,int tUserId)
 	{
 		this.sessionType=sessionType;
