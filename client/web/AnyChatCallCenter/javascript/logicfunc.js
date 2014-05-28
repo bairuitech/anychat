@@ -24,6 +24,9 @@ var NOTIFY_TYPE_SYSTEM = 1;
 
 function LogicInit() {
     setTimeout(function () {
+		if (navigator.plugins && navigator.plugins.length) {
+			window.navigator.plugins.refresh(false);
+		}
         //检查是否安装了插件	
         var NEED_ANYCHAT_APILEVEL = "0"; 						// 定义业务层需要的AnyChat API Level
         var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	// 初始化插件
