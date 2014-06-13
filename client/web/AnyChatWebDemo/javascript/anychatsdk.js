@@ -106,6 +106,7 @@ var BRAC_RECORD_FLAGS_SERVER	=	0x00000004;	// 服务器端录制
 var BRAC_RECORD_FLAGS_MIXAUDIO 	=	0x00000010;	// 录制音频时，将其它人的声音混音后录制
 var BRAC_RECORD_FLAGS_MIXVIDEO	=	0x00000020;	// 录制视频时，将其它人的视频迭加后录制
 var BRAC_RECORD_FLAGS_ABREAST	=	0x00000100;	// 录制视频时，将其它人的视频并列录制
+var BRAC_RECORD_FLAGS_STEREO	=	0x00000200;	// 录制音频时，将其它人的声音混合为立体声后录制
 
 // 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
 var BRAC_USERSTATE_CAMERA = 				1;	// 用户摄像头状态（参数为DWORD型）
