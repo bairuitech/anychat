@@ -105,10 +105,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	protected void onRestart() {
 		// TODO Auto-generated method stub
 		super.onRestart();
-		anychat.UserCameraControl(-1, 1);
-		anychat.UserSpeakControl(-1, 1);
-		anychat.UserSpeakControl(dwTargetUserId, 1);
-		anychat.UserCameraControl(dwTargetUserId, 1);
 		// 如果是采用Java视频显示，则需要绑定用户
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
@@ -130,11 +126,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
-		anychat.UserCameraControl(-1, 0);
-		anychat.UserSpeakControl(-1, 0);
-		anychat.UserSpeakControl(dwTargetUserId, 0);
-		anychat.UserCameraControl(dwTargetUserId, 0);
-		anychat.LeaveRoom(-1);
+	
 
 	}
 
@@ -142,10 +134,16 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		anychat.UserCameraControl(-1, 0);
+		anychat.UserSpeakControl(-1, 0);
+		anychat.UserSpeakControl(dwTargetUserId, 0);
+		anychat.UserCameraControl(dwTargetUserId, 0);
 		mTimerCheckAv.cancel();
 		mTimerShowVideoTime.cancel();
 		if (dialog != null && dialog.isShowing())
 			dialog.dismiss();
+		anychat.LeaveRoom(-1);
+		
 
 	}
 
@@ -473,14 +471,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	public void OnAnyChatVideoCallEvent(int dwEventType, int dwUserId,
 			int dwErrorCode, int dwFlags, int dwParam, String userStr) {
 		// TODO Auto-generated method stub
-		if (dwEventType == AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH) {
-			anychat.UserCameraControl(-1, 0);
-			anychat.UserSpeakControl(-1, 0);
-			anychat.UserSpeakControl(dwTargetUserId, 0);
-			anychat.UserCameraControl(dwTargetUserId, 0);
-			anychat.LeaveRoom(-1);
-			this.finish();
-		}
+		this.finish();
 	}
 
 	@Override
@@ -496,6 +487,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		// TODO Auto-generated method stub
 		BussinessCenter.getBussinessCenter().onUserOnlineStatusNotify(dwUserId, dwStatus);
 	}
+	
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {

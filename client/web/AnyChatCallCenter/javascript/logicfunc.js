@@ -122,7 +122,7 @@ function InitInterfaceUI() {
 		else {
 			Getdmo("advanceset_div").style.display = "block"; // 显示高级设置界面
             // 初始化高级设置界面
-			InitAdvancedSettingsDlg();
+			InitAdvanced();
         }
     }
 }
@@ -345,7 +345,7 @@ function createVideoContainer() {
 		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_FINISH,mTargetUserId,0,0,0,""); 	// 挂断
     }
     Getdmo("VideoShowDiv").appendChild(under_finish);
-    // 切换界面 按钮
+    // 高级设置 按钮
     var video_paramers_config = document.createElement("div");
     video_paramers_config.id = "video_paramers_config";
     video_paramers_config.className = "Buttons";
@@ -356,7 +356,7 @@ function createVideoContainer() {
         else {
             Getdmo("advanceset_div").style.display = "block"; // 显示高级设置界面
             // 初始化高级设置界面
-            InitAdvancedSettingsDlg();
+            InitAdvanced();
         }
     }
     video_paramers_config.innerHTML = "设置";

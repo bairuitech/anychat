@@ -438,6 +438,9 @@ public class AnyChatCoreSDK
     // 缓冲区扩展回调函数定义
 	private void OnTransBufferExCallBack(int userid, byte[] buf, int len, int wparam, int lparam, int taskid)
     {
+		if (AnyChatCoreSDK.this.transDataEvent != null)
+			AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransBufferEx(userid,
+					buf, len, wparam, lparam, taskid);
     /*	Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TRANSBUFEX);       
