@@ -3,7 +3,31 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "BRAnyChatSDKDemo"=.\BRAnyChatSDKDemo\BRAnyChatSDKDemo.dsp - Package Owner=<4>
+Project: "AnyChatInputVideo"=".\AnyChatInputVideo\AnyChatInputVideo.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AnyChatVideoMixer"=".\AnyChatVideoMixer\AnyChatVideoMixer.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "BRAnyChatSDKDemo"=".\BRAnyChatSDKDemo\BRAnyChatSDKDemo.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

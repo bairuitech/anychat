@@ -1,9 +1,9 @@
-// AnyChatInputVideo.cpp : Defines the class behaviors for the application.
+// AnyChatVideoMixer.cpp : Defines the class behaviors for the application.
 //
 
 #include "stdafx.h"
-#include "AnyChatInputVideo.h"
-#include "AnyChatInputVideoDlg.h"
+#include "AnyChatVideoMixer.h"
+#include "AnyChatVideoMixerDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -12,34 +12,36 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CAnyChatInputVideoApp
+// CAnyChatVideoMixerApp
 
-BEGIN_MESSAGE_MAP(CAnyChatInputVideoApp, CWinApp)
-	//{{AFX_MSG_MAP(CAnyChatInputVideoApp)
+BEGIN_MESSAGE_MAP(CAnyChatVideoMixerApp, CWinApp)
+	//{{AFX_MSG_MAP(CAnyChatVideoMixerApp)
 	//}}AFX_MSG
 	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CAnyChatInputVideoApp construction
+// CAnyChatVideoMixerApp construction
 
-CAnyChatInputVideoApp::CAnyChatInputVideoApp()
+CAnyChatVideoMixerApp::CAnyChatVideoMixerApp()
 {
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// The one and only CAnyChatInputVideoApp object
+// The one and only CAnyChatVideoMixerApp object
 
-CAnyChatInputVideoApp theApp;
+CAnyChatVideoMixerApp theApp;
 
 /////////////////////////////////////////////////////////////////////////////
-// CAnyChatInputVideoApp initialization
+// CAnyChatVideoMixerApp initialization
 
-BOOL CAnyChatInputVideoApp::InitInstance()
+BOOL CAnyChatVideoMixerApp::InitInstance()
 {
+	AfxEnableControlContainer();
+
 	// Standard initialization
 
-	CAnyChatInputVideoDlg dlg;
+	CAnyChatVideoMixerDlg dlg;
 	m_pMainWnd = &dlg;
 	int nResponse = dlg.DoModal();
 	if (nResponse == IDOK)

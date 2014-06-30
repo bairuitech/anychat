@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BRAnyChatSDKDemo", "BRAnyChatSDKDemo\BRAnyChatSDKDemo.vcproj", "{37F7F182-1EDC-423B-A654-BAF178379D2C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnyChatInputVideo", "AnyChatInputVideo\AnyChatInputVideo.vcproj", "{3F8BC1C6-4D75-4350-81E6-D19F85DDEEDB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnyChatVideoMixer", "AnyChatVideoMixer\AnyChatVideoMixer.vcproj", "{9E00D5BE-A553-4A4D-A392-420F572E2588}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +17,14 @@ Global
 		{37F7F182-1EDC-423B-A654-BAF178379D2C}.Debug|Win32.Build.0 = Debug|Win32
 		{37F7F182-1EDC-423B-A654-BAF178379D2C}.Release|Win32.ActiveCfg = Release|Win32
 		{37F7F182-1EDC-423B-A654-BAF178379D2C}.Release|Win32.Build.0 = Release|Win32
+		{3F8BC1C6-4D75-4350-81E6-D19F85DDEEDB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3F8BC1C6-4D75-4350-81E6-D19F85DDEEDB}.Debug|Win32.Build.0 = Debug|Win32
+		{3F8BC1C6-4D75-4350-81E6-D19F85DDEEDB}.Release|Win32.ActiveCfg = Release|Win32
+		{3F8BC1C6-4D75-4350-81E6-D19F85DDEEDB}.Release|Win32.Build.0 = Release|Win32
+		{9E00D5BE-A553-4A4D-A392-420F572E2588}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9E00D5BE-A553-4A4D-A392-420F572E2588}.Debug|Win32.Build.0 = Debug|Win32
+		{9E00D5BE-A553-4A4D-A392-420F572E2588}.Release|Win32.ActiveCfg = Release|Win32
+		{9E00D5BE-A553-4A4D-A392-420F572E2588}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
