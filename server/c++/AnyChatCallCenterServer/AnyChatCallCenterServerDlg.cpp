@@ -191,6 +191,7 @@ void CALLBACK OnUserLogoutActionExCallBack(DWORD dwUserId, DWORD dwErrorCode, LP
 			lpServerDlg->m_onlineUserList.erase(it);
 			break;
 		}
+		it++;
 	}
 	// 核心服务器会通知其它用户（如果是好友），提示好友下线，不需要业务服务器干预
 
