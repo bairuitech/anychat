@@ -2,7 +2,6 @@ package com.bairuitech.anychat;		// 不能修改包的名称
 
 import java.awt.Component;
 
-
 public class AnyChatCoreSDK
 {
 	AnyChatBaseEvent		baseEvent;
@@ -13,6 +12,7 @@ public class AnyChatCoreSDK
 	AnyChatVideoCallEvent	videoCallEvent;
 	AnyChatUserInfoEvent	userInfoEvent;
 	AnyChatDataEncDecEvent	encdecEvent;
+	AnyChatRecordEvent		recordEvent;
 	
 	private final int HANDLE_TYPE_NOTIFYMSG = 1;		// 消息通知
 	private final int HANDLE_TYPE_TEXTMSG 	= 2;		// 文字信息
@@ -20,6 +20,8 @@ public class AnyChatCoreSDK
 	private final int HANDLE_TYPE_TRANSBUF	= 4;		// 缓冲区传输
 	private final int HANDLE_TYPE_TRANSBUFEX= 5;		// 扩展缓冲区传输
 	private final int HANDLE_TYPE_SDKFILTER	= 6;		// SDK Filter Data
+	private static int HANDLE_TYPE_VIDEOCALL= 7;		// 视频呼叫
+	private static int HANDLE_TYPE_RECORD	= 8;		// 录像、拍照
 	
 	// 设置AnyChat基本事件通知接口
 	public void SetBaseEvent(AnyChatBaseEvent e)
@@ -68,6 +70,12 @@ public class AnyChatCoreSDK
 	{
 		RegisterNotify();
 		this.encdecEvent = e;
+	}
+	// 设置视频录制、拍照事件通知接口
+	public void SetRecordSnapShotEvent(AnyChatRecordEvent e)
+	{
+		RegisterNotify();
+		this.recordEvent = e;
 	}
 		
 	// 查询SDK主版本号
@@ -307,162 +315,41 @@ public class AnyChatCoreSDK
 			break;
 		}
     }
-  
-   /* class MainHandler extends Handler
-    {
-         public MainHandler(){}
-         public MainHandler(Looper L)
-         {
-             super(L);
-         }
-         public void handleMessage(Message nMsg)
-         {
-             super.handleMessage(nMsg);
-             Bundle tBundle=nMsg.getData();
-             int type = tBundle.getInt("HANDLETYPE");
-             if(type == HANDLE_TYPE_NOTIFYMSG)
-             {
-            	 int msg=tBundle.getInt("MSG");
-            	 int wParam=tBundle.getInt("WPARAM");
-            	 int lParam=tBundle.getInt("LPARAM");
-            	 AnyChatCoreSDK.this.OnNotifyMsg(msg,wParam,lParam);
-             }
-             else if(type == HANDLE_TYPE_TEXTMSG)
-             {
-            	 int fromid = tBundle.getInt("FROMUSERID");
-                 int toid = tBundle.getInt("TOUSERID");
-                 int secret = tBundle.getInt("SECRET");
-                 String message = tBundle.getString("MESSAGE");
-                 if(AnyChatCoreSDK.this.textMsgEvent != null)
-                	 AnyChatCoreSDK.this.textMsgEvent.OnAnyChatTextMessage(fromid, toid, secret!=0?true:false, message);
-             }
-             else if(type == HANDLE_TYPE_TRANSFILE)
-             {
-                 int userid = tBundle.getInt("USERID");
-                 String filename = tBundle.getString("FILENAME");
-                 String tempfile = tBundle.getString("TEMPFILE");
-                 int length = tBundle.getInt("LENGTH");
-                 int wparam = tBundle.getInt("WPARAM");
-                 int lparam = tBundle.getInt("LPARAM");
-                 int taskid = tBundle.getInt("TASKID");
-                 if(AnyChatCoreSDK.this.transDataEvent != null)
-                	 AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransFile(userid, filename, tempfile, length, wparam, lparam, taskid);
-             }
-             else if(type == HANDLE_TYPE_TRANSBUF)
-             {
-            	 int userid = tBundle.getInt("USERID");
-            	 int length = tBundle.getInt("LENGTH");
-            	 byte[] buf = tBundle.getByteArray("BUF");
-            	 if(AnyChatCoreSDK.this.transDataEvent != null)
-            		 AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransBuffer(userid, buf, length);
-             }
-             else if(type == HANDLE_TYPE_TRANSBUFEX)
-             {
-            	 int userid = tBundle.getInt("USERID");
-            	 int length = tBundle.getInt("LENGTH");
-            	 byte[] buf = tBundle.getByteArray("BUF");
-            	 int wparam = tBundle.getInt("WPARAM");
-            	 int lparam = tBundle.getInt("LPARAM");
-            	 int taskid = tBundle.getInt("TASKID");
-            	 if(AnyChatCoreSDK.this.transDataEvent != null)
-            		 AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransBufferEx(userid, buf, length, wparam, lparam, taskid);
-             }
-             else if(type == HANDLE_TYPE_SDKFILTER)
-             {
-            	 int length = tBundle.getInt("LENGTH");
-            	 byte[] buf = tBundle.getByteArray("BUF");
-            	 if(AnyChatCoreSDK.this.transDataEvent != null)
-            		 AnyChatCoreSDK.this.transDataEvent.OnAnyChatSDKFilterData(buf, length); 
-             }
-        }
-     }*/
    
     // 异步消息通知（AnyChat底层其它线程回调上来，需要通过Msg传递到主线程）
 	private void OnAnyChatNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
     {
 		AnyChatCoreSDK.this.OnNotifyMsg(dwNotifyMsg,wParam,lParam);
-		System.out.println(dwNotifyMsg+"-"+wParam+"-"+lParam);
-   /* 	Message tMsg=new Message();
-        Bundle tBundle=new Bundle();
-        tBundle.putInt("HANDLETYPE", HANDLE_TYPE_NOTIFYMSG);       
-        tBundle.putInt("MSG", dwNotifyMsg);
-        tBundle.putInt("WPARAM", wParam);
-        tBundle.putInt("LPARAM", lParam);
-        tMsg.setData(tBundle);
-        mHandler.sendMessage(tMsg);*/
     }
     // 文字消息通知（AnyChat底层其它线程回调上来，需要通过Msg传递到主线程）
 	private void OnTextMessageCallBack(int dwFromUserid, int dwToUserid, int bSecret, String message)
     {
-    	/*Message tMsg=new Message();
-        Bundle tBundle=new Bundle();
-        tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TEXTMSG);       
-        tBundle.putInt("FROMUSERID", dwFromUserid);
-        tBundle.putInt("TOUSERID", dwToUserid);
-        tBundle.putInt("SECRET", bSecret);
-        tBundle.putString("MESSAGE", message);
-        tMsg.setData(tBundle);
-        mHandler.sendMessage(tMsg);*/
-		AnyChatCoreSDK.this.textMsgEvent.OnAnyChatTextMessage(dwFromUserid, dwToUserid, bSecret!=0?true:false, message);
+		if(AnyChatCoreSDK.this.textMsgEvent != null)
+			AnyChatCoreSDK.this.textMsgEvent.OnAnyChatTextMessage(dwFromUserid, dwToUserid, bSecret!=0?true:false, message);
     }
     // 文件传输回调函数定义
 	private void OnTransFileCallBack(int userid, String filename, String tempfilepath, int filelength, int wparam, int lparam, int taskid)
     {
+		if(AnyChatCoreSDK.this.transDataEvent != null)
 		AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransFile(userid, filename, tempfilepath, filelength, wparam, lparam, taskid);
-    /*	Message tMsg=new Message();
-        Bundle tBundle=new Bundle();
-        tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TRANSFILE);       
-        tBundle.putInt("USERID", userid);
-        tBundle.putString("FILENAME", filename);
-        tBundle.putString("TEMPFILE", tempfilepath);
-        tBundle.putInt("LENGTH", filelength);
-        tBundle.putInt("WPARAM", wparam);
-        tBundle.putInt("LPARAM", lparam);
-        tBundle.putInt("TASKID", taskid);
-        tMsg.setData(tBundle);
-        mHandler.sendMessage(tMsg);*/
     }
     // 缓冲区回调函数定义
 	private void OnTransBufferCallBack(int userid, byte[] buf, int len)
     {
-		 AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransBuffer(userid, buf, len);
-    /*	Message tMsg=new Message();
-        Bundle tBundle=new Bundle();
-        tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TRANSBUF);       
-        tBundle.putInt("USERID", userid);
-        tBundle.putByteArray("BUF", buf);
-        tBundle.putInt("LENGTH", len);
-         tMsg.setData(tBundle);
-        mHandler.sendMessage(tMsg);*/
+		if (AnyChatCoreSDK.this.transDataEvent != null)
+			AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransBuffer(userid, buf, len);
     }
     // 缓冲区扩展回调函数定义
 	private void OnTransBufferExCallBack(int userid, byte[] buf, int len, int wparam, int lparam, int taskid)
     {
 		if (AnyChatCoreSDK.this.transDataEvent != null)
-			AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransBufferEx(userid,
-					buf, len, wparam, lparam, taskid);
-    /*	Message tMsg=new Message();
-        Bundle tBundle=new Bundle();
-        tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TRANSBUFEX);       
-        tBundle.putInt("USERID", userid);
-        tBundle.putByteArray("BUF", buf);
-        tBundle.putInt("LENGTH", len);
-        tBundle.putInt("WPARAM", wparam);
-        tBundle.putInt("LPARAM", lparam);
-        tBundle.putInt("TASKID", taskid);
-         tMsg.setData(tBundle);
-        mHandler.sendMessage(tMsg);*/
+			AnyChatCoreSDK.this.transDataEvent.OnAnyChatTransBufferEx(userid, buf, len, wparam, lparam, taskid);
     }
     // 服务器发送的SDK Filter Data数据回调函数定义
 	private void OnSDKFilterDataCallBack(byte[] buf, int len)
     {
-    /*	Message tMsg=new Message();
-        Bundle tBundle=new Bundle();
-        tBundle.putInt("HANDLETYPE", HANDLE_TYPE_SDKFILTER);       
-        tBundle.putByteArray("BUF", buf);
-        tBundle.putInt("LENGTH", len);
-         tMsg.setData(tBundle);
-        mHandler.sendMessage(tMsg);*/
+		if(AnyChatCoreSDK.this.transDataEvent != null)
+			AnyChatCoreSDK.this.transDataEvent.OnAnyChatSDKFilterData(buf, len);
     }
 	
 	// 视频呼叫事件回调函数
@@ -470,6 +357,17 @@ public class AnyChatCoreSDK
 	{
 		if(AnyChatCoreSDK.this.videoCallEvent != null)
 			AnyChatCoreSDK.this.videoCallEvent.OnAnyChatVideoCallEvent(eventtype, userid, errorcode, flags, param, userStr);
+	}
+	
+	// 录像、快照任务完成回调函数
+	private void OnRecordSnapShotCallBack(int userid, String filename, int param, int brecord)
+	{
+		if(AnyChatCoreSDK.this.recordEvent != null) {
+        	 if(brecord > 0)
+        		 AnyChatCoreSDK.this.recordEvent.OnAnyChatRecordEvent(userid, filename, param);
+        	 else
+        		 AnyChatCoreSDK.this.recordEvent.OnAnyChatSnapShotEvent(userid, filename, param);
+   	 	}
 	}
 	
 	// 数据加密、解密回调函数

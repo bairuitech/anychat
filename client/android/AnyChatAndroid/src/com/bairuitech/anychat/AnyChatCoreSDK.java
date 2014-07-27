@@ -19,6 +19,7 @@ public class AnyChatCoreSDK
 	AnyChatVideoCallEvent	videoCallEvent;
 	AnyChatUserInfoEvent	userInfoEvent;
 	AnyChatDataEncDecEvent	encdecEvent;
+	AnyChatRecordEvent		recordEvent;
 	
 	static MainHandler mHandler;
 	public static AnyChatAudioHelper	mAudioHelper = new AnyChatAudioHelper();
@@ -33,6 +34,7 @@ public class AnyChatCoreSDK
 	private static int HANDLE_TYPE_TRANSBUFEX	= 5;	// 扩展缓冲区传输
 	private static int HANDLE_TYPE_SDKFILTER	= 6;	// SDK Filter Data
 	private static int HANDLE_TYPE_VIDEOCALL	= 7;	// 视频呼叫
+	private static int HANDLE_TYPE_RECORD		= 8;	// 录像、拍照
 	
 	// 设置AnyChat基本事件通知接口
 	public void SetBaseEvent(AnyChatBaseEvent e)
@@ -82,6 +84,12 @@ public class AnyChatCoreSDK
 	{
 		RegisterNotify();
 		this.encdecEvent = e;
+	}
+	// 设置视频录制、拍照事件通知接口
+	public void SetRecordSnapShotEvent(AnyChatRecordEvent e)
+	{
+		RegisterNotify();
+		this.recordEvent = e;
 	}
 	
 	// 查询SDK主版本号
@@ -445,6 +453,19 @@ public class AnyChatCoreSDK
             	 if(anychat.videoCallEvent != null)
             		 anychat.videoCallEvent.OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, userStr);
              }
+             else if(type == HANDLE_TYPE_RECORD)
+             {
+            	 int dwUserId = tBundle.getInt("USERID");
+            	 String filename = tBundle.getString("FILENAME");
+            	 int dwParam = tBundle.getInt("PARAM");
+            	 int bRecord = tBundle.getInt("BRECORD");
+            	 if(anychat.recordEvent != null) {
+                 	 if(bRecord > 0)
+                 		 anychat.recordEvent.OnAnyChatRecordEvent(dwUserId, filename, dwParam);
+                 	 else
+                 		 anychat.recordEvent.OnAnyChatSnapShotEvent(dwUserId, filename, dwParam);
+            	 }
+             }
         }
      }
    
@@ -549,6 +570,20 @@ public class AnyChatCoreSDK
         tBundle.putInt("FLAGS", flags);
         tBundle.putInt("PARAM", param);
         tBundle.putString("USERSTR", userStr);
+        tMsg.setData(tBundle);
+        mHandler.sendMessage(tMsg);
+	}
+	
+	// 录像、快照任务完成回调函数
+	private void OnRecordSnapShotCallBack(int userid, String filename, int param, int brecord)
+	{
+		Message tMsg=new Message();
+        Bundle tBundle=new Bundle();
+        tBundle.putInt("HANDLETYPE", HANDLE_TYPE_RECORD);
+        tBundle.putInt("USERID", userid);
+        tBundle.putString("FILENAME", filename);
+        tBundle.putInt("PARAM", param);
+        tBundle.putInt("BRECORD", brecord);
         tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);
 	}
