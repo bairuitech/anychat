@@ -64,6 +64,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_RECORD_AUDIOBR			=	11;	///< 录像音频码率设置（参数为：int型，单位：bps）
 	public static final int BRAC_SO_RECORD_TMPDIR			=	12;	///< 录像文件临时目录设置（参数为字符串TCHAR类型，必须是完整的绝对路径）
 	public static final int BRAC_SO_SNAPSHOT_TMPDIR			=	13;	///< 快照文件临时目录设置（参数为字符串TCHAR类型，必须是完整的绝对路径）
+	public static final int BRAC_SO_RECORD_FILETYPE			=	140;///< 录制文件类型设置（参数为：int型， 0 MP4[默认], 1 WMV, 2 FLV）
 	public static final int BRAC_SO_CORESDK_TMPDIR			=	14;	///< 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 	public static final int BRAC_SO_CORESDK_LOADCODEC		=	16;	///< 加载外部编解码器（参数为字符串TCHAR类型，必须是完整的绝对路径，包含文件名，或包含文件名的绝对路径）
 	public static final int BRAC_SO_CORESDK_USEARMV6LIB		=	17;	///< 强制使用ARMv6指令集的库，android平台使用（参数为：int型，1使用ARMv6指令集， 0内核自动判断[默认]）
