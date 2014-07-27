@@ -37,6 +37,7 @@ public class AnyChatSensorHelper implements SensorEventListener{
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_SURFACEROTATION, degrees);
 		
 		AnyChatCoreSDK.mCameraHelper.SetContext(context);
+		AnyChatCoreSDK.mAudioHelper.SetContext(context);
 		
 		if(orientationListener == null) {
 			orientationListener = new AnyChatOrientationEventListener(context, SensorManager.SENSOR_DELAY_NORMAL);

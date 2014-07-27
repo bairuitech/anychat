@@ -21,7 +21,7 @@ public class AnyChatCoreSDK
 	AnyChatDataEncDecEvent	encdecEvent;
 	
 	static MainHandler mHandler;
-	static AnyChatAudioHelper	mAudioHelper;
+	public static AnyChatAudioHelper	mAudioHelper = new AnyChatAudioHelper();
 	public static AnyChatCameraHelper	mCameraHelper = new AnyChatCameraHelper();
 	public AnyChatSensorHelper	mSensorHelper = new AnyChatSensorHelper();
 	public AnyChatVideoHelper	mVideoHelper = new AnyChatVideoHelper();
@@ -337,26 +337,20 @@ public class AnyChatCoreSDK
 				userInfoEvent.OnAnyChatFriendStatus(wParam, lParam);
 			break;
 		case AnyChatDefine.WM_GV_AUDIOPLAYCTRL:
-			if(wParam == 1) {
-				if(mAudioHelper == null)
-					mAudioHelper = new AnyChatAudioHelper();
+			if(mAudioHelper == null)
+				break;
+			if(wParam == 1)
 				mAudioHelper.InitAudioPlayer(lParam);
-			}
-			else {
-				if(mAudioHelper != null)
-					mAudioHelper.ReleaseAudioPlayer();
-			}
+			else
+				mAudioHelper.ReleaseAudioPlayer();
 			break;
 		case AnyChatDefine.WM_GV_AUDIORECCTRL:
-			if(wParam == 1) {
-				if(mAudioHelper == null)
-					mAudioHelper = new AnyChatAudioHelper();
+			if(mAudioHelper == null)
+				break;
+			if(wParam == 1)
 				mAudioHelper.InitAudioRecorder(lParam);
-			}
-			else {
-				if(mAudioHelper != null)
-					mAudioHelper.ReleaseAudioRecorder();
-			}
+			else
+				mAudioHelper.ReleaseAudioRecorder();
 			break;
 		case AnyChatDefine.WM_GV_VIDEOCAPCTRL:
 			mCameraHelper.CaptureControl(wParam==0 ? false : true);

@@ -1,5 +1,6 @@
 package com.bairuitech.anychat;
 
+import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -14,6 +15,10 @@ public class AnyChatAudioHelper {
 	private AudioTrack mAudioTrack = null;
 	private AudioRecord mAudioRecord = null;
 	
+	public static final int PLAY_MODE_AUTO		= 0;		// 自动模式
+	public static final int PLAY_MODE_RECEIVER	= 1;		// 听筒播放模式
+	public static final int PLAY_MODE_SPEAKER	= 2;		// 喇叭播放模式	
+	
 	private PlayAudioThread mPlayAudioThread = null;		// 播放线程
 	private boolean mPlayThreadExitFlag = false;			// 播放线程退出标志
 	private int mMinPlayBufSize = 0;
@@ -23,11 +28,19 @@ public class AnyChatAudioHelper {
 	private boolean mRecordThreadExitFlag = false;			// 采集线程退出标志
 	private int mMinRecordBufSize = 0;
 	private boolean mAudioRecordReleased = false;
+	
+	private Context mContext = null;
+	private int mProfile = 0;
+	private int mPlayMode = PLAY_MODE_SPEAKER;				// 默认是喇叭播放模式
 
+	// 设置父窗口句柄
+	public void SetContext(Context ctx)	{	mContext = ctx;	}
+	
 	// 初始化音频播放器
 	public int InitAudioPlayer(int profile) {
 		if(mAudioTrack != null)
 			return 0;
+		mProfile = profile;
 		Log.d(TAG, "InitAudioPlayer, profile: " + profile);
 		int channel, samplerate, samplebit;
 		// 根据上层设定的profile来配置参数
@@ -48,8 +61,9 @@ public class AnyChatAudioHelper {
 			mAudioPlayReleased = false;
 			// 获得构建对象的最小缓冲区大小
 			mMinPlayBufSize = AudioTrack.getMinBufferSize(samplerate, channel, samplebit);
-			mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, samplerate, channel, samplebit, mMinPlayBufSize, AudioTrack.MODE_STREAM);
-			
+			mAudioTrack = new AudioTrack(mPlayMode == PLAY_MODE_SPEAKER ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_VOICE_CALL,
+					samplerate, channel, samplebit, mMinPlayBufSize, AudioTrack.MODE_STREAM);
+
 			if (mPlayAudioThread == null)
 			{
 				mPlayThreadExitFlag = false;
@@ -117,6 +131,35 @@ public class AnyChatAudioHelper {
 			}
 			Log.d(TAG, "audio play stop....");
 		}
+	}
+	
+	// 判断当前是否为喇叭播放模式
+	public Boolean IsSpeakerMode() {	return mPlayMode == PLAY_MODE_SPEAKER;	}
+	
+	// 切换声音播放设备（喇叭、耳机）
+	public void SwitchPlayMode(int mode) {
+		try {
+			AudioManager audioManager = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
+			if(mode == PLAY_MODE_AUTO) {
+				if(IsSpeakerMode()) {
+					audioManager.setMode(AudioManager.MODE_IN_CALL);		// 切换到听筒
+					mPlayMode = PLAY_MODE_RECEIVER;
+				} else {
+					audioManager.setMode(AudioManager.MODE_NORMAL);			// 切换到扬声器
+					mPlayMode = PLAY_MODE_SPEAKER;
+				}
+			} else if(mode == PLAY_MODE_RECEIVER) {
+				audioManager.setMode(AudioManager.MODE_IN_CALL);
+				mPlayMode = PLAY_MODE_RECEIVER;
+			} else if(mode == PLAY_MODE_SPEAKER) {
+				audioManager.setMode(AudioManager.MODE_NORMAL);
+				mPlayMode = PLAY_MODE_SPEAKER;
+			}
+			// 重新初始化播放器
+			ReleaseAudioPlayer();
+			InitAudioPlayer(mProfile);
+		}
+		catch (Exception e) {}
 	}
 	
 	// 初始化音频采集设备
