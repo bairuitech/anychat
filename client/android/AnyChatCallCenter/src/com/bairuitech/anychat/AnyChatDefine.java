@@ -136,6 +136,10 @@ public class AnyChatDefine {
 	public static final int BRAC_RECORD_FLAGS_VIDEO			=	0x00000001;	///< 录制视频
 	public static final int BRAC_RECORD_FLAGS_AUDIO			=	0x00000002;	///< 录制音频
 	public static final int BRAC_RECORD_FLAGS_SERVER		=	0x00000004;	///< 服务器端录制
+	public static final int BRAC_RECORD_FLAGS_MIXAUDIO		=	0x00000010;	///< 录制音频时，将其它人的声音混音后录制
+	public static final int BRAC_RECORD_FLAGS_MIXVIDEO		=	0x00000020;	///< 录制视频时，将其它人的视频迭加后录制（画中画模式）
+	public static final int BRAC_RECORD_FLAGS_ABREAST		=	0x00000100;	///< 录制视频时，将其它人的视频并列录制
+	public static final int BRAC_RECORD_FLAGS_STEREO		=	0x00000200;	///< 录制音频时，将其它人的声音混合为立体声后录制
 
 
 	// 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
