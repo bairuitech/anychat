@@ -124,7 +124,7 @@ DWORD CALLBACK OnRecordFinishCallBack(DWORD dwUserId, CHAR* lpFileName, DWORD dw
 	*lpRecordSeconds = 10;
 
 	CHAR szString[100] = {0};
-	_snprintf(szString, sizeof(szString), "OnRecordFinishCallBack(dwUserId)", dwUserId);
+	_snprintf(szString, sizeof(szString), "OnRecordFinishCallBack(dwUserId:%d)", dwUserId);
 	OutputLogStr(szString);
 	return 0;
 }

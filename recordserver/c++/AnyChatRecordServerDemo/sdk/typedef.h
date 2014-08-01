@@ -19,7 +19,6 @@ typedef unsigned char BYTE;
 
 
 #define LPDWORD DWORD*
-#define CALLBACK __stdcall
 #define VOID    void
 #define LPVOID  void*
 #define LPBYTE  unsigned char*
@@ -29,6 +28,10 @@ typedef unsigned char BYTE;
 #define TRUE    1
 #define FALSE   0
 
-
+#if defined(WIN32)
+#   define CALLBACK __stdcall
+#else
+#   define CALLBACK
+#endif
 
 #endif //BR_ANYCHAT_SERVER_TYPEDEF_H__INCLUDE_
