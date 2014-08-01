@@ -21,7 +21,8 @@ public class AnyChatRecordServerSDK
 	// 数据类型标志（回调函数：OnAnyChatRecordBufferCallBack 参数）
 	public static final int BRRS_RECORD_FLAGS_AUDIO			=	1;	///< 音频数据
 	public static final int BRRS_RECORD_FLAGS_VIDEO			=	2;	///< 音频数据
-	public static final int BRRS_RECORD_FLAGS_BUFFER		=	4;	///< 缓冲区数据
+	public static final int BRRS_RECORD_FLAGS_BUFFER		=	4;	///< 透明通道缓冲区数据
+	public static final int BRRS_RECORD_FLAGS_BUFFEREX		=	8;	///< 透明通道扩展缓冲区
 	public static final int BRRS_RECORD_FLAGS_KEYFRAME		=	16;	///< 视频关键帧
 	public static final int BRRS_RECORD_FLAGS_SILENCE		=	32;	///< 音频静音帧
 
