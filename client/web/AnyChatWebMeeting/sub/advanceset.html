@@ -1,0 +1,117 @@
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript">
+        var Get = function (id) {
+            return document.getElementById(id);
+        }
+        var code_rate = ["质量模式", "40", "60", "100", "150", "200", "300", "400", "500", "600", "800", "1000", "1200", "1500"];
+        var quality = ["较差质量", "一般质量", "中等质量", "较好质量", "最好质量"];
+        var distinguishability = ["176x144", "320x240", "352x288", "640x480", "720x480", "720x576", "800x600", "960x720", "1024x576", "1280x720", "1280x1024", "1920x1080"];
+        var frame_rate = ["5 FPS", "8 FPS", "12 FPS", "15 FPS", "20 FPS", "25 FPS", "30 FPS"];
+        var preinstall = ["1", "2", "3", "4", "5"];
+        function Init() {
+            filltheselect("code_rate", code_rate);
+            filltheselect("quality", quality);
+            filltheselect("distinguishability", distinguishability);
+            filltheselect("frame_rate", frame_rate);
+            filltheselect("preinstall", preinstall);
+//            filltheselect("video_device", WebCtrlEnumDevices(1));
+            Get("ServerSetting").onclick = function () {
+                var SelectTag = document.getElementsByTagName("select");
+                for (var i = 0; i < SelectTag.length; i++) {
+                    if (SelectTag[i].getAttribute("name") == "Server") {
+                        if (Get("ServerSetting").checked == false) {
+                            SelectTag[i].disabled = "disabled"
+                        }
+                        else
+                            SelectTag[i].disabled = "";
+                    }
+                }
+            }
+            Get("regulate").onclick = function () {
+                //alert(Get("advancedsetting"));
+                //Get("code_rate").options[Get("code_rate").selectedIndex].text;
+            }  //WebCtrlEnumDevices()
+        }
+        
+        function filltheselect(id, theArray) {
+            Get(id).options.length = 0;
+            for (var j = 0; j < theArray.length; j++) {
+                var option = document.createElement("option");
+                Get(id).appendChild(option);
+                option.value = j;
+                option.text = theArray[j];
+            }
+        }
+    </script>
+</head>
+<body onload="Init()" style="font-family:微软雅黑;">
+    <div style="width:502px; height:348px; border:1px solid black;">
+        <div id="asd" style=" width:330px; height:100px; border:1px solid black; margin-left:5px; margin-top:5px; float:left;">
+            <table style=" width:330px; height:100px; font-size:12px;">
+                <tr>
+                    <td style="text-align:right;"><input type="checkbox" id="ServerSetting" checked="checked" /></td>
+                    <td>服务器配置参数</td>
+                    <td></td>
+                    <td style="text-align:right;">质量：</td>
+                    <td><select id="quality" disabled="disabled" style=" width:80px;"></select></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;">码率：</td>
+                    <td><select id="code_rate" name="Server" style=" width:80px;"></select></td>
+                    <td></td>
+                    <td style="text-align:right;">分辨率：</td>
+                    <td><select id="distinguishability" name="Server" style=" width:80px;"></select></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;">帧率：</td>
+                    <td><select id="frame_rate" name="Server" style=" width:80px;"></select></td>
+                    <td></td>
+                    <td style="text-align:right;">(当前分辨率:0x0)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;">预设：</td>
+                    <td><select id="preinstall" name="Server" style=" width:80px;"></select></td>
+                    <td></td>
+                    <td><div id="regulate" style=" cursor:pointer; text-align:center; line-height:20px; width:70px; height:20px; border:1px solid black;">画面调节</div></td>
+                    <td><div style=" cursor:pointer; text-align:center; line-height:20px; width:70px; height:20px; border:1px solid black;">应用更改</div></td>
+                </tr>
+            </table>            
+        </div>
+        <div style="width:3px; float:left;"></div>
+        <div style="border:1px solid black; float:left; width:155px; height:105px; margin-top:5px; font-size:12px;">
+            <div style=" height:30px; margin:10px 0px 0px 5px;"><select style=" width:140px;"></select></div>
+            <div style=" width:75px; height:30px; line-height:30px; float:left; text-align:center;"><input type="checkbox" />静音检测</div>
+            <div style=" width:75px; height:30px; line-height:30px; float:left; text-align:center;"><input type="checkbox" />回音消除</div>
+            <div style=" width:75px; height:30px; line-height:30px; float:left; text-align:center;"><input type="checkbox" />噪音抑制</div>
+            <div style=" width:75px; height:30px; line-height:30px; float:left; text-align:center;"><input type="checkbox" />自动增益</div>
+        </div>
+
+    <!--设备选择 -->
+        <div style=" float:left; width:250px; height:100px; border:1px solid black; margin-top:10px; margin-left:5px;">
+            <table style="width:250px; height:98px;">
+                <tr>
+                    <td style="text-align:right; font-size:12px;">视频设备：</td>
+                    <td><select id="video_device" style="width: 150px"></select></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right; font-size:12px;">录音设备：</td>
+                    <td><select id="record_device" style="width: 150px"></select></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right; font-size:12px;">放音设备：</td>
+                    <td><select id="voice_device" style="width: 150px"></select></td>
+                </tr>
+            </table>
+        </div>
+        <div style="width:3px; float:left;"></div>
+        <div style="background-color:Yellow; width:235px; height:100px; float:left; margin-top:10px; margin-right:5px; font-size:12px; border:1px solid black;">
+            <table>
+                
+            </table>
+        </div>
+    </div>
+</body>
+</html>

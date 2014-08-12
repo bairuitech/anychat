@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>AnyChat for Web SDK Demo</title>
+<!-- 加载AnyChat for Web SDK库  -->
+<script language="javascript" type="text/javascript" src="./javascript/anychatsdk.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/anychatevent.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/advanceset.js" charset="GB2312"></script>
+<!-- 加载业务逻辑控制脚本  -->
+<script language="javascript" type="text/javascript" src="./javascript/logicfunc.js" charset="GB2312"></script>
+<link href="./css/demo.css" rel="stylesheet" type="text/css" />	
+<link href="./css/advanceset.css" rel="Stylesheet" type="text/css" />
+</head>
+<body onload="LogicInit()" style=" background-color: #C4CEDD; font-family:微软雅黑; margin:0 auto;">
+
+<!--系统日志信息层-->
+<div id="LOG_DIV_BODY">
+    <div id="LOG_DIV_TITLE">系统日志</div>
+    <div id="LOG_DIV_CONTENT"></div>
+</div>
+
+<!--操作等待层 -->
+<div id="LOADING_DIV"><img src="./images/LoadImg.gif" alt="请等待..." style=" height:50px;" /></div>
+
+<!--灰色背景透明层 -->
+<div id="LOADING_GREY_DIV"></div>
+
+<!--所有界面与浏览器顶部距离层 -->
+<div id="margintop"></div>
+
+<div id="MAIN_DIV">
+    <!--安装插件提示层 -->
+    <div id="prompt_div">
+        <div class="close_div">
+            <div id="prompt_div_headline1">插件安装提示</div>
+            <div id="prompt_div_headline2">刷新</div>
+        </div>
+        <div>
+            <div id="prompt_div_line1"></div>
+            <div id="prompt_div_line2">控件安装完成后，请重启浏览器</div>
+            <div id="prompt_div_btn_load" onclick="window.open('http://anychat.oss.aliyuncs.com/AnyChatWebSetup.exe')">下载安装</div>
+        </div>
+        <div style="height: 85px;">
+            <div id="prompt_div_BR">
+                <a href="http://www.anychat.cn/">AnyChat</a>&nbsp|&nbsp<a href="http://www.bairuitech.com/">佰锐科技</a>
+            </div>
+        </div>
+    </div>
+
+    <!--登录层 -->
+    <div id="login_div">
+        <div style=" height:55px;">
+        <div style=" height:35px; line-height:35px; text-align:left; margin:10px 5px 0px 5px; text-align:center;">AnyChat for Web SDK Demo</div>
+            <div id="cutoff_div"></div>
+        </div>
+        <div class="wordage">帐号：<input type="text" id="username" /><a id="a_error_user" style=" color:#FAFADD; font-size:15px;">&nbsp×</a></div>
+		<div class="wordage">密码：<input type="text" id="password" onfocus="PasswordFocus(this,'white')" onblur="myblur(this,'white')" value="密码可为空" style="color:#CDCDCD"/><a id="a_error_password" style=" color:#FAFADD; font-size:15px;">&nbsp×</a></div>
+		
+        <div id="Btn_div">
+            <div id="setting" class="Btn" onmouseout="Mouseout('setting')" onmousemove="Mouseover('setting')" style=" float:left;">设置</div>
+            <div id="loginbtn" class="Btn" onmouseout="Mouseout('loginbtn')" onmousemove="Mouseover('loginbtn')" onclick="LoginToHall()" style=" float:right;">登录</div>
+        </div>
+        <div id="setting_div">
+            <div id="setting_div_input">
+                服务器:&nbsp<input type="text" id="ServerAddr" style="width:120px;" />&nbsp&nbsp&nbsp
+                 端口:&nbsp<input type="text" id="ServerPort" style="width:40px;" />
+            </div>
+        </div>
+    </div>
+
+    <!--大厅层 -->
+    <div id="hall_div">
+        <div style="width:610px; height:25px;"><div id="ExitSystemBtn">×关闭</div></div>
+        <div id="hall_div_myinfo">
+            <div id="hall_div_myinfo1">
+                <table style="width:100%; margin-top:15px;">
+                    <tr>
+                        <td class="hall_div_left">昵称：</td>
+                        <td class="hall_div_center" id="hall_div_td_name"></td>
+                    </tr>
+                    <tr>
+                        <td class="hall_div_left">ID：</td>
+                        <td class="hall_div_center" id="hall_div_td_id"></td>
+                    </tr>
+                    <tr>
+                        <td class="hall_div_left">级别：</td>
+                        <td class="hall_div_center" id="hall_div_td_level"></td>
+                    </tr>
+                    <tr>
+                        <td class="hall_div_left">IP：</td>
+                        <td class="hall_div_center" id="hall_div_td_ip"></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="hall_div_table">
+                <div style="height:133px;">
+                    <div class="hall_div_table_room" id="hall_div_table_room1" onmouseout="Mouseout('hall_div_table_room1')" onmousemove="Mouseover('hall_div_table_room1')" onclick="EnterRoomRequest(1)">房间1</div>
+                    <div class="hall_div_table_room" id="hall_div_table_room2" onmouseout="Mouseout('hall_div_table_room2')" onmousemove="Mouseover('hall_div_table_room2')" onclick="EnterRoomRequest(2)">房间2</div>
+                    <div class="hall_div_table_room" id="hall_div_table_room3" onmouseout="Mouseout('hall_div_table_room3')" onmousemove="Mouseover('hall_div_table_room3')" onclick="EnterRoomRequest(3)">房间3</div>
+                    <div class="hall_div_table_room" id="hall_div_table_room4" onmouseout="Mouseout('hall_div_table_room4')" onmousemove="Mouseover('hall_div_table_room4')" onclick="EnterRoomRequest(4)">房间4</div>
+                </div>
+                <div id="hall_div_operation">
+                    <div id="hall_div_operation_div1">
+                        <div id="hall_div_operation_div2">
+                            <div id="hall_div_customroomdiv">自定义房间:&nbsp<input type="text" id="customroomid" style=" width:130px;" /></div>
+                            <div id="hall_div_customroomdiv_btn"><div id="EnterRoomBtn" onmouseout="Mouseout('EnterRoomBtn')" onmousemove="Mouseover('EnterRoomBtn')">进入</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--房间界面 -->
+    <div id="room_div">
+        <div id="room_div_close"><div id="leaveroom">×关闭</div></div>
+        <div style="padding:10px 20px 10px 20px;">
+            <div id="room_div_left">
+                <div id="room_div_userlist"></div>
+                <div id="room_div_myobject">
+                    <div id="AnyChatLocalVideoDiv" style="height:147px;"></div>
+                    <div style=" text-align:left; width:193px; height:4px;">
+                        <div id="LocalAudioVolume"></div>
+                    </div>
+                </div>
+                <div style=" text-align:center;margin:10px 0px 0px 0px;" >
+                    <div id="advancedsetting" onmouseout="Mouseout('advancedsetting')" onmousemove="Mouseover('advancedsetting')">高级设置</div>
+					<select id="videoscreensetting" style="height:25px; width:100px;" onchange="onVideoScreenChange()">
+						<option value="1">一分屏</option>
+						<option value="2">二分屏</option>
+						<option value="4">四分屏</option>
+						<option value="9">九分屏</option>
+					</select>
+                </div>
+            </div>
+
+            <div id="room_div_right">
+                <div id="room_div_otherobject">
+                    <div id="AnyChatRemoteVideoDiv"></div>
+                    <div style="width:502px; height:4px; text-align:left;">
+                        <div id="RemoteAudioVolume"></div>
+                    </div>
+                </div>
+                <div id="room_div_msgimg">
+                    <div id="ReceiveMsgDiv"></div>
+                    <div style=" width:464px; height:55px;">
+                        <div id="room_div_right_MsgTxt"">发言:<input type="text" id="MessageInput" style="width:280px;" /></div>
+                        <div id="SendMsg" class="Btn" onmouseout="Mouseout('SendMsg')" onmousemove="Mouseover('SendMsg')" style="float:left;">发送信息</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--高级设置界面 -->
+    <div id="advanceset_div">
+        <div id="advanceset_div_close">×关闭</div>
+        <div id="advanceset_div_mainpark">
+            <div id="advanceset_div_Div_Btn">
+                <div id="Btn_Div_Device" clickstate="true" onclick="AdvancedSetup('Device_Interface','Btn_Div_Device')" onmouseout="SettingBtnMouseout('Btn_Div_Device')" onmousemove="SettingBtnMouseover('Device_Interface','Btn_Div_Device')">设备选择</div>
+                <div id="Btn_Div_Video" class="Btn_Div" clickstate="false" onclick="AdvancedSetup('Video_Parameter_Interface','Btn_Div_Video')" onmouseout="SettingBtnMouseout('Btn_Div_Video')" onmousemove="SettingBtnMouseover('Video_Parameter_Interface','Btn_Div_Video')">视频参数</div>
+                <div id="Btn_Div_Sound" class="Btn_Div" clickstate="false" onclick="AdvancedSetup('Sound_Parameter_Interface','Btn_Div_Sound')" onmouseout="SettingBtnMouseout('Btn_Div_Sound')" onmousemove="SettingBtnMouseover('Sound_Parameter_Interface','Btn_Div_Sound')">音频参数</div>
+                <div id="Btn_Div_Other" class="Btn_Div" clickstate="false" onclick="AdvancedSetup('Other_Parameter_Interface','Btn_Div_Other')" onmouseout="SettingBtnMouseout('Btn_Div_Other')" onmousemove="SettingBtnMouseover('Other_Parameter_Interface','Btn_Div_Other')">其他设置</div>
+            </div>
+            <div id="advanceset_div_mainpark_parameter">
+                <div style="height:10px;"></div>
+                <div id="Device_Interface">
+                    视频设备：<select id="DeviceType_VideoCapture" onchange="GetTheValue('DeviceType_VideoCapture')" style=" width:250px;"></select><br />
+                    录音设备：<select id="DeviceType_AudioCapture" onchange="GetTheValue('DeviceType_AudioCapture')" style=" width:250px;"></select><br />
+                    放音设备：<select id="DeviceType_AudioPlayBack" onchange="GetTheValue('DeviceType_AudioPlayBack')" style=" width:250px;"></select>
+                </div>
+                <div id="Video_Parameter_Interface">
+                    <table id="advanceset_div_Tab">
+                        <tr>
+                            <td class="td_input"><input type="checkbox" id="ServerSetting" onclick="ChangeTheResult('ServerSetting')" checked="checked" /></td>
+                            <td>服务器配置参数优先</td>
+                            <td></td>
+                            <td class="td_input"><a>质量：</a></td>
+                            <td><select id="quality" onchange="GetTheValue('quality')" disabled="disabled" style=" width:80px;"></select></td>
+                        </tr>
+                        <tr>
+                            <td class="td_input"><a>码率：</a></td>
+                            <td><select id="code_rate" onchange="GetTheValue('code_rate')" disabled="disabled" style=" width:80px;"></select></td>
+                            <td></td>
+                            <td class="td_input"><a>分辨率：</a></td>
+                            <td><select id="distinguishability" onchange="GetTheValue('distinguishability')" disabled="disabled" style=" width:80px;"></select></td>
+                        </tr>
+                        <tr>
+                            <td class="td_input"><a>帧率：</a></td>
+                            <td><select id="frame_rate" onchange="GetTheValue('frame_rate')" disabled="disabled" style=" width:80px;"></select></td>
+                            <td></td>
+                            <td class="td_input"">(当前分辨率：</td>
+                            <td id="current_resolution"></td>
+                        </tr>
+                        <tr>
+                            <td class="td_input"><a>预设：</a></td>
+                            <td><select id="preinstall" onchange="GetTheValue('preinstall')" disabled="disabled" style=" width:80px;"></select></td>
+                            <td></td>
+                            <td><div id="regulate" onclick="BtnAdjust()" onmouseout="Mouseout('regulate')" onmousemove="Mouseover('regulate')">画面调节</div></td>
+                            <td><div id="apply_changes" onclick="BtnApply()" onmouseout="Mouseout('apply_changes')" onmousemove="Mouseover('apply_changes')">应用更改</div></td>
+                        </tr>
+                    </table>            
+                </div>
+                <div id="Sound_Parameter_Interface">
+                    <div style=" height:30px; margin:10px 0px 0px 5px;"><select id="Speak_Mode" style=" width:140px;" onChange="GetTheValue('Speak_Mode')"></select></div>
+                    <div class="audio_tabcontrol"><input id="audio_vadctrl" onchange="ChangeTheResult('audio_vadctrl')" type="checkbox" />静音检测</div>
+                    <div class="audio_tabcontrol"><input id="audio_echoctrl" onchange="ChangeTheResult('audio_echoctrl')" type="checkbox" />回音消除</div>
+                    <div class="audio_tabcontrol"><input id="audio_nsctrl" onchange="ChangeTheResult('audio_nsctrl')" type="checkbox" />噪音抑制</div>
+                    <div class="audio_tabcontrol"><input id="audio_agcctrl" onchange="ChangeTheResult('audio_agcctrl')" type="checkbox" />自动增益</div>
+                </div>
+                <div id="Other_Parameter_Interface">
+                    <input id="Checkbox_P2P" onchange="ChangeTheResult('Checkbox_P2P')" type="checkbox" />P2P优先
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
