@@ -43,7 +43,13 @@
 
 #define BRAS_USERINFO_CTRLCODE_APPDEFINE	100	///< 应用层自定义起始指令
 
-#define BRAS_SO_GETTRANSBUFTIMESTAMP		1	///< 获取透明通道时间戳
+// 内核参数设置常量定义（API：BRAS_SetSDKOption 传入参数）
+#define BRAS_SO_RECORD_VIDEOBR				2	///< 录像视频码率设置（参数为：int型，单位：bps）
+#define BRAS_SO_RECORD_AUDIOBR				3	///< 录像音频码率设置（参数为：int型，单位：bps）
+#define BRAS_SO_RECORD_FILETYPE				4	///< 录制文件类型设置（参数为：int型， 0 MP4[默认], 1 WMV, 2 FLV, 3 MP3）
+#define BRAS_SO_RECORD_WIDTH				5	///< 录制视频宽度设置（参数为：int型，如：320）
+#define BRAS_SO_RECORD_HEIGHT				6	///< 录制文件高度设置（参数为：int型，如：240）
+#define BRAS_SO_RECORD_FILENAMERULE			7	///< 录制文件名命名规则（参数为：int型）
 
 // 初始化标志（API：BRAS_InitSDK 传入参数）
 #define BRAS_INITFLAGS_MULTITHREADS		0x01	///< 多线程模式

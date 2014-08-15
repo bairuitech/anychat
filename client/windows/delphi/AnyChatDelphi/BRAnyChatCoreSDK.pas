@@ -59,6 +59,11 @@ const
   BRAC_SO_RECORD_AUDIOBR		=11;	  		///< 录像音频码率设置（参数为：int型，单位：bps）
   BRAC_SO_RECORD_TMPDIR			=12;	 		///< 录像文件临时目录设置（参数为字符串PCHAR类型）
   BRAC_SO_SNAPSHOT_TMPDIR		=13;	 		///< 快照文件临时目录设置（参数为字符串PCHAR类型）
+  BRAC_SO_RECORD_FILETYPE		=140;			///< 录制文件类型设置（参数为：int型， 0 MP4[默认], 1 WMV, 2 FLV, 3 MP3）
+  BRAC_SO_RECORD_WIDTH			=141;			///< 录制视频宽度设置（参数为：int型，如：320）
+  BRAC_SO_RECORD_HEIGHT			=142;			///< 录制文件高度设置（参数为：int型，如：240）
+  BRAC_SO_RECORD_FILENAMERULE	=143;			///< 录制文件名命名规则（参数为：int型）
+  
   BRAC_SO_CORESDK_TMPDIR		=14;	  		///< 设置AnyChat Core SDK临时目录（参数为字符串PCHAR类型）
   BRAC_SO_CORESDK_PATH			=20;	  		///< 设置AnyChat Core SDK相关组件路径（参数为字符串PCHAR类型）
   BRAC_SO_CORESDK_DUMPCOREINFO	=21;			///< 输出内核信息到日志文件中，便于分析故障原因（参数为：int型：1 输出）

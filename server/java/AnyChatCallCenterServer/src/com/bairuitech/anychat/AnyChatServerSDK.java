@@ -26,6 +26,12 @@ public class AnyChatServerSDK
 	
 	// 内核参数控制（API：SetSDKOption 传入参数）
 	public static final int BRAS_SO_GETTRANSBUFTIMESTAMP	=	1;	///< 获取透明通道时间戳（传入参数为userid）
+	public static final int BRAS_SO_RECORD_VIDEOBR			=	2;	///< 录像视频码率设置（参数为：int型，单位：bps）
+	public static final int BRAS_SO_RECORD_AUDIOBR			=	3;	///< 录像音频码率设置（参数为：int型，单位：bps）
+	public static final int BRAS_SO_RECORD_FILETYPE			=	4;	///< 录制文件类型设置（参数为：int型， 0 MP4[默认], 1 WMV, 2 FLV, 3 MP3）
+	public static final int BRAS_SO_RECORD_WIDTH			=	5;	///< 录制视频宽度设置（参数为：int型，如：320）
+	public static final int BRAS_SO_RECORD_HEIGHT			=	6;	///< 录制文件高度设置（参数为：int型，如：240）
+	public static final int BRAS_SO_RECORD_FILENAMERULE		=	7;	///< 录制文件名命名规则（参数为：int型）
 	
 	// 初始化标志（API：BRAS_InitSDK 传入参数）
 	public static final int BRAS_INITFLAGS_MULTITHREADS		=	1;	///< 多线程模式

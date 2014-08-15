@@ -33,6 +33,11 @@ var BRAC_SO_RECORD_VIDEOBR = 				10;	// 录像视频码率设置（参数为：int型，单位：b
 var BRAC_SO_RECORD_AUDIOBR = 				11;	// 录像音频码率设置（参数为：int型，单位：bps）
 var BRAC_SO_RECORD_TMPDIR = 				12;	// 录像文件临时目录设置（参数为字符串TCHAR类型，必须是完整的绝对路径）
 var BRAC_SO_SNAPSHOT_TMPDIR = 				13;	// 快照文件临时目录设置（参数为字符串TCHAR类型，必须是完整的绝对路径）
+var BRAC_SO_RECORD_FILETYPE	=				140;// 录制文件类型设置（参数为：int型， 0 MP4[默认], 1 WMV, 2 FLV, 3 MP3）
+var BRAC_SO_RECORD_WIDTH	=				141;// 录制视频宽度设置（参数为：int型，如：320）
+var BRAC_SO_RECORD_HEIGHT	=				142;// 录制文件高度设置（参数为：int型，如：240）
+var BRAC_SO_RECORD_FILENAMERULE	=			143;// 录制文件名命名规则（参数为：int型）
+
 var BRAC_SO_CORESDK_TMPDIR = 				14;	// 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 var BRAC_SO_CORESDK_MAGICADJUST = 			15;	// 内核调试参数
 var BRAC_SO_CORESDK_LOADCODEC = 			16;	// 加载外部编解码器（参数为字符串TCHAR类型，必须是完整的绝对路径，包含文件名，或包含文件名的绝对路径）
@@ -106,6 +111,7 @@ var BRAC_RECORD_FLAGS_SERVER	=	0x00000004;	// 服务器端录制
 var BRAC_RECORD_FLAGS_MIXAUDIO 	=	0x00000010;	// 录制音频时，将其它人的声音混音后录制
 var BRAC_RECORD_FLAGS_MIXVIDEO	=	0x00000020;	// 录制视频时，将其它人的视频迭加后录制
 var BRAC_RECORD_FLAGS_ABREAST	=	0x00000100;	// 录制视频时，将其它人的视频并列录制
+var BRAC_RECORD_FLAGS_STEREO	=	0x00000200;	// 录制音频时，将其它人的声音混合为立体声后录制
 
 // 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
 var BRAC_USERSTATE_CAMERA = 				1;	// 用户摄像头状态（参数为DWORD型）
