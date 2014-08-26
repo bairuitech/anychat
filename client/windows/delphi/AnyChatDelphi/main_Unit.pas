@@ -654,16 +654,13 @@ begin
                 S_UserNAME[i].Caption :='';
 
 	end;
-        BRAC_ActiveCallLog(true);//关闭日志输出
-        //BRAC_FUNC_VIDEO_CBDATA or BRAC_FUNC_AUDIO_AUTOPLAY or BRAC_FUNC_AUDIO_CBDATA;
-      	dwMode :=BRAC_FUNC_VIDEO_AUTODISP or      //通过回调函数处理视频BRAC_FUNC_VIDEO_CBDATA  BRAC_FUNC_VIDEO_AUTODISP
-                 BRAC_FUNC_AUDIO_AUTOPLAY or    //SDK自动处理音频数据
-                 BRAC_FUNC_CONFIG_LOCALINI or   //< 生成本地配置文件（AnyChatSDK.ini）
-                 BRAC_FUNC_AUDIO_VOLUMECALC or   //< 由SDK自动计算语音的音量
-                 BRAC_FUNC_FIREWALL_OPEN or      //< 允许SDK操作Windows防火墙，将当前应用程序加入防火墙访问列表（避免Windows提示用户是否阻止当前应用程序）
-                 BRAC_FUNC_NET_SUPPORTUPNP ; //;or      //< 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
-               //  BRAC_SO_AUDIO_AUTOPARAM         //根据音频编码，自动选择参数音频自动蚕食设置
-
+ 
+      	dwMode :=BRAC_FUNC_VIDEO_CBDATA or      //< 通过回调函数处理视频BRAC_FUNC_VIDEO_CBDATA  BRAC_FUNC_VIDEO_AUTODISP
+                 BRAC_FUNC_AUDIO_AUTOPLAY or    //< SDK自动处理音频数据
+                 BRAC_FUNC_CONFIG_LOCALINI or  	//< 生成本地配置文件（AnyChatSDK.ini）
+                 BRAC_FUNC_AUDIO_VOLUMECALC or  //< 由SDK自动计算语音的音量
+                 BRAC_FUNC_FIREWALL_OPEN or     //< 允许SDK操作Windows防火墙，将当前应用程序加入防火墙访问列表（避免Windows提示用户是否阻止当前应用程序）
+                 BRAC_FUNC_NET_SUPPORTUPNP ;	//< 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
 	if(BRAC_InitSDK(mainform.Handle,dwMode) = GV_ERR_SUCCESS) then
 	begin
 		AppendLogString('初始化成功');
@@ -697,27 +694,27 @@ begin
          BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_BITRATECTRL,@dwVolume,sizeof(dwVolume));
   
 
-                 dwVolume:=3; /////< 本地视频编码质量因子控制（参数为int型，同服务器配置：VideoQuality）
+         dwVolume:=3; /////< 本地视频编码质量因子控制（参数为int型，同服务器配置：VideoQuality）
          BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_QUALITYCTRL,@dwVolume,sizeof(dwVolume));
 
-                 dwVolume:=20; /////< 本地视频编码关键帧间隔控制（参数为int型，同服务器配置：VideoGOPSize）
+         dwVolume:=20; /////< 本地视频编码关键帧间隔控制（参数为int型，同服务器配置：VideoGOPSize）
          BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_GOPCTRL,@dwVolume,sizeof(dwVolume));
 
-                 dwVolume:=8; /////< 本地视频编码帧率控制（参数为int型，同服务器配置：VideoFps）
+         dwVolume:=8; /////< 本地视频编码帧率控制（参数为int型，同服务器配置：VideoFps）
          BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_FPSCTRL,@dwVolume,sizeof(dwVolume));
 
-                 dwVolume:=3; /////< 本地视频编码预设参数控制（参数为int型，1-5）
+         dwVolume:=3; /////< 本地视频编码预设参数控制（参数为int型，1-5）
          BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_PRESETCTRL,@dwVolume,sizeof(dwVolume));
 
 
-                  dwVolume:=0;  // ///< 视频显示模式控制（参数为：int型，0 单画面显示，1 视频迭加显示）
+          dwVolume:=0;  // ///< 视频显示模式控制（参数为：int型，0 单画面显示，1 视频迭加显示）
           BRAC_SetSDKOption(BRAC_SO_VIDEOSHOW_MODECTRL,@dwVolume,sizeof(dwVolume));
 
 
           dwVolume:=1;  // 	///< 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL）
           BRAC_SetSDKOption(BRAC_SO_VIDEOSHOW_DRIVERCTRL,@dwVolume,sizeof(dwVolume));
 
-                  bAPPLYPARAM:=1;    //立即生效
+          bAPPLYPARAM:=1;    //立即生效
          BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_APPLYPARAM,@bAPPLYPARAM,sizeof(integer));
 
 
