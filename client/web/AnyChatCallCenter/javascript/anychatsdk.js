@@ -112,6 +112,20 @@ var BRAC_RECORD_FLAGS_MIXAUDIO 	=	0x00000010;	// Â¼ÖÆÒôÆµÊ±£¬½«ÆäËüÈËµÄÉùÒô»ìÒôº
 var BRAC_RECORD_FLAGS_MIXVIDEO	=	0x00000020;	// Â¼ÖÆÊÓÆµÊ±£¬½«ÆäËüÈËµÄÊÓÆµµü¼ÓºóÂ¼ÖÆ
 var BRAC_RECORD_FLAGS_ABREAST	=	0x00000100;	// Â¼ÖÆÊÓÆµÊ±£¬½«ÆäËüÈËµÄÊÓÆµ²¢ÁÐÂ¼ÖÆ
 var BRAC_RECORD_FLAGS_STEREO	=	0x00000200;	// Â¼ÖÆÒôÆµÊ±£¬½«ÆäËüÈËµÄÉùÒô»ìºÏÎªÁ¢ÌåÉùºóÂ¼ÖÆ
+var BRAC_RECORD_FLAGS_SNAPSHOT	=	0x00000400;	// ÅÄÕÕ
+var BRAC_RECORD_FLAGS_LOCALCB	=	0x00000800;	// ´¥·¢±¾µØ»Øµ÷
+
+// ¿Í»§¶Ë¡¢·þÎñÆ÷¶ËÂ¼ÖÆ±êÖ¾¶¨Òå±£³ÖÍ³Ò»
+var ANYCHAT_RECORD_FLAGS_VIDEO	=	BRAC_RECORD_FLAGS_VIDEO;
+var ANYCHAT_RECORD_FLAGS_AUDIO	=	BRAC_RECORD_FLAGS_AUDIO;
+var ANYCHAT_RECORD_FLAGS_SERVER	=	BRAC_RECORD_FLAGS_SERVER;
+var ANYCHAT_RECORD_FLAGS_MIXAUDIO=	BRAC_RECORD_FLAGS_MIXAUDIO;
+var ANYCHAT_RECORD_FLAGS_MIXVIDEO=	BRAC_RECORD_FLAGS_MIXVIDEO;
+var ANYCHAT_RECORD_FLAGS_ABREAST=	BRAC_RECORD_FLAGS_ABREAST;
+var ANYCHAT_RECORD_FLAGS_STEREO	=	BRAC_RECORD_FLAGS_STEREO;
+var ANYCHAT_RECORD_FLAGS_SNAPSHOT=	BRAC_RECORD_FLAGS_SNAPSHOT;
+var ANYCHAT_RECORD_FLAGS_LOCALCB=	BRAC_RECORD_FLAGS_LOCALCB;
+
 
 // ÓÃ»§×´Ì¬±êÖ¾¶¨Òå£¨API£ºBRAC_QueryUserState ´«Èë²ÎÊý£©
 var BRAC_USERSTATE_CAMERA = 				1;	// ÓÃ»§ÉãÏñÍ·×´Ì¬£¨²ÎÊýÎªDWORDÐÍ£©
@@ -193,6 +207,7 @@ var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.4";
  *				·½·¨¶¨Òå²¿·Ö				*
  *******************************************/
 var anychat;									// AnyChat²å¼þDMO¶ÔÏó£¬Íâ²¿³õÊ¼»¯
+var bSupportStreamRecordCtrlEx = false;			// ÊÇ·ñÖ§³ÖÂ¼ÏñÀ©Õ¹API½Ó¿Ú
 
 // ³õÊ¼»¯SDK£¬·µ»Ø³ö´í´úÂë
 function BRAC_InitSDK(apilevel) {
@@ -227,6 +242,8 @@ function BRAC_InitSDK(apilevel) {
 	    var videopluginver = videoobj.GetVersion(0);
 	    // ÅÐ¶Ï²å¼þµÄ°æ±¾ÊÇ·ñÌ«¾É
 	    var bRightVersion = ((anychatpluginver >= MIN_ANYCHAT_PLUGIN_VER) && (videopluginver >= MIN_VIDEO_PLUGIN_VER));
+		// ÅÐ¶Ï²å¼þÊÇ·ñÖ§³ÖÂ¼ÏñÀ©Õ¹API½Ó¿Ú
+		bSupportStreamRecordCtrlEx = (anychatpluginver >= "1.0.1.0");
 		// ÅÐ¶Ïµ±Ç°µÄAPI LevelÊÇ·ñÂú×ãÒµÎñ²ãµÄÐèÒª
 		if(apilevel > anychatobj.GetVersion(2))
 			bRightVersion = false;
@@ -234,39 +251,17 @@ function BRAC_InitSDK(apilevel) {
 			insertdiv.removeChild(videoobj);
 			anychat = anychatobj;
 			// ¹ØÁª»Øµ÷ÊÂ¼þ
-			if(window.ActiveXObject || "ActiveXObject" in window) {
-				if(window.ActiveXObject && anychat.attachEvent) {
-					anychat.attachEvent('OnNotifyMessage', OnAnyChatNotifyMessage);
-					anychat.attachEvent('OnTextMessage', OnAnyChatTextMessage);
-					anychat.attachEvent('OnTransBuffer', OnAnyChatTransBuffer);
-					anychat.attachEvent('OnTransBufferEx', OnAnyChatTransBufferEx);
-					anychat.attachEvent('OnTransFile', OnAnyChatTransFile);
-					anychat.attachEvent('OnVolumeChange', OnAnyChatVolumeChange);
-					anychat.attachEvent('OnSDKFilterData', OnAnyChatSDKFilterData);
-					anychat.attachEvent('OnRecordSnapShot', OnAnyChatRecordSnapShot);
-					anychat.attachEvent('OnVideoCallEvent', OnAnyChatVideoCallEvent);
-				} else {
-					BRAC_AttachIE11Event(anychat, 'OnNotifyMessage', OnAnyChatNotifyMessage);
-					BRAC_AttachIE11Event(anychat, 'OnTextMessage', OnAnyChatTextMessage);
-					BRAC_AttachIE11Event(anychat, 'OnTransBuffer', OnAnyChatTransBuffer);
-					BRAC_AttachIE11Event(anychat, 'OnTransBufferEx', OnAnyChatTransBufferEx);
-					BRAC_AttachIE11Event(anychat, 'OnTransFile', OnAnyChatTransFile);
-					BRAC_AttachIE11Event(anychat, 'OnVolumeChange', OnAnyChatVolumeChange);
-					BRAC_AttachIE11Event(anychat, 'OnSDKFilterData', OnAnyChatSDKFilterData);
-					BRAC_AttachIE11Event(anychat, 'OnRecordSnapShot', OnAnyChatRecordSnapShot);
-					BRAC_AttachIE11Event(anychat, 'OnVideoCallEvent', OnAnyChatVideoCallEvent);
-				}
-			} else {
-				anychat.OnNotifyMessage = OnAnyChatNotifyMessage;
-				anychat.OnTextMessage = OnAnyChatTextMessage;
-				anychat.OnTransBuffer = OnAnyChatTransBuffer;
-				anychat.OnTransBufferEx = OnAnyChatTransBufferEx;
-				anychat.OnTransFile = OnAnyChatTransFile;
-				anychat.OnVolumeChange = OnAnyChatVolumeChange;
-				anychat.OnSDKFilterData = OnAnyChatSDKFilterData;
-				anychat.OnRecordSnapShot = OnAnyChatRecordSnapShot;
-				anychat.OnVideoCallEvent = OnAnyChatVideoCallEvent;
-			}
+			BRAC_RegisterCallBack(anychat, 'OnNotifyMessage', 	OnAnyChatNotifyMessage);
+			BRAC_RegisterCallBack(anychat, 'OnTextMessage', 	OnAnyChatTextMessage);
+			BRAC_RegisterCallBack(anychat, 'OnTransBuffer', 	OnAnyChatTransBuffer);
+			BRAC_RegisterCallBack(anychat, 'OnTransBufferEx', 	OnAnyChatTransBufferEx);
+			BRAC_RegisterCallBack(anychat, 'OnTransFile', 		OnAnyChatTransFile);
+			BRAC_RegisterCallBack(anychat, 'OnVolumeChange', 	OnAnyChatVolumeChange);
+			BRAC_RegisterCallBack(anychat, 'OnSDKFilterData', 	OnAnyChatSDKFilterData);
+			BRAC_RegisterCallBack(anychat, 'OnVideoCallEvent', 	OnAnyChatVideoCallEvent);
+			BRAC_RegisterCallBack(anychat, 'OnRecordSnapShot', 	OnAnyChatRecordSnapShot);
+			if(bSupportStreamRecordCtrlEx)
+				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx', OnAnyChatRecordSnapShotEx);
 		} else {
 			document.body.removeChild(insertdiv);
 		}
@@ -277,6 +272,21 @@ function BRAC_InitSDK(apilevel) {
 	    if (insertdiv)
 	        document.body.removeChild(insertdiv);
 	    return GV_ERR_PLUGINNOINSTALL;
+	}
+}
+
+// ×¢²á»Øµ÷ÊÂ¼þ
+function BRAC_RegisterCallBack(obj, name, proc) {
+	if(typeof(proc) != "function")
+		return;
+	if(window.ActiveXObject || "ActiveXObject" in window) {
+		if(window.ActiveXObject && obj.attachEvent) {
+			obj.attachEvent(name, proc);
+		} else {
+			BRAC_AttachIE11Event(obj, name, proc);
+		}
+	} else {
+		obj[name] = proc;
 	}
 }
 
@@ -453,6 +463,14 @@ function BRAC_AudioSetVolume(device, dwVolume) {
 function BRAC_StreamRecordCtrl(dwUserId, bStartRecord, dwFlags, dwParam) {
 	return anychat.StreamRecordCtrl(dwUserId, bStartRecord, dwFlags, dwParam);
 }
+// ÓÃ»§Òô¡¢ÊÓÆµÂ¼ÖÆ£¨À©Õ¹£©
+function BRAC_StreamRecordCtrl(dwUserId, bStartRecord, dwFlags, dwParam, lpUserStr) {
+	if(bSupportStreamRecordCtrlEx)
+		return anychat.StreamRecordCtrlEx(dwUserId, bStartRecord, dwFlags, dwParam, lpUserStr);
+	else
+		return -1;
+}
+
 // ¶ÔÓÃ»§µÄÊÓÆµ½øÐÐ×¥ÅÄ£¨¿ìÕÕ£©
 function BRAC_SnapShot(dwUserId, dwFlags, dwParam) {
 	return anychat.SnapShot(dwUserId, dwFlags, dwParam);

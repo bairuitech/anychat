@@ -75,6 +75,11 @@ function OnAnyChatRecordSnapShot(dwUserId, lpFileName, dwParam, bRecordType) {
 
 }
 
+// 收到录像或拍照完成事件（扩展）
+function OnAnyChatRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr) {
+
+}
+
 
 /********************************************
  *		AnyChat SDK核心业务流程				*
