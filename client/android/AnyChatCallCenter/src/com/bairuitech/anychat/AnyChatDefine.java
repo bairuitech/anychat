@@ -203,6 +203,18 @@ public class AnyChatDefine {
     public static final int BRAC_ERRORCODE_SESSION_REFUSE	= 100104;///< 目标用户拒绝会话
     public static final int BRAC_ERRORCODE_SESSION_TIMEOUT	= 100105;///< 会话请求超时
     public static final int BRAC_ERRORCODE_SESSION_DISCONNECT=100106;///< 网络断线
+    
+    
+    // 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
+	public static final int ANYCHAT_RECORD_FLAGS_VIDEO		= 0x00000001;	///< 录制视频
+	public static final int ANYCHAT_RECORD_FLAGS_AUDIO		= 0x00000002;	///< 录制音频
+	public static final int ANYCHAT_RECORD_FLAGS_SERVER		= 0x00000004;	///< 服务器端录制
+	public static final int ANYCHAT_RECORD_FLAGS_MIXAUDIO	= 0x00000010;	///< 录制音频时，将其它人的声音混音后录制
+	public static final int ANYCHAT_RECORD_FLAGS_MIXVIDEO	= 0x00000020;	///< 录制视频时，将其它人的视频迭加后录制
+	public static final int ANYCHAT_RECORD_FLAGS_ABREAST	= 0x00000100;	///< 录制视频时，将其它人的视频并列录制
+	public static final int ANYCHAT_RECORD_FLAGS_STEREO		= 0x00000200;	///< 录制音频时，将其它人的声音混合为立体声后录制
+	public static final int ANYCHAT_RECORD_FLAGS_SNAPSHOT	= 0x00000400;	///< 拍照
+	public static final int ANYCHAT_RECORD_FLAGS_LOCALCB	= 0x00000800;	///< 触发本地回调
 	
 	
 	

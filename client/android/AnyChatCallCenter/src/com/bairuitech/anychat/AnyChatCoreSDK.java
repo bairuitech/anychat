@@ -137,8 +137,10 @@ public class AnyChatCoreSDK
     public native int UserCameraControl(int userid, int bopen);
     // 用户音频控制
     public native int UserSpeakControl(int userid, int bopen);
-	// 用户音、视频录制（中心服务器录像）
+	// 用户音、视频录制
 	public native int StreamRecordCtrl(int userid, int bstartrecord, int flags, int param);
+	// 用户音、视频录制（扩展）
+	public native int StreamRecordCtrlEx(int userid, int bstartrecord, int flags, int param, int szUserStr);
 	
 	// 获取指定音频设备的当前音量
 	public native int AudioGetVolume(int device);
@@ -457,13 +459,16 @@ public class AnyChatCoreSDK
              {
             	 int dwUserId = tBundle.getInt("USERID");
             	 String filename = tBundle.getString("FILENAME");
+            	 int dwElapse = tBundle.getInt("ELAPSE");
+            	 int dwFlags = tBundle.getInt("FLAGS");
             	 int dwParam = tBundle.getInt("PARAM");
-            	 int bRecord = tBundle.getInt("BRECORD");
+            	 String userstr = tBundle.getString("USERSTR");
+
             	 if(anychat.recordEvent != null) {
-                 	 if(bRecord > 0)
-                 		 anychat.recordEvent.OnAnyChatRecordEvent(dwUserId, filename, dwParam);
+                 	 if((dwFlags & AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT) == 0)
+                 		 anychat.recordEvent.OnAnyChatRecordEvent(dwUserId, filename, dwElapse, dwFlags, dwParam, userstr);
                  	 else
-                 		 anychat.recordEvent.OnAnyChatSnapShotEvent(dwUserId, filename, dwParam);
+                 		 anychat.recordEvent.OnAnyChatSnapShotEvent(dwUserId, filename, dwFlags, dwParam, userstr);
             	 }
              }
         }
@@ -575,15 +580,17 @@ public class AnyChatCoreSDK
 	}
 	
 	// 录像、快照任务完成回调函数
-	private void OnRecordSnapShotCallBack(int userid, String filename, int param, int brecord)
+	private void OnRecordSnapShotExCallBack(int dwUserId, String lpFileName, int dwElapse, int dwFlags, int dwParam, String lpUserStr)
 	{
 		Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_RECORD);
-        tBundle.putInt("USERID", userid);
-        tBundle.putString("FILENAME", filename);
-        tBundle.putInt("PARAM", param);
-        tBundle.putInt("BRECORD", brecord);
+        tBundle.putInt("USERID", dwUserId);
+        tBundle.putString("FILENAME", lpFileName);
+        tBundle.putInt("ELAPSE", dwElapse);
+        tBundle.putInt("FLAGS", dwFlags);
+        tBundle.putInt("PARAM", dwParam);
+        tBundle.putString("USERSTR", lpUserStr);
         tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);
 	}

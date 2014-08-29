@@ -123,8 +123,10 @@ public class AnyChatCoreSDK
     public native int UserCameraControl(int userid, int bopen);
     // 用户音频控制
     public native int UserSpeakControl(int userid, int bopen);
-    // 用户音、视频录制（中心服务器录像）
+    // 用户音、视频录制
 	public native int StreamRecordCtrl(int userid, int bstartrecord, int flags, int param);
+	// 用户音、视频录制（扩展）
+	public native int StreamRecordCtrlEx(int userid, int bstartrecord, int flags, int param, String szUserStr);
     
     // 获取指定用户的字符串类型状态
     public native String QueryUserStateString(int userid, int infoname);
@@ -360,13 +362,13 @@ public class AnyChatCoreSDK
 	}
 	
 	// 录像、快照任务完成回调函数
-	private void OnRecordSnapShotCallBack(int userid, String filename, int param, int brecord)
+	private void OnRecordSnapShotExCallBack(int dwUserId, String lpFileName, int dwElapse, int dwFlags, int dwParam, String lpUserStr)
 	{
 		if(AnyChatCoreSDK.this.recordEvent != null) {
-        	 if(brecord > 0)
-        		 AnyChatCoreSDK.this.recordEvent.OnAnyChatRecordEvent(userid, filename, param);
+        	 if((dwFlags & AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT) == 0)
+        		 AnyChatCoreSDK.this.recordEvent.OnAnyChatRecordEvent(dwUserId, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr);
         	 else
-        		 AnyChatCoreSDK.this.recordEvent.OnAnyChatSnapShotEvent(userid, filename, param);
+        		 AnyChatCoreSDK.this.recordEvent.OnAnyChatSnapShotEvent(dwUserId, lpFileName, dwFlags, dwParam, lpUserStr);
    	 	}
 	}
 	
