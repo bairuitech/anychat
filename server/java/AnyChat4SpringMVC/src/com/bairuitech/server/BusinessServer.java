@@ -246,13 +246,18 @@ public class BusinessServer implements AnyChatServerEvent {
 	}
 
 	/**
-	 * 服务器录像回调函数，由中心录像服务器触发
+	 * 服务器录像（扩展）回调函数，由中心录像服务器触发
 	 * 参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=20&extra=page%3D1
 	 */
 	@Override
-	public void OnAnyChatServerRecordCallBack(int dwUserId, int dwParam, int dwRecordServerId, int dwElapse, String szRecordFileName) {
-		// TODO Auto-generated method stub
-		String str = "OnAnyChatServerRecordCallBack: dwUserId" + dwUserId + " szRecordFileName:" + szRecordFileName;
+	public void OnAnyChatServerRecordExCallBack(int dwUserId, String szRecordFileName, int dwElapse, int dwFlags, int dwParam, String lpUserStr, int dwRecordServerId){
+		boolean bSnapShotEvent = ((dwFlags & AnyChatServerSDK.ANYCHAT_RECORD_FLAGS_SNAPSHOT) != 0);	// 是否为拍照事件
+		String eventStr;
+		if(bSnapShotEvent)
+			eventStr = " ,SnapShot Event";
+		else
+			eventStr = " ,Record Event";
+		String str = "OnAnyChatServerRecordExCallBack: dwUserId" + dwUserId + eventStr + " ,szRecordFileName:" + szRecordFileName + " lpUserStr:" + lpUserStr;
 		generateLog(str);
 	}
 

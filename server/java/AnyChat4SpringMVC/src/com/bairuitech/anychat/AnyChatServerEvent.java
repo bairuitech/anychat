@@ -35,8 +35,8 @@ public interface AnyChatServerEvent {
 	
 	// 收到用户文字聊天通信数据回调函数定义
 	public void OnAnyChatRecvUserTextMsgCallBack(int dwRoomId, int dwSrcUserId, int dwTarUserId, int bSecret, String szTextMessage, int dwLen);
-	// 服务器录像回调函数定义
-	public void OnAnyChatServerRecordCallBack(int dwUserId, int dwParam, int dwRecordServerId, int dwElapse, String szRecordFileName);
+	// 服务器录像回调函数定义（扩展）
+	public void OnAnyChatServerRecordExCallBack(int dwUserId, String szRecordFileName, int dwElapse, int dwFlags, int dwParam, String lpUserStr, int dwRecordServerId);
 	
 	// 视频通话消息通知回调函数定义
 	public int OnAnyChatVideoCallEventCallBack(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, String lpUserStr);
