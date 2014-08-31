@@ -210,14 +210,15 @@ void CALLBACK OnTransFileCallBack(DWORD dwUserId, LPCTSTR lpFileName, LPCTSTR lp
 	}
 }
 
-// 服务器录像回调函数定义
-void CALLBACK OnServerRecord_CallBack(DWORD dwUserId, DWORD dwParam, DWORD dwRecordServerId, DWORD dwElapse, LPCTSTR lpRecordFileName, LPVOID lpUserValue)
+// 服务器录像回调函数定义（扩展）
+void CALLBACK OnServerRecordEx_CallBack(DWORD dwUserId, LPCTSTR lpFileName, DWORD dwElapse, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, DWORD dwRecordServerId, LPVOID lpUserValue)
 {
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
 	if(lpServerDlg)
 	{
 		CString strMsg;
-		strMsg.Format(_T("OnServerRecordCallBack(dwUserId:%d, FileName:%s)"),(int)dwUserId, lpRecordFileName);
+		BOOL bSnapShotType = !!(dwFlags & ANYCHAT_RECORD_FLAGS_SNAPSHOT);
+		strMsg.Format(_T("OnServerRecordExCallBack(type:%s dwUserId:%d, dwParam:%d, dwElapse:%d, FileName:%s, UserStr:%s)"), bSnapShotType?_T("SnapShot"):_T("Record"), (int)dwUserId, dwParam, dwElapse, lpFileName, lpUserStr);
 		lpServerDlg->AppendLogString(strMsg);
 	}
 }
@@ -311,7 +312,7 @@ BOOL CAnyChatBusinessServerDlg::OnInitDialog()
 	// 设置文件传输回调函数
 	BRAS_SetOnTransFileCallBack(OnTransFileCallBack, this);
 	// 设置服务器录像回调函数
-	BRAS_SetOnServerRecordCallBack(OnServerRecord_CallBack, this);
+	BRAS_SetCallBack(BRAS_CBTYPE_SERVERRECORDEX, OnServerRecordEx_CallBack, this);
 	
 	BRAS_InitSDK(0);
 
@@ -461,7 +462,8 @@ void CAnyChatBusinessServerDlg::OnButtonStartRecord()
 		GetDlgItem(IDC_EDIT_TARGETID)->SetFocus();
 		return;
 	}
-	BRAS_StreamRecordCtrl(m_iTargetId, TRUE, 0, 0, -1);
+	DWORD dwFlags = ANYCHAT_RECORD_FLAGS_VIDEO | ANYCHAT_RECORD_FLAGS_AUDIO | ANYCHAT_RECORD_FLAGS_SERVER;
+	BRAS_StreamRecordCtrlEx(m_iTargetId, TRUE, dwFlags, 0, "用户自定义参数：hello world!", -1);
 }
 
 void CAnyChatBusinessServerDlg::OnButtonStopRecord() 
@@ -473,7 +475,7 @@ void CAnyChatBusinessServerDlg::OnButtonStopRecord()
 		GetDlgItem(IDC_EDIT_TARGETID)->SetFocus();
 		return;
 	}
-	BRAS_StreamRecordCtrl(m_iTargetId, FALSE, 0, 0, -1);
+	BRAS_StreamRecordCtrlEx(m_iTargetId, FALSE, 0, 0, NULL, -1);
 }
 /**
  *	用户选择是否显示用户活动日志

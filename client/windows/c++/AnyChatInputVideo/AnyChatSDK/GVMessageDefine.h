@@ -31,8 +31,6 @@
 #define WM_GV_ACTIVESTATE			WM_GV + 13		///< 用户活动状态发生变化，wParam（INT）表示用户ID号，lParam（INT）表示用户的当前活动状态
 #define WM_GV_P2PCONNECTSTATE		WM_GV + 14		///< 本地用户与其它用户的P2P网络连接状态发生变化，wParam（INT）表示其它用户ID号，lParam（INT）表示本地用户与其它用户的当前P2P网络连接状态
 #define WM_GV_VIDEOSIZECHG			WM_GV + 15		///< 用户视频分辩率发生变化，wParam（INT）表示用户ID号，lParam（INT）表示用户的视频分辨率组合值（低16位表示宽度，高16位表示高度）
-#define WM_GV_USERINFOUPDATE		WM_GV + 16		///< 用户信息更新通知，wParam（INT）表示用户ID号，lParam（INT）表示更新类别
-#define WM_GV_FRIENDSTATUS			WM_GV + 17		///< 好友在线状态变化，wParam（INT）表示好友用户ID号，lParam（INT）表示用户的当前活动状态：0 离线， 1 上线
 
 #define WM_GV_PRIVATEREQUEST		WM_GV + 21		///< 用户发起私聊请求，wParam（INT）表示发起者的用户ID号，lParam（INT）表示私聊请求编号，标识该请求
 #define WM_GV_PRIVATEECHO			WM_GV + 22		///< 用户回复私聊请求，wParam（INT）表示回复者的用户ID号，lParam（INT）为出错代码

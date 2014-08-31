@@ -142,7 +142,6 @@ unsigned int CALLBACK VideoAndAudioMixThread( void * args )
 			
 			if(dwSiteIndex)
 			{
-				lpDlg->OverlayAnyChatFlagToVideoFrame((BYTE*)lpDlg->m_lpMixVideoBuf, g_localSettings.dwWidth, g_localSettings.dwHeight);
 				BRAC_InputVideoData((BYTE*)lpDlg->m_lpMixVideoBuf, lpDlg->m_dwMixImageSize, 0);
 			}
 			lpDlg->m_dwLastVideoInputTime = GetTickCount();
@@ -812,51 +811,3 @@ void CAnyChatVideoMixerDlg::AudioBufferMixUpdate(LONG* lpMixBuffer, DWORD dwFram
 	}
 }
 
-/**
- *	迭加AnyChat标志到视频上面
- *	charTable 由字模软件生成，宋体12;  此字体下对应的点阵为：宽x高=8x16
- */
-void CAnyChatVideoMixerDlg::OverlayAnyChatFlagToVideoFrame(BYTE* lpFrame, DWORD dwWidth, DWORD dwHeight)
-{
-	const unsigned char charTable[] = {
-		/*--  文字:  A  --*/
-		0x00,0x00,0x00,0x10,0x10,0x18,0x28,0x28,0x24,0x3C,0x44,0x42,0x42,0xE7,0x00,0x00,
-		/*--  文字:  n  --*/
-		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xDC,0x62,0x42,0x42,0x42,0x42,0xE7,0x00,0x00,
-		/*--  文字:  y  --*/
-		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xE7,0x42,0x24,0x24,0x28,0x18,0x10,0x10,0xE0,
-		/*--  文字:  C  --*/
-		0x00,0x00,0x00,0x3E,0x42,0x42,0x80,0x80,0x80,0x80,0x80,0x42,0x44,0x38,0x00,0x00,
-		/*--  文字:  h  --*/
-		0x00,0x00,0x00,0xC0,0x40,0x40,0x40,0x5C,0x62,0x42,0x42,0x42,0x42,0xE7,0x00,0x00,
-		/*--  文字:  a  --*/
-		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x3C,0x42,0x1E,0x22,0x42,0x42,0x3F,0x00,0x00,
-		/*--  文字:  t  --*/
-		0x00,0x00,0x00,0x00,0x00,0x10,0x10,0x7C,0x10,0x10,0x10,0x10,0x10,0x0C,0x00,0x00,
-	};
-	int iCharCount = sizeof(charTable)/16;
-	int x = 20;
-	int y = dwHeight - 20;
-	for (int i=0; i<iCharCount; i++)
-	{
-		OverlayOSDCharToYUV420PFrame(lpFrame, dwWidth, dwHeight, x+i*10, y, 8, 16, (BYTE*)charTable+i*16);
-	}
-}
-
-// 迭加点阵字符到YUV420P图像指定位置
-void CAnyChatVideoMixerDlg::OverlayOSDCharToYUV420PFrame(PBYTE pSrc, DWORD dwWidth, DWORD dwHeight, DWORD dwX, DWORD dwY, DWORD dwFrontW, DWORD dwFrontH, BYTE* lpFrontTable)
-{
-	BYTE* Y = pSrc;
-	//i是点阵的高度，k点阵的宽度
-	for (DWORD i = 0, y = dwY; i < dwFrontH && y < dwHeight - 1; i++, y++)	// line dots per char
-	{
-		BYTE p8 = *(lpFrontTable + i);				// 取字模数据
-		BYTE mask8 = 0x80;
-		for (DWORD k = 0, x = dwX; k < dwFrontW && x < dwWidth - 1; k++, x++)    // dots in a line
-		{
-			if (p8 & mask8)
-				*(Y + y * dwWidth + x) += 100;
-			mask8 = mask8 >> 1; /* 循环移位取数据 */
-		}
-	}
-}

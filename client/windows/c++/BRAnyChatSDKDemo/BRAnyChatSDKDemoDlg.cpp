@@ -226,14 +226,15 @@ void CALLBACK TransFile_CallBack(DWORD dwUserid, LPCTSTR lpFileName, LPCTSTR lpT
 	}
 }
 
-// 录像、快照任务完成回调函数定义
-void CALLBACK RecordSnapShot_CallBack(DWORD dwUserid, LPCTSTR lpFileName, DWORD dwParam, BOOL bRecordType, LPVOID lpUserValue)
+// 录像、快照任务完成扩展回调函数定义
+void CALLBACK RecordSnapShotEx_CallBack(DWORD dwUserId, LPCTSTR lpFileName, DWORD dwElapse, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue)
 {
 	CBRAnyChatSDKDemoDlg*	pDemoDlg = (CBRAnyChatSDKDemoDlg*)lpUserValue;
 	if(pDemoDlg)
 	{
 		CString strNotify;
-		strNotify.Format("%s CallBack:dwUserid-%d, FilePathName-%s",bRecordType?"Record":"SnapShot",(int)dwUserid,lpFileName);
+		BOOL bSnapShotType = !!(dwFlags & ANYCHAT_RECORD_FLAGS_SNAPSHOT);
+		strNotify.Format(_T("%s CallBack:dwUserid:%d, FilePathName:%s, UserStr:%s"),bSnapShotType?_T("SnapShot"):_T("Record"),(int)dwUserId, lpFileName, lpUserStr);
 		pDemoDlg->AppendLogString(strNotify);
 	}
 }
@@ -446,9 +447,8 @@ void CBRAnyChatSDKDemoDlg::OnButtonInit()
 	BRAC_SetTransBufferExCallBack(TransBufferEx_CallBack,this);
 	BRAC_SetTransBufferCallBack(TransBuffer_CallBack,this);
 	BRAC_SetTransFileCallBack(TransFile_CallBack,this);
-	BRAC_SetRecordSnapShotCallBack(RecordSnapShot_CallBack,this);
 	BRAC_SetSDKFilterDataCallBack(SDKFilterData_CallBack,this);
-//	BRAC_SelectVideoCapture("USB 视频设备");	// 设置指定的视频设备，则在后面打开时，就可以打开该设备，如果不调用该方法，则会打开默认的视频设备
+	BRAC_SetCallBack(BRAC_CBTYPE_STREAMRECORDEX, (void*)RecordSnapShotEx_CallBack, this);
 	
 	UpdateData(TRUE);
 	BRAC_SetSDKOption(BRAC_SO_AUDIO_AGCCTRL,(PCHAR)&m_bEnableAGC,sizeof(m_bEnableAGC));
@@ -1179,7 +1179,8 @@ void CBRAnyChatSDKDemoDlg::OnButtonRecordctrl0()
 	static BOOL bLastState = FALSE;
 	if(m_iUserID[0] != -1)
 	{
-		BRAC_StreamRecordCtrl(m_iUserID[0],!bLastState,0,0);
+		DWORD dwFlags = ANYCHAT_RECORD_FLAGS_AUDIO | ANYCHAT_RECORD_FLAGS_VIDEO;
+		BRAC_StreamRecordCtrlEx(m_iUserID[0], !bLastState, dwFlags, 0, _T("用户自定义字符串：hellow world!"));
 		bLastState = !bLastState;
 	}
 }
@@ -1189,7 +1190,8 @@ void CBRAnyChatSDKDemoDlg::OnButtonRecordctrl1()
 	static BOOL bLastState = FALSE;
 	if(m_iUserID[1] != -1)
 	{
-		BRAC_StreamRecordCtrl(m_iUserID[1],!bLastState,0,0);
+		DWORD dwFlags = ANYCHAT_RECORD_FLAGS_AUDIO | ANYCHAT_RECORD_FLAGS_VIDEO;
+		BRAC_StreamRecordCtrlEx(m_iUserID[1], !bLastState, dwFlags, 0, _T("用户自定义字符串：hellow world!"));
 		bLastState = !bLastState;
 	}	
 }
@@ -1199,7 +1201,8 @@ void CBRAnyChatSDKDemoDlg::OnButtonRecordctrl2()
 	static BOOL bLastState = FALSE;
 	if(m_iUserID[2] != -1)
 	{
-		BRAC_StreamRecordCtrl(m_iUserID[2],!bLastState,0,0);
+		DWORD dwFlags = ANYCHAT_RECORD_FLAGS_AUDIO | ANYCHAT_RECORD_FLAGS_VIDEO;
+		BRAC_StreamRecordCtrlEx(m_iUserID[2], !bLastState, dwFlags, 0, _T("用户自定义字符串：hellow world!"));
 		bLastState = !bLastState;
 	}
 }
@@ -1209,7 +1212,8 @@ void CBRAnyChatSDKDemoDlg::OnButtonRecordctrl3()
 	static BOOL bLastState = FALSE;
 	if(m_iUserID[3] != -1)
 	{
-		BRAC_StreamRecordCtrl(m_iUserID[3],!bLastState,0,0);
+		DWORD dwFlags = ANYCHAT_RECORD_FLAGS_AUDIO | ANYCHAT_RECORD_FLAGS_VIDEO;
+		BRAC_StreamRecordCtrlEx(m_iUserID[3], !bLastState, dwFlags, 0, _T("用户自定义字符串：hellow world!"));
 		bLastState = !bLastState;
 	}
 }

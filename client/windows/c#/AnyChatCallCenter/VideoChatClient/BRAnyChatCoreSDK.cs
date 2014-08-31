@@ -115,6 +115,20 @@ namespace ANYCHATAPI
 		public const int BRAC_RECORD_FLAGS_MIXAUDIO		= 0x10;	// 录制音频时，将其它人的声音混音后录制
 		public const int BRAC_RECORD_FLAGS_MIXVIDEO		= 0x20;	// 录制视频时，将其它人的视频迭加后录制
 		public const int BRAC_RECORD_FLAGS_ABREAST		= 0x100;// 录制视频时，将其它人的视频并列录制
+		public const int BRAC_RECORD_FLAGS_STEREO		= 0x200;// 录制音频时，将其它人的声音混合为立体声后录制
+		public const int BRAC_RECORD_FLAGS_SNAPSHOT     = 0x400;// 拍照
+		public const int BRAC_RECORD_FLAGS_LOCALCB      = 0x800;// 触发本地回调
+
+		// 客户端、服务器端录制标志定义保持统一
+		public const int ANYCHAT_RECORD_FLAGS_VIDEO     = BRAC_RECORD_FLAGS_VIDEO;
+		public const int ANYCHAT_RECORD_FLAGS_AUDIO     = BRAC_RECORD_FLAGS_AUDIO;
+		public const int ANYCHAT_RECORD_FLAGS_SERVER    = BRAC_RECORD_FLAGS_SERVER;
+		public const int ANYCHAT_RECORD_FLAGS_MIXAUDIO  = BRAC_RECORD_FLAGS_MIXAUDIO;
+		public const int ANYCHAT_RECORD_FLAGS_MIXVIDEO  = BRAC_RECORD_FLAGS_MIXVIDEO;
+		public const int ANYCHAT_RECORD_FLAGS_ABREAST   = BRAC_RECORD_FLAGS_ABREAST;
+		public const int ANYCHAT_RECORD_FLAGS_STEREO    = BRAC_RECORD_FLAGS_STEREO;
+		public const int ANYCHAT_RECORD_FLAGS_SNAPSHOT  = BRAC_RECORD_FLAGS_SNAPSHOT;
+		public const int ANYCHAT_RECORD_FLAGS_LOCALCB   = BRAC_RECORD_FLAGS_LOCALCB;
 		
 		// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
 		public const int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	// 呼叫请求
@@ -188,6 +202,24 @@ namespace ANYCHATAPI
         public const ulong BRAC_FUNC_AUDIO_AUTOVOLUME=	0x00000100L;	// 允许SDK自动控制Mic录音音量
         public const ulong BRAC_FUNC_NET_SUPPORTUPNP=   0x00000200L;    // 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
         public const ulong BRAC_FUNC_DISABLEDECODE =    0x00000400L;    // 禁止对收到的数据进行解码和播放，为了提高代理客户端的数据转发性能，可设置该标志，否则不能设置该标志
+
+        // 回调函数类型定义（API：BRAC_SetCallBack 传入参数）
+        public const int BRAC_CBTYPE_NOTIFYMESSAGE	=   1;	// 异步消息通知回调
+        public const int BRAC_CBTYPE_VIDEODATA		=   2;	// 视频数据回调
+        public const int BRAC_CBTYPE_VIDEODATAEX	=   3;	// 视频数据扩展回调
+        public const int BRAC_CBTYPE_AUDIODATA		=   4;	// 音频数据回调
+        public const int BRAC_CBTYPE_AUDIODATAEX	=   5;	// 音频数据回调扩展回调
+        public const int BRAC_CBTYPE_TEXTMESSAGE	=   6;	// 文字消息回调
+        public const int BRAC_CBTYPE_TRANSBUFFER	=   7;	// 透明通道数据回调
+        public const int BRAC_CBTYPE_TRANSBUFFEREX	=   8;	// 透明通道数据扩展回调
+        public const int BRAC_CBTYPE_TRANSFILE		=   9;	// 文件传输回调
+        public const int BRAC_CBTYPE_VOLUMECHANGE	=   10;	// 音量变化回调
+        public const int BRAC_CBTYPE_SDKFILTERDATA	=   11;	// SDK Filter通信数据回调
+        public const int BRAC_CBTYPE_STREAMRECORD	=   12;	// 录像快照任务完成通知回调
+        public const int BRAC_CBTYPE_STREAMRECORDEX	=	13;	// 录像快照任务完成通知扩展回调
+        public const int BRAC_CBTYPE_VIDEOCALLEVENT	=   14;	// 视频通话消息通知回调
+        public const int BRAC_CBTYPE_DATAENCDEC		=   15;	// 数据加密、解密回调
+        public const int BRAC_CBTYPE_SCREENEVENT    =   16;	// 屏幕事件回调
 
         // 音频设备枚举定义
         public enum AudioDevice
@@ -308,6 +340,18 @@ namespace ANYCHATAPI
         /// <param name="recordType">录像类型,1录像,0拍照</param>
         /// <param name="userValue">用户参数</param>
         public delegate void RecordCallBack(int userId, string filePath, int param, bool recordType,int userValue);
+
+        /// <summary>
+        /// 录像回调函数（扩展）
+        /// </summary>
+        /// <param name="dwUserId">用户ID</param>
+        /// <param name="lpFileName">录像保存路径</param>
+        /// <param name="dwElapse">录像时长，单位：秒（s）</param>
+        /// <param name="dwFlags">录像标志</param>
+        /// <param name="dwParam">用户自定义参数（整形）</param>
+        /// <param name="lpUserStr">用户自定义参数（字符串）</param>
+        /// <param name="lpCallBackUserValue">回调自定义参数</param>
+        public delegate void RecordCallBackEx(int dwUserId, string lpFileName, int dwElapse, int dwFlags, int dwParam, string lpUserStr, IntPtr lpCallBackUserValue);
 
         /// <summary>
         /// 视频回调函数
@@ -526,6 +570,16 @@ namespace ANYCHATAPI
         /// <returns>0为成功，否则失败</returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetDataEncDecCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetDataEncDecCallBack(DataEncDec_CallBack function, int userValue);
+
+        /// <summary>
+        /// 设置回调函数
+        /// </summary>
+        /// <param name="dwCBType">注册回调函数类型</param>
+        /// <param name="lpFuncPtr">回调函数地址</param>
+        /// <param name="lpCallBackUserValue">回调自定义参数</param>
+        /// <returns>0为成功，否则失败</returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetCallBack", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetCallBack(int dwCBType, IntPtr lpFuncPtr, IntPtr lpCallBackUserValue);
 
 
         /// <summary>
@@ -777,6 +831,18 @@ namespace ANYCHATAPI
         /// <returns>0为成功，否则失败</returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_StreamRecordCtrl", CallingConvention = CallingConvention.Cdecl)]
         public static extern int StreamRecordCtrl(int userId, bool startRecord, ulong flags, int param);
+
+        /// <summary>
+        /// 开启或关闭录像（扩展）
+        /// </summary>
+        /// <param name="userId">用户id</param>
+        /// <param name="startRecord">是否开启录像</param>
+        /// <param name="flags">标志,0为录制视频音频</param>
+        /// <param name="param">自定义参数（整型）</param>
+        /// <param name="userstr">自定义参数（字符串）</param>
+        /// <returns>0为成功，否则失败</returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_StreamRecordCtrlEx", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int StreamRecordCtrlEx(int userId, bool startRecord, ulong flags, int param, string userstr);
 
         /// <summary>
         /// 抓取视频，对指定用户进行拍照

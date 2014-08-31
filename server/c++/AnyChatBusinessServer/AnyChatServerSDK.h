@@ -54,6 +54,39 @@
 // 初始化标志（API：BRAS_InitSDK 传入参数）
 #define BRAS_INITFLAGS_MULTITHREADS		0x01	///< 多线程模式
 
+// 回调函数类型定义（API：BRAS_SetCallBack 传入参数）
+#define BRAS_CBTYPE_APPMESSAGE				1	// 服务器应用程序消息回调
+#define BRAS_CBTYPE_APPMESSAGEEX			2	// 服务器应用程序消息（扩展）回调
+#define BRAS_CBTYPE_ONTIMER					3	// SDK定时器回调
+#define BRAS_CBTYPE_VERIFYUSER				4	// 用户身份验证回调
+#define BRAS_CBTYPE_PERPAREENTERROOM		5	// 用户申请进入房间回调
+#define BRAS_CBTYPE_USERLOGIN				6	// 用户登录成功回调
+#define BRAS_CBTYPE_USERLOGOUT				7	// 用户注销回调
+#define BRAS_CBTYPE_USERLOGOUTEX			8	// 用户注销（扩展）回调
+#define BRAS_CBTYPE_USERENTERROOM			9	// 用户进入房间回调
+#define BRAS_CBTYPE_USERLEAVEROOM			10	// 用户离开房间回调
+#define BRAS_CBTYPE_FILTERDATA				11	// 上层业务自定义数据回调
+#define BRAS_CBTYPE_TEXTMESSAGE				12	// 文字聊天通信数据回调
+#define BRAS_CBTYPE_TRANSBUFFER				13	// 透明通道数据回调
+#define BRAS_CBTYPE_TRANSBUFFEREX			14	// 透明通道数据扩展回调
+#define BRAS_CBTYPE_TRANSFILE				15	// 文件传输回调函数
+#define BRAS_CBTYPE_SERVERRECORD			16	// 服务器录像回调
+#define BRAS_CBTYPE_SERVERRECORDEX			17	// 服务器录像（扩展）回调
+#define BRAS_CBTYPE_VIDEOCALL				18	// 视频通话消息通知回调
+#define BRAS_CBTYPE_USERINFOCTRL			19	// 用户信息控制回调
+
+
+// 录像功能标志定义（API：BRAS_StreamRecordCtrl 传入参数）
+#define ANYCHAT_RECORD_FLAGS_VIDEO		0x00000001	// 录制视频
+#define ANYCHAT_RECORD_FLAGS_AUDIO		0x00000002	// 录制音频
+#define ANYCHAT_RECORD_FLAGS_SERVER		0x00000004	// 服务器端录制
+#define ANYCHAT_RECORD_FLAGS_MIXAUDIO	0x00000010	// 录制音频时，将其它人的声音混音后录制
+#define ANYCHAT_RECORD_FLAGS_MIXVIDEO	0x00000020	// 录制视频时，将其它人的视频迭加后录制
+#define ANYCHAT_RECORD_FLAGS_ABREAST	0x00000100	// 录制视频时，将其它人的视频并列录制
+#define ANYCHAT_RECORD_FLAGS_STEREO		0x00000200	// 录制音频时，将其它人的声音混合为立体声后录制
+#define ANYCHAT_RECORD_FLAGS_SNAPSHOT	0x00000400	// 拍照
+#define ANYCHAT_RECORD_FLAGS_LOCALCB	0x00000800	// 触发本地回调
+
 
 // 服务器应用程序消息回调函数定义
 typedef void (CALLBACK* BRAS_OnServerAppMessage_CallBack)(DWORD dwMsg, LPVOID lpUserValue);
@@ -88,6 +121,8 @@ typedef void (CALLBACK * BRAS_OnTransBufferEx_CallBack)(DWORD dwUserId, LPBYTE l
 typedef void (CALLBACK * BRAS_OnTransFile_CallBack)(DWORD dwUserId, LPCTSTR lpFileName, LPCTSTR lpTempFilePath, DWORD dwFileLength, DWORD wParam, DWORD lParam, DWORD dwTaskId, LPVOID lpUserValue);
 // 服务器录像回调函数定义
 typedef void (CALLBACK * BRAS_OnServerRecord_CallBack)(DWORD dwUserId, DWORD dwParam, DWORD dwRecordServerId, DWORD dwElapse, LPCTSTR lpRecordFileName, LPVOID lpUserValue);
+// 服务器录像回调函数定义（扩展）
+typedef void (CALLBACK * BRAS_OnServerRecordEx_CallBack)(DWORD dwUserId, LPCTSTR lpFileName, DWORD dwElapse, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, DWORD dwRecordServerId, LPVOID lpUserValue);
 // 视频通话消息通知回调函数定义
 typedef DWORD (CALLBACK * BRAS_OnVideoCallEvent_CallBack)(DWORD dwEventType, DWORD dwSrcUserId, DWORD dwTarUserId, DWORD dwErrorCode, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
 // 用户信息控制回调函数定义
@@ -133,7 +168,8 @@ BRAS_API DWORD BRAS_SetOnServerRecordCallBack(BRAS_OnServerRecord_CallBack lpFun
 BRAS_API DWORD BRAS_SetOnVideoCallEventCallBack(BRAS_OnVideoCallEvent_CallBack lpFunction, LPVOID lpUserValue=NULL);
 // 设置用户信息控制回调函数
 BRAS_API DWORD BRAS_SetOnUserInfoControlCallBack(BRAS_OnUserInfoControl_CallBack lpFunction, LPVOID lpUserValue=NULL);
-
+// 设置回调函数
+BRAS_API DWORD BRAS_SetCallBack(DWORD dwCBType, LPVOID lpFunction, LPVOID lpUserValue=NULL);
 
 // 获取SDK版本信息
 BRAS_API DWORD BRAS_GetSDKVersion(DWORD& dwMainVer, DWORD& dwSubVer, TCHAR* lpCompileTime, DWORD dwBufLen);
@@ -156,6 +192,8 @@ BRAS_API DWORD BRAS_TransFile(DWORD dwUserId, LPCTSTR lpLocalPathName, DWORD wPa
 
 // 中心端录像控制
 BRAS_API DWORD BRAS_StreamRecordCtrl(DWORD dwUserId, BOOL bStartRecord, DWORD dwFlags, DWORD dwParam, DWORD dwRecordServerId);
+// 中心端录像控制（扩展）
+BRAS_API DWORD BRAS_StreamRecordCtrlEx(DWORD dwUserId, BOOL bStartRecord, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr=NULL, DWORD dwRecordServerId=-1);
 // 发送透明通道数据给录像服务器
 BRAS_API DWORD BRAS_TransBuffer2RecordServer(DWORD dwUserId, LPBYTE lpBuf, DWORD dwLen, DWORD dwParam, DWORD dwRecordServerId);
 

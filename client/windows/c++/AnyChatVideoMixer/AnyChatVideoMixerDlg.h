@@ -93,10 +93,6 @@ public:
 
 	// 音频数据混音
 	void AudioBufferMixUpdate(LONG* lpMixBuffer, DWORD dwFrameNum, SHORT* lpDesBuffer);
-	// 迭加AnyChat标志到视频上面
-	void OverlayAnyChatFlagToVideoFrame(BYTE* lpFrame, DWORD dwWidth, DWORD dwHeight);
-	// 迭加点阵字符到YUV420P图像指定位置
-	void OverlayOSDCharToYUV420PFrame(PBYTE pSrc, DWORD dwWidth, DWORD dwHeight, DWORD dwX, DWORD dwY, DWORD dwFrontW, DWORD dwFrontH, BYTE* lpFrontTable);
 
 
 // Dialog Data
