@@ -140,7 +140,7 @@ public class AnyChatCoreSDK
 	// 用户音、视频录制
 	public native int StreamRecordCtrl(int userid, int bstartrecord, int flags, int param);
 	// 用户音、视频录制（扩展）
-	public native int StreamRecordCtrlEx(int userid, int bstartrecord, int flags, int param, int szUserStr);
+	public native int StreamRecordCtrlEx(int userid, int bstartrecord, int flags, int param, String szUserStr);
 	
 	// 获取指定音频设备的当前音量
 	public native int AudioGetVolume(int device);
