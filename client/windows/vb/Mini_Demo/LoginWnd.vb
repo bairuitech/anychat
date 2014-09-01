@@ -4,7 +4,7 @@
 
     Private Sub LoginWnd_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         InitSDK()
-        LoginUser.Text = "AnyChat3"
+        LoginUser.Text = "AnyChat5"
         Room.Text = "1"
 
         Server.Text = "demo.anychat.cn"

@@ -277,7 +277,7 @@ Module BRAnyChatCoreSDK
 	
 	'// 数据加密、解密回调函数定义
 	'typedef DWORD (CALLBACK * BRAC_DataEncDec_CallBack)(DWORD dwUserId, DWORD dwFlags, LPBYTE lpInBuf, DWORD dwInSize, LPBYTE lpOutBuf, LPDWORD lpOutSize, LPVOID lpUserValue);
-	Public Delegate Sub BRAC_DataEncDec_CallBack(ByVal dwUserId As Integer, ByVal dwFlags As Integer, ByVal lpInBuf As Byte(), ByVal dwInSize As Integer, ByVal lpOutBuf As As Byte(), ByVal lpOutSize As IntPtr, ByVal lpUserValue As IntPtr)
+    Public Delegate Sub BRAC_DataEncDec_CallBack(ByVal dwUserId As Integer, ByVal dwFlags As Integer, ByVal lpInBuf As Byte(), ByVal dwInSize As Integer, ByVal lpOutBuf As Byte(), ByVal lpOutSize As IntPtr, ByVal lpUserValue As IntPtr)
 
     '/**
     ' *  API方法定义
