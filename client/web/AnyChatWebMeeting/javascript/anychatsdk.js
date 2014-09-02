@@ -99,6 +99,9 @@ var BRAC_SO_CORESDK_DEVICEMODE	=			130;// 设备模式控制（局域网设备之间可以互相通
 var BRAC_SO_CORESDK_SCREENCAMERACTRL =		131;// 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
 var BRAC_SO_CORESDK_UPLOADLOGINFO =			134;// 上传日志信息到客户端（参数为：int型，0 关闭[默认]， 1 开启）
 
+var BRAC_SO_ENABLEWEBSERVICE =			11002;	// 启动本地Web服务
+var BRAC_SO_LOCALPATH2URL =				11003;	// 将本地路径转换为URL地址
+
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
 var BRAC_TRANSTASK_PROGRESS = 				1;	// 传输任务进度查询（参数为：DOUBLE型，返回值0.0 ~ 100.0， 或参数为：DWORD型，返回值0 ~ 100）
 var BRAC_TRANSTASK_BITRATE = 				2;	// 传输任务当前传输码率（参数为：int型，单位：bps）
@@ -545,6 +548,10 @@ function BRAC_GetSDKOptionInt(optname) {
 // SDK内核参数状态查询（字符串参数值）
 function BRAC_GetSDKOptionString(optname) {
 	return anychat.GetSDKOptionString(optname);
+}
+// SDK内核参数状态查询（字符串参数值，扩展）
+function BRAC_GetSDKOptionStringEx(optname, strValue, dwFlags) {
+	return anychat.GetSDKOptionStringEx(optname, strValue, dwFlags);
 }
 
 // 获取内部通信句柄
