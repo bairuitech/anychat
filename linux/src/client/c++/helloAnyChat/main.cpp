@@ -18,7 +18,12 @@ int main(int argc, char *argv[])
     BRAC_Login("linux","",0);
     BRAC_EnterRoom(2,"",0);
 
-    getchar();
+    while(1) {
+	printf("AnyChat for linux client still running, Press 'q' exit...\r\n");
+	if(getchar() == 'q')
+	    break;
+    	usleep(100*1000);
+    }
 
     BRAC_Release();
     return 0;
