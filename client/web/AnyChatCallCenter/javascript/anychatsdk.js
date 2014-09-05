@@ -264,7 +264,7 @@ function BRAC_InitSDK(apilevel) {
 			BRAC_RegisterCallBack(anychat, 'OnSDKFilterData', 	OnAnyChatSDKFilterData);
 			BRAC_RegisterCallBack(anychat, 'OnVideoCallEvent', 	OnAnyChatVideoCallEvent);
 			BRAC_RegisterCallBack(anychat, 'OnRecordSnapShot', 	OnAnyChatRecordSnapShot);
-			if(bSupportStreamRecordCtrlEx)
+			if(typeof(OnAnyChatRecordSnapShotEx) == "function")
 				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx', OnAnyChatRecordSnapShotEx);
 		} else {
 			document.body.removeChild(insertdiv);
