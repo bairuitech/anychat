@@ -1,4 +1,4 @@
-// AnyChat for Web SDK
+// AnyChat for Web SDK（不要对该文件进行任何修改，当升级SDK时，新版本会直接覆盖旧版本）
 
 /********************************************
  *				常量定义部分				*
@@ -101,6 +101,7 @@ var BRAC_SO_CORESDK_UPLOADLOGINFO =			134;// 上传日志信息到客户端（参数为：int型
 
 var BRAC_SO_ENABLEWEBSERVICE =			11002;	// 启动本地Web服务
 var BRAC_SO_LOCALPATH2URL =				11003;	// 将本地路径转换为URL地址
+var BRAC_SO_GETTASKPATHNAME	=			11004;	// 根据传输任务ID获取文件路径
 
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
 var BRAC_TRANSTASK_PROGRESS = 				1;	// 传输任务进度查询（参数为：DOUBLE型，返回值0.0 ~ 100.0， 或参数为：DWORD型，返回值0 ~ 100）
@@ -255,16 +256,25 @@ function BRAC_InitSDK(apilevel) {
 			insertdiv.removeChild(videoobj);
 			anychat = anychatobj;
 			// 关联回调事件
-			BRAC_RegisterCallBack(anychat, 'OnNotifyMessage', 	OnAnyChatNotifyMessage);
-			BRAC_RegisterCallBack(anychat, 'OnTextMessage', 	OnAnyChatTextMessage);
-			BRAC_RegisterCallBack(anychat, 'OnTransBuffer', 	OnAnyChatTransBuffer);
-			BRAC_RegisterCallBack(anychat, 'OnTransBufferEx', 	OnAnyChatTransBufferEx);
-			BRAC_RegisterCallBack(anychat, 'OnTransFile', 		OnAnyChatTransFile);
-			BRAC_RegisterCallBack(anychat, 'OnVolumeChange', 	OnAnyChatVolumeChange);
-			BRAC_RegisterCallBack(anychat, 'OnSDKFilterData', 	OnAnyChatSDKFilterData);
-			BRAC_RegisterCallBack(anychat, 'OnVideoCallEvent', 	OnAnyChatVideoCallEvent);
-			BRAC_RegisterCallBack(anychat, 'OnRecordSnapShot', 	OnAnyChatRecordSnapShot);
-			if(typeof(OnAnyChatRecordSnapShotEx) == "function")
+			if(typeof(OnAnyChatNotifyMessage) == "function")
+				BRAC_RegisterCallBack(anychat, 'OnNotifyMessage', 	OnAnyChatNotifyMessage);
+			if(typeof(OnAnyChatTextMessage) == "function")
+				BRAC_RegisterCallBack(anychat, 'OnTextMessage', 	OnAnyChatTextMessage);
+			if(typeof(OnAnyChatTransBuffer) == "function")
+				BRAC_RegisterCallBack(anychat, 'OnTransBuffer', 	OnAnyChatTransBuffer);
+			if(typeof(OnAnyChatTransBufferEx) == "function")
+				BRAC_RegisterCallBack(anychat, 'OnTransBufferEx', 	OnAnyChatTransBufferEx);
+			if(typeof(OnAnyChatTransFile) == "function")
+				BRAC_RegisterCallBack(anychat, 'OnTransFile', 		OnAnyChatTransFile);
+			if(typeof(OnAnyChatVolumeChange) == "function")
+				BRAC_RegisterCallBack(anychat, 'OnVolumeChange', 	OnAnyChatVolumeChange);
+			if(typeof(OnAnyChatSDKFilterData) == "function")
+				BRAC_RegisterCallBack(anychat, 'OnSDKFilterData', 	OnAnyChatSDKFilterData);
+			if(typeof(OnAnyChatVideoCallEvent) == "function")
+				BRAC_RegisterCallBack(anychat, 'OnVideoCallEvent', 	OnAnyChatVideoCallEvent);
+			if(typeof(OnAnyChatRecordSnapShot) == "function")
+				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShot', 	OnAnyChatRecordSnapShot);
+			if(typeof(OnAnyChatRecordSnapShotEx) == "function" && bSupportStreamRecordCtrlEx)
 				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx', OnAnyChatRecordSnapShotEx);
 		} else {
 			document.body.removeChild(insertdiv);
