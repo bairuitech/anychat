@@ -607,6 +607,8 @@ public class AnyChatCoreSDK
 	}
 	
     static {
+		System.loadLibrary("audio_preprocessing");
+		System.loadLibrary("mediacore");
     	System.loadLibrary("anychatcore");
     }
     
