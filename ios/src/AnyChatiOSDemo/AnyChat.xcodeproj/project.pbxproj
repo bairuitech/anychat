@@ -462,12 +462,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AnyChat/AnyChat-Prefix.pch";
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/include,
+				);
 				INFOPLIST_FILE = "AnyChat/AnyChat-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../sdk/libs,
-					../sdk/libs/audioprocess,
+					../../sdk/libs,
+					../../sdk/libs/audioprocess,
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -492,12 +496,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AnyChat/AnyChat-Prefix.pch";
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/include,
+				);
 				INFOPLIST_FILE = "AnyChat/AnyChat-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../sdk/libs,
-					../sdk/libs/audioprocess,
+					../../sdk/libs,
+					../../sdk/libs/audioprocess,
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -7,7 +7,7 @@
 //
 
 #import "LoginViewController.h"
-#import "../../sdk/include/AnyChatPlatform.h"
+#import "AnyChatPlatform.h"
 #import "AnyChatAppDelegate.h"
 
 @implementation LoginViewController
