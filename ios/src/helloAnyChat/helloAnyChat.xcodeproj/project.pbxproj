@@ -1,0 +1,483 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FE135AB219C7DC7200C0DB66 /* AnyChatNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE135AB119C7DC7200C0DB66 /* AnyChatNavigationController.m */; };
+		FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B2E7319C692F300773FE6 /* VideoViewController.m */; };
+		FE1B2E7619C692F300773FE6 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1B2E7419C692F300773FE6 /* VideoViewController.xib */; };
+		FEBBA25119C2CC0B009EE02C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA25019C2CC0B009EE02C /* Foundation.framework */; };
+		FEBBA25319C2CC0B009EE02C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA25219C2CC0B009EE02C /* CoreGraphics.framework */; };
+		FEBBA25519C2CC0B009EE02C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA25419C2CC0B009EE02C /* UIKit.framework */; };
+		FEBBA25B19C2CC0B009EE02C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FEBBA25919C2CC0B009EE02C /* InfoPlist.strings */; };
+		FEBBA25D19C2CC0B009EE02C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBBA25C19C2CC0B009EE02C /* main.m */; };
+		FEBBA26119C2CC0B009EE02C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBBA26019C2CC0B009EE02C /* AppDelegate.m */; };
+		FEBBA26319C2CC0B009EE02C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEBBA26219C2CC0B009EE02C /* Images.xcassets */; };
+		FEBBA29719C2CD0D009EE02C /* libaudio_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28519C2CD0D009EE02C /* libaudio_processing.a */; };
+		FEBBA29819C2CD0D009EE02C /* libsignal_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28619C2CD0D009EE02C /* libsignal_processing.a */; };
+		FEBBA29919C2CD0D009EE02C /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28719C2CD0D009EE02C /* libsystem_wrappers.a */; };
+		FEBBA29A19C2CD0D009EE02C /* libanychatcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28819C2CD0D009EE02C /* libanychatcore.a */; };
+		FEBBA29B19C2CD0D009EE02C /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28919C2CD0D009EE02C /* libavcodec.a */; };
+		FEBBA29C19C2CD0D009EE02C /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28A19C2CD0D009EE02C /* libavformat.a */; };
+		FEBBA29D19C2CD0D009EE02C /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28B19C2CD0D009EE02C /* libavutil.a */; };
+		FEBBA29E19C2CD0D009EE02C /* libcelt0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28C19C2CD0D009EE02C /* libcelt0.a */; };
+		FEBBA29F19C2CD0D009EE02C /* libmediacore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28D19C2CD0D009EE02C /* libmediacore.a */; };
+		FEBBA2A019C2CD0D009EE02C /* libmediashow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28E19C2CD0D009EE02C /* libmediashow.a */; };
+		FEBBA2A119C2CD0D009EE02C /* libmediautil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28F19C2CD0D009EE02C /* libmediautil.a */; };
+		FEBBA2A219C2CD0D009EE02C /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA29019C2CD0D009EE02C /* libmp3lame.a */; };
+		FEBBA2A319C2CD0D009EE02C /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA29119C2CD0D009EE02C /* libopencore-amrwb.a */; };
+		FEBBA2A419C2CD0D009EE02C /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA29219C2CD0D009EE02C /* libswresample.a */; };
+		FEBBA2A519C2CD0D009EE02C /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA29319C2CD0D009EE02C /* libswscale.a */; };
+		FEBBA2A619C2CD0D009EE02C /* libvo-amrwbenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA29419C2CD0D009EE02C /* libvo-amrwbenc.a */; };
+		FEBBA2A719C2CD0D009EE02C /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA29519C2CD0D009EE02C /* libvpx.a */; };
+		FEBBA2A819C2CD0D009EE02C /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA29619C2CD0D009EE02C /* libx264.a */; };
+		FEBBA2AA19C2CDDE009EE02C /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA2A919C2CDDE009EE02C /* libstdc++.6.dylib */; };
+		FEBBA2AC19C2CDEB009EE02C /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA2AB19C2CDEB009EE02C /* libstdc++.dylib */; };
+		FEBBA2AE19C2CE06009EE02C /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA2AD19C2CE06009EE02C /* CoreAudio.framework */; };
+		FEBBA2B019C2CE12009EE02C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA2AF19C2CE12009EE02C /* CoreVideo.framework */; };
+		FEBBA2B219C2CE21009EE02C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA2B119C2CE21009EE02C /* AudioToolbox.framework */; };
+		FEBBA2B419C2CE2B009EE02C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA2B319C2CE2B009EE02C /* AVFoundation.framework */; };
+		FEBBA2B619C2CE36009EE02C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA2B519C2CE36009EE02C /* CoreMedia.framework */; };
+		FEBBA2BA19C2CF67009EE02C /* AnyChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBBA2B819C2CF67009EE02C /* AnyChatViewController.m */; };
+		FEBBA2BB19C2CF67009EE02C /* AnyChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEBBA2B919C2CF67009EE02C /* AnyChatViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FE135AB019C7DC7200C0DB66 /* AnyChatNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatNavigationController.h; sourceTree = "<group>"; };
+		FE135AB119C7DC7200C0DB66 /* AnyChatNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnyChatNavigationController.m; sourceTree = "<group>"; };
+		FE1B2E7219C692F300773FE6 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
+		FE1B2E7319C692F300773FE6 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VideoViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		FE1B2E7419C692F300773FE6 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
+		FEBBA24D19C2CC0B009EE02C /* helloAnyChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = helloAnyChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEBBA25019C2CC0B009EE02C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FEBBA25219C2CC0B009EE02C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FEBBA25419C2CC0B009EE02C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FEBBA25819C2CC0B009EE02C /* helloAnyChat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "helloAnyChat-Info.plist"; sourceTree = "<group>"; };
+		FEBBA25A19C2CC0B009EE02C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FEBBA25C19C2CC0B009EE02C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FEBBA25E19C2CC0B009EE02C /* helloAnyChat-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "helloAnyChat-Prefix.pch"; sourceTree = "<group>"; };
+		FEBBA25F19C2CC0B009EE02C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FEBBA26019C2CC0B009EE02C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FEBBA26219C2CC0B009EE02C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		FEBBA26919C2CC0B009EE02C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		FEBBA28019C2CD0D009EE02C /* AnyChatDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatDefine.h; sourceTree = "<group>"; };
+		FEBBA28119C2CD0D009EE02C /* AnyChatErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatErrorCode.h; sourceTree = "<group>"; };
+		FEBBA28219C2CD0D009EE02C /* AnyChatPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatPlatform.h; sourceTree = "<group>"; };
+		FEBBA28519C2CD0D009EE02C /* libaudio_processing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing.a; sourceTree = "<group>"; };
+		FEBBA28619C2CD0D009EE02C /* libsignal_processing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsignal_processing.a; sourceTree = "<group>"; };
+		FEBBA28719C2CD0D009EE02C /* libsystem_wrappers.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsystem_wrappers.a; sourceTree = "<group>"; };
+		FEBBA28819C2CD0D009EE02C /* libanychatcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libanychatcore.a; sourceTree = "<group>"; };
+		FEBBA28919C2CD0D009EE02C /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavcodec.a; sourceTree = "<group>"; };
+		FEBBA28A19C2CD0D009EE02C /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavformat.a; sourceTree = "<group>"; };
+		FEBBA28B19C2CD0D009EE02C /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavutil.a; sourceTree = "<group>"; };
+		FEBBA28C19C2CD0D009EE02C /* libcelt0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcelt0.a; sourceTree = "<group>"; };
+		FEBBA28D19C2CD0D009EE02C /* libmediacore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediacore.a; sourceTree = "<group>"; };
+		FEBBA28E19C2CD0D009EE02C /* libmediashow.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediashow.a; sourceTree = "<group>"; };
+		FEBBA28F19C2CD0D009EE02C /* libmediautil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediautil.a; sourceTree = "<group>"; };
+		FEBBA29019C2CD0D009EE02C /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		FEBBA29119C2CD0D009EE02C /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
+		FEBBA29219C2CD0D009EE02C /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswresample.a; sourceTree = "<group>"; };
+		FEBBA29319C2CD0D009EE02C /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
+		FEBBA29419C2CD0D009EE02C /* libvo-amrwbenc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libvo-amrwbenc.a"; sourceTree = "<group>"; };
+		FEBBA29519C2CD0D009EE02C /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libvpx.a; sourceTree = "<group>"; };
+		FEBBA29619C2CD0D009EE02C /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libx264.a; sourceTree = "<group>"; };
+		FEBBA2A919C2CDDE009EE02C /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
+		FEBBA2AB19C2CDEB009EE02C /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		FEBBA2AD19C2CE06009EE02C /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		FEBBA2AF19C2CE12009EE02C /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		FEBBA2B119C2CE21009EE02C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FEBBA2B319C2CE2B009EE02C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FEBBA2B519C2CE36009EE02C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		FEBBA2B719C2CF67009EE02C /* AnyChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatViewController.h; sourceTree = "<group>"; };
+		FEBBA2B819C2CF67009EE02C /* AnyChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnyChatViewController.m; sourceTree = "<group>"; };
+		FEBBA2B919C2CF67009EE02C /* AnyChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnyChatViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FEBBA24A19C2CC0B009EE02C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEBBA2B619C2CE36009EE02C /* CoreMedia.framework in Frameworks */,
+				FEBBA2B419C2CE2B009EE02C /* AVFoundation.framework in Frameworks */,
+				FEBBA2B219C2CE21009EE02C /* AudioToolbox.framework in Frameworks */,
+				FEBBA2B019C2CE12009EE02C /* CoreVideo.framework in Frameworks */,
+				FEBBA2AE19C2CE06009EE02C /* CoreAudio.framework in Frameworks */,
+				FEBBA2AC19C2CDEB009EE02C /* libstdc++.dylib in Frameworks */,
+				FEBBA2AA19C2CDDE009EE02C /* libstdc++.6.dylib in Frameworks */,
+				FEBBA2A219C2CD0D009EE02C /* libmp3lame.a in Frameworks */,
+				FEBBA29D19C2CD0D009EE02C /* libavutil.a in Frameworks */,
+				FEBBA29F19C2CD0D009EE02C /* libmediacore.a in Frameworks */,
+				FEBBA29A19C2CD0D009EE02C /* libanychatcore.a in Frameworks */,
+				FEBBA25319C2CC0B009EE02C /* CoreGraphics.framework in Frameworks */,
+				FEBBA29819C2CD0D009EE02C /* libsignal_processing.a in Frameworks */,
+				FEBBA2A519C2CD0D009EE02C /* libswscale.a in Frameworks */,
+				FEBBA29919C2CD0D009EE02C /* libsystem_wrappers.a in Frameworks */,
+				FEBBA2A719C2CD0D009EE02C /* libvpx.a in Frameworks */,
+				FEBBA29E19C2CD0D009EE02C /* libcelt0.a in Frameworks */,
+				FEBBA2A619C2CD0D009EE02C /* libvo-amrwbenc.a in Frameworks */,
+				FEBBA29719C2CD0D009EE02C /* libaudio_processing.a in Frameworks */,
+				FEBBA2A119C2CD0D009EE02C /* libmediautil.a in Frameworks */,
+				FEBBA2A319C2CD0D009EE02C /* libopencore-amrwb.a in Frameworks */,
+				FEBBA2A819C2CD0D009EE02C /* libx264.a in Frameworks */,
+				FEBBA2A419C2CD0D009EE02C /* libswresample.a in Frameworks */,
+				FEBBA25519C2CC0B009EE02C /* UIKit.framework in Frameworks */,
+				FEBBA2A019C2CD0D009EE02C /* libmediashow.a in Frameworks */,
+				FEBBA29C19C2CD0D009EE02C /* libavformat.a in Frameworks */,
+				FEBBA25119C2CC0B009EE02C /* Foundation.framework in Frameworks */,
+				FEBBA29B19C2CD0D009EE02C /* libavcodec.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FEBBA24419C2CC0B009EE02C = {
+			isa = PBXGroup;
+			children = (
+				FEBBA27F19C2CD0D009EE02C /* include */,
+				FEBBA28319C2CD0D009EE02C /* libs */,
+				FEBBA25619C2CC0B009EE02C /* helloAnyChat */,
+				FEBBA24F19C2CC0B009EE02C /* Frameworks */,
+				FEBBA24E19C2CC0B009EE02C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FEBBA24E19C2CC0B009EE02C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FEBBA24D19C2CC0B009EE02C /* helloAnyChat.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FEBBA2B519C2CE36009EE02C /* CoreMedia.framework */,
+				FEBBA2B319C2CE2B009EE02C /* AVFoundation.framework */,
+				FEBBA2B119C2CE21009EE02C /* AudioToolbox.framework */,
+				FEBBA2AF19C2CE12009EE02C /* CoreVideo.framework */,
+				FEBBA2AD19C2CE06009EE02C /* CoreAudio.framework */,
+				FEBBA2AB19C2CDEB009EE02C /* libstdc++.dylib */,
+				FEBBA2A919C2CDDE009EE02C /* libstdc++.6.dylib */,
+				FEBBA25019C2CC0B009EE02C /* Foundation.framework */,
+				FEBBA25219C2CC0B009EE02C /* CoreGraphics.framework */,
+				FEBBA25419C2CC0B009EE02C /* UIKit.framework */,
+				FEBBA26919C2CC0B009EE02C /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FEBBA25619C2CC0B009EE02C /* helloAnyChat */ = {
+			isa = PBXGroup;
+			children = (
+				FEBBA25F19C2CC0B009EE02C /* AppDelegate.h */,
+				FEBBA26019C2CC0B009EE02C /* AppDelegate.m */,
+				FE135AB019C7DC7200C0DB66 /* AnyChatNavigationController.h */,
+				FE135AB119C7DC7200C0DB66 /* AnyChatNavigationController.m */,
+				FEBBA2B719C2CF67009EE02C /* AnyChatViewController.h */,
+				FEBBA2B819C2CF67009EE02C /* AnyChatViewController.m */,
+				FEBBA2B919C2CF67009EE02C /* AnyChatViewController.xib */,
+				FE1B2E7219C692F300773FE6 /* VideoViewController.h */,
+				FE1B2E7319C692F300773FE6 /* VideoViewController.m */,
+				FE1B2E7419C692F300773FE6 /* VideoViewController.xib */,
+				FEBBA26219C2CC0B009EE02C /* Images.xcassets */,
+				FEBBA25719C2CC0B009EE02C /* Supporting Files */,
+			);
+			path = helloAnyChat;
+			sourceTree = "<group>";
+		};
+		FEBBA25719C2CC0B009EE02C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FEBBA25819C2CC0B009EE02C /* helloAnyChat-Info.plist */,
+				FEBBA25919C2CC0B009EE02C /* InfoPlist.strings */,
+				FEBBA25C19C2CC0B009EE02C /* main.m */,
+				FEBBA25E19C2CC0B009EE02C /* helloAnyChat-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FEBBA27F19C2CD0D009EE02C /* include */ = {
+			isa = PBXGroup;
+			children = (
+				FEBBA28019C2CD0D009EE02C /* AnyChatDefine.h */,
+				FEBBA28119C2CD0D009EE02C /* AnyChatErrorCode.h */,
+				FEBBA28219C2CD0D009EE02C /* AnyChatPlatform.h */,
+			);
+			name = include;
+			path = ../../sdk/include;
+			sourceTree = "<group>";
+		};
+		FEBBA28319C2CD0D009EE02C /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				FEBBA28419C2CD0D009EE02C /* audioprocess */,
+				FEBBA28819C2CD0D009EE02C /* libanychatcore.a */,
+				FEBBA28919C2CD0D009EE02C /* libavcodec.a */,
+				FEBBA28A19C2CD0D009EE02C /* libavformat.a */,
+				FEBBA28B19C2CD0D009EE02C /* libavutil.a */,
+				FEBBA28C19C2CD0D009EE02C /* libcelt0.a */,
+				FEBBA28D19C2CD0D009EE02C /* libmediacore.a */,
+				FEBBA28E19C2CD0D009EE02C /* libmediashow.a */,
+				FEBBA28F19C2CD0D009EE02C /* libmediautil.a */,
+				FEBBA29019C2CD0D009EE02C /* libmp3lame.a */,
+				FEBBA29119C2CD0D009EE02C /* libopencore-amrwb.a */,
+				FEBBA29219C2CD0D009EE02C /* libswresample.a */,
+				FEBBA29319C2CD0D009EE02C /* libswscale.a */,
+				FEBBA29419C2CD0D009EE02C /* libvo-amrwbenc.a */,
+				FEBBA29519C2CD0D009EE02C /* libvpx.a */,
+				FEBBA29619C2CD0D009EE02C /* libx264.a */,
+			);
+			name = libs;
+			path = ../../sdk/libs;
+			sourceTree = "<group>";
+		};
+		FEBBA28419C2CD0D009EE02C /* audioprocess */ = {
+			isa = PBXGroup;
+			children = (
+				FEBBA28519C2CD0D009EE02C /* libaudio_processing.a */,
+				FEBBA28619C2CD0D009EE02C /* libsignal_processing.a */,
+				FEBBA28719C2CD0D009EE02C /* libsystem_wrappers.a */,
+			);
+			path = audioprocess;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FEBBA24C19C2CC0B009EE02C /* helloAnyChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEBBA27919C2CC0B009EE02C /* Build configuration list for PBXNativeTarget "helloAnyChat" */;
+			buildPhases = (
+				FEBBA24919C2CC0B009EE02C /* Sources */,
+				FEBBA24A19C2CC0B009EE02C /* Frameworks */,
+				FEBBA24B19C2CC0B009EE02C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = helloAnyChat;
+			productName = helloAnyChat;
+			productReference = FEBBA24D19C2CC0B009EE02C /* helloAnyChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FEBBA24519C2CC0B009EE02C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "GuangZhou BaiRui NetWork Technology Co.,Ltd.";
+			};
+			buildConfigurationList = FEBBA24819C2CC0B009EE02C /* Build configuration list for PBXProject "helloAnyChat" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FEBBA24419C2CC0B009EE02C;
+			productRefGroup = FEBBA24E19C2CC0B009EE02C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FEBBA24C19C2CC0B009EE02C /* helloAnyChat */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FEBBA24B19C2CC0B009EE02C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEBBA25B19C2CC0B009EE02C /* InfoPlist.strings in Resources */,
+				FEBBA2BB19C2CF67009EE02C /* AnyChatViewController.xib in Resources */,
+				FE1B2E7619C692F300773FE6 /* VideoViewController.xib in Resources */,
+				FEBBA26319C2CC0B009EE02C /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FEBBA24919C2CC0B009EE02C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEBBA26119C2CC0B009EE02C /* AppDelegate.m in Sources */,
+				FEBBA25D19C2CC0B009EE02C /* main.m in Sources */,
+				FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */,
+				FE135AB219C7DC7200C0DB66 /* AnyChatNavigationController.m in Sources */,
+				FEBBA2BA19C2CF67009EE02C /* AnyChatViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FEBBA25919C2CC0B009EE02C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FEBBA25A19C2CC0B009EE02C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FEBBA27719C2CC0B009EE02C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FEBBA27819C2CC0B009EE02C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FEBBA27A19C2CC0B009EE02C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "helloAnyChat/helloAnyChat-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/include,
+				);
+				INFOPLIST_FILE = "helloAnyChat/helloAnyChat-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/libs,
+					../../sdk/libs/audioprocess,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "armv7 armv7s";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FEBBA27B19C2CC0B009EE02C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "helloAnyChat/helloAnyChat-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/include,
+				);
+				INFOPLIST_FILE = "helloAnyChat/helloAnyChat-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/libs,
+					../../sdk/libs/audioprocess,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "armv7 armv7s";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FEBBA24819C2CC0B009EE02C /* Build configuration list for PBXProject "helloAnyChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEBBA27719C2CC0B009EE02C /* Debug */,
+				FEBBA27819C2CC0B009EE02C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEBBA27919C2CC0B009EE02C /* Build configuration list for PBXNativeTarget "helloAnyChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEBBA27A19C2CC0B009EE02C /* Debug */,
+				FEBBA27B19C2CC0B009EE02C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FEBBA24519C2CC0B009EE02C /* Project object */;
+}

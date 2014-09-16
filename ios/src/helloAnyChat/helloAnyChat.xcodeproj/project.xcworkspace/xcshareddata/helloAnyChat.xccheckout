@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EBD4DAD6-708A-42E2-B084-DFE706DD2B89</string>
+	<key>IDESourceControlProjectName</key>
+	<string>helloAnyChat</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3ED9A5C6-8724-4E1D-AA15-542C8C782366</key>
+		<string>ssh://code.csdn.net/99263/anychat.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios/src/helloAnyChat/helloAnyChat.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3ED9A5C6-8724-4E1D-AA15-542C8C782366</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://code.csdn.net/99263/anychat.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3ED9A5C6-8724-4E1D-AA15-542C8C782366</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3ED9A5C6-8724-4E1D-AA15-542C8C782366</string>
+			<key>IDESourceControlWCCName</key>
+			<string>99263-anychat</string>
+		</dict>
+	</array>
+</dict>
+</plist>

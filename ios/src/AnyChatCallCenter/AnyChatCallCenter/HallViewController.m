@@ -323,8 +323,10 @@
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 54.0f)];
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 54.0f)];
         [self setUserInfoFromHeaderView:headerView :dwUserId];
         onlineUserTable.tableHeaderView = headerView;
+        onlineUserTable.tableFooterView = footerView;
     }
 }
 
