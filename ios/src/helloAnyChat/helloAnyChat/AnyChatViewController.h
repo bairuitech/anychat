@@ -17,19 +17,16 @@
 
 @class VideoViewController;
 
-@interface AnyChatViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,AnyChatNotifyMessageDelegate>
+@interface AnyChatViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,AnyChatNotifyMessageDelegate>
 
-@property (weak, nonatomic) IBOutlet UIButton               *theHideKeyboardBtn;
 @property (weak, nonatomic) IBOutlet UITextField            *theUserName;
 @property (weak, nonatomic) IBOutlet UITextField            *theRoomNO;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
 @property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *theLogoutBtn;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersion;
 @property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
-@property (weak, nonatomic) IBOutlet UITableView            *onLineUserTableView;
-
+@property (nonatomic, retain) UITableView                   *onLineUserTableView;
 @property (nonatomic, retain) AVCaptureVideoPreviewLayer    *localVideoSurface;
 @property (nonatomic, retain) NSMutableArray                *onlineUserMArray;
 @property (nonatomic, retain) VideoViewController           *videoVC;
@@ -38,10 +35,14 @@
 
 - (IBAction)OnLoginBtnClicked:(id)sender;
 
-- (IBAction)OnLogoutBtnClicked:(id)sender;
+- (NSMutableArray *) getOnlineUserArray;
+
+- (void) createTableView;
 
 - (id) GetServerIP;
 
 - (int) GetServerPort;
+
+- (void) OnLogout;
 
 @end

@@ -10,6 +10,8 @@
 		FE135AB219C7DC7200C0DB66 /* AnyChatNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE135AB119C7DC7200C0DB66 /* AnyChatNavigationController.m */; };
 		FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B2E7319C692F300773FE6 /* VideoViewController.m */; };
 		FE1B2E7619C692F300773FE6 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1B2E7419C692F300773FE6 /* VideoViewController.xib */; };
+		FE284F7719CA898B00FA8205 /* login_bk.png in Resources */ = {isa = PBXBuildFile; fileRef = FE284F7519CA898B00FA8205 /* login_bk.png */; };
+		FE284F7819CA898B00FA8205 /* star_bk.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE284F7619CA898B00FA8205 /* star_bk.jpg */; };
 		FEBBA25119C2CC0B009EE02C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA25019C2CC0B009EE02C /* Foundation.framework */; };
 		FEBBA25319C2CC0B009EE02C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA25219C2CC0B009EE02C /* CoreGraphics.framework */; };
 		FEBBA25519C2CC0B009EE02C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA25419C2CC0B009EE02C /* UIKit.framework */; };
@@ -52,6 +54,8 @@
 		FE1B2E7219C692F300773FE6 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		FE1B2E7319C692F300773FE6 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VideoViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FE1B2E7419C692F300773FE6 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
+		FE284F7519CA898B00FA8205 /* login_bk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_bk.png; sourceTree = "<group>"; };
+		FE284F7619CA898B00FA8205 /* star_bk.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = star_bk.jpg; sourceTree = "<group>"; };
 		FEBBA24D19C2CC0B009EE02C /* helloAnyChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = helloAnyChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEBBA25019C2CC0B009EE02C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FEBBA25219C2CC0B009EE02C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -136,9 +140,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE284F7419CA898B00FA8205 /* bk */ = {
+			isa = PBXGroup;
+			children = (
+				FE284F7519CA898B00FA8205 /* login_bk.png */,
+				FE284F7619CA898B00FA8205 /* star_bk.jpg */,
+			);
+			name = bk;
+			path = helloAnyChat/bk;
+			sourceTree = "<group>";
+		};
 		FEBBA24419C2CC0B009EE02C = {
 			isa = PBXGroup;
 			children = (
+				FE284F7419CA898B00FA8205 /* bk */,
 				FEBBA27F19C2CD0D009EE02C /* include */,
 				FEBBA28319C2CD0D009EE02C /* libs */,
 				FEBBA25619C2CC0B009EE02C /* helloAnyChat */,
@@ -300,6 +315,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEBBA25B19C2CC0B009EE02C /* InfoPlist.strings in Resources */,
+				FE284F7719CA898B00FA8205 /* login_bk.png in Resources */,
+				FE284F7819CA898B00FA8205 /* star_bk.jpg in Resources */,
 				FEBBA2BB19C2CF67009EE02C /* AnyChatViewController.xib in Resources */,
 				FE1B2E7619C692F300773FE6 /* VideoViewController.xib in Resources */,
 				FEBBA26319C2CC0B009EE02C /* Images.xcassets in Resources */,
@@ -417,7 +434,7 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "helloAnyChat/helloAnyChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
@@ -425,7 +442,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -443,14 +460,14 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "helloAnyChat/helloAnyChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
 					../../sdk/libs/audioprocess,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

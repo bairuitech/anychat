@@ -25,8 +25,7 @@
 @synthesize theServerIP;
 @synthesize theServerPort;
 @synthesize theLoginBtn;
-@synthesize theLogoutBtn;
-@synthesize theHideKeyboardBtn;
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -48,8 +47,7 @@
     anyChat.notifyMsgDelegate = self;
     
     [AnyChatPlatform InitSDK:0];
-    self.onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
-    videoVC = [VideoViewController new];
+    [self createTableView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -60,18 +58,20 @@
     
     [self prefersStatusBarHidden];
     [self.navigationController setNavigationBarHidden:YES];
+    [self.theServerIP addTarget:self action:@selector(textFieldShouldEndEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [self.theServerPort addTarget:self action:@selector(textFieldShouldEndEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [self.theUserName addTarget:self action:@selector(textFieldShouldEndEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [self.theRoomNO addTarget:self action:@selector(textFieldShouldEndEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    
     
     float sysVersion = [[UIDevice currentDevice].systemVersion floatValue];
     if (sysVersion < 7.0) {
         
         theLoginBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
         theLoginBtn.titleLabel.textColor = [UIColor grayColor];
-        theLogoutBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
-        theLogoutBtn.titleLabel.textColor = [UIColor grayColor];
-        
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
-    
+
     [theVersion setText:[AnyChatPlatform GetSDKVersion]];
 }
 
@@ -98,9 +98,13 @@
     
     NSInteger userID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] intValue];
     NSString *name = [AnyChatPlatform GetUserName:userID];
+    NSString *cellLabelText = [NSString stringWithFormat:@"%@ (%i)",name,userID];
     
-    Cell.textLabel.text = name;
-    Cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",userID];
+    Cell.textLabel.text = cellLabelText;
+    Cell.textLabel.textColor = [UIColor whiteColor];
+    Cell.textLabel.font = [UIFont systemFontOfSize:15];
+    Cell.backgroundColor = [UIColor clearColor];
+    Cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return Cell;
 }
@@ -111,10 +115,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int selectID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] integerValue];
+    
+    videoVC = [VideoViewController new];
     videoVC.iRemoteUserId = selectID;
     [self.navigationController pushViewController:videoVC animated:YES];
 }
 
+- (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return 36.0f;
+}
 
 #pragma mark - AnyChatNotifyMessageDelegate
 
@@ -133,6 +142,8 @@
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode
 {
+    self.onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
+    
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
         if([theRoomNO.text length] == 0)
@@ -159,9 +170,11 @@
 // 用户进入房间消息
 - (void) OnAnyChatUserEnterRoom:(int) dwUserId
 {
-    if (videoVC.iRemoteUserId == dwUserId ) {
+    if (videoVC.iRemoteUserId == -1 ) {
+        videoVC.iRemoteUserId = dwUserId;
         [videoVC StartVideoChat:dwUserId];
     }
+    self.onlineUserMArray = [self getOnlineUserArray];
     [self.onLineUserTableView reloadData];
 }
 
@@ -171,6 +184,7 @@
     if (videoVC.iRemoteUserId == dwUserId ) {
         [videoVC FinishVideoChat];
     }
+    self.onlineUserMArray = [self getOnlineUserArray];
     [self.onLineUserTableView reloadData];
 }
 
@@ -209,16 +223,22 @@
 
 #pragma mark - Instance method
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (void)AnyChatNotifyHandler:(NSNotification*)notify
 {
     NSDictionary* dict = notify.userInfo;
     [anyChat OnRecvAnyChatNotify:dict];
+}
+
+- (void)createTableView
+{
+    onLineUserTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 166, self.view.frame.size.width, 263)];
+    onLineUserTableView.backgroundColor = [UIColor clearColor];
+    onLineUserTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.onLineUserTableView.delegate = self;
+    self.onLineUserTableView.dataSource = self;
+    
+    [self.view addSubview:onLineUserTableView];
 }
 
 - (NSMutableArray *) getOnlineUserArray
@@ -227,17 +247,8 @@
     return onLineUserList;
 }
 
-- (BOOL)prefersStatusBarHidden
-{
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
     return YES;
-}
-
-- (IBAction) hideKeyBoard:(id)sender
-{
-    [theUserName resignFirstResponder];
-    [theRoomNO resignFirstResponder];
-    [theServerIP resignFirstResponder];
-    [theServerPort resignFirstResponder];
 }
 
 - (IBAction)OnLoginBtnClicked:(id)sender
@@ -252,7 +263,7 @@
     [AnyChatPlatform Login:theUserName.text : @""];
 }
 
-- (IBAction)OnLogoutBtnClicked:(id)sender
+- (void) OnLogout
 {
     [AnyChatPlatform Logout];
     theStateInfo.text = @"• Logout Server.";
@@ -260,6 +271,10 @@
     [self.onLineUserTableView reloadData];
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
 
 
 #pragma mark - Memory Warning method

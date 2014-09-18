@@ -30,15 +30,15 @@
 {
     [super viewDidLoad];
     
-    [self StartVideoChat:iRemoteUserId];
+    [self StartVideoChat:self.iRemoteUserId];
 }
 
 
-#pragma mark - Action Method
+#pragma mark - Instance Method
 
 - (void) StartVideoChat:(int) userid
 {
-    iRemoteUserId = userid;
+    self.iRemoteUserId = userid;
     
     // open local video
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
@@ -68,6 +68,8 @@
 - (IBAction)FinishVideoChatBtnClicked:(id)sender
 {
     [self FinishVideoChat];
+    AnyChatViewController *videoVC = [AnyChatViewController new];
+    videoVC.onlineUserMArray = [videoVC getOnlineUserArray];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
