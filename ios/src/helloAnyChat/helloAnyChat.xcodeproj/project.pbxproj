@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FE135AB219C7DC7200C0DB66 /* AnyChatNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE135AB119C7DC7200C0DB66 /* AnyChatNavigationController.m */; };
 		FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B2E7319C692F300773FE6 /* VideoViewController.m */; };
 		FE1B2E7619C692F300773FE6 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1B2E7419C692F300773FE6 /* VideoViewController.xib */; };
 		FE284F7719CA898B00FA8205 /* login_bk.png in Resources */ = {isa = PBXBuildFile; fileRef = FE284F7519CA898B00FA8205 /* login_bk.png */; };
@@ -49,8 +48,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FE135AB019C7DC7200C0DB66 /* AnyChatNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatNavigationController.h; sourceTree = "<group>"; };
-		FE135AB119C7DC7200C0DB66 /* AnyChatNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnyChatNavigationController.m; sourceTree = "<group>"; };
 		FE1B2E7219C692F300773FE6 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		FE1B2E7319C692F300773FE6 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VideoViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FE1B2E7419C692F300773FE6 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
@@ -193,8 +190,6 @@
 			children = (
 				FEBBA25F19C2CC0B009EE02C /* AppDelegate.h */,
 				FEBBA26019C2CC0B009EE02C /* AppDelegate.m */,
-				FE135AB019C7DC7200C0DB66 /* AnyChatNavigationController.h */,
-				FE135AB119C7DC7200C0DB66 /* AnyChatNavigationController.m */,
 				FEBBA2B719C2CF67009EE02C /* AnyChatViewController.h */,
 				FEBBA2B819C2CF67009EE02C /* AnyChatViewController.m */,
 				FEBBA2B919C2CF67009EE02C /* AnyChatViewController.xib */,
@@ -333,7 +328,6 @@
 				FEBBA26119C2CC0B009EE02C /* AppDelegate.m in Sources */,
 				FEBBA25D19C2CC0B009EE02C /* main.m in Sources */,
 				FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */,
-				FE135AB219C7DC7200C0DB66 /* AnyChatNavigationController.m in Sources */,
 				FEBBA2BA19C2CF67009EE02C /* AnyChatViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

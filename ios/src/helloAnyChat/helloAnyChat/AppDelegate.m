@@ -8,17 +8,19 @@
 
 #import "AppDelegate.h"
 
-
 @implementation AppDelegate
+
+@synthesize navController;
+@synthesize anychatVC;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    
-    AnyChatViewController *anychatVC = [[AnyChatViewController alloc] init];
-    AnyChatNavigationController *anyChatNC = [[AnyChatNavigationController alloc] initWithRootViewController:anychatVC];
-    self.window.rootViewController = anyChatNC;
+
+    self.anychatVC =  [[AnyChatViewController alloc]init];
+    self.navController = [[UINavigationController alloc] initWithRootViewController:self.anychatVC];
+    [self.window addSubview:navController.view];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

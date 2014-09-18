@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "AnyChatViewController.h"
-#import "AnyChatNavigationController.h"
+
+@class AnyChatViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIWindow                  *window;
+@property (strong, nonatomic) UINavigationController    *navController;
+@property (strong, nonatomic) AnyChatViewController     *anychatVC;
 
 @end
