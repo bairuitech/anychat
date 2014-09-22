@@ -18,6 +18,9 @@ enum BRAC_PixelFormat{
 	BRAC_PIX_FMT_NV12,							///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is U and V
 	BRAC_PIX_FMT_NV21,							///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is V and U
 	BRAC_PIX_FMT_NV16,							///< YUV422SP
+	
+	BRAC_PIX_FMT_MJPEG = 200,
+	BRAC_PIX_FMT_H264,
 };
 
 // 音频设备定义
