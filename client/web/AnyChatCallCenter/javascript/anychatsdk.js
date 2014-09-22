@@ -72,6 +72,8 @@ var BRAC_SO_LOCALVIDEO_CODECID = 			93;	// 本地视频编码器ID设置（参数为int型，-1
 var BRAC_SO_LOCALVIDEO_ROTATECTRL = 		94;	// 本地视频旋转控制（参数为int型，0表示不进行旋转，1表示垂直翻转）
 var BRAC_SO_LOCALVIDEO_CAPDRIVER = 			95;	// 本地视频采集驱动设置（参数为int型，0表示自动选择[默认]， 1 Video4Linux, 2 DirectShow, 3 Java采集[Android平台使用]）
 var BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA = 		96;	// 修正视频采集颜色偏色（参数为int型，0表示关闭[默认]，1 开启）
+var BRAC_SO_LOCALVIDEO_TVFORMAT	=			104;// 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
+var BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP	=	105;// 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
 
 var BRAC_SO_NETWORK_P2PPOLITIC = 			40;	// 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 var BRAC_SO_NETWORK_P2PCONNECT = 			41;	// 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -483,11 +485,11 @@ function BRAC_StreamRecordCtrl(dwUserId, bStartRecord, dwFlags, dwParam) {
 	return anychat.StreamRecordCtrl(dwUserId, bStartRecord, dwFlags, dwParam);
 }
 // 用户音、视频录制（扩展）
-function BRAC_StreamRecordCtrl(dwUserId, bStartRecord, dwFlags, dwParam, lpUserStr) {
+function BRAC_StreamRecordCtrlEx(dwUserId, bStartRecord, dwFlags, dwParam, lpUserStr) {
 	if(bSupportStreamRecordCtrlEx)
 		return anychat.StreamRecordCtrlEx(dwUserId, bStartRecord, dwFlags, dwParam, lpUserStr);
 	else
-		return -1;
+		return anychat.StreamRecordCtrl(dwUserId, bStartRecord, dwFlags, dwParam);
 }
 
 // 对用户的视频进行抓拍（快照）
