@@ -32,13 +32,15 @@ Widget::Widget(QWidget *parent) :
 
     ui->RemoteUserlabel->setStyleSheet("background-color:black");//设置默认显示背景
     ui->LocalUserlabel->setStyleSheet ("background-color:black");
-    ui->RoomId_lineEdit->setText("3");
+    ui->RoomId_lineEdit->setText("1");
+    ui->ServerIP_lineEdit->setText("demo.anychat.cn");
+    ui->ServerPort_lineEdit->setText("8906");
+    ui->UserName_lineEdit->setText("QtDemo");
     connect(this,SIGNAL(changeSysLogs(QString)),this,SLOT(setSysLogs(QString)));
 
     memset(m_iUserID,-1,sizeof(m_iUserID));
 
     HelloChatInit(); //初始化
-    HelloChatLogin();//登陆
 }
 
 Widget::~Widget()
@@ -151,8 +153,13 @@ void Widget::HelloChatInit()
 
 void Widget::HelloChatLogin()
 {
-   BRAC_Connect("demo.anychat.cn",8906);  //连接服务器 :connect to server
-   BRAC_Login("HelloChat", "", 0);        //登陆服务器 :loging to server
+   QString UserName   = ui->UserName_lineEdit->text();
+   QString ServerIP   = ui->ServerIP_lineEdit->text();
+   QString ServerPort = ui->ServerPort_lineEdit->text();
+   int port = ServerPort.toInt();
+
+   BRAC_Connect(ServerIP.toStdString().c_str(),port);  //连接服务器 :connect to server
+   BRAC_Login(UserName.toStdString().c_str(), "", 0);  //登陆服务器 :loging to server
 }
 
 void Widget::AppendLogString(QString logstr)
@@ -468,6 +475,7 @@ void Widget::DrawUserVideo(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, BITMAPINFO
 //单击进入房间事件
 void Widget::on_EnterRoom_Btn_clicked()
 {
+    HelloChatLogin();//登陆
     QString roomId = ui->RoomId_lineEdit->text();                           //房间号
     QString pwd = "";                                                       //密码
     BRAC_EnterRoom(roomId.toInt(), (LPCTSTR)pwd.toStdString().c_str() , 0); //进入房间
@@ -492,6 +500,7 @@ void Widget::on_LeaveRoom_Btn_clicked()
     HelloChatRefreshUserList(); //清空用户列表
     AppendLogString("#INFO# User Leave Room");
     g_sOpenedCamUserId = 0;
+    BRAC_Logout();
 }
 
 //双击列表事件，双击后请求远程用户视频
