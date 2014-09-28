@@ -145,6 +145,7 @@ public class AnyChatDefine {
 	public static final int BRAC_RECORD_FLAGS_MIXVIDEO		=	0x00000020;	///< 录制视频时，将其它人的视频迭加后录制（画中画模式）
 	public static final int BRAC_RECORD_FLAGS_ABREAST		=	0x00000100;	///< 录制视频时，将其它人的视频并列录制
 	public static final int BRAC_RECORD_FLAGS_STEREO		=	0x00000200;	///< 录制音频时，将其它人的声音混合为立体声后录制
+	public static final int BRAC_RECORD_FLAGS_STREAM	    =   0x00001000;	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
 
 
 	// 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
@@ -194,6 +195,8 @@ public class AnyChatDefine {
 
 	// 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
 	public static final int BRAC_USERINFO_CTRLCODE_ROTATION	=	8;	///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
+	public static final int BRAC_USERINFO_CTRLCODE_DEBUGLO	=	9;	///< 输出本地用户的调试日志，wParam为调试日志类型
+	public static final int BRAC_USERINFO_CTRLCODE_LVORIENTFIX =10;	///< 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
 	
 	// 常见出错代码定义
     public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< 没有错误
@@ -214,6 +217,7 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_RECORD_FLAGS_STEREO		= 0x00000200;	///< 录制音频时，将其它人的声音混合为立体声后录制
 	public static final int ANYCHAT_RECORD_FLAGS_SNAPSHOT	= 0x00000400;	///< 拍照
 	public static final int ANYCHAT_RECORD_FLAGS_LOCALCB	= 0x00000800;	///< 触发本地回调
+	public static final int ANYCHAT_RECORD_FLAGS_STREAM		= 0x00001000;	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
 	
 	
 }

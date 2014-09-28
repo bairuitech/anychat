@@ -89,6 +89,7 @@
 #define ANYCHAT_RECORD_FLAGS_STEREO		0x00000200	///< 录制音频时，将其它人的声音混合为立体声后录制
 #define ANYCHAT_RECORD_FLAGS_SNAPSHOT	0x00000400	///< 拍照
 #define ANYCHAT_RECORD_FLAGS_LOCALCB	0x00000800	///< 触发本地回调
+#define ANYCHAT_RECORD_FLAGS_STREAM		0x00001000	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
 
 
 // 服务器应用程序消息回调函数定义

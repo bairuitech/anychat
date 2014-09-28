@@ -112,9 +112,13 @@ const
   BRAC_RECORD_FLAGS_VIDEO		=$00000001;		///< 录制视频
   BRAC_RECORD_FLAGS_AUDIO		=$00000002;		///< 录制音频
   BRAC_RECORD_FLAGS_SERVER		=$00000004;		///< 服务器端录制
-  BRAC_RECORD_FLAGS_MIXAUDIO	=$00000010;		///< 录制音频时，将其它人的声音混音后录制
-  BRAC_RECORD_FLAGS_MIXVIDEO	=$00000020;		///< 录制视频时，将其它人的视频迭加后录制
+  BRAC_RECORD_FLAGS_MIXAUDIO		=$00000010;		///< 录制音频时，将其它人的声音混音后录制
+  BRAC_RECORD_FLAGS_MIXVIDEO		=$00000020;		///< 录制视频时，将其它人的视频迭加后录制
   BRAC_RECORD_FLAGS_ABREAST		=$00000100;		///< 录制视频时，将其它人的视频并列录制
+  BRAC_RECORD_FLAGS_SNAPSHOT		=$0x00000400;		///< 拍照
+  BRAC_RECORD_FLAGS_LOCALCB		=$0x00000800;		///< 触发本地回调
+  BRAC_RECORD_FLAGS_STREAM		=$0x00001000;		///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+
 
   // 用户状态标志定义
   BRAC_USERSTATE_CAMERA			=1;				///< 用户摄像头状态（参数为DWORD型）
@@ -155,6 +159,8 @@ const
 
   // 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
   BRAC_USERINFO_CTRLCODE_ROTATION	=	8;		///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
+  BRAC_USERINFO_CTRLCODE_DEBUGLOG	=	9;		///< 输出本地用户的调试日志，wParam为调试日志类型
+  BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;		///< 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
 
   // 数据加（解）密标志定义（DataEncDec回调参数）
   BRAC_DATAENCDEC_FLAGS_ENCMODE		=	$01;	///< 加密模式

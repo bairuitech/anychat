@@ -118,6 +118,7 @@ namespace ANYCHATAPI
 		public const int BRAC_RECORD_FLAGS_STEREO		= 0x200;// 录制音频时，将其它人的声音混合为立体声后录制
 		public const int BRAC_RECORD_FLAGS_SNAPSHOT     = 0x400;// 拍照
 		public const int BRAC_RECORD_FLAGS_LOCALCB      = 0x800;// 触发本地回调
+		public const int BRAC_RECORD_FLAGS_STREAM		= 0x00001000;// 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
 
 		// 客户端、服务器端录制标志定义保持统一
 		public const int ANYCHAT_RECORD_FLAGS_VIDEO     = BRAC_RECORD_FLAGS_VIDEO;
@@ -129,6 +130,7 @@ namespace ANYCHATAPI
 		public const int ANYCHAT_RECORD_FLAGS_STEREO    = BRAC_RECORD_FLAGS_STEREO;
 		public const int ANYCHAT_RECORD_FLAGS_SNAPSHOT  = BRAC_RECORD_FLAGS_SNAPSHOT;
 		public const int ANYCHAT_RECORD_FLAGS_LOCALCB   = BRAC_RECORD_FLAGS_LOCALCB;
+		public const int ANYCHAT_RECORD_FLAGS_STREAM	= BRAC_RECORD_FLAGS_STREAM;
 		
 		// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
 		public const int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	// 呼叫请求
@@ -152,7 +154,9 @@ namespace ANYCHATAPI
 
 		// 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
 		public const int BRAC_USERINFO_CTRLCODE_ROTATION=	8;	// 让指定的用户视频在显示时旋转，wParam为旋转角度参数
-		
+		public const int BRAC_USERINFO_CTRLCODE_DEBUGLOG=	9;	///< 输出本地用户的调试日志，wParam为调试日志类型
+		public const int BRAC_USERINFO_CTRLCODE_LVORIENTFIX=	10;	///< 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
+
 		// 数据加（解）密标志定义（DataEncDec回调参数）
 		public const int BRAC_DATAENCDEC_FLAGS_ENCMODE	=	0x01;// 加密模式
 		public const int BRAC_DATAENCDEC_FLAGS_DECMODE	=	0x02;// 解密模式

@@ -152,6 +152,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_RECORD_FLAGS_MIXVIDEO	0x00000020L	///< 录制视频时，将其它人的视频迭加后录制
 #define BRAC_RECORD_FLAGS_ABREAST	0x00000100L	///< 录制视频时，将其它人的视频并列录制
 #define BRAC_RECORD_FLAGS_STEREO	0x00000200L	///< 录制音频时，将其它人的声音混合为立体声后录制
+#define BRAC_RECORD_FLAGS_STREAM	0x00001000	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
 
 // 组播功能标志定义（API：BRAC_MultiCastControl 传入参数）
 #define BRAC_MCFLAGS_JOINGROUP		0x00000001L	///< 加入多播组
@@ -201,6 +202,8 @@ enum BRAC_VideoShowDriver{
 
 // 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
 #define BRAC_USERINFO_CTRLCODE_ROTATION		8	///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
+#define BRAC_USERINFO_CTRLCODE_DEBUGLOG		9	///< 输出本地用户的调试日志，wParam为调试日志类型
+#define BRAC_USERINFO_CTRLCODE_LVORIENTFIX	10	///< 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
 
 
 

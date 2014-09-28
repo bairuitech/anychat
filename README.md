@@ -7,5 +7,3 @@ AnyChat是一套跨平台的音视频解决方案。
 官方网站：http://www.anychat.cn
 
 技术论坛：http://bbs.anychat.cn
-
-testtest

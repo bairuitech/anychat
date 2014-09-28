@@ -73,11 +73,24 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 					break;
 				}
 			}
-			parameters.setPreviewFrameRate(25);
 			// 指定的分辩率不支持时，用默认的分辩率替代
 			if(!bSetPreviewSize)
 				parameters.setPreviewSize(320, 240);
-
+			
+			// 设置视频采集帧率
+			boolean bSetPreviewFrameRate = false;
+			List<int[]> fpsRange = parameters.getSupportedPreviewFpsRange();
+			for(int i=0; i<fpsRange.size(); i++) {
+				int[] r = fpsRange.get(i);
+				if(r[0] >= 25000 && r[1] >= 25000) {
+					bSetPreviewFrameRate = true;
+					parameters.setPreviewFpsRange(r[0], r[1]);
+					break;
+				}
+			}
+			if(!bSetPreviewFrameRate)
+				parameters.setPreviewFpsRange(1000, 25000);
+			
 			// 设置视频数据格式
 			parameters.setPreviewFormat(ImageFormat.NV21);
 			// 参数设置生效
@@ -120,7 +133,10 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			
 			Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_CORESDK_EXTVIDEOINPUT, 1);
-			AnyChatCoreSDK.SetInputVideoFormat(mVideoPixfmt, previewSize.width, previewSize.height, mCamera.getParameters().getPreviewFrameRate(), 0);
+			
+			int iCurPreviewRange[] = new int[2];  
+			parameters.getPreviewFpsRange(iCurPreviewRange);
+			AnyChatCoreSDK.SetInputVideoFormat(mVideoPixfmt, previewSize.width, previewSize.height, iCurPreviewRange[1]/1000, 0);
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAMERAFACE, cameraInfo.facing);
 		} catch (Exception e) {
 			e.printStackTrace();

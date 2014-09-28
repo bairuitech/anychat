@@ -102,6 +102,7 @@ namespace ANYCHATAPI
         public const int ANYCHAT_RECORD_FLAGS_STEREO	= 0x200;// 录制音频时，将其它人的声音混合为立体声后录制
         public const int ANYCHAT_RECORD_FLAGS_SNAPSHOT	= 0x400;// 拍照
         public const int ANYCHAT_RECORD_FLAGS_LOCALCB   = 0x800;// 触发本地回调
+		public const int  ANYCHAT_RECORD_FLAGS_STREAM   = 0x00001000;// 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
 		
 		
         /**
