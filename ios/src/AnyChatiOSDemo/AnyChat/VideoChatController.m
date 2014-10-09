@@ -15,6 +15,7 @@
 
 @synthesize localVideoSurface;
 @synthesize remoteVideoSurface;
+@synthesize theLocalView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -41,34 +42,26 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    UIDevice *device = [UIDevice currentDevice];
+    [device beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientation:) name:UIDeviceOrientationDidChangeNotification object:device];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    self.theLocalView = nil;
 }
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (BOOL)shouldAutorotate
-{
-    return NO;
-}
-
 
 - (void) OnLocalVideoInit:(id)session
 {
     self.localVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
-    self.localVideoSurface.frame = CGRectMake(5, 260, 120, 160);
+    self.localVideoSurface.frame = CGRectMake(0, 0, 120, 160);
     self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    
-    [self.view.layer addSublayer: self.localVideoSurface];
+
+    [self.theLocalView.layer addSublayer:self.localVideoSurface];
 }
 
 - (void) OnLocalVideoRelease:(id)sender
@@ -78,7 +71,6 @@
         self.localVideoSurface = nil;
     }
 }
-
 
 - (void) StartVideoChat:(int) userid
 {
@@ -125,6 +117,72 @@
 {
     [self FinishVideoChat];
     [[AnyChatAppDelegate GetApp].viewController showRoomView];
+}
+
+#pragma mark - Orientation Rotation
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - Video Rotation
+
+- (void)deviceOrientation:(NSNotification *)notification
+{
+    //device orientation
+    UIDeviceOrientation devOrientation = [UIDevice currentDevice].orientation;
+    
+    if (devOrientation == UIDeviceOrientationLandscapeLeft)
+    {
+        [self setFrameOfLandscapeLeft];
+    }
+    else if (devOrientation == UIDeviceOrientationLandscapeRight)
+    {
+        [self setFrameOfLandscapeRight];
+    }
+    if (devOrientation == UIDeviceOrientationPortrait)
+    {
+        [self setFrameOfPortrait];
+    }
+    
+}
+
+
+-(void)setFrameOfPortrait
+{
+    //Rotate
+    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(0.0);
+    self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(0.0);
+    //Scale
+    self.remoteVideoSurface.frame = CGRectMake(0, 0, kScreen_Width, kScreen_Height);
+    self.theLocalView.frame = kLocalVideoPortrait_CGRect;
+}
+
+-(void)setFrameOfLandscapeLeft
+{
+    //Rotate
+    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(90.0);
+    self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(-90.0);
+    //Scale
+    self.remoteVideoSurface.frame = CGRectMake(0, 0, kScreen_Height, kScreen_Width);
+    self.theLocalView.frame = kLocalVideoLandscape_CGRect;
+}
+
+-(void)setFrameOfLandscapeRight
+{
+    //Rotate
+    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(-90.0);;
+    self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(90.0);
+    //Scale
+    self.remoteVideoSurface.frame = CGRectMake(0, 0, kScreen_Height, kScreen_Width);
+    self.theLocalView.frame = kLocalVideoLandscape_CGRect;
 }
 
 @end

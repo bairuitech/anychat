@@ -25,6 +25,9 @@ NSString* const kVideoQuality = @"videoquality";
 
 
 @implementation AnyChatViewController
+{
+    BOOL isSupporteAutorotate;
+}
 
 @synthesize loginViewController;
 @synthesize hallViewController;
@@ -57,7 +60,6 @@ NSString* const kVideoQuality = @"videoquality";
     anychat.notifyMsgDelegate = self;
     
     [AnyChatPlatform InitSDK:0];
-//    notifyText.text = [AnyChatPlatform GetSDKVersion];
 }
 
 
@@ -74,6 +76,17 @@ NSString* const kVideoQuality = @"videoquality";
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+-(BOOL)shouldAutorotate
+{
+    return isSupporteAutorotate;
+}
+
+
 - (void) hideAllView
 {
     for(NSInteger i=0;i<[self.view.subviews count];i++){  
@@ -85,24 +98,28 @@ NSString* const kVideoQuality = @"videoquality";
 {
     [self hideAllView];
     [self.view insertSubview:settingsController.view atIndex:0];
+    isSupporteAutorotate = NO;
 }
 
 - (void) showLoginView
 {
     [self hideAllView];
     [self.view insertSubview:loginViewController.view atIndex:0];
+    isSupporteAutorotate = NO;
 }
 
 - (void) showHallView
 {
     [self hideAllView];
     [self.view insertSubview:hallViewController.view atIndex:0];
+    isSupporteAutorotate = NO;
 }
 
 - (void) showRoomView
 {
     [self hideAllView];
     [self.view insertSubview:roomViewController.view atIndex:0];
+    isSupporteAutorotate = NO;
 }
 
 - (void) showVideoChatView:(int) userid
@@ -111,6 +128,7 @@ NSString* const kVideoQuality = @"videoquality";
     [self hideAllView];
     [self.view insertSubview:videoChatController.view atIndex:0];
     [self.videoChatController StartVideoChat:userid];
+    isSupporteAutorotate = YES;
 }
 
 - (void)AnyChatNotifyHandler:(NSNotification*)notify
