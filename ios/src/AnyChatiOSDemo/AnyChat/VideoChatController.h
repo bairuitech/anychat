@@ -12,9 +12,6 @@
 #define kLocalVideoPortrait_CGRect          CGRectMake(15, 305, 120, 160)
 #define kLocalVideoLandscape_CGRect         CGRectMake(15, 185, 160, 120)
 
-#define kNavBar_Height                      44.0f                   //Navigation Bar Height
-#define kStatusBar_Height                   20.0f                   //Status Bar Height
-#define kDevice_SysVersion                  [UIDevice currentDevice].systemVersion
 #define kScreen_Width                       [[UIScreen mainScreen] bounds].size.width
 #define kScreen_Height                      [[UIScreen mainScreen] bounds].size.height
 
