@@ -1,8 +1,8 @@
-package com.bairuitech.anychat;		// ²»ÄÜĞŞ¸Ä°üµÄÃû³Æ
+package com.bairuitech.anychat;		// ä¸èƒ½ä¿®æ”¹åŒ…çš„åç§°
 
 /**
- * Í¨ÓÃº¯Êı·µ»Ø²ÎÊıÀà
- * AnyChatÄÚºËµ÷ÓÃSet·½·¨ÉèÖÃ²ÎÊı£¬ÉÏ²ãÓ¦ÓÃÍ¨¹ıGet·½·¨»ñÈ¡Öµ
+ * é€šç”¨å‡½æ•°è¿”å›å‚æ•°ç±»
+ * AnyChatå†…æ ¸è°ƒç”¨Setæ–¹æ³•è®¾ç½®å‚æ•°ï¼Œä¸Šå±‚åº”ç”¨é€šè¿‡Getæ–¹æ³•è·å–å€¼
  */
 public class AnyChatOutParam{
 	private int iValue = 0;

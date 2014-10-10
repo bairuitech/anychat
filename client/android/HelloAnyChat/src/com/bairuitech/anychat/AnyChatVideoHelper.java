@@ -14,7 +14,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 
 
-//AnyChat ÊÓÆµÏÔÊ¾°ü×°Àà£¬ÊµÏÖJava²ãÃæµÄÊÓÆµ²¥·Å
+//AnyChat è§†é¢‘æ˜¾ç¤ºåŒ…è£…ç±»ï¼Œå®žçŽ°Javaå±‚é¢çš„è§†é¢‘æ’­æ”¾
 public class AnyChatVideoHelper {
 	private int MAX_VIDEO_NUM = 10;
 	VideoRenderer render[];
@@ -57,8 +57,8 @@ public class AnyChatVideoHelper {
 	}
 	
 	/***
-	 * ÉèÖÃ×î´ó²Ã¼ôÍ¼Æ¬µÄ±ÈÀý¡£±ÈÀýÔ½´ó£¬µ±ÐèÒª²Ã¼ôµÄÊ±ºò¶ªÊ§µÄÊý¾ÝÔ½¶à£¬surfaceviewÕ¼µÄÆÁÄ»Ò²¸üÂú
-	 * @param scale ±ÈÀý
+	 * è®¾ç½®æœ€å¤§è£å‰ªå›¾ç‰‡çš„æ¯”ä¾‹ã€‚æ¯”ä¾‹è¶Šå¤§ï¼Œå½“éœ€è¦è£å‰ªçš„æ—¶å€™ä¸¢å¤±çš„æ•°æ®è¶Šå¤šï¼Œsurfaceviewå çš„å±å¹•ä¹Ÿæ›´æ»¡
+	 * @param scale æ¯”ä¾‹
 	 */
 	public void setMaxCutScale(int userId,float scale)
 	{
@@ -101,7 +101,7 @@ class VideoRenderer implements Callback {
     // private float dstLeftScale = 0;
     private float dstRightScale = 1;
     
-    private float max_cut_imgscale = 1.0f/3;		//×î´óÄÜ²Ã¼ôÊÓÆµµÄ±ÈÀý
+    private float max_cut_imgscale = 1.0f/3;		//æœ€å¤§èƒ½è£å‰ªè§†é¢‘çš„æ¯”ä¾‹
     
     private int mUserid = -1;
 	
@@ -109,16 +109,16 @@ class VideoRenderer implements Callback {
     public VideoRenderer(SurfaceHolder holder) {
         if(holder == null)
             return;
-        mUserid = 0;			// Î´Öª×´Ì¬
+        mUserid = 0;			// æœªçŸ¥çŠ¶æ€
         surfaceHolder = holder;
         holder.addCallback(this);
     }
     
-    // »ñÈ¡µ±Ç°ÊÓÆµÏÔÊ¾µ¥Ôª°ó¶¨µÄÓÃ»§ID
+    // èŽ·å–å½“å‰è§†é¢‘æ˜¾ç¤ºå•å…ƒç»‘å®šçš„ç”¨æˆ·ID
     public int GetUserId() 				{		return mUserid;			}
-    // ÉèÖÃÓÃ»§ID
+    // è®¾ç½®ç”¨æˆ·ID
     public void SetUserId(int userid)	{		mUserid = userid;   	}
-    // ÉèÖÃ×î´ó²Ã¼ôÍ¼Æ¬µÄ±ÈÀý
+    // è®¾ç½®æœ€å¤§è£å‰ªå›¾ç‰‡çš„æ¯”ä¾‹
 	public void setMaxCutScale(float scale) {
 		if(scale>1.0)
 			scale=1.0f;
@@ -186,14 +186,14 @@ class VideoRenderer implements Callback {
     public void DrawByteBuffer(byte [] mPixel, int rotation, int mirror) {
         if(bitmap == null)
             return;
-        ByteBuffer byteBuffer = ByteBuffer.wrap(mPixel); // ½« byte Êý×é°ü×°µ½»º³åÇøÖÐ
+        ByteBuffer byteBuffer = ByteBuffer.wrap(mPixel); // å°† byte æ•°ç»„åŒ…è£…åˆ°ç¼“å†²åŒºä¸­
 		byteBuffer.rewind();
 		bitmap.copyPixelsFromBuffer(byteBuffer);
 		Canvas canvas = surfaceHolder.lockCanvas();
 		if (canvas != null) {
 			
 			Paint paint = new Paint();
-			paint.setAntiAlias(true); // ¿¹¾â³Ý
+			paint.setAntiAlias(true); // æŠ—é”¯é½¿
 			Matrix matrix = new Matrix();
 			float fScalex = 0;
 			float fScaley = 0;

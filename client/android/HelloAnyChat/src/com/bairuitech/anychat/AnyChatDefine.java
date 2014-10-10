@@ -1,7 +1,7 @@
 package com.bairuitech.anychat;
 
 public class AnyChatDefine {
-	// ÏûÏ¢Í¨ÖªÀàĞÍ¶¨Òå
+	// æ¶ˆæ¯é€šçŸ¥ç±»å‹å®šä¹‰
 	static final int WM_GV = 1224;
 	static final int WM_GV_CONNECT			=	WM_GV + 1;
 	static final int WM_GV_LOGINSYSTEM		=	WM_GV + 2;
@@ -24,197 +24,206 @@ public class AnyChatDefine {
 	static final int WM_GV_AUDIORECCTRL		=	WM_GV + 101;
 	static final int WM_GV_VIDEOCAPCTRL		=	WM_GV + 102;
 	
-	// ÊÓÆµÍ¼Ïñ¸ñÊ½¶¨Òå
-	public static final int BRAC_PIX_FMT_RGB24		= 	0;	///< Packed RGB 8:8:8, 24bpp, RGBRGB...£¨MEDIASUBTYPE_RGB24£©
-	public static final int BRAC_PIX_FMT_RGB32		=	1;	///< ¶ÔÓ¦ÓÚ£ºMEDIASUBTYPE_RGB32£¬Packed RGB 8:8:8, 32bpp, (msb)8A 8R 8G 8B(lsb), in cpu endianness
-	public static final int BRAC_PIX_FMT_YV12		=	2;	///< ¶ÔÓ¦ÓÚ£ºMEDIASUBTYPE_YV12£¬Planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
-	public static final int BRAC_PIX_FMT_YUY2		=	3;	///< ¶ÔÓ¦ÓÚ£ºMEDIASUBTYPE_YUY2£¬Packed YUV 4:2:2, 16bpp, Y0 Cb Y1 Cr
+	// è§†é¢‘å›¾åƒæ ¼å¼å®šä¹‰
+	public static final int BRAC_PIX_FMT_RGB24		= 	0;	///< Packed RGB 8:8:8, 24bpp, RGBRGB...ï¼ˆMEDIASUBTYPE_RGB24ï¼‰
+	public static final int BRAC_PIX_FMT_RGB32		=	1;	///< å¯¹åº”äºï¼šMEDIASUBTYPE_RGB32ï¼ŒPacked RGB 8:8:8, 32bpp, (msb)8A 8R 8G 8B(lsb), in cpu endianness
+	public static final int BRAC_PIX_FMT_YV12		=	2;	///< å¯¹åº”äºï¼šMEDIASUBTYPE_YV12ï¼ŒPlanar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
+	public static final int BRAC_PIX_FMT_YUY2		=	3;	///< å¯¹åº”äºï¼šMEDIASUBTYPE_YUY2ï¼ŒPacked YUV 4:2:2, 16bpp, Y0 Cb Y1 Cr
 	public static final int BRAC_PIX_FMT_YUV420P	=	4;	///< Planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
-	public static final int BRAC_PIX_FMT_RGB565		=	5;	///< ¶ÔÓ¦ÓÚ£ºMEDIASUBTYPE_RGB565
-	public static final int BRAC_PIX_FMT_RGB555		=	6;	///< ¶ÔÓ¦ÓÚ£ºMEDIASUBTYPE_RGB555
+	public static final int BRAC_PIX_FMT_RGB565		=	5;	///< å¯¹åº”äºï¼šMEDIASUBTYPE_RGB565
+	public static final int BRAC_PIX_FMT_RGB555		=	6;	///< å¯¹åº”äºï¼šMEDIASUBTYPE_RGB555
 	public static final int BRAC_PIX_FMT_NV12		=	7;	///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is U and V
 	public static final int BRAC_PIX_FMT_NV21		=	8;	///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is V and U
 	public static final int BRAC_PIX_FMT_NV16		=	9;	///< YUV422SP
 	
-	// ÊÓÆµ²É¼¯Çı¶¯
-	public static final int VIDEOCAP_DRIVER_JAVA	=	3;	///< JavaÊÓÆµ²É¼¯Çı¶¯
-	// ÊÓÆµÏÔÊ¾Çı¶¯
-	public static final int VIDEOSHOW_DRIVER_JAVA	=	5;	///< JavaÊÓÆµÏÔÊ¾Çı¶¯
-	// ÒôÆµ²É¼¯Çı¶¯
-	public static final int AUDIOREC_DRIVER_JAVA	=	3;	///< JavaÒôÆµ²É¼¯Çı¶¯
-	// ÒôÆµ²¥·ÅÇı¶¯
-	public static final int AUDIOPLAY_DRIVER_JAVA	=	3;	///< JavaÒôÆµ²¥·ÅÇı¶¯
+	// è§†é¢‘é‡‡é›†é©±åŠ¨
+	public static final int VIDEOCAP_DRIVER_JAVA	=	3;	///< Javaè§†é¢‘é‡‡é›†é©±åŠ¨
+	// è§†é¢‘æ˜¾ç¤ºé©±åŠ¨
+	public static final int VIDEOSHOW_DRIVER_JAVA	=	5;	///< Javaè§†é¢‘æ˜¾ç¤ºé©±åŠ¨
+	// éŸ³é¢‘é‡‡é›†é©±åŠ¨
+	public static final int AUDIOREC_DRIVER_JAVA	=	3;	///< JavaéŸ³é¢‘é‡‡é›†é©±åŠ¨
+	// éŸ³é¢‘æ’­æ”¾é©±åŠ¨
+	public static final int AUDIOPLAY_DRIVER_JAVA	=	3;	///< JavaéŸ³é¢‘æ’­æ”¾é©±åŠ¨
 	
-	// ÄÚºË²ÎÊı¶¨Òå
-	public static final int BRAC_SO_AUDIO_VADCTRL			=	1;	///< ÒôÆµ¾²Òô¼ì²â¿ØÖÆ£¨²ÎÊıÎª£ºintĞÍ£º1´ò¿ª£¬0¹Ø±Õ£©
-	public static final int BRAC_SO_AUDIO_NSCTRL			=	2;	///< ÒôÆµÔëÒôÒÖÖÆ¿ØÖÆ£¨²ÎÊıÎª£ºintĞÍ£º1´ò¿ª£¬0¹Ø±Õ£©
-	public static final int BRAC_SO_AUDIO_ECHOCTRL			=	3;	///< ÒôÆµ»ØÒôÏû³ı¿ØÖÆ£¨²ÎÊıÎª£ºintĞÍ£º1´ò¿ª£¬0¹Ø±Õ£©
-	public static final int BRAC_SO_AUDIO_AGCCTRL			=	4;	///< ÒôÆµ×Ô¶¯ÔöÒæ¿ØÖÆ£¨²ÎÊıÎª£ºintĞÍ£º1´ò¿ª£¬0¹Ø±Õ£©
-	public static final int BRAC_SO_AUDIO_CPATUREMODE		=	5;	///< ÒôÆµ²É¼¯Ä£Ê½ÉèÖÃ£¨²ÎÊıÎª£ºintĞÍ£º0 ·¢ÑÔÄ£Ê½£¬1 ·Å¸èÄ£Ê½£¬2 ¿¨À­OKÄ£Ê½£¬3 ÏßÂ·ÊäÈëÄ£Ê½£©
-	public static final int BRAC_SO_AUDIO_MICBOOST			=	6;	///< ÒôÆµ²É¼¯MicÔöÇ¿¿ØÖÆ£¨²ÎÊıÎª£ºintĞÍ£º0 È¡Ïû£¬1 Ñ¡ÖĞ£¬2 Éè±¸²»´æÔÚ[²éÑ¯Ê±·µ»ØÖµ]£©
-	public static final int BRAC_SO_AUDIO_AUTOPARAM			=	7;	///< ¸ù¾İÒôÆµ²É¼¯Ä£Ê½£¬×Ô¶¯Ñ¡ÔñºÏÊÊµÄÏà¹Ø²ÎÊı£¬°üÀ¨±àÂëÆ÷¡¢²ÉÑù²ÎÊı¡¢ÂëÂÊ²ÎÊıµÈ£¨²ÎÊıÎªintĞÍ£º1 ÆôÓÃ£¬0 ¹Ø±Õ[Ä¬ÈÏ]£©
-	public static final int BRAC_SO_AUDIO_MONOBITRATE		=	8;	///< ÉèÖÃµ¥ÉùµÀÄ£Ê½ÏÂÒôÆµ±àÂëÄ¿±êÂëÂÊ£¨²ÎÊıÎª£ºintĞÍ£¬µ¥Î»£ºbps£©
-	public static final int BRAC_SO_AUDIO_STEREOBITRATE		=	9;	///< ÉèÖÃË«ÉùµÀÄ£Ê½ÏÂÒôÆµ±àÂëÄ¿±êÂëÂÊ£¨²ÎÊıÎª£ºintĞÍ£¬µ¥Î»£ºbps£©
-	public static final int BRAC_SO_AUDIO_PLAYDRVCTRL		=	70;	///< ÒôÆµ²¥·ÅÇı¶¯Ñ¡Ôñ£¨²ÎÊıÎª£ºintĞÍ£¬0Ä¬ÈÏÇı¶¯£¬ 1 DSoundÇı¶¯£¬ 2 WaveOutÇı¶¯£¬ 3 Java²¥·Å[AndroidÆ½Ì¨Ê¹ÓÃ]£©
-	public static final int BRAC_SO_AUDIO_SOFTVOLMODE		=	73;	///< ÉèÖÃÈí¼şÒôÁ¿Ä£Ê½¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬1´ò¿ª£¬0¹Ø±Õ[Ä¬ÈÏ]£©£¬Ê¹ÓÃÈí¼şÒôÁ¿Ä£Ê½£¬½«²»»á¸Ä±äÏµÍ³µÄÒôÁ¿ÉèÖÃ
-	public static final int BRAC_SO_AUDIO_RECORDDRVCTRL		=	74;	///< ÒôÆµ²É¼¯Çı¶¯¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬0Ä¬ÈÏÇı¶¯£¬ 1 DSoundÇı¶¯£¬ 2 WaveInÇı¶¯£¬ 3 Java²É¼¯[AndroidÆ½Ì¨Ê¹ÓÃ]£©
-	public static final int BRAC_SO_AUDIO_ECHODELAY			=	75;	///< ÒôÆµ»ØÉùÏû³ıÑÓ³Ù²ÎÊıÉèÖÃ£¨²ÎÊıÎªintĞÍ£¬µ¥Î»£ºms£©
+	// å†…æ ¸å‚æ•°å®šä¹‰
+	public static final int BRAC_SO_AUDIO_VADCTRL			=	1;	///< éŸ³é¢‘é™éŸ³æ£€æµ‹æ§åˆ¶ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼š1æ‰“å¼€ï¼Œ0å…³é—­ï¼‰
+	public static final int BRAC_SO_AUDIO_NSCTRL			=	2;	///< éŸ³é¢‘å™ªéŸ³æŠ‘åˆ¶æ§åˆ¶ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼š1æ‰“å¼€ï¼Œ0å…³é—­ï¼‰
+	public static final int BRAC_SO_AUDIO_ECHOCTRL			=	3;	///< éŸ³é¢‘å›éŸ³æ¶ˆé™¤æ§åˆ¶ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼š1æ‰“å¼€ï¼Œ0å…³é—­ï¼‰
+	public static final int BRAC_SO_AUDIO_AGCCTRL			=	4;	///< éŸ³é¢‘è‡ªåŠ¨å¢ç›Šæ§åˆ¶ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼š1æ‰“å¼€ï¼Œ0å…³é—­ï¼‰
+	public static final int BRAC_SO_AUDIO_CPATUREMODE		=	5;	///< éŸ³é¢‘é‡‡é›†æ¨¡å¼è®¾ç½®ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼š0 å‘è¨€æ¨¡å¼ï¼Œ1 æ”¾æ­Œæ¨¡å¼ï¼Œ2 å¡æ‹‰OKæ¨¡å¼ï¼Œ3 çº¿è·¯è¾“å…¥æ¨¡å¼ï¼‰
+	public static final int BRAC_SO_AUDIO_MICBOOST			=	6;	///< éŸ³é¢‘é‡‡é›†Micå¢å¼ºæ§åˆ¶ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼š0 å–æ¶ˆï¼Œ1 é€‰ä¸­ï¼Œ2 è®¾å¤‡ä¸å­˜åœ¨[æŸ¥è¯¢æ—¶è¿”å›å€¼]ï¼‰
+	public static final int BRAC_SO_AUDIO_AUTOPARAM			=	7;	///< æ ¹æ®éŸ³é¢‘é‡‡é›†æ¨¡å¼ï¼Œè‡ªåŠ¨é€‰æ‹©åˆé€‚çš„ç›¸å…³å‚æ•°ï¼ŒåŒ…æ‹¬ç¼–ç å™¨ã€é‡‡æ ·å‚æ•°ã€ç ç‡å‚æ•°ç­‰ï¼ˆå‚æ•°ä¸ºintå‹ï¼š1 å¯ç”¨ï¼Œ0 å…³é—­[é»˜è®¤]ï¼‰
+	public static final int BRAC_SO_AUDIO_MONOBITRATE		=	8;	///< è®¾ç½®å•å£°é“æ¨¡å¼ä¸‹éŸ³é¢‘ç¼–ç ç›®æ ‡ç ç‡ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œå•ä½ï¼šbpsï¼‰
+	public static final int BRAC_SO_AUDIO_STEREOBITRATE		=	9;	///< è®¾ç½®åŒå£°é“æ¨¡å¼ä¸‹éŸ³é¢‘ç¼–ç ç›®æ ‡ç ç‡ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œå•ä½ï¼šbpsï¼‰
+	public static final int BRAC_SO_AUDIO_PLAYDRVCTRL		=	70;	///< éŸ³é¢‘æ’­æ”¾é©±åŠ¨é€‰æ‹©ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œ0é»˜è®¤é©±åŠ¨ï¼Œ 1 DSoundé©±åŠ¨ï¼Œ 2 WaveOuté©±åŠ¨ï¼Œ 3 Javaæ’­æ”¾[Androidå¹³å°ä½¿ç”¨]ï¼‰
+	public static final int BRAC_SO_AUDIO_SOFTVOLMODE		=	73;	///< è®¾ç½®è½¯ä»¶éŸ³é‡æ¨¡å¼æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ1æ‰“å¼€ï¼Œ0å…³é—­[é»˜è®¤]ï¼‰ï¼Œä½¿ç”¨è½¯ä»¶éŸ³é‡æ¨¡å¼ï¼Œå°†ä¸ä¼šæ”¹å˜ç³»ç»Ÿçš„éŸ³é‡è®¾ç½®
+	public static final int BRAC_SO_AUDIO_RECORDDRVCTRL		=	74;	///< éŸ³é¢‘é‡‡é›†é©±åŠ¨æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ0é»˜è®¤é©±åŠ¨ï¼Œ 1 DSoundé©±åŠ¨ï¼Œ 2 WaveIné©±åŠ¨ï¼Œ 3 Javaé‡‡é›†[Androidå¹³å°ä½¿ç”¨]ï¼‰
+	public static final int BRAC_SO_AUDIO_ECHODELAY			=	75;	///< éŸ³é¢‘å›å£°æ¶ˆé™¤å»¶è¿Ÿå‚æ•°è®¾ç½®ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œå•ä½ï¼šmsï¼‰
 	
-	public static final int BRAC_SO_RECORD_VIDEOBR			=	10;	///< Â¼ÏñÊÓÆµÂëÂÊÉèÖÃ£¨²ÎÊıÎª£ºintĞÍ£¬µ¥Î»£ºbps£©
-	public static final int BRAC_SO_RECORD_AUDIOBR			=	11;	///< Â¼ÏñÒôÆµÂëÂÊÉèÖÃ£¨²ÎÊıÎª£ºintĞÍ£¬µ¥Î»£ºbps£©
-	public static final int BRAC_SO_RECORD_TMPDIR			=	12;	///< Â¼ÏñÎÄ¼şÁÙÊ±Ä¿Â¼ÉèÖÃ£¨²ÎÊıÎª×Ö·û´®TCHARÀàĞÍ£¬±ØĞëÊÇÍêÕûµÄ¾ø¶ÔÂ·¾¶£©
-	public static final int BRAC_SO_SNAPSHOT_TMPDIR			=	13;	///< ¿ìÕÕÎÄ¼şÁÙÊ±Ä¿Â¼ÉèÖÃ£¨²ÎÊıÎª×Ö·û´®TCHARÀàĞÍ£¬±ØĞëÊÇÍêÕûµÄ¾ø¶ÔÂ·¾¶£©
-	public static final int BRAC_SO_RECORD_FILETYPE			=	140;///< Â¼ÖÆÎÄ¼şÀàĞÍÉèÖÃ£¨²ÎÊıÎª£ºintĞÍ£¬ 0 MP4[Ä¬ÈÏ], 1 WMV, 2 FLV, 3 MP3£©
-	public static final int BRAC_SO_RECORD_WIDTH			=	141;///< Â¼ÖÆÊÓÆµ¿í¶ÈÉèÖÃ£¨²ÎÊıÎª£ºintĞÍ£¬Èç£º320£©
-	public static final int BRAC_SO_RECORD_HEIGHT			=	142;///< Â¼ÖÆÎÄ¼ş¸ß¶ÈÉèÖÃ£¨²ÎÊıÎª£ºintĞÍ£¬Èç£º240£©
-	public static final int BRAC_SO_RECORD_FILENAMERULE		=	143;///< Â¼ÖÆÎÄ¼şÃûÃüÃû¹æÔò£¨²ÎÊıÎª£ºintĞÍ£©
+	public static final int BRAC_SO_RECORD_VIDEOBR			=	10;	///< å½•åƒè§†é¢‘ç ç‡è®¾ç½®ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œå•ä½ï¼šbpsï¼‰
+	public static final int BRAC_SO_RECORD_AUDIOBR			=	11;	///< å½•åƒéŸ³é¢‘ç ç‡è®¾ç½®ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œå•ä½ï¼šbpsï¼‰
+	public static final int BRAC_SO_RECORD_TMPDIR			=	12;	///< å½•åƒæ–‡ä»¶ä¸´æ—¶ç›®å½•è®¾ç½®ï¼ˆå‚æ•°ä¸ºå­—ç¬¦ä¸²TCHARç±»å‹ï¼Œå¿…é¡»æ˜¯å®Œæ•´çš„ç»å¯¹è·¯å¾„ï¼‰
+	public static final int BRAC_SO_SNAPSHOT_TMPDIR			=	13;	///< å¿«ç…§æ–‡ä»¶ä¸´æ—¶ç›®å½•è®¾ç½®ï¼ˆå‚æ•°ä¸ºå­—ç¬¦ä¸²TCHARç±»å‹ï¼Œå¿…é¡»æ˜¯å®Œæ•´çš„ç»å¯¹è·¯å¾„ï¼‰
+	public static final int BRAC_SO_RECORD_FILETYPE			=	140;///< å½•åˆ¶æ–‡ä»¶ç±»å‹è®¾ç½®ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œ 0 MP4[é»˜è®¤], 1 WMV, 2 FLV, 3 MP3ï¼‰
+	public static final int BRAC_SO_RECORD_WIDTH			=	141;///< å½•åˆ¶è§†é¢‘å®½åº¦è®¾ç½®ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œå¦‚ï¼š320ï¼‰
+	public static final int BRAC_SO_RECORD_HEIGHT			=	142;///< å½•åˆ¶æ–‡ä»¶é«˜åº¦è®¾ç½®ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œå¦‚ï¼š240ï¼‰
+	public static final int BRAC_SO_RECORD_FILENAMERULE		=	143;///< å½•åˆ¶æ–‡ä»¶åå‘½åè§„åˆ™ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼‰
 	
-	public static final int BRAC_SO_CORESDK_TMPDIR			=	14;	///< ÉèÖÃAnyChat Core SDKÁÙÊ±Ä¿Â¼£¨²ÎÊıÎª×Ö·û´®TCHARÀàĞÍ£¬±ØĞëÊÇÍêÕûµÄ¾ø¶ÔÂ·¾¶£©
-	public static final int BRAC_SO_CORESDK_LOADCODEC		=	16;	///< ¼ÓÔØÍâ²¿±à½âÂëÆ÷£¨²ÎÊıÎª×Ö·û´®TCHARÀàĞÍ£¬±ØĞëÊÇÍêÕûµÄ¾ø¶ÔÂ·¾¶£¬°üº¬ÎÄ¼şÃû£¬»ò°üº¬ÎÄ¼şÃûµÄ¾ø¶ÔÂ·¾¶£©
-	public static final int BRAC_SO_CORESDK_USEARMV6LIB		=	17;	///< Ç¿ÖÆÊ¹ÓÃARMv6Ö¸Áî¼¯µÄ¿â£¬androidÆ½Ì¨Ê¹ÓÃ£¨²ÎÊıÎª£ºintĞÍ£¬1Ê¹ÓÃARMv6Ö¸Áî¼¯£¬ 0ÄÚºË×Ô¶¯ÅĞ¶Ï[Ä¬ÈÏ]£©
-	public static final int BRAC_SO_CORESDK_USEHWCODEC		=	18;	///< Ê¹ÓÃÆ½Ì¨ÄÚÖÃÓ²¼ş±à½âÂëÆ÷£¨²ÎÊıÎªintĞÍ£¬0 ²»Ê¹ÓÃÓ²¼ş±à½âÂëÆ÷[Ä¬ÈÏ]  1 Ê¹ÓÃÄÚÖÃÓ²¼ş±à½âÂëÆ÷£©
+	public static final int BRAC_SO_CORESDK_TMPDIR			=	14;	///< è®¾ç½®AnyChat Core SDKä¸´æ—¶ç›®å½•ï¼ˆå‚æ•°ä¸ºå­—ç¬¦ä¸²TCHARç±»å‹ï¼Œå¿…é¡»æ˜¯å®Œæ•´çš„ç»å¯¹è·¯å¾„ï¼‰
+	public static final int BRAC_SO_CORESDK_LOADCODEC		=	16;	///< åŠ è½½å¤–éƒ¨ç¼–è§£ç å™¨ï¼ˆå‚æ•°ä¸ºå­—ç¬¦ä¸²TCHARç±»å‹ï¼Œå¿…é¡»æ˜¯å®Œæ•´çš„ç»å¯¹è·¯å¾„ï¼ŒåŒ…å«æ–‡ä»¶åï¼Œæˆ–åŒ…å«æ–‡ä»¶åçš„ç»å¯¹è·¯å¾„ï¼‰
+	public static final int BRAC_SO_CORESDK_USEARMV6LIB		=	17;	///< å¼ºåˆ¶ä½¿ç”¨ARMv6æŒ‡ä»¤é›†çš„åº“ï¼Œandroidå¹³å°ä½¿ç”¨ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œ1ä½¿ç”¨ARMv6æŒ‡ä»¤é›†ï¼Œ 0å†…æ ¸è‡ªåŠ¨åˆ¤æ–­[é»˜è®¤]ï¼‰
+	public static final int BRAC_SO_CORESDK_USEHWCODEC		=	18;	///< ä½¿ç”¨å¹³å°å†…ç½®ç¡¬ä»¶ç¼–è§£ç å™¨ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ0 ä¸ä½¿ç”¨ç¡¬ä»¶ç¼–è§£ç å™¨[é»˜è®¤]  1 ä½¿ç”¨å†…ç½®ç¡¬ä»¶ç¼–è§£ç å™¨ï¼‰
 	
-	public static final int BRAC_SO_CORESDK_PATH			=	20;	///< ÉèÖÃAnyChat Core SDKÏà¹Ø×é¼şÂ·¾¶£¨²ÎÊıÎª×Ö·û´®TCHARÀàĞÍ£¬±ØĞëÊÇÍêÕûµÄ¾ø¶ÔÂ·¾¶£©
-	public static final int BRAC_SO_CORESDK_DUMPCOREINFO	=	21;	///< Êä³öÄÚºËĞÅÏ¢µ½ÈÕÖ¾ÎÄ¼şÖĞ£¬±ãÓÚ·ÖÎö¹ÊÕÏÔ­Òò£¨²ÎÊıÎª£ºintĞÍ£º1 Êä³ö£©
-	public static final int BRAC_SO_CORESDK_MAINVERSION		=	22;	///< ²éÑ¯SDKÖ÷°æ±¾ºÅºÅ£¨²ÎÊıÎªintĞÍ£©
-	public static final int BRAC_SO_CORESDK_SUBVERSION		=	23;	///< ²éÑ¯SDK´Ó°æ±¾ºÅ£¨²ÎÊıÎªintĞÍ£©
-	public static final int BRAC_SO_CORESDK_BUILDTIME		=	24;	///< ²éÑ¯SDK±àÒëÊ±¼ä£¨²ÎÊıÎª×Ö·û´®TCHARÀàĞÍ£©
-	public static final int BRAC_SO_CORESDK_EXTVIDEOINPUT	=	26;	///< Íâ²¿À©Õ¹ÊÓÆµÊäÈë¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬ 0 ¹Ø±ÕÍâ²¿ÊÓÆµÊäÈë[Ä¬ÈÏ]£¬ 1 ÆôÓÃÍâ²¿ÊÓÆµÊäÈë£©
-	public static final int BRAC_SO_CORESDK_EXTAUDIOINPUT	=	27;	///< Íâ²¿À©Õ¹ÒôÆµÊäÈë¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬ 0 ¹Ø±ÕÍâ²¿ÒôÆµÊäÈë[Ä¬ÈÏ]£¬ 1 ÆôÓÃÍâ²¿ÒôÆµÊäÈë£©
+	public static final int BRAC_SO_CORESDK_PATH			=	20;	///< è®¾ç½®AnyChat Core SDKç›¸å…³ç»„ä»¶è·¯å¾„ï¼ˆå‚æ•°ä¸ºå­—ç¬¦ä¸²TCHARç±»å‹ï¼Œå¿…é¡»æ˜¯å®Œæ•´çš„ç»å¯¹è·¯å¾„ï¼‰
+	public static final int BRAC_SO_CORESDK_DUMPCOREINFO	=	21;	///< è¾“å‡ºå†…æ ¸ä¿¡æ¯åˆ°æ—¥å¿—æ–‡ä»¶ä¸­ï¼Œä¾¿äºåˆ†ææ•…éšœåŸå› ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼š1 è¾“å‡ºï¼‰
+	public static final int BRAC_SO_CORESDK_MAINVERSION		=	22;	///< æŸ¥è¯¢SDKä¸»ç‰ˆæœ¬å·å·ï¼ˆå‚æ•°ä¸ºintå‹ï¼‰
+	public static final int BRAC_SO_CORESDK_SUBVERSION		=	23;	///< æŸ¥è¯¢SDKä»ç‰ˆæœ¬å·ï¼ˆå‚æ•°ä¸ºintå‹ï¼‰
+	public static final int BRAC_SO_CORESDK_BUILDTIME		=	24;	///< æŸ¥è¯¢SDKç¼–è¯‘æ—¶é—´ï¼ˆå‚æ•°ä¸ºå­—ç¬¦ä¸²TCHARç±»å‹ï¼‰
+	public static final int BRAC_SO_CORESDK_EXTVIDEOINPUT	=	26;	///< å¤–éƒ¨æ‰©å±•è§†é¢‘è¾“å…¥æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ 0 å…³é—­å¤–éƒ¨è§†é¢‘è¾“å…¥[é»˜è®¤]ï¼Œ 1 å¯ç”¨å¤–éƒ¨è§†é¢‘è¾“å…¥ï¼‰
+	public static final int BRAC_SO_CORESDK_EXTAUDIOINPUT	=	27;	///< å¤–éƒ¨æ‰©å±•éŸ³é¢‘è¾“å…¥æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ 0 å…³é—­å¤–éƒ¨éŸ³é¢‘è¾“å…¥[é»˜è®¤]ï¼Œ 1 å¯ç”¨å¤–éƒ¨éŸ³é¢‘è¾“å…¥ï¼‰
 	
-	public static final int BRAC_SO_LOCALVIDEO_BITRATECTRL	=	30;	///< ±¾µØÊÓÆµ±àÂëÂëÂÊÉèÖÃ£¨²ÎÊıÎªintĞÍ£¬µ¥Î»bps£¬Í¬·şÎñÆ÷ÅäÖÃ£ºVideoBitrate£©
-	public static final int BRAC_SO_LOCALVIDEO_QUALITYCTRL	=	31;	///< ±¾µØÊÓÆµ±àÂëÖÊÁ¿Òò×Ó¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬Í¬·şÎñÆ÷ÅäÖÃ£ºVideoQuality£©
-	public static final int BRAC_SO_LOCALVIDEO_GOPCTRL		=	32;	///< ±¾µØÊÓÆµ±àÂë¹Ø¼üÖ¡¼ä¸ô¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬Í¬·şÎñÆ÷ÅäÖÃ£ºVideoGOPSize£©
-	public static final int BRAC_SO_LOCALVIDEO_FPSCTRL		=	33;	///< ±¾µØÊÓÆµ±àÂëÖ¡ÂÊ¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬Í¬·şÎñÆ÷ÅäÖÃ£ºVideoFps£©
-	public static final int BRAC_SO_LOCALVIDEO_PRESETCTRL	=	34;	///< ±¾µØÊÓÆµ±àÂëÔ¤Éè²ÎÊı¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬1-5£©
-	public static final int BRAC_SO_LOCALVIDEO_APPLYPARAM	=	35;	///< Ó¦ÓÃ±¾µØÊÓÆµ±àÂë²ÎÊı£¬Ê¹µÃÇ°ÊöĞŞ¸Ä¼´Ê±ÉúĞ§£¨²ÎÊıÎªintĞÍ£º1 Ê¹ÓÃĞÂ²ÎÊı£¬0 Ê¹ÓÃÄ¬ÈÏ²ÎÊı£©
-	public static final int BRAC_SO_LOCALVIDEO_VIDEOSIZEPOLITIC=36;///< ±¾µØÊÓÆµ²É¼¯·Ö±çÂÊ¿ØÖÆ²ßÂÔ£¨²ÎÊıÎªintĞÍ£¬0 ×Ô¶¯ÏòÏÂÖğ¼¶Æ¥Åä[Ä¬ÈÏ]£»1 Ê¹ÓÃ²É¼¯Éè±¸Ä¬ÈÏ·Ö±çÂÊ£©£¬µ±ÅäÖÃµÄ·Ö±çÂÊ²»±»²É¼¯Éè±¸Ö§³ÖÊ±ÓĞĞ§
-	public static final int BRAC_SO_LOCALVIDEO_DEINTERLACE	=	37;	///< ±¾µØÊÓÆµ·´½»Ö¯²ÎÊı¿ØÖÆ£¨²ÎÊıÎªintĞÍ£º 0 ²»½øĞĞ·´½»Ö¯´¦Àí[Ä¬ÈÏ]£»1 ·´½»Ö¯´¦Àí£©£¬µ±ÊäÈëÊÓÆµÔ´ÊÇ¸ôĞĞÉ¨ÃèÔ´£¨ÈçµçÊÓĞÅºÅ£©Ê±Í¨¹ı·´½»Ö¯´¦Àí¿ÉÒÔÌá¸ß»­ÃæÖÊÁ¿
-	public static final int BRAC_SO_LOCALVIDEO_WIDTHCTRL	=	38;	///< ±¾µØÊÓÆµ²É¼¯·Ö±æÂÊ¿í¶È¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬Í¬·şÎñÆ÷ÅäÖÃ£ºVideoWidth£©
-	public static final int BRAC_SO_LOCALVIDEO_HEIGHTCTRL	=	39;	///< ±¾µØÊÓÆµ²É¼¯·Ö±æÂÊ¸ß¶È¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬Í¬·şÎñÆ÷ÅäÖÃ£ºVideoHeight£©
-	public static final int BRAC_SO_LOCALVIDEO_FOCUSCTRL	=	90;	///< ±¾µØÊÓÆµÉãÏñÍ·¶Ô½¹¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬1±íÊ¾×Ô¶¯¶Ô½¹£¬ 0±íÊ¾ÊÖ¶¯¶Ô½¹£©
-	public static final int BRAC_SO_LOCALVIDEO_PIXFMTCTRL	=	91;	///< ±¾µØÊÓÆµ²É¼¯ÓÅÏÈ¸ñÊ½¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬-1±íÊ¾ÖÇÄÜÆ¥Åä£¬·ñÔòÓÅÏÈ²ÉÓÃÖ¸¶¨¸ñÊ½£¬²Î¿¼£ºBRAC_PixelFormat£©
-	public static final int BRAC_SO_LOCALVIDEO_OVERLAY		=	92;	///< ±¾µØÊÓÆµ²ÉÓÃOverlayÄ£Ê½£¨²ÎÊıÎªintĞÍ£¬1±íÊ¾²ÉÓÃOverlayÄ£Ê½£¬ 0±íÊ¾ÆÕÍ¨Ä£Ê½[Ä¬ÈÏ]£©
-	public static final int BRAC_SO_LOCALVIDEO_CODECID		=	93;	///< ±¾µØÊÓÆµ±àÂëÆ÷IDÉèÖÃ£¨²ÎÊıÎªintĞÍ£¬-1±íÊ¾Ä¬ÈÏ£¬Èç¹ûÉèÖÃµÄ±àÂëÆ÷ID²»´æÔÚ£¬ÔòÄÚºË»á²ÉÓÃÄ¬ÈÏµÄ±àÂëÆ÷£©
-	public static final int BRAC_SO_LOCALVIDEO_ROTATECTRL	=	94;	///< ±¾µØÊÓÆµĞı×ª¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬0±íÊ¾²»½øĞĞĞı×ª£¬1±íÊ¾´¹Ö±·­×ª£©
-	public static final int BRAC_SO_LOCALVIDEO_CAPDRIVER	=	95;	///< ±¾µØÊÓÆµ²É¼¯Çı¶¯ÉèÖÃ£¨²ÎÊıÎªintĞÍ£¬0±íÊ¾×Ô¶¯Ñ¡Ôñ[Ä¬ÈÏ]£¬ 1 Video4Linux, 2 DirectShow, 3 Java²É¼¯[AndroidÆ½Ì¨Ê¹ÓÃ]£©
-	public static final int BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA=	96;	///< ĞŞÕıÊÓÆµ²É¼¯ÑÕÉ«Æ«É«£¨²ÎÊıÎªintĞÍ£¬0±íÊ¾¹Ø±Õ[Ä¬ÈÏ]£¬1 ¿ªÆô£©
-	public static final int BRAC_SO_LOCALVIDEO_ORIENTATION	=	97;	///< ±¾µØÊÓÆµÉè±¸·½Ïò£¨²ÎÊıÎª£ºintĞÍ£¬¶¨ÒåÎª³£Á¿£ºANYCHAT_DEVICEORIENTATION_XXXX£©
-	public static final int BRAC_SO_LOCALVIDEO_AUTOROTATION	=	98;	///< ±¾µØÊÓÆµ×Ô¶¯Ğı×ª¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬ 0±íÊ¾¹Ø±Õ£¬ 1 ¿ªÆô[Ä¬ÈÏ]£¬ÊÓÆµĞı×ªÊ±ĞèÒª²Î¿¼±¾µØÊÓÆµÉè±¸·½Ïò²ÎÊı£©
-	public static final int BRAC_SO_LOCALVIDEO_SURFACEROTATION=	99;	///< ÉèÖÃ±¾µØÊÓÆµÔ¤ÀÀÏÔÊ¾Ğı×ª½Ç¶È£¨²ÎÊıÎªintĞÍ£¬½Ç¶È£©
-	public static final int BRAC_SO_LOCALVIDEO_CAMERAFACE	=	100;///< ±¾µØÉãÏñÍ··½Ïò£¨Ç°ÖÃ¡¢ºóÖÃ£©
-	public static final int BRAC_SO_LOCALVIDEO_DEVICEMODE	=	103;///< Éè±¸ÀàĞÍ
+	public static final int BRAC_SO_LOCALVIDEO_BITRATECTRL	=	30;	///< æœ¬åœ°è§†é¢‘ç¼–ç ç ç‡è®¾ç½®ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œå•ä½bpsï¼ŒåŒæœåŠ¡å™¨é…ç½®ï¼šVideoBitrateï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_QUALITYCTRL	=	31;	///< æœ¬åœ°è§†é¢‘ç¼–ç è´¨é‡å› å­æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼ŒåŒæœåŠ¡å™¨é…ç½®ï¼šVideoQualityï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_GOPCTRL		=	32;	///< æœ¬åœ°è§†é¢‘ç¼–ç å…³é”®å¸§é—´éš”æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼ŒåŒæœåŠ¡å™¨é…ç½®ï¼šVideoGOPSizeï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_FPSCTRL		=	33;	///< æœ¬åœ°è§†é¢‘ç¼–ç å¸§ç‡æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼ŒåŒæœåŠ¡å™¨é…ç½®ï¼šVideoFpsï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_PRESETCTRL	=	34;	///< æœ¬åœ°è§†é¢‘ç¼–ç é¢„è®¾å‚æ•°æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ1-5ï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_APPLYPARAM	=	35;	///< åº”ç”¨æœ¬åœ°è§†é¢‘ç¼–ç å‚æ•°ï¼Œä½¿å¾—å‰è¿°ä¿®æ”¹å³æ—¶ç”Ÿæ•ˆï¼ˆå‚æ•°ä¸ºintå‹ï¼š1 ä½¿ç”¨æ–°å‚æ•°ï¼Œ0 ä½¿ç”¨é»˜è®¤å‚æ•°ï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_VIDEOSIZEPOLITIC=36;///< æœ¬åœ°è§†é¢‘é‡‡é›†åˆ†è¾©ç‡æ§åˆ¶ç­–ç•¥ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ0 è‡ªåŠ¨å‘ä¸‹é€çº§åŒ¹é…[é»˜è®¤]ï¼›1 ä½¿ç”¨é‡‡é›†è®¾å¤‡é»˜è®¤åˆ†è¾©ç‡ï¼‰ï¼Œå½“é…ç½®çš„åˆ†è¾©ç‡ä¸è¢«é‡‡é›†è®¾å¤‡æ”¯æŒæ—¶æœ‰æ•ˆ
+	public static final int BRAC_SO_LOCALVIDEO_DEINTERLACE	=	37;	///< æœ¬åœ°è§†é¢‘åäº¤ç»‡å‚æ•°æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼š 0 ä¸è¿›è¡Œåäº¤ç»‡å¤„ç†[é»˜è®¤]ï¼›1 åäº¤ç»‡å¤„ç†ï¼‰ï¼Œå½“è¾“å…¥è§†é¢‘æºæ˜¯éš”è¡Œæ‰«ææºï¼ˆå¦‚ç”µè§†ä¿¡å·ï¼‰æ—¶é€šè¿‡åäº¤ç»‡å¤„ç†å¯ä»¥æé«˜ç”»é¢è´¨é‡
+	public static final int BRAC_SO_LOCALVIDEO_WIDTHCTRL	=	38;	///< æœ¬åœ°è§†é¢‘é‡‡é›†åˆ†è¾¨ç‡å®½åº¦æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼ŒåŒæœåŠ¡å™¨é…ç½®ï¼šVideoWidthï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_HEIGHTCTRL	=	39;	///< æœ¬åœ°è§†é¢‘é‡‡é›†åˆ†è¾¨ç‡é«˜åº¦æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼ŒåŒæœåŠ¡å™¨é…ç½®ï¼šVideoHeightï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_FOCUSCTRL	=	90;	///< æœ¬åœ°è§†é¢‘æ‘„åƒå¤´å¯¹ç„¦æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ1è¡¨ç¤ºè‡ªåŠ¨å¯¹ç„¦ï¼Œ 0è¡¨ç¤ºæ‰‹åŠ¨å¯¹ç„¦ï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_PIXFMTCTRL	=	91;	///< æœ¬åœ°è§†é¢‘é‡‡é›†ä¼˜å…ˆæ ¼å¼æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ-1è¡¨ç¤ºæ™ºèƒ½åŒ¹é…ï¼Œå¦åˆ™ä¼˜å…ˆé‡‡ç”¨æŒ‡å®šæ ¼å¼ï¼Œå‚è€ƒï¼šBRAC_PixelFormatï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_OVERLAY		=	92;	///< æœ¬åœ°è§†é¢‘é‡‡ç”¨Overlayæ¨¡å¼ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ1è¡¨ç¤ºé‡‡ç”¨Overlayæ¨¡å¼ï¼Œ 0è¡¨ç¤ºæ™®é€šæ¨¡å¼[é»˜è®¤]ï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_CODECID		=	93;	///< æœ¬åœ°è§†é¢‘ç¼–ç å™¨IDè®¾ç½®ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ-1è¡¨ç¤ºé»˜è®¤ï¼Œå¦‚æœè®¾ç½®çš„ç¼–ç å™¨IDä¸å­˜åœ¨ï¼Œåˆ™å†…æ ¸ä¼šé‡‡ç”¨é»˜è®¤çš„ç¼–ç å™¨ï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_ROTATECTRL	=	94;	///< æœ¬åœ°è§†é¢‘æ—‹è½¬æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ0è¡¨ç¤ºä¸è¿›è¡Œæ—‹è½¬ï¼Œ1è¡¨ç¤ºå‚ç›´ç¿»è½¬ï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_CAPDRIVER	=	95;	///< æœ¬åœ°è§†é¢‘é‡‡é›†é©±åŠ¨è®¾ç½®ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ0è¡¨ç¤ºè‡ªåŠ¨é€‰æ‹©[é»˜è®¤]ï¼Œ 1 Video4Linux, 2 DirectShow, 3 Javaé‡‡é›†[Androidå¹³å°ä½¿ç”¨]ï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA=	96;	///< ä¿®æ­£è§†é¢‘é‡‡é›†é¢œè‰²åè‰²ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ0è¡¨ç¤ºå…³é—­[é»˜è®¤]ï¼Œ1 å¼€å¯ï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_ORIENTATION	=	97;	///< æœ¬åœ°è§†é¢‘è®¾å¤‡æ–¹å‘ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œå®šä¹‰ä¸ºå¸¸é‡ï¼šANYCHAT_DEVICEORIENTATION_XXXXï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_AUTOROTATION	=	98;	///< æœ¬åœ°è§†é¢‘è‡ªåŠ¨æ—‹è½¬æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ 0è¡¨ç¤ºå…³é—­ï¼Œ 1 å¼€å¯[é»˜è®¤]ï¼Œè§†é¢‘æ—‹è½¬æ—¶éœ€è¦å‚è€ƒæœ¬åœ°è§†é¢‘è®¾å¤‡æ–¹å‘å‚æ•°ï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_SURFACEROTATION=	99;	///< è®¾ç½®æœ¬åœ°è§†é¢‘é¢„è§ˆæ˜¾ç¤ºæ—‹è½¬è§’åº¦ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œè§’åº¦ï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_CAMERAFACE	=	100;///< æœ¬åœ°æ‘„åƒå¤´æ–¹å‘ï¼ˆå‰ç½®ã€åç½®ï¼‰
+	public static final int BRAC_SO_LOCALVIDEO_DEVICEMODE	=	103;///< è®¾å¤‡ç±»å‹
 	
-	public static final int BRAC_SO_NETWORK_P2PPOLITIC		=	40;	///< ±¾µØÍøÂçP2P²ßÂÔ¿ØÖÆ£¨²ÎÊıÎª£ºintĞÍ£º0 ½ûÖ¹±¾µØP2P£¬1 ·şÎñÆ÷¿ØÖÆP2P[Ä¬ÈÏ]£¬2 ÉÏ²ãÓ¦ÓÃ¿ØÖÆP2PÁ¬½Ó£¬3 °´Ğè½¨Á¢P2PÁ¬½Ó£©
-	public static final int BRAC_SO_NETWORK_P2PCONNECT		=	41;	///< ³¢ÊÔÓëÖ¸¶¨ÓÃ»§½¨Á¢P2PÁ¬½Ó£¨²ÎÊıÎªintĞÍ£¬±íÊ¾Ä¿±êÓÃ»§ID£©£¬Á¬½Ó½¨Á¢³É¹¦ºó£¬»áÍ¨¹ıÏûÏ¢·´À¡¸øÉÏ²ãÓ¦ÓÃ£¬P2P¿ØÖÆ²ßÂÔ=2Ê±ÓĞĞ§
-	public static final int BRAC_SO_NETWORK_P2PBREAK		=	42;	///< ¶Ï¿ªÓëÖ¸¶¨ÓÃ»§µÄP2PÁ¬½Ó£¨²ÎÊıÎªintĞÍ£¬±íÊ¾Ä¿±êÓÃ»§ID£©[Ôİ²»Ö§³Ö£¬±£Áô]
-	public static final int BRAC_SO_NETWORK_TCPSERVICEPORT	=	43;	///< ÉèÖÃ±¾µØTCP·şÎñ¶Ë¿Ú£¨²ÎÊıÎªintĞÍ£©£¬Á¬½Ó·şÎñÆ÷Ö®Ç°ÉèÖÃÓĞĞ§
-	public static final int BRAC_SO_NETWORK_UDPSERVICEPORT	=	44;	///< ÉèÖÃ±¾µØUDP·şÎñ¶Ë¿Ú£¨²ÎÊıÎªintĞÍ£©£¬Á¬½Ó·şÎñÆ÷Ö®Ç°ÉèÖÃÓĞĞ§
-	public static final int BRAC_SO_NETWORK_MULTICASTPOLITIC=	45;	///< ×é²¥²ßÂÔ¿ØÖÆ£¨²ÎÊıÎªintĞÍ£º0 Ö´ĞĞ·şÎñÆ÷Â·ÓÉ²ßÂÔ£¬½ûÖ¹×é²¥·¢ËÍ[Ä¬ÈÏ]£¬ 1 ºöÂÔ·şÎñÆ÷Â·ÓÉ²ßÂÔ£¬Ö»Ïò×é²¥×é¹ã²¥Ã½ÌåÁ÷£¬ 2 Ö´ĞĞ·şÎñÆ÷Â·ÓÉ²ßÂÔ£¬Í¬Ê±×é²¥£©
-	public static final int BRAC_SO_NETWORK_TRANSBUFMAXBITRATE=	46;	///< ´«Êä»º³åÇø¡¢ÎÄ¼ş×î´óÂëÂÊ¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬0 ²»ÏŞÖÆ£¬ÒÔ×î¿ìËÙÂÊ´«Êä[Ä¬ÈÏ]£¬ ·ñÔò±íÊ¾ÏŞÖÆÂëÂÊ£¬µ¥Î»Îª£ºbps£©
-	public static final int BRAC_SO_NETWORK_AUTORECONNECT	=	47;	///< ÍøÂçµôÏß×Ô¶¯ÖØÁ¬¹¦ÄÜ¿ØÖÆ£¨²ÎÊıÎªintĞÍ£¬0 ¹Ø±Õ£¬ 1 ¿ªÆô[Ä¬ÈÏ]£©
+	public static final int BRAC_SO_NETWORK_P2PPOLITIC		=	40;	///< æœ¬åœ°ç½‘ç»œP2Pç­–ç•¥æ§åˆ¶ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼š0 ç¦æ­¢æœ¬åœ°P2Pï¼Œ1 æœåŠ¡å™¨æ§åˆ¶P2P[é»˜è®¤]ï¼Œ2 ä¸Šå±‚åº”ç”¨æ§åˆ¶P2Pè¿æ¥ï¼Œ3 æŒ‰éœ€å»ºç«‹P2Pè¿æ¥ï¼‰
+	public static final int BRAC_SO_NETWORK_P2PCONNECT		=	41;	///< å°è¯•ä¸æŒ‡å®šç”¨æˆ·å»ºç«‹P2Pè¿æ¥ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œè¡¨ç¤ºç›®æ ‡ç”¨æˆ·IDï¼‰ï¼Œè¿æ¥å»ºç«‹æˆåŠŸåï¼Œä¼šé€šè¿‡æ¶ˆæ¯åé¦ˆç»™ä¸Šå±‚åº”ç”¨ï¼ŒP2Pæ§åˆ¶ç­–ç•¥=2æ—¶æœ‰æ•ˆ
+	public static final int BRAC_SO_NETWORK_P2PBREAK		=	42;	///< æ–­å¼€ä¸æŒ‡å®šç”¨æˆ·çš„P2Pè¿æ¥ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œè¡¨ç¤ºç›®æ ‡ç”¨æˆ·IDï¼‰[æš‚ä¸æ”¯æŒï¼Œä¿ç•™]
+	public static final int BRAC_SO_NETWORK_TCPSERVICEPORT	=	43;	///< è®¾ç½®æœ¬åœ°TCPæœåŠ¡ç«¯å£ï¼ˆå‚æ•°ä¸ºintå‹ï¼‰ï¼Œè¿æ¥æœåŠ¡å™¨ä¹‹å‰è®¾ç½®æœ‰æ•ˆ
+	public static final int BRAC_SO_NETWORK_UDPSERVICEPORT	=	44;	///< è®¾ç½®æœ¬åœ°UDPæœåŠ¡ç«¯å£ï¼ˆå‚æ•°ä¸ºintå‹ï¼‰ï¼Œè¿æ¥æœåŠ¡å™¨ä¹‹å‰è®¾ç½®æœ‰æ•ˆ
+	public static final int BRAC_SO_NETWORK_MULTICASTPOLITIC=	45;	///< ç»„æ’­ç­–ç•¥æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼š0 æ‰§è¡ŒæœåŠ¡å™¨è·¯ç”±ç­–ç•¥ï¼Œç¦æ­¢ç»„æ’­å‘é€[é»˜è®¤]ï¼Œ 1 å¿½ç•¥æœåŠ¡å™¨è·¯ç”±ç­–ç•¥ï¼Œåªå‘ç»„æ’­ç»„å¹¿æ’­åª’ä½“æµï¼Œ 2 æ‰§è¡ŒæœåŠ¡å™¨è·¯ç”±ç­–ç•¥ï¼ŒåŒæ—¶ç»„æ’­ï¼‰
+	public static final int BRAC_SO_NETWORK_TRANSBUFMAXBITRATE=	46;	///< ä¼ è¾“ç¼“å†²åŒºã€æ–‡ä»¶æœ€å¤§ç ç‡æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ0 ä¸é™åˆ¶ï¼Œä»¥æœ€å¿«é€Ÿç‡ä¼ è¾“[é»˜è®¤]ï¼Œ å¦åˆ™è¡¨ç¤ºé™åˆ¶ç ç‡ï¼Œå•ä½ä¸ºï¼šbpsï¼‰
+	public static final int BRAC_SO_NETWORK_AUTORECONNECT	=	47;	///< ç½‘ç»œæ‰çº¿è‡ªåŠ¨é‡è¿åŠŸèƒ½æ§åˆ¶ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ0 å…³é—­ï¼Œ 1 å¼€å¯[é»˜è®¤]ï¼‰
 
-	public static final int BRAC_SO_PROXY_FUNCTIONCTRL		=	50;	///< ±¾µØÓÃ»§´úÀí¹¦ÄÜ¿ØÖÆ£¬£¨²ÎÊıÎª£ºintĞÍ£¬1Æô¶¯´úÀí£¬0¹Ø±Õ´úÀí[Ä¬ÈÏ]£©
-	public static final int BRAC_SO_PROXY_VIDEOCTRL			=	51;	///< ±¾µØÓÃ»§´úÀíÊÓÆµ¿ØÖÆ£¬½«±¾µØÊÓÆµ±äÎªÖ¸¶¨ÓÃ»§µÄÊÓÆµ¶ÔÍâ·¢²¼£¨²ÎÊıÎªintĞÍ£¬±íÊ¾ÆäËüÓÃ»§µÄuserid£©
-	public static final int BRAC_SO_PROXY_AUDIOCTRL			=	52;	///< ±¾µØÓÃ»§´úÀíÒôÆµ¿ØÖÆ£¬½«±¾µØÒôÆµ±äÎªÖ¸¶¨ÓÃ»§µÄÒôÆµ¶ÔÍâ·¢²¼£¨²ÎÊıÍ¬BRAC_SO_PROXY_VIDEOCTRL£©
+	public static final int BRAC_SO_PROXY_FUNCTIONCTRL		=	50;	///< æœ¬åœ°ç”¨æˆ·ä»£ç†åŠŸèƒ½æ§åˆ¶ï¼Œï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œ1å¯åŠ¨ä»£ç†ï¼Œ0å…³é—­ä»£ç†[é»˜è®¤]ï¼‰
+	public static final int BRAC_SO_PROXY_VIDEOCTRL			=	51;	///< æœ¬åœ°ç”¨æˆ·ä»£ç†è§†é¢‘æ§åˆ¶ï¼Œå°†æœ¬åœ°è§†é¢‘å˜ä¸ºæŒ‡å®šç”¨æˆ·çš„è§†é¢‘å¯¹å¤–å‘å¸ƒï¼ˆå‚æ•°ä¸ºintå‹ï¼Œè¡¨ç¤ºå…¶å®ƒç”¨æˆ·çš„useridï¼‰
+	public static final int BRAC_SO_PROXY_AUDIOCTRL			=	52;	///< æœ¬åœ°ç”¨æˆ·ä»£ç†éŸ³é¢‘æ§åˆ¶ï¼Œå°†æœ¬åœ°éŸ³é¢‘å˜ä¸ºæŒ‡å®šç”¨æˆ·çš„éŸ³é¢‘å¯¹å¤–å‘å¸ƒï¼ˆå‚æ•°åŒBRAC_SO_PROXY_VIDEOCTRLï¼‰
 
-	public static final int BRAC_SO_STREAM_BUFFERTIME		=	60;	///< Á÷»º³åÊ±¼ä£¨²ÎÊıÎªintĞÍ£¬µ¥Î»£ººÁÃë£¬È¡Öµ·¶Î§£º500 ~ 5000£¬Ä¬ÈÏ£º800£©
-	public static final int BRAC_SO_STREAM_SMOOTHPLAYMODE	=	61;	///< Æ½»¬²¥·ÅÄ£Ê½£¨²ÎÊıÎªintĞÍ£¬0 ¹Ø±Õ[Ä¬ÈÏ], 1 ´ò¿ª£©£¬´ò¿ª×´Ì¬ÏÂÓöµ½ÊÓÆµ¶ªÖ¡Ê±»á¼ÌĞø²¥·Å£¨¿ÉÄÜ³öÏÖÂíÈü¿Ë£©£¬²»»á¿¨×¡
+	public static final int BRAC_SO_STREAM_BUFFERTIME		=	60;	///< æµç¼“å†²æ—¶é—´ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œå•ä½ï¼šæ¯«ç§’ï¼Œå–å€¼èŒƒå›´ï¼š500 ~ 5000ï¼Œé»˜è®¤ï¼š800ï¼‰
+	public static final int BRAC_SO_STREAM_SMOOTHPLAYMODE	=	61;	///< å¹³æ»‘æ’­æ”¾æ¨¡å¼ï¼ˆå‚æ•°ä¸ºintå‹ï¼Œ0 å…³é—­[é»˜è®¤], 1 æ‰“å¼€ï¼‰ï¼Œæ‰“å¼€çŠ¶æ€ä¸‹é‡åˆ°è§†é¢‘ä¸¢å¸§æ—¶ä¼šç»§ç»­æ’­æ”¾ï¼ˆå¯èƒ½å‡ºç°é©¬èµ›å…‹ï¼‰ï¼Œä¸ä¼šå¡ä½
 	
-	public static final int BRAC_SO_VIDEOSHOW_MODECTRL		=	80;	///< ÊÓÆµÏÔÊ¾Ä£Ê½¿ØÖÆ£¨²ÎÊıÎª£ºintĞÍ£¬0 µ¥»­ÃæÏÔÊ¾£¬1 ÊÓÆµµü¼ÓÏÔÊ¾£©
-	public static final int BRAC_SO_VIDEOSHOW_SETPRIMARYUSER=	81;	///< ÉèÖÃÖ÷ÏÔÊ¾ÓÃ»§±àºÅ£¨²ÎÊıÎª£ºintĞÍ£¬ÓÃ»§IDºÅ£©
-	public static final int BRAC_SO_VIDEOSHOW_SETOVERLAYUSER=	82;	///< ÉèÖÃµü¼ÓÏÔÊ¾ÓÃ»§±àºÅ£¨²ÎÊıÎª£ºintĞÍ£¬ÓÃ»§IDºÅ£©
-	public static final int BRAC_SO_VIDEOSHOW_DRIVERCTRL	=	83;	///< ÊÓÆµÏÔÊ¾Çı¶¯¿ØÖÆ£¨²ÎÊıÎª£ºintĞÍ£¬0 Ä¬ÈÏÇı¶¯£¬ 1 Windows DirectShow£¬2 Windows GDI£¬3 SDL, 4 Android2X, 5 Android Java£©
-	public static final int BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER =	84;	///< ÊÓÆµÊı¾İ¾­¹ıGPUÖ±½ÓäÖÈ¾£¬½«½âÂëºóµÄÊÓÆµÊı¾İÖ±½Ó´«Êäµ½GPUµÄÎïÀíµØÖ·£¨²ÎÊıÎª£ºintĞÍ£¬ 0 ¹Ø±Õ[Ä¬ÈÏ]£¬ 1 ´ò¿ª£©£¬ÓëÓ²¼şÆ½Ì¨Ïà¹Ø
+	public static final int BRAC_SO_VIDEOSHOW_MODECTRL		=	80;	///< è§†é¢‘æ˜¾ç¤ºæ¨¡å¼æ§åˆ¶ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œ0 å•ç”»é¢æ˜¾ç¤ºï¼Œ1 è§†é¢‘è¿­åŠ æ˜¾ç¤ºï¼‰
+	public static final int BRAC_SO_VIDEOSHOW_SETPRIMARYUSER=	81;	///< è®¾ç½®ä¸»æ˜¾ç¤ºç”¨æˆ·ç¼–å·ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œç”¨æˆ·IDå·ï¼‰
+	public static final int BRAC_SO_VIDEOSHOW_SETOVERLAYUSER=	82;	///< è®¾ç½®è¿­åŠ æ˜¾ç¤ºç”¨æˆ·ç¼–å·ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œç”¨æˆ·IDå·ï¼‰
+	public static final int BRAC_SO_VIDEOSHOW_DRIVERCTRL	=	83;	///< è§†é¢‘æ˜¾ç¤ºé©±åŠ¨æ§åˆ¶ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œ0 é»˜è®¤é©±åŠ¨ï¼Œ 1 Windows DirectShowï¼Œ2 Windows GDIï¼Œ3 SDL, 4 Android2X, 5 Android Javaï¼‰
+	public static final int BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER =	84;	///< è§†é¢‘æ•°æ®ç»è¿‡GPUç›´æ¥æ¸²æŸ“ï¼Œå°†è§£ç åçš„è§†é¢‘æ•°æ®ç›´æ¥ä¼ è¾“åˆ°GPUçš„ç‰©ç†åœ°å€ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œ 0 å…³é—­[é»˜è®¤]ï¼Œ 1 æ‰“å¼€ï¼‰ï¼Œä¸ç¡¬ä»¶å¹³å°ç›¸å…³
 
-	public static final int BRAC_SO_CORESDK_DEVICEMODE		=	130;///< Éè±¸Ä£Ê½¿ØÖÆ£¨¾ÖÓòÍøÉè±¸Ö®¼ä¿ÉÒÔ»¥ÏàÍ¨ĞÅ£¬²»ÒÀÀµ·şÎñÆ÷£»²ÎÊıÎªintĞÍ£¬0 ¹Ø±Õ[Ä¬ÈÏ]£¬1 ¿ªÆô£©
-	public static final int BRAC_SO_CORESDK_SCREENCAMERACTRL=	131;///< ×ÀÃæ¹²Ïí¹¦ÄÜ¿ØÖÆ£¨²ÎÊıÎª£ºintĞÍ£¬ 0 ¹Ø±Õ[Ä¬ÈÏ]£¬ 1 ¿ªÆô£©
-	public static final int BRAC_SO_CORESDK_DATAENCRYPTION	=	132;///< Êı¾İ¼ÓÃÜ¿ØÖÆ£¨²ÎÊıÎª£ºintĞÍ£¬ 0 ¹Ø±Õ[Ä¬ÈÏ]£¬ 1 ¿ªÆô£©
+	public static final int BRAC_SO_CORESDK_DEVICEMODE		=	130;///< è®¾å¤‡æ¨¡å¼æ§åˆ¶ï¼ˆå±€åŸŸç½‘è®¾å¤‡ä¹‹é—´å¯ä»¥äº’ç›¸é€šä¿¡ï¼Œä¸ä¾èµ–æœåŠ¡å™¨ï¼›å‚æ•°ä¸ºintå‹ï¼Œ0 å…³é—­[é»˜è®¤]ï¼Œ1 å¼€å¯ï¼‰
+	public static final int BRAC_SO_CORESDK_SCREENCAMERACTRL=	131;///< æ¡Œé¢å…±äº«åŠŸèƒ½æ§åˆ¶ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œ 0 å…³é—­[é»˜è®¤]ï¼Œ 1 å¼€å¯ï¼‰
+	public static final int BRAC_SO_CORESDK_DATAENCRYPTION	=	132;///< æ•°æ®åŠ å¯†æ§åˆ¶ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œ 0 å…³é—­[é»˜è®¤]ï¼Œ 1 å¼€å¯ï¼‰
 	
-	// ´«ÊäÈÎÎñĞÅÏ¢²ÎÊı¶¨Òå
-	public static final int BRAC_TRANSTASK_PROGRESS			=	1;	///< ´«ÊäÈÎÎñ½ø¶È²éÑ¯£¨²ÎÊıÎª£ºintĞÍ£¨0 ~ 100£©£©
-	public static final int BRAC_TRANSTASK_BITRATE			=	2;	///< ´«ÊäÈÎÎñµ±Ç°´«ÊäÂëÂÊ£¨²ÎÊıÎª£ºintĞÍ£¬µ¥Î»£ºbps£©
-	public static final int BRAC_TRANSTASK_STATUS			=	3;	///< ´«ÊäÈÎÎñµ±Ç°×´Ì¬£¨²ÎÊıÎª£ºintĞÍ£©
-
-
-	// Â¼Ïñ¹¦ÄÜ±êÖ¾¶¨Òå£¨API£ºStreamRecordCtrl´«Èë²ÎÊı£¬Ä¿Ç°AndroidÆ½Ì¨ÔİÊ±Ö»Ö§³Ö·şÎñÆ÷¶ËÂ¼ÖÆ£©
-	public static final int BRAC_RECORD_FLAGS_VIDEO			=	0x00000001;	///< Â¼ÖÆÊÓÆµ
-	public static final int BRAC_RECORD_FLAGS_AUDIO			=	0x00000002;	///< Â¼ÖÆÒôÆµ
-	public static final int BRAC_RECORD_FLAGS_SERVER		=	0x00000004;	///< ·şÎñÆ÷¶ËÂ¼ÖÆ
-	public static final int BRAC_RECORD_FLAGS_MIXAUDIO		=	0x00000010;	///< Â¼ÖÆÒôÆµÊ±£¬½«ÆäËüÈËµÄÉùÒô»ìÒôºóÂ¼ÖÆ
-	public static final int BRAC_RECORD_FLAGS_MIXVIDEO		=	0x00000020;	///< Â¼ÖÆÊÓÆµÊ±£¬½«ÆäËüÈËµÄÊÓÆµµü¼ÓºóÂ¼ÖÆ£¨»­ÖĞ»­Ä£Ê½£©
-	public static final int BRAC_RECORD_FLAGS_ABREAST		=	0x00000100;	///< Â¼ÖÆÊÓÆµÊ±£¬½«ÆäËüÈËµÄÊÓÆµ²¢ÁĞÂ¼ÖÆ
-	public static final int BRAC_RECORD_FLAGS_STEREO		=	0x00000200;	///< Â¼ÖÆÒôÆµÊ±£¬½«ÆäËüÈËµÄÉùÒô»ìºÏÎªÁ¢ÌåÉùºóÂ¼ÖÆ
+	// ä¼ è¾“ä»»åŠ¡ä¿¡æ¯å‚æ•°å®šä¹‰
+	public static final int BRAC_TRANSTASK_PROGRESS			=	1;	///< ä¼ è¾“ä»»åŠ¡è¿›åº¦æŸ¥è¯¢ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼ˆ0 ~ 100ï¼‰ï¼‰
+	public static final int BRAC_TRANSTASK_BITRATE			=	2;	///< ä¼ è¾“ä»»åŠ¡å½“å‰ä¼ è¾“ç ç‡ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼Œå•ä½ï¼šbpsï¼‰
+	public static final int BRAC_TRANSTASK_STATUS			=	3;	///< ä¼ è¾“ä»»åŠ¡å½“å‰çŠ¶æ€ï¼ˆå‚æ•°ä¸ºï¼šintå‹ï¼‰
 
 
-	// ÓÃ»§×´Ì¬±êÖ¾¶¨Òå£¨API£ºBRAC_QueryUserState ´«Èë²ÎÊı£©
-	public static final int BRAC_USERSTATE_CAMERA			=	1;	///< ÓÃ»§ÉãÏñÍ·×´Ì¬£¨²ÎÊıÎªDWORDĞÍ£©
-	public static final int BRAC_USERSTATE_HOLDMIC			=	2;	///< ÓÃ»§ÒôÆµÉè±¸×´Ì¬£¨²ÎÊıÎªDWORDĞÍ£¬·µ»ØÖµ£º0 ÒôÆµ²É¼¯¹Ø±Õ£¬ 1 ÒôÆµ²É¼¯¿ªÆô£©
-	public static final int BRAC_USERSTATE_SPEAKVOLUME		=	3;	///< ÓÃ»§µ±Ç°Ëµ»°ÒôÁ¿£¨²ÎÊıÎªDOUBLEÀàĞÍ£¨0.0 ~ 100.0£©£©
-	public static final int BRAC_USERSTATE_RECORDING		=	4;	///< ÓÃ»§Â¼Ïñ£¨Òô£©×´Ì¬£¨²ÎÊıÎªDWORDĞÍ£©
-	public static final int BRAC_USERSTATE_LEVEL			=	5;	///< ÓÃ»§¼¶±ğ£¨²ÎÊıÎªDWORDĞÍ£©
-	public static final int BRAC_USERSTATE_NICKNAME			=	6;	///< ÓÃ»§êÇ³Æ£¨²ÎÊıÎª×Ö·û´®TCHARÀàĞÍ£©
-	public static final int BRAC_USERSTATE_LOCALIP			=	7;	///< ÓÃ»§±¾µØIPµØÖ·£¨ÄÚÍø£¬²ÎÊıÎª×Ö·û´®TCHARÀàĞÍ£©
-	public static final int BRAC_USERSTATE_INTERNETIP		=	8;	///< ÓÃ»§»¥ÁªÍøIPµØÖ·£¨²ÎÊıÎª×Ö·û´®TCHARÀàĞÍ£©
-	public static final int BRAC_USERSTATE_VIDEOBITRATE		=	9;	///< ÓÃ»§µ±Ç°µÄÊÓÆµÂëÂÊ£¨²ÎÊıÎªDWORDÀàĞÍ£¬Bps£©
-	public static final int BRAC_USERSTATE_AUDIOBITRATE		=	10;	///< ÓÃ»§µ±Ç°µÄÒôÆµÂëÂÊ£¨²ÎÊıÎªDWORDÀàĞÍ£¬Bps£©
-	public static final int BRAC_USERSTATE_P2PCONNECT		=	11;	///< ²éÑ¯±¾µØÓÃ»§ÓëÖ¸¶¨ÓÃ»§µÄµ±Ç°P2PÁ¬½Ó×´Ì¬£¨²ÎÊıÎªDWORDÀàĞÍ£¬·µ»ØÖµ£º0 P2P²»Í¨£¬ 1 P2PÁ¬½Ó³É¹¦[TCP]£¬2 P2PÁ¬½Ó³É¹¦[UDP]£¬3 P2PÁ¬½Ó³É¹¦[TCP¡¢UDP]£©
-	public static final int BRAC_USERSTATE_NETWORKSTATUS	=	12;	///< ²éÑ¯Ö¸¶¨ÓÃ»§µÄÍøÂç×´Ì¬£¨²ÎÊıÎªDWORDÀàĞÍ£¬·µ»ØÖµ£º0 ÓÅÁ¼£¬1 ½ÏºÃ£¬2 Ò»°ã£¬3 ½Ï²î£¬4 ·Ç³£²î£©£¬×¢£º²éÑ¯¼ä¸ôĞèÒª>1s
-	public static final int BRAC_USERSTATE_VIDEOSIZE		=	13;	///< ²éÑ¯Ö¸¶¨ÓÃ»§µÄÊÓÆµ·Ö±æÂÊ£¨²ÎÊıÎªDWORDÀàĞÍ£¬·µ»ØÖµ£ºµÍ16Î»±íÊ¾¿í¶È£¬¸ß16Î»±íÊ¾¸ß¶È£©
-	public static final int BRAC_USERSTATE_PACKLOSSRATE		=	14;	///< ²éÑ¯Ö¸¶¨ÓÃ»§µÄÍøÂçÁ÷Ã½ÌåÊı¾İ¶ª°üÂÊ£¨²ÎÊıÎªDWORDÀàĞÍ£¬·µ»ØÖµ£º0 - 100£¬Èç£º·µ»ØÖµÎª5£¬±íÊ¾¶ª°üÂÊÎª5%£©
-	public static final int BRAC_USERSTATE_DEVICETYPE		=	15;	///< ²éÑ¯Ö¸¶¨ÓÃ»§µÄÖÕ¶ËÀàĞÍ£¨²ÎÊıÎªDWORDÀàĞÍ£¬·µ»ØÖµ£º0 Unknow£¬ 1 Windows£¬2 Android£¬3 iOS£¬4 Web£¬5 Linux£¬6 Mac£¬7 Win Phone£¬8 WinCE£©
-	public static final int BRAC_USERSTATE_SELFUSERSTATUS	=	16;	///< ²éÑ¯±¾µØÓÃ»§µÄµ±Ç°×´Ì¬£¨²ÎÊıÎªDWORDÀàĞÍ£¬·µ»ØÖµ£º0 Unknow£¬1 Connected£¬2 Logined£¬3 In Room£¬4 Logouted£¬5 Link Closed£©
-	public static final int BRAC_USERSTATE_SELFUSERID		=	17;	///< ²éÑ¯±¾µØÓÃ»§µÄID£¨²ÎÊıÎªDWORDÀàĞÍ£¬ÈôÓÃ»§µÇÂ¼³É¹¦£¬·µ»ØÓÃ»§Êµ¼ÊµÄuserid£¬·ñÔò·µ»Ø-1£©
-	public static final int BRAC_USERSTATE_VIDEOROTATION	=	18;	///< ²éÑ¯Ö¸¶¨ÓÃ»§µÄµ±Ç°ÊÓÆµĞı×ª½Ç¶È£¨²ÎÊıÎªDWORDÀàĞÍ£¬·µ»Ø½Ç¶ÈÖµ£©
-	public static final int BRAC_USERSTATE_VIDEOMIRRORED	=	19;	///< ²éÑ¯Ö¸¶¨ÓÃ»§µÄÊÓÆµÊÇ·ñĞèÒª¾µÏñ·­×ª
-	
-	// ·¿¼ä×´Ì¬±êÖ¾¶¨Òå£¨API£ºBRAC_QueryRoomState ´«Èë²ÎÊı£©
-	public static final int BRAC_ROOMSTATE_ROOMNAME			=	1;	///< ·¿¼äÃû³Æ£¨²ÎÊıÎª×Ö·û´®TCHARÀàĞÍ£©
-	public static final int BRAC_ROOMSTATE_ONLINEUSERS		=	2;	///< ·¿¼äÔÚÏßÓÃ»§Êı£¨²ÎÊıÎªDWORDĞÍ£¬²»°üº¬×Ô¼º£©
-	
-	// ÊÓÆµºô½ĞÊÂ¼şÀàĞÍ¶¨Òå£¨API£ºBRAC_VideoCallControl ´«Èë²ÎÊı¡¢VideoCallEvent»Øµ÷²ÎÊı£©
-	public static final int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	///< ºô½ĞÇëÇó
-	public static final int BRAC_VIDEOCALL_EVENT_REPLY		=	2;	///< ºô½ĞÇëÇó»Ø¸´
-	public static final int BRAC_VIDEOCALL_EVENT_START		=	3;	///< ÊÓÆµºô½Ğ»á»°¿ªÊ¼ÊÂ¼ş
-	public static final int BRAC_VIDEOCALL_EVENT_FINISH		=	4;	///< ¹Ò¶Ï£¨½áÊø£©ºô½Ğ»á»°
-	
-	// ÊÓÆµºô½Ğ±êÖ¾¶¨Òå£¨API£ºBRAC_VideoCallControl ´«Èë²ÎÊı£©
-	public static final int BRAC_VIDEOCALL_FLAGS_AUDIO		= 0x01;	///< ÓïÒôÍ¨»°
-	public static final int BRAC_VIDEOCALL_FLAGS_VIDEO		= 0x02;	///< ÊÓÆµÍ¨»°
-	public static final int BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	= 0x10;	///< ½ûÖ¹Ô´£¨ºô½Ğ¶Ë£©ÒôÆµ
-	public static final int BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	= 0x20;	///< ½ûÖ¹Ô´£¨ºô½Ğ¶Ë£©ÊÓÆµ
-	public static final int BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	= 0x40;	///< ½ûÖ¹Ä¿±ê£¨±»ºô½Ğ¶Ë£©ÒôÆµ
-	public static final int BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	= 0x80;	///< ½ûÖ¹Ä¿±ê£¨±»ºô½Ğ¶Ë£©ÊÓÆµ
-	
-	// ÊÓÆµ·½ÏòĞŞÕı±êÖ¾¶¨Òå
-	public static final int BRAC_ROTATION_FLAGS_MIRRORED	= 0x1000;///< Í¼ÏñĞèÒª¾µÏñ·­×ª
-	public static final int BRAC_ROTATION_FLAGS_ROTATION90	= 0x2000;///< Ë³Ê±ÕëĞı×ª90¶È
-	public static final int BRAC_ROTATION_FLAGS_ROTATION180	= 0x4000;///< Ë³Ê±ÕëĞı×ª180¶È
-	public static final int BRAC_ROTATION_FLAGS_ROTATION270	= 0x8000;///< Ë³Ê±ÕëĞı×ª270¶È
+	// å½•åƒåŠŸèƒ½æ ‡å¿—å®šä¹‰ï¼ˆAPIï¼šStreamRecordCtrlä¼ å…¥å‚æ•°ï¼Œç›®å‰Androidå¹³å°æš‚æ—¶åªæ”¯æŒæœåŠ¡å™¨ç«¯å½•åˆ¶ï¼‰
+	public static final int BRAC_RECORD_FLAGS_VIDEO			=	0x00000001;	///< å½•åˆ¶è§†é¢‘
+	public static final int BRAC_RECORD_FLAGS_AUDIO			=	0x00000002;	///< å½•åˆ¶éŸ³é¢‘
+	public static final int BRAC_RECORD_FLAGS_SERVER		=	0x00000004;	///< æœåŠ¡å™¨ç«¯å½•åˆ¶
+	public static final int BRAC_RECORD_FLAGS_MIXAUDIO		=	0x00000010;	///< å½•åˆ¶éŸ³é¢‘æ—¶ï¼Œå°†å…¶å®ƒäººçš„å£°éŸ³æ··éŸ³åå½•åˆ¶
+	public static final int BRAC_RECORD_FLAGS_MIXVIDEO		=	0x00000020;	///< å½•åˆ¶è§†é¢‘æ—¶ï¼Œå°†å…¶å®ƒäººçš„è§†é¢‘è¿­åŠ åå½•åˆ¶ï¼ˆç”»ä¸­ç”»æ¨¡å¼ï¼‰
+	public static final int BRAC_RECORD_FLAGS_ABREAST		=	0x00000100;	///< å½•åˆ¶è§†é¢‘æ—¶ï¼Œå°†å…¶å®ƒäººçš„è§†é¢‘å¹¶åˆ—å½•åˆ¶
+	public static final int BRAC_RECORD_FLAGS_STEREO		=	0x00000200;	///< å½•åˆ¶éŸ³é¢‘æ—¶ï¼Œå°†å…¶å®ƒäººçš„å£°éŸ³æ··åˆä¸ºç«‹ä½“å£°åå½•åˆ¶
+	public static final int BRAC_RECORD_FLAGS_STREAM	    =   0x00001000;	///< å¯¹è§†é¢‘æµè¿›è¡Œå½•åˆ¶ï¼ˆæ•ˆç‡é«˜ï¼Œä½†å¯èƒ½å­˜åœ¨è§†é¢‘æ–¹å‘æ—‹è½¬çš„é—®é¢˜ï¼‰
 
-	// ÓÃ»§ĞÅÏ¢¿ØÖÆÀàĞÍ¶¨Òå£¨API£ºBRAC_UserInfoControl ´«Èë²ÎÊı£©
-	public static final int BRAC_USERINFO_CTRLCODE_ROTATION	=	8;	///< ÈÃÖ¸¶¨µÄÓÃ»§ÊÓÆµÔÚÏÔÊ¾Ê±Ğı×ª£¬wParamÎªĞı×ª½Ç¶È²ÎÊı
+
+
+
+
+
+	// ç”¨æˆ·çŠ¶æ€æ ‡å¿—å®šä¹‰ï¼ˆAPIï¼šBRAC_QueryUserState ä¼ å…¥å‚æ•°ï¼‰
+	public static final int BRAC_USERSTATE_CAMERA			=	1;	///< ç”¨æˆ·æ‘„åƒå¤´çŠ¶æ€ï¼ˆå‚æ•°ä¸ºDWORDå‹ï¼‰
+	public static final int BRAC_USERSTATE_HOLDMIC			=	2;	///< ç”¨æˆ·éŸ³é¢‘è®¾å¤‡çŠ¶æ€ï¼ˆå‚æ•°ä¸ºDWORDå‹ï¼Œè¿”å›å€¼ï¼š0 éŸ³é¢‘é‡‡é›†å…³é—­ï¼Œ 1 éŸ³é¢‘é‡‡é›†å¼€å¯ï¼‰
+	public static final int BRAC_USERSTATE_SPEAKVOLUME		=	3;	///< ç”¨æˆ·å½“å‰è¯´è¯éŸ³é‡ï¼ˆå‚æ•°ä¸ºDOUBLEç±»å‹ï¼ˆ0.0 ~ 100.0ï¼‰ï¼‰
+	public static final int BRAC_USERSTATE_RECORDING		=	4;	///< ç”¨æˆ·å½•åƒï¼ˆéŸ³ï¼‰çŠ¶æ€ï¼ˆå‚æ•°ä¸ºDWORDå‹ï¼‰
+	public static final int BRAC_USERSTATE_LEVEL			=	5;	///< ç”¨æˆ·çº§åˆ«ï¼ˆå‚æ•°ä¸ºDWORDå‹ï¼‰
+	public static final int BRAC_USERSTATE_NICKNAME			=	6;	///< ç”¨æˆ·æ˜µç§°ï¼ˆå‚æ•°ä¸ºå­—ç¬¦ä¸²TCHARç±»å‹ï¼‰
+	public static final int BRAC_USERSTATE_LOCALIP			=	7;	///< ç”¨æˆ·æœ¬åœ°IPåœ°å€ï¼ˆå†…ç½‘ï¼Œå‚æ•°ä¸ºå­—ç¬¦ä¸²TCHARç±»å‹ï¼‰
+	public static final int BRAC_USERSTATE_INTERNETIP		=	8;	///< ç”¨æˆ·äº’è”ç½‘IPåœ°å€ï¼ˆå‚æ•°ä¸ºå­—ç¬¦ä¸²TCHARç±»å‹ï¼‰
+	public static final int BRAC_USERSTATE_VIDEOBITRATE		=	9;	///< ç”¨æˆ·å½“å‰çš„è§†é¢‘ç ç‡ï¼ˆå‚æ•°ä¸ºDWORDç±»å‹ï¼ŒBpsï¼‰
+	public static final int BRAC_USERSTATE_AUDIOBITRATE		=	10;	///< ç”¨æˆ·å½“å‰çš„éŸ³é¢‘ç ç‡ï¼ˆå‚æ•°ä¸ºDWORDç±»å‹ï¼ŒBpsï¼‰
+	public static final int BRAC_USERSTATE_P2PCONNECT		=	11;	///< æŸ¥è¯¢æœ¬åœ°ç”¨æˆ·ä¸æŒ‡å®šç”¨æˆ·çš„å½“å‰P2Pè¿æ¥çŠ¶æ€ï¼ˆå‚æ•°ä¸ºDWORDç±»å‹ï¼Œè¿”å›å€¼ï¼š0 P2Pä¸é€šï¼Œ 1 P2Pè¿æ¥æˆåŠŸ[TCP]ï¼Œ2 P2Pè¿æ¥æˆåŠŸ[UDP]ï¼Œ3 P2Pè¿æ¥æˆåŠŸ[TCPã€UDP]ï¼‰
+	public static final int BRAC_USERSTATE_NETWORKSTATUS	=	12;	///< æŸ¥è¯¢æŒ‡å®šç”¨æˆ·çš„ç½‘ç»œçŠ¶æ€ï¼ˆå‚æ•°ä¸ºDWORDç±»å‹ï¼Œè¿”å›å€¼ï¼š0 ä¼˜è‰¯ï¼Œ1 è¾ƒå¥½ï¼Œ2 ä¸€èˆ¬ï¼Œ3 è¾ƒå·®ï¼Œ4 éå¸¸å·®ï¼‰ï¼Œæ³¨ï¼šæŸ¥è¯¢é—´éš”éœ€è¦>1s
+	public static final int BRAC_USERSTATE_VIDEOSIZE		=	13;	///< æŸ¥è¯¢æŒ‡å®šç”¨æˆ·çš„è§†é¢‘åˆ†è¾¨ç‡ï¼ˆå‚æ•°ä¸ºDWORDç±»å‹ï¼Œè¿”å›å€¼ï¼šä½16ä½è¡¨ç¤ºå®½åº¦ï¼Œé«˜16ä½è¡¨ç¤ºé«˜åº¦ï¼‰
+	public static final int BRAC_USERSTATE_PACKLOSSRATE		=	14;	///< æŸ¥è¯¢æŒ‡å®šç”¨æˆ·çš„ç½‘ç»œæµåª’ä½“æ•°æ®ä¸¢åŒ…ç‡ï¼ˆå‚æ•°ä¸ºDWORDç±»å‹ï¼Œè¿”å›å€¼ï¼š0 - 100ï¼Œå¦‚ï¼šè¿”å›å€¼ä¸º5ï¼Œè¡¨ç¤ºä¸¢åŒ…ç‡ä¸º5%ï¼‰
+	public static final int BRAC_USERSTATE_DEVICETYPE		=	15;	///< æŸ¥è¯¢æŒ‡å®šç”¨æˆ·çš„ç»ˆç«¯ç±»å‹ï¼ˆå‚æ•°ä¸ºDWORDç±»å‹ï¼Œè¿”å›å€¼ï¼š0 Unknowï¼Œ 1 Windowsï¼Œ2 Androidï¼Œ3 iOSï¼Œ4 Webï¼Œ5 Linuxï¼Œ6 Macï¼Œ7 Win Phoneï¼Œ8 WinCEï¼‰
+	public static final int BRAC_USERSTATE_SELFUSERSTATUS	=	16;	///< æŸ¥è¯¢æœ¬åœ°ç”¨æˆ·çš„å½“å‰çŠ¶æ€ï¼ˆå‚æ•°ä¸ºDWORDç±»å‹ï¼Œè¿”å›å€¼ï¼š0 Unknowï¼Œ1 Connectedï¼Œ2 Loginedï¼Œ3 In Roomï¼Œ4 Logoutedï¼Œ5 Link Closedï¼‰
+	public static final int BRAC_USERSTATE_SELFUSERID		=	17;	///< æŸ¥è¯¢æœ¬åœ°ç”¨æˆ·çš„IDï¼ˆå‚æ•°ä¸ºDWORDç±»å‹ï¼Œè‹¥ç”¨æˆ·ç™»å½•æˆåŠŸï¼Œè¿”å›ç”¨æˆ·å®é™…çš„useridï¼Œå¦åˆ™è¿”å›-1ï¼‰
+	public static final int BRAC_USERSTATE_VIDEOROTATION	=	18;	///< æŸ¥è¯¢æŒ‡å®šç”¨æˆ·çš„å½“å‰è§†é¢‘æ—‹è½¬è§’åº¦ï¼ˆå‚æ•°ä¸ºDWORDç±»å‹ï¼Œè¿”å›è§’åº¦å€¼ï¼‰
+	public static final int BRAC_USERSTATE_VIDEOMIRRORED	=	19;	///< æŸ¥è¯¢æŒ‡å®šç”¨æˆ·çš„è§†é¢‘æ˜¯å¦éœ€è¦é•œåƒç¿»è½¬
 	
-	// ³£¼û³ö´í´úÂë¶¨Òå
-    public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< Ã»ÓĞ´íÎó
-    public static final int BRAC_ERRORCODE_SESSION_QUIT		= 100101;///< Ô´ÓÃ»§Ö÷¶¯·ÅÆú»á»°
-    public static final int BRAC_ERRORCODE_SESSION_OFFLINE	= 100102;///< Ä¿±êÓÃ»§²»ÔÚÏß
-    public static final int BRAC_ERRORCODE_SESSION_BUSY		= 100103;///< Ä¿±êÓÃ»§Ã¦
-    public static final int BRAC_ERRORCODE_SESSION_REFUSE	= 100104;///< Ä¿±êÓÃ»§¾Ü¾ø»á»°
-    public static final int BRAC_ERRORCODE_SESSION_TIMEOUT	= 100105;///< »á»°ÇëÇó³¬Ê±
-    public static final int BRAC_ERRORCODE_SESSION_DISCONNECT=100106;///< ÍøÂç¶ÏÏß
+	// æˆ¿é—´çŠ¶æ€æ ‡å¿—å®šä¹‰ï¼ˆAPIï¼šBRAC_QueryRoomState ä¼ å…¥å‚æ•°ï¼‰
+	public static final int BRAC_ROOMSTATE_ROOMNAME			=	1;	///< æˆ¿é—´åç§°ï¼ˆå‚æ•°ä¸ºå­—ç¬¦ä¸²TCHARç±»å‹ï¼‰
+	public static final int BRAC_ROOMSTATE_ONLINEUSERS		=	2;	///< æˆ¿é—´åœ¨çº¿ç”¨æˆ·æ•°ï¼ˆå‚æ•°ä¸ºDWORDå‹ï¼Œä¸åŒ…å«è‡ªå·±ï¼‰
+	
+	// è§†é¢‘å‘¼å«äº‹ä»¶ç±»å‹å®šä¹‰ï¼ˆAPIï¼šBRAC_VideoCallControl ä¼ å…¥å‚æ•°ã€VideoCallEventå›è°ƒå‚æ•°ï¼‰
+	public static final int BRAC_VIDEOCALL_EVENT_REQUEST	=	1;	///< å‘¼å«è¯·æ±‚
+	public static final int BRAC_VIDEOCALL_EVENT_REPLY		=	2;	///< å‘¼å«è¯·æ±‚å›å¤
+	public static final int BRAC_VIDEOCALL_EVENT_START		=	3;	///< è§†é¢‘å‘¼å«ä¼šè¯å¼€å§‹äº‹ä»¶
+	public static final int BRAC_VIDEOCALL_EVENT_FINISH		=	4;	///< æŒ‚æ–­ï¼ˆç»“æŸï¼‰å‘¼å«ä¼šè¯
+	
+	// è§†é¢‘å‘¼å«æ ‡å¿—å®šä¹‰ï¼ˆAPIï¼šBRAC_VideoCallControl ä¼ å…¥å‚æ•°ï¼‰
+	public static final int BRAC_VIDEOCALL_FLAGS_AUDIO		= 0x01;	///< è¯­éŸ³é€šè¯
+	public static final int BRAC_VIDEOCALL_FLAGS_VIDEO		= 0x02;	///< è§†é¢‘é€šè¯
+	public static final int BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	= 0x10;	///< ç¦æ­¢æºï¼ˆå‘¼å«ç«¯ï¼‰éŸ³é¢‘
+	public static final int BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	= 0x20;	///< ç¦æ­¢æºï¼ˆå‘¼å«ç«¯ï¼‰è§†é¢‘
+	public static final int BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	= 0x40;	///< ç¦æ­¢ç›®æ ‡ï¼ˆè¢«å‘¼å«ç«¯ï¼‰éŸ³é¢‘
+	public static final int BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	= 0x80;	///< ç¦æ­¢ç›®æ ‡ï¼ˆè¢«å‘¼å«ç«¯ï¼‰è§†é¢‘
+	
+	// è§†é¢‘æ–¹å‘ä¿®æ­£æ ‡å¿—å®šä¹‰
+	public static final int BRAC_ROTATION_FLAGS_MIRRORED	= 0x1000;///< å›¾åƒéœ€è¦é•œåƒç¿»è½¬
+	public static final int BRAC_ROTATION_FLAGS_ROTATION90	= 0x2000;///< é¡ºæ—¶é’ˆæ—‹è½¬90åº¦
+	public static final int BRAC_ROTATION_FLAGS_ROTATION180	= 0x4000;///< é¡ºæ—¶é’ˆæ—‹è½¬180åº¦
+	public static final int BRAC_ROTATION_FLAGS_ROTATION270	= 0x8000;///< é¡ºæ—¶é’ˆæ—‹è½¬270åº¦
+
+	// ç”¨æˆ·ä¿¡æ¯æ§åˆ¶ç±»å‹å®šä¹‰ï¼ˆAPIï¼šBRAC_UserInfoControl ä¼ å…¥å‚æ•°ï¼‰
+	public static final int BRAC_USERINFO_CTRLCODE_ROTATION	=	8;	///< è®©æŒ‡å®šçš„ç”¨æˆ·è§†é¢‘åœ¨æ˜¾ç¤ºæ—¶æ—‹è½¬ï¼ŒwParamä¸ºæ—‹è½¬è§’åº¦å‚æ•°
+	public static final int BRAC_USERINFO_CTRLCODE_DEBUGLOG =   9;	///< è¾“å‡ºæœ¬åœ°ç”¨æˆ·çš„è°ƒè¯•æ—¥å¿—ï¼ŒwParamä¸ºè°ƒè¯•æ—¥å¿—ç±»å‹
+	public static final int BRAC_USERINFO_CTRLCODE_LVORIENTFIX=	10;	///< æœ¬åœ°è§†é¢‘é‡‡é›†æ–¹å‘ä¿®æ­£ï¼ŒwParamä¸ºæ–¹å‘å‚æ•°ï¼ŒlParamä¸ºä¿®æ­£è§’åº¦
+	
+	// å¸¸è§å‡ºé”™ä»£ç å®šä¹‰
+    public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< æ²¡æœ‰é”™è¯¯
+    public static final int BRAC_ERRORCODE_SESSION_QUIT		= 100101;///< æºç”¨æˆ·ä¸»åŠ¨æ”¾å¼ƒä¼šè¯
+    public static final int BRAC_ERRORCODE_SESSION_OFFLINE	= 100102;///< ç›®æ ‡ç”¨æˆ·ä¸åœ¨çº¿
+    public static final int BRAC_ERRORCODE_SESSION_BUSY		= 100103;///< ç›®æ ‡ç”¨æˆ·å¿™
+    public static final int BRAC_ERRORCODE_SESSION_REFUSE	= 100104;///< ç›®æ ‡ç”¨æˆ·æ‹’ç»ä¼šè¯
+    public static final int BRAC_ERRORCODE_SESSION_TIMEOUT	= 100105;///< ä¼šè¯è¯·æ±‚è¶…æ—¶
+    public static final int BRAC_ERRORCODE_SESSION_DISCONNECT=100106;///< ç½‘ç»œæ–­çº¿
     
     
-    // Â¼Ïñ¹¦ÄÜ±êÖ¾¶¨Òå£¨API£ºBRAC_StreamRecordCtrl ´«Èë²ÎÊı£©
-	public static final int ANYCHAT_RECORD_FLAGS_VIDEO		= 0x00000001;	///< Â¼ÖÆÊÓÆµ
-	public static final int ANYCHAT_RECORD_FLAGS_AUDIO		= 0x00000002;	///< Â¼ÖÆÒôÆµ
-	public static final int ANYCHAT_RECORD_FLAGS_SERVER		= 0x00000004;	///< ·şÎñÆ÷¶ËÂ¼ÖÆ
-	public static final int ANYCHAT_RECORD_FLAGS_MIXAUDIO	= 0x00000010;	///< Â¼ÖÆÒôÆµÊ±£¬½«ÆäËüÈËµÄÉùÒô»ìÒôºóÂ¼ÖÆ
-	public static final int ANYCHAT_RECORD_FLAGS_MIXVIDEO	= 0x00000020;	///< Â¼ÖÆÊÓÆµÊ±£¬½«ÆäËüÈËµÄÊÓÆµµü¼ÓºóÂ¼ÖÆ
-	public static final int ANYCHAT_RECORD_FLAGS_ABREAST	= 0x00000100;	///< Â¼ÖÆÊÓÆµÊ±£¬½«ÆäËüÈËµÄÊÓÆµ²¢ÁĞÂ¼ÖÆ
-	public static final int ANYCHAT_RECORD_FLAGS_STEREO		= 0x00000200;	///< Â¼ÖÆÒôÆµÊ±£¬½«ÆäËüÈËµÄÉùÒô»ìºÏÎªÁ¢ÌåÉùºóÂ¼ÖÆ
-	public static final int ANYCHAT_RECORD_FLAGS_SNAPSHOT	= 0x00000400;	///< ÅÄÕÕ
-	public static final int ANYCHAT_RECORD_FLAGS_LOCALCB	= 0x00000800;	///< ´¥·¢±¾µØ»Øµ÷
+    // å½•åƒåŠŸèƒ½æ ‡å¿—å®šä¹‰ï¼ˆAPIï¼šBRAC_StreamRecordCtrl ä¼ å…¥å‚æ•°ï¼‰
+	public static final int ANYCHAT_RECORD_FLAGS_VIDEO		= 0x00000001;	///< å½•åˆ¶è§†é¢‘
+	public static final int ANYCHAT_RECORD_FLAGS_AUDIO		= 0x00000002;	///< å½•åˆ¶éŸ³é¢‘
+	public static final int ANYCHAT_RECORD_FLAGS_SERVER		= 0x00000004;	///< æœåŠ¡å™¨ç«¯å½•åˆ¶
+	public static final int ANYCHAT_RECORD_FLAGS_MIXAUDIO	= 0x00000010;	///< å½•åˆ¶éŸ³é¢‘æ—¶ï¼Œå°†å…¶å®ƒäººçš„å£°éŸ³æ··éŸ³åå½•åˆ¶
+	public static final int ANYCHAT_RECORD_FLAGS_MIXVIDEO	= 0x00000020;	///< å½•åˆ¶è§†é¢‘æ—¶ï¼Œå°†å…¶å®ƒäººçš„è§†é¢‘è¿­åŠ åå½•åˆ¶
+	public static final int ANYCHAT_RECORD_FLAGS_ABREAST	= 0x00000100;	///< å½•åˆ¶è§†é¢‘æ—¶ï¼Œå°†å…¶å®ƒäººçš„è§†é¢‘å¹¶åˆ—å½•åˆ¶
+	public static final int ANYCHAT_RECORD_FLAGS_STEREO		= 0x00000200;	///< å½•åˆ¶éŸ³é¢‘æ—¶ï¼Œå°†å…¶å®ƒäººçš„å£°éŸ³æ··åˆä¸ºç«‹ä½“å£°åå½•åˆ¶
+	public static final int ANYCHAT_RECORD_FLAGS_SNAPSHOT	= 0x00000400;	///< æ‹ç…§
+	public static final int ANYCHAT_RECORD_FLAGS_LOCALCB	= 0x00000800;	///< è§¦å‘æœ¬åœ°å›è°ƒ
+	public static final int ANYCHAT_RECORD_FLAGS_STREAM		= 0x00001000;	///< å¯¹è§†é¢‘æµè¿›è¡Œå½•åˆ¶ï¼ˆæ•ˆç‡é«˜ï¼Œä½†å¯èƒ½å­˜åœ¨è§†é¢‘æ–¹å‘æ—‹è½¬çš„é—®é¢˜ï¼‰
+
 	
 	
 	

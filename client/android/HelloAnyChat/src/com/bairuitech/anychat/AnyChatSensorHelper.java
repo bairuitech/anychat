@@ -14,17 +14,17 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 
-// AnyChat Camera°ü×°Àà£¬ÊµÏÖ±¾µØÊÓÆµ²É¼¯
+// AnyChat CameraåŒ…è£…ç±»ï¼Œå®ç°æœ¬åœ°è§†é¢‘é‡‡é›†
 public class AnyChatSensorHelper implements SensorEventListener{
 
 	private AnyChatOrientationEventListener orientationListener = null;
 	
 	public void InitSensor(Context context) {
-		// »ñÈ¡Éè±¸ÀàĞÍ
+		// è·å–è®¾å¤‡ç±»å‹
 		int iDeviceType = ((context.getResources().getConfiguration().screenLayout
 				& Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) ? 2 : 1;
 		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_DEVICEMODE, iDeviceType);
-		// ÉèÖÃÆÁÄ»Ğı×ª·½Ïò
+		// è®¾ç½®å±å¹•æ—‹è½¬æ–¹å‘
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		int rotation = wm.getDefaultDisplay ().getRotation ();
 		int degrees = 0 ;
@@ -44,11 +44,11 @@ public class AnyChatSensorHelper implements SensorEventListener{
 			orientationListener.enable();
 		}
 
-		// »ñÈ¡´«¸ĞÆ÷¹ÜÀí·şÎñ
+		// è·å–ä¼ æ„Ÿå™¨ç®¡ç†æœåŠ¡
 		SensorManager sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-		// »ñÈ¡¼ÓËÙ¶È´«¸ĞÆ÷
+		// è·å–åŠ é€Ÿåº¦ä¼ æ„Ÿå™¨
 		Sensor mAccelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		// »ñÈ¡¼ÓËÙ¶È´«¸ĞÆ÷µÄÏûÏ¢£¬SensorManager. SENSOR_DELAY_NORMAL±íÊ¾»ñÈ¡ÖÜÆÚ£¬È¡Õı³£¼´¿É
+		// è·å–åŠ é€Ÿåº¦ä¼ æ„Ÿå™¨çš„æ¶ˆæ¯ï¼ŒSensorManager. SENSOR_DELAY_NORMALè¡¨ç¤ºè·å–å‘¨æœŸï¼Œå–æ­£å¸¸å³å¯
 		sm.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 	}
 	
@@ -60,8 +60,8 @@ public class AnyChatSensorHelper implements SensorEventListener{
 	private float LastYSpead = 0;
 	private float LastZSpead = 0;
 	
-	private boolean bCameraNeedFocus = false; // ÉãÏñ»úÊÇ·ñĞèÒª¶Ô½¹
-	private Date LastSportTime = new Date(); // ÉÏ´ÎÔË¶¯Ê±¼ä
+	private boolean bCameraNeedFocus = false; // æ‘„åƒæœºæ˜¯å¦éœ€è¦å¯¹ç„¦
+	private Date LastSportTime = new Date(); // ä¸Šæ¬¡è¿åŠ¨æ—¶é—´
 	
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -73,17 +73,17 @@ public class AnyChatSensorHelper implements SensorEventListener{
 		if (Sensor.TYPE_ACCELEROMETER != event.sensor.getType()) {
             return;
         }	
-		float X = event.values[0]; // Ë®Æ½x·½Ïò¼ÓËÙ¶È £¬ÎïÌå¾²Ö¹Ê±ÔÚ£¨0--1Ö®¼ä£©
-		float Y = event.values[1]; // Ë®Æ½Y·½Ïò¼ÓËÙ¶È £¬ÎïÌå¾²Ö¹Ê±ÔÚ£¨0--1Ö®¼ä£©
-		float Z = event.values[2]; // ÊúÖ±Z·½Ïò¼ÓËÙ¶È £¬ÎïÌå¾²Ö¹Ê±ÔÚ£¨9.5--10Ö®¼ä£©
+		float X = event.values[0]; // æ°´å¹³xæ–¹å‘åŠ é€Ÿåº¦ ï¼Œç‰©ä½“é™æ­¢æ—¶åœ¨ï¼ˆ0--1ä¹‹é—´ï¼‰
+		float Y = event.values[1]; // æ°´å¹³Yæ–¹å‘åŠ é€Ÿåº¦ ï¼Œç‰©ä½“é™æ­¢æ—¶åœ¨ï¼ˆ0--1ä¹‹é—´ï¼‰
+		float Z = event.values[2]; // ç«–ç›´Zæ–¹å‘åŠ é€Ÿåº¦ ï¼Œç‰©ä½“é™æ­¢æ—¶åœ¨ï¼ˆ9.5--10ä¹‹é—´ï¼‰
 
-		if ((Math.abs(X - LastXSpead) <= 0.5) && (Math.abs(Y - LastYSpead) <= 0.5) && (Math.abs(Z - LastZSpead) <= 0.5)) // ¾²Ö¹×´Ì¬
+		if ((Math.abs(X - LastXSpead) <= 0.5) && (Math.abs(Y - LastYSpead) <= 0.5) && (Math.abs(Z - LastZSpead) <= 0.5)) // é™æ­¢çŠ¶æ€
 		{
 			Date now = new Date();
 			long interval = now.getTime() - LastSportTime.getTime();
 			if (bCameraNeedFocus && interval > 1000) {
 				bCameraNeedFocus = false;
-				// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµ²É¼¯£¬ÔòÔÚJava²ã½øĞĞÉãÏñÍ·×Ô¶¯¶Ô½¹²Ù×÷
+				// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘é‡‡é›†ï¼Œåˆ™åœ¨Javaå±‚è¿›è¡Œæ‘„åƒå¤´è‡ªåŠ¨å¯¹ç„¦æ“ä½œ
 				if(AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA)
 					AnyChatCoreSDK.mCameraHelper.CameraAutoFocus();
 				else
@@ -114,7 +114,7 @@ class AnyChatOrientationEventListener extends OrientationEventListener{
 		int ANYCHAT_DEVICEORIENTATION_PORTRAIT			= 5;		// Device oriented vertically, home button on the bottom
 		int ANYCHAT_DEVICEORIENTATION_PORTRAITUPSIDE	= 6;		// Device oriented vertically, home button on the top
 		
-		//È·¶¨ÓÉ½Ç¶ÈÓëÆÁÄ»·½ÏòµÄ¶ÔÓ¦·¶Î§  
+		//ç¡®å®šç”±è§’åº¦ä¸å±å¹•æ–¹å‘çš„å¯¹åº”èŒƒå›´  
 		int orientation = ANYCHAT_DEVICEORIENTATION_UNKNOW;
 		if(degree == -1)
 			orientation = ANYCHAT_DEVICEORIENTATION_FACEUP;

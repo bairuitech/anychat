@@ -1,4 +1,4 @@
-package com.bairuitech.anychat;		// ²»ÄÜĞŞ¸Ä°üµÄÃû³Æ
+package com.bairuitech.anychat;		// ä¸èƒ½ä¿®æ”¹åŒ…çš„åç§°
 
 import java.lang.ref.WeakReference;
 
@@ -27,256 +27,256 @@ public class AnyChatCoreSDK
 	public AnyChatSensorHelper	mSensorHelper = new AnyChatSensorHelper();
 	public AnyChatVideoHelper	mVideoHelper = new AnyChatVideoHelper();
 	
-	private static int HANDLE_TYPE_NOTIFYMSG 	= 1;	// ÏûÏ¢Í¨Öª
-	private static int HANDLE_TYPE_TEXTMSG 		= 2;	// ÎÄ×ÖĞÅÏ¢
-	private static int HANDLE_TYPE_TRANSFILE 	= 3;	// ÎÄ¼ş´«Êä
-	private static int HANDLE_TYPE_TRANSBUF		= 4;	// »º³åÇø´«Êä
-	private static int HANDLE_TYPE_TRANSBUFEX	= 5;	// À©Õ¹»º³åÇø´«Êä
+	private static int HANDLE_TYPE_NOTIFYMSG 	= 1;	// æ¶ˆæ¯é€šçŸ¥
+	private static int HANDLE_TYPE_TEXTMSG 		= 2;	// æ–‡å­—ä¿¡æ¯
+	private static int HANDLE_TYPE_TRANSFILE 	= 3;	// æ–‡ä»¶ä¼ è¾“
+	private static int HANDLE_TYPE_TRANSBUF		= 4;	// ç¼“å†²åŒºä¼ è¾“
+	private static int HANDLE_TYPE_TRANSBUFEX	= 5;	// æ‰©å±•ç¼“å†²åŒºä¼ è¾“
 	private static int HANDLE_TYPE_SDKFILTER	= 6;	// SDK Filter Data
-	private static int HANDLE_TYPE_VIDEOCALL	= 7;	// ÊÓÆµºô½Ğ
-	private static int HANDLE_TYPE_RECORD		= 8;	// Â¼Ïñ¡¢ÅÄÕÕ
+	private static int HANDLE_TYPE_VIDEOCALL	= 7;	// è§†é¢‘å‘¼å«
+	private static int HANDLE_TYPE_RECORD		= 8;	// å½•åƒã€æ‹ç…§
 	
-	// ÉèÖÃAnyChat»ù±¾ÊÂ¼şÍ¨Öª½Ó¿Ú
+	// è®¾ç½®AnyChatåŸºæœ¬äº‹ä»¶é€šçŸ¥æ¥å£
 	public void SetBaseEvent(AnyChatBaseEvent e)
 	{
 		mHandler = new MainHandler(this);
 		RegisterNotify();
 		this.baseEvent = e;
 	}
-	// ÉèÖÃAnyChat×´Ì¬±ä»¯ÊÂ¼şÍ¨Öª½Ó¿Ú
+	// è®¾ç½®AnyChatçŠ¶æ€å˜åŒ–äº‹ä»¶é€šçŸ¥æ¥å£
 	public void SetStateChgEvent(AnyChatStateChgEvent e)
 	{
 		RegisterNotify();
 		this.stateChgEvent = e;
 	}
-	// ÉèÖÃAnyChatË½ÁÄÏûÏ¢Í¨Öª½Ó¿Ú
+	// è®¾ç½®AnyChatç§èŠæ¶ˆæ¯é€šçŸ¥æ¥å£
 	public void SetPrivateChatEvent(AnyChatPrivateChatEvent e)
 	{
 		RegisterNotify();
 		this.privateChatEvent = e;
 	}
-	// ÉèÖÃÎÄ×ÖÁÄÌìÏûÏ¢Í¨Öª½Ó¿Ú
+	// è®¾ç½®æ–‡å­—èŠå¤©æ¶ˆæ¯é€šçŸ¥æ¥å£
 	public void SetTextMessageEvent(AnyChatTextMsgEvent e)
 	{
 		RegisterNotify();
 		this.textMsgEvent = e;
 	}
-	// ÉèÖÃÊı¾İ´«ÊäÏûÏ¢Í¨Öª½Ó¿Ú
+	// è®¾ç½®æ•°æ®ä¼ è¾“æ¶ˆæ¯é€šçŸ¥æ¥å£
 	public void SetTransDataEvent(AnyChatTransDataEvent e)
 	{
 		RegisterNotify();
 		this.transDataEvent = e;
 	}
-	// ÉèÖÃÊÓÆµºô½ĞÊÂ¼şÍ¨Öª½Ó¿Ú
+	// è®¾ç½®è§†é¢‘å‘¼å«äº‹ä»¶é€šçŸ¥æ¥å£
 	public void SetVideoCallEvent(AnyChatVideoCallEvent e)
 	{
 		RegisterNotify();
 		this.videoCallEvent = e;
 	}
-	// ÉèÖÃÓÃ»§ĞÅÏ¢£¨ºÃÓÑ£©ÊÂ¼şÍ¨Öª½Ó¿Ú
+	// è®¾ç½®ç”¨æˆ·ä¿¡æ¯ï¼ˆå¥½å‹ï¼‰äº‹ä»¶é€šçŸ¥æ¥å£
 	public void SetUserInfoEvent(AnyChatUserInfoEvent e)
 	{
 		RegisterNotify();
 		this.userInfoEvent = e;
 	}
-	// ÉèÖÃÊı¾İ¼ÓÃÜ¡¢½âÃÜ»Øµ÷ÊÂ¼ş½Ó¿Ú
+	// è®¾ç½®æ•°æ®åŠ å¯†ã€è§£å¯†å›è°ƒäº‹ä»¶æ¥å£
 	public void SetDataEncDecEvent(AnyChatDataEncDecEvent e)
 	{
 		RegisterNotify();
 		this.encdecEvent = e;
 	}
-	// ÉèÖÃÊÓÆµÂ¼ÖÆ¡¢ÅÄÕÕÊÂ¼şÍ¨Öª½Ó¿Ú
+	// è®¾ç½®è§†é¢‘å½•åˆ¶ã€æ‹ç…§äº‹ä»¶é€šçŸ¥æ¥å£
 	public void SetRecordSnapShotEvent(AnyChatRecordEvent e)
 	{
 		RegisterNotify();
 		this.recordEvent = e;
 	}
 	
-	// ²éÑ¯SDKÖ÷°æ±¾ºÅ
+	// æŸ¥è¯¢SDKä¸»ç‰ˆæœ¬å·
 	public int GetSDKMainVersion()
 	{
 		return GetSDKOptionInt(AnyChatDefine.BRAC_SO_CORESDK_MAINVERSION);
 	}
-	// ²éÑ¯SDK´Ó°æ±¾ºÅ
+	// æŸ¥è¯¢SDKä»ç‰ˆæœ¬å·
 	public int GetSDKSubVersion()
 	{
 		return GetSDKOptionInt(AnyChatDefine.BRAC_SO_CORESDK_SUBVERSION);
 	}
-	// ²éÑ¯SDK±àÒëÊ±¼ä
+	// æŸ¥è¯¢SDKç¼–è¯‘æ—¶é—´
 	public String GetSDKBuildTime()
 	{
 		return GetSDKOptionString(AnyChatDefine.BRAC_SO_CORESDK_BUILDTIME);
 	}
     
-    // ×¢²áÏûÏ¢Í¨Öª
+    // æ³¨å†Œæ¶ˆæ¯é€šçŸ¥
     public native int RegisterNotify();
     
-    // ³õÊ¼»¯SDK
+    // åˆå§‹åŒ–SDK
     public native int InitSDK(int osver, int flags);
-    // Á¬½Ó·şÎñÆ÷
+    // è¿æ¥æœåŠ¡å™¨
     public native int Connect(String serverip, int port);
-    // µÇÂ¼ÏµÍ³
+    // ç™»å½•ç³»ç»Ÿ
     public native int Login(String username, String password);
-    // ½øÈë·¿¼ä£¨·¿¼äID£©
+    // è¿›å…¥æˆ¿é—´ï¼ˆæˆ¿é—´IDï¼‰
     public native int EnterRoom(int roomid, String password);
-    // ½øÈë·¿¼ä£¨·¿¼äÃû³Æ£©
+    // è¿›å…¥æˆ¿é—´ï¼ˆæˆ¿é—´åç§°ï¼‰
     public native int EnterRoomEx(String roomname, String password);
     
-    // ÍË³ö·¿¼ä
+    // é€€å‡ºæˆ¿é—´
     public native int LeaveRoom(int roomid);
-    // ×¢ÏúµÇÂ¼
+    // æ³¨é”€ç™»å½•
     public native int Logout();
-    // ÊÍ·Å×ÊÔ´
+    // é‡Šæ”¾èµ„æº
     public native int Release();
     
-    // »ñÈ¡ÔÚÏßÓÃ»§ÁĞ±í
+    // è·å–åœ¨çº¿ç”¨æˆ·åˆ—è¡¨
     public native int[] GetOnlineUser();
-    // ÉèÖÃÊÓÆµÏÔÊ¾Î»ÖÃ
+    // è®¾ç½®è§†é¢‘æ˜¾ç¤ºä½ç½®
     public native int SetVideoPos(int userid, Surface s, int lef, int top, int right, int bottom);
-    // ÓÃ»§ÉãÏñÍ·¿ØÖÆ
+    // ç”¨æˆ·æ‘„åƒå¤´æ§åˆ¶
     public native int UserCameraControl(int userid, int bopen);
-    // ÓÃ»§ÒôÆµ¿ØÖÆ
+    // ç”¨æˆ·éŸ³é¢‘æ§åˆ¶
     public native int UserSpeakControl(int userid, int bopen);
-	// ÓÃ»§Òô¡¢ÊÓÆµÂ¼ÖÆ
+	// ç”¨æˆ·éŸ³ã€è§†é¢‘å½•åˆ¶
 	public native int StreamRecordCtrl(int userid, int bstartrecord, int flags, int param);
-	// ÓÃ»§Òô¡¢ÊÓÆµÂ¼ÖÆ£¨À©Õ¹£©
+	// ç”¨æˆ·éŸ³ã€è§†é¢‘å½•åˆ¶ï¼ˆæ‰©å±•ï¼‰
 	public native int StreamRecordCtrlEx(int userid, int bstartrecord, int flags, int param, String szUserStr);
-	// ÓÃ»§Í¼Ïñ×¥ÅÄ
+	// ç”¨æˆ·å›¾åƒæŠ“æ‹
 	public native int SnapShot(int userid, int flags, int param);
 	
-	// »ñÈ¡Ö¸¶¨ÒôÆµÉè±¸µÄµ±Ç°ÒôÁ¿
+	// è·å–æŒ‡å®šéŸ³é¢‘è®¾å¤‡çš„å½“å‰éŸ³é‡
 	public native int AudioGetVolume(int device);
-	// ÉèÖÃÖ¸¶¨ÒôÆµÉè±¸µÄÒôÁ¿
+	// è®¾ç½®æŒ‡å®šéŸ³é¢‘è®¾å¤‡çš„éŸ³é‡
 	public native int AudioSetVolume(int device, int volume);
     
-    // »ñÈ¡Ö¸¶¨ÓÃ»§µÄ×Ö·û´®ÀàĞÍ×´Ì¬
+    // è·å–æŒ‡å®šç”¨æˆ·çš„å­—ç¬¦ä¸²ç±»å‹çŠ¶æ€
     public native String QueryUserStateString(int userid, int infoname);
-	// »ñÈ¡Ö¸¶¨ÓÃ»§µÄÕûĞÍ×´Ì¬
+	// è·å–æŒ‡å®šç”¨æˆ·çš„æ•´å‹çŠ¶æ€
     public native int QueryUserStateInt(int userid, int infoname);
-    // »ñÈ¡Ö¸¶¨ÓÃ»§µÄËµ»°ÒôÁ¿(0 ~ 100)
+    // è·å–æŒ‡å®šç”¨æˆ·çš„è¯´è¯éŸ³é‡(0 ~ 100)
     public native int GetUserSpeakVolume(int userid);
-    // »ñÈ¡Ö¸¶¨ÓÃ»§µÄÉãÏñÍ·×´Ì¬
+    // è·å–æŒ‡å®šç”¨æˆ·çš„æ‘„åƒå¤´çŠ¶æ€
     public native int GetCameraState(int userid);
-    // »ñÈ¡Ö¸¶¨ÓÃ»§µÄÒôÆµÉè±¸×´Ì¬
+    // è·å–æŒ‡å®šç”¨æˆ·çš„éŸ³é¢‘è®¾å¤‡çŠ¶æ€
 	public native int GetSpeakState(int userid);
-	// »ñÈ¡Ö¸¶¨ÓÃ»§µÄÊÓÆµ·Ö±æÂÊ¿í¶È
+	// è·å–æŒ‡å®šç”¨æˆ·çš„è§†é¢‘åˆ†è¾¨ç‡å®½åº¦
 	public native int GetUserVideoWidth(int userid);
-	// »ñÈ¡Ö¸¶¨ÓÃ»§µÄÊÓÆµ·Ö±æÂÊ¸ß¶È
+	// è·å–æŒ‡å®šç”¨æˆ·çš„è§†é¢‘åˆ†è¾¨ç‡é«˜åº¦
 	public native int GetUserVideoHeight(int userid);
 	
-	// »ñÈ¡Ö¸¶¨·¿¼äµÄ×Ö·û´®ÀàĞÍ×´Ì¬
+	// è·å–æŒ‡å®šæˆ¿é—´çš„å­—ç¬¦ä¸²ç±»å‹çŠ¶æ€
     public native String QueryRoomStateString(int roomid, int infoname);
-	// »ñÈ¡Ö¸¶¨·¿¼äµÄÕûĞÍ×´Ì¬
+	// è·å–æŒ‡å®šæˆ¿é—´çš„æ•´å‹çŠ¶æ€
     public native int QueryRoomStateInt(int roomid, int infoname);
 
-	// ÉèÖÃ·şÎñÆ÷ÈÏÖ¤ÃÜÂë
+	// è®¾ç½®æœåŠ¡å™¨è®¤è¯å¯†ç 
 	public native int SetServerAuthPass(String Password);
-	// ÉèÖÃSDK²ÎÊı£¨ÕûĞÍÖµ£©
+	// è®¾ç½®SDKå‚æ•°ï¼ˆæ•´å‹å€¼ï¼‰
 	public static native int SetSDKOptionInt(int optname, int optvalue);
-	// ÉèÖÃSDK²ÎÊı£¨×Ö·û´®Öµ£©
+	// è®¾ç½®SDKå‚æ•°ï¼ˆå­—ç¬¦ä¸²å€¼ï¼‰
 	public native int SetSDKOptionString(int optname, String optvalue);
-	// ²éÑ¯SDK²ÎÊı£¨ÕûĞÍÖµ£©
+	// æŸ¥è¯¢SDKå‚æ•°ï¼ˆæ•´å‹å€¼ï¼‰
 	public static native int GetSDKOptionInt(int optname);
-	// ²éÑ¯SDK²ÎÊı£¨×Ö·û´®Öµ£©
+	// æŸ¥è¯¢SDKå‚æ•°ï¼ˆå­—ç¬¦ä¸²å€¼ï¼‰
 	public native String GetSDKOptionString(int optname);
 	
-	// ·¢ËÍÎÄ×ÖÏûÏ¢
+	// å‘é€æ–‡å­—æ¶ˆæ¯
 	public native int SendTextMessage(int userid, int secret, String message);
-	// ´«ËÍÎÄ¼ş
+	// ä¼ é€æ–‡ä»¶
 	public native int TransFile(int userid, String filepath, int wparam, int lparam, int flags, AnyChatOutParam outParam);
-	// Í¸Ã÷Í¨µÀ´«ËÍ»º³åÇø
+	// é€æ˜é€šé“ä¼ é€ç¼“å†²åŒº
 	public native int TransBuffer(int userid, byte[] buf, int len);
-	// Í¸Ã÷Í¨µÀ´«ËÍ»º³åÇøÀ©Õ¹
+	// é€æ˜é€šé“ä¼ é€ç¼“å†²åŒºæ‰©å±•
 	public native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags, AnyChatOutParam outParam);
-	// ÖÕÖ¹´«ÊäÈÎÎñ
+	// ç»ˆæ­¢ä¼ è¾“ä»»åŠ¡
 	public native int CancelTransTask(int userid, int taskid);
-	// ²éÑ¯´«ÊäÈÎÎñ×´Ì¬
+	// æŸ¥è¯¢ä¼ è¾“ä»»åŠ¡çŠ¶æ€
 	public native int QueryTransTaskInfo(int userid, int taskid, int infoname, AnyChatOutParam outParam);
-	// ·¢ËÍSDK Filter Í¨ĞÅÊı¾İ
+	// å‘é€SDK Filter é€šä¿¡æ•°æ®
 	public native int SendSDKFilterData(byte[] buf, int len);
 	
-	// »ñÈ¡ÒôÆµ²¥·ÅÊı¾İ
+	// è·å–éŸ³é¢‘æ’­æ”¾æ•°æ®
 	public static native byte[] FetchAudioPlayBuffer(int size);
 	
-	// ±¾µØÊÓÆµ×Ô¶¯¶Ô½¹
+	// æœ¬åœ°è§†é¢‘è‡ªåŠ¨å¯¹ç„¦
 	public void CameraAutoFocus()
 	{
 		SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_FOCUSCTRL, 1);
 	}
-	// ²éÑ¯Ö¸¶¨ÓÃ»§Ãû³Æ
+	// æŸ¥è¯¢æŒ‡å®šç”¨æˆ·åç§°
 	public String GetUserName(int userid)
 	{
 		return QueryUserStateString(userid, AnyChatDefine.BRAC_USERSTATE_NICKNAME);
 	}
-	// ²éÑ¯Ö¸¶¨ÓÃ»§»¥ÁªÍøIPµØÖ·
+	// æŸ¥è¯¢æŒ‡å®šç”¨æˆ·äº’è”ç½‘IPåœ°å€
 	public String GetUserIPAddr(int userid)
 	{
 		return QueryUserStateString(userid, AnyChatDefine.BRAC_USERSTATE_INTERNETIP);
 	}
 	
-	// Ã¶¾Ù±¾µØÊÓÆµ²É¼¯Éè±¸
+	// æšä¸¾æœ¬åœ°è§†é¢‘é‡‡é›†è®¾å¤‡
 	public native String[] EnumVideoCapture();
-	// Ñ¡ÔñÖ¸¶¨µÄÊÓÆµ²É¼¯Éè±¸
+	// é€‰æ‹©æŒ‡å®šçš„è§†é¢‘é‡‡é›†è®¾å¤‡
 	public native int SelectVideoCapture(String devicename);
-	// »ñÈ¡µ±Ç°Ê¹ÓÃµÄÊÓÆµ²É¼¯Éè±¸
+	// è·å–å½“å‰ä½¿ç”¨çš„è§†é¢‘é‡‡é›†è®¾å¤‡
 	public native String GetCurVideoCapture();
-	// Ã¶¾Ù±¾µØÒôÆµ²É¼¯Éè±¸
+	// æšä¸¾æœ¬åœ°éŸ³é¢‘é‡‡é›†è®¾å¤‡
 	public native String[] EnumAudioCapture();
-	// Ñ¡ÔñÖ¸¶¨µÄÒôÆµ²É¼¯Éè±¸
+	// é€‰æ‹©æŒ‡å®šçš„éŸ³é¢‘é‡‡é›†è®¾å¤‡
 	public native int SelectAudioCapture(String devicename);
-	// »ñÈ¡µ±Ç°Ê¹ÓÃµÄÒôÆµ²É¼¯Éè±¸
+	// è·å–å½“å‰ä½¿ç”¨çš„éŸ³é¢‘é‡‡é›†è®¾å¤‡
 	public native String GetCurAudioCapture();
-	// Ã¶¾Ù±¾µØÒôÆµ²¥·ÅÉè±¸
+	// æšä¸¾æœ¬åœ°éŸ³é¢‘æ’­æ”¾è®¾å¤‡
 	public native String[] EnumAudioPlayback();
-	// Ñ¡ÔñÖ¸¶¨µÄÒôÆµ²¥·ÅÉè±¸
+	// é€‰æ‹©æŒ‡å®šçš„éŸ³é¢‘æ’­æ”¾è®¾å¤‡
 	public native int SelectAudioPlayback(String devicename);
-	// »ñÈ¡µ±Ç°Ê¹ÓÃµÄÒôÆµ²¥·ÅÉè±¸
+	// è·å–å½“å‰ä½¿ç”¨çš„éŸ³é¢‘æ’­æ”¾è®¾å¤‡
 	public native String GetCurAudioPlayback();	
 	
-	// ¸ü¸Äµ±Ç°µÄÁÄÌìÄ£Ê½
+	// æ›´æ”¹å½“å‰çš„èŠå¤©æ¨¡å¼
 	public native int ChangeChatMode(int chatmode);
-	// »ñÈ¡Ö¸¶¨ÓÃ»§µ±Ç°µÄÁÄÌìÄ£Ê½£¨·µ»ØÖµÎªdwChatMode£©
+	// è·å–æŒ‡å®šç”¨æˆ·å½“å‰çš„èŠå¤©æ¨¡å¼ï¼ˆè¿”å›å€¼ä¸ºdwChatModeï¼‰
 	public native int GetUserChatMode(int userid);
-	// ÇëÇóÓë¶Ô·½Ë½ÁÄ£¬Ïò¶Ô·½·¢ÆğË½ÁÄÇëÇó
+	// è¯·æ±‚ä¸å¯¹æ–¹ç§èŠï¼Œå‘å¯¹æ–¹å‘èµ·ç§èŠè¯·æ±‚
 	public native int PrivateChatRequest(int userid);
-	// »Ø¸´¶Ô·½µÄË½ÁÄÇëÇó
+	// å›å¤å¯¹æ–¹çš„ç§èŠè¯·æ±‚
 	public native int PrivateChatEcho(int userid, int requestid, int baccept);
-	// »Ø¸´¶Ô·½µÄË½ÁÄÇëÇó£¨À©Õ¹£¬¿ÉÒÔ¸½´ø³ö´í´úÂë£©
+	// å›å¤å¯¹æ–¹çš„ç§èŠè¯·æ±‚ï¼ˆæ‰©å±•ï¼Œå¯ä»¥é™„å¸¦å‡ºé”™ä»£ç ï¼‰
 	public native int PrivateChatEchoEx(int userid, int requestid, int errorcode);
-	// ÍË³öÓëÄ³ÓÃ»§µÄË½ÁÄ£¬»òÕß½«Ä³ÓÃ»§´Ó×Ô¼ºµÄË½ÁÄÁĞ±íÖĞÇå³ı
+	// é€€å‡ºä¸æŸç”¨æˆ·çš„ç§èŠï¼Œæˆ–è€…å°†æŸç”¨æˆ·ä»è‡ªå·±çš„ç§èŠåˆ—è¡¨ä¸­æ¸…é™¤
 	public native int PrivateChatExit(int userid);
 	
-	// ÉèÖÃÍâ²¿ÊäÈëÊÓÆµ¸ñÊ½
+	// è®¾ç½®å¤–éƒ¨è¾“å…¥è§†é¢‘æ ¼å¼
 	public static native int SetInputVideoFormat(int pixFmt, int dwWidth, int dwHeight, int dwFps, int dwFlags);
-	// Íâ²¿ÊÓÆµÊı¾İÊäÈë
+	// å¤–éƒ¨è§†é¢‘æ•°æ®è¾“å…¥
 	public static native int InputVideoData(byte[] lpVideoFrame, int dwSize, int dwTimeStamp);
-	// ÉèÖÃÍâ²¿ÊäÈëÒôÆµ¸ñÊ½
+	// è®¾ç½®å¤–éƒ¨è¾“å…¥éŸ³é¢‘æ ¼å¼
 	public static native int SetInputAudioFormat(int dwChannels, int dwSamplesPerSec, int dwBitsPerSample, int dwFlags);
-	// Íâ²¿ÒôÆµÊı¾İÊäÈë
+	// å¤–éƒ¨éŸ³é¢‘æ•°æ®è¾“å…¥
 	public static native int InputAudioData(byte[] lpSamples, int dwSize, int dwTimeStamp);
 	
-	// ÊÓÆµºô½ĞÊÂ¼ş¿ØÖÆ£¨ÇëÇó¡¢»Ø¸´¡¢¹Ò¶ÏµÈ£©
+	// è§†é¢‘å‘¼å«äº‹ä»¶æ§åˆ¶ï¼ˆè¯·æ±‚ã€å›å¤ã€æŒ‚æ–­ç­‰ï¼‰
 	public native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String szUserStr);
 	
-	// »ñÈ¡ÓÃ»§ºÃÓÑIDÁĞ±í
+	// è·å–ç”¨æˆ·å¥½å‹IDåˆ—è¡¨
 	public native int[] GetUserFriends();
-	// »ñÈ¡ºÃÓÑÔÚÏß×´Ì¬
+	// è·å–å¥½å‹åœ¨çº¿çŠ¶æ€
 	public native int GetFriendStatus(int dwFriendUserId);
-	// »ñÈ¡ÓÃ»§·Ö×éIDÁĞ±í
+	// è·å–ç”¨æˆ·åˆ†ç»„IDåˆ—è¡¨
 	public native int[] GetUserGroups();
-	// »ñÈ¡·Ö×éÏÂÃæµÄºÃÓÑÁĞ±í
+	// è·å–åˆ†ç»„ä¸‹é¢çš„å¥½å‹åˆ—è¡¨
 	public native int[] GetGroupFriends(int dwGroupId);
-	// »ñÈ¡ÓÃ»§ĞÅÏ¢
+	// è·å–ç”¨æˆ·ä¿¡æ¯
 	public native String GetUserInfo(int dwUserId, int dwInfoId);
-	// »ñÈ¡ÓÃ»§·Ö×éÃû³Æ
+	// è·å–ç”¨æˆ·åˆ†ç»„åç§°
 	public native String GetGroupName(int dwGroupId);
-	// ÓÃ»§ĞÅÏ¢¿ØÖÆ
+	// ç”¨æˆ·ä¿¡æ¯æ§åˆ¶
 	public native int UserInfoControl(int dwUserId, int dwCtrlCode, int wParam, int lParam, String szStrValue);
 	
-	// IP×é²¥¹¦ÄÜ¿ØÖÆ
+	// IPç»„æ’­åŠŸèƒ½æ§åˆ¶
 	public native int MultiCastControl(String lpMultiCastAddr, int dwPort, String lpNicAddr, int dwTTL, int dwFlags);
     
-    // Òì²½ÏûÏ¢Í¨Öª
+    // å¼‚æ­¥æ¶ˆæ¯é€šçŸ¥
     public void OnNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
     {
     	switch(dwNotifyMsg)
@@ -476,7 +476,7 @@ public class AnyChatCoreSDK
         }
      }
    
-    // Òì²½ÏûÏ¢Í¨Öª£¨AnyChatµ×²ãÆäËüÏß³Ì»Øµ÷ÉÏÀ´£¬ĞèÒªÍ¨¹ıMsg´«µİµ½Ö÷Ïß³Ì£©
+    // å¼‚æ­¥æ¶ˆæ¯é€šçŸ¥ï¼ˆAnyChatåº•å±‚å…¶å®ƒçº¿ç¨‹å›è°ƒä¸Šæ¥ï¼Œéœ€è¦é€šè¿‡Msgä¼ é€’åˆ°ä¸»çº¿ç¨‹ï¼‰
 	private void OnAnyChatNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
     {
     	Message tMsg=new Message();
@@ -488,7 +488,7 @@ public class AnyChatCoreSDK
         tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);
     }
-    // ÎÄ×ÖÏûÏ¢Í¨Öª£¨AnyChatµ×²ãÆäËüÏß³Ì»Øµ÷ÉÏÀ´£¬ĞèÒªÍ¨¹ıMsg´«µİµ½Ö÷Ïß³Ì£©
+    // æ–‡å­—æ¶ˆæ¯é€šçŸ¥ï¼ˆAnyChatåº•å±‚å…¶å®ƒçº¿ç¨‹å›è°ƒä¸Šæ¥ï¼Œéœ€è¦é€šè¿‡Msgä¼ é€’åˆ°ä¸»çº¿ç¨‹ï¼‰
 	private void OnTextMessageCallBack(int dwFromUserid, int dwToUserid, int bSecret, String message)
     {
     	Message tMsg=new Message();
@@ -501,7 +501,7 @@ public class AnyChatCoreSDK
         tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);
     }
-    // ÎÄ¼ş´«Êä»Øµ÷º¯Êı¶¨Òå
+    // æ–‡ä»¶ä¼ è¾“å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnTransFileCallBack(int userid, String filename, String tempfilepath, int filelength, int wparam, int lparam, int taskid)
     {
     	Message tMsg=new Message();
@@ -517,7 +517,7 @@ public class AnyChatCoreSDK
         tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);
     }
-    // »º³åÇø»Øµ÷º¯Êı¶¨Òå
+    // ç¼“å†²åŒºå›è°ƒå‡½æ•°å®šä¹‰
 	private void OnTransBufferCallBack(int userid, byte[] buf, int len)
     {
     	Message tMsg=new Message();
@@ -529,7 +529,7 @@ public class AnyChatCoreSDK
          tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);
     }
-    // »º³åÇøÀ©Õ¹»Øµ÷º¯Êı¶¨Òå
+    // ç¼“å†²åŒºæ‰©å±•å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnTransBufferExCallBack(int userid, byte[] buf, int len, int wparam, int lparam, int taskid)
     {
     	Message tMsg=new Message();
@@ -544,7 +544,7 @@ public class AnyChatCoreSDK
          tMsg.setData(tBundle);
         mHandler.sendMessage(tMsg);
     }
-    // ·şÎñÆ÷·¢ËÍµÄSDK Filter DataÊı¾İ»Øµ÷º¯Êı¶¨Òå
+    // æœåŠ¡å™¨å‘é€çš„SDK Filter Dataæ•°æ®å›è°ƒå‡½æ•°å®šä¹‰
 	private void OnSDKFilterDataCallBack(byte[] buf, int len)
     {
     	Message tMsg=new Message();
@@ -556,7 +556,7 @@ public class AnyChatCoreSDK
         mHandler.sendMessage(tMsg);
     }
 	
-	// ÊÓÆµÊı¾İ»Øµ÷º¯Êı
+	// è§†é¢‘æ•°æ®å›è°ƒå‡½æ•°
 	private void OnVideoDataCallBack(int userid, byte[] buf, int len, int width, int height)
 	{
 		mVideoHelper.SetVideoFmt(userid, width, height);
@@ -565,7 +565,7 @@ public class AnyChatCoreSDK
 		mVideoHelper.ShowVideo(userid, buf, degree, mirror);
 	}
 	
-	// ÊÓÆµºô½ĞÊÂ¼ş»Øµ÷º¯Êı
+	// è§†é¢‘å‘¼å«äº‹ä»¶å›è°ƒå‡½æ•°
 	private void OnVideoCallEventCallBack(int eventtype, int userid, int errorcode, int flags, int param, String userStr)
 	{
 		Message tMsg=new Message();
@@ -581,7 +581,7 @@ public class AnyChatCoreSDK
         mHandler.sendMessage(tMsg);
 	}
 	
-	// Â¼Ïñ¡¢¿ìÕÕÈÎÎñÍê³É»Øµ÷º¯Êı
+	// å½•åƒã€å¿«ç…§ä»»åŠ¡å®Œæˆå›è°ƒå‡½æ•°
 	private void OnRecordSnapShotExCallBack(int dwUserId, String lpFileName, int dwElapse, int dwFlags, int dwParam, String lpUserStr)
 	{
 		Message tMsg=new Message();
@@ -597,7 +597,7 @@ public class AnyChatCoreSDK
         mHandler.sendMessage(tMsg);
 	}
 	
-	// Êı¾İ¼ÓÃÜ¡¢½âÃÜ»Øµ÷º¯Êı
+	// æ•°æ®åŠ å¯†ã€è§£å¯†å›è°ƒå‡½æ•°
 	private int OnDataEncDecCallBack(int userid, int flags, byte[] buf, int len, AnyChatOutParam outParam)
 	{
 		if(encdecEvent != null)

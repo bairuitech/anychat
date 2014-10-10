@@ -7,27 +7,22 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 
-import android.R.integer;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.graphics.Matrix;
 
 public class MainActivity extends Activity implements AnyChatBaseEvent {
 	public AnyChatCoreSDK anyChatSDK;
@@ -37,6 +32,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private EditText edit_port;
 	private EditText edit_name;
 	private EditText edit_hourseID;
+	private TextView bottom_connState;
 	private TextView bottom_tips;
 	private Button btn_start;
 	private Button btn_logout;
@@ -64,16 +60,16 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 					AnyChatDefine.BRAC_SO_CORESDK_USEARMV6LIB, 1);
 			anyChatSDK.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
 
-			// ÊÓÆµ²É¼¯Çı¶¯ÉèÖÃ
+			// è§†é¢‘é‡‡é›†é©±åŠ¨è®¾ç½®
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER, 3);
-			// ÊÓÆµÏÔÊ¾Çı¶¯ÉèÖÃ
+			// è§†é¢‘æ˜¾ç¤ºé©±åŠ¨è®¾ç½®
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL, 5);
-			// ÒôÆµ²¥·ÅÇı¶¯ÉèÖÃ
+			// éŸ³é¢‘æ’­æ”¾é©±åŠ¨è®¾ç½®
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_AUDIO_PLAYDRVCTRL, 3);
-			// ÒôÆµ²É¼¯Çı¶¯ÉèÖÃ
+			// éŸ³é¢‘é‡‡é›†é©±åŠ¨è®¾ç½®
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_AUDIO_RECORDDRVCTRL, 3);
 
@@ -87,14 +83,16 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		edit_port = (EditText) this.findViewById(R.id.main_et_port);
 		edit_name = (EditText) this.findViewById(R.id.main_et_name);
 		edit_hourseID = (EditText) this.findViewById(R.id.main_et_hourseID);
+		bottom_connState =(TextView)this.findViewById(R.id.main_bottom_connState);
 		bottom_tips = (TextView) this.findViewById(R.id.main_bottom_tips);
 		btn_start = (Button) this.findViewById(R.id.main_btn_start);
 		btn_logout = (Button) this.findViewById(R.id.main_btn_logout);
 		btn_waiting = (Button)this.findViewById(R.id.main_btn_waiting);
 	
 		role_listView.setDivider(null);
-		//³õÊ¼»¯bottom_tipsĞÅÏ¢
-		bottom_tips.setText("Not content to the serve V" + anyChatSDK.GetSDKMainVersion()
+		bottom_connState.setText("Not content to the server");
+		//åˆå§‹åŒ–bottom_tipsä¿¡æ¯
+		bottom_tips.setText(" V" + anyChatSDK.GetSDKMainVersion()
 				+ "."+ anyChatSDK.GetSDKSubVersion() +"  Build time: "+anyChatSDK.GetSDKBuildTime());
 		bottom_tips.setGravity(Gravity.CENTER_HORIZONTAL);
 		btn_start.setOnClickListener(new OnClickListener() {
@@ -125,8 +123,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				setBtnVisible(1);
 				anyChatSDK.Logout();
 				role_listView.setAdapter(null);
-				bottom_tips.setText("Not content to the serve V" + anyChatSDK.GetSDKMainVersion()
-						+ "."+ anyChatSDK.GetSDKSubVersion() +"  Build time: "+anyChatSDK.GetSDKBuildTime());
+				bottom_connState.setText("Not connnect to the server");
 			}
 		});
 	}
@@ -138,27 +135,23 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		String hourseID = edit_hourseID.getText().toString().trim();
 
 		if (ValueUtils.isStrEmpty(ip)) {
-			bottom_tips.setVisibility(View.VISIBLE);
-			bottom_tips.setText("ÇëÊäÈëIP");
+			bottom_connState.setText("è¯·è¾“å…¥IP");
 			return false;
 		} else if (ValueUtils.isStrEmpty(port)) {
-			bottom_tips.setVisibility(View.VISIBLE);
-			bottom_tips.setText("ÇëÊäÈë¶Ë¿ÚºÅ");
+			bottom_connState.setText("è¯·è¾“å…¥ç«¯å£å·");
 			return false;
 		} else if (ValueUtils.isStrEmpty(name)) {
-			bottom_tips.setVisibility(View.VISIBLE);
-			bottom_tips.setText("ÇëÊäÈëĞÕÃû");
+			bottom_connState.setText("è¯·è¾“å…¥å§“å");
 			return false;
 		} else if (ValueUtils.isStrEmpty(hourseID)) {
-			bottom_tips.setVisibility(View.VISIBLE);
-			bottom_tips.setText("ÇëÊäÈë·¿¼äºÅ");
+			bottom_connState.setText("è¯·è¾“å…¥æˆ¿é—´å·");
 			return false;
 		} else {
 			return true;
 		}
 	}
 
-	//1¡¢2ºÍ3·Ö±ğ±íÊ¾°ÑµÇÂ½¡¢µÈ´ıºÍµÇ³öÏÔÊ¾³öÀ´£¬ÆäËûµÄÁ½¸öÒş²ØÁË
+	//1ã€2å’Œ3åˆ†åˆ«è¡¨ç¤ºæŠŠç™»é™†ã€ç­‰å¾…å’Œç™»å‡ºæ˜¾ç¤ºå‡ºæ¥ï¼Œå…¶ä»–çš„ä¸¤ä¸ªéšè—äº†
 	private void setBtnVisible(int index)
 	{
 		if (index ==1)
@@ -179,9 +172,16 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		}
 	}
 
+	private void hideKeyboard()
+	{
+		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);  
+		if (imm.isActive()) { 
+			imm.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); 
+		}
+	}
 	protected void onDestroy() {
 		if (bNeedRelease) {
-			anyChatSDK.Release(); // ¹Ø±ÕSDK
+			anyChatSDK.Release(); // ï¿½Ø±ï¿½SDK
 		}
 		anyChatSDK.Logout();
 		super.onDestroy();
@@ -191,13 +191,13 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		anyChatSDK.SetBaseEvent(this);
 		super.onResume();
 	}
-
+	
 	@Override
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
 		if (!bSuccess) {
 			setBtnVisible(1);
 			btn_start.setClickable(true);
-			Toast.makeText(this, "Á¬½Ó·şÎñÆ÷Ê§°Ü£¬×Ô¶¯ÖØÁ¬£¬ÇëÉÔºó...", Toast.LENGTH_SHORT)
+			Toast.makeText(this, "è¿æ¥æœåŠ¡å™¨å¤±è´¥ï¼Œè‡ªåŠ¨é‡è¿ï¼Œè¯·ç¨å...", Toast.LENGTH_SHORT)
 					.show();
 		}
 	}
@@ -206,8 +206,9 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
 		if (dwErrorCode == 0) {
 			setBtnVisible(3);
+			hideKeyboard();
 			
-			Toast.makeText(this, "µÇÂ¼³É¹¦£¡", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "ç™»å½•æˆåŠŸï¼", Toast.LENGTH_SHORT).show();
 			bNeedRelease = false;
 			int sHourseID = Integer.valueOf(edit_hourseID.getEditableText()
 					.toString());
@@ -216,7 +217,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			// finish();
 		} else {
 			setBtnVisible(1);
-			Toast.makeText(this, "µÇÂ¼Ê§°Ü£¬´íÎó´úÂë£º" + dwErrorCode, Toast.LENGTH_SHORT)
+			Toast.makeText(this, "ç™»å½•å¤±è´¥ï¼Œé”™è¯¯ä»£ç ï¼š" + dwErrorCode, Toast.LENGTH_SHORT)
 					.show();
 		}
 	}
@@ -242,11 +243,9 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		role_listView.setAdapter(adapter);
 
 		if (userID.length == 0) {
-			//bottom_tips.setVisibility(View.VISIBLE);
-			bottom_tips.setText("·¿¼äÀïÃ»ÓĞÈË");
+			bottom_connState.setText("æˆ¿é—´é‡Œæ²¡æœ‰äºº");
 		} else {
-			//bottom_tips.setVisibility(View.GONE);
-			bottom_tips.setText("Connect to the server success. " +"Build time: "+anyChatSDK.GetSDKBuildTime());
+			bottom_connState.setText("Connect to the server success.");
 			role_listView.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -290,7 +289,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		setBtnVisible(1);
-		Toast.makeText(this, "Á¬½Ó¹Ø±Õ£¬error£º" + dwErrorCode, Toast.LENGTH_SHORT)
+		Toast.makeText(this, "è¿æ¥å…³é—­ï¼Œerrorï¼š" + dwErrorCode, Toast.LENGTH_SHORT)
 				.show();
 	}
 

@@ -2,17 +2,17 @@ package com.bairuitech.anychat;
 
 import com.bairuitech.anychat.AnyChatOutParam;
 
-// Êı¾İ¼ÓÃÜ¡¢½âÃÜ½Ó¿Ú
+// æ•°æ®åŠ å¯†ã€è§£å¯†æ¥å£
 public interface AnyChatDataEncDecEvent {
 
-	// Êı¾İ¼Ó£¨½â£©ÃÜ±êÖ¾¶¨Òå£¨DataEncDec»Øµ÷²ÎÊı£©
-	public static final int BRAC_DATAENCDEC_FLAGS_ENCMODE	=	0x01;	///< ¼ÓÃÜÄ£Ê½
-	public static final int BRAC_DATAENCDEC_FLAGS_DECMODE	=	0x02;	///< ½âÃÜÄ£Ê½
-	public static final int BRAC_DATAENCDEC_FLAGS_AUDIO		=	0x10;	///< ÒôÆµ±àÂëÊı¾İ
-	public static final int BRAC_DATAENCDEC_FLAGS_VIDEO		=	0x20;	///< ÊÓÆµ±àÂëÊı¾İ
-	public static final int BRAC_DATAENCDEC_FLAGS_BUFFER	=	0x40;	///< Í¸Ã÷Í¨µÀÊı¾İ
-	public static final int BRAC_DATAENCDEC_FLAGS_TXTMSG	=	0x80;	///< ÎÄ×ÖÁÄÌìÊı¾İ
+	// æ•°æ®åŠ ï¼ˆè§£ï¼‰å¯†æ ‡å¿—å®šä¹‰ï¼ˆDataEncDecå›è°ƒå‚æ•°ï¼‰
+	public static final int BRAC_DATAENCDEC_FLAGS_ENCMODE	=	0x01;	///< åŠ å¯†æ¨¡å¼
+	public static final int BRAC_DATAENCDEC_FLAGS_DECMODE	=	0x02;	///< è§£å¯†æ¨¡å¼
+	public static final int BRAC_DATAENCDEC_FLAGS_AUDIO		=	0x10;	///< éŸ³é¢‘ç¼–ç æ•°æ®
+	public static final int BRAC_DATAENCDEC_FLAGS_VIDEO		=	0x20;	///< è§†é¢‘ç¼–ç æ•°æ®
+	public static final int BRAC_DATAENCDEC_FLAGS_BUFFER	=	0x40;	///< é€æ˜é€šé“æ•°æ®
+	public static final int BRAC_DATAENCDEC_FLAGS_TXTMSG	=	0x80;	///< æ–‡å­—èŠå¤©æ•°æ®
 
-	// Êı¾İ¼ÓÃÜ¡¢½âÃÜ»Øµ÷º¯Êı¶¨Òå
+	// æ•°æ®åŠ å¯†ã€è§£å¯†å›è°ƒå‡½æ•°å®šä¹‰
 	public int OnAnyChatDataEncDec(int userid, int flags, byte[] lpBuf, int dwLen, AnyChatOutParam outParam);
 }

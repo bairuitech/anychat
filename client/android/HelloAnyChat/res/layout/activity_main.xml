@@ -12,14 +12,13 @@
         android:layout_marginTop="30dip"
         android:layout_alignParentTop="true"
         android:gravity="center|center_vertical"
-        android:text="HELLO ANYCHAT"
+        android:text="Hello AnyChat"
         android:textColor="#ffffff"
         android:textSize="28sp" />
 
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
         android:stretchColumns="0,1" >
 
         <TableRow>
@@ -28,7 +27,7 @@
                 android:layout_width="70dip"
                 android:layout_height="25dip"
                 android:layout_marginLeft="65dip"
-                android:layout_marginTop="30dip"
+                android:layout_marginTop="20dip"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
@@ -54,7 +53,7 @@
             <LinearLayout
                 android:layout_width="25dip"
                 android:layout_height="25dip"
-                android:layout_marginTop="30dip"
+                android:layout_marginTop="20dip"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
@@ -92,7 +91,7 @@
                 android:layout_width="70dip"
                 android:layout_height="25dip"
                 android:layout_marginLeft="65dip"
-                android:layout_marginTop="30dip"
+                android:layout_marginTop="10dip"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
@@ -118,7 +117,7 @@
             <LinearLayout
                 android:layout_width="25dip"
                 android:layout_height="25dip"
-                android:layout_marginTop="30dip"
+                android:layout_marginTop="10dip"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
@@ -155,7 +154,7 @@
     <FrameLayout 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dip"
+        android:layout_marginTop="20dip"
         android:layout_gravity="center"
         >
                     
@@ -194,12 +193,22 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="50dip"
+        android:layout_marginTop="30dip"
         android:layout_weight="1"
         android:cacheColorHint="#00000000"
         android:listSelector="#00000000"
+        android:scrollbars="vertical"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth" />
+    
+    <TextView
+        android:id="@+id/main_bottom_connState"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:background="@android:color/darker_gray"
+        android:textColor="#000000"
+        android:text="Not connect to the server"/>
 
     <TextView
         android:id="@+id/main_bottom_tips"
@@ -209,7 +218,6 @@
         android:background="@android:color/black"
         android:gravity="center"
         android:text="Not connect to 192.168.1.1"
-        android:textColor="#ffffff"
-        android:visibility="visible" />
+        android:textColor="#ffffff"/>
     
 </LinearLayout>

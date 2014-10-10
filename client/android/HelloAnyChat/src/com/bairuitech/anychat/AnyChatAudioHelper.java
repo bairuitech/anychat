@@ -9,41 +9,41 @@ import android.media.MediaRecorder;
 import android.util.Log;
 
 
-// AnyChat ÒôÆµ°ü×°Àà£¬ÊµÏÖÒôÆµ²É¼¯¡¢²¥·ÅµÈ
+// AnyChat éŸ³é¢‘åŒ…è£…ç±»ï¼Œå®ç°éŸ³é¢‘é‡‡é›†ã€æ’­æ”¾ç­‰
 public class AnyChatAudioHelper {
 	private final static String TAG = "ANYCHAT";
 	private AudioTrack mAudioTrack = null;
 	private AudioRecord mAudioRecord = null;
 	
-	public static final int PLAY_MODE_AUTO		= 0;		// ×Ô¶¯Ä£Ê½
-	public static final int PLAY_MODE_RECEIVER	= 1;		// ÌıÍ²²¥·ÅÄ£Ê½
-	public static final int PLAY_MODE_SPEAKER	= 2;		// À®°È²¥·ÅÄ£Ê½	
+	public static final int PLAY_MODE_AUTO		= 0;		// è‡ªåŠ¨æ¨¡å¼
+	public static final int PLAY_MODE_RECEIVER	= 1;		// å¬ç­’æ’­æ”¾æ¨¡å¼
+	public static final int PLAY_MODE_SPEAKER	= 2;		// å–‡å­æ’­æ”¾æ¨¡å¼	
 	
-	private PlayAudioThread mPlayAudioThread = null;		// ²¥·ÅÏß³Ì
-	private boolean mPlayThreadExitFlag = false;			// ²¥·ÅÏß³ÌÍË³ö±êÖ¾
+	private PlayAudioThread mPlayAudioThread = null;		// æ’­æ”¾çº¿ç¨‹
+	private boolean mPlayThreadExitFlag = false;			// æ’­æ”¾çº¿ç¨‹é€€å‡ºæ ‡å¿—
 	private int mMinPlayBufSize = 0;
 	private boolean mAudioPlayReleased = false;
 	
-	private RecordAudioThread mRecordAudioThread = null;	// ²É¼¯Ïß³Ì
-	private boolean mRecordThreadExitFlag = false;			// ²É¼¯Ïß³ÌÍË³ö±êÖ¾
+	private RecordAudioThread mRecordAudioThread = null;	// é‡‡é›†çº¿ç¨‹
+	private boolean mRecordThreadExitFlag = false;			// é‡‡é›†çº¿ç¨‹é€€å‡ºæ ‡å¿—
 	private int mMinRecordBufSize = 0;
 	private boolean mAudioRecordReleased = false;
 	
 	private Context mContext = null;
 	private int mProfile = 0;
-	private int mPlayMode = PLAY_MODE_SPEAKER;				// Ä¬ÈÏÊÇÀ®°È²¥·ÅÄ£Ê½
+	private int mPlayMode = PLAY_MODE_SPEAKER;				// é»˜è®¤æ˜¯å–‡å­æ’­æ”¾æ¨¡å¼
 
-	// ÉèÖÃ¸¸´°¿Ú¾ä±ú
+	// è®¾ç½®çˆ¶çª—å£å¥æŸ„
 	public void SetContext(Context ctx)	{	mContext = ctx;	}
 	
-	// ³õÊ¼»¯ÒôÆµ²¥·ÅÆ÷
+	// åˆå§‹åŒ–éŸ³é¢‘æ’­æ”¾å™¨
 	public int InitAudioPlayer(int profile) {
 		if(mAudioTrack != null)
 			return 0;
 		mProfile = profile;
 		Log.d(TAG, "InitAudioPlayer, profile: " + profile);
 		int channel, samplerate, samplebit;
-		// ¸ù¾İÉÏ²ãÉè¶¨µÄprofileÀ´ÅäÖÃ²ÎÊı
+		// æ ¹æ®ä¸Šå±‚è®¾å®šçš„profileæ¥é…ç½®å‚æ•°
 		if(profile==1) {
 			samplerate = 16000;
 			channel = AudioFormat.CHANNEL_CONFIGURATION_MONO;
@@ -59,7 +59,7 @@ public class AnyChatAudioHelper {
 		}
 		try {
 			mAudioPlayReleased = false;
-			// »ñµÃ¹¹½¨¶ÔÏóµÄ×îĞ¡»º³åÇø´óĞ¡
+			// è·å¾—æ„å»ºå¯¹è±¡çš„æœ€å°ç¼“å†²åŒºå¤§å°
 			mMinPlayBufSize = AudioTrack.getMinBufferSize(samplerate, channel, samplebit);
 			mAudioTrack = new AudioTrack(mPlayMode == PLAY_MODE_SPEAKER ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_VOICE_CALL,
 					samplerate, channel, samplebit, mMinPlayBufSize, AudioTrack.MODE_STREAM);
@@ -76,7 +76,7 @@ public class AnyChatAudioHelper {
 		}
 		return 0;
 	}
-	// Ïú»ÙÒôÆµ²¥·ÅÆ÷
+	// é”€æ¯éŸ³é¢‘æ’­æ”¾å™¨
 	public void ReleaseAudioPlayer() {
 		if(mAudioPlayReleased)
 			return;
@@ -99,7 +99,7 @@ public class AnyChatAudioHelper {
 	}
 	
 	/*
-	 *  ÒôÆµ²¥·ÅÏß³Ì
+	 *  éŸ³é¢‘æ’­æ”¾çº¿ç¨‹
 	 */
 	class PlayAudioThread extends Thread
 	{
@@ -133,19 +133,19 @@ public class AnyChatAudioHelper {
 		}
 	}
 	
-	// ÅĞ¶Ïµ±Ç°ÊÇ·ñÎªÀ®°È²¥·ÅÄ£Ê½
+	// åˆ¤æ–­å½“å‰æ˜¯å¦ä¸ºå–‡å­æ’­æ”¾æ¨¡å¼
 	public Boolean IsSpeakerMode() {	return mPlayMode == PLAY_MODE_SPEAKER;	}
 	
-	// ÇĞ»»ÉùÒô²¥·ÅÉè±¸£¨À®°È¡¢¶ú»ú£©
+	// åˆ‡æ¢å£°éŸ³æ’­æ”¾è®¾å¤‡ï¼ˆå–‡å­ã€è€³æœºï¼‰
 	public void SwitchPlayMode(int mode) {
 		try {
 			AudioManager audioManager = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
 			if(mode == PLAY_MODE_AUTO) {
 				if(IsSpeakerMode()) {
-					audioManager.setMode(AudioManager.MODE_IN_CALL);		// ÇĞ»»µ½ÌıÍ²
+					audioManager.setMode(AudioManager.MODE_IN_CALL);		// åˆ‡æ¢åˆ°å¬ç­’
 					mPlayMode = PLAY_MODE_RECEIVER;
 				} else {
-					audioManager.setMode(AudioManager.MODE_NORMAL);			// ÇĞ»»µ½ÑïÉùÆ÷
+					audioManager.setMode(AudioManager.MODE_NORMAL);			// åˆ‡æ¢åˆ°æ‰¬å£°å™¨
 					mPlayMode = PLAY_MODE_SPEAKER;
 				}
 			} else if(mode == PLAY_MODE_RECEIVER) {
@@ -155,20 +155,20 @@ public class AnyChatAudioHelper {
 				audioManager.setMode(AudioManager.MODE_NORMAL);
 				mPlayMode = PLAY_MODE_SPEAKER;
 			}
-			// ÖØĞÂ³õÊ¼»¯²¥·ÅÆ÷
+			// é‡æ–°åˆå§‹åŒ–æ’­æ”¾å™¨
 			ReleaseAudioPlayer();
 			InitAudioPlayer(mProfile);
 		}
 		catch (Exception e) {}
 	}
 	
-	// ³õÊ¼»¯ÒôÆµ²É¼¯Éè±¸
+	// åˆå§‹åŒ–éŸ³é¢‘é‡‡é›†è®¾å¤‡
 	public int InitAudioRecorder(int profile) {
 		if(mAudioRecord != null)
 			return 0;
 		Log.d(TAG, "InitAudioRecorder, profile: " + profile);
 		int channel, samplerate, samplebit;
-		// ¸ù¾İÉÏ²ãÉè¶¨µÄprofileÀ´ÅäÖÃ²ÎÊı
+		// æ ¹æ®ä¸Šå±‚è®¾å®šçš„profileæ¥é…ç½®å‚æ•°
 		if(profile==1) {
 			samplerate = 16000;
 			channel = AudioFormat.CHANNEL_CONFIGURATION_MONO;
@@ -184,11 +184,11 @@ public class AnyChatAudioHelper {
 		}
 		try {
 			mAudioRecordReleased = false;
-			// »ñµÃ¹¹½¨¶ÔÏóµÄ×îĞ¡»º³åÇø´óĞ¡
+			// è·å¾—æ„å»ºå¯¹è±¡çš„æœ€å°ç¼“å†²åŒºå¤§å°
 			mMinRecordBufSize = AudioRecord.getMinBufferSize(samplerate, channel, samplebit);
 			mAudioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, samplerate, channel, samplebit, mMinRecordBufSize);
 			
-			// ÉèÖÃAnyChatµÄÍâ²¿ÒôÆµÊäÈë²ÎÊı
+			// è®¾ç½®AnyChatçš„å¤–éƒ¨éŸ³é¢‘è¾“å…¥å‚æ•°
 			AnyChatCoreSDK.SetInputAudioFormat(mAudioRecord.getChannelCount(), mAudioRecord.getSampleRate(), 16, 0);
 			
 			if (mRecordAudioThread == null)
@@ -205,7 +205,7 @@ public class AnyChatAudioHelper {
 		}
 		return 0;
 	}
-	// Ïú»ÙÒôÆµ²É¼¯Éè±¸
+	// é”€æ¯éŸ³é¢‘é‡‡é›†è®¾å¤‡
 	public void ReleaseAudioRecorder() {
 		if(mAudioRecordReleased)
 			return;
@@ -228,7 +228,7 @@ public class AnyChatAudioHelper {
 	
 	
 	/*
-	 *  ÒôÆµ²É¼¯Ïß³Ì
+	 *  éŸ³é¢‘é‡‡é›†çº¿ç¨‹
 	 */
 	class RecordAudioThread extends Thread
 	{
@@ -255,7 +255,7 @@ public class AnyChatAudioHelper {
 					int ret = mAudioRecord.read(recordbuf, 0, recordbuf.length);
 					if(ret ==  AudioRecord.ERROR_INVALID_OPERATION || ret == AudioRecord.ERROR_BAD_VALUE)
 						break;
-					// Í¨¹ıAnyChatµÄÍâ²¿ÒôÆµÊäÈë½Ó¿Ú½«ÒôÆµ²ÉÑùÊı¾İ´«ÈëÄÚºË
+					// é€šè¿‡AnyChatçš„å¤–éƒ¨éŸ³é¢‘è¾“å…¥æ¥å£å°†éŸ³é¢‘é‡‡æ ·æ•°æ®ä¼ å…¥å†…æ ¸
 					AnyChatCoreSDK.InputAudioData(recordbuf, ret, 0);
 				} catch (Exception e) {
 					break;

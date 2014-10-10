@@ -13,7 +13,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,8 +28,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 	public AnyChatCoreSDK anychatSDK;
 
-	private boolean bSelfVideoOpened = false; // ±¾µØÊÓÆµÊÇ·ñÒÑ´ò¿ª
-	private boolean bOtherVideoOpened = false; // ¶Ô·½ÊÓÆµÊÇ·ñÒÑ´ò¿ª
+	private boolean bSelfVideoOpened = false; // æœ¬åœ°è§†é¢‘æ˜¯å¦å·²æ‰“å¼€
+	private boolean bOtherVideoOpened = false; // å¯¹æ–¹è§†é¢‘æ˜¯å¦å·²æ‰“å¼€
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 	private void InitLayout() {
 		this.setContentView(R.layout.video_frame);
-		this.setTitle("Óë" + anychatSDK.GetUserName(userID));
+		this.setTitle("ä¸" + anychatSDK.GetUserName(userID));
 		myView = (SurfaceView) findViewById(R.id.surface_local);
 		otherView = (SurfaceView) findViewById(R.id.surface_remote);
 		mBtnSitchvideo = (ImageView) findViewById(R.id.BtnSitchvideo);
@@ -63,7 +62,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 			public void onClick(View v) {
 				if (v == mBtnSitchvideo) {
 
-					// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµ²É¼¯£¬ÔòÔÚJava²ã½øĞĞÉãÏñÍ·ÇĞ»»
+					// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘é‡‡é›†ï¼Œåˆ™åœ¨Javaå±‚è¿›è¡Œæ‘„åƒå¤´åˆ‡æ¢
 					if (AnyChatCoreSDK
 							.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
 						AnyChatCoreSDK.mCameraHelper.SwitchCamera();
@@ -85,13 +84,13 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 			}
 		});
 
-		// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµ²É¼¯£¬ÔòĞèÒªÉèÖÃSurfaceµÄCallBack
+		// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘é‡‡é›†ï¼Œåˆ™éœ€è¦è®¾ç½®Surfaceçš„CallBack
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
 			myView.getHolder().addCallback(AnyChatCoreSDK.mCameraHelper);
 		}
 
-		// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµÏÔÊ¾£¬ÔòĞèÒªÉèÖÃSurfaceµÄCallBack
+		// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘æ˜¾ç¤ºï¼Œåˆ™éœ€è¦è®¾ç½®Surfaceçš„CallBack
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 			int index = anychatSDK.mVideoHelper
@@ -105,18 +104,18 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		anychatSDK.UserCameraControl(userID, 1);
 		anychatSDK.UserSpeakControl(userID, 1);
 
-		// ÅĞ¶ÏÊÇ·ñÏÔÊ¾±¾µØÉãÏñÍ·ÇĞ»»Í¼±ê
+		// åˆ¤æ–­æ˜¯å¦æ˜¾ç¤ºæœ¬åœ°æ‘„åƒå¤´åˆ‡æ¢å›¾æ ‡
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
 			if (AnyChatCoreSDK.mCameraHelper.GetCameraNumber() > 1) {
-				// Ä¬ÈÏ´ò¿ªÇ°ÖÃÉãÏñÍ·
+				// é»˜è®¤æ‰“å¼€å‰ç½®æ‘„åƒå¤´
 				AnyChatCoreSDK.mCameraHelper
 						.SelectVideoCapture(AnyChatCoreSDK.mCameraHelper.CAMERA_FACING_FRONT);
 			}
 		} else {
 			String[] strVideoCaptures = anychatSDK.EnumVideoCapture();
 			if (strVideoCaptures != null && strVideoCaptures.length > 1) {
-				// Ä¬ÈÏ´ò¿ªÇ°ÖÃÉãÏñÍ·
+				// é»˜è®¤æ‰“å¼€å‰ç½®æ‘„åƒå¤´
 				for (int i = 0; i < strVideoCaptures.length; i++) {
 					String strDevices = strVideoCaptures[i];
 					if (strDevices.indexOf("Front") >= 0) {
@@ -127,15 +126,15 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 			}
 		}
 
-		// ¸ù¾İÆÁÄ»·½Ïò¸Ä±ä±¾µØsurfaceviewµÄ¿í¸ß±È
+		// æ ¹æ®å±å¹•æ–¹å‘æ”¹å˜æœ¬åœ°surfaceviewçš„å®½é«˜æ¯”
 		if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			adjustLocalVideo(true);
 		} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 			adjustLocalVideo(false);
 		}
 		
-		anychatSDK.UserCameraControl(-1, 1);//-1±íÊ¾¶Ô±¾µØÊÓÆµ½øĞĞ¿ØÖÆ£¬´ò¿ª±¾µØÊÓÆµ
-		anychatSDK.UserSpeakControl(-1, 1);//-1±íÊ¾¶Ô±¾µØÒôÆµ½øĞĞ¿ØÖÆ£¬´ò¿ª±¾µØÒôÆµ
+		anychatSDK.UserCameraControl(-1, 1);//-1è¡¨ç¤ºå¯¹æœ¬åœ°è§†é¢‘è¿›è¡Œæ§åˆ¶ï¼Œæ‰“å¼€æœ¬åœ°è§†é¢‘
+		anychatSDK.UserSpeakControl(-1, 1);//-1è¡¨ç¤ºå¯¹æœ¬åœ°éŸ³é¢‘è¿›è¡Œæ§åˆ¶ï¼Œæ‰“å¼€æœ¬åœ°éŸ³é¢‘
 		
 	}
 
@@ -150,7 +149,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 	protected void onRestart() {
 		super.onRestart();
-		// Èç¹ûÊÇ²ÉÓÃJavaÊÓÆµÏÔÊ¾£¬ÔòĞèÒªÉèÖÃSurfaceµÄCallBack
+		// å¦‚æœæ˜¯é‡‡ç”¨Javaè§†é¢‘æ˜¾ç¤ºï¼Œåˆ™éœ€è¦è®¾ç½®Surfaceçš„CallBack
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 			int index = anychatSDK.mVideoHelper
@@ -274,7 +273,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-		// ÍøÂçÁ¬½Ó¶Ï¿ªÖ®ºó£¬ÉÏ²ãĞèÒªÖ÷¶¯¹Ø±ÕÒÑ¾­´ò¿ªµÄÒôÊÓÆµÉè±¸
+		// ç½‘ç»œè¿æ¥æ–­å¼€ä¹‹åï¼Œä¸Šå±‚éœ€è¦ä¸»åŠ¨å…³é—­å·²ç»æ‰“å¼€çš„éŸ³è§†é¢‘è®¾å¤‡
 		if (bOtherVideoOpened) {
 			anychatSDK.UserCameraControl(userID, 0);
 			anychatSDK.UserSpeakControl(userID, 0);

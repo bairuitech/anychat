@@ -47,10 +47,10 @@ public class RoleListAdapter extends BaseAdapter {
 			holder.mname = (TextView) convertView.findViewById(R.id.mname);
 			holder.mRoleID = (TextView) convertView.findViewById(R.id.mRoleID);
 			convertView.setTag(holder);
-			//ÉèÖÃ°×É«µ×Í¼Í¸Ã÷¶È
+			//è®¾ç½®ç™½è‰²åº•å›¾é€æ˜åº¦
 			ImageView imageView = (ImageView)convertView.findViewById(R.id.cellBackground);
 			imageView.setAlpha(position *25);
-			//Ëæ»úÉèÖÃ½ÇÉ«Í·Ïñ
+			//éšæœºè®¾ç½®è§’è‰²å¤´åƒ
 			setRoleHeader(convertView);
 		} else {
 			holder = (ViewHolder) convertView.getTag();

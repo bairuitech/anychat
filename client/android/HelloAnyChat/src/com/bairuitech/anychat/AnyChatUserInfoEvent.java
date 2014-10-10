@@ -1,9 +1,9 @@
 package com.bairuitech.anychat;
 
-//AnyChatÓÃ»§ĞÅÏ¢ÊÂ¼ş½Ó¿Ú
+//AnyChatç”¨æˆ·ä¿¡æ¯äº‹ä»¶æ¥å£
 public interface AnyChatUserInfoEvent {
-	// ÓÃ»§ĞÅÏ¢¸üĞÂÍ¨Öª£¬wParam£¨INT£©±íÊ¾ÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾¸üĞÂÀà±ğ
+	// ç”¨æˆ·ä¿¡æ¯æ›´æ–°é€šçŸ¥ï¼ŒwParamï¼ˆINTï¼‰è¡¨ç¤ºç”¨æˆ·IDå·ï¼ŒlParamï¼ˆINTï¼‰è¡¨ç¤ºæ›´æ–°ç±»åˆ«
     public void OnAnyChatUserInfoUpdate(int dwUserId, int dwType);
-	// ºÃÓÑÔÚÏß×´Ì¬±ä»¯£¬wParam£¨INT£©±íÊ¾ºÃÓÑÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾ÓÃ»§µÄµ±Ç°»î¶¯×´Ì¬£º0 ÀëÏß£¬ 1 ÉÏÏß
+	// å¥½å‹åœ¨çº¿çŠ¶æ€å˜åŒ–ï¼ŒwParamï¼ˆINTï¼‰è¡¨ç¤ºå¥½å‹ç”¨æˆ·IDå·ï¼ŒlParamï¼ˆINTï¼‰è¡¨ç¤ºç”¨æˆ·çš„å½“å‰æ´»åŠ¨çŠ¶æ€ï¼š0 ç¦»çº¿ï¼Œ 1 ä¸Šçº¿
     public void OnAnyChatFriendStatus(int dwUserId, int dwStatus);
 }
