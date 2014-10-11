@@ -1,23 +1,23 @@
 package com.example.helloanychat;
 
 public class RoleInfo {
-	private String m_strName;
-	private String m_strUserID;
+	private String mStrName;
+	private String mStrUserID;
 
 	public void setName(String strName) {
-		m_strName = strName;
+		mStrName = strName;
 	}
 
 	public String getName() {
-		return m_strName;
+		return mStrName;
 	}
 
 	public void setUserID(String strUserID) {
-		m_strUserID = strUserID;
+		mStrUserID = strUserID;
 	}
 
 	public String getUserID() {
-		return m_strUserID;
+		return mStrUserID;
 	}
 
 }

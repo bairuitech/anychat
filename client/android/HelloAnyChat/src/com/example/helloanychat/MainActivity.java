@@ -25,23 +25,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements AnyChatBaseEvent {
-	public AnyChatCoreSDK anyChatSDK;
+	private ListView mRoleList;
+	private EditText mEditIP;
+	private EditText mEditPort;
+	private EditText mEditName;
+	private EditText mEditRoomID;
+	private TextView mBottomConnMsg;
+	private TextView mBottomBuildMsg;
+	private Button 	 mBtnStart;
+	private Button   mBtnLogout;
+	private Button   mBtnWaiting;
 
-	private ListView role_listView;
-	private EditText edit_ip;
-	private EditText edit_port;
-	private EditText edit_name;
-	private EditText edit_hourseID;
-	private TextView bottom_connState;
-	private TextView bottom_tips;
-	private Button btn_start;
-	private Button btn_logout;
-	private Button btn_waiting;
-
-	private List<RoleInfo> roleInfoList = new ArrayList<RoleInfo>();
-	private RoleListAdapter adapter;
+	private List<RoleInfo> mRoleInfoList = new ArrayList<RoleInfo>();
+	private RoleListAdapter mAdapter;
 
 	private boolean bNeedRelease = false;
+	
+	public AnyChatCoreSDK 	anyChatSDK;
+	public ConfigEntity 	configEntity;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,139 +50,135 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		setContentView(R.layout.activity_main);
 
 		InitSDK();
-		initViews();
+		InitLayout();
 	}
 
 	private void InitSDK() {
 		if (anyChatSDK == null) {
 			anyChatSDK = new AnyChatCoreSDK();
 			anyChatSDK.SetBaseEvent(this);
-			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_CORESDK_USEARMV6LIB, 1);
 			anyChatSDK.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
 
+			configEntity = new ConfigEntity();
 			// 视频采集驱动设置
 			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER, 3);
+					AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER, configEntity.videoCapDriver);
 			// 视频显示驱动设置
 			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL, 5);
+					AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL, configEntity.videoShowDriver);
 			// 音频播放驱动设置
 			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_AUDIO_PLAYDRVCTRL, 3);
+					AnyChatDefine.BRAC_SO_AUDIO_PLAYDRVCTRL, configEntity.audioPlayDriver);
 			// 音频采集驱动设置
 			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_AUDIO_RECORDDRVCTRL, 3);
+					AnyChatDefine.BRAC_SO_AUDIO_RECORDDRVCTRL, configEntity.audioRecordDriver);
 
 			bNeedRelease = true;
 		}
 	}
 
-	private void initViews() {
-		role_listView = (ListView) this.findViewById(R.id.role_listview);
-		edit_ip = (EditText) this.findViewById(R.id.main_et_ip);
-		edit_port = (EditText) this.findViewById(R.id.main_et_port);
-		edit_name = (EditText) this.findViewById(R.id.main_et_name);
-		edit_hourseID = (EditText) this.findViewById(R.id.main_et_hourseID);
-		bottom_connState =(TextView)this.findViewById(R.id.main_bottom_connState);
-		bottom_tips = (TextView) this.findViewById(R.id.main_bottom_tips);
-		btn_start = (Button) this.findViewById(R.id.main_btn_start);
-		btn_logout = (Button) this.findViewById(R.id.main_btn_logout);
-		btn_waiting = (Button)this.findViewById(R.id.main_btn_waiting);
-	
-		role_listView.setDivider(null);
-		bottom_connState.setText("Not content to the server");
-		//初始化bottom_tips信息
-		bottom_tips.setText(" V" + anyChatSDK.GetSDKMainVersion()
-				+ "."+ anyChatSDK.GetSDKSubVersion() +"  Build time: "+anyChatSDK.GetSDKBuildTime());
-		bottom_tips.setGravity(Gravity.CENTER_HORIZONTAL);
-		btn_start.setOnClickListener(new OnClickListener() {
-			
+	private void InitLayout() {
+		mRoleList = (ListView) this.findViewById(R.id.roleListView);
+		mEditIP = (EditText) this.findViewById(R.id.mainUIEditIP);
+		mEditPort = (EditText) this.findViewById(R.id.mainUIEditPort);
+		mEditName = (EditText) this.findViewById(R.id.main_et_name);
+		mEditRoomID = (EditText) this.findViewById(R.id.mainUIEditRoomID);
+		mBottomConnMsg = (TextView) this
+				.findViewById(R.id.mainUIbottomConnMsg);
+		mBottomBuildMsg = (TextView) this.findViewById(R.id.mainUIbottomBuildMsg);
+		mBtnStart = (Button) this.findViewById(R.id.mainUIStartBtn);
+		mBtnLogout = (Button) this.findViewById(R.id.mainUILogoutBtn);
+		mBtnWaiting = (Button) this.findViewById(R.id.mainUIWaitingBtn);
+
+		mRoleList.setDivider(null);
+		mBottomConnMsg.setText("No content to the server");
+		// 初始化bottom_tips信息
+		mBottomBuildMsg.setText(" V" + anyChatSDK.GetSDKMainVersion() + "."
+				+ anyChatSDK.GetSDKSubVersion() + "  Build time: "
+				+ anyChatSDK.GetSDKBuildTime());
+		mBottomBuildMsg.setGravity(Gravity.CENTER_HORIZONTAL);
+		mBtnStart.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				if (checkInputData()) {
-					//setLoginPicRun(true);
-					
-					setBtnVisible(2);
-					
-					String strIP = edit_ip.getEditableText().toString();
-					int sPort = Integer.parseInt(edit_port.getEditableText()
+					setBtnVisible(ConfigEntity.showWaitingFlag);
+
+					String strIP = mEditIP.getEditableText().toString();
+					int sPort = Integer.parseInt(mEditPort.getEditableText()
 							.toString());
-					String roleName = edit_name.getEditableText().toString();
+					String roleName = mEditName.getEditableText().toString();
 					anyChatSDK.Connect(strIP, sPort);
 					anyChatSDK.Login(roleName, "");
-					
 				}
 			}
 		});
-		
-		btn_logout.setOnClickListener(new OnClickListener() {
-			
+
+		mBtnLogout.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				setBtnVisible(1);
+				setBtnVisible(ConfigEntity.showLoginFlag);
 				anyChatSDK.Logout();
-				role_listView.setAdapter(null);
-				bottom_connState.setText("Not connnect to the server");
+				mRoleList.setAdapter(null);
+				mBottomConnMsg.setText("No connnect to the server");
 			}
 		});
 	}
-
+	
 	private boolean checkInputData() {
-		String ip = edit_ip.getText().toString().trim();
-		String port = edit_port.getText().toString().trim();
-		String name = edit_name.getText().toString().trim();
-		String hourseID = edit_hourseID.getText().toString().trim();
+		String ip = mEditIP.getText().toString().trim();
+		String port = mEditPort.getText().toString().trim();
+		String name = mEditName.getText().toString().trim();
+		String roomID = mEditRoomID.getText().toString().trim();
 
 		if (ValueUtils.isStrEmpty(ip)) {
-			bottom_connState.setText("请输入IP");
+			mBottomConnMsg.setText("请输入IP");
 			return false;
 		} else if (ValueUtils.isStrEmpty(port)) {
-			bottom_connState.setText("请输入端口号");
+			mBottomConnMsg.setText("请输入端口号");
 			return false;
 		} else if (ValueUtils.isStrEmpty(name)) {
-			bottom_connState.setText("请输入姓名");
+			mBottomConnMsg.setText("请输入姓名");
 			return false;
-		} else if (ValueUtils.isStrEmpty(hourseID)) {
-			bottom_connState.setText("请输入房间号");
+		} else if (ValueUtils.isStrEmpty(roomID)) {
+			mBottomConnMsg.setText("请输入房间号");
 			return false;
 		} else {
 			return true;
 		}
 	}
 
-	//1、2和3分别表示把登陆、等待和登出显示出来，其他的两个隐藏了
-	private void setBtnVisible(int index)
-	{
-		if (index ==1)
-		{
-			btn_start.setVisibility(View.VISIBLE);
-			btn_logout.setVisibility(View.GONE);
-			btn_waiting.setVisibility(View.GONE);
-		}
-		else if (index ==2) {
-			btn_start.setVisibility(View.GONE);
-			btn_logout.setVisibility(View.GONE);
-			btn_waiting.setVisibility(View.VISIBLE);
-		}
-		else if (index==3) {
-			btn_start.setVisibility(View.GONE);
-			btn_logout.setVisibility(View.VISIBLE);
-			btn_waiting.setVisibility(View.GONE);
+	//控制登陆，等待和登出按钮状态
+	private void setBtnVisible(int index) {
+		if (index == ConfigEntity.showLoginFlag) {
+			mBtnStart.setVisibility(View.VISIBLE);
+			mBtnLogout.setVisibility(View.GONE);
+			mBtnWaiting.setVisibility(View.GONE);
+		} else if (index == ConfigEntity.showWaitingFlag) {
+			mBtnStart.setVisibility(View.GONE);
+			mBtnLogout.setVisibility(View.GONE);
+			mBtnWaiting.setVisibility(View.VISIBLE);
+		} else if (index == ConfigEntity.showLogoutFlag) {
+			mBtnStart.setVisibility(View.GONE);
+			mBtnLogout.setVisibility(View.VISIBLE);
+			mBtnWaiting.setVisibility(View.GONE);
 		}
 	}
 
-	private void hideKeyboard()
-	{
-		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);  
-		if (imm.isActive()) { 
-			imm.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); 
+	private void hideKeyboard() {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (imm.isActive()) {
+			imm.hideSoftInputFromWindow(getCurrentFocus()
+					.getApplicationWindowToken(),
+					InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 	}
+
 	protected void onDestroy() {
 		if (bNeedRelease) {
-			anyChatSDK.Release(); // �ر�SDK
+			anyChatSDK.Release();
 		}
 		anyChatSDK.Logout();
 		super.onDestroy();
@@ -191,12 +188,12 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		anyChatSDK.SetBaseEvent(this);
 		super.onResume();
 	}
-	
+
 	@Override
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
 		if (!bSuccess) {
-			setBtnVisible(1);
-			btn_start.setClickable(true);
+			setBtnVisible(ConfigEntity.showLoginFlag);
+			mBtnStart.setClickable(true);
 			Toast.makeText(this, "连接服务器失败，自动重连，请稍后...", Toast.LENGTH_SHORT)
 					.show();
 		}
@@ -205,18 +202,18 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	@Override
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
 		if (dwErrorCode == 0) {
-			setBtnVisible(3);
+			setBtnVisible(ConfigEntity.showLogoutFlag);
 			hideKeyboard();
-			
+
 			Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show();
 			bNeedRelease = false;
-			int sHourseID = Integer.valueOf(edit_hourseID.getEditableText()
+			int sHourseID = Integer.valueOf(mEditRoomID.getEditableText()
 					.toString());
 			anyChatSDK.EnterRoom(sHourseID, "");
 
 			// finish();
 		} else {
-			setBtnVisible(1);
+			setBtnVisible(ConfigEntity.showLoginFlag);
 			Toast.makeText(this, "登录失败，错误代码：" + dwErrorCode, Toast.LENGTH_SHORT)
 					.show();
 		}
@@ -229,24 +226,23 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	@Override
 	public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId) {
-		roleInfoList.clear();
+		mRoleInfoList.clear();
 		int[] userID = anyChatSDK.GetOnlineUser();
 		for (int index = 0; index < userID.length; ++index) {
 			RoleInfo info = new RoleInfo();
 			info.setName(anyChatSDK.GetUserName(userID[index]));
 			info.setUserID(String.valueOf(userID[index]));
-			roleInfoList.add(info);
+			mRoleInfoList.add(info);
 		}
 
-
-		adapter = new RoleListAdapter(MainActivity.this, roleInfoList);
-		role_listView.setAdapter(adapter);
+		mAdapter = new RoleListAdapter(MainActivity.this, mRoleInfoList);
+		mRoleList.setAdapter(mAdapter);
 
 		if (userID.length == 0) {
-			bottom_connState.setText("房间里没有人");
+			mBottomConnMsg.setText("房间里没有人");
 		} else {
-			bottom_connState.setText("Connect to the server success.");
-			role_listView.setOnItemClickListener(new OnItemClickListener() {
+			mBottomConnMsg.setText("Connect to the server success.");
+			mRoleList.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -258,7 +254,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	}
 
 	private void onSelectItem(int postion) {
-		String strUserID = roleInfoList.get(postion).getUserID();
+		String strUserID = mRoleInfoList.get(postion).getUserID();
 		Intent intent = new Intent();
 		intent.putExtra("UserID", strUserID);
 		intent.setClass(this, VideoActivity.class);
@@ -268,19 +264,18 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	@Override
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
 		System.out.println("OnAnyChatUserAtRoomMessage");
-		if(bEnter){
+		if (bEnter) {
 			RoleInfo info = new RoleInfo();
 			info.setUserID(String.valueOf(dwUserId));
 			info.setName(anyChatSDK.GetUserName(dwUserId));
-			roleInfoList.add(info);
-			adapter.notifyDataSetChanged();
-		}else {
-			
-			for (int i = 0; i < roleInfoList.size(); i++) {
-				if(roleInfoList.get(i).getUserID().equals(""+dwUserId))
-				{
-					roleInfoList.remove(i);
-					adapter.notifyDataSetChanged();
+			mRoleInfoList.add(info);
+			mAdapter.notifyDataSetChanged();
+		} else {
+
+			for (int i = 0; i < mRoleInfoList.size(); i++) {
+				if (mRoleInfoList.get(i).getUserID().equals("" + dwUserId)) {
+					mRoleInfoList.remove(i);
+					mAdapter.notifyDataSetChanged();
 				}
 			}
 		}
@@ -288,7 +283,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-		setBtnVisible(1);
+		setBtnVisible(ConfigEntity.showLoginFlag);
 		Toast.makeText(this, "连接关闭，error：" + dwErrorCode, Toast.LENGTH_SHORT)
 				.show();
 	}
