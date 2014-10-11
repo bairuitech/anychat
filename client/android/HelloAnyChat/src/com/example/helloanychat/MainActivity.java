@@ -90,7 +90,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		btn_waiting = (Button)this.findViewById(R.id.main_btn_waiting);
 	
 		role_listView.setDivider(null);
-		bottom_connState.setText("Not content to the server");
+		bottom_connState.setText("No content to the server");
 		//初始化bottom_tips信息
 		bottom_tips.setText(" V" + anyChatSDK.GetSDKMainVersion()
 				+ "."+ anyChatSDK.GetSDKSubVersion() +"  Build time: "+anyChatSDK.GetSDKBuildTime());
