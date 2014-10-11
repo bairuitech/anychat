@@ -51,15 +51,12 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 		InitSDK();
 		InitLayout();
-		
-		setBaseEvent();
 	}
 
 	private void InitSDK() {
 		if (anyChatSDK == null) {
 			anyChatSDK = new AnyChatCoreSDK();
-			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_CORESDK_USEARMV6LIB, 1);
+			anyChatSDK.SetBaseEvent(this);
 			anyChatSDK.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
 
 			configEntity = new ConfigEntity();
@@ -130,10 +127,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		});
 	}
 	
-	private void setBaseEvent() {
-		anyChatSDK.SetBaseEvent(this);
-	}
-
 	private boolean checkInputData() {
 		String ip = mEditIP.getText().toString().trim();
 		String port = mEditPort.getText().toString().trim();
