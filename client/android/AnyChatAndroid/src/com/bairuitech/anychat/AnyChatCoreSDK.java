@@ -3,6 +3,7 @@ package com.bairuitech.anychat;		// 不能修改包的名称
 import java.lang.ref.WeakReference;
 
 import android.view.Surface;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,6 +22,8 @@ public class AnyChatCoreSDK
 	AnyChatDataEncDecEvent	encdecEvent;
 	AnyChatRecordEvent		recordEvent;
 	
+	private static AnyChatCoreSDK mAnyChat = null;		// 单例模式对象
+	
 	static MainHandler mHandler;
 	public static AnyChatAudioHelper	mAudioHelper = new AnyChatAudioHelper();
 	public static AnyChatCameraHelper	mCameraHelper = new AnyChatCameraHelper();
@@ -35,6 +38,14 @@ public class AnyChatCoreSDK
 	private static int HANDLE_TYPE_SDKFILTER	= 6;	// SDK Filter Data
 	private static int HANDLE_TYPE_VIDEOCALL	= 7;	// 视频呼叫
 	private static int HANDLE_TYPE_RECORD		= 8;	// 录像、拍照
+	
+	// 获取单例模式对象
+	public synchronized static AnyChatCoreSDK getInstance(Context context)
+	{
+		if(mAnyChat==null)
+			mAnyChat = new AnyChatCoreSDK();
+		return mAnyChat;
+	}
 	
 	// 设置AnyChat基本事件通知接口
 	public void SetBaseEvent(AnyChatBaseEvent e)
