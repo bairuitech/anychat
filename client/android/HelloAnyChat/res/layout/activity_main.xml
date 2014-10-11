@@ -6,13 +6,12 @@
     android:orientation="vertical" >
 
 <TextView
-        android:id="@+id/main_title"
+        android:id="@+id/mainUITitle"
         android:layout_width="fill_parent"
         android:layout_height="40dip"
         android:layout_marginTop="30dip"
-        android:layout_alignParentTop="true"
         android:gravity="center|center_vertical"
-        android:text="Hello AnyChat"
+        android:text="@string/HelloTitle"
         android:textColor="#ffffff"
         android:textSize="28sp" />
 
@@ -39,7 +38,7 @@
                     android:src="@drawable/smalltip_1" />
 
                 <EditText
-                    android:id="@+id/main_et_ip"
+                    android:id="@+id/mainUIEditIP"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -65,7 +64,7 @@
                     android:src="@drawable/smalltip_2" />
 
                 <EditText
-                    android:id="@+id/main_et_port"
+                    android:id="@+id/mainUIEditPort"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -129,7 +128,7 @@
                     android:src="@drawable/smalltip_4" />
 
                 <EditText
-                    android:id="@+id/main_et_hourseID"
+                    android:id="@+id/mainUIEditRoomID"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -159,7 +158,7 @@
         >
                     
         <Button
-        android:id="@+id/main_btn_start"
+        android:id="@+id/mainUIStartBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -169,7 +168,7 @@
         android:visibility="visible"/>
         
         <Button
-        android:id="@+id/main_btn_logout"
+        android:id="@+id/mainUILogoutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -178,7 +177,7 @@
         android:textStyle="bold" 
         android:visibility="gone"/>
         <Button
-        android:id="@+id/main_btn_waiting"
+        android:id="@+id/mainUIWaitingBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -189,7 +188,7 @@
     </FrameLayout>
 
     <ListView
-        android:id="@+id/role_listview"
+        android:id="@+id/roleListView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -197,12 +196,11 @@
         android:layout_weight="1"
         android:cacheColorHint="#00000000"
         android:listSelector="#00000000"
-        android:scrollbars="vertical"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth" />
     
     <TextView
-        android:id="@+id/main_bottom_connState"
+        android:id="@+id/mainUIbottomConnMsg"
         android:layout_width="fill_parent"
         android:layout_height="20dp"
         android:gravity="center"
@@ -211,7 +209,7 @@
         android:text="Not connect to the server"/>
 
     <TextView
-        android:id="@+id/main_bottom_tips"
+        android:id="@+id/mainUIbottomBuildMsg"
         android:layout_width="fill_parent"
         android:layout_height="20dip"
         android:layout_alignParentBottom="true"
