@@ -7,17 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB3679A819D8453E008D9C5E /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB3679A719D8453E008D9C5E /* VideoViewController.xib */; };
+		FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD379719D82B4B000FF14E /* QuartzCore.framework */; };
+		FE01D92519D41872005D1189 /* switchvideo.png in Resources */ = {isa = PBXBuildFile; fileRef = FE01D91B19D41872005D1189 /* switchvideo.png */; };
 		FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B2E7319C692F300773FE6 /* VideoViewController.m */; };
-		FE1B2E7619C692F300773FE6 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1B2E7419C692F300773FE6 /* VideoViewController.xib */; };
-		FE284F7719CA898B00FA8205 /* login_bk.png in Resources */ = {isa = PBXBuildFile; fileRef = FE284F7519CA898B00FA8205 /* login_bk.png */; };
-		FE284F7819CA898B00FA8205 /* star_bk.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE284F7619CA898B00FA8205 /* star_bk.jpg */; };
+		FE20E49619D960C200189A8A /* btn_warting_01.png in Resources */ = {isa = PBXBuildFile; fileRef = FE20E49219D960C200189A8A /* btn_warting_01.png */; };
+		FE20E49719D960C200189A8A /* btn_logout_01.png in Resources */ = {isa = PBXBuildFile; fileRef = FE20E49319D960C200189A8A /* btn_logout_01.png */; };
+		FE20E49819D960C200189A8A /* btn_login_01.png in Resources */ = {isa = PBXBuildFile; fileRef = FE20E49419D960C200189A8A /* btn_login_01.png */; };
+		FE20E49B19D968A800189A8A /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = FE20E49A19D968A800189A8A /* bg.png */; };
+		FE3EAB6019E5233A00030ECA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */; };
+		FE3EAB6119E5233A00030ECA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5F19E5233A00030ECA /* Default@2x.png */; };
+		FE85404619D515A800253FA0 /* tableVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE85404519D515A800253FA0 /* tableVCell.xib */; };
+		FE9DD09C19DA4F92008889EC /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD09219DA4F92008889EC /* 1.png */; };
+		FE9DD09E19DA4F92008889EC /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD09419DA4F92008889EC /* 2.png */; };
+		FE9DD09F19DA4F92008889EC /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD09519DA4F92008889EC /* 3.png */; };
+		FE9DD0A019DA4F92008889EC /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD09619DA4F92008889EC /* 4.png */; };
+		FE9DD0A119DA4F92008889EC /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD09719DA4F92008889EC /* 5.png */; };
+		FE9DD19119DA916C008889EC /* cell_01.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD19019DA916C008889EC /* cell_01.png */; };
+		FEA9264619E4EE7400FC42AC /* Icon_ip.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA9264419E4EE7400FC42AC /* Icon_ip.png */; };
+		FEA9264719E4EE7400FC42AC /* Icon_port.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA9264519E4EE7400FC42AC /* Icon_port.png */; };
+		FEA9264A19E4EEB300FC42AC /* Icon_name.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA9264819E4EEB300FC42AC /* Icon_name.png */; };
+		FEA9264B19E4EEB300FC42AC /* Icon_room.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA9264919E4EEB300FC42AC /* Icon_room.png */; };
 		FEBBA25119C2CC0B009EE02C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA25019C2CC0B009EE02C /* Foundation.framework */; };
 		FEBBA25319C2CC0B009EE02C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA25219C2CC0B009EE02C /* CoreGraphics.framework */; };
 		FEBBA25519C2CC0B009EE02C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA25419C2CC0B009EE02C /* UIKit.framework */; };
 		FEBBA25B19C2CC0B009EE02C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FEBBA25919C2CC0B009EE02C /* InfoPlist.strings */; };
 		FEBBA25D19C2CC0B009EE02C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBBA25C19C2CC0B009EE02C /* main.m */; };
 		FEBBA26119C2CC0B009EE02C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBBA26019C2CC0B009EE02C /* AppDelegate.m */; };
-		FEBBA26319C2CC0B009EE02C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEBBA26219C2CC0B009EE02C /* Images.xcassets */; };
 		FEBBA29719C2CD0D009EE02C /* libaudio_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28519C2CD0D009EE02C /* libaudio_processing.a */; };
 		FEBBA29819C2CD0D009EE02C /* libsignal_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28619C2CD0D009EE02C /* libsignal_processing.a */; };
 		FEBBA29919C2CD0D009EE02C /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA28719C2CD0D009EE02C /* libsystem_wrappers.a */; };
@@ -45,14 +61,32 @@
 		FEBBA2B619C2CE36009EE02C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA2B519C2CE36009EE02C /* CoreMedia.framework */; };
 		FEBBA2BA19C2CF67009EE02C /* AnyChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBBA2B819C2CF67009EE02C /* AnyChatViewController.m */; };
 		FEBBA2BB19C2CF67009EE02C /* AnyChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEBBA2B919C2CF67009EE02C /* AnyChatViewController.xib */; };
+		FEC56CBD19D7B0320008EA42 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEC56CBC19D7B0320008EA42 /* Icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB3679A719D8453E008D9C5E /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
+		FBCD379719D82B4B000FF14E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FE01D91B19D41872005D1189 /* switchvideo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switchvideo.png; path = helloAnyChat/Resources/switchvideo.png; sourceTree = "<group>"; };
 		FE1B2E7219C692F300773FE6 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		FE1B2E7319C692F300773FE6 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VideoViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		FE1B2E7419C692F300773FE6 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
-		FE284F7519CA898B00FA8205 /* login_bk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_bk.png; sourceTree = "<group>"; };
-		FE284F7619CA898B00FA8205 /* star_bk.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = star_bk.jpg; sourceTree = "<group>"; };
+		FE20E49219D960C200189A8A /* btn_warting_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_warting_01.png; path = helloAnyChat/Resources/btn_warting_01.png; sourceTree = "<group>"; };
+		FE20E49319D960C200189A8A /* btn_logout_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_logout_01.png; path = helloAnyChat/Resources/btn_logout_01.png; sourceTree = "<group>"; };
+		FE20E49419D960C200189A8A /* btn_login_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_login_01.png; path = helloAnyChat/Resources/btn_login_01.png; sourceTree = "<group>"; };
+		FE20E49A19D968A800189A8A /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = helloAnyChat/Resources/bg.png; sourceTree = "<group>"; };
+		FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "helloAnyChat/Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
+		FE3EAB5F19E5233A00030ECA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "helloAnyChat/Resources/Default@2x.png"; sourceTree = "<group>"; };
+		FE85404519D515A800253FA0 /* tableVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = tableVCell.xib; sourceTree = "<group>"; };
+		FE9DD09219DA4F92008889EC /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		FE9DD09419DA4F92008889EC /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		FE9DD09519DA4F92008889EC /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		FE9DD09619DA4F92008889EC /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		FE9DD09719DA4F92008889EC /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
+		FE9DD19019DA916C008889EC /* cell_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cell_01.png; path = helloAnyChat/Resources/cell_01.png; sourceTree = "<group>"; };
+		FEA9264419E4EE7400FC42AC /* Icon_ip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_ip.png; path = helloAnyChat/Resources/Icon_ip.png; sourceTree = "<group>"; };
+		FEA9264519E4EE7400FC42AC /* Icon_port.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_port.png; path = helloAnyChat/Resources/Icon_port.png; sourceTree = "<group>"; };
+		FEA9264819E4EEB300FC42AC /* Icon_name.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_name.png; path = helloAnyChat/Resources/Icon_name.png; sourceTree = "<group>"; };
+		FEA9264919E4EEB300FC42AC /* Icon_room.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_room.png; path = helloAnyChat/Resources/Icon_room.png; sourceTree = "<group>"; };
 		FEBBA24D19C2CC0B009EE02C /* helloAnyChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = helloAnyChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEBBA25019C2CC0B009EE02C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FEBBA25219C2CC0B009EE02C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -63,7 +97,6 @@
 		FEBBA25E19C2CC0B009EE02C /* helloAnyChat-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "helloAnyChat-Prefix.pch"; sourceTree = "<group>"; };
 		FEBBA25F19C2CC0B009EE02C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FEBBA26019C2CC0B009EE02C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		FEBBA26219C2CC0B009EE02C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FEBBA26919C2CC0B009EE02C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		FEBBA28019C2CD0D009EE02C /* AnyChatDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatDefine.h; sourceTree = "<group>"; };
 		FEBBA28119C2CD0D009EE02C /* AnyChatErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatErrorCode.h; sourceTree = "<group>"; };
@@ -94,8 +127,9 @@
 		FEBBA2B319C2CE2B009EE02C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FEBBA2B519C2CE36009EE02C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		FEBBA2B719C2CF67009EE02C /* AnyChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatViewController.h; sourceTree = "<group>"; };
-		FEBBA2B819C2CF67009EE02C /* AnyChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnyChatViewController.m; sourceTree = "<group>"; };
+		FEBBA2B819C2CF67009EE02C /* AnyChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AnyChatViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FEBBA2B919C2CF67009EE02C /* AnyChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnyChatViewController.xib; sourceTree = "<group>"; };
+		FEC56CBC19D7B0320008EA42 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "helloAnyChat/Resources/Icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */,
 				FEBBA2B619C2CE36009EE02C /* CoreMedia.framework in Frameworks */,
 				FEBBA2B419C2CE2B009EE02C /* AVFoundation.framework in Frameworks */,
 				FEBBA2B219C2CE21009EE02C /* AudioToolbox.framework in Frameworks */,
@@ -137,22 +172,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FE284F7419CA898B00FA8205 /* bk */ = {
+		FE01D91119D41858005D1189 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FE284F7519CA898B00FA8205 /* login_bk.png */,
-				FE284F7619CA898B00FA8205 /* star_bk.jpg */,
+				FE9DD09119DA4F92008889EC /* HeadPortrait */,
+				FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */,
+				FE3EAB5F19E5233A00030ECA /* Default@2x.png */,
+				FE20E49A19D968A800189A8A /* bg.png */,
+				FE20E49219D960C200189A8A /* btn_warting_01.png */,
+				FE20E49319D960C200189A8A /* btn_logout_01.png */,
+				FE20E49419D960C200189A8A /* btn_login_01.png */,
+				FEC56CBC19D7B0320008EA42 /* Icon@2x.png */,
+				FE9DD19019DA916C008889EC /* cell_01.png */,
+				FEA9264419E4EE7400FC42AC /* Icon_ip.png */,
+				FEA9264819E4EEB300FC42AC /* Icon_name.png */,
+				FEA9264919E4EEB300FC42AC /* Icon_room.png */,
+				FEA9264519E4EE7400FC42AC /* Icon_port.png */,
+				FE01D91B19D41872005D1189 /* switchvideo.png */,
 			);
-			name = bk;
-			path = helloAnyChat/bk;
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		FE9DD09019DA48D2008889EC /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				FEBBA2B919C2CF67009EE02C /* AnyChatViewController.xib */,
+				FE85404519D515A800253FA0 /* tableVCell.xib */,
+				FB3679A719D8453E008D9C5E /* VideoViewController.xib */,
+			);
+			name = xib;
+			path = helloAnyChat;
+			sourceTree = "<group>";
+		};
+		FE9DD09119DA4F92008889EC /* HeadPortrait */ = {
+			isa = PBXGroup;
+			children = (
+				FE9DD09219DA4F92008889EC /* 1.png */,
+				FE9DD09419DA4F92008889EC /* 2.png */,
+				FE9DD09519DA4F92008889EC /* 3.png */,
+				FE9DD09619DA4F92008889EC /* 4.png */,
+				FE9DD09719DA4F92008889EC /* 5.png */,
+			);
+			name = HeadPortrait;
+			path = helloAnyChat/Resources/HeadPortrait;
 			sourceTree = "<group>";
 		};
 		FEBBA24419C2CC0B009EE02C = {
 			isa = PBXGroup;
 			children = (
-				FE284F7419CA898B00FA8205 /* bk */,
+				FE01D91119D41858005D1189 /* Resources */,
 				FEBBA27F19C2CD0D009EE02C /* include */,
 				FEBBA28319C2CD0D009EE02C /* libs */,
+				FE9DD09019DA48D2008889EC /* xib */,
 				FEBBA25619C2CC0B009EE02C /* helloAnyChat */,
 				FEBBA24F19C2CC0B009EE02C /* Frameworks */,
 				FEBBA24E19C2CC0B009EE02C /* Products */,
@@ -170,6 +241,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FBCD379719D82B4B000FF14E /* QuartzCore.framework */,
 				FEBBA2B519C2CE36009EE02C /* CoreMedia.framework */,
 				FEBBA2B319C2CE2B009EE02C /* AVFoundation.framework */,
 				FEBBA2B119C2CE21009EE02C /* AudioToolbox.framework */,
@@ -192,11 +264,8 @@
 				FEBBA26019C2CC0B009EE02C /* AppDelegate.m */,
 				FEBBA2B719C2CF67009EE02C /* AnyChatViewController.h */,
 				FEBBA2B819C2CF67009EE02C /* AnyChatViewController.m */,
-				FEBBA2B919C2CF67009EE02C /* AnyChatViewController.xib */,
 				FE1B2E7219C692F300773FE6 /* VideoViewController.h */,
 				FE1B2E7319C692F300773FE6 /* VideoViewController.m */,
-				FE1B2E7419C692F300773FE6 /* VideoViewController.xib */,
-				FEBBA26219C2CC0B009EE02C /* Images.xcassets */,
 				FEBBA25719C2CC0B009EE02C /* Supporting Files */,
 			);
 			path = helloAnyChat;
@@ -266,8 +335,8 @@
 			buildConfigurationList = FEBBA27919C2CC0B009EE02C /* Build configuration list for PBXNativeTarget "helloAnyChat" */;
 			buildPhases = (
 				FEBBA24919C2CC0B009EE02C /* Sources */,
-				FEBBA24A19C2CC0B009EE02C /* Frameworks */,
 				FEBBA24B19C2CC0B009EE02C /* Resources */,
+				FEBBA24A19C2CC0B009EE02C /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -309,12 +378,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE9DD09C19DA4F92008889EC /* 1.png in Resources */,
+				FE85404619D515A800253FA0 /* tableVCell.xib in Resources */,
+				FEA9264A19E4EEB300FC42AC /* Icon_name.png in Resources */,
+				FE20E49B19D968A800189A8A /* bg.png in Resources */,
+				FE20E49619D960C200189A8A /* btn_warting_01.png in Resources */,
+				FE3EAB6019E5233A00030ECA /* Default-568h@2x.png in Resources */,
+				FE20E49819D960C200189A8A /* btn_login_01.png in Resources */,
 				FEBBA25B19C2CC0B009EE02C /* InfoPlist.strings in Resources */,
-				FE284F7719CA898B00FA8205 /* login_bk.png in Resources */,
-				FE284F7819CA898B00FA8205 /* star_bk.jpg in Resources */,
+				FEA9264719E4EE7400FC42AC /* Icon_port.png in Resources */,
+				FEA9264619E4EE7400FC42AC /* Icon_ip.png in Resources */,
+				FE9DD19119DA916C008889EC /* cell_01.png in Resources */,
+				FE9DD0A119DA4F92008889EC /* 5.png in Resources */,
+				FE01D92519D41872005D1189 /* switchvideo.png in Resources */,
+				FE20E49719D960C200189A8A /* btn_logout_01.png in Resources */,
+				FEC56CBD19D7B0320008EA42 /* Icon@2x.png in Resources */,
+				FE9DD0A019DA4F92008889EC /* 4.png in Resources */,
+				FE3EAB6119E5233A00030ECA /* Default@2x.png in Resources */,
+				FE9DD09F19DA4F92008889EC /* 3.png in Resources */,
 				FEBBA2BB19C2CF67009EE02C /* AnyChatViewController.xib in Resources */,
-				FE1B2E7619C692F300773FE6 /* VideoViewController.xib in Resources */,
-				FEBBA26319C2CC0B009EE02C /* Images.xcassets in Resources */,
+				FE9DD09E19DA4F92008889EC /* 2.png in Resources */,
+				FB3679A819D8453E008D9C5E /* VideoViewController.xib in Resources */,
+				FEA9264B19E4EEB300FC42AC /* Icon_room.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,7 +521,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -461,7 +546,7 @@
 					../../sdk/libs/audioprocess,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

@@ -25,6 +25,8 @@
 @synthesize theServerIP;
 @synthesize theServerPort;
 @synthesize theLoginBtn;
+@synthesize onLoginState;
+
 
 
 
@@ -37,6 +39,7 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -47,34 +50,25 @@
     anyChat.notifyMsgDelegate = self;
     
     [AnyChatPlatform InitSDK:0];
-    [self createTableView];
+    
+//    [self createTableView];
+    onLoginState = NO;
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     
-    [theVersion setText:[AnyChatPlatform GetSDKVersion]];
-    
-    [self prefersStatusBarHidden];
-    [self.navigationController setNavigationBarHidden:YES];
-    [self.theServerIP addTarget:self action:@selector(textFieldShouldEndEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [self.theServerPort addTarget:self action:@selector(textFieldShouldEndEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [self.theUserName addTarget:self action:@selector(textFieldShouldEndEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [self.theRoomNO addTarget:self action:@selector(textFieldShouldEndEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    
-    
-    float sysVersion = [[UIDevice currentDevice].systemVersion floatValue];
-    if (sysVersion < 7.0) {
-        
-        theLoginBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
-        theLoginBtn.titleLabel.textColor = [UIColor grayColor];
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    }
-
-    [theVersion setText:[AnyChatPlatform GetSDKVersion]];
+    [self setUIControls];
 }
 
+
+#pragma mark - Rotation
+
+- (BOOL)shouldAutorotate {
+    return NO;
+}
 
 #pragma mark - Table view data source
 
@@ -83,7 +77,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.onlineUserMArray.count;
+    return onlineUserMArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -92,29 +86,37 @@
     
     UITableViewCell *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    if(Cell == nil) {
-        Cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    if (Cell == nil)
+    {
+        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"tableVCell" owner:self options:nil];
+        Cell = [nibs objectAtIndex:0];
     }
     
-    NSInteger userID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] intValue];
+    NSInteger userID = [[onlineUserMArray objectAtIndex:[indexPath row]] intValue];
     NSString *name = [AnyChatPlatform GetUserName:userID];
-    NSString *cellLabelText = [NSString stringWithFormat:@"%@ (%i)",name,userID];
     
-    Cell.textLabel.text = cellLabelText;
-    Cell.textLabel.textColor = [UIColor whiteColor];
-    Cell.textLabel.font = [UIFont systemFontOfSize:15];
-    Cell.backgroundColor = [UIColor clearColor];
+    UILabel *userIDLabel = (UILabel *)[Cell.contentView viewWithTag:kUserIDValueTag];
+    UILabel *nameLabel = (UILabel *)[Cell.contentView viewWithTag:kNameValueTag];
+    UIImageView *bgView = (UIImageView *)[Cell viewWithTag:kBackgroundViewTag];
+    
+    nameLabel.text = name;
+    userIDLabel.text = [NSString stringWithFormat:@"%i",userID];
+    
+    NSString *RandomNo = [[NSString alloc] initWithFormat:@"%i",[self getRandomNumber:1 to:5]];
+    bgView.image = [UIImage imageNamed:RandomNo];
+    
     Cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return Cell;
 }
 
 
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int selectID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] integerValue];
+    int selectID = [[onlineUserMArray objectAtIndex:[indexPath row]] integerValue];
     
     videoVC = [VideoViewController new];
     videoVC.iRemoteUserId = selectID;
@@ -122,7 +124,20 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 36.0f;
+	return 70.0f;
+}
+
+
+#pragma mark - TextField Delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    return YES;
 }
 
 #pragma mark - AnyChatNotifyMessageDelegate
@@ -130,41 +145,58 @@
 // 连接服务器消息
 - (void) OnAnyChatConnect:(BOOL) bSuccess
 {
-    if (bSuccess == YES) {
-        theStateInfo.text = @"• Connection to server successfully!";
+    if (bSuccess)
+    {
+        theStateInfo.text = @"• Successful connection";
     }
     else
     {
-        theStateInfo.text = @"• Connection failed, please try again.";
+        theStateInfo.text = @"• Connection failed";
     }
 }
 
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode
 {
-    self.onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
+    onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
     
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
+        onLoginState = YES;
+        theStateInfo.text = [NSString stringWithFormat:@" Login successful. Self userid:%d", dwUserId];
+
+        [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_logout_01"] forState:UIControlStateNormal];
+        
         if([theRoomNO.text length] == 0)
         {
             theRoomNO.text = @"1";
         }
         [AnyChatPlatform EnterRoom:[theRoomNO.text integerValue] :@""];
     }
+    else
+    {
+        onLoginState = NO;
+        theStateInfo.text = [NSString stringWithFormat:@"• Login failed(ErrorCode:%i)",dwErrorCode];
+    }
+    
 }
 
 // 用户进入房间消息
 - (void) OnAnyChatEnterRoom:(int) dwRoomId : (int) dwErrorCode
 {
-    [self.onLineUserTableView reloadData];
+    if (dwErrorCode != 0)
+    {
+        theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
+    }
+
+    [onLineUserTableView reloadData];
 }
 
 // 房间在线用户消息
 - (void) OnAnyChatOnlineUser:(int) dwUserNum : (int) dwRoomId
 {
-    self.onlineUserMArray = [self getOnlineUserArray];
-    [self.onLineUserTableView reloadData];
+    onlineUserMArray = [self getOnlineUserArray];
+    [onLineUserTableView reloadData];
 }
 
 // 用户进入房间消息
@@ -174,8 +206,8 @@
         videoVC.iRemoteUserId = dwUserId;
         [videoVC StartVideoChat:dwUserId];
     }
-    self.onlineUserMArray = [self getOnlineUserArray];
-    [self.onLineUserTableView reloadData];
+    onlineUserMArray = [self getOnlineUserArray];
+    [onLineUserTableView reloadData];
 }
 
 // 用户退出房间消息
@@ -184,8 +216,8 @@
     if (videoVC.iRemoteUserId == dwUserId ) {
         [videoVC FinishVideoChat];
     }
-    self.onlineUserMArray = [self getOnlineUserArray];
-    [self.onLineUserTableView reloadData];
+    onlineUserMArray = [self getOnlineUserArray];
+    [onLineUserTableView reloadData];
 }
 
 // 网络断开消息
@@ -195,10 +227,12 @@
     [AnyChatPlatform Logout];
     
     videoVC.iRemoteUserId = -1;
+    
+    theStateInfo.text = [NSString stringWithFormat:@"• AnyChat Link Close(ErrorCode:%i)",dwErrorCode];
 }
 
 
-#pragma mark - Class method
+#pragma mark - Class Method
 
 - (id) GetServerIP
 {
@@ -212,7 +246,7 @@
 
 - (int) GetServerPort
 {
-    if([theServerPort.text intValue] == 0 || [theServerPort.text intValue] == 0)
+    if([theServerPort.text length] == 0)
     {
         theServerPort.text = @"8906";
     }
@@ -221,24 +255,12 @@
 }
 
 
-#pragma mark - Instance method
+#pragma mark - Instance Method
 
 - (void)AnyChatNotifyHandler:(NSNotification*)notify
 {
     NSDictionary* dict = notify.userInfo;
     [anyChat OnRecvAnyChatNotify:dict];
-}
-
-- (void)createTableView
-{
-    onLineUserTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 166, self.view.frame.size.width, 263)];
-    onLineUserTableView.backgroundColor = [UIColor clearColor];
-    onLineUserTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    self.onLineUserTableView.delegate = self;
-    self.onLineUserTableView.dataSource = self;
-    
-    [self.view addSubview:onLineUserTableView];
 }
 
 - (NSMutableArray *) getOnlineUserArray
@@ -247,28 +269,49 @@
     return onLineUserList;
 }
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
-    return YES;
-}
-
 - (IBAction)OnLoginBtnClicked:(id)sender
 {
-    [AnyChatPlatform Logout];
-    
-    if([theUserName.text length] == 0)
+    if (onLoginState == YES)
     {
-        theUserName.text = @"HelloAnyChat";
+        [self OnLogout];
     }
-    [AnyChatPlatform Connect:[self GetServerIP] : [self GetServerPort]];
-    [AnyChatPlatform Login:theUserName.text : @""];
+    else
+    {
+        [self OnLogin];
+    }
+}
+
+- (void) OnLogin
+{
+    if (onLoginState == NO)
+    {
+        if([theUserName.text length] == 0)
+        {
+            theUserName.text = @"HelloAnyChat";
+        }
+        [AnyChatPlatform Connect:[self GetServerIP] : [self GetServerPort]];
+        [AnyChatPlatform Login:theUserName.text : @""];
+    }
+    
 }
 
 - (void) OnLogout
 {
+    [AnyChatPlatform LeaveRoom:-1];
     [AnyChatPlatform Logout];
-    theStateInfo.text = @"• Logout Server.";
+    
+    onLoginState = NO;
     [onlineUserMArray removeAllObjects];
-    [self.onLineUserTableView reloadData];
+    [onLineUserTableView reloadData];
+    theStateInfo.text = @"• Logout Server.";
+
+    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
+}
+
+- (int)getRandomNumber:(int)from to:(int)to
+{
+    //  +1,result is [from to]; else is [from, to)!!!!!!!
+    return (int)(from + (arc4random() % (to - from + 1)));
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -276,12 +319,55 @@
     return YES;
 }
 
-
-#pragma mark - Memory Warning method
+#pragma mark - Memory Warning Method
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
+
+#pragma mark - Animation Method
+
+- (void) transitionAnimationWithInstance:(id)instanceLayer
+{
+    CATransition *transition = [CATransition animation];
+    transition.delegate = self;
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade;
+    
+    [instanceLayer addAnimation:transition forKey:@"transitionAnimation"];
+}
+
+
+#pragma mark - UI Controls
+
+- (void)setUIControls
+{
+    [self.navigationController setNavigationBarHidden:YES];
+    [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [theUserName addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [theRoomNO addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0)
+    {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    }
+
+    if ([UIScreen mainScreen].bounds.size.height == 480.0f || [UIScreen mainScreen].bounds.size.height == 960.0f)
+    {
+        onLineUserTableView.frame = CGRectMake(0, 240, 320, 210);
+    }
+    else if ([UIScreen mainScreen].bounds.size.height == 568.0f || [UIScreen mainScreen].bounds.size.height == 1136.0f)
+    {
+        onLineUserTableView.frame = CGRectMake(0, 258, 320, 280);
+    }
+    
+    [theVersion setText:[AnyChatPlatform GetSDKVersion]];
+    [self prefersStatusBarHidden];
+    
+}
+
 
 @end

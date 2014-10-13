@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AVFoundation/AVFoundation.h>
+#import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
 #import "VideoViewController.h"
 
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
+
+#define kNameValueTag           1001
+#define kUserIDValueTag         1002
+#define kBackgroundViewTag      1003
 
 @class VideoViewController;
 
@@ -26,18 +30,16 @@
 @property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersion;
 @property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
-@property (nonatomic, retain) UITableView                   *onLineUserTableView;
-@property (nonatomic, retain) AVCaptureVideoPreviewLayer    *localVideoSurface;
-@property (nonatomic, retain) NSMutableArray                *onlineUserMArray;
-@property (nonatomic, retain) VideoViewController           *videoVC;
-@property (nonatomic, retain) AnyChatPlatform               *anyChat;
+@property (retain, nonatomic) IBOutlet UITableView          *onLineUserTableView;
+@property (retain, nonatomic) NSMutableArray                *onlineUserMArray;
+@property (retain, nonatomic) VideoViewController           *videoVC;
+@property (retain, nonatomic) AnyChatPlatform               *anyChat;
+@property BOOL onLoginState;
 
 
 - (IBAction)OnLoginBtnClicked:(id)sender;
 
 - (NSMutableArray *) getOnlineUserArray;
-
-- (void) createTableView;
 
 - (id) GetServerIP;
 
