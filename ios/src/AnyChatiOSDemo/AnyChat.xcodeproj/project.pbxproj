@@ -60,6 +60,7 @@
 		FE8F4C9716F5C4E10076580A /* libsignal_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8F4C9616F5C4E10076580A /* libsignal_processing.a */; };
 		FE93E749196B830F0012EA24 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE93E748196B830F0012EA24 /* libstdc++.6.dylib */; };
 		FE951401142592FA0049EA39 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = FE951400142592FA0049EA39 /* camera.png */; };
+		FEA5688E19EBD2C600DEF6DF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA5688D19EBD2C600DEF6DF /* QuartzCore.framework */; };
 		FEDEAB3B17CF5C41000D97B1 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEDEAB3A17CF5C41000D97B1 /* libvpx.a */; };
 		FEF552C819A76B9F00A9D329 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEF552C619A76B9F00A9D329 /* libmp3lame.a */; };
 		FEF552C919A76B9F00A9D329 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEF552C719A76B9F00A9D329 /* libswresample.a */; };
@@ -130,6 +131,7 @@
 		FE8F4C9616F5C4E10076580A /* libsignal_processing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsignal_processing.a; path = ../sdk/libs/audioprocess/libsignal_processing.a; sourceTree = "<group>"; };
 		FE93E748196B830F0012EA24 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		FE951400142592FA0049EA39 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		FEA5688D19EBD2C600DEF6DF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FEDEAB3A17CF5C41000D97B1 /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx.a; path = ../sdk/libs/libvpx.a; sourceTree = "<group>"; };
 		FEF552C619A76B9F00A9D329 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmp3lame.a; path = ../sdk/libs/libmp3lame.a; sourceTree = "<group>"; };
 		FEF552C719A76B9F00A9D329 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../sdk/libs/libswresample.a; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEA5688E19EBD2C600DEF6DF /* QuartzCore.framework in Frameworks */,
 				FEF552C819A76B9F00A9D329 /* libmp3lame.a in Frameworks */,
 				FEF552C919A76B9F00A9D329 /* libswresample.a in Frameworks */,
 				FE93E749196B830F0012EA24 /* libstdc++.6.dylib in Frameworks */,
@@ -195,6 +198,7 @@
 		FE8CF3B613EFC08100B4C34B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FEA5688D19EBD2C600DEF6DF /* QuartzCore.framework */,
 				FE8CF40F13EFE48100B4C34B /* CoreMedia.framework */,
 				FE8CF40D13EFE3E800B4C34B /* AVFoundation.framework */,
 				FE8CF40B13EFE3CA00B4C34B /* AudioToolbox.framework */,
