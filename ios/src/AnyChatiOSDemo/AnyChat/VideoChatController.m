@@ -168,7 +168,7 @@
 -(void)setFrameOfLandscapeLeft
 {
     //Rotate
-    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(90.0);
+    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(-90.0);
     self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(-90.0);
     //Scale
     self.remoteVideoSurface.frame = CGRectMake(0, 0, kScreen_Height, kScreen_Width);
@@ -178,7 +178,7 @@
 -(void)setFrameOfLandscapeRight
 {
     //Rotate
-    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(-90.0);;
+    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(90.0);;
     self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(90.0);
     //Scale
     self.remoteVideoSurface.frame = CGRectMake(0, 0, kScreen_Height, kScreen_Width);
