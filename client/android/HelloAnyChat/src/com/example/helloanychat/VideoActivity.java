@@ -13,7 +13,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -26,7 +28,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 	private SurfaceView mOtherView;
 	private SurfaceView mMyView;
-	private ImageView mImgSwitchVideo;
+	private ImageButton mImgSwitchVideo;
+	private Button      mEndCallBtn;
 
 	public AnyChatCoreSDK anychatSDK;
 
@@ -44,7 +47,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 	}
 
 	private void InitSDK() {
-		anychatSDK = new AnyChatCoreSDK();
+		anychatSDK = AnyChatCoreSDK.getInstance(this);
 		anychatSDK.mSensorHelper.InitSensor(this);
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
 	}
@@ -54,7 +57,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		this.setTitle("与" + anychatSDK.GetUserName(userID));
 		mMyView = (SurfaceView) findViewById(R.id.surface_local);
 		mOtherView = (SurfaceView) findViewById(R.id.surface_remote);
-		mImgSwitchVideo = (ImageView) findViewById(R.id.ImgSwichVideo);
+		mImgSwitchVideo = (ImageButton) findViewById(R.id.ImgSwichVideo);
+		mEndCallBtn= (Button)findViewById(R.id.endCall);
 		mMyView.setZOrderOnTop(true);
 		mImgSwitchVideo.setOnClickListener(new OnClickListener() {
 		
@@ -84,6 +88,18 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 			}
 		});
 
+		mEndCallBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (v==mEndCallBtn)
+				{
+					onPause();
+					onDestroy();
+				}
+			}
+		});
 		// 如果是采用Java视频采集，则需要设置Surface的CallBack
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
@@ -137,6 +153,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		anychatSDK.UserSpeakControl(-1, 1);//-1表示对本地音频进行控制，打开本地音频
 		
 	}
+	
 	
 	private void setBaseEvent()
 	{

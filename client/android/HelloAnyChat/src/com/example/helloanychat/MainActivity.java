@@ -55,7 +55,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	private void InitSDK() {
 		if (anyChatSDK == null) {
-			anyChatSDK = new AnyChatCoreSDK();
+			anyChatSDK = AnyChatCoreSDK.getInstance(this);
 			anyChatSDK.SetBaseEvent(this);
 			anyChatSDK.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
 
