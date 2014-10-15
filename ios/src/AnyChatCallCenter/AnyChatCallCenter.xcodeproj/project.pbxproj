@@ -553,6 +553,7 @@
 				);
 				INFOPLIST_FILE = "AnyChatCallCenter/AnyChatCallCenter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LD_NO_PIE = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
@@ -581,6 +582,7 @@
 				);
 				INFOPLIST_FILE = "AnyChatCallCenter/AnyChatCallCenter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LD_NO_PIE = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
