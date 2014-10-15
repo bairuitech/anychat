@@ -52,7 +52,6 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-    self.theLocalView = nil;
 }
 
 - (void) OnLocalVideoInit:(id)session
@@ -161,27 +160,27 @@
     remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(0.0);
     self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(0.0);
     //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kScreen_Width, kScreen_Height);
+    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
     self.theLocalView.frame = kLocalVideoPortrait_CGRect;
 }
 
 -(void)setFrameOfLandscapeLeft
 {
     //Rotate
-    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(90.0);
+    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(-90.0);
     self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(-90.0);
     //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kScreen_Height, kScreen_Width);
+    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
     self.theLocalView.frame = kLocalVideoLandscape_CGRect;
 }
 
 -(void)setFrameOfLandscapeRight
 {
     //Rotate
-    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(-90.0);;
+    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(90.0);
     self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(90.0);
     //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kScreen_Height, kScreen_Width);
+    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
     self.theLocalView.frame = kLocalVideoLandscape_CGRect;
 }
 

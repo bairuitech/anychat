@@ -26,6 +26,8 @@
 @synthesize theServerPort;
 @synthesize theLoginBtn;
 @synthesize onLoginState;
+@synthesize theLoginAlertView;
+@synthesize theHideKeyboardBtn;
 
 
 
@@ -188,6 +190,10 @@
     {
         theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
     }
+    else
+    {
+        [self dimissAlertView:theLoginAlertView];
+    }
 
     [onLineUserTableView reloadData];
 }
@@ -236,24 +242,57 @@
 
 - (id) GetServerIP
 {
-    if([theServerIP.text length] == 0)
+    NSString* serverIP;
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
+    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
+        serverIP =  [array objectAtIndex:0];
+        
+        if([serverIP length] == 0)
+            theServerIP.text = @"demo.anychat.cn";
+            serverIP = theServerIP.text;
+    }
+    else
     {
         theServerIP.text = @"demo.anychat.cn";
+        serverIP = theServerIP.text;
     }
-    
-    return theServerIP.text;
+    return serverIP;
 }
 
 - (int) GetServerPort
 {
-    if([theServerPort.text length] == 0)
+    NSString* serverPort;
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
+    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
+        serverPort = [array objectAtIndex:1];
+        
+        if([serverPort intValue] == 0 || [serverPort intValue] == 0)
+            theServerPort.text = @"8906";
+            serverPort = theServerPort.text;
+    }
+    else
     {
         theServerPort.text = @"8906";
+        serverPort = theServerPort.text;
     }
-    
-    return [theServerPort.text intValue];
+    return [serverPort intValue];
 }
 
+
+#pragma mark - AlertView method
+
+- (void) dimissAlertView:(UIAlertView *)alert
+{
+    if(alert){
+        [alert dismissWithClickedButtonIndex:[alert cancelButtonIndex] animated:YES];
+    }
+}
 
 #pragma mark - Instance Method
 
@@ -267,6 +306,14 @@
 {
     NSMutableArray *onLineUserList = [[NSMutableArray alloc] initWithArray:[AnyChatPlatform GetOnlineUser]];
     return onLineUserList;
+}
+
+- (IBAction)hideKeyBoard
+{
+    [theServerIP resignFirstResponder];
+    [theServerPort resignFirstResponder];
+    [theUserName resignFirstResponder];
+    [theRoomNO resignFirstResponder];
 }
 
 - (IBAction)OnLoginBtnClicked:(id)sender
@@ -283,8 +330,17 @@
 
 - (void) OnLogin
 {
+    [self hideKeyBoard];
+    
     if (onLoginState == NO)
     {
+        theLoginAlertView = [[UIAlertView alloc] initWithTitle:@"Log in, please wait."
+                                                       message:@"HelloAnyChat loading..."
+                                                      delegate:self
+                                             cancelButtonTitle:nil
+                                             otherButtonTitles:nil,nil];
+        [theLoginAlertView show];
+        
         if([theUserName.text length] == 0)
         {
             theUserName.text = @"HelloAnyChat";
@@ -345,6 +401,7 @@
 - (void)setUIControls
 {
     [self.navigationController setNavigationBarHidden:YES];
+    
     [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theUserName addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -367,6 +424,13 @@
     [theVersion setText:[AnyChatPlatform GetSDKVersion]];
     [self prefersStatusBarHidden];
     
+}
+
+- (void)saveSettings
+{   // save settings to file
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
+    [[NSArray arrayWithObjects:theUserName.text,theRoomNO.text,theServerIP.text,theServerPort.text, nil] writeToFile:filePath atomically:YES];
 }
 
 

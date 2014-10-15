@@ -18,12 +18,11 @@
 
 #define kLocalVideo_Width                   120.0f
 #define kLocalVideo_Height                  160.0f
-#define kUI_Spacing                         15.0f
-#define kLocalVideoPortrait_CGRect          CGRectMake(15, 305, 120, 160)
-#define kLocalVideoLandscape_CGRect         CGRectMake(15, 185, 160, 120)
+#define kLocalVideoPortrait_CGRect          CGRectMake(200, 320, kLocalVideo_Width, kLocalVideo_Height)
+#define kLocalVideoLandscape_CGRect         CGRectMake(320, 200, kLocalVideo_Height, kLocalVideo_Width)
 
-#define kScreen_Width                       [[UIScreen mainScreen] bounds].size.width
-#define kScreen_Height                      [[UIScreen mainScreen] bounds].size.height
+#define kSelfView_Width                     self.view.frame.size.width
+#define kSelfView_Height                    self.view.frame.size.height
 
 #define kRadians(degrees)                   M_PI / 180.0 * degrees
 #define kLayer3DRotation_Z_Axis(degrees)    CATransform3DMakeRotation(kRadians(degrees), 0.0, 0.0, 1.0)
