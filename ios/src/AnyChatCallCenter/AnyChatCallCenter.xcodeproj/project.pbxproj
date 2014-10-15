@@ -557,7 +557,6 @@
 					"$(inherited)",
 					../../sdk/libs,
 					../../sdk/libs/audioprocess,
-					/Users/bairuitech/brwork/anychatsamples/ios/sdk/libs,
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -586,7 +585,6 @@
 					"$(inherited)",
 					../../sdk/libs,
 					../../sdk/libs/audioprocess,
-					/Users/bairuitech/brwork/anychatsamples/ios/sdk/libs,
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
