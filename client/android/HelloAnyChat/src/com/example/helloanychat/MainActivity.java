@@ -309,21 +309,15 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 		mAdapter = new RoleListAdapter(MainActivity.this, mRoleInfoList);
 		mRoleList.setAdapter(mAdapter);
-
-		if (userID.length == 0) {
-			mBottomConnMsg.setText("房间里没有人");
-		} else {
-			mRoleList.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,	int arg2, long arg3) {
-					if (arg2==0)
-						return;
-					
-					onSelectItem(arg2);
-				}
-			});
-		}
+		mRoleList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,	int arg2, long arg3) {
+				if (arg2==0)
+					return;
+				
+				onSelectItem(arg2);
+			}
+		});
 	}
 
 	private void onSelectItem(int postion) {
