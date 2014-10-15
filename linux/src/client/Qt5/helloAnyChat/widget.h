@@ -18,6 +18,7 @@ class Widget;
 #define MAX_USER_NUM 10
 #define MAX_VIDEOFRAME_NUM 2
 
+
 class Widget : public QWidget
 {
     Q_OBJECT

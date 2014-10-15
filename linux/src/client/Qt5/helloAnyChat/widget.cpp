@@ -7,7 +7,6 @@
 #define REFRESH_RECORDSTATE_TIMER	    3   //更新录像状态定时器
 
 Widget* pthis;
-
 static int g_sOpenedCamUserId=0;            //已经请求视频的用户id
 
 Widget::Widget(QWidget *parent) :
