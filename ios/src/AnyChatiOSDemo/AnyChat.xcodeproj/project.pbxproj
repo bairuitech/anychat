@@ -53,6 +53,8 @@
 		FE8CF42213EFE74C00B4C34B /* logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = FE8CF41B13EFE74C00B4C34B /* logo.gif */; };
 		FE8CF42313EFE74C00B4C34B /* room.png in Resources */ = {isa = PBXBuildFile; fileRef = FE8CF41C13EFE74C00B4C34B /* room.png */; };
 		FE8CF42413EFE74C00B4C34B /* videophonebk.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE8CF41D13EFE74C00B4C34B /* videophonebk.jpg */; };
+		FE8E0ACB19EE1A060038782A /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8E0AC919EE1A060038782A /* libyuv_neon.a */; };
+		FE8E0ACC19EE1A060038782A /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8E0ACA19EE1A060038782A /* libyuv.a */; };
 		FE8F00F815496C6B006F5C36 /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8F00F615496C6B006F5C36 /* SettingsController.m */; };
 		FE8F00F915496C6B006F5C36 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE8F00F715496C6B006F5C36 /* SettingsController.xib */; };
 		FE8F4C8816F5C4390076580A /* libaudio_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8F4C8616F5C4390076580A /* libaudio_processing.a */; };
@@ -125,6 +127,8 @@
 		FE8CF41B13EFE74C00B4C34B /* logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = logo.gif; sourceTree = "<group>"; };
 		FE8CF41C13EFE74C00B4C34B /* room.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = room.png; sourceTree = "<group>"; };
 		FE8CF41D13EFE74C00B4C34B /* videophonebk.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = videophonebk.jpg; sourceTree = "<group>"; };
+		FE8E0AC919EE1A060038782A /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyuv_neon.a; path = ../../sdk/libs/libyuv_neon.a; sourceTree = "<group>"; };
+		FE8E0ACA19EE1A060038782A /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyuv.a; path = ../../sdk/libs/libyuv.a; sourceTree = "<group>"; };
 		FE8F00F515496C6B006F5C36 /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
 		FE8F00F615496C6B006F5C36 /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
 		FE8F00F715496C6B006F5C36 /* SettingsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
@@ -146,6 +150,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE8E0ACB19EE1A060038782A /* libyuv_neon.a in Frameworks */,
+				FE8E0ACC19EE1A060038782A /* libyuv.a in Frameworks */,
 				FEA5688E19EBD2C600DEF6DF /* QuartzCore.framework in Frameworks */,
 				FEF552C819A76B9F00A9D329 /* libmp3lame.a in Frameworks */,
 				FEF552C919A76B9F00A9D329 /* libswresample.a in Frameworks */,
@@ -259,6 +265,8 @@
 		FE8CF41513EFE5FC00B4C34B /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				FE8E0AC919EE1A060038782A /* libyuv_neon.a */,
+				FE8E0ACA19EE1A060038782A /* libyuv.a */,
 				FE93E748196B830F0012EA24 /* libstdc++.6.dylib */,
 				FEF552C719A76B9F00A9D329 /* libswresample.a */,
 				FEF552C619A76B9F00A9D329 /* libmp3lame.a */,
@@ -484,6 +492,7 @@
 					"$(inherited)",
 					../../sdk/libs,
 					../../sdk/libs/audioprocess,
+					/Users/bairuitech/brwork/anychatsamples/ios/sdk/libs,
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -518,6 +527,7 @@
 					"$(inherited)",
 					../../sdk/libs,
 					../../sdk/libs/audioprocess,
+					/Users/bairuitech/brwork/anychatsamples/ios/sdk/libs,
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
