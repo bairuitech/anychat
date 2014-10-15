@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE8E0ACF19EE1B5D0038782A /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8E0ACD19EE1B5D0038782A /* libyuv_neon.a */; };
+		FE8E0AD019EE1B5D0038782A /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8E0ACE19EE1B5D0038782A /* libyuv.a */; };
 		FE95EC9F19B944AC000798CF /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE95EC8D19B944AC000798CF /* SettingsViewController.m */; };
 		FE95ECA019B944AC000798CF /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE95EC8E19B944AC000798CF /* SettingsViewController.xib */; };
 		FE95ECA119B944AC000798CF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE95EC9019B944AC000798CF /* LoginViewController.m */; };
@@ -68,6 +70,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FE8E0ACD19EE1B5D0038782A /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
+		FE8E0ACE19EE1B5D0038782A /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
 		FE95EC8C19B944AC000798CF /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SettingsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FE95EC8D19B944AC000798CF /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		FE95EC8E19B944AC000798CF /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -149,6 +153,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE8E0ACF19EE1B5D0038782A /* libyuv_neon.a in Frameworks */,
+				FE8E0AD019EE1B5D0038782A /* libyuv.a in Frameworks */,
 				FEB3382D19B858AD00D2C2F3 /* libstdc++.6.dylib in Frameworks */,
 				FEB3382B19B858A200D2C2F3 /* libstdc++.dylib in Frameworks */,
 				FEB3382919B857F800D2C2F3 /* CoreAudio.framework in Frameworks */,
@@ -266,6 +272,8 @@
 			isa = PBXGroup;
 			children = (
 				FEB337F719B8575B00D2C2F3 /* audioprocess */,
+				FE8E0ACD19EE1B5D0038782A /* libyuv_neon.a */,
+				FE8E0ACE19EE1B5D0038782A /* libyuv.a */,
 				FEB337FB19B8575B00D2C2F3 /* libanychatcore.a */,
 				FEB337FC19B8575B00D2C2F3 /* libavcodec.a */,
 				FEB337FD19B8575B00D2C2F3 /* libavformat.a */,
@@ -545,6 +553,7 @@
 				);
 				INFOPLIST_FILE = "AnyChatCallCenter/AnyChatCallCenter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LD_NO_PIE = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
@@ -573,6 +582,7 @@
 				);
 				INFOPLIST_FILE = "AnyChatCallCenter/AnyChatCallCenter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LD_NO_PIE = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,

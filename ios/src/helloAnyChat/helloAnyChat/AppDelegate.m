@@ -8,19 +8,11 @@
 
 #import "AppDelegate.h"
 
-#ifdef DEBUG
-FILE *fopen$UNIX2003(const char *filename, const char *mode) {
-    return fopen(filename, mode);
-}
-size_t fwrite$UNIX2003(const void *ptr, size_t size, size_t nitems, FILE *stream) {
-    return fwrite(ptr, size, nitems, stream);
-}
-#endif
-
 @implementation AppDelegate
 
 @synthesize navController;
 @synthesize anychatVC;
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -29,11 +21,12 @@ size_t fwrite$UNIX2003(const void *ptr, size_t size, size_t nitems, FILE *stream
 
     self.anychatVC =  [[AnyChatViewController alloc]init];
     self.navController = [[UINavigationController alloc] initWithRootViewController:self.anychatVC];
-    [self.window addSubview:navController.view];
+    self.window.rootViewController = self.navController;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -79,17 +72,19 @@ size_t fwrite$UNIX2003(const void *ptr, size_t size, size_t nitems, FILE *stream
      */
 }
 
+#pragma mark - supported Orientation
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    if (self.navController.topViewController.shouldAutorotate == YES)
     {
-        return UIInterfaceOrientationMaskAll;
+        return UIInterfaceOrientationMaskAllButUpsideDown;
     }
     else
     {
-        return UIInterfaceOrientationMaskPortrait ;
+        return UIInterfaceOrientationMaskPortrait;
     }
+    
 }
 
 

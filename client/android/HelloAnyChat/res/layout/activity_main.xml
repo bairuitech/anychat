@@ -1,0 +1,219 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+<TextView
+        android:id="@+id/mainUITitle"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_marginTop="30dip"
+        android:gravity="center|center_vertical"
+        android:text="@string/HelloTitle"
+        android:textColor="#ffffff"
+        android:textSize="28sp" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,1" >
+
+        <TableRow>
+
+            <LinearLayout
+                android:layout_width="70dip"
+                android:layout_height="25dip"
+                android:layout_marginLeft="65dip"
+                android:layout_marginTop="20dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/smalltip_1" />
+
+                <EditText
+                    android:id="@+id/mainUIEditIP"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="demo.anychat.cn"
+                    android:textColorHint="#bfbfbf"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_marginTop="20dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/smalltip_2" />
+
+                <EditText
+                    android:id="@+id/mainUIEditPort"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="8906"
+                    android:inputType="number"  
+                    android:textColorHint="#bfbfbf"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </TableRow>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginRight="75dp"
+            android:background="#FFFFFF" />
+
+        <TableRow>
+
+            <LinearLayout
+                android:layout_width="70dip"
+                android:layout_height="25dip"
+                android:layout_marginLeft="65dip"
+                android:layout_marginTop="10dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/smalltip_3" />
+
+                <EditText
+                    android:id="@+id/main_et_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="name"
+                    android:textColorHint="#bfbfbf"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_marginTop="10dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/smalltip_4" />
+
+                <EditText
+                    android:id="@+id/mainUIEditRoomID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="房间ID"
+                    android:inputType="number"  
+                    android:textColorHint="#bfbfbf"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </TableRow>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginRight="75dp"
+            
+            android:background="#FFFFFF" />
+    </TableLayout>
+
+    <FrameLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_gravity="center"
+        >
+                    
+        <Button
+        android:id="@+id/mainUIStartBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_login_01"
+        android:gravity="center"
+        android:textStyle="bold" 
+        android:visibility="visible"/>
+        
+        <Button
+        android:id="@+id/mainUILogoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_logout_01"
+        android:gravity="center"
+        android:textStyle="bold" 
+        android:visibility="gone"/>
+        <Button
+        android:id="@+id/mainUIWaitingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_warting_01"
+        android:gravity="center"
+        android:textStyle="bold" 
+        android:visibility="gone"/>
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/roleListView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dip"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:listSelector="#00000000"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth" />
+    
+    <TextView
+        android:id="@+id/mainUIbottomConnMsg"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:background="@android:color/darker_gray"
+        android:textColor="#000000"
+        android:text="Not connect to the server"/>
+
+    <TextView
+        android:id="@+id/mainUIbottomBuildMsg"
+        android:layout_width="fill_parent"
+        android:layout_height="20dip"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/black"
+        android:gravity="center"
+        android:text="Not connect to 192.168.1.1"
+        android:textColor="#ffffff"/>
+    
+</LinearLayout>

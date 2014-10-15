@@ -29,7 +29,6 @@
     
     AnyChatPlatform *anychat;
     int iCurrentChatUserId;
-    
 }
 
 @property (nonatomic, strong) LoginViewController* loginViewController;
@@ -37,6 +36,7 @@
 @property (nonatomic, strong) VideoChatController* videoChatController;
 @property (nonatomic, strong) SettingsController* settingsController;
 @property (nonatomic, strong) RoomViewController* roomViewController;
+
 
 - (void)AnyChatNotifyHandler:(NSNotification*)notify;
 
@@ -54,5 +54,6 @@
 
 // 更新本地参数设置
 - (void) updateLocalSettings;
+
 
 @end

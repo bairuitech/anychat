@@ -15,6 +15,9 @@
 @implementation VideoViewController
 
 @synthesize iRemoteUserId;
+@synthesize remoteVideoSurface;
+@synthesize localVideoSurface;
+@synthesize theLocalView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,13 +36,10 @@
     [self StartVideoChat:self.iRemoteUserId];
 }
 
-
 #pragma mark - Instance Method
 
 - (void) StartVideoChat:(int) userid
 {
-    self.iRemoteUserId = userid;
-    
     // open local video
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
     [AnyChatPlatform UserSpeakControl: -1:YES];
@@ -48,9 +48,12 @@
     
     // request other user video
     [AnyChatPlatform UserSpeakControl: userid:YES];
-    [AnyChatPlatform SetVideoPos:userid: self.theUIImageView:0:0:0:0];
+    [AnyChatPlatform SetVideoPos:userid: self.remoteVideoSurface:0:0:0:0];
     [AnyChatPlatform UserCameraControl:userid : YES];
     
+    self.iRemoteUserId = userid;
+    
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
 }
 
 
@@ -70,6 +73,7 @@
     [self FinishVideoChat];
     AnyChatViewController *videoVC = [AnyChatViewController new];
     videoVC.onlineUserMArray = [videoVC getOnlineUserArray];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -90,19 +94,84 @@
 
 - (void) OnLocalVideoInit:(id)session
 {
-    self.thelocalVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
-    self.thelocalVideoSurface.frame = CGRectMake(5, 260, 120, 160);
-    self.thelocalVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    self.localVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
+    self.localVideoSurface.frame = CGRectMake(0, 0, 120, 160);
+    self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
     
-    [self.view.layer addSublayer: self.thelocalVideoSurface];
+    [self.theLocalView.layer addSublayer:self.localVideoSurface];
 }
 
 - (void) OnLocalVideoRelease:(id)sender
 {
-    if(self.thelocalVideoSurface)
+    if(self.localVideoSurface)
     {
-        self.thelocalVideoSurface = nil;
+        self.localVideoSurface = nil;
     }
+}
+
+
+#pragma mark - Orientation Rotation
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    //device orientation
+    UIDeviceOrientation devOrientation = [UIDevice currentDevice].orientation;
+    
+    if (devOrientation == UIDeviceOrientationLandscapeLeft)
+    {
+        [self setFrameOfLandscapeLeft];
+    }
+    else if (devOrientation == UIDeviceOrientationLandscapeRight)
+    {
+        [self setFrameOfLandscapeRight];
+    }
+    if (devOrientation == UIDeviceOrientationPortrait)
+    {
+        [self setFrameOfPortrait];
+    }
+}
+
+#pragma mark - Video Rotation
+
+-(void)setFrameOfPortrait
+{
+    //Rotate
+    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(0.0);
+    self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(0.0);
+    //Scale
+    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
+    self.theLocalView.frame = kLocalVideoPortrait_CGRect;
+}
+
+-(void)setFrameOfLandscapeLeft
+{
+    //Rotate
+    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(-90.0);
+    self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(-90.0);
+    //Scale
+    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
+    self.theLocalView.frame = kLocalVideoLandscape_CGRect;
+}
+
+-(void)setFrameOfLandscapeRight
+{
+    //Rotate
+    remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(90.0);
+    self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(90.0);
+    //Scale
+    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
+    self.theLocalView.frame = kLocalVideoLandscape_CGRect;
 }
 
 

@@ -51,7 +51,6 @@
     
     // get anychat version string
     [theVersion setText:[AnyChatPlatform GetSDKVersion]];
-//    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"login_bk.jpg"]];
 }
 
 - (void)viewDidUnload
