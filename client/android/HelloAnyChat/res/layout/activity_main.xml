@@ -71,6 +71,7 @@
                     android:background="@android:color/transparent"
                     android:hint="8906"
                     android:text="8906"
+                    android:inputType="number"  
                     android:textColorHint="#bfbfbf"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -135,6 +136,7 @@
                     android:background="@android:color/transparent"
                     android:hint="房间ID"
                     android:text="1"
+                    android:inputType="number"  
                     android:textColorHint="#bfbfbf"
                     android:textSize="14sp" />
             </LinearLayout>

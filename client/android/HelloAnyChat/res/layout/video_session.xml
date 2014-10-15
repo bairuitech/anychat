@@ -8,6 +8,7 @@
         android:id="@+id/surface_remote"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/videoremote_bg"
         android:layout_gravity="center" />
 
     <LinearLayout

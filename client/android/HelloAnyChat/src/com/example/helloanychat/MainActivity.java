@@ -34,12 +34,13 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private TextView mBottomBuildMsg;
 	private Button 	 mBtnStart;
 	private Button   mBtnLogout;
-	private Button   mBtnWaiting;
+	private Button   mBtnWaiting;	
 
 	private List<RoleInfo> mRoleInfoList = new ArrayList<RoleInfo>();
 	private RoleListAdapter mAdapter;
 
 	private boolean bNeedRelease = false;
+	private int UserselfID;
 	
 	public AnyChatCoreSDK 	anyChatSDK;
 	public ConfigEntity 	configEntity;
@@ -89,7 +90,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mBtnStart = (Button) this.findViewById(R.id.mainUIStartBtn);
 		mBtnLogout = (Button) this.findViewById(R.id.mainUILogoutBtn);
 		mBtnWaiting = (Button) this.findViewById(R.id.mainUIWaitingBtn);
-
+		
 		mRoleList.setDivider(null);
 		mBottomConnMsg.setText("No content to the server");
 		// 初始化bottom_tips信息
@@ -104,10 +105,10 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				if (checkInputData()) {
 					setBtnVisible(ConfigEntity.showWaitingFlag);
 
-					String strIP = mEditIP.getEditableText().toString();
+					String strIP = mEditIP.getText().toString().trim();
 					int sPort = Integer.parseInt(mEditPort.getEditableText()
 							.toString());
-					String roleName = mEditName.getEditableText().toString();
+					String roleName = mEditName.getText().toString().trim();
 					anyChatSDK.Connect(strIP, sPort);
 					anyChatSDK.Login(roleName, "");
 				}
@@ -210,7 +211,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			int sHourseID = Integer.valueOf(mEditRoomID.getEditableText()
 					.toString());
 			anyChatSDK.EnterRoom(sHourseID, "");
-
+			
+			UserselfID = dwUserId;
 			// finish();
 		} else {
 			setBtnVisible(ConfigEntity.showLoginFlag);
@@ -228,6 +230,11 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId) {
 		mRoleInfoList.clear();
 		int[] userID = anyChatSDK.GetOnlineUser();
+		RoleInfo userselfInfo = new RoleInfo();
+		userselfInfo.setName(anyChatSDK.GetUserName(UserselfID)+"(自己)");
+		userselfInfo.setUserID(String.valueOf(UserselfID));
+		mRoleInfoList.add(userselfInfo);
+		
 		for (int index = 0; index < userID.length; ++index) {
 			RoleInfo info = new RoleInfo();
 			info.setName(anyChatSDK.GetUserName(userID[index]));
@@ -247,6 +254,9 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
+					if (arg2==0)
+						return;
+					
 					onSelectItem(arg2);
 				}
 			});

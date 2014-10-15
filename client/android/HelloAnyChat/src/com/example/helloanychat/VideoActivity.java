@@ -7,6 +7,7 @@ import com.bairuitech.anychat.AnyChatDefine;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
@@ -39,15 +40,14 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 		Intent intent = getIntent();
 		userID = Integer.parseInt(intent.getStringExtra("UserID"));
-
+		
 		InitSDK();
 		InitLayout();
-		
-		setBaseEvent();
 	}
 
 	private void InitSDK() {
 		anychatSDK = AnyChatCoreSDK.getInstance(this);
+		anychatSDK.SetBaseEvent(this);
 		anychatSDK.mSensorHelper.InitSensor(this);
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
 	}
@@ -59,7 +59,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		mOtherView = (SurfaceView) findViewById(R.id.surface_remote);
 		mImgSwitchVideo = (ImageButton) findViewById(R.id.ImgSwichVideo);
 		mEndCallBtn= (Button)findViewById(R.id.endCall);
-		mMyView.setZOrderOnTop(true);
 		mImgSwitchVideo.setOnClickListener(new OnClickListener() {
 		
 			@Override
@@ -95,8 +94,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 				// TODO Auto-generated method stub
 				if (v==mEndCallBtn)
 				{
-					onPause();
-					onDestroy();
+					destroyCurActivity();
 				}
 			}
 		});
@@ -114,9 +112,12 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 			anychatSDK.mVideoHelper.SetVideoUser(index, userID);
 		}
 
+		mOtherView.setZOrderOnTop(true);
 		SurfaceHolder holder = mOtherView.getHolder();
 		holder.setKeepScreenOn(true);
-
+		holder.setFormat(PixelFormat.TRANSLUCENT);
+		mMyView.setZOrderOnTop(true);
+		
 		anychatSDK.UserCameraControl(userID, 1);
 		anychatSDK.UserSpeakControl(userID, 1);
 
@@ -153,12 +154,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		anychatSDK.UserSpeakControl(-1, 1);//-1表示对本地音频进行控制，打开本地音频
 		
 	}
-	
-	
-	private void setBaseEvent()
-	{
-		anychatSDK.SetBaseEvent(this);
-	}
 
 	private void refreshAV() {
 		anychatSDK.UserCameraControl(userID, 1);
@@ -169,6 +164,10 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		bSelfVideoOpened = false;
 	}
 
+	private void destroyCurActivity() {
+		onPause();
+		onDestroy();
+	}
 	protected void onRestart() {
 		super.onRestart();
 		// 如果是采用Java视频显示，则需要设置Surface的CallBack
@@ -306,5 +305,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 			anychatSDK.UserSpeakControl(-1, 0);
 			bSelfVideoOpened = false;
 		}
+		
+		//销毁当前界面
+		destroyCurActivity();
 	}
 }
