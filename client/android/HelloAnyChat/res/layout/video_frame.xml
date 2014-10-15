@@ -35,7 +35,7 @@
 
         <ImageButton
             android:id="@+id/ImgSwichVideo"
-            android:layout_width="50dp"
+            android:layout_width="52dp"
             android:layout_height="fill_parent"
             android:background="@drawable/button_background"
             android:src="@drawable/switchvideo" />

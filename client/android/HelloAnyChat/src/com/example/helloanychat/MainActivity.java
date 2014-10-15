@@ -7,7 +7,6 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +15,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -23,7 +23,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private Button 	 mBtnStart;
 	private Button   mBtnLogout;
 	private Button   mBtnWaiting;	
+	private LinearLayout mFullLayout;
+	private LinearLayout mProgressLayout;
 	
 	private String   mStrIP = "demo.anychat.cn";
 	private String   mStrName = "name";
@@ -101,6 +105,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mBtnStart = (Button) this.findViewById(R.id.mainUIStartBtn);
 		mBtnLogout = (Button) this.findViewById(R.id.mainUILogoutBtn);
 		mBtnWaiting = (Button) this.findViewById(R.id.mainUIWaitingBtn);
+		mFullLayout = (LinearLayout)this.findViewById(R.id.waitingLayout);
 		
 		mRoleList.setDivider(null);
 		mBottomConnMsg.setText("No content to the server");
@@ -115,7 +120,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			public void onClick(View v) {
 				if (checkInputData()) {
 					setBtnVisible(ConfigEntity.showWaitingFlag);
-
+					showWaitingTips();
 					mSRoomID = Integer.parseInt(mEditRoomID.getText().toString().trim());
 					mStrName = mEditName.getText().toString().trim();
 					mStrIP = mEditIP.getText().toString().trim();
@@ -133,6 +138,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				setBtnVisible(ConfigEntity.showLoginFlag);
+				
 				anyChatSDK.Logout();
 				mRoleList.setAdapter(null);
 				mBottomConnMsg.setText("No connnect to the server");
@@ -209,6 +215,23 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			mBtnWaiting.setVisibility(View.GONE);
 		}
 	}
+	
+	//init登陆等待状态UI
+	private void showWaitingTips()
+	{		
+		mProgressLayout = new LinearLayout(this);
+		mProgressLayout.setOrientation(LinearLayout.HORIZONTAL);
+		mProgressLayout.setGravity(Gravity.CENTER_VERTICAL);
+		mProgressLayout.setPadding(1, 1, 1, 1);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		params.setMargins(5, 5, 5, 5);
+		ProgressBar progressBar = new ProgressBar(this, null,
+				android.R.attr.progressBarStyleLarge);
+		mProgressLayout.addView(progressBar, params);
+
+		mFullLayout.addView(mProgressLayout, new LayoutParams(params));
+	}
 
 	private void hideKeyboard() {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -235,6 +258,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
 		if (!bSuccess) {
 			setBtnVisible(ConfigEntity.showLoginFlag);
+			mProgressLayout.setVisibility(View.GONE);
 			mBtnStart.setClickable(true);
 			Toast.makeText(this, "连接服务器失败，自动重连，请稍后...", Toast.LENGTH_SHORT).show();
 		}
@@ -245,6 +269,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		if (dwErrorCode == 0) {
 			saveLoginData();			
 			setBtnVisible(ConfigEntity.showLogoutFlag);
+			mProgressLayout.setVisibility(View.GONE);
 			hideKeyboard();
 			
 			Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show();
