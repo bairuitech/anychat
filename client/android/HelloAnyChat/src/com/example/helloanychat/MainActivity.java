@@ -7,9 +7,12 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -35,6 +38,11 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private Button 	 mBtnStart;
 	private Button   mBtnLogout;
 	private Button   mBtnWaiting;	
+	
+	private String   mStrIP = "demo.anychat.cn";
+	private String   mStrName = "name";
+	private int      mSPort = 8906;
+	private int      mSRoomID = 1;
 
 	private List<RoleInfo> mRoleInfoList = new ArrayList<RoleInfo>();
 	private RoleListAdapter mAdapter;
@@ -52,6 +60,10 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 		InitSDK();
 		InitLayout();
+		//读取登陆配置表
+		readLoginDate();
+		//初始化登陆配置数据
+		initLoginConfig();
 	}
 
 	private void InitSDK() {
@@ -84,8 +96,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mEditPort = (EditText) this.findViewById(R.id.mainUIEditPort);
 		mEditName = (EditText) this.findViewById(R.id.main_et_name);
 		mEditRoomID = (EditText) this.findViewById(R.id.mainUIEditRoomID);
-		mBottomConnMsg = (TextView) this
-				.findViewById(R.id.mainUIbottomConnMsg);
+		mBottomConnMsg = (TextView) this.findViewById(R.id.mainUIbottomConnMsg);
 		mBottomBuildMsg = (TextView) this.findViewById(R.id.mainUIbottomBuildMsg);
 		mBtnStart = (Button) this.findViewById(R.id.mainUIStartBtn);
 		mBtnLogout = (Button) this.findViewById(R.id.mainUILogoutBtn);
@@ -94,8 +105,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mRoleList.setDivider(null);
 		mBottomConnMsg.setText("No content to the server");
 		// 初始化bottom_tips信息
-		mBottomBuildMsg.setText(" V" + anyChatSDK.GetSDKMainVersion() + "."
-				+ anyChatSDK.GetSDKSubVersion() + "  Build time: "
+		mBottomBuildMsg.setText(" V" + anyChatSDK.GetSDKMainVersion()
+				+ "."	+ anyChatSDK.GetSDKSubVersion() + "  Build time: "
 				+ anyChatSDK.GetSDKBuildTime());
 		mBottomBuildMsg.setGravity(Gravity.CENTER_HORIZONTAL);
 		mBtnStart.setOnClickListener(new OnClickListener() {
@@ -105,12 +116,13 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				if (checkInputData()) {
 					setBtnVisible(ConfigEntity.showWaitingFlag);
 
-					String strIP = mEditIP.getText().toString().trim();
-					int sPort = Integer.parseInt(mEditPort.getEditableText()
-							.toString());
-					String roleName = mEditName.getText().toString().trim();
-					anyChatSDK.Connect(strIP, sPort);
-					anyChatSDK.Login(roleName, "");
+					mSRoomID = Integer.parseInt(mEditRoomID.getText().toString().trim());
+					mStrName = mEditName.getText().toString().trim();
+					mStrIP = mEditIP.getText().toString().trim();
+					mSPort = Integer.parseInt(mEditPort.getText().toString().trim());
+					
+					anyChatSDK.Connect(mStrIP, mSPort);
+					anyChatSDK.Login(mStrName, "");
 				}
 			}
 		});
@@ -126,6 +138,36 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				mBottomConnMsg.setText("No connnect to the server");
 			}
 		});
+	}
+	
+	private void initLoginConfig()
+	{
+		mEditIP.setText(mStrIP);
+		mEditName.setText(mStrName);
+		mEditPort.setText(String.valueOf(mSPort));
+		mEditRoomID.setText(String.valueOf(mSRoomID));
+	}
+	//读取登陆数据
+	private void readLoginDate()
+	{
+		SharedPreferences preferences = getSharedPreferences("LoginInfo", 0);
+		mStrIP = preferences.getString("UserIP", "demo.anychat.cn");
+		mStrName = preferences.getString("UserName", "name");
+		mSPort = preferences.getInt("UserPort", 8906);
+		mSRoomID = preferences.getInt("UserRoomID", 1);
+	}
+	
+	
+	//保存登陆相关数据
+	private void saveLoginData()
+	{
+		SharedPreferences preferences = getSharedPreferences("LoginInfo", 0);
+		Editor preferencesEditor = preferences.edit();
+		preferencesEditor.putString("UserIP", mStrIP);
+		preferencesEditor.putString("UserName", mStrName);
+		preferencesEditor.putInt("UserPort", mSPort);
+		preferencesEditor.putInt("UserRoomID", mSRoomID);
+		preferencesEditor.commit();
 	}
 	
 	private boolean checkInputData() {
@@ -172,8 +214,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		if (imm.isActive()) {
 			imm.hideSoftInputFromWindow(getCurrentFocus()
-					.getApplicationWindowToken(),
-					InputMethodManager.HIDE_NOT_ALWAYS);
+					.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 	}
 
@@ -195,29 +236,28 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		if (!bSuccess) {
 			setBtnVisible(ConfigEntity.showLoginFlag);
 			mBtnStart.setClickable(true);
-			Toast.makeText(this, "连接服务器失败，自动重连，请稍后...", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(this, "连接服务器失败，自动重连，请稍后...", Toast.LENGTH_SHORT).show();
 		}
 	}
 
 	@Override
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
 		if (dwErrorCode == 0) {
+			saveLoginData();			
 			setBtnVisible(ConfigEntity.showLogoutFlag);
 			hideKeyboard();
-
+			
 			Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show();
+			mBottomConnMsg.setText("Connect to the server success.");
 			bNeedRelease = false;
-			int sHourseID = Integer.valueOf(mEditRoomID.getEditableText()
-					.toString());
+			int sHourseID = Integer.valueOf(mEditRoomID.getEditableText().toString());
 			anyChatSDK.EnterRoom(sHourseID, "");
 			
 			UserselfID = dwUserId;
 			// finish();
 		} else {
 			setBtnVisible(ConfigEntity.showLoginFlag);
-			Toast.makeText(this, "登录失败，错误代码：" + dwErrorCode, Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(this, "登录失败，错误代码：" + dwErrorCode, Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -248,12 +288,10 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		if (userID.length == 0) {
 			mBottomConnMsg.setText("房间里没有人");
 		} else {
-			mBottomConnMsg.setText("Connect to the server success.");
 			mRoleList.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-						int arg2, long arg3) {
+				public void onItemClick(AdapterView<?> arg0, View arg1,	int arg2, long arg3) {
 					if (arg2==0)
 						return;
 					

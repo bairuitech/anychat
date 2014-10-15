@@ -44,7 +44,6 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:hint="demo.anychat.cn"
-                    android:text="demo.anychat.cn"
                     android:textColorHint="#bfbfbf"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -70,7 +69,6 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:hint="8906"
-                    android:text="8906"
                     android:inputType="number"  
                     android:textColorHint="#bfbfbf"
                     android:textSize="14sp" />
@@ -109,7 +107,6 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:hint="name"
-                    android:text="xing"
                     android:textColorHint="#bfbfbf"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -135,7 +132,6 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:hint="房间ID"
-                    android:text="1"
                     android:inputType="number"  
                     android:textColorHint="#bfbfbf"
                     android:textSize="14sp" />
