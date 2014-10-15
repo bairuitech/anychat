@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private Button 	 mBtnStart;
 	private Button   mBtnLogout;
 	private Button   mBtnWaiting;	
-	private LinearLayout mFullLayout;
+	private LinearLayout mWaitingLayout;
 	private LinearLayout mProgressLayout;
 	
 	private String   mStrIP = "demo.anychat.cn";
@@ -105,7 +105,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mBtnStart = (Button) this.findViewById(R.id.mainUIStartBtn);
 		mBtnLogout = (Button) this.findViewById(R.id.mainUILogoutBtn);
 		mBtnWaiting = (Button) this.findViewById(R.id.mainUIWaitingBtn);
-		mFullLayout = (LinearLayout)this.findViewById(R.id.waitingLayout);
+		mWaitingLayout = (LinearLayout)this.findViewById(R.id.waitingLayout);
 		
 		mRoleList.setDivider(null);
 		mBottomConnMsg.setText("No content to the server");
@@ -162,7 +162,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mSPort = preferences.getInt("UserPort", 8906);
 		mSRoomID = preferences.getInt("UserRoomID", 1);
 	}
-	
 	
 	//保存登陆相关数据
 	private void saveLoginData()
@@ -230,7 +229,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				android.R.attr.progressBarStyleLarge);
 		mProgressLayout.addView(progressBar, params);
 
-		mFullLayout.addView(mProgressLayout, new LayoutParams(params));
+		mWaitingLayout.addView(mProgressLayout, new LayoutParams(params));
 	}
 
 	private void hideKeyboard() {
