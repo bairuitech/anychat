@@ -307,5 +307,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		
 		//销毁当前界面
 		destroyCurActivity();
+		Intent mIntent = new Intent("VideoActivity");  
+        //发送广播  
+        sendBroadcast(mIntent);  
 	}
 }

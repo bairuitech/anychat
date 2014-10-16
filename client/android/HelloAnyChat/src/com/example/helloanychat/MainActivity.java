@@ -8,8 +8,10 @@ import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -27,7 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private ListView mRoleList;
@@ -68,6 +69,10 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		readLoginDate();
 		//初始化登陆配置数据
 		initLoginConfig();
+		initWaitingTips();
+		
+	    //注册广播  
+        registerBoradcastReceiver();  
 	}
 
 	private void InitSDK() {
@@ -120,7 +125,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			public void onClick(View v) {
 				if (checkInputData()) {
 					setBtnVisible(ConfigEntity.showWaitingFlag);
-					showWaitingTips();
 					mSRoomID = Integer.parseInt(mEditRoomID.getText().toString().trim());
 					mStrName = mEditName.getText().toString().trim();
 					mStrIP = mEditIP.getText().toString().trim();
@@ -204,32 +208,41 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			mBtnStart.setVisibility(View.VISIBLE);
 			mBtnLogout.setVisibility(View.GONE);
 			mBtnWaiting.setVisibility(View.GONE);
+			
+			mProgressLayout.setVisibility(View.GONE);
 		} else if (index == ConfigEntity.showWaitingFlag) {
 			mBtnStart.setVisibility(View.GONE);
 			mBtnLogout.setVisibility(View.GONE);
 			mBtnWaiting.setVisibility(View.VISIBLE);
+			
+			mProgressLayout.setVisibility(View.VISIBLE);
 		} else if (index == ConfigEntity.showLogoutFlag) {
 			mBtnStart.setVisibility(View.GONE);
 			mBtnLogout.setVisibility(View.VISIBLE);
 			mBtnWaiting.setVisibility(View.GONE);
+			
+			mProgressLayout.setVisibility(View.GONE);
 		}
 	}
 	
 	//init登陆等待状态UI
-	private void showWaitingTips()
+	private void initWaitingTips()
 	{		
-		mProgressLayout = new LinearLayout(this);
-		mProgressLayout.setOrientation(LinearLayout.HORIZONTAL);
-		mProgressLayout.setGravity(Gravity.CENTER_VERTICAL);
-		mProgressLayout.setPadding(1, 1, 1, 1);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		params.setMargins(5, 5, 5, 5);
-		ProgressBar progressBar = new ProgressBar(this, null,
-				android.R.attr.progressBarStyleLarge);
-		mProgressLayout.addView(progressBar, params);
-
-		mWaitingLayout.addView(mProgressLayout, new LayoutParams(params));
+		if(mProgressLayout ==null)
+		{
+			mProgressLayout = new LinearLayout(this);
+			mProgressLayout.setOrientation(LinearLayout.HORIZONTAL);
+			mProgressLayout.setGravity(Gravity.CENTER_VERTICAL);
+			mProgressLayout.setPadding(1, 1, 1, 1);
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			params.setMargins(5, 5, 5, 5);
+			ProgressBar progressBar = new ProgressBar(this, null,
+					android.R.attr.progressBarStyleLarge);
+			mProgressLayout.addView(progressBar, params);
+			mProgressLayout.setVisibility(View.GONE);
+			mWaitingLayout.addView(mProgressLayout, new LayoutParams(params));
+		}
 	}
 
 	private void hideKeyboard() {
@@ -257,9 +270,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
 		if (!bSuccess) {
 			setBtnVisible(ConfigEntity.showLoginFlag);
-			mProgressLayout.setVisibility(View.GONE);
-			mBtnStart.setClickable(true);
-			Toast.makeText(this, "连接服务器失败，自动重连，请稍后...", Toast.LENGTH_SHORT).show();
+			mBottomConnMsg.setText("连接服务器失败，自动重连，请稍后...");
 		}
 	}
 
@@ -268,10 +279,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		if (dwErrorCode == 0) {
 			saveLoginData();			
 			setBtnVisible(ConfigEntity.showLogoutFlag);
-			mProgressLayout.setVisibility(View.GONE);
 			hideKeyboard();
 			
-			Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show();
 			mBottomConnMsg.setText("Connect to the server success.");
 			bNeedRelease = false;
 			int sHourseID = Integer.valueOf(mEditRoomID.getEditableText().toString());
@@ -281,17 +290,18 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			// finish();
 		} else {
 			setBtnVisible(ConfigEntity.showLoginFlag);
-			Toast.makeText(this, "登录失败，错误代码：" + dwErrorCode, Toast.LENGTH_SHORT).show();
+			mBottomConnMsg.setText("登录失败，errorCode：" + dwErrorCode);
 		}
 	}
 
 	@Override
 	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
-		System.out.println("getEditableText()");
+		System.out.println("OnAnyChatEnterRoomMessage" +dwRoomId +"err:"+dwErrorCode);
 	}
 
 	@Override
 	public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId) {
+		mBottomConnMsg.setText("进入房间成功！");
 		mRoleInfoList.clear();
 		int[] userID = anyChatSDK.GetOnlineUser();
 		RoleInfo userselfInfo = new RoleInfo();
@@ -329,7 +339,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	@Override
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
-		System.out.println("OnAnyChatUserAtRoomMessage");
 		if (bEnter) {
 			RoleInfo info = new RoleInfo();
 			info.setUserID(String.valueOf(dwUserId));
@@ -351,8 +360,25 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		setBtnVisible(ConfigEntity.showLoginFlag);
 		mRoleList.setAdapter(null);
-		Toast.makeText(this, "连接关闭，error：" + dwErrorCode, Toast.LENGTH_SHORT)
-				.show();
+		mBottomConnMsg.setText("连接关闭，errorCode：" + dwErrorCode);
 	}
-
+	
+	//广播
+	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver(){  
+        @Override  
+        public void onReceive(Context context, Intent intent) {  
+            String action = intent.getAction();  
+            if(action.equals("VideoActivity")){  
+        		setBtnVisible(ConfigEntity.showLoginFlag);
+        		mRoleList.setAdapter(null);
+            }  
+        }  
+    }; 
+    
+    public void registerBoradcastReceiver(){  
+        IntentFilter myIntentFilter = new IntentFilter();  
+        myIntentFilter.addAction("VideoActivity");  
+        //注册广播        
+        registerReceiver(mBroadcastReceiver, myIntentFilter);  
+    }  
 }
