@@ -7,6 +7,7 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -48,7 +49,12 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private String   mStrName = "name";
 	private int      mSPort = 8906;
 	private int      mSRoomID = 1;
-
+	
+	private final int SHOWLOGINSTATEFLAG = 1;      //显示的按钮是登陆状态的标识
+	private final int SHOWWAITINGSTATEFLAG =2;     //显示的按钮是等待状态的标识
+	private final int SHOWLOGOUTSTATEFLAG = 3;     //显示的按钮是登出状态的标识
+	private final int LOCALVIDEOAUTOROTATION = 1; //本地视频自动旋转控制
+	
 	private List<RoleInfo> mRoleInfoList = new ArrayList<RoleInfo>();
 	private RoleListAdapter mAdapter;
 
@@ -56,13 +62,11 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private int UserselfID;
 	
 	public AnyChatCoreSDK 	anyChatSDK;
-	public ConfigEntity 	configEntity;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-
 		InitSDK();
 		InitLayout();
 		//读取登陆配置表
@@ -70,32 +74,30 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		//初始化登陆配置数据
 		initLoginConfig();
 		initWaitingTips();
-		
 	    //注册广播  
         registerBoradcastReceiver();  
 	}
 
 	private void InitSDK() {
 		if (anyChatSDK == null) {
-			anyChatSDK = new AnyChatCoreSDK();
+			anyChatSDK = AnyChatCoreSDK.getInstance(this);
 			anyChatSDK.SetBaseEvent(this);
 			anyChatSDK.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
 
-			configEntity = new ConfigEntity();
 			// 视频采集驱动设置
 			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER, configEntity.videoCapDriver);
+					AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER, AnyChatDefine.VIDEOCAP_DRIVER_JAVA);
 			// 视频显示驱动设置
 			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL, configEntity.videoShowDriver);
+					AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL, AnyChatDefine.VIDEOSHOW_DRIVER_JAVA);
 			// 音频播放驱动设置
 			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_AUDIO_PLAYDRVCTRL, configEntity.audioPlayDriver);
+					AnyChatDefine.BRAC_SO_AUDIO_PLAYDRVCTRL, AnyChatDefine.AUDIOPLAY_DRIVER_JAVA);
 			// 音频采集驱动设置
 			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_AUDIO_RECORDDRVCTRL, configEntity.audioRecordDriver);
+					AnyChatDefine.BRAC_SO_AUDIO_RECORDDRVCTRL, AnyChatDefine.AUDIOREC_DRIVER_JAVA);
 			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_LOCALVIDEO_AUTOROTATION, configEntity.videoAutoRotation);
+					AnyChatDefine.BRAC_SO_LOCALVIDEO_AUTOROTATION, LOCALVIDEOAUTOROTATION);
 
 			bNeedRelease = true;
 		}
@@ -126,7 +128,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			@Override
 			public void onClick(View v) {
 				if (checkInputData()) {
-					setBtnVisible(ConfigEntity.showWaitingFlag);
+					setBtnVisible(SHOWWAITINGSTATEFLAG);
 					mSRoomID = Integer.parseInt(mEditRoomID.getText().toString().trim());
 					mStrName = mEditName.getText().toString().trim();
 					mStrIP = mEditIP.getText().toString().trim();
@@ -143,7 +145,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				setBtnVisible(ConfigEntity.showLoginFlag);
+				setBtnVisible(SHOWLOGINSTATEFLAG);
 				
 				anyChatSDK.Logout();
 				mRoleList.setAdapter(null);
@@ -206,19 +208,19 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	//控制登陆，等待和登出按钮状态
 	private void setBtnVisible(int index) {
-		if (index == ConfigEntity.showLoginFlag) {
+		if (index == SHOWLOGINSTATEFLAG) {
 			mBtnStart.setVisibility(View.VISIBLE);
 			mBtnLogout.setVisibility(View.GONE);
 			mBtnWaiting.setVisibility(View.GONE);
 			
 			mProgressLayout.setVisibility(View.GONE);
-		} else if (index == ConfigEntity.showWaitingFlag) {
+		} else if (index == SHOWWAITINGSTATEFLAG) {
 			mBtnStart.setVisibility(View.GONE);
 			mBtnLogout.setVisibility(View.GONE);
 			mBtnWaiting.setVisibility(View.VISIBLE);
 			
 			mProgressLayout.setVisibility(View.VISIBLE);
-		} else if (index == ConfigEntity.showLogoutFlag) {
+		} else if (index == SHOWLOGOUTSTATEFLAG) {
 			mBtnStart.setVisibility(View.GONE);
 			mBtnLogout.setVisibility(View.VISIBLE);
 			mBtnWaiting.setVisibility(View.GONE);
@@ -256,22 +258,32 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	}
 
 	protected void onDestroy() {
+	
 		if (bNeedRelease) {
+			anyChatSDK.LeaveRoom(-1);
+			anyChatSDK.Logout();
 			anyChatSDK.Release();
 		}
-		anyChatSDK.Logout();
+	
 		super.onDestroy();
 	}
 
 	protected void onResume() {
-		anyChatSDK.SetBaseEvent(this);
 		super.onResume();
+	}
+	
+
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		anyChatSDK.SetBaseEvent(this);
 	}
 
 	@Override
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
 		if (!bSuccess) {
-			setBtnVisible(ConfigEntity.showLoginFlag);
+			setBtnVisible(SHOWLOGINSTATEFLAG);
 			mBottomConnMsg.setText("连接服务器失败，自动重连，请稍后...");
 		}
 	}
@@ -280,7 +292,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
 		if (dwErrorCode == 0) {
 			saveLoginData();			
-			setBtnVisible(ConfigEntity.showLogoutFlag);
+			setBtnVisible(SHOWLOGOUTSTATEFLAG);
 			hideKeyboard();
 			
 			mBottomConnMsg.setText("Connect to the server success.");
@@ -291,7 +303,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			UserselfID = dwUserId;
 			// finish();
 		} else {
-			setBtnVisible(ConfigEntity.showLoginFlag);
+			setBtnVisible(SHOWLOGINSTATEFLAG);
 			mBottomConnMsg.setText("登录失败，errorCode：" + dwErrorCode);
 		}
 	}
@@ -360,7 +372,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-		setBtnVisible(ConfigEntity.showLoginFlag);
+		setBtnVisible(SHOWLOGINSTATEFLAG);
 		mRoleList.setAdapter(null);
 		mBottomConnMsg.setText("连接关闭，errorCode：" + dwErrorCode);
 	}
@@ -371,7 +383,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
         public void onReceive(Context context, Intent intent) {  
             String action = intent.getAction();  
             if(action.equals("VideoActivity")){  
-        		setBtnVisible(ConfigEntity.showLoginFlag);
+        		setBtnVisible(SHOWLOGINSTATEFLAG);
         		mRoleList.setAdapter(null);
             }  
         }  

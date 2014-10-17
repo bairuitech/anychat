@@ -53,7 +53,7 @@ public class AnyChatSensorHelper implements SensorEventListener{
 	
 	public void DestroySensor() {
 		orientationListener.disable();
-		orientationListener=null;
+//		orientationListener=null;
 	}
 
 	private float LastXSpead = 0;
