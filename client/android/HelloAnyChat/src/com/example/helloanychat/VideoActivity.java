@@ -47,7 +47,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 	}
 
 	private void InitSDK() {
-		anychatSDK = AnyChatCoreSDK.getInstance(this);
+		anychatSDK = new AnyChatCoreSDK();
 		anychatSDK.SetBaseEvent(this);
 		anychatSDK.mSensorHelper.InitSensor(this);
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
@@ -303,10 +303,17 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 	@Override
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
 		if (!bEnter) {
-			anychatSDK.UserCameraControl(dwUserId, 0);
-			anychatSDK.UserSpeakControl(dwUserId, 0);
-			bOtherVideoOpened = false;
+			if(dwUserId == userID)
+			{
+				userID=0;
+				anychatSDK.UserCameraControl(dwUserId, 0);
+				anychatSDK.UserSpeakControl(dwUserId, 0);
+				bOtherVideoOpened = false;
+			}
+		
 		} else {
+			if(userID != 0)
+				return;
 
 			int index = anychatSDK.mVideoHelper.bindVideo(mOtherView
 					.getHolder());
@@ -314,6 +321,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 			anychatSDK.UserCameraControl(dwUserId, 1);
 			anychatSDK.UserSpeakControl(dwUserId, 1);
+			userID=dwUserId;
 		}
 	}
 

@@ -77,7 +77,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	private void InitSDK() {
 		if (anyChatSDK == null) {
-			anyChatSDK = AnyChatCoreSDK.getInstance(this);
+			anyChatSDK = new AnyChatCoreSDK();
 			anyChatSDK.SetBaseEvent(this);
 			anyChatSDK.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
 
@@ -94,6 +94,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			// 音频采集驱动设置
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_AUDIO_RECORDDRVCTRL, configEntity.audioRecordDriver);
+			AnyChatCoreSDK.SetSDKOptionInt(
+					AnyChatDefine.BRAC_SO_LOCALVIDEO_AUTOROTATION, configEntity.videoAutoRotation);
 
 			bNeedRelease = true;
 		}
