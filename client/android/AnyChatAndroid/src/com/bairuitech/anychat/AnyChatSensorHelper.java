@@ -41,9 +41,8 @@ public class AnyChatSensorHelper implements SensorEventListener{
 		
 		if(orientationListener == null) {
 			orientationListener = new AnyChatOrientationEventListener(context, SensorManager.SENSOR_DELAY_NORMAL);
-			orientationListener.enable();
 		}
-
+		orientationListener.enable();
 		// 获取传感器管理服务
 		SensorManager sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
 		// 获取加速度传感器
@@ -54,6 +53,7 @@ public class AnyChatSensorHelper implements SensorEventListener{
 	
 	public void DestroySensor() {
 		orientationListener.disable();
+		orientationListener=null;
 	}
 
 	private float LastXSpead = 0;
