@@ -29,7 +29,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 	private SurfaceView mOtherView;
 	private SurfaceView mMyView;
 	private ImageButton mImgSwitchVideo;
-	private Button      mEndCallBtn;
+	private Button mEndCallBtn;
+	private ImageButton mBtnCameraCtrl; // 控制视频的按钮
+	private ImageButton mBtnSpeakCtrl; // 控制音频的按钮
 
 	public AnyChatCoreSDK anychatSDK;
 
@@ -39,7 +41,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 		Intent intent = getIntent();
 		userID = Integer.parseInt(intent.getStringExtra("UserID"));
-		
+
 		InitSDK();
 		InitLayout();
 	}
@@ -53,50 +55,17 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 	private void InitLayout() {
 		this.setContentView(R.layout.video_frame);
-		this.setTitle("与" + anychatSDK.GetUserName(userID));
+		this.setTitle("与" + anychatSDK.GetUserName(userID)+"对话中");
 		mMyView = (SurfaceView) findViewById(R.id.surface_local);
 		mOtherView = (SurfaceView) findViewById(R.id.surface_remote);
 		mImgSwitchVideo = (ImageButton) findViewById(R.id.ImgSwichVideo);
-		mEndCallBtn= (Button)findViewById(R.id.endCall);
-		mImgSwitchVideo.setOnClickListener(new OnClickListener() {
-		
-			@Override
-			public void onClick(View v) {
-				if (v == mImgSwitchVideo) {
-
-					// 如果是采用Java视频采集，则在Java层进行摄像头切换
-					if (AnyChatCoreSDK
-							.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
-						AnyChatCoreSDK.mCameraHelper.SwitchCamera();
-						return;
-					}
-
-					String strVideoCaptures[] = anychatSDK.EnumVideoCapture();
-					String temp = anychatSDK.GetCurVideoCapture();
-					for (int i = 0; i < strVideoCaptures.length; i++) {
-						if (!temp.equals(strVideoCaptures[i])) {
-							anychatSDK.UserCameraControl(-1, 0);
-							bSelfVideoOpened = false;
-							anychatSDK.SelectVideoCapture(strVideoCaptures[i]);
-							anychatSDK.UserCameraControl(-1, 1);
-							break;
-						}
-					}
-				}
-			}
-		});
-
-		mEndCallBtn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (v==mEndCallBtn)
-				{
-					destroyCurActivity();
-				}
-			}
-		});
+		mEndCallBtn = (Button) findViewById(R.id.endCall);
+		mBtnSpeakCtrl = (ImageButton) findViewById(R.id.btn_speakControl);
+		mBtnCameraCtrl = (ImageButton) findViewById(R.id.btn_cameraControl);
+		mBtnSpeakCtrl.setOnClickListener(onClickListener);
+		mBtnCameraCtrl.setOnClickListener(onClickListener);
+		mImgSwitchVideo.setOnClickListener(onClickListener);
+		mEndCallBtn.setOnClickListener(onClickListener);
 		// 如果是采用Java视频采集，则需要设置Surface的CallBack
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
@@ -106,8 +75,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		// 如果是采用Java视频显示，则需要设置Surface的CallBack
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
-			int index = anychatSDK.mVideoHelper
-					.bindVideo(mOtherView.getHolder());
+			int index = anychatSDK.mVideoHelper.bindVideo(mOtherView
+					.getHolder());
 			anychatSDK.mVideoHelper.SetVideoUser(index, userID);
 		}
 
@@ -116,7 +85,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		holder.setKeepScreenOn(true);
 		holder.setFormat(PixelFormat.TRANSLUCENT);
 		mMyView.setZOrderOnTop(true);
-		
+
 		anychatSDK.UserCameraControl(userID, 1);
 		anychatSDK.UserSpeakControl(userID, 1);
 
@@ -148,17 +117,73 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 			adjustLocalVideo(false);
 		}
-		
-		anychatSDK.UserCameraControl(-1, 1);//-1表示对本地视频进行控制，打开本地视频
-		anychatSDK.UserSpeakControl(-1, 1);//-1表示对本地音频进行控制，打开本地音频
-		
+
+		anychatSDK.UserCameraControl(-1, 1);// -1表示对本地视频进行控制，打开本地视频
+		anychatSDK.UserSpeakControl(-1, 1);// -1表示对本地音频进行控制，打开本地音频
+
 	}
+
+	private OnClickListener onClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View view) {
+			switch (view.getId()) {
+			case (R.id.ImgSwichVideo): {
+
+				// 如果是采用Java视频采集，则在Java层进行摄像头切换
+				if (AnyChatCoreSDK
+						.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
+					AnyChatCoreSDK.mCameraHelper.SwitchCamera();
+					return;
+				}
+
+				String strVideoCaptures[] = anychatSDK.EnumVideoCapture();
+				String temp = anychatSDK.GetCurVideoCapture();
+				for (int i = 0; i < strVideoCaptures.length; i++) {
+					if (!temp.equals(strVideoCaptures[i])) {
+						anychatSDK.UserCameraControl(-1, 0);
+						bSelfVideoOpened = false;
+						anychatSDK.SelectVideoCapture(strVideoCaptures[i]);
+						anychatSDK.UserCameraControl(-1, 1);
+						break;
+					}
+				}
+			}
+				break;
+			case (R.id.endCall): {
+				destroyCurActivity();
+			}
+			case R.id.btn_speakControl:
+				if ((anychatSDK.GetSpeakState(-1) == 1)) {
+					mBtnSpeakCtrl.setImageResource(R.drawable.speak_off);
+					anychatSDK.UserSpeakControl(-1, 0);
+				} else {
+					mBtnSpeakCtrl.setImageResource(R.drawable.speak_on);
+					anychatSDK.UserSpeakControl(-1, 1);
+				}
+
+				break;
+			case R.id.btn_cameraControl:
+				if ((anychatSDK.GetCameraState(-1) == 2)) {
+					mBtnCameraCtrl.setImageResource(R.drawable.camera_off);
+					anychatSDK.UserCameraControl(-1, 0);
+				} else {
+					mBtnCameraCtrl.setImageResource(R.drawable.camera_on);
+					anychatSDK.UserCameraControl(-1, 1);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+	};
 
 	private void refreshAV() {
 		anychatSDK.UserCameraControl(userID, 1);
 		anychatSDK.UserSpeakControl(userID, 1);
 		anychatSDK.UserCameraControl(-1, 1);
 		anychatSDK.UserSpeakControl(-1, 1);
+		mBtnSpeakCtrl.setImageResource(R.drawable.speak_on);
+		mBtnCameraCtrl.setImageResource(R.drawable.camera_on);
 		bOtherVideoOpened = false;
 		bSelfVideoOpened = false;
 	}
@@ -167,13 +192,14 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		onPause();
 		onDestroy();
 	}
+
 	protected void onRestart() {
 		super.onRestart();
 		// 如果是采用Java视频显示，则需要设置Surface的CallBack
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
-			int index = anychatSDK.mVideoHelper
-					.bindVideo(mOtherView.getHolder());
+			int index = anychatSDK.mVideoHelper.bindVideo(mOtherView
+					.getHolder());
 			anychatSDK.mVideoHelper.SetVideoUser(index, userID);
 		}
 
@@ -282,8 +308,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 			bOtherVideoOpened = false;
 		} else {
 
-			int index = anychatSDK.mVideoHelper
-					.bindVideo(mOtherView.getHolder());
+			int index = anychatSDK.mVideoHelper.bindVideo(mOtherView
+					.getHolder());
 			anychatSDK.mVideoHelper.SetVideoUser(index, dwUserId);
 
 			anychatSDK.UserCameraControl(dwUserId, 1);
@@ -304,11 +330,11 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 			anychatSDK.UserSpeakControl(-1, 0);
 			bSelfVideoOpened = false;
 		}
-		
-		//销毁当前界面
+
+		// 销毁当前界面
 		destroyCurActivity();
-		Intent mIntent = new Intent("VideoActivity");  
-        //发送广播  
-        sendBroadcast(mIntent);  
+		Intent mIntent = new Intent("VideoActivity");
+		// 发送广播
+		sendBroadcast(mIntent);
 	}
 }

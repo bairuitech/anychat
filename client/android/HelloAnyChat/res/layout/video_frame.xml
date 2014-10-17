@@ -26,8 +26,32 @@
             android:background="@drawable/button_background"
             android:onClick="onEndCall"
             android:text="@string/endCall1"
-            android:textColor="#ffffff" />
-
+            android:textColor="#ffffff" />     
+        
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/trans_white" />
+        
+        <ImageButton
+            android:id="@+id/btn_speakControl"
+            android:layout_width="52dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/button_background"
+            android:src="@drawable/speak_on"/>
+        
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/trans_white" />
+        
+        <ImageButton
+            android:id="@+id/btn_cameraControl"
+            android:layout_width="52dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/button_background"
+            android:src="@drawable/camera_on"/>
+        
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
