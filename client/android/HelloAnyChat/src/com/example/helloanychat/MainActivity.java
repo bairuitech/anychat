@@ -7,7 +7,6 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -385,6 +384,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
             if(action.equals("VideoActivity")){  
         		setBtnVisible(SHOWLOGINSTATEFLAG);
         		mRoleList.setAdapter(null);
+        		mBottomConnMsg.setText("No content to the server");
             }  
         }  
     }; 
