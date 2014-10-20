@@ -18,13 +18,17 @@
 @synthesize remoteVideoSurface;
 @synthesize localVideoSurface;
 @synthesize theLocalView;
+@synthesize endCallBtn;
+@synthesize switchCameraBtn;
+@synthesize voiceBtn;
+@synthesize cameraBtn;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+       
     }
     return self;
 }
@@ -32,83 +36,39 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self StartVideoChat:self.iRemoteUserId];
 }
 
-#pragma mark - Instance Method
-
-- (void) StartVideoChat:(int) userid
+- (void)viewWillAppear:(BOOL)animated
 {
-    // open local video
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
-    [AnyChatPlatform UserSpeakControl: -1:YES];
-    [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
-    [AnyChatPlatform UserCameraControl:-1 : YES];
-    
-    // request other user video
-    [AnyChatPlatform UserSpeakControl: userid:YES];
-    [AnyChatPlatform SetVideoPos:userid: self.remoteVideoSurface:0:0:0:0];
-    [AnyChatPlatform UserCameraControl:userid : YES];
-    
-    self.iRemoteUserId = userid;
-    
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
+    [super viewWillAppear:YES];
+    [self setUIControls];
 }
 
-
-- (void) FinishVideoChat
+- (void)viewDidAppear:(BOOL)animated
 {
-    [AnyChatPlatform UserSpeakControl: -1 : NO];
-    [AnyChatPlatform UserCameraControl: -1 : NO];
-    
-    [AnyChatPlatform UserSpeakControl: self.iRemoteUserId : NO];
-    [AnyChatPlatform UserCameraControl: self.iRemoteUserId : NO];
-    
-    self.iRemoteUserId = -1;    
+    [super viewDidAppear:YES];
 }
 
-- (IBAction)FinishVideoChatBtnClicked:(id)sender
+#pragma mark - Memory Warning method
+
+- (void)didReceiveMemoryWarning
 {
-    [self FinishVideoChat];
-    AnyChatViewController *videoVC = [AnyChatViewController new];
-    videoVC.onlineUserMArray = [videoVC getOnlineUserArray];
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    [super didReceiveMemoryWarning];
 }
 
-- (IBAction) OnSwitchCameraBtnClicked:(id)sender
+#pragma mark - UIActionSheet Delegate Method
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    static int CurrentCameraDevice = 0;
-    NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
-    if(cameraDeviceArray.count == 2)
-    {
-        CurrentCameraDevice = (++CurrentCameraDevice) % 2;
-        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
+    if (buttonIndex == 0) {
+        [self FinishVideoChat];
+        AnyChatViewController *videoVC = [AnyChatViewController new];
+        videoVC.onlineUserMArray = [videoVC getOnlineUserArray];
+
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
-
-- (BOOL)prefersStatusBarHidden{
-    return YES;
-}
-
-- (void) OnLocalVideoInit:(id)session
-{
-    self.localVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
-    self.localVideoSurface.frame = CGRectMake(0, 0, 120, 160);
-    self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    
-    [self.theLocalView.layer addSublayer:self.localVideoSurface];
-}
-
-- (void) OnLocalVideoRelease:(id)sender
-{
-    if(self.localVideoSurface)
-    {
-        self.localVideoSurface = nil;
-    }
-}
-
 
 #pragma mark - Orientation Rotation
 
@@ -174,13 +134,166 @@
     self.theLocalView.frame = kLocalVideoLandscape_CGRect;
 }
 
+#pragma mark - Instance Method
 
-#pragma mark - Memory Warning method
 
-- (void)didReceiveMemoryWarning
+- (void) StartVideoChat:(int) userid
 {
-    [super didReceiveMemoryWarning];
+    // open local video
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
+    [AnyChatPlatform UserSpeakControl: -1:YES];
+    [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
+    [AnyChatPlatform UserCameraControl:-1 : YES];
+    
+    // request other user video
+    [AnyChatPlatform UserSpeakControl: userid:YES];
+    [AnyChatPlatform SetVideoPos:userid: self.remoteVideoSurface:0:0:0:0];
+    [AnyChatPlatform UserCameraControl:userid : YES];
+    
+    self.iRemoteUserId = userid;
+    
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
 }
 
+
+- (void) FinishVideoChat
+{
+    [AnyChatPlatform UserSpeakControl: -1 : NO];
+    [AnyChatPlatform UserCameraControl: -1 : NO];
+    
+    [AnyChatPlatform UserSpeakControl: self.iRemoteUserId : NO];
+    [AnyChatPlatform UserCameraControl: self.iRemoteUserId : NO];
+    
+    self.iRemoteUserId = -1;    
+}
+
+- (IBAction)OnCloseVoiceBtnClicked:(id)sender
+{
+    int test = [AnyChatPlatform GetSpeakState:-1];
+    
+    if (voiceBtn.selected == NO)
+    {
+        [AnyChatPlatform UserSpeakControl:-1 :NO];
+        voiceBtn.selected = YES;
+    }
+    else
+    {
+        [AnyChatPlatform UserSpeakControl: -1:YES];
+        voiceBtn.selected = NO;
+    }
+
+}
+
+- (IBAction)OnCloseCameraBtnClicked:(id)sender
+{
+        if ([AnyChatPlatform GetCameraState:-1] == 1)
+        {   //open local Camera
+            [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
+            [AnyChatPlatform UserCameraControl:-1 : YES];
+            self.theLocalView.hidden = NO;
+            cameraBtn.selected = NO;
+        }
+    
+        if ([AnyChatPlatform GetCameraState:-1] == 2)
+        {   //close local Camera
+            [AnyChatPlatform UserCameraControl:-1 :NO];
+            self.theLocalView.hidden = YES;
+            cameraBtn.selected = YES;
+        }
+}
+
+- (IBAction)FinishVideoChatBtnClicked:(id)sender
+{
+    UIActionSheet *isFinish = [[UIActionSheet alloc]
+                               initWithTitle:@"确定结束会话?"
+                               delegate:self
+                               cancelButtonTitle:nil
+                               destructiveButtonTitle:nil
+                               otherButtonTitles:@"确定",@"取消", nil];
+    isFinish.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [isFinish showInView:self.view];
+}
+
+- (IBAction) OnSwitchCameraBtnClicked:(id)sender
+{
+    static int CurrentCameraDevice = 0;
+    NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
+    if(cameraDeviceArray.count == 2)
+    {
+        CurrentCameraDevice = (++CurrentCameraDevice) % 2;
+        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
+    }
+    
+    [self btnSelectedOnClicked:switchCameraBtn];
+}
+
+- (void) OnLocalVideoRelease:(id)sender
+{
+    if(self.localVideoSurface)
+    {
+        self.localVideoSurface = nil;
+    }
+}
+
+- (BOOL)prefersStatusBarHidden{
+    return YES;
+}
+
+- (void) OnLocalVideoInit:(id)session
+{
+    self.localVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
+    self.localVideoSurface.frame = CGRectMake(0, 0, kLocalVideo_Width, kLocalVideo_Height);
+    self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    
+    [self.theLocalView.layer addSublayer:self.localVideoSurface];
+}
+
+- (void)setUIControls
+{
+    [switchCameraBtn setBackgroundImage:[UIImage imageNamed:@"Icon_camera_w_b"] forState:UIControlStateSelected];
+    
+    //Local View line
+    theLocalView.layer.borderColor = [[UIColor whiteColor] CGColor];
+    theLocalView.layer.borderWidth = 1.0f;
+    //Rounded corners
+    theLocalView.layer.cornerRadius = 4;
+    theLocalView.layer.masksToBounds = YES;
+}
+
+- (void) btnSelectedOnClicked:(UIButton*)button
+{
+    if (button.selected)
+    {
+        button.selected = NO;
+    }
+    else
+    {
+        button.selected = YES;
+    }
+}
+
+//iRemote user video loading status
+-(BOOL)remoteVideoDidLoadStatus
+{
+    BOOL isDidLoad;
+    int videoHeight = 0;
+    int theTimes = 0;
+    
+    while (isDidLoad == NO && theTimes < 5000)
+    {
+        videoHeight = [AnyChatPlatform GetUserVideoHeight:self.iRemoteUserId];
+        
+        if (videoHeight > 0) {
+            isDidLoad = YES;
+        }
+        else
+        {
+            isDidLoad = NO;
+            theTimes++;
+        }
+    }
+    
+    return isDidLoad;
+}
 
 @end
