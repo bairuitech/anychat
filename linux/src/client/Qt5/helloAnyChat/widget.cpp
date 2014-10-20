@@ -1,19 +1,32 @@
-#include "widget.h"
+﻿#include "widget.h"
 #include "ui_widget.h"
 #include <QThread>
+#include <QMessageBox>
 
 #define REFRESH_TRANSTASK_STATUS_TIMER 	1	//刷新传输任务状态定时器
 #define REFRESH_SPEAKVOLUME_TIMER	    2   //更新用户说话音量定时器
 #define REFRESH_RECORDSTATE_TIMER	    3   //更新录像状态定时器
 
 Widget* pthis;
+
 static int g_sOpenedCamUserId=0;            //已经请求视频的用户id
+static int g_isRemoteFullScreen = 0;        //远程视频区域是否是全屏状态
+static int g_isLocalFullScreen = 0;         //本地视频区域是否是全屏状态
+
+static QRect g_WinRect;
+static QRect g_RemoteUserRect;
+static QRect g_LocalUserRect;
+
+static QRect g_DeskRect;
+static QDesktopWidget *g_DesktopWidget;
+
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+
     int width = this->geometry().width();
     int height = this->geometry().height();
     this->setFixedSize(width,height); //设置窗体固定大小
@@ -35,6 +48,18 @@ Widget::Widget(QWidget *parent) :
     ui->ServerIP_lineEdit->setText("demo.anychat.cn");
     ui->ServerPort_lineEdit->setText("8906");
     ui->UserName_lineEdit->setText("QtDemo");
+
+    ui->RemoteUserlabel->installEventFilter(this);//初始化事件过滤
+    ui->LocalUserlabel->installEventFilter(this); //初始化事件过滤
+
+    g_DesktopWidget =QApplication::desktop();   //获取桌面对象
+    g_DeskRect =g_DesktopWidget->screenGeometry();//获取桌面区域
+
+
+    g_WinRect = this->geometry();               //保存默认窗口区域
+    g_RemoteUserRect = ui->horizontalWidgetRemoteUser->geometry();//保存默认远程用户窗口区域
+    g_LocalUserRect = ui->horizontalWidgetLocalUser->geometry();  //保存默认本地用户窗口区域
+
     connect(this,SIGNAL(changeSysLogs(QString)),this,SLOT(setSysLogs(QString)));
 
     memset(m_iUserID,-1,sizeof(m_iUserID));
@@ -128,7 +153,7 @@ void Widget::HelloChatInit()
     QString szCoreSDKPath;
     szCoreSDKPath = QCoreApplication::applicationDirPath();   //获取当前应用程序路径
     (strrchr((char*)szCoreSDKPath.toStdString().c_str(),'/'))[1] = 0;
-    BRAC_SetSDKOption(BRAC_SO_CORESDK_PATH,(char*)szCoreSDKPath.toStdString().c_str(),strlen((char*)szCoreSDKPath.toStdString().c_str()));
+    int ret = BRAC_SetSDKOption(BRAC_SO_CORESDK_PATH,(char*)szCoreSDKPath.toStdString().c_str(),strlen((char*)szCoreSDKPath.toStdString().c_str()));
 
     // 根据BRAC_InitSDK的第二个参数：dwFuncMode，来告诉SDK该如何处理相关的任务（详情请参考开发文档）
     DWORD dwFuncMode = BRAC_FUNC_VIDEO_CBDATA/*BRAC_FUNC_VIDEO_AUTODISP*/ | BRAC_FUNC_AUDIO_AUTOPLAY | BRAC_FUNC_CHKDEPENDMODULE |
@@ -136,10 +161,14 @@ void Widget::HelloChatInit()
                        BRAC_FUNC_AUDIO_AUTOVOLUME | BRAC_FUNC_AUDIO_VOLUMECALC | BRAC_FUNC_CONFIG_LOCALINI;
 
     BRAC_InitSDK((HWND*)this->winId(), dwFuncMode);
+
     BRAC_SetVideoDataCallBack(BRAC_PIX_FMT_RGB32,VideoData_CallBack, this);//设置视频数据回调
     BRAC_SetAudioDataCallBack(AudioData_CallBack, this);                   //设置声音数据回调
     BRAC_SetNotifyMessageCallBack(NotifyMessage_CallBack,this);            //设置异步消息回调
     BRAC_SetTextMessageCallBack(TextMessage_CallBack,this);                //设置消息发送回调
+
+    //char *lpMediaCodecDll="Dxva_Codec.dll";                              //设置外部编解码器
+    //BRAC_SetSDKOption(BRAC_SO_CORESDK_LOADCODEC,lpMediaCodecDll,strlen(lpMediaCodecDll));
 
     // 设置服务器认证密码
     QString pwd = "BaiRuiTech";
@@ -315,7 +344,7 @@ void CALLBACK Widget::TimerProc_CallBack(HWND hwnd, UINT uMsg, UINT nIDEvent, DW
         {
              //本地用户音频实时刷新
             double fSpeakVolume = 0.0;
-            if( pthis->m_SelfId != -1 && BRAC_QueryUserState(pthis->m_SelfId,
+            if( pthis->m_SelfId != 0 && BRAC_QueryUserState(pthis->m_SelfId,
                                                   BRAC_USERSTATE_SPEAKVOLUME,
                                                   (PCHAR)&fSpeakVolume,
                                                   sizeof(DOUBLE)) == GV_ERR_SUCCESS)
@@ -360,7 +389,7 @@ void CALLBACK Widget::VideoData_CallBack(DWORD dwUserid, LPVOID lpBuf, DWORD dwL
     Widget *pDemoDlg = (Widget*)lpUserValue;
     if(pDemoDlg)
     {
-          pDemoDlg->DrawUserVideo(dwUserid,lpBuf,dwLen,bmiHeader,pDemoDlg);
+          pDemoDlg->DrawUserVideo(dwUserid,lpBuf,dwLen,bmiHeader.biWidth,bmiHeader.biHeight);
     }
 }
 
@@ -383,13 +412,13 @@ void CALLBACK Widget::TextMessage_CallBack(DWORD dwFromUserid, DWORD dwToUserid,
         if(pDemoDlg)
         {
             QDateTime time    = QDateTime::currentDateTime();    //获取系统当前时间
-            QString   strTime = time.toString("yyyy-MM-dd hh:mm:ss ");
+            QString   strTime = time.toString(" yyyy-MM-dd hh:mm:ss ");
             CHAR      username[30];
 
             BRAC_GetUserName(dwFromUserid,username,sizeof(username));//获取用户名
-            pDemoDlg->AppendLogString(username + strTime);
-            message.sprintf("%s", lpMsgBuf);
-            pDemoDlg->AppendLogString(message);
+
+            message.sprintf("#INFO# %s%s\n%s\n", username,strTime.toStdString().c_str(),lpMsgBuf);
+            emit pDemoDlg->changeSysLogs(message);
         }
 }
 
@@ -422,51 +451,52 @@ void CALLBACK Widget::NotifyMessage_CallBack(DWORD dwNotifyMsg, DWORD wParam, DW
 };
 
 //视频数据显示
-void Widget::DrawUserVideo(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, BITMAPINFOHEADER bmiHeader,Widget *pWidget)
+void Widget::DrawUserVideo(int dwUserid, LPVOID lpBuf, int dwLen, int bmpWidth,int bmpHeight)
 {
     if(dwLen <= 0 || lpBuf == NULL)
         return;
 
-    int width  = bmiHeader.biWidth;
-    int height = bmiHeader.biHeight;
+    int width  =bmpWidth;
+    int height =bmpHeight;
 
     //判断用户id选择不同的显示区域
     if(m_SelfId == dwUserid) //本地用户视频
     {
-        char* p = m_lpLocalVideoFrame;
-        if(  !p ||m_iLocalVideoSize < dwLen)
+        if( !m_lpLocalVideoFrame || m_iLocalVideoSize < dwLen)
         {
-            p = (char*)realloc(p, dwLen);
-            if(!p)
+            m_lpLocalVideoFrame = (char*)realloc(m_lpLocalVideoFrame, dwLen);
+            if(!m_lpLocalVideoFrame)
                 return;
             m_iLocalVideoSize = dwLen;
         }
-        memcpy(p, lpBuf, dwLen);
-        QImage img = QImage((uchar *)p,width,height,QImage::Format_RGB32);// can load the image
+
+        memcpy(m_lpLocalVideoFrame, lpBuf, dwLen);
+        QImage img = QImage((uchar *)m_lpLocalVideoFrame,width,height,QImage::Format_RGB32);// can load the image
 #ifdef  WIN32
         QImage img2 = img.mirrored();
-        pWidget->ui->RemoteUserlabel->setPixmap(QPixmap::fromImage(img2));
+        ui->LocalUserlabel->setPixmap(QPixmap::fromImage(img2));
+        ui->LocalUserlabel->update();
 #else
-        pWidget->ui->RemoteUserlabel->setPixmap(QPixmap::fromImage(img));
+        ui->LocalUserlabel->setPixmap(QPixmap::fromImage(img));
 #endif
     }
     else  //远程用户视频
     {
-        char* p = m_lpRemoteVideoFrame;
-        if(  !p ||m_iRemoteVideoSize < dwLen)
+        if(  !m_lpRemoteVideoFrame ||m_iRemoteVideoSize < dwLen)
         {
-            p = (char*)realloc(p, dwLen);
-            if(!p)
+            m_lpRemoteVideoFrame = (char*)realloc(m_lpRemoteVideoFrame, dwLen);
+            if(!m_lpRemoteVideoFrame)
                 return;
             m_iRemoteVideoSize = dwLen;
         }
-        memcpy(p, lpBuf, dwLen);
-        QImage img = QImage((uchar *)p,width,height,QImage::Format_RGB32);// can load the image
+        memcpy(m_lpRemoteVideoFrame, lpBuf, dwLen);
+
+        QImage img = QImage((uchar *)m_lpRemoteVideoFrame,width,height,QImage::Format_RGB32);// can load the image
 #ifdef  WIN32
         QImage img2 = img.mirrored();
-        pWidget->ui->RemoteUserlabel->setPixmap(QPixmap::fromImage(img2));
+        ui->RemoteUserlabel->setPixmap(QPixmap::fromImage(img2));
 #else
-        pWidget->ui->RemoteUserlabel->setPixmap(QPixmap::fromImage(img));
+        ui->RemoteUserlabel->setPixmap(QPixmap::fromImage(img));
 #endif
     }
 }
@@ -539,10 +569,92 @@ void Widget::on_SendMsg_Btn_clicked()
         QString strTime = time.toString("  yyyy-MM-dd hh:mm:ss ");
         QString info ="#INFO#";
         CHAR username[30];
-        BRAC_GetUserName(g_sOpenedCamUserId,username,sizeof(username));
+        BRAC_GetUserName(m_SelfId,username,sizeof(username));
         AppendLogString(info+username + strTime);
+
+        QString Msg;
+        Msg.sprintf("%s\n",message.toStdString().c_str());
         AppendLogString(message);
     }
 
     ui->SendMsglineEdit->setText("");
+}
+
+bool Widget::eventFilter(QObject *obj, QEvent *event)
+{
+
+    if (obj == ui->RemoteUserlabel)
+    {
+        if (event->type() == QEvent::MouseButtonDblClick)
+        {
+
+            if(g_isRemoteFullScreen)
+            {
+                int x_Win = (g_DeskRect.width()- g_WinRect.width())/2;
+                int y_Win = (g_DeskRect.height()- g_WinRect.height())/2;
+
+                this->setFixedSize(g_WinRect.width(),g_WinRect.height());
+                this->setGeometry(x_Win,y_Win,g_WinRect.width(),g_WinRect.height());
+                ui->horizontalWidgetRemoteUser->setGeometry(g_RemoteUserRect);
+
+                qDebug()<<"RemoteUser Show Normal Screen";
+                g_isRemoteFullScreen=0;
+            }
+            else if(!g_isRemoteFullScreen && !g_isLocalFullScreen)//远程视频全屏
+            {
+                this->setFixedSize(g_DeskRect.width(),g_DeskRect.height());
+                this->setGeometry(g_DeskRect);
+                ui->horizontalWidgetRemoteUser->setGeometry(g_DeskRect);
+                ui->horizontalWidgetRemoteUser->raise();
+                qDebug()<<"RemoteUser Show Full Screen";
+
+                g_isRemoteFullScreen=1;
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else if (obj == ui->LocalUserlabel)
+    {
+        if (event->type() == QEvent::MouseButtonDblClick)
+        {
+
+            if(g_isLocalFullScreen)
+            {
+                int x_Win = (g_DeskRect.width()- g_WinRect.width())/2;
+                int y_Win = (g_DeskRect.height()- g_WinRect.height())/2;
+
+                this->setFixedSize(g_WinRect.width(),g_WinRect.height());
+                this->setGeometry(x_Win,y_Win,g_WinRect.width(),g_WinRect.height());
+
+                ui->horizontalWidgetLocalUser->setGeometry(g_LocalUserRect);
+
+                qDebug()<<"RemoteUser Show Normal Screen";
+                g_isLocalFullScreen=0;
+            }
+            else if(!g_isLocalFullScreen && !g_isRemoteFullScreen )//本地视频全屏
+            {
+                this->setFixedSize(g_DeskRect.width(),g_DeskRect.height());
+                this->setGeometry(g_DeskRect);
+                ui->horizontalWidgetLocalUser->setGeometry(g_DeskRect);
+                ui->horizontalWidgetLocalUser->raise();
+                qDebug()<<"RemoteUser Show Full Screen";
+
+                g_isLocalFullScreen=1;
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        // pass the event on to the parent class
+        return Widget::eventFilter(obj, event);
+    }
 }

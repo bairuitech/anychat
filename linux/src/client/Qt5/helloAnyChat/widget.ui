@@ -28,7 +28,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget_2">
+  <widget class="QWidget" name="horizontalWidgetRemoteUser" native="true">
    <property name="geometry">
     <rect>
      <x>280</x>
@@ -58,7 +58,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget_3">
+  <widget class="QWidget" name="horizontalWidgetLocalUser" native="true">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -273,6 +273,18 @@
     </item>
    </layout>
   </widget>
+  <zorder>horizontalLayoutWidget</zorder>
+  <zorder>LocalUserProgressBar</zorder>
+  <zorder>RemoteUserprogressBar</zorder>
+  <zorder>horizontalLayoutWidget_4</zorder>
+  <zorder>verticalLayoutWidget</zorder>
+  <zorder>horizontalLayoutWidget_5</zorder>
+  <zorder>label</zorder>
+  <zorder>horizontalLayoutWidget_6</zorder>
+  <zorder>horizontalLayoutWidget_7</zorder>
+  <zorder>horizontalLayoutWidget_8</zorder>
+  <zorder>horizontalWidgetRemoteUser</zorder>
+  <zorder>horizontalWidgetLocalUser</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
