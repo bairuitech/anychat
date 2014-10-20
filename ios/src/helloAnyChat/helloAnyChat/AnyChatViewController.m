@@ -14,10 +14,11 @@
 
 @implementation AnyChatViewController
 
-@synthesize onLineUserTableView;
-@synthesize onlineUserMArray;
 @synthesize anyChat;
 @synthesize videoVC;
+@synthesize onLineUserTableView;
+@synthesize onlineUserMArray;
+@synthesize theOnLineLoginState;
 @synthesize theVersion;
 @synthesize theStateInfo;
 @synthesize theRoomNO;
@@ -25,18 +26,18 @@
 @synthesize theServerIP;
 @synthesize theServerPort;
 @synthesize theLoginBtn;
-@synthesize onLoginState;
 @synthesize theLoginAlertView;
 @synthesize theHideKeyboardBtn;
-
-
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
+        
+        [AnyChatPlatform InitSDK:0];
     }
     return self;
 }
@@ -45,30 +46,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
-    
+
     anyChat = [[AnyChatPlatform alloc] init];
     anyChat.notifyMsgDelegate = self;
-    
-    [AnyChatPlatform InitSDK:0];
-    
-//    [self createTableView];
-    onLoginState = NO;
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
     [self setUIControls];
 }
 
+#pragma mark - Memory Warning Method
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
 
 #pragma mark - Rotation
 
-- (BOOL)shouldAutorotate {
+- (BOOL)shouldAutorotate
+{
     return NO;
 }
 
@@ -112,7 +112,17 @@
     return Cell;
 }
 
-
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row)
+    {   //Display Cell end of loading
+        theOnLineLoginState = YES;
+    }
+    else
+    {
+        theOnLineLoginState = NO;
+    }
+}
 
 #pragma mark - Table view delegate
 
@@ -151,10 +161,6 @@
     {
         theStateInfo.text = @"• Successful connection";
     }
-    else
-    {
-        theStateInfo.text = @"• Connection failed";
-    }
 }
 
 // 用户登陆消息
@@ -164,20 +170,22 @@
     
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
-        onLoginState = YES;
+        theOnLineLoginState = YES;
         theStateInfo.text = [NSString stringWithFormat:@" Login successful. Self userid:%d", dwUserId];
+        [self saveSettings];  //save correct configuration
 
         [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_logout_01"] forState:UIControlStateNormal];
         
         if([theRoomNO.text length] == 0)
         {
-            theRoomNO.text = @"1";
+            theRoomNO.text = [self GetRoomNO];
         }
-        [AnyChatPlatform EnterRoom:[theRoomNO.text integerValue] :@""];
+        [AnyChatPlatform EnterRoom:[theRoomNO.text intValue] :@""];
+        
     }
     else
     {
-        onLoginState = NO;
+        theOnLineLoginState = NO;
         theStateInfo.text = [NSString stringWithFormat:@"• Login failed(ErrorCode:%i)",dwErrorCode];
     }
     
@@ -192,7 +200,7 @@
     }
     else
     {
-        [self dimissAlertView:theLoginAlertView];
+        [self timeOutMsg];
     }
 
     [onLineUserTableView reloadData];
@@ -238,7 +246,7 @@
 }
 
 
-#pragma mark - Class Method
+#pragma mark - Get & Save Settings Method
 
 - (id) GetServerIP
 {
@@ -251,8 +259,10 @@
         serverIP =  [array objectAtIndex:0];
         
         if([serverIP length] == 0)
+        {
             theServerIP.text = @"demo.anychat.cn";
             serverIP = theServerIP.text;
+        }
     }
     else
     {
@@ -262,7 +272,7 @@
     return serverIP;
 }
 
-- (int) GetServerPort
+- (id) GetServerPort
 {
     NSString* serverPort;
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -272,27 +282,75 @@
         NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
         serverPort = [array objectAtIndex:1];
         
-        if([serverPort intValue] == 0 || [serverPort intValue] == 0)
+        if([serverPort intValue] == 0 || [serverPort length] == 0)
+        {
             theServerPort.text = @"8906";
             serverPort = theServerPort.text;
+        }
     }
     else
     {
         theServerPort.text = @"8906";
         serverPort = theServerPort.text;
     }
-    return [serverPort intValue];
+    return serverPort;
 }
 
-
-#pragma mark - AlertView method
-
-- (void) dimissAlertView:(UIAlertView *)alert
+- (id) GetUserName
 {
-    if(alert){
-        [alert dismissWithClickedButtonIndex:[alert cancelButtonIndex] animated:YES];
+    NSString* userName;
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
+    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
+        userName =  [array objectAtIndex:2];
+        
+        if([userName length] == 0)
+        {
+            theUserName.text = @"HelloAnyChat";
+            userName = theServerIP.text;
+        }
     }
+    else
+    {
+        theUserName.text = @"HelloAnyChat";
+        userName = theUserName.text;
+    }
+    return userName;
 }
+
+- (id) GetRoomNO
+{
+    NSString* roomNO;
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
+    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
+        roomNO = [array objectAtIndex:3];
+        
+        if([roomNO intValue] == 0 || [roomNO length] == 0)
+        {
+            theRoomNO.text = @"1";
+            roomNO = theRoomNO.text;
+        }
+    }
+    else
+    {
+        theRoomNO.text = @"1";
+        roomNO = theRoomNO.text;
+    }
+    return roomNO;
+}
+
+- (void)saveSettings
+{   // save settings to file
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
+    [[NSArray arrayWithObjects:theServerIP.text,theServerPort.text,theUserName.text,theRoomNO.text, nil] writeToFile:filePath atomically:YES];
+}
+
 
 #pragma mark - Instance Method
 
@@ -318,7 +376,7 @@
 
 - (IBAction)OnLoginBtnClicked:(id)sender
 {
-    if (onLoginState == YES)
+    if (theOnLineLoginState == YES)
     {
         [self OnLogout];
     }
@@ -330,38 +388,43 @@
 
 - (void) OnLogin
 {
-    [self hideKeyBoard];
-    
-    if (onLoginState == NO)
+    if (theOnLineLoginState == NO)
     {
-        theLoginAlertView = [[UIAlertView alloc] initWithTitle:@"Log in, please wait."
-                                                       message:@"HelloAnyChat loading..."
-                                                      delegate:self
-                                             cancelButtonTitle:nil
-                                             otherButtonTitles:nil,nil];
-        [theLoginAlertView show];
+        [self showLoadingAnimated];
         
+        
+        if([theServerIP.text length] == 0)
+        {
+            theServerIP.text = [self GetServerIP];
+        }
+        if([theServerPort.text length] == 0)
+        {
+            theServerPort.text = [self GetServerPort];
+        }
         if([theUserName.text length] == 0)
         {
-            theUserName.text = @"HelloAnyChat";
+            theUserName.text = [self GetUserName];
         }
-        [AnyChatPlatform Connect:[self GetServerIP] : [self GetServerPort]];
+        [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
         [AnyChatPlatform Login:theUserName.text : @""];
     }
     
+    [self hideKeyBoard];
 }
 
 - (void) OnLogout
 {
-    [AnyChatPlatform LeaveRoom:-1];
-    [AnyChatPlatform Logout];
-    
-    onLoginState = NO;
-    [onlineUserMArray removeAllObjects];
-    [onLineUserTableView reloadData];
-    theStateInfo.text = @"• Logout Server.";
-
-    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
+    if (theOnLineLoginState == YES)
+    {
+        [AnyChatPlatform LeaveRoom:-1];
+        [AnyChatPlatform Logout];
+        
+        theOnLineLoginState = NO;
+        [onlineUserMArray removeAllObjects];
+        [onLineUserTableView reloadData];
+        theStateInfo.text = @"• Logout Server.";
+        [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
+    }
 }
 
 - (int)getRandomNumber:(int)from to:(int)to
@@ -375,32 +438,53 @@
     return YES;
 }
 
-#pragma mark - Memory Warning Method
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 #pragma mark - Animation Method
 
-- (void) transitionAnimationWithInstance:(id)instanceLayer
+- (void)showLoadingAnimated
 {
-    CATransition *transition = [CATransition animation];
-    transition.delegate = self;
-    transition.duration = 0.5;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type = kCATransitionFade;
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
     
-    [instanceLayer addAnimation:transition forKey:@"transitionAnimation"];
+    HUD.delegate = self;
+    HUD.dimBackground = YES;
+    HUD.labelText = @"HelloAnyChat";
+    HUD.detailsLabelText = @"Loading...";
+    
+    [HUD showWhileExecuting:@selector(onLoginLoadingAnimatedRunTime) onTarget:self withObject:nil animated:YES];
 }
 
+- (void)onLoginLoadingAnimatedRunTime
+{
+    int theTimes = 0;
+    while (theOnLineLoginState == NO && theTimes < 6)
+    {
+        sleep(1);
+        theTimes++;
+        
+        if (theTimes == 5 ) {
+            [self timeOutMsg];
+        }
+    }
+}
+
+- (void) timeOutMsg
+{
+    if (theOnLineLoginState == NO)
+    {
+        theStateInfo.text = @"Login timeout,please check the Network and Setting.";
+    }
+}
 
 #pragma mark - UI Controls
 
 - (void)setUIControls
 {
     [self.navigationController setNavigationBarHidden:YES];
+    
+    theRoomNO.text = [self GetRoomNO];
+    theUserName.text = [self GetUserName];
+    theServerIP.text = [self GetServerIP];
+    theServerPort.text = [self GetServerPort];
     
     [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -424,13 +508,6 @@
     [theVersion setText:[AnyChatPlatform GetSDKVersion]];
     [self prefersStatusBarHidden];
     
-}
-
-- (void)saveSettings
-{   // save settings to file
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    [[NSArray arrayWithObjects:theUserName.text,theRoomNO.text,theServerIP.text,theServerPort.text, nil] writeToFile:filePath atomically:YES];
 }
 
 
