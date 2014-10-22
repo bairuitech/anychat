@@ -169,8 +169,6 @@
 
 - (IBAction)OnCloseVoiceBtnClicked:(id)sender
 {
-    int test = [AnyChatPlatform GetSpeakState:-1];
-    
     if (voiceBtn.selected == NO)
     {
         [AnyChatPlatform UserSpeakControl:-1 :NO];
