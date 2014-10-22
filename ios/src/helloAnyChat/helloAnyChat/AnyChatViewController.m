@@ -159,7 +159,7 @@
 {
     if (bSuccess)
     {
-        theStateInfo.text = @"• Successful connection";
+        theStateInfo.text = @"• Success connected to server";
     }
 }
 
@@ -171,7 +171,7 @@
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
         theOnLineLoginState = YES;
-        theStateInfo.text = [NSString stringWithFormat:@" Login successful. Self userid:%d", dwUserId];
+        theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
         [self saveSettings];  //save correct configuration
 
         [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_logout_01"] forState:UIControlStateNormal];
@@ -216,10 +216,6 @@
 // 用户进入房间消息
 - (void) OnAnyChatUserEnterRoom:(int) dwUserId
 {
-    if (videoVC.iRemoteUserId == -1 ) {
-        videoVC.iRemoteUserId = dwUserId;
-        [videoVC StartVideoChat:dwUserId];
-    }
     onlineUserMArray = [self getOnlineUserArray];
     [onLineUserTableView reloadData];
 }
@@ -229,6 +225,7 @@
 {
     if (videoVC.iRemoteUserId == dwUserId ) {
         [videoVC FinishVideoChat];
+        videoVC.iRemoteUserId = -1;
     }
     onlineUserMArray = [self getOnlineUserArray];
     [onLineUserTableView reloadData];
@@ -242,7 +239,7 @@
     
     videoVC.iRemoteUserId = -1;
     
-    theStateInfo.text = [NSString stringWithFormat:@"• AnyChat Link Close(ErrorCode:%i)",dwErrorCode];
+    theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
 }
 
 
@@ -448,7 +445,7 @@
     HUD.delegate = self;
     HUD.dimBackground = YES;
     HUD.labelText = @"HelloAnyChat";
-    HUD.detailsLabelText = @"Loading...";
+    HUD.detailsLabelText = @"Connecting...";
     
     [HUD showWhileExecuting:@selector(onLoginLoadingAnimatedRunTime) onTarget:self withObject:nil animated:YES];
 }

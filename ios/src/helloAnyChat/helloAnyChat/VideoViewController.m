@@ -63,10 +63,6 @@
 {
     if (buttonIndex == 0) {
         [self FinishVideoChat];
-        AnyChatViewController *videoVC = [AnyChatViewController new];
-        videoVC.onlineUserMArray = [videoVC getOnlineUserArray];
-
-        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -158,13 +154,19 @@
 
 - (void) FinishVideoChat
 {
+    // 关闭摄像头
     [AnyChatPlatform UserSpeakControl: -1 : NO];
     [AnyChatPlatform UserCameraControl: -1 : NO];
     
     [AnyChatPlatform UserSpeakControl: self.iRemoteUserId : NO];
     [AnyChatPlatform UserCameraControl: self.iRemoteUserId : NO];
     
-    self.iRemoteUserId = -1;    
+    self.iRemoteUserId = -1;
+    
+    AnyChatViewController *videoVC = [AnyChatViewController new];
+    videoVC.onlineUserMArray = [videoVC getOnlineUserArray];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)OnCloseVoiceBtnClicked:(id)sender
@@ -179,7 +181,6 @@
         [AnyChatPlatform UserSpeakControl: -1:YES];
         voiceBtn.selected = NO;
     }
-
 }
 
 - (IBAction)OnCloseCameraBtnClicked:(id)sender
@@ -227,14 +228,9 @@
 
 - (void) OnLocalVideoRelease:(id)sender
 {
-    if(self.localVideoSurface)
-    {
+    if(self.localVideoSurface) {
         self.localVideoSurface = nil;
     }
-}
-
-- (BOOL)prefersStatusBarHidden{
-    return YES;
 }
 
 - (void) OnLocalVideoInit:(id)session
@@ -244,6 +240,11 @@
     self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
     
     [self.theLocalView.layer addSublayer:self.localVideoSurface];
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 - (void)setUIControls
