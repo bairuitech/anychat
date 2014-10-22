@@ -42,6 +42,7 @@
 @property (strong, nonatomic) VideoViewController           *videoVC;
 @property (strong, nonatomic) AnyChatPlatform               *anyChat;
 @property BOOL theOnLineLoginState;
+@property int theMyUserID;
 
 
 - (IBAction) hideKeyBoard;

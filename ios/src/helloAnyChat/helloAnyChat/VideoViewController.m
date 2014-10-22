@@ -135,12 +135,14 @@
 
 - (void) StartVideoChat:(int) userid
 {
+    NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
+    [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+    
     // open local video
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
     [AnyChatPlatform UserSpeakControl: -1:YES];
     [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
     [AnyChatPlatform UserCameraControl:-1 : YES];
-    
     // request other user video
     [AnyChatPlatform UserSpeakControl: userid:YES];
     [AnyChatPlatform SetVideoPos:userid: self.remoteVideoSurface:0:0:0:0];

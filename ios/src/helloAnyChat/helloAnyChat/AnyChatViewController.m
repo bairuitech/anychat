@@ -28,6 +28,7 @@
 @synthesize theLoginBtn;
 @synthesize theLoginAlertView;
 @synthesize theHideKeyboardBtn;
+@synthesize theMyUserID;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -95,13 +96,21 @@
     }
     
     NSInteger userID = [[onlineUserMArray objectAtIndex:[indexPath row]] intValue];
-    NSString *name = [AnyChatPlatform GetUserName:userID];
+    NSString *name = [AnyChatPlatform GetUserName:userID];;
     
     UILabel *userIDLabel = (UILabel *)[Cell.contentView viewWithTag:kUserIDValueTag];
     UILabel *nameLabel = (UILabel *)[Cell.contentView viewWithTag:kNameValueTag];
     UIImageView *bgView = (UIImageView *)[Cell viewWithTag:kBackgroundViewTag];
     
-    nameLabel.text = name;
+    if (theMyUserID == userID)
+    {
+        nameLabel.text = [name stringByAppendingString:@"(自己)"];
+    }
+    else
+    {
+        nameLabel.text = name;
+    }
+    
     userIDLabel.text = [NSString stringWithFormat:@"%i",userID];
     
     NSString *RandomNo = [[NSString alloc] initWithFormat:@"%i",[self getRandomNumber:1 to:5]];
@@ -130,9 +139,11 @@
 {
     int selectID = [[onlineUserMArray objectAtIndex:[indexPath row]] integerValue];
     
-    videoVC = [VideoViewController new];
-    videoVC.iRemoteUserId = selectID;
-    [self.navigationController pushViewController:videoVC animated:YES];
+    if (selectID != theMyUserID) {
+        videoVC = [VideoViewController new];
+        videoVC.iRemoteUserId = selectID;
+        [self.navigationController pushViewController:videoVC animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -171,9 +182,9 @@
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
         theOnLineLoginState = YES;
-        theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
+        theMyUserID = dwUserId;
         [self saveSettings];  //save correct configuration
-
+        theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
         [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_logout_01"] forState:UIControlStateNormal];
         
         if([theRoomNO.text length] == 0)
@@ -181,7 +192,6 @@
             theRoomNO.text = [self GetRoomNO];
         }
         [AnyChatPlatform EnterRoom:[theRoomNO.text intValue] :@""];
-        
     }
     else
     {
@@ -236,8 +246,9 @@
 {
     [videoVC FinishVideoChat];
     [AnyChatPlatform Logout];
-    
-    videoVC.iRemoteUserId = -1;
+    theOnLineLoginState = NO;
+    [onlineUserMArray removeAllObjects];
+    [onLineUserTableView reloadData];
     
     theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
 }
@@ -360,6 +371,7 @@
 - (NSMutableArray *) getOnlineUserArray
 {
     NSMutableArray *onLineUserList = [[NSMutableArray alloc] initWithArray:[AnyChatPlatform GetOnlineUser]];
+    [onLineUserList insertObject:[NSString stringWithFormat:@"%i",theMyUserID] atIndex:0];
     return onLineUserList;
 }
 
