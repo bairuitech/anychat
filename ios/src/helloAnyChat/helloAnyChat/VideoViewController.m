@@ -217,7 +217,7 @@
 
 - (IBAction) OnSwitchCameraBtnClicked:(id)sender
 {
-    static int CurrentCameraDevice = 0;
+    static int CurrentCameraDevice = 1;
     NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
     if(cameraDeviceArray.count == 2)
     {

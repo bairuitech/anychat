@@ -116,7 +116,7 @@
     NSString *RandomNo = [[NSString alloc] initWithFormat:@"%i",[self getRandomNumber:1 to:5]];
     bgView.image = [UIImage imageNamed:RandomNo];
     
-    Cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    Cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     
     return Cell;
 }
@@ -245,12 +245,14 @@
 - (void) OnAnyChatLinkClose:(int) dwErrorCode
 {
     [videoVC FinishVideoChat];
+    [AnyChatPlatform LeaveRoom:-1];
     [AnyChatPlatform Logout];
     theOnLineLoginState = NO;
     [onlineUserMArray removeAllObjects];
     [onLineUserTableView reloadData];
     
     theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
+    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
 }
 
 
