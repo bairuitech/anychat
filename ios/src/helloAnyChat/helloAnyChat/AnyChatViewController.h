@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
+#import "MBProgressHUD.h"
 #import "VideoViewController.h"
 
 #import "AnyChatPlatform.h"
@@ -19,10 +20,13 @@
 #define kUserIDValueTag             1002
 #define kBackgroundViewTag          1003
 #define kAnyChatSettingsFileName    @"settings.plist"
+#define kTimeoutTime_seconds        3
 
 @class VideoViewController;
 
-@interface AnyChatViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,UITextFieldDelegate,AnyChatNotifyMessageDelegate>
+@interface AnyChatViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,MBProgressHUDDelegate,UITextFieldDelegate,AnyChatNotifyMessageDelegate>{
+    MBProgressHUD *HUD;
+}
 
 @property (weak, nonatomic) IBOutlet UITextField            *theUserName;
 @property (weak, nonatomic) IBOutlet UITextField            *theRoomNO;
@@ -32,24 +36,31 @@
 @property (weak, nonatomic) IBOutlet UIButton               *theHideKeyboardBtn;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersion;
 @property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
-@property (retain, nonatomic) IBOutlet UITableView          *onLineUserTableView;
-@property (retain, nonatomic) NSMutableArray                *onlineUserMArray;
+@property (strong, nonatomic) IBOutlet UITableView          *onLineUserTableView;
+@property (strong, nonatomic) NSMutableArray                *onlineUserMArray;
 @property (strong, nonatomic) UIAlertView                   *theLoginAlertView;
-@property (retain, nonatomic) VideoViewController           *videoVC;
-@property (retain, nonatomic) AnyChatPlatform               *anyChat;
-@property BOOL onLoginState;
+@property (strong, nonatomic) VideoViewController           *videoVC;
+@property (strong, nonatomic) AnyChatPlatform               *anyChat;
+@property BOOL theOnLineLoginState;
+@property int theMyUserID;
 
 
-- (IBAction)hideKeyBoard;
+- (IBAction) hideKeyBoard;
 
-- (IBAction)OnLoginBtnClicked:(id)sender;
+- (IBAction) OnLoginBtnClicked:(id)sender;
 
 - (NSMutableArray *) getOnlineUserArray;
 
 - (id) GetServerIP;
 
-- (int) GetServerPort;
+- (id) GetServerPort;
+
+- (id) GetUserName;
+
+- (id) GetRoomNO;
 
 - (void) OnLogout;
+
+- (void) saveSettings;
 
 @end
