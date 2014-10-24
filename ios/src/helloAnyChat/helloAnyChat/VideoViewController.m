@@ -135,8 +135,12 @@
 
 - (void) StartVideoChat:(int) userid
 {
+    //Get a camera, Must be in the real machine.
     NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
-    [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+    if (cameraDeviceArray.count > 0)
+    {
+        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+    }
     
     // open local video
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
