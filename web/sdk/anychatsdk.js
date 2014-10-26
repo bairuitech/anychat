@@ -1,4 +1,5 @@
-// AnyChat for Web SDK（不要对该文件进行任何修改，当升级SDK时，新版本会直接覆盖旧版本）
+// AnyChat for Web SDK
+// 不要对该文件进行任何修改，当升级SDK时，新版本将会直接覆盖旧版本
 
 /********************************************
  *				常量定义部分				*
@@ -37,6 +38,7 @@ var BRAC_SO_RECORD_FILETYPE	=				140;// 录制文件类型设置（参数为：int型， 0 MP4[
 var BRAC_SO_RECORD_WIDTH	=				141;// 录制视频宽度设置（参数为：int型，如：320）
 var BRAC_SO_RECORD_HEIGHT	=				142;// 录制文件高度设置（参数为：int型，如：240）
 var BRAC_SO_RECORD_FILENAMERULE	=			143;// 录制文件名命名规则（参数为：int型）
+var BRAC_SO_RECORD_CLIPMODE	=				144;// 录制视频裁剪模式（参数为：int型）
 
 var BRAC_SO_CORESDK_TMPDIR = 				14;	// 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 var BRAC_SO_CORESDK_MAGICADJUST = 			15;	// 内核调试参数
@@ -95,6 +97,7 @@ var BRAC_SO_VIDEOSHOW_MODECTRL = 			80;	// 视频显示模式控制（参数为：int型，0 单
 var BRAC_SO_VIDEOSHOW_SETPRIMARYUSER = 		81;	// 设置主显示用户编号（参数为：int型，用户ID号）
 var BRAC_SO_VIDEOSHOW_SETOVERLAYUSER = 		82;	// 设置迭加显示用户编号（参数为：int型，用户ID号）
 var BRAC_SO_VIDEOSHOW_DRIVERCTRL = 			83;	// 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL, 4 Android2X）
+var BRAC_SO_VIDEOSHOW_CLIPMODE =			86;	// 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
 
 var BRAC_SO_CORESDK_TICKOUTUSER	=			110;// 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
 var BRAC_SO_CORESDK_DEVICEMODE	=			130;// 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
@@ -123,8 +126,6 @@ var BRAC_RECORD_FLAGS_SNAPSHOT	=	0x00000400;	// 拍照
 var BRAC_RECORD_FLAGS_LOCALCB	=	0x00000800;	// 触发本地回调
 var BRAC_RECORD_FLAGS_STREAM	=	0x00001000;	// 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
 
-
-
 // 客户端、服务器端录制标志定义保持统一
 var ANYCHAT_RECORD_FLAGS_VIDEO	=	BRAC_RECORD_FLAGS_VIDEO;
 var ANYCHAT_RECORD_FLAGS_AUDIO	=	BRAC_RECORD_FLAGS_AUDIO;
@@ -136,6 +137,13 @@ var ANYCHAT_RECORD_FLAGS_STEREO	=	BRAC_RECORD_FLAGS_STEREO;
 var ANYCHAT_RECORD_FLAGS_SNAPSHOT =	BRAC_RECORD_FLAGS_SNAPSHOT;
 var ANYCHAT_RECORD_FLAGS_LOCALCB =	BRAC_RECORD_FLAGS_LOCALCB;
 var ANYCHAT_RECORD_FLAGS_STREAM =	BRAC_RECORD_FLAGS_STREAM;
+
+// 视频裁剪模式定义
+var ANYCHAT_VIDEOCLIPMODE_AUTO		=		0;	// 默认模式，以最大比例进行裁剪，然后再整体拉伸，画面保持比例，但被裁剪画面较大
+var ANYCHAT_VIDEOCLIPMODE_OVERLAP	=		1;	// 重叠模式，只取最大有效部分，对边缘进行裁剪
+var ANYCHAT_VIDEOCLIPMODE_SHRINK	=		2;	// 缩小模式，缩小到合适的比例，不进行裁剪
+var ANYCHAT_VIDEOCLIPMODE_STRETCH	=		3;	// 平铺模式，不进行裁剪，但可能导致画面不成比例
+var ANYCHAT_VIDEOCLIPMODE_DYNAMIC	=		4;	// 动态模式，由上层应用根据分辩率来调整显示表面，保持画面不变形
 
 
 // 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
@@ -330,8 +338,7 @@ function BRAC_AttachIE11Event(obj, _strEventId, _functionCallback) {
 	try {
 		handler = document.createElement("script");
 		handler.setAttribute("for", obj.id);
-	}
-	catch(ex) {
+	} catch(ex) {
 		handler = document.createElement('<script for="' + obj.id + '">');
 	}
 	handler.event = _strEventId + params;
