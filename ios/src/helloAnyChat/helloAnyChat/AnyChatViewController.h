@@ -16,11 +16,6 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-#define kNameValueTag               1001
-#define kUserIDValueTag             1002
-#define kBackgroundViewTag          1003
-#define kAnyChatSettingsFileName    @"settings.plist"
-#define kTimeoutTime_seconds        3
 
 @class VideoViewController;
 

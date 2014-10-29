@@ -16,19 +16,6 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-#define kLocalVideo_Width                   100.0f
-#define kLocalVideo_Height                  130.0f
-#define kBar_Height                         30.0f
-#define kSelfView_Width                     self.view.frame.size.width
-#define kSelfView_Height                    self.view.frame.size.height
-
-#define kLocalVideoPortrait_CGRect          CGRectMake(kSelfView_Width-2-kLocalVideo_Width, kSelfView_Height- kLocalVideo_Height-2-kBar_Height, kLocalVideo_Width,kLocalVideo_Height)
-#define kLocalVideoLandscape_CGRect         CGRectMake(kSelfView_Width-2-kLocalVideo_Height, kSelfView_Height-kLocalVideo_Width-2-kBar_Height, kLocalVideo_Height, kLocalVideo_Width)
-
-#define kRadians(degrees)                   M_PI / 180.0 * degrees
-#define kLayer3DRotation_Z_Axis(degrees)    CATransform3DMakeRotation(kRadians(degrees), 0.0, 0.0, 1.0)
-
-
 @interface VideoViewController : UIViewController<UIActionSheetDelegate>
 {
     AnyChatPlatform *theAnyChat;
