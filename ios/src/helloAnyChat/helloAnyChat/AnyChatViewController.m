@@ -36,9 +36,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
         
-        [AnyChatPlatform InitSDK:0];
     }
     return self;
 }
@@ -48,6 +46,10 @@
 {
     [super viewDidLoad];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
+    
+    [AnyChatPlatform InitSDK:0];
+    
     anyChat = [[AnyChatPlatform alloc] init];
     anyChat.notifyMsgDelegate = self;
 }
