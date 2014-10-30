@@ -2,6 +2,7 @@
 #include "ui_widget.h"
 #include <QThread>
 #include <QMessageBox>
+#include <iconv.h>
 
 #define REFRESH_TRANSTASK_STATUS_TIMER 	1	//刷新传输任务状态定时器
 #define REFRESH_SPEAKVOLUME_TIMER	    2   //更新用户说话音量定时器
@@ -20,6 +21,33 @@ static QRect g_LocalUserRect;
 static QRect g_DeskRect;
 static QDesktopWidget *g_DesktopWidget;
 
+
+static int code_convert(char *from_charset,char *to_charset,char *inbuf,size_t inlen,char *outbuf,size_t outlen)
+{
+   iconv_t cd;
+   int rc;
+   char **pin = &inbuf;
+   char **pout = &outbuf;
+
+   cd = iconv_open(to_charset,from_charset);
+   if (cd==0) return -1;
+   memset(outbuf,0,outlen);
+   if (iconv(cd,pin,&inlen,pout,&outlen)==-1) return -1;
+   iconv_close(cd);
+   return 0;
+}
+
+//utf-8转为GB2312码
+static int u2g(char *inbuf,size_t inlen,char *outbuf,size_t outlen)
+{
+   return code_convert("utf-8","gb2312",inbuf,inlen,outbuf,outlen);
+}
+
+//GB2312码转为utf-8码
+static int g2u(char *inbuf,size_t inlen,char *outbuf,size_t outlen)
+{
+   return code_convert("gb2312","utf-8",inbuf,inlen,outbuf,outlen);
+}
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -115,11 +143,13 @@ void Widget::HelloChatRefreshUserList()
 
         if(dwUserID != -1)
         {
-            char cUserName[30];
-            BRAC_GetUserName(dwUserID,cUserName,sizeof(cUserName));//获取用户名
+            char UserName[30];
+            BRAC_GetUserName(dwUserID,UserName,sizeof(UserName));//获取用户名
 
+            char str_username[30];
+            g2u(UserName,30,str_username,30);// gbk to utf-8
             m_iUserID[i] = dwUserID;
-            ui->UserlistWidget->insertItem(i,cUserName);//对应的用户名添加到列表中,从0开始
+            ui->UserlistWidget->insertItem(i,str_username);//对应的用户名添加到列表中,从0开始
         }
         else
             break;
@@ -167,7 +197,7 @@ void Widget::HelloChatInit()
     BRAC_SetNotifyMessageCallBack(NotifyMessage_CallBack,this);            //设置异步消息回调
     BRAC_SetTextMessageCallBack(TextMessage_CallBack,this);                //设置消息发送回调
 
-    //char *lpMediaCodecDll="Dxva_Codec.dll";                              //设置外部编解码器
+    //char *lpMediaCodecDll="ExtMediaCodec.dll";
     //BRAC_SetSDKOption(BRAC_SO_CORESDK_LOADCODEC,lpMediaCodecDll,strlen(lpMediaCodecDll));
 
     // 设置服务器认证密码
@@ -186,8 +216,11 @@ void Widget::HelloChatLogin()
    QString ServerPort = ui->ServerPort_lineEdit->text();
    int port = ServerPort.toInt();
 
+   char gbk_username[30];
+   u2g((char *)UserName.toStdString().c_str(),UserName.toStdString().length(),gbk_username,30);
+
    BRAC_Connect(ServerIP.toStdString().c_str(),port);  //连接服务器 :connect to server
-   BRAC_Login(UserName.toStdString().c_str(), "", 0);  //登陆服务器 :loging to server
+   BRAC_Login(gbk_username, "", 0);  //登陆服务器 :loging to server
 }
 
 void Widget::AppendLogString(QString logstr)
@@ -216,7 +249,10 @@ long Widget::OnGVClientLogin(WPARAM wParam, LPARAM lParam)
     {
         CHAR username[30];
         BRAC_GetUserName(dwUserID,username,sizeof(username));
-        logstr.sprintf("#INFO# Login Server OK UserId：%d(%s)",dwUserID,username);
+
+        char utf_username[30];
+        g2u(username,30,utf_username,30);
+        logstr.sprintf("#INFO# Login Server OK UserId：%d(%s)",dwUserID,utf_username);
 
         //将自己的ID保存
         m_SelfId= dwUserID;
@@ -289,7 +325,11 @@ long Widget::OnGVClientUserAtRoom(WPARAM wParam, LPARAM lParam)
 
      char username[30]={0};
      BRAC_GetUserName(userid,username,sizeof(username));
-     logstr.sprintf("#INFO# User id：%d ,User name(%s) ",userid,username);
+
+     char str_username[30];
+     g2u(username,30,str_username,30);// gbk to utf-8
+
+     logstr.sprintf("#INFO# User id：%d ,User name(%s) ",userid,str_username);
      logstr.append(bEnter ? "Enter" : "Leave");
      logstr.append("Room");
      emit changeSysLogs(logstr);
@@ -417,7 +457,14 @@ void CALLBACK Widget::TextMessage_CallBack(DWORD dwFromUserid, DWORD dwToUserid,
 
             BRAC_GetUserName(dwFromUserid,username,sizeof(username));//获取用户名
 
-            message.sprintf("#INFO# %s%s\n%s\n", username,strTime.toStdString().c_str(),lpMsgBuf);
+            char str_msg[255];
+            g2u((char *)lpMsgBuf,strlen(lpMsgBuf),str_msg,255); //message gbk to utf-8
+
+            char str_username[30];
+            g2u(username,30,str_username,30);                   //username gbk to utf-8
+
+            message.sprintf("#INFO# %s%s\n%s\n", str_username,strTime.toStdString().c_str(),str_msg);
+
             emit pDemoDlg->changeSysLogs(message);
         }
 }
@@ -464,7 +511,13 @@ void Widget::DrawUserVideo(int dwUserid, LPVOID lpBuf, int dwLen, int bmpWidth,i
     {
         if( !m_lpLocalVideoFrame || m_iLocalVideoSize < dwLen)
         {
+            qDebug()<<"m_lpLocalVideoFrame realloc";
+            if(m_lpLocalVideoFrame)
+                free(m_lpLocalVideoFrame);
+
             m_lpLocalVideoFrame = (char*)realloc(m_lpLocalVideoFrame, dwLen);
+            qDebug()<<"m_lpLocalVideoFrame realloc end";
+
             if(!m_lpLocalVideoFrame)
                 return;
             m_iLocalVideoSize = dwLen;
@@ -475,7 +528,7 @@ void Widget::DrawUserVideo(int dwUserid, LPVOID lpBuf, int dwLen, int bmpWidth,i
 #ifdef  WIN32
         QImage img2 = img.mirrored();
         ui->LocalUserlabel->setPixmap(QPixmap::fromImage(img2));
-        ui->LocalUserlabel->update();
+        //ui->LocalUserlabel->update();
 #else
         ui->LocalUserlabel->setPixmap(QPixmap::fromImage(img));
 #endif
@@ -484,7 +537,12 @@ void Widget::DrawUserVideo(int dwUserid, LPVOID lpBuf, int dwLen, int bmpWidth,i
     {
         if(  !m_lpRemoteVideoFrame ||m_iRemoteVideoSize < dwLen)
         {
+            qDebug()<<"m_lpRemoteVideoFrame realloc";
+            if(m_lpRemoteVideoFrame)
+                free(m_lpRemoteVideoFrame);
+
             m_lpRemoteVideoFrame = (char*)realloc(m_lpRemoteVideoFrame, dwLen);
+             qDebug()<<"m_lpRemoteVideoFrame realloc end";
             if(!m_lpRemoteVideoFrame)
                 return;
             m_iRemoteVideoSize = dwLen;
@@ -495,6 +553,7 @@ void Widget::DrawUserVideo(int dwUserid, LPVOID lpBuf, int dwLen, int bmpWidth,i
 #ifdef  WIN32
         QImage img2 = img.mirrored();
         ui->RemoteUserlabel->setPixmap(QPixmap::fromImage(img2));
+        //ui->RemoteUserlabel->update();
 #else
         ui->RemoteUserlabel->setPixmap(QPixmap::fromImage(img));
 #endif
@@ -518,11 +577,12 @@ void Widget::on_LeaveRoom_Btn_clicked()
     BRAC_UserSpeakControl(g_sOpenedCamUserId,0);
     ui->RemoteUserlabel->clear();
     ui->RemoteUserlabel->setText("RemoteUser");
+
     //关闭本地用户视频
     BRAC_UserCameraControl(m_SelfId,0);
     BRAC_UserSpeakControl(m_SelfId,0);
     ui->LocalUserlabel->clear();
-    ui->LocalUserlabel->setText("LocalUser");
+
     //离开当前房间
     BRAC_LeaveRoom(1);
     //然后清空用户列表
@@ -562,15 +622,21 @@ void Widget::on_SendMsg_Btn_clicked()
         ui->SendMsglineEdit->setText("");
         return ;
     }
+    char str_out[255];
+    char *str_in = (char *)message.toStdString().c_str();
+    u2g(str_in, strlen(str_in), str_out, 255);  //msg utf-8 to gbk
 
-    if((BRAC_SendTextMessage(g_sOpenedCamUserId, NULL, (LPCTSTR)message.toStdString().c_str(), message.toStdString().length()))== 0)  //发送成功
+    if((BRAC_SendTextMessage(g_sOpenedCamUserId, NULL, (LPCTSTR)str_out, 255))== 0)  //发送成功
     {
         QDateTime time = QDateTime::currentDateTime();    //获取系统当前时间
         QString strTime = time.toString("  yyyy-MM-dd hh:mm:ss ");
         QString info ="#INFO#";
         CHAR username[30];
         BRAC_GetUserName(m_SelfId,username,sizeof(username));
-        AppendLogString(info+username + strTime);
+
+        char utf_username[30];
+        g2u(username,30,utf_username,30);
+        AppendLogString(info + utf_username + strTime);
 
         QString Msg;
         Msg.sprintf("%s\n",message.toStdString().c_str());
