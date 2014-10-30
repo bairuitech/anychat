@@ -36,9 +36,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
         
-        [AnyChatPlatform InitSDK:0];
     }
     return self;
 }
@@ -48,6 +46,10 @@
 {
     [super viewDidLoad];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
+    
+    [AnyChatPlatform InitSDK:0];
+    
     anyChat = [[AnyChatPlatform alloc] init];
     anyChat.notifyMsgDelegate = self;
 }
@@ -373,7 +375,7 @@
 - (NSMutableArray *) getOnlineUserArray
 {
     NSMutableArray *onLineUserList = [[NSMutableArray alloc] initWithArray:[AnyChatPlatform GetOnlineUser]];
-    [onLineUserList insertObject:[NSString stringWithFormat:@"%i",theMyUserID] atIndex:0];
+    [onLineUserList insertObject:[NSString stringWithFormat:@"%i",self.theMyUserID] atIndex:0];
     return onLineUserList;
 }
 
@@ -507,17 +509,20 @@
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
 
-    if ([UIScreen mainScreen].bounds.size.height == 480.0f || [UIScreen mainScreen].bounds.size.height == 960.0f)
+    if (k_iPhone4)
     {
         onLineUserTableView.frame = CGRectMake(0, 240, 320, 210);
     }
-    else if ([UIScreen mainScreen].bounds.size.height == 568.0f || [UIScreen mainScreen].bounds.size.height == 1136.0f)
+    else if (k_iPhone5)
     {
         onLineUserTableView.frame = CGRectMake(0, 258, 320, 280);
     }
     
     [theVersion setText:[AnyChatPlatform GetSDKVersion]];
     [self prefersStatusBarHidden];
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 70.0f)];
+    onLineUserTableView.tableFooterView = footerView;
     
 }
 

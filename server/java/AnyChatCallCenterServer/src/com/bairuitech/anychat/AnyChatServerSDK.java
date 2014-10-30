@@ -32,6 +32,7 @@ public class AnyChatServerSDK
 	public static final int BRAS_SO_RECORD_WIDTH			=	5;	///< 录制视频宽度设置（参数为：int型，如：320）
 	public static final int BRAS_SO_RECORD_HEIGHT			=	6;	///< 录制文件高度设置（参数为：int型，如：240）
 	public static final int BRAS_SO_RECORD_FILENAMERULE		=	7;	///< 录制文件名命名规则（参数为：int型）
+	public static final int BRAS_SO_RECORD_CLIPMODE			=	8;	///< 录制视频裁剪模式（参数为：int型）
 	
 	// 初始化标志（API：BRAS_InitSDK 传入参数）
 	public static final int BRAS_INITFLAGS_MULTITHREADS		=	1;	///< 多线程模式
@@ -46,8 +47,13 @@ public class AnyChatServerSDK
 	public static final int ANYCHAT_RECORD_FLAGS_STEREO		= 0x00000200;	///< 录制音频时，将其它人的声音混合为立体声后录制
 	public static final int ANYCHAT_RECORD_FLAGS_SNAPSHOT	= 0x00000400;	///< 拍照
 	public static final int ANYCHAT_RECORD_FLAGS_LOCALCB	= 0x00000800;	///< 触发本地回调
-	public static final int ANYCHAT_RECORD_FLAGS_STREAM		= 0x00001000;	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
-
+	
+	// 视频裁剪模式定义
+	public static final int ANYCHAT_VIDEOCLIPMODE_AUTO		=	0;	///< 默认模式，以最大比例进行裁剪，然后再整体拉伸，画面保持比例，但被裁剪画面较大
+	public static final int ANYCHAT_VIDEOCLIPMODE_OVERLAP	=	1;	///< 重叠模式，只取最大有效部分，对边缘进行裁剪
+	public static final int ANYCHAT_VIDEOCLIPMODE_SHRINK	=	2;	///< 缩小模式，缩小到合适的比例，不进行裁剪
+	public static final int ANYCHAT_VIDEOCLIPMODE_STRETCH	=	3;	///< 平铺模式，不进行裁剪，但可能导致画面不成比例
+	public static final int ANYCHAT_VIDEOCLIPMODE_DYNAMIC	=	4;	///< 动态模式，由上层应用根据分辩率来调整显示表面，保持画面不变形
 	
 	
 	
