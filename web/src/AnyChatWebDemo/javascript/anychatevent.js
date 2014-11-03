@@ -21,7 +21,7 @@ function OnAnyChatNotifyMessage(dwNotifyMsg, wParam, lParam) {
 		case WM_GV_PRIVATEEXIT:		OnAnyChatPrivateExit(wParam, lParam);		break;
 		case WM_GV_USERINFOUPDATE:	OnAnyChatUserInfoUpdate(wParam, lParam);	break;
 		case WM_GV_FRIENDSTATUS:	OnAnyChatFriendStatus(wParam, lParam);		break;
-		case WM_GV_VIDEOSIZECHG:	OnAnyChatVideoSizeChange(wParam, lParam);		break;
+		case WM_GV_VIDEOSIZECHG:	OnAnyChatVideoSizeChange(wParam, lParam);	break;
 		default:
 			break;
 	}
@@ -151,6 +151,12 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
     else {
 		ShowNotifyMessage(BRAC_GetUserName(dwUserId) +"&nbspleave room!", NOTIFY_TYPE_NORMAL);
         if (dwUserId == mTargetUserId) {			// 当前被请求的用户离开房间，默认请求房间中其它用户的音视频
+			var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
+			var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
+			if(divWidth<divHeight){
+				GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
+				GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
+			}
 			var bRequestOtherUser = false;
 			var useridlist = BRAC_GetOnlineUser();
 			for (var k=0; k<useridlist.length; k++) {
@@ -172,6 +178,12 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 // 网络连接已关闭，该消息只有在客户端连接服务器成功之后，网络异常中断之时触发，reason表示连接断开的原因
 function OnAnyChatLinkClose(reason, errorcode) {
 	AddLog("OnAnyChatLinkClose(reason=" + reason + ", errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
+	var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
+	var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
+	if(divWidth<divHeight){
+		GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
+		GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
+	}
 	DisplayLoadingDiv(false);
 	ShowRoomDiv(false);
 	ShowHallDiv(false);
@@ -188,6 +200,15 @@ function OnAnyChatCameraStateChange(dwUserId, State) {
     if (State == 0) GetID(dwUserId + "_CameraTag").src = "";
     if (State == 1) GetID(dwUserId + "_CameraTag").src = "./images/advanceset/camera_false.png";
     if (State == 2) GetID(dwUserId + "_CameraTag").src = "./images/advanceset/camera_true.png";
+	if(dwUserId==mTargetUserId&&State==1){
+		var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
+		var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
+		if(divWidth<divHeight){
+			GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
+			GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
+		}
+	}
+	
 }
 
 // 本地用户与其它用户的P2P网络连接状态发生变化，dwUserId表示其它用户ID号，State表示本地用户与其它用户的当前P2P网络连接状态（0：没有连接，1：仅TCP连接，2：仅UDP连接，3：TCP与UDP连接）
@@ -228,8 +249,7 @@ function OnAnyChatFriendStatus(dwUserId, dwStatus) {
 }
 
 // 用户视频分辩率发生变化，dwUserId（INT）表示用户ID号，dwResolution（INT）表示用户的视频分辨率组合值（低16位表示宽度，高16位表示高度）
-function OnAnyChatVideoSizeChange(dwUserId,dwResolution)
-{
+function OnAnyChatVideoSizeChange(dwUserId,dwResolution){
 	if(dwUserId!=mTargetUserId)
 		return;
 	var height=dwResolution>>16;
@@ -243,7 +263,6 @@ function OnAnyChatVideoSizeChange(dwUserId,dwResolution)
 			GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
 			GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
 		}
-		
 	}
 	else{
 		if(divWidth>divHeight){
@@ -251,9 +270,6 @@ function OnAnyChatVideoSizeChange(dwUserId,dwResolution)
 			GetID("AnyChatRemoteVideoDiv").style.width=(3.0/4*divHeight)+"px";
 			GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
 		}
-		
-	}
-
-	
+	}	
 }
 
