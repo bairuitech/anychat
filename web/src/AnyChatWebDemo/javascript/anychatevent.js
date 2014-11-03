@@ -21,6 +21,7 @@ function OnAnyChatNotifyMessage(dwNotifyMsg, wParam, lParam) {
 		case WM_GV_PRIVATEEXIT:		OnAnyChatPrivateExit(wParam, lParam);		break;
 		case WM_GV_USERINFOUPDATE:	OnAnyChatUserInfoUpdate(wParam, lParam);	break;
 		case WM_GV_FRIENDSTATUS:	OnAnyChatFriendStatus(wParam, lParam);		break;
+		case WM_GV_VIDEOSIZECHG:	OnAnyChatVideoSizeChange(wParam, lParam);		break;
 		default:
 			break;
 	}
@@ -223,6 +224,36 @@ function OnAnyChatUserInfoUpdate(dwUserId, dwType) {
 // 好友在线状态变化，dwUserId表示好友用户ID号，dwStatus表示用户的当前活动状态：0 离线， 1 上线
 function OnAnyChatFriendStatus(dwUserId, dwStatus) {
 	AddLog("OnAnyChatFriendStatus(dwUserId=" + dwUserId + ", dwStatus=" + dwStatus + ")", LOG_TYPE_EVENT);
+	
+}
+
+// 用户视频分辩率发生变化，dwUserId（INT）表示用户ID号，dwResolution（INT）表示用户的视频分辨率组合值（低16位表示宽度，高16位表示高度）
+function OnAnyChatVideoSizeChange(dwUserId,dwResolution)
+{
+	if(dwUserId!=mTargetUserId)
+		return;
+	var height=dwResolution>>16;
+	var width=dwResolution&0x0000ffff;
+	var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
+	var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
+	//如果采用视频显示裁剪模式是动态模式，可根据分辨率的情况，动态改变div布局，使得画面不变形。
+	if(width>height){
+		if(divWidth<divHeight){
+			//竖屏切换到横屏情况
+			GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
+			GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
+		}
+		
+	}
+	else{
+		if(divWidth>divHeight){
+			//横屏切换到竖屏情况
+			GetID("AnyChatRemoteVideoDiv").style.width=(3.0/4*divHeight)+"px";
+			GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
+		}
+		
+	}
+
 	
 }
 
