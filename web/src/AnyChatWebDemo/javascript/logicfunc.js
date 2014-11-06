@@ -321,16 +321,9 @@ function RequestOtherUserVideo(userid) {
     }
     // 判断是否需要关闭之前已请求的用户音视频数据
     if (mTargetUserId != -1) {
+		reVideoDivSize();
         BRAC_UserCameraControl(mTargetUserId, 0);
         BRAC_UserSpeakControl(mTargetUserId, 0);
-		var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
-		var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
-		if(divWidth<divHeight){
-			//竖屏切换到横屏情况
-			GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
-			GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
-		}
-
     }
     GetID(userid + "_MicrophoneTag").src = "./images/advanceset/microphone_true.png"; // 点亮话筒图片
     GetID(userid + "_UserDiv").style.backgroundColor = "#E6E6E6"; //设置被点击<a>元素的字体颜色
@@ -449,4 +442,14 @@ function MicrophoneOnclick(userid) {
             BRAC_UserSpeakControl(userid, 1); // 开启语音
         }
     }
+}
+//恢复显示视频div大小
+function reVideoDivSize()
+{
+	var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
+	var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
+	if(divWidth<divHeight){
+		GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
+		GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
+	}
 }

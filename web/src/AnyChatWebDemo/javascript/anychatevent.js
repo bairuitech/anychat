@@ -151,12 +151,7 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
     else {
 		ShowNotifyMessage(BRAC_GetUserName(dwUserId) +"&nbspleave room!", NOTIFY_TYPE_NORMAL);
         if (dwUserId == mTargetUserId) {			// 当前被请求的用户离开房间，默认请求房间中其它用户的音视频
-			var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
-			var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
-			if(divWidth<divHeight){
-				GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
-				GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
-			}
+			reVideoDivSize();
 			var bRequestOtherUser = false;
 			var useridlist = BRAC_GetOnlineUser();
 			for (var k=0; k<useridlist.length; k++) {
@@ -178,12 +173,7 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 // 网络连接已关闭，该消息只有在客户端连接服务器成功之后，网络异常中断之时触发，reason表示连接断开的原因
 function OnAnyChatLinkClose(reason, errorcode) {
 	AddLog("OnAnyChatLinkClose(reason=" + reason + ", errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
-	var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
-	var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
-	if(divWidth<divHeight){
-		GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
-		GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
-	}
+	reVideoDivSize();
 	DisplayLoadingDiv(false);
 	ShowRoomDiv(false);
 	ShowHallDiv(false);
@@ -200,13 +190,16 @@ function OnAnyChatCameraStateChange(dwUserId, State) {
     if (State == 0) GetID(dwUserId + "_CameraTag").src = "";
     if (State == 1) GetID(dwUserId + "_CameraTag").src = "./images/advanceset/camera_false.png";
     if (State == 2) GetID(dwUserId + "_CameraTag").src = "./images/advanceset/camera_true.png";
-	if(dwUserId==mTargetUserId&&State==1){
-		var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
-		var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
-		if(divWidth<divHeight){
-			GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
-			GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
+	if(dwUserId==mTargetUserId){
+		if(State==1){
+			reVideoDivSize();
+			BRAC_SetVideoPos(0, GetID("AnyChatRemoteVideoDiv"), "ANYCHAT_VIDEO_REMOTE");
 		}
+		else
+		{
+			BRAC_SetVideoPos(dwUserId, GetID("AnyChatRemoteVideoDiv"), "ANYCHAT_VIDEO_REMOTE");
+		}
+		
 	}
 	
 }

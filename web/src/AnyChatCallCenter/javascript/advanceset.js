@@ -6,12 +6,14 @@ var resolution_txt = ["176x144", "320x240", "352x288", "640x480", "720x480", "72
 var frame_rate_txt = ["5 FPS", "8 FPS", "12 FPS", "15 FPS", "20 FPS", "25 FPS", "30 FPS"]; // 帧率下拉框
 var preinstall_txt = ["1", "2", "3", "4", "5"]; // 预设下拉框
 var speakmode_txt = ["发言模式(默认)", "放歌模式", "卡拉OK模式", "线路输入模式"]; // 音频模式下拉框
+var videoshow_clipmode_txt = ["默认模式", "重叠模式", "缩小模式", "平铺模式","动态模式"]; // 视频显示裁剪模式下拉框
 
 var bitrate_combo_value = [0, 40000, 60000, 100000, 150000, 200000, 300000, 400000, 500000, 600000, 800000, 1000000, 1200000, 1500000]; // 码率值
 var quality_combo_value= [2, 3, 4]; // 质量因子值
 var framerate_combo_value= [5, 8, 12, 15 , 20 , 25 , 30 ]; // 帧率值
 var videopreset_combo_value= [1, 2, 3, 4, 5]; // 预设参数值
 var speakmode_combo_value= [0, 1, 2, 3]; // 音频模式值
+var videoshow_clipmode_value= [0, 1, 2, 3,4]; // 视频显示裁剪模式值
 
 var mVideoWidthValue = 320;
 var mVideoHeightValue = 240;
@@ -42,16 +44,13 @@ function InitAdvanced() {
     filltheselect("DeviceType_VideoCapture", BRAC_EnumDevices(BRAC_DEVICE_VIDEOCAPTURE), BRAC_EnumDevices(BRAC_DEVICE_VIDEOCAPTURE)); 		// 视频采集设备下拉框值
     filltheselect("DeviceType_AudioCapture", BRAC_EnumDevices(BRAC_DEVICE_AUDIOCAPTURE),BRAC_EnumDevices(BRAC_DEVICE_AUDIOCAPTURE)); 		// 音频采集设备下拉框值
     filltheselect("DeviceType_AudioPlayBack", BRAC_EnumDevices(BRAC_DEVICE_AUDIOPLAYBACK), BRAC_EnumDevices(BRAC_DEVICE_AUDIOPLAYBACK)); 	// 音频播放设备下拉框值
+	filltheselect("videoshow_clipmode", videoshow_clipmode_txt, videoshow_clipmode_value);		// 视频显示裁剪模式下拉框值
     SetThePos();
     initControlSelected();
 }
-// 音视频设备 按钮划出效果
-function SettingBtnMouseout(id) {
-    if (GetID(id).getAttribute("clickstate") == "false") // 没有被点击的按钮改变背景色
-        GetID(id).style.backgroundColor = "#9CAAC1";
-}
+
 // 音视频设备 按钮划入效果
-function SettingBtnMouseover(id, dd) {
+function selectSettingMenu(id, dd) {
     // 隐藏所有参数界面
     GetID("Device_Interface").style.display = "none";
     GetID("Video_Parameter_Interface").style.display = "none";
@@ -101,6 +100,9 @@ function GetTheValue(id) {
         case "Speak_Mode": 				// 音频播放模式
             BRAC_SetSDKOption(BRAC_SO_AUDIO_CAPTUREMODE, parseInt(value));
             break;
+		case "videoshow_clipmode":		//视频显示裁剪模式
+			BRAC_SetSDKOption(BRAC_SO_VIDEOSHOW_CLIPMODE, parseInt(value));
+			break;
     }
 }
 //  复选框事件
@@ -167,6 +169,7 @@ function initControlSelected() {
     GetIndex("frame_rate",framerate_combo_value, BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_FPSCTRL), "combobox"); // 当前使用的的帧率参数
     GetIndex("preinstall", videopreset_combo_value,BRAC_GetSDKOptionInt(BRAC_SO_LOCALVIDEO_PRESETCTRL), "combobox"); // 当前使用的预设参数
     GetIndex("Speak_Mode",speakmode_combo_value, BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_CAPTUREMODE), "combobox"); // 当前使用的音频播放模式
+	GetIndex("videoshow_clipmode",videoshow_clipmode_value, BRAC_GetSDKOptionInt(BRAC_SO_VIDEOSHOW_CLIPMODE), "combobox"); // 当前使用的视频显示裁剪模式
 	
     GetIndex("audio_vadctrl", null,BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_VADCTRL), "checkbox");// 当前使用的静音检测
     GetIndex("audio_echoctrl", null,BRAC_GetSDKOptionInt(BRAC_SO_AUDIO_ECHOCTRL), "checkbox"); // 当前使用的回音消除
