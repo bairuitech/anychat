@@ -88,7 +88,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 					break;
 				}
 			}
-			if(!bSetPreviewFrameRate)
+			if(!bSetPreviewFrameRate&&fpsRange.size()!=0)
 				parameters.setPreviewFpsRange(1000, 25000);
 			
 			// 设置视频数据格式
