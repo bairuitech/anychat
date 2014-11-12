@@ -63,7 +63,6 @@
 		FEB3388119B8608300D2C2F3 /* 8.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB3387619B8608300D2C2F3 /* 8.png */; };
 		FEB3388219B8608300D2C2F3 /* 9.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB3387719B8608300D2C2F3 /* 9.png */; };
 		FEB3388519B861E800D2C2F3 /* login_bk.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB3388419B861E800D2C2F3 /* login_bk.png */; };
-		FEB3388919B861FD00D2C2F3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB3388619B861FD00D2C2F3 /* Default.png */; };
 		FEB3388A19B861FD00D2C2F3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB3388719B861FD00D2C2F3 /* Default@2x.png */; };
 		FEB3388B19B861FD00D2C2F3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB3388819B861FD00D2C2F3 /* Default-568h@2x.png */; };
 		FEB3388E19B862B400D2C2F3 /* AnyChatNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB3388D19B862B400D2C2F3 /* AnyChatNavigationController.m */; };
@@ -141,7 +140,6 @@
 		FEB3387619B8608300D2C2F3 /* 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 8.png; sourceTree = "<group>"; };
 		FEB3387719B8608300D2C2F3 /* 9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 9.png; sourceTree = "<group>"; };
 		FEB3388419B861E800D2C2F3 /* login_bk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = login_bk.png; path = AnyChatCallCenter/bk/login_bk.png; sourceTree = "<group>"; };
-		FEB3388619B861FD00D2C2F3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = AnyChatCallCenter/bk/Default.png; sourceTree = "<group>"; };
 		FEB3388719B861FD00D2C2F3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "AnyChatCallCenter/bk/Default@2x.png"; sourceTree = "<group>"; };
 		FEB3388819B861FD00D2C2F3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "AnyChatCallCenter/bk/Default-568h@2x.png"; sourceTree = "<group>"; };
 		FEB3388C19B862B400D2C2F3 /* AnyChatNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatNavigationController.h; sourceTree = "<group>"; };
@@ -345,7 +343,6 @@
 		FEB3388319B8615800D2C2F3 /* bk */ = {
 			isa = PBXGroup;
 			children = (
-				FEB3388619B861FD00D2C2F3 /* Default.png */,
 				FEB3388719B861FD00D2C2F3 /* Default@2x.png */,
 				FEB3388819B861FD00D2C2F3 /* Default-568h@2x.png */,
 				FEB3388419B861E800D2C2F3 /* login_bk.png */,
@@ -425,7 +422,6 @@
 				FEB3388519B861E800D2C2F3 /* login_bk.png in Resources */,
 				FEB3387E19B8608300D2C2F3 /* 5.png in Resources */,
 				FE95ECA019B944AC000798CF /* SettingsViewController.xib in Resources */,
-				FEB3388919B861FD00D2C2F3 /* Default.png in Resources */,
 				FEB3388A19B861FD00D2C2F3 /* Default@2x.png in Resources */,
 				FEB3388B19B861FD00D2C2F3 /* Default-568h@2x.png in Resources */,
 				FEB3387C19B8608300D2C2F3 /* 3.png in Resources */,
