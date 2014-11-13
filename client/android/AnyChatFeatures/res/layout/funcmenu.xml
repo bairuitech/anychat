@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/funcmenuGridView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:numColumns="auto_fit"
+    android:verticalSpacing="20dp"
+    android:horizontalSpacing="20dp"
+    android:stretchMode="columnWidth"
+    android:paddingTop="35dp"
+    android:gravity="center_horizontal">
+    
+
+</GridView>
