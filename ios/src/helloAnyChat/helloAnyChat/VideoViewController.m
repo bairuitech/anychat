@@ -63,10 +63,6 @@
 {
     if (buttonIndex == 0) {
         [self FinishVideoChat];
-        AnyChatViewController *videoVC = [AnyChatViewController new];
-        videoVC.onlineUserMArray = [videoVC getOnlineUserArray];
-
-        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -139,12 +135,18 @@
 
 - (void) StartVideoChat:(int) userid
 {
+    //Get a camera, Must be in the real machine.
+    NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
+    if (cameraDeviceArray.count > 0)
+    {
+        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+    }
+    
     // open local video
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
     [AnyChatPlatform UserSpeakControl: -1:YES];
     [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
     [AnyChatPlatform UserCameraControl:-1 : YES];
-    
     // request other user video
     [AnyChatPlatform UserSpeakControl: userid:YES];
     [AnyChatPlatform SetVideoPos:userid: self.remoteVideoSurface:0:0:0:0];
@@ -158,19 +160,23 @@
 
 - (void) FinishVideoChat
 {
+    // 关闭摄像头
     [AnyChatPlatform UserSpeakControl: -1 : NO];
     [AnyChatPlatform UserCameraControl: -1 : NO];
     
     [AnyChatPlatform UserSpeakControl: self.iRemoteUserId : NO];
     [AnyChatPlatform UserCameraControl: self.iRemoteUserId : NO];
     
-    self.iRemoteUserId = -1;    
+    self.iRemoteUserId = -1;
+    
+    AnyChatViewController *videoVC = [AnyChatViewController new];
+    videoVC.onlineUserMArray = [videoVC getOnlineUserArray];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)OnCloseVoiceBtnClicked:(id)sender
 {
-    int test = [AnyChatPlatform GetSpeakState:-1];
-    
     if (voiceBtn.selected == NO)
     {
         [AnyChatPlatform UserSpeakControl:-1 :NO];
@@ -181,7 +187,6 @@
         [AnyChatPlatform UserSpeakControl: -1:YES];
         voiceBtn.selected = NO;
     }
-
 }
 
 - (IBAction)OnCloseCameraBtnClicked:(id)sender
@@ -216,7 +221,7 @@
 
 - (IBAction) OnSwitchCameraBtnClicked:(id)sender
 {
-    static int CurrentCameraDevice = 0;
+    static int CurrentCameraDevice = 1;
     NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
     if(cameraDeviceArray.count == 2)
     {
@@ -229,14 +234,9 @@
 
 - (void) OnLocalVideoRelease:(id)sender
 {
-    if(self.localVideoSurface)
-    {
+    if(self.localVideoSurface) {
         self.localVideoSurface = nil;
     }
-}
-
-- (BOOL)prefersStatusBarHidden{
-    return YES;
 }
 
 - (void) OnLocalVideoInit:(id)session
@@ -246,6 +246,11 @@
     self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
     
     [self.theLocalView.layer addSublayer:self.localVideoSurface];
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 - (void)setUIControls

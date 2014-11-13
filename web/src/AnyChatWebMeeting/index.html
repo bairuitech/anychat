@@ -157,10 +157,10 @@
         <div id="advanceset_div_close">×关闭</div>
         <div id="advanceset_div_mainpark">
             <div id="advanceset_div_Div_Btn">
-                <div id="Btn_Div_Device" clickstate="true" onclick="AdvancedSetup('Device_Interface','Btn_Div_Device')" onmouseout="SettingBtnMouseout('Btn_Div_Device')" onmousemove="SettingBtnMouseover('Device_Interface','Btn_Div_Device')">设备选择</div>
-                <div id="Btn_Div_Video" class="Btn_Div" clickstate="false" onclick="AdvancedSetup('Video_Parameter_Interface','Btn_Div_Video')" onmouseout="SettingBtnMouseout('Btn_Div_Video')" onmousemove="SettingBtnMouseover('Video_Parameter_Interface','Btn_Div_Video')">视频参数</div>
-                <div id="Btn_Div_Sound" class="Btn_Div" clickstate="false" onclick="AdvancedSetup('Sound_Parameter_Interface','Btn_Div_Sound')" onmouseout="SettingBtnMouseout('Btn_Div_Sound')" onmousemove="SettingBtnMouseover('Sound_Parameter_Interface','Btn_Div_Sound')">音频参数</div>
-                <div id="Btn_Div_Other" class="Btn_Div" clickstate="false" onclick="AdvancedSetup('Other_Parameter_Interface','Btn_Div_Other')" onmouseout="SettingBtnMouseout('Btn_Div_Other')" onmousemove="SettingBtnMouseover('Other_Parameter_Interface','Btn_Div_Other')">其他设置</div>
+                <div id="Btn_Div_Device" clickstate="true" onclick="selectSettingMenu('Device_Interface','Btn_Div_Device')" >设备选择</div>
+                <div id="Btn_Div_Video" class="Btn_Div" clickstate="false" onclick="selectSettingMenu('Video_Parameter_Interface','Btn_Div_Video')" >视频参数</div>
+                <div id="Btn_Div_Sound" class="Btn_Div" clickstate="false" onclick="selectSettingMenu('Sound_Parameter_Interface','Btn_Div_Sound')"  >音频参数</div>
+                <div id="Btn_Div_Other" class="Btn_Div" clickstate="false" onclick="selectSettingMenu('Other_Parameter_Interface','Btn_Div_Other')"  >其他设置</div>
             </div>
             <div id="advanceset_div_mainpark_parameter">
                 <div style="height:10px;"></div>
@@ -209,7 +209,8 @@
                     <div class="audio_tabcontrol"><input id="audio_agcctrl" onchange="ChangeTheResult('audio_agcctrl')" type="checkbox" />自动增益</div>
                 </div>
                 <div id="Other_Parameter_Interface">
-                    <input id="Checkbox_P2P" onchange="ChangeTheResult('Checkbox_P2P')" type="checkbox" />P2P优先
+                    <p style="float:left;margin:10px;"><input id="Checkbox_P2P" onchange="ChangeTheResult('Checkbox_P2P')" type="checkbox" />P2P优先</p>
+					<p style="float:left;margin:10px;">视频显示裁剪模式:<select id="videoshow_clipmode" onchange="GetTheValue('videoshow_clipmode')"  style=" width:80px;" ></select></p>
                 </div>
             </div>
         </div>

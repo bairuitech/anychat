@@ -14,3 +14,33 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+
+#pragma mark - AnyChatViewController Function Parameter
+
+#define kNameValueTag               1001
+#define kUserIDValueTag             1002
+#define kBackgroundViewTag          1003
+#define kAnyChatSettingsFileName    @"settings.plist"
+#define kTimeoutTime_seconds        3
+
+
+#pragma mark - VideoViewController Function Parameters & Method
+
+#define kLocalVideo_Width                   100.0f
+#define kLocalVideo_Height                  130.0f
+#define kBar_Height                         30.0f
+#define kSelfView_Width                     self.view.frame.size.width
+#define kSelfView_Height                    self.view.frame.size.height
+
+#define kLocalVideoPortrait_CGRect          CGRectMake(kSelfView_Width-2-kLocalVideo_Width, kSelfView_Height- kLocalVideo_Height-2-kBar_Height, kLocalVideo_Width,kLocalVideo_Height)
+#define kLocalVideoLandscape_CGRect         CGRectMake(kSelfView_Width-2-kLocalVideo_Height, kSelfView_Height-kLocalVideo_Width-2-kBar_Height, kLocalVideo_Height, kLocalVideo_Width)
+
+#define kRadians(degrees)                   M_PI / 180.0 * degrees
+#define kLayer3DRotation_Z_Axis(degrees)    CATransform3DMakeRotation(kRadians(degrees), 0.0, 0.0, 1.0)
+
+
+#pragma mark - Device Type
+
+#define	 k_iPhone4 	([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
+#define	 k_iPhone5 	([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)

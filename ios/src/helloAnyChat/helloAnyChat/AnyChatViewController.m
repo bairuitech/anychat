@@ -28,6 +28,7 @@
 @synthesize theLoginBtn;
 @synthesize theLoginAlertView;
 @synthesize theHideKeyboardBtn;
+@synthesize theMyUserID;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -35,9 +36,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
         
-        [AnyChatPlatform InitSDK:0];
     }
     return self;
 }
@@ -47,6 +46,10 @@
 {
     [super viewDidLoad];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
+    
+    [AnyChatPlatform InitSDK:0];
+    
     anyChat = [[AnyChatPlatform alloc] init];
     anyChat.notifyMsgDelegate = self;
 }
@@ -95,19 +98,27 @@
     }
     
     NSInteger userID = [[onlineUserMArray objectAtIndex:[indexPath row]] intValue];
-    NSString *name = [AnyChatPlatform GetUserName:userID];
+    NSString *name = [AnyChatPlatform GetUserName:userID];;
     
     UILabel *userIDLabel = (UILabel *)[Cell.contentView viewWithTag:kUserIDValueTag];
     UILabel *nameLabel = (UILabel *)[Cell.contentView viewWithTag:kNameValueTag];
     UIImageView *bgView = (UIImageView *)[Cell viewWithTag:kBackgroundViewTag];
     
-    nameLabel.text = name;
+    if (theMyUserID == userID)
+    {
+        nameLabel.text = [name stringByAppendingString:@"(自己)"];
+    }
+    else
+    {
+        nameLabel.text = name;
+    }
+    
     userIDLabel.text = [NSString stringWithFormat:@"%i",userID];
     
     NSString *RandomNo = [[NSString alloc] initWithFormat:@"%i",[self getRandomNumber:1 to:5]];
     bgView.image = [UIImage imageNamed:RandomNo];
     
-    Cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    Cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     
     return Cell;
 }
@@ -130,9 +141,11 @@
 {
     int selectID = [[onlineUserMArray objectAtIndex:[indexPath row]] integerValue];
     
-    videoVC = [VideoViewController new];
-    videoVC.iRemoteUserId = selectID;
-    [self.navigationController pushViewController:videoVC animated:YES];
+    if (selectID != theMyUserID) {
+        videoVC = [VideoViewController new];
+        videoVC.iRemoteUserId = selectID;
+        [self.navigationController pushViewController:videoVC animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -159,7 +172,7 @@
 {
     if (bSuccess)
     {
-        theStateInfo.text = @"• Successful connection";
+        theStateInfo.text = @"• Success connected to server";
     }
 }
 
@@ -171,9 +184,9 @@
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
         theOnLineLoginState = YES;
-        theStateInfo.text = [NSString stringWithFormat:@" Login successful. Self userid:%d", dwUserId];
+        theMyUserID = dwUserId;
         [self saveSettings];  //save correct configuration
-
+        theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
         [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_logout_01"] forState:UIControlStateNormal];
         
         if([theRoomNO.text length] == 0)
@@ -181,7 +194,6 @@
             theRoomNO.text = [self GetRoomNO];
         }
         [AnyChatPlatform EnterRoom:[theRoomNO.text intValue] :@""];
-        
     }
     else
     {
@@ -216,10 +228,6 @@
 // 用户进入房间消息
 - (void) OnAnyChatUserEnterRoom:(int) dwUserId
 {
-    if (videoVC.iRemoteUserId == -1 ) {
-        videoVC.iRemoteUserId = dwUserId;
-        [videoVC StartVideoChat:dwUserId];
-    }
     onlineUserMArray = [self getOnlineUserArray];
     [onLineUserTableView reloadData];
 }
@@ -229,6 +237,7 @@
 {
     if (videoVC.iRemoteUserId == dwUserId ) {
         [videoVC FinishVideoChat];
+        videoVC.iRemoteUserId = -1;
     }
     onlineUserMArray = [self getOnlineUserArray];
     [onLineUserTableView reloadData];
@@ -238,11 +247,14 @@
 - (void) OnAnyChatLinkClose:(int) dwErrorCode
 {
     [videoVC FinishVideoChat];
+    [AnyChatPlatform LeaveRoom:-1];
     [AnyChatPlatform Logout];
+    theOnLineLoginState = NO;
+    [onlineUserMArray removeAllObjects];
+    [onLineUserTableView reloadData];
     
-    videoVC.iRemoteUserId = -1;
-    
-    theStateInfo.text = [NSString stringWithFormat:@"• AnyChat Link Close(ErrorCode:%i)",dwErrorCode];
+    theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
+    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
 }
 
 
@@ -363,6 +375,7 @@
 - (NSMutableArray *) getOnlineUserArray
 {
     NSMutableArray *onLineUserList = [[NSMutableArray alloc] initWithArray:[AnyChatPlatform GetOnlineUser]];
+    [onLineUserList insertObject:[NSString stringWithFormat:@"%i",self.theMyUserID] atIndex:0];
     return onLineUserList;
 }
 
@@ -448,7 +461,7 @@
     HUD.delegate = self;
     HUD.dimBackground = YES;
     HUD.labelText = @"HelloAnyChat";
-    HUD.detailsLabelText = @"Loading...";
+    HUD.detailsLabelText = @"Connecting...";
     
     [HUD showWhileExecuting:@selector(onLoginLoadingAnimatedRunTime) onTarget:self withObject:nil animated:YES];
 }
@@ -496,17 +509,20 @@
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
 
-    if ([UIScreen mainScreen].bounds.size.height == 480.0f || [UIScreen mainScreen].bounds.size.height == 960.0f)
+    if (k_iPhone4)
     {
         onLineUserTableView.frame = CGRectMake(0, 240, 320, 210);
     }
-    else if ([UIScreen mainScreen].bounds.size.height == 568.0f || [UIScreen mainScreen].bounds.size.height == 1136.0f)
+    else if (k_iPhone5)
     {
         onLineUserTableView.frame = CGRectMake(0, 258, 320, 280);
     }
     
     [theVersion setText:[AnyChatPlatform GetSDKVersion]];
     [self prefersStatusBarHidden];
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 70.0f)];
+    onLineUserTableView.tableFooterView = footerView;
     
 }
 

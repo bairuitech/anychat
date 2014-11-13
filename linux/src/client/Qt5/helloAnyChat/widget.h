@@ -1,4 +1,4 @@
-#ifndef WIDGET_H
+﻿#ifndef WIDGET_H
 #define WIDGET_H
 
 #include <QWidget>
@@ -8,6 +8,8 @@
 #include <QDebug>
 #include <QString>
 #include <QCloseEvent>
+#include <QLabel>
+#include <QDesktopWidget>
 
 #include "BRAnyChatCoreSDK.h"
 
@@ -17,7 +19,6 @@ class Widget;
 
 #define MAX_USER_NUM 10
 #define MAX_VIDEOFRAME_NUM 2
-
 
 class Widget : public QWidget
 {
@@ -29,7 +30,6 @@ public:
 
     QString m_strLogInfo;           //显示sys消息
     QTimer *m_pTimer;               //定时器
-    //QImage  m_image;                //图像
 
     char*   m_lpLocalVideoFrame;    //本地视频缓冲
     int     m_iLocalVideoSize;      //本地视频缓冲大小
@@ -46,7 +46,9 @@ public:
     void HelloChatRefreshUserList();//刷新列表,最后一个参数用于设置添加（0）或者删除(-1）用户
 
     void AppendLogString(QString logstr);
-    void DrawUserVideo(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, BITMAPINFOHEADER bmiHeader,Widget *pWidget);
+    //void DrawUserVideo(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, BITMAPINFOHEADER bmiHeader,Widget *pWidget);
+    void DrawUserVideo(int dwUserid, void *lpBuf, int dwLen, int bmpWidth, int bmpHeight);
+
     //以下为异步消息回调，初始化的时候设置
     long OnGVClientConnect(WPARAM wParam, LPARAM lParam);
     long OnGVClientLogin(WPARAM wParam, LPARAM lParam);
@@ -73,6 +75,7 @@ public:
 
 signals:
     void changeSysLogs(QString str); //回调返回信息
+
 public slots:
     void setSysLogs(QString str);    //显示回调返回信息
 
@@ -88,6 +91,8 @@ private slots:
 
 private:
     Ui::Widget *ui;
+protected:
+     bool eventFilter(QObject *obj, QEvent *ev);
 };
 
 #endif // WIDGET_H

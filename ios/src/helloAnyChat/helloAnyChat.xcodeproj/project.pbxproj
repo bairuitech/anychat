@@ -235,7 +235,7 @@
 			children = (
 				FEBBA25619C2CC0B009EE02C /* helloAnyChat */,
 				FE01D91119D41858005D1189 /* Resources */,
-				FECF537D19EFB5D200338859 /* Reference class */,
+				FECF537D19EFB5D200338859 /* Reference */,
 				FEBBA24F19C2CC0B009EE02C /* Frameworks */,
 				FEBBA24E19C2CC0B009EE02C /* Products */,
 			);
@@ -358,13 +358,13 @@
 			path = helloAnyChat/Resources/video_footer;
 			sourceTree = "<group>";
 		};
-		FECF537D19EFB5D200338859 /* Reference class */ = {
+		FECF537D19EFB5D200338859 /* Reference */ = {
 			isa = PBXGroup;
 			children = (
 				FEAD552F19F497BF009CAD8C /* MBProgressHUD.m */,
 				FEAD553019F497BF009CAD8C /* MBProgressHUD.h */,
 			);
-			name = "Reference class";
+			name = Reference;
 			sourceTree = "<group>";
 		};
 		FECF538119EFBB3A00338859 /* images */ = {
@@ -593,7 +593,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3a398f73-5a73-44dc-ae47-46e1c0ef5010";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -620,7 +620,7 @@
 					../../sdk/libs/audioprocess,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3a398f73-5a73-44dc-ae47-46e1c0ef5010";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

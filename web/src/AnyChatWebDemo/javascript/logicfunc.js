@@ -321,6 +321,7 @@ function RequestOtherUserVideo(userid) {
     }
     // 判断是否需要关闭之前已请求的用户音视频数据
     if (mTargetUserId != -1) {
+		reVideoDivSize();
         BRAC_UserCameraControl(mTargetUserId, 0);
         BRAC_UserSpeakControl(mTargetUserId, 0);
     }
@@ -441,4 +442,14 @@ function MicrophoneOnclick(userid) {
             BRAC_UserSpeakControl(userid, 1); // 开启语音
         }
     }
+}
+//恢复显示视频div大小
+function reVideoDivSize()
+{
+	var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
+	var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
+	if(divWidth<divHeight){
+		GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
+		GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
+	}
 }
