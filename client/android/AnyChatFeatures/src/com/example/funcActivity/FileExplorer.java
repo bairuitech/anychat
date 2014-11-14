@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.anychatfeatures.R;
+import com.example.common.ScreenInfo;
 
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -42,13 +41,10 @@ public class FileExplorer extends ListActivity {
 		MyAdapter adapter = new MyAdapter(this);
 		setListAdapter(adapter);
 
-		WindowManager winManager = getWindowManager();
-		Display display = winManager.getDefaultDisplay();
 		LayoutParams layoutParams = getWindow().getAttributes();
-		layoutParams.height = (int) (display.getHeight() * 0.8);
-		layoutParams.width = (int) (display.getWidth() * 0.95);
+		layoutParams.height = (int) (ScreenInfo.HEIGHT * 0.8);
+		layoutParams.width = (int) (ScreenInfo.WIDTH * 0.95);
 		getWindow().setAttributes(layoutParams);
-		
 	}
 	
 	private List<Map<String, Object>> getFileData()
