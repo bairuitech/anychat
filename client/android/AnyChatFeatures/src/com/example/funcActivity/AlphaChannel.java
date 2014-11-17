@@ -57,7 +57,7 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
 		mImgBtnReturn.setOnClickListener(onClickListener);
-		mTitleName.setText("透明通道");
+		mTitleName.setText("与" + anyChatSDK.GetUserName(userID) + "发送指令中");
 	}
 
 	private void initSDK() {

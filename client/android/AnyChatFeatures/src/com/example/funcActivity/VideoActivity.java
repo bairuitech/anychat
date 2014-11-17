@@ -48,17 +48,19 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private ImageButton mBtnCameraCtrl; // 控制视频的按钮
 	private ImageButton mBtnSpeakCtrl; // 控制音频的按钮
 	private ImageButton mIBLocalRecording; // 混合录制
-	private ImageButton mIBServerRecording;      // 服务器录制
-	private int[] mArrLocalRecordingImg = { R.drawable.local_recording_off, R.drawable.local_recording_on };
-	private int[] mArrServerRecordingImg = {R.drawable.server_recording_off, R.drawable.server_recording_on};
-	private int mLocalRecordState;  //1表示本地录制打开着，0表示本地录制关闭着
-	private int mServerRecordState; //1表示服务器录制打开着，0表示服务器录制关闭着
+	private ImageButton mIBServerRecording; // 服务器录制
+	private int[] mArrLocalRecordingImg = { R.drawable.local_recording_off,
+			R.drawable.local_recording_on };
+	private int[] mArrServerRecordingImg = { R.drawable.server_recording_off,
+			R.drawable.server_recording_on };
+	private int mLocalRecordState; // 1表示本地录制打开着，0表示本地录制关闭着
+	private int mServerRecordState; // 1表示服务器录制打开着，0表示服务器录制关闭着
 	private ImageButton mIBTakePhotoSelf;
 	private ImageButton mIBTakePhotoOther;
 	private int dwFlags = 0;
 	private CustomApplication mCustomApplication;
 	private Dialog mDialog;
-	
+
 	private final String mStrBasePath = "/anyChat";
 
 	public AnyChatCoreSDK anyChatSDK;
@@ -68,8 +70,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.video_frame);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  
-		
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
+				R.layout.titlebar);
+
 		Intent intent = getIntent();
 		userID = Integer.parseInt(intent.getStringExtra("UserID"));
 
@@ -86,16 +89,16 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
 
 		anyChatSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_RECORD_TMPDIR,
-						Environment.getExternalStorageDirectory()
-								+ mStrBasePath + "/Recording");
+				Environment.getExternalStorageDirectory() + mStrBasePath
+						+ "/Recording");
 		// 设置录像格式（0表示mp4）
 		AnyChatCoreSDK
 				.SetSDKOptionInt(AnyChatDefine.BRAC_SO_RECORD_FILETYPE, 0);
-		
+
 		// 拍照存储路径
-		anyChatSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_SNAPSHOT_TMPDIR, 
-				Environment.getExternalStorageDirectory()
-								+  mStrBasePath + "/Photo");
+		anyChatSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_SNAPSHOT_TMPDIR,
+				Environment.getExternalStorageDirectory() + mStrBasePath
+						+ "/Photo");
 	}
 
 	private void InitLayout() {
@@ -113,33 +116,33 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mServerRecordState = 0;
 		mIBTakePhotoSelf = (ImageButton) findViewById(R.id.btn_TakePhotoSelf);
 		mIBTakePhotoOther = (ImageButton) findViewById(R.id.btn_TakePhotoOther);
-		
+
 		mTitleName.setText("与" + anyChatSDK.GetUserName(userID) + "对话中");
 		mImgSwitchVideo.setVisibility(View.VISIBLE);
-		
+
 		mCustomApplication = (CustomApplication) getApplication();
 		if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VOICEVIDEO) {
 			mIBLocalRecording.setVisibility(View.GONE);
 			mIBServerRecording.setVisibility(View.GONE);
-			
+
 			mIBTakePhotoSelf.setVisibility(View.GONE);
 			mIBTakePhotoOther.setVisibility(View.GONE);
 		} else if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEO) {
 			mBtnSpeakCtrl.setVisibility(View.GONE);
 			mBtnCameraCtrl.setVisibility(View.GONE);
-			
+
 			mIBTakePhotoSelf.setVisibility(View.GONE);
 			mIBTakePhotoOther.setVisibility(View.GONE);
 		} else if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_PHOTOGRAPH) {
 			mBtnSpeakCtrl.setVisibility(View.GONE);
 			mBtnCameraCtrl.setVisibility(View.GONE);
-			
+
 			mIBLocalRecording.setVisibility(View.GONE);
 			mIBServerRecording.setVisibility(View.GONE);
-		} else if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL){
+		} else if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
 			mIBLocalRecording.setVisibility(View.GONE);
 			mIBServerRecording.setVisibility(View.GONE);
-			
+
 			mIBTakePhotoSelf.setVisibility(View.GONE);
 			mIBTakePhotoOther.setVisibility(View.GONE);
 		}
@@ -218,11 +221,17 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_STEREO
 				+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_LOCALCB
 				+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_ABREAST;
-		
+
 		@Override
 		public void onClick(View view) {
 			switch (view.getId()) {
-			case (R.id.returnImgBtn):{
+			case (R.id.returnImgBtn): {
+				if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
+					CallingCenter.getInstance().VideoCallControl(
+							AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userID,
+							0, 0, -1, "");
+				}
+				
 				destroyCurActivity();
 				break;
 			}
@@ -249,7 +258,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			}
 				break;
 			case (R.id.endCall): {
-				if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL){
+				if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
 					showEndCallDialog();
 					return;
 				}
@@ -278,60 +287,72 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			case R.id.btn_LocalRecording:
 				if (mServerRecordState == 1) {
 					mServerRecordState = 0;
-					dwFlags = dwFlagsBase + AnyChatDefine.ANYCHAT_RECORD_FLAGS_SERVER;
+					dwFlags = dwFlagsBase
+							+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_SERVER;
 					anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "打开视频录制");
-					mIBServerRecording.setImageResource(mArrServerRecordingImg[mServerRecordState]);
+					mIBServerRecording
+							.setImageResource(mArrServerRecordingImg[mServerRecordState]);
 				}
-				
+
 				dwFlags = dwFlagsBase;
-				if (mLocalRecordState == 1){
+				if (mLocalRecordState == 1) {
 					mLocalRecordState = 0;
-					anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭本地视频录制");
-				}
-				else {
+					anyChatSDK
+							.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭本地视频录制");
+				} else {
 					mLocalRecordState = 1;
-					anyChatSDK.StreamRecordCtrlEx(-1, 1, dwFlags, 0, "打开本地视频录制");
+					anyChatSDK
+							.StreamRecordCtrlEx(-1, 1, dwFlags, 0, "打开本地视频录制");
 				}
-				
-				mIBLocalRecording.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
+
+				mIBLocalRecording
+						.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
 				break;
 			case R.id.btn_ServerRecording:
 				dwFlags = dwFlagsBase;
-				if (mLocalRecordState == 1){
+				if (mLocalRecordState == 1) {
 					mLocalRecordState = 0;
-					anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭本地视频录制");
-					mIBLocalRecording.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
+					anyChatSDK
+							.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭本地视频录制");
+					mIBLocalRecording
+							.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
 				}
-				
-				dwFlags = dwFlagsBase + AnyChatDefine.ANYCHAT_RECORD_FLAGS_SERVER;
+
+				dwFlags = dwFlagsBase
+						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_SERVER;
 				if (mServerRecordState == 1) {
 					mServerRecordState = 0;
-					anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭服务器视频录制");
+					anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0,
+							"关闭服务器视频录制");
 				} else {
 					mServerRecordState = 1;
-					anyChatSDK.StreamRecordCtrlEx(-1, 1, dwFlags, 0, "打开服务器视频录制");
+					anyChatSDK.StreamRecordCtrlEx(-1, 1, dwFlags, 0,
+							"打开服务器视频录制");
 				}
-				
-				mIBServerRecording.setImageResource(mArrServerRecordingImg[mServerRecordState]);
+
+				mIBServerRecording
+						.setImageResource(mArrServerRecordingImg[mServerRecordState]);
 				break;
 			case R.id.btn_TakePhotoSelf:
-				anyChatSDK.SnapShot(-1, AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
+				anyChatSDK.SnapShot(-1,
+						AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
 				break;
 			case R.id.btn_TakePhotoOther:
-				anyChatSDK.SnapShot(userID, AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
+				anyChatSDK.SnapShot(userID,
+						AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
 				break;
 			default:
 				break;
 			}
 		}
 	};
-	
-	private void showEndCallDialog()
-	{
+
+	private void showEndCallDialog() {
 		mDialog = DialogFactory.getDialog(DialogFactory.DIALOGID_ENDCALL,
-		userID, this);
+				userID, this);
 		mDialog.show();
 	}
+
 	private void refreshAV() {
 		anyChatSDK.UserCameraControl(userID, 1);
 		anyChatSDK.UserSpeakControl(userID, 1);
@@ -341,12 +362,14 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mBtnCameraCtrl.setImageResource(R.drawable.camera_on);
 		bOtherVideoOpened = false;
 		bSelfVideoOpened = false;
-		
+
 		mLocalRecordState = 0;
 		mServerRecordState = 0;
 		anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭视频录制");
-		mIBLocalRecording.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
-		mIBServerRecording.setImageResource(mArrServerRecordingImg[mServerRecordState]);
+		mIBLocalRecording
+				.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
+		mIBServerRecording
+				.setImageResource(mArrServerRecordingImg[mServerRecordState]);
 	}
 
 	private void destroyCurActivity() {
@@ -356,7 +379,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	protected void onRestart() {
 		super.onRestart();
-		
+
 		anyChatSDK.SetBaseEvent(this);
 		anyChatSDK.SetVideoCallEvent(this);
 		// 如果是采用Java视频显示，则需要设置Surface的CallBack
@@ -373,8 +396,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	protected void onResume() {
 		super.onResume();
-		if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL)
-		{
+		if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
 			CallingCenter.mContext = this;
 		}
 	}
@@ -386,12 +408,14 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		anyChatSDK.UserSpeakControl(userID, 0);
 		anyChatSDK.UserCameraControl(-1, 0);
 		anyChatSDK.UserSpeakControl(-1, 0);
-		
+
 		mLocalRecordState = 0;
 		mServerRecordState = 0;
 		anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭视频录制");
-		mIBLocalRecording.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
-		mIBServerRecording.setImageResource(mArrServerRecordingImg[mServerRecordState]);
+		mIBLocalRecording
+				.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
+		mIBServerRecording
+				.setImageResource(mArrServerRecordingImg[mServerRecordState]);
 	}
 
 	protected void onDestroy() {
@@ -403,12 +427,14 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
 			showEndCallDialog();
 		}
 
 		return super.onKeyDown(keyCode, event);
 	}
+
 	public void adjustLocalVideo(boolean bLandScape) {
 		float width;
 		float height = 0;

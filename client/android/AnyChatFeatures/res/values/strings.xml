@@ -7,12 +7,12 @@
     <string name ="voiceVideoInteraction">音视频交互</string>
     <string name ="textChat">文字聊天</string>
     <string name ="alphaChannel">透明通道</string>
-    <string name ="fileTransfer">文件上传</string>
+    <string name ="fileTransfer">文件传输</string>
     <string name ="video">视频录像</string>
     <string name ="photograph">视频抓拍</string>
     <string name ="videoCall">呼叫中心</string>
     <string name ="dialog_read_from_dir">Open from dir</string>
-    <string name="str_dialog_title_protip">AnyChatCallCenter提示</string>
+    <string name="str_dialog_title_protip">提示</string>
     <string name="str_calling">呼叫成功，正在等待用户响应</string>
     <string name="str_call">呼叫</string>
     <string name="str_pause">挂断</string>
