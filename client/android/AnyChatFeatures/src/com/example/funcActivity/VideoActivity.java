@@ -231,7 +231,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 							AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userID,
 							0, 0, -1, "");
 				}
-				
+
 				destroyCurActivity();
 				break;
 			}
@@ -259,10 +259,11 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				break;
 			case (R.id.endCall): {
 				if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
-					showEndCallDialog();
-					return;
+					showEndVideoCallDialog();
+				}else {
+					showEndVideoDialog();
 				}
-				destroyCurActivity();
+	
 				break;
 			}
 			case R.id.btn_speakControl:
@@ -347,9 +348,14 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		}
 	};
 
-	private void showEndCallDialog() {
+	private void showEndVideoCallDialog() {
 		mDialog = DialogFactory.getDialog(DialogFactory.DIALOGID_ENDCALL,
 				userID, this);
+		mDialog.show();
+	}
+
+	private void showEndVideoDialog() {
+		mDialog = DialogFactory.getDialog(DialogFactory.DIALOGID_EXIT, userID, this);
 		mDialog.show();
 	}
 
@@ -396,9 +402,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	protected void onResume() {
 		super.onResume();
-		if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
-			CallingCenter.mContext = this;
-		}
 	}
 
 	protected void onPause() {
@@ -427,9 +430,12 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK
-				&& mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
-			showEndCallDialog();
+		if (keyCode == KeyEvent.KEYCODE_BACK){
+			if(mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
+			showEndVideoCallDialog();
+			}else{
+				showEndVideoDialog();
+			}
 		}
 
 		return super.onKeyDown(keyCode, event);

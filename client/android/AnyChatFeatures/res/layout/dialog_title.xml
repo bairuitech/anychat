@@ -12,6 +12,7 @@
         android:paddingBottom="10dip"                
         android:paddingRight="5dip"
         android:paddingTop="10dip"
+        android:layout_centerHorizontal="true" 
         android:text="@string/str_dialog_title_protip"
         android:textColor="@android:color/white" />
 

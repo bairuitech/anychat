@@ -83,6 +83,9 @@ public class DialogFactory extends Activity{
 			initCallReceivedDialg(mDialog, object);
 			mDialog.setCancelable(false);
 			break;
+		case DIALOGID_EXIT:
+			initEndConfirmDialg(mDialog, object);
+			break;
 		}
 	}
 	
@@ -151,8 +154,8 @@ public class DialogFactory extends Activity{
 				CallingCenter.getInstance().VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userId, 0,
 						0, -1, "");
 				
-				if (CallingCenter.mContext != null)
-					CallingCenter.mContext.finish();
+				if (mContext != null)
+					mContext.finish();
 			}
 		});
 		buttonCancel.setOnClickListener(new OnClickListener() {
@@ -205,6 +208,33 @@ public class DialogFactory extends Activity{
 		dialog.setContentView(view);
 	}
 
+	private void initEndConfirmDialg(final Dialog dialog, final Object object)
+	{
+		View view = mLayoutInlater
+				.inflate(R.layout.dialog_resumeorcancel, null);
+		Button buttonPuase = (Button) view.findViewById(R.id.btn_resume);
+		Button buttonCancel = (Button) view.findViewById(R.id.btn_cancel);
+		buttonPuase.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (mContext != null)
+					mContext.finish();
+			}
+		});
+		buttonCancel.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				dialog.dismiss();
+			}
+		});
+		String strTitle = mContext.getString(R.string.str_endsession);
+		initDialogTitle(view, strTitle);
+		dialog.setContentView(view);
+	}
+	
 	private void initDialogTitle(View view, final String strTitle) {
 		ImageView imageView = (ImageView) view.findViewById(R.id.image_cancel);
 		mTextViewTitle = (TextView) view.findViewById(R.id.txt_dialog_prompt);
