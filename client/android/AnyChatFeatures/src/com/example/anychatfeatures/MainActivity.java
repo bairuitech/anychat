@@ -39,8 +39,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private Button mBtnStart;
 	private Button mBtnLogout;
 	private Button mBtnWaiting;
-	private ImageButton mImgBtnReturn;
-	private TextView mTitleName;
 	private LinearLayout mWaitingLayout;
 	private LinearLayout mProgressLayout;
 	private CustomApplication mCustomApplication;
@@ -51,7 +49,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	private final int SHOWLOGINSTATEFLAG = 1; // 显示的按钮是登陆状态的标识
 	private final int SHOWWAITINGSTATEFLAG = 2; // 显示的按钮是等待状态的标识
-	private final int SHOWLOGOUTSTATEFLAG = 3; // 显示的按钮是登出状态的标识
 	private final int LOCALVIDEOAUTOROTATION = 1; // 本地视频自动旋转控制
 	private boolean bNeedRelease = false;
 
@@ -62,10 +59,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 		setDisPlayMetrics();
 
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-				R.layout.titlebar);
 
 		mCustomApplication = (CustomApplication) getApplication();
 
@@ -121,8 +116,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mBtnLogout = (Button) this.findViewById(R.id.mainUILogoutBtn);
 		mBtnWaiting = (Button) this.findViewById(R.id.mainUIWaitingBtn);
 		mWaitingLayout = (LinearLayout) this.findViewById(R.id.waitingLayout);
-		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
-		mTitleName = (TextView) this.findViewById(R.id.titleName);
 
 		mBottomConnMsg.setText("No content to the server");
 		// 初始化bottom_tips信息
@@ -130,9 +123,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				+ anyChatSDK.GetSDKSubVersion() + "  Build time: "
 				+ anyChatSDK.GetSDKBuildTime());
 		mBottomBuildMsg.setGravity(Gravity.CENTER_HORIZONTAL);
-		mTitleName.setText(R.string.str_welecoeTitle);
-
-		mImgBtnReturn.setOnClickListener(OnClickListener);
 		mBtnStart.setOnClickListener(OnClickListener);
 		mBtnLogout.setOnClickListener(OnClickListener);
 	}
@@ -141,10 +131,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-			case R.id.returnImgBtn:
-				destroyCurActivity();
-				break;
-
 			case R.id.mainUIStartBtn:
 				if (checkInputData()) {
 					setBtnVisible(SHOWWAITINGSTATEFLAG);
@@ -226,13 +212,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			mBtnWaiting.setVisibility(View.VISIBLE);
 
 			mProgressLayout.setVisibility(View.VISIBLE);
-		} else if (index == SHOWLOGOUTSTATEFLAG) {
-			mBtnStart.setVisibility(View.GONE);
-			mBtnLogout.setVisibility(View.VISIBLE);
-			mBtnWaiting.setVisibility(View.GONE);
-
-			mProgressLayout.setVisibility(View.GONE);
-		}
+		} 
 	}
 
 	// init登陆等待状态UI
@@ -312,7 +292,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
 		if (dwErrorCode == 0) {
 			saveLoginData();
-			setBtnVisible(SHOWLOGOUTSTATEFLAG);
 			hideKeyboard();
 
 			mCustomApplication.setUserID(dwUserId);
