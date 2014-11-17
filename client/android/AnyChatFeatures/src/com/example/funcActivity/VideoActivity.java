@@ -117,7 +117,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mIBTakePhotoSelf = (ImageButton) findViewById(R.id.btn_TakePhotoSelf);
 		mIBTakePhotoOther = (ImageButton) findViewById(R.id.btn_TakePhotoOther);
 
-		mTitleName.setText("与" + anyChatSDK.GetUserName(userID) + "对话中");
+		mTitleName.setText("与 \"" + anyChatSDK.GetUserName(userID) + "\" 对话中");
 		mImgSwitchVideo.setVisibility(View.VISIBLE);
 
 		mCustomApplication = (CustomApplication) getApplication();

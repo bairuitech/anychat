@@ -55,7 +55,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
 		mImgBtnReturn.setOnClickListener(onClickListener);
-		mTitleName.setText("与" + anyChatSDK.GetUserName(userID) + "聊天中");
+		mTitleName.setText("与 \"" + anyChatSDK.GetUserName(userID) + "\" 聊天中");
 	}
 
 	private void InitSDK() {
@@ -131,7 +131,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 			return;
 
 		anyChatSDK.SendTextMessage(userID, 1, strSendMsg);
-		mMessageList.add("我说: " + strSendMsg);
+		mMessageList.add("我: " + strSendMsg);
 		mMessageListView.SetFileList(mMessageList);
 		mMessagEditText.setText("");
 		mMessageListView
@@ -171,7 +171,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 	public void OnAnyChatTextMessage(int dwFromUserid, int dwToUserid,
 			boolean bSecret, String message) {
 		mMessageList
-				.add(anyChatSDK.GetUserName(dwFromUserid) + "说: " + message);
+				.add(anyChatSDK.GetUserName(dwFromUserid) + ": " + message);
 		// messageListView.setStackFromBottom(true);
 		mMessageListView.SetFileList(mMessageList);
 		mMessageListView

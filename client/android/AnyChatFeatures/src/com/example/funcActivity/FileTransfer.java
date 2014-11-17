@@ -72,7 +72,7 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
 		mImgBtnReturn.setOnClickListener(onClickListener);
-		mTitleName.setText("文件传输");
+		mTitleName.setText("与 \"" + anyChatSDK.GetUserName(userID) + "\" 传输文件中");
 	}
 
 	private void initSDK() {

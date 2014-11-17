@@ -129,7 +129,7 @@ public class DialogFactory extends Activity{
 			}
 		});
 		String strTitle = "";
-		strTitle = "准备向" + anyChatSDK.GetUserName(userId) + "发起视频会话";
+		strTitle = "准备向 \"" + anyChatSDK.GetUserName(userId) + "\" 发起视频会话";
 		initDialogTitle(view, strTitle);
 		dialog.setContentView(view);
 	}
@@ -203,7 +203,7 @@ public class DialogFactory extends Activity{
 			}
 		});
 		
-		String strTitle = anyChatSDK.GetUserName(userId) + mContext.getString(R.string.sessioning_reqite);
+		String strTitle = "\"" + anyChatSDK.GetUserName(userId) + "\" " + mContext.getString(R.string.sessioning_reqite);
 		initDialogTitle(view, strTitle, userId);
 		dialog.setContentView(view);
 	}
