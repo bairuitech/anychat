@@ -24,7 +24,7 @@ public class AnyChatCoreSDK
 	
 	private static AnyChatCoreSDK mAnyChat = null;		// 单例模式对象
 	
-	static MainHandler mHandler;
+	static MainHandler mHandler = null;
 	public static AnyChatAudioHelper	mAudioHelper = new AnyChatAudioHelper();
 	public static AnyChatCameraHelper	mCameraHelper = new AnyChatCameraHelper();
 	public AnyChatSensorHelper	mSensorHelper = new AnyChatSensorHelper();
@@ -490,6 +490,8 @@ public class AnyChatCoreSDK
     // 异步消息通知（AnyChat底层其它线程回调上来，需要通过Msg传递到主线程）
 	private void OnAnyChatNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
     {
+		if(mHandler == null)
+			return;
     	Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_NOTIFYMSG);       
@@ -502,6 +504,8 @@ public class AnyChatCoreSDK
     // 文字消息通知（AnyChat底层其它线程回调上来，需要通过Msg传递到主线程）
 	private void OnTextMessageCallBack(int dwFromUserid, int dwToUserid, int bSecret, String message)
     {
+		if(mHandler == null)
+			return;
     	Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TEXTMSG);       
@@ -515,6 +519,8 @@ public class AnyChatCoreSDK
     // 文件传输回调函数定义
 	private void OnTransFileCallBack(int userid, String filename, String tempfilepath, int filelength, int wparam, int lparam, int taskid)
     {
+		if(mHandler == null)
+			return;
     	Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TRANSFILE);       
@@ -531,6 +537,8 @@ public class AnyChatCoreSDK
     // 缓冲区回调函数定义
 	private void OnTransBufferCallBack(int userid, byte[] buf, int len)
     {
+		if(mHandler == null)
+			return;
     	Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TRANSBUF);       
@@ -543,6 +551,8 @@ public class AnyChatCoreSDK
     // 缓冲区扩展回调函数定义
 	private void OnTransBufferExCallBack(int userid, byte[] buf, int len, int wparam, int lparam, int taskid)
     {
+		if(mHandler == null)
+			return;
     	Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_TRANSBUFEX);       
@@ -558,6 +568,8 @@ public class AnyChatCoreSDK
     // 服务器发送的SDK Filter Data数据回调函数定义
 	private void OnSDKFilterDataCallBack(byte[] buf, int len)
     {
+		if(mHandler == null)
+			return;
     	Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_SDKFILTER);       
@@ -579,6 +591,8 @@ public class AnyChatCoreSDK
 	// 视频呼叫事件回调函数
 	private void OnVideoCallEventCallBack(int eventtype, int userid, int errorcode, int flags, int param, String userStr)
 	{
+		if(mHandler == null)
+			return;
 		Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_VIDEOCALL);
@@ -595,6 +609,8 @@ public class AnyChatCoreSDK
 	// 录像、快照任务完成回调函数
 	private void OnRecordSnapShotExCallBack(int dwUserId, String lpFileName, int dwElapse, int dwFlags, int dwParam, String lpUserStr)
 	{
+		if(mHandler == null)
+			return;
 		Message tMsg=new Message();
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_RECORD);
