@@ -10,13 +10,16 @@ import com.example.common.DialogFactory;
 import com.example.anychatfeatures.FuncMenu;
 import com.example.anychatfeatures.R;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -78,6 +81,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 		InitSDK();
 		InitLayout();
+		
+		//如果视频流过来了，则把背景设置成透明的
+		handler.postDelayed(runnable, 200);
 	}
 
 	private void InitSDK() {
@@ -170,10 +176,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			anyChatSDK.mVideoHelper.SetVideoUser(index, userID);
 		}
 
-		mOtherView.setZOrderOnTop(true);
-		SurfaceHolder holder = mOtherView.getHolder();
-		holder.setKeepScreenOn(true);
-		holder.setFormat(PixelFormat.TRANSLUCENT);
 		mMyView.setZOrderOnTop(true);
 
 		anyChatSDK.UserCameraControl(userID, 1);
@@ -212,6 +214,26 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		anyChatSDK.UserSpeakControl(-1, 1);// -1表示对本地音频进行控制，打开本地音频
 
 	}
+	
+	Handler handler = new Handler();
+	Runnable runnable = new Runnable() {
+		
+		@Override
+		public void run() {
+			try {
+				int videoBitrate = anyChatSDK.QueryUserStateInt(userID, AnyChatDefine.BRAC_USERSTATE_VIDEOBITRATE);
+				if (videoBitrate > 0)
+				{
+					handler.removeCallbacks(runnable);
+					mOtherView.setBackgroundColor(Color.TRANSPARENT);
+				}
+				
+				handler.postDelayed(runnable, 200);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	};
 
 	private OnClickListener onClickListener = new OnClickListener() {
 		int dwFlagsBase = AnyChatDefine.BRAC_RECORD_FLAGS_AUDIO
