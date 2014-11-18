@@ -209,10 +209,11 @@
     if (dwErrorCode != 0)
     {
         theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
+        theOnLineLoginState = NO;
     }
     else
     {
-        [self timeOutMsg];
+        theOnLineLoginState = YES;
     }
 
     [onLineUserTableView reloadData];
@@ -474,19 +475,13 @@
         sleep(1);
         theTimes++;
         
-        if (theTimes == 5 ) {
-            [self timeOutMsg];
+        if (theTimes == 5 && theOnLineLoginState == NO)
+        {
+            theStateInfo.text = @"Login timeout,please check the Network and Setting.";
         }
     }
 }
 
-- (void) timeOutMsg
-{
-    if (theOnLineLoginState == NO)
-    {
-        theStateInfo.text = @"Login timeout,please check the Network and Setting.";
-    }
-}
 
 #pragma mark - UI Controls
 
