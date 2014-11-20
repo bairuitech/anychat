@@ -36,7 +36,7 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 		AnyChatTransDataEvent {
 
 	private static final int REQUEST_EX = 1;
-	private static final String SAVE_PATH = "/mnt/sdcard/anyChat/FileRec/";
+	private static final String SAVE_PATH = "/mnt/sdcard/AnyChat/FileRec/";
 
 	private int userID;
 	private Button mBtnOpen;

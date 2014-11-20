@@ -3,14 +3,17 @@ package com.example.anychatfeatures;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.bairuitech.anychat.AnyChatCoreSDK;
+import com.bairuitech.anychat.AnyChatDefine;
 import com.example.anychatfeatures.R;
-import com.example.anychatfeatures.R.string;
 import com.example.common.CustomApplication;
+import com.example.config.ConfigEntity;
+import com.example.config.ConfigService;
+import com.example.funcActivity.VideoConfig;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -32,11 +35,15 @@ public class FuncMenu extends Activity {
 	public static final int FUNC_VIDEO = 5;
 	public static final int FUNC_PHOTOGRAPH = 6;
 	public static final int FUNC_VIDEOCALL = 7;
+	public static final int FUNC_CONFIG = 8;
 
+	// 视频配置界面标识
+	public static final int ACTIVITY_ID_VIDEOCONFIG = 1;
+	
 	private ImageButton mImgBtnReturn;
 	private TextView mTitleName;
 	private GridView mMenuGridView;
-	private final int mMenuCount = 7;
+	private final int mMenuCount = 8;
 	private CustomApplication mCustomApplication;
 	private ArrayList<HashMap<String, Object>> mArrItem;
 
@@ -62,11 +69,13 @@ public class FuncMenu extends Activity {
 		String[] arrFuncNames = { getString(R.string.voiceVideoInteraction),
 				getString(R.string.textChat), getString(R.string.alphaChannel),
 				getString(R.string.fileTransfer), getString(R.string.video),
-				getString(R.string.photograph), getString(R.string.videoCall) };
+				getString(R.string.photograph), getString(R.string.videoCall),
+				getString(R.string.config)};
 
 		int[] arrFuncIcons = { R.drawable.voicevideo, R.drawable.textchat,
 				R.drawable.alphachannel, R.drawable.filetransfer,
-				R.drawable.video, R.drawable.photograph, R.drawable.videocall };
+				R.drawable.video, R.drawable.photograph, R.drawable.videocall,
+				R.drawable.config};
 
 		mArrItem = new ArrayList<HashMap<String, Object>>();
 		for (int index = 0; index < mMenuCount; ++index) {
@@ -92,7 +101,17 @@ public class FuncMenu extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
-
+			
+			//设置参数部分
+			if (arg2 + 1 == FUNC_CONFIG)
+			{
+				Intent intent = new Intent();
+				intent.setClass(FuncMenu.this, VideoConfig.class);
+				startActivityForResult(intent, ACTIVITY_ID_VIDEOCONFIG);
+				
+				return;
+			}
+			
 			// 不同的功能模块进入不同的房间，从1开始，1~7房间，如语音视频聊天进入1号房间，文字聊天进入2号房间。。。
 			mCustomApplication.setCurOpenFuncUI(arg2 + 1);
 			openRolesListActivity(arg2 + 1);
@@ -115,6 +134,85 @@ public class FuncMenu extends Activity {
 		startActivity(intent);
 	}
 
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		if (resultCode == RESULT_OK && requestCode == ACTIVITY_ID_VIDEOCONFIG ) {
+			ApplyVideoConfig();
+		}
+	}
+
+	// 根据配置文件配置视频参数
+	private void ApplyVideoConfig() {
+		ConfigEntity configEntity = ConfigService.LoadConfig(this);
+		if (configEntity.mConfigMode == 1) // 自定义视频参数配置
+		{
+			// 设置本地视频编码的码率（如果码率为0，则表示使用质量优先模式）
+			AnyChatCoreSDK.SetSDKOptionInt(
+					AnyChatDefine.BRAC_SO_LOCALVIDEO_BITRATECTRL,
+					configEntity.mVideoBitrate);
+			if (configEntity.mVideoBitrate == 0) {
+				// 设置本地视频编码的质量
+				AnyChatCoreSDK.SetSDKOptionInt(
+						AnyChatDefine.BRAC_SO_LOCALVIDEO_QUALITYCTRL,
+						configEntity.mVideoQuality);
+			}
+			// 设置本地视频编码的帧率
+			AnyChatCoreSDK.SetSDKOptionInt(
+					AnyChatDefine.BRAC_SO_LOCALVIDEO_FPSCTRL,
+					configEntity.mVideoFps);
+			// 设置本地视频编码的关键帧间隔
+			AnyChatCoreSDK.SetSDKOptionInt(
+					AnyChatDefine.BRAC_SO_LOCALVIDEO_GOPCTRL,
+					configEntity.mVideoFps * 4);
+			// 设置本地视频采集分辨率
+			AnyChatCoreSDK.SetSDKOptionInt(
+					AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL,
+					configEntity.mResolutionWidth);
+			AnyChatCoreSDK.SetSDKOptionInt(
+					AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL,
+					configEntity.mResolutionHeight);
+			// 设置视频编码预设参数（值越大，编码质量越高，占用CPU资源也会越高）
+			AnyChatCoreSDK.SetSDKOptionInt(
+					AnyChatDefine.BRAC_SO_LOCALVIDEO_PRESETCTRL,
+					configEntity.mVideoPreset);
+		}
+		// 让视频参数生效
+		AnyChatCoreSDK.SetSDKOptionInt(
+				AnyChatDefine.BRAC_SO_LOCALVIDEO_APPLYPARAM,
+				configEntity.mConfigMode);
+		// P2P设置
+		AnyChatCoreSDK.SetSDKOptionInt(
+				AnyChatDefine.BRAC_SO_NETWORK_P2PPOLITIC,
+				configEntity.mEnableP2P);
+		// 本地视频Overlay模式设置
+		AnyChatCoreSDK.SetSDKOptionInt(
+				AnyChatDefine.BRAC_SO_LOCALVIDEO_OVERLAY,
+				configEntity.mVideoOverlay);
+		// 回音消除设置
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_AUDIO_ECHOCTRL,
+				configEntity.mEnableAEC);
+		// 平台硬件编码设置
+		AnyChatCoreSDK.SetSDKOptionInt(
+				AnyChatDefine.BRAC_SO_CORESDK_USEHWCODEC,
+				configEntity.mUseHWCodec);
+		// 视频旋转模式设置
+		AnyChatCoreSDK.SetSDKOptionInt(
+				AnyChatDefine.BRAC_SO_LOCALVIDEO_ROTATECTRL,
+				configEntity.mVideoRotateMode);
+		// 本地视频采集偏色修正设置
+		AnyChatCoreSDK.SetSDKOptionInt(
+				AnyChatDefine.BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA,
+				configEntity.mFixColorDeviation);
+		// 视频GPU渲染设置
+		AnyChatCoreSDK.SetSDKOptionInt(
+				AnyChatDefine.BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER,
+				configEntity.mVideoShowGPURender);
+		// 本地视频自动旋转设置
+		AnyChatCoreSDK.SetSDKOptionInt(
+				AnyChatDefine.BRAC_SO_LOCALVIDEO_AUTOROTATION,
+				configEntity.mVideoAutoRotation);
+	}
+	
 	// 广播
 	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
 		@Override

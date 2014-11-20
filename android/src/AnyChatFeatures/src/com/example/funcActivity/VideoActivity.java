@@ -10,20 +10,17 @@ import com.example.common.DialogFactory;
 import com.example.anychatfeatures.FuncMenu;
 import com.example.anychatfeatures.R;
 
-import android.R.integer;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
@@ -64,7 +61,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private CustomApplication mCustomApplication;
 	private Dialog mDialog;
 
-	private final String mStrBasePath = "/anyChat";
+	private final String mStrBasePath = "/AnyChat";
 
 	public AnyChatCoreSDK anyChatSDK;
 

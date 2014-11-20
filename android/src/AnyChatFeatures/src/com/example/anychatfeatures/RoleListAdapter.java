@@ -3,7 +3,6 @@ package com.example.anychatfeatures;
 import com.example.anychatfeatures.R;
 
 import java.util.List;
-import java.util.Random;
 
 import android.content.Context;
 import android.view.LayoutInflater;

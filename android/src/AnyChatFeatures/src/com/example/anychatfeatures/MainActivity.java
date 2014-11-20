@@ -25,7 +25,6 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -80,7 +79,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			anyChatSDK = AnyChatCoreSDK.getInstance(this);
 			anyChatSDK.SetBaseEvent(this);
 			anyChatSDK.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
-
+			
+			/*
 			// 视频采集驱动设置
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER,
@@ -97,6 +97,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_AUDIO_RECORDDRVCTRL,
 					AnyChatDefine.AUDIOREC_DRIVER_JAVA);
+			*/
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_AUTOROTATION,
 					LOCALVIDEOAUTOROTATION);

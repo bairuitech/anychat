@@ -11,6 +11,7 @@
     <string name ="video">视频录像</string>
     <string name ="photograph">视频抓拍</string>
     <string name ="videoCall">呼叫中心</string>
+    <string name ="config">设置</string>
     <string name ="dialog_read_from_dir">Open from dir</string>
     <string name="str_dialog_title_protip">提示</string>
     <string name="str_calling">呼叫成功，正在等待用户响应</string>
