@@ -26,12 +26,8 @@ import android.widget.TextView;
 import android.widget.Spinner;
 
 public class VideoConfigActivity extends Activity{
-	private LinearLayout fullLayout;
-	private LinearLayout mainLayout;
 	private Button saveBtn;
 	private ConfigEntity configEntity;
-	
-	private RadioGroup configModeRadioGroup;		// 配置模式组
 	
 	RadioButton configModeServerBtn;				// 服务器配置
 	RadioButton configModeCustomBtn;				// 自定义配置
@@ -52,10 +48,6 @@ public class VideoConfigActivity extends Activity{
 	private Spinner videoFPSSpinner;
 	private Spinner videoQualitySpinner;
 	private Spinner videoPresetSpinner;
-	private Spinner videoShowDriverSpinner;
-	private Spinner audioPlayDriverSpinner;
-	private Spinner audioRecordDriverSpinner;
-	private Spinner videoCapDriverSpinner;
 
 	private final String[] videoSizeString={"176 x 144", "320 x 240（默认）", "352 x 288", "640 x 480", "720 x 480", "1280 x 720"};
 	private final int[] videoWidthValue={176,320,352,640, 720, 1280};
@@ -73,23 +65,12 @@ public class VideoConfigActivity extends Activity{
 	private final String[] videoPresetString={"最高效率，较低质量","较高效率，较低质量","性能均衡（默认）","较高质量，较低效率","最高质量，较低效率"};
 	private final int[] videoPresetValue={1,2,3,4,5};
 	
-	private final String[] videoShowDriverString={"内核视频显示驱动", "Android 2.x兼容模式", "Java视频显示驱动"};
-	private final int[]	videoShowDriverValue={0,4,5};
-	
-	private final String[] audioPlayDriverString={"内核音频播放驱动", "Java音频播放驱动"};
-	private final int[] audioPlayDriverValue={0,3};
-	
-	private final String[] audioRecordDriverString={"内核音频采集驱动", "Java音频采集驱动"};
-	private final int[] audioRecordDriverValue={0,3};	
-	
-	private final String[] videoCapDriverString={"内核视频采集驱动", "Video4Linux驱动", "Java视频采集驱动"};
-	private final int[] videoCapDriverValue={0,1,3};	
-	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configEntity = ConfigService.LoadConfig(this);
+        setContentView(R.layout.videoconfig);
         getScrennInfo();
         InitialLayout();
     }
@@ -103,94 +84,60 @@ public class VideoConfigActivity extends Activity{
     private void InitialLayout()
     {   
         this.setTitle("配置");
-    	fullLayout =  new LinearLayout(this);
-    	fullLayout.setBackgroundColor(Color.WHITE);
-    	fullLayout.setOrientation(LinearLayout.VERTICAL);
-    	fullLayout.setOnTouchListener(touchListener);
-	    
-    	
-    	mainLayout =  new LinearLayout(this);
-    	mainLayout.setBackgroundColor(Color.WHITE);
-	    mainLayout.setOrientation(LinearLayout.VERTICAL);
-	    mainLayout.setOnTouchListener(touchListener);
-	    
-	    enableP2PBox = new CheckBox(this);
-	    enableP2PBox.setText("启用P2P网络连接");
+        
+        // 启用P2P网络连接
+	    enableP2PBox =  (CheckBox)this.findViewById(R.id.enableP2PBox);
 	    enableP2PBox.setTextColor(Color.BLACK);
-	    mainLayout.addView(enableP2PBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    enableP2PBox.setChecked(configEntity.enableP2P != 0);
 	    
-	    videoOverlayBox = new CheckBox(this);
-	    videoOverlayBox.setText("Overlay视频模式");
+	    // Overlay视频模式
+	    videoOverlayBox = (CheckBox)this.findViewById(R.id.videoOverlayBox);
 	    videoOverlayBox.setTextColor(Color.BLACK);
-	    mainLayout.addView(videoOverlayBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    videoOverlayBox.setChecked(configEntity.videoOverlay != 0);  
 	    
-	    videoRotateBox = new CheckBox(this);
-	    videoRotateBox.setText("翻转视频");
+	    // 翻转视频
+	    videoRotateBox = (CheckBox)this.findViewById(R.id.videoRotateBox);
 	    videoRotateBox.setTextColor(Color.BLACK);
-	    mainLayout.addView(videoRotateBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    videoRotateBox.setChecked(configEntity.videorotatemode != 0); 
 	    
-	    fixColorDeviation = new CheckBox(this);
-	    fixColorDeviation.setText("本地视频采集偏色修正");
+	    // 本地视频采集偏色修正
+	    fixColorDeviation = (CheckBox)this.findViewById(R.id.fixColorDeviation);
 	    fixColorDeviation.setTextColor(Color.BLACK);
-	    mainLayout.addView(fixColorDeviation,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    fixColorDeviation.setChecked(configEntity.fixcolordeviation!=0);  
 	    
-	    videoShowGPURender = new CheckBox(this);
-	    videoShowGPURender.setText("启用视频GPU渲染");
+	    // 启用视频GPU渲染
+	    videoShowGPURender = (CheckBox)this.findViewById(R.id.videoShowGPURender);
 	    videoShowGPURender.setTextColor(Color.BLACK);
-	    mainLayout.addView(videoShowGPURender,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    videoShowGPURender.setChecked(configEntity.videoShowGPURender!=0); 	    
 	    
-	    videoAutoRotation = new CheckBox(this);
-	    videoAutoRotation.setText("本地视频跟随设备自动旋转");
+	    //本地视频跟随设备自动旋转
+	    videoAutoRotation = (CheckBox)this.findViewById(R.id.videoAutoRotation);
 	    videoAutoRotation.setTextColor(Color.BLACK);
-	    mainLayout.addView(videoAutoRotation,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    videoAutoRotation.setChecked(configEntity.videoAutoRotation != 0);  	    
-	    
-	    useARMv6Box = new CheckBox(this);
-	    useARMv6Box.setText("强制使用ARMv6指令集（安全模式）");
+	  
+	    // 强制使用ARMv6指令集（安全模式）
+	    useARMv6Box = (CheckBox)this.findViewById(R.id.useARMv6Box);
 	    useARMv6Box.setTextColor(Color.BLACK);
-	    mainLayout.addView(useARMv6Box,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    useARMv6Box.setChecked(configEntity.useARMv6Lib != 0); 
 	    
-	    useAECBox = new CheckBox(this);
-	    useAECBox.setText("启用回音消除（AEC）");
+	    // 启用回音消除（AEC）
+	    useAECBox = (CheckBox)this.findViewById(R.id.useAECBox);
 	    useAECBox.setTextColor(Color.BLACK);
-	    mainLayout.addView(useAECBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    useAECBox.setChecked(configEntity.enableAEC != 0); 
 	    
+	    // 启用平台内置硬件编解码（需重启应用程序）
 	    useHWCodecBox = new CheckBox(this);
-	    useHWCodecBox.setText("启用平台内置硬件编解码（需重启应用程序）");
 	    useHWCodecBox.setTextColor(Color.BLACK);
-	    mainLayout.addView(useHWCodecBox,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 	    useHWCodecBox.setChecked(configEntity.useHWCodec != 0);
 	    
-    	// 插入音频播放驱动设置
-    	audioPlayDriverSpinner = InsertSpinnerInterface("音频播放驱动", audioPlayDriverString, audioPlayDriverValue, configEntity.audioPlayDriver);
-    	// 插入音频采集驱动设置
-    	audioRecordDriverSpinner = InsertSpinnerInterface("音频采集驱动", audioRecordDriverString, audioRecordDriverValue, configEntity.audioRecordDriver);
-     	// 插入视频采集驱动设置
-    	videoCapDriverSpinner = InsertSpinnerInterface("视频采集驱动", videoCapDriverString, videoCapDriverValue, configEntity.videoCapDriver);
-    	//插入视频显示驱动设置
-	    videoShowDriverSpinner = InsertSpinnerInterface("视频显示驱动", videoShowDriverString, videoShowDriverValue, configEntity.videoShowDriver);
 	    // 插入配置模式选择项
-    	TextView configModeLable = new TextView(this);
+    	TextView configModeLable = (TextView)this.findViewById(R.id.configModelLable);
     	configModeLable.setTextColor(Color.BLACK);
-    	configModeLable.setText("选择配置模式：");
-    	mainLayout.addView(configModeLable,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-    	
-       	configModeRadioGroup = new RadioGroup(this);
-    	configModeServerBtn = new RadioButton(this);
-    	configModeCustomBtn = new RadioButton(this);
+   	
+    	configModeServerBtn = (RadioButton)findViewById(R.id.serverModelConfigBtn);
+    	configModeCustomBtn = (RadioButton)findViewById(R.id.customModelConfigBtn);
        	configModeServerBtn.setTextColor(Color.BLACK);
     	configModeCustomBtn.setTextColor(Color.BLACK);
-    	configModeServerBtn.setText("服务器配置参数");
-    	configModeCustomBtn.setText("自定义配置参数");
-    	configModeRadioGroup.addView(configModeServerBtn);
-    	configModeRadioGroup.addView(configModeCustomBtn);
     	configModeServerBtn.setOnClickListener(listener);
     	configModeCustomBtn.setOnClickListener(listener);
 
@@ -198,20 +145,13 @@ public class VideoConfigActivity extends Activity{
     		configModeServerBtn.setChecked(true);
     	else
     		configModeCustomBtn.setChecked(true);
-    	
-    	mainLayout.addView(configModeRadioGroup,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-    	    	
+    		    	
     	//插入视频分辨率
-    	resolutionLable = new TextView(this);
+    	resolutionLable = (TextView)this.findViewById(R.id.resolutionTV);
     	resolutionLable.setTextColor(Color.BLACK);
     	resolutionLable.setText("选择视频分辨率：");
-    	mainLayout.addView(resolutionLable,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-    	
-    	
-    	videoSizeSpinner = new Spinner(this);
-    	LinearLayout.LayoutParams videoSizeLP = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-    	videoSizeLP.gravity = Gravity.RIGHT;
-    	mainLayout.addView(videoSizeSpinner,videoSizeLP);
+
+    	videoSizeSpinner = (Spinner)this.findViewById(R.id.videoSizeSpinner);
     	ArrayAdapter<String> videoSizeAdapter; 
     	videoSizeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,videoSizeString);  
     	videoSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);  
@@ -229,13 +169,13 @@ public class VideoConfigActivity extends Activity{
     	videoSizeSpinner.setSelection(iSelectVideoSize);
 
     	//插入码率
-    	videoBitrateSpinner = InsertSpinnerInterface("选择视频码率", videoBitrateString, videoBitrateValue, configEntity.videoBitrate);
+    	videoBitrateSpinner = InsertSpinnerInterface(1, videoBitrateString, videoBitrateValue, configEntity.videoBitrate);
     	//插入帧率
-    	videoFPSSpinner = InsertSpinnerInterface("选择视频帧率", videofpsString, videofpsValue, configEntity.videoFps); 	
+    	videoFPSSpinner = InsertSpinnerInterface(2, videofpsString, videofpsValue, configEntity.videoFps); 	
     	//插入视频质量
-    	videoQualitySpinner = InsertSpinnerInterface("选择视频质量", videoQualityString, videoQualityValue, configEntity.videoQuality);
+    	videoQualitySpinner = InsertSpinnerInterface(3, videoQualityString, videoQualityValue, configEntity.videoQuality);
     	// 插入视频预设参数
-    	videoPresetSpinner = InsertSpinnerInterface("选择视频预设参数", videoPresetString, videoPresetValue, configEntity.videoPreset);
+    	videoPresetSpinner = InsertSpinnerInterface(4, videoPresetString, videoPresetValue, configEntity.videoPreset);
     	
     	// 根据配置模式，确定是否需要显示自定义的配置项
     	CustomControlsShow(configEntity.configMode == 0 ? false : true);
@@ -244,19 +184,9 @@ public class VideoConfigActivity extends Activity{
     	LinearLayout btnLayout =  new LinearLayout(this);
     	btnLayout.setOrientation(LinearLayout.HORIZONTAL);
     	
-    	saveBtn = new Button(this);
-    	saveBtn.setText("保存设置");
-    	btnLayout.addView(saveBtn,new LayoutParams(ScreenInfo.WIDTH,LayoutParams.WRAP_CONTENT));
+    	saveBtn =  (Button)this.findViewById(R.id.saveBtn);
+
     	saveBtn.setOnClickListener(listener);
-
-    	
-        ScrollView sv = new ScrollView(this);
-        sv.addView(mainLayout);
-    	fullLayout.addView(sv,new LayoutParams(ScreenInfo.WIDTH,ScreenInfo.HEIGHT*8/10));
-    	
-    	fullLayout.addView(btnLayout,new LayoutParams(ScreenInfo.WIDTH,ScreenInfo.HEIGHT/10));
-    	this.setContentView(fullLayout);
-
     }
     
     OnClickListener listener = new OnClickListener()
@@ -302,19 +232,13 @@ public class VideoConfigActivity extends Activity{
     	configEntity.videorotatemode = videoRotateBox.isChecked() ? 1 : 0;
     	configEntity.fixcolordeviation = fixColorDeviation.isChecked() ? 1 : 0;
     	configEntity.videoShowGPURender = videoShowGPURender.isChecked() ? 1 : 0;
-    	if(configEntity.videoCapDriver==1)			// Video4Linux驱动不支持Overlay模式
-    		configEntity.videoOverlay = 0;
 
     	configEntity.videoAutoRotation = videoAutoRotation.isChecked() ? 1 : 0;
     	
     	configEntity.enableP2P = enableP2PBox.isChecked() ? 1 : 0;
     	configEntity.useARMv6Lib = useARMv6Box.isChecked() ? 1 : 0;
     	configEntity.enableAEC = useAECBox.isChecked() ? 1 : 0;
-     	configEntity.useHWCodec = useHWCodecBox.isChecked() ? 1 : 0;
-     	configEntity.videoShowDriver = videoShowDriverValue[videoShowDriverSpinner.getSelectedItemPosition()];
-     	configEntity.audioPlayDriver = audioPlayDriverValue[audioPlayDriverSpinner.getSelectedItemPosition()];     	
-     	configEntity.audioRecordDriver = audioRecordDriverValue[audioRecordDriverSpinner.getSelectedItemPosition()];
-     	configEntity.videoCapDriver = videoCapDriverValue[videoCapDriverSpinner.getSelectedItemPosition()];     	
+     	configEntity.useHWCodec = useHWCodecBox.isChecked() ? 1 : 0;   	
     	ConfigService.SaveConfig(this, configEntity);
 		
 		this.setResult(RESULT_OK);
@@ -347,16 +271,18 @@ public class VideoConfigActivity extends Activity{
 		}
     };
     
-    private Spinner InsertSpinnerInterface(String caption, String[] context, int[] value, int select) {
-    	TextView lable = new TextView(this);
-    	lable.setTextColor(Color.BLACK);
-    	lable.setText(caption+"：");
-    	mainLayout.addView(lable,new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-    	
-    	Spinner spinner = new Spinner(this);
-    	LinearLayout.LayoutParams LP = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-    	LP.gravity = Gravity.RIGHT;
-    	mainLayout.addView(spinner,LP);
+    private Spinner InsertSpinnerInterface(int spinnerIndex, String[] context, int[] value, int select) {
+    	Spinner spinner = null;
+		if (spinnerIndex == 1){
+			spinner = (Spinner)this.findViewById(R.id.videoBitrateSpinner);
+		}else if (spinnerIndex == 2) {
+			spinner = (Spinner)this.findViewById(R.id.videoFPSSpinner);
+		}else if (spinnerIndex == 3) {
+			spinner = (Spinner)this.findViewById(R.id.videoQualitySpinner);
+		}else if (spinnerIndex == 4) {
+			spinner = (Spinner)this.findViewById(R.id.videoPresetSpinner);
+		}
+		
     	ArrayAdapter<String> Adapter; 
     	Adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, context);  
     	Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);  
