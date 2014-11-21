@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE673EC01A1ED9E300C18ACD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FE673EBF1A1ED9E300C18ACD /* Settings.bundle */; };
+		FE673EC31A1EE70E00C18ACD /* bg_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673EC11A1EE70E00C18ACD /* bg_video@2x.png */; };
+		FE673EC41A1EE70E00C18ACD /* bg_video-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673EC21A1EE70E00C18ACD /* bg_video-568h@2x.png */; };
+		FE673ECE1A1EE77600C18ACD /* bg_video_footer.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673EC61A1EE77600C18ACD /* bg_video_footer.png */; };
+		FE673ECF1A1EE77600C18ACD /* Icon_EndCall.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673EC71A1EE77600C18ACD /* Icon_EndCall.png */; };
+		FE673ED01A1EE77600C18ACD /* Icon_noCamera.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673EC81A1EE77600C18ACD /* Icon_noCamera.png */; };
+		FE673ED11A1EE77600C18ACD /* Icon_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673EC91A1EE77600C18ACD /* Icon_camera.png */; };
+		FE673ED21A1EE77600C18ACD /* Icon_voice.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673ECA1A1EE77600C18ACD /* Icon_voice.png */; };
+		FE673ED31A1EE77600C18ACD /* Icon_noVoice.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673ECB1A1EE77600C18ACD /* Icon_noVoice.png */; };
+		FE673ED41A1EE77600C18ACD /* Icon_camera_w.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673ECC1A1EE77600C18ACD /* Icon_camera_w.png */; };
+		FE673ED51A1EE77600C18ACD /* Icon_camera_w_b.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673ECD1A1EE77600C18ACD /* Icon_camera_w_b.png */; };
 		FE8E0ACF19EE1B5D0038782A /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8E0ACD19EE1B5D0038782A /* libyuv_neon.a */; };
 		FE8E0AD019EE1B5D0038782A /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8E0ACE19EE1B5D0038782A /* libyuv.a */; };
 		FE95EC9F19B944AC000798CF /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE95EC8D19B944AC000798CF /* SettingsViewController.m */; };
@@ -25,7 +36,6 @@
 		FEB337D219B8555200D2C2F3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FEB337D019B8555200D2C2F3 /* InfoPlist.strings */; };
 		FEB337D419B8555200D2C2F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB337D319B8555200D2C2F3 /* main.m */; };
 		FEB337D819B8555200D2C2F3 /* AnyChatAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB337D719B8555200D2C2F3 /* AnyChatAppDelegate.m */; };
-		FEB337DA19B8555200D2C2F3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEB337D919B8555200D2C2F3 /* Images.xcassets */; };
 		FEB3380A19B8575B00D2C2F3 /* libaudio_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB337F819B8575B00D2C2F3 /* libaudio_processing.a */; };
 		FEB3380B19B8575B00D2C2F3 /* libsignal_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB337F919B8575B00D2C2F3 /* libsignal_processing.a */; };
 		FEB3380C19B8575B00D2C2F3 /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB337FA19B8575B00D2C2F3 /* libsystem_wrappers.a */; };
@@ -69,6 +79,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FE673EBF1A1ED9E300C18ACD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		FE673EC11A1EE70E00C18ACD /* bg_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_video@2x.png"; path = "AnyChatCallCenter/bk/bg_video@2x.png"; sourceTree = "<group>"; };
+		FE673EC21A1EE70E00C18ACD /* bg_video-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_video-568h@2x.png"; path = "AnyChatCallCenter/bk/bg_video-568h@2x.png"; sourceTree = "<group>"; };
+		FE673EC61A1EE77600C18ACD /* bg_video_footer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_video_footer.png; path = AnyChatCallCenter/bk/video_footer/bg_video_footer.png; sourceTree = "<group>"; };
+		FE673EC71A1EE77600C18ACD /* Icon_EndCall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_EndCall.png; path = AnyChatCallCenter/bk/video_footer/Icon_EndCall.png; sourceTree = "<group>"; };
+		FE673EC81A1EE77600C18ACD /* Icon_noCamera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_noCamera.png; path = AnyChatCallCenter/bk/video_footer/Icon_noCamera.png; sourceTree = "<group>"; };
+		FE673EC91A1EE77600C18ACD /* Icon_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_camera.png; path = AnyChatCallCenter/bk/video_footer/Icon_camera.png; sourceTree = "<group>"; };
+		FE673ECA1A1EE77600C18ACD /* Icon_voice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_voice.png; path = AnyChatCallCenter/bk/video_footer/Icon_voice.png; sourceTree = "<group>"; };
+		FE673ECB1A1EE77600C18ACD /* Icon_noVoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_noVoice.png; path = AnyChatCallCenter/bk/video_footer/Icon_noVoice.png; sourceTree = "<group>"; };
+		FE673ECC1A1EE77600C18ACD /* Icon_camera_w.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_camera_w.png; path = AnyChatCallCenter/bk/video_footer/Icon_camera_w.png; sourceTree = "<group>"; };
+		FE673ECD1A1EE77600C18ACD /* Icon_camera_w_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_camera_w_b.png; path = AnyChatCallCenter/bk/video_footer/Icon_camera_w_b.png; sourceTree = "<group>"; };
 		FE8E0ACD19EE1B5D0038782A /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
 		FE8E0ACE19EE1B5D0038782A /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
 		FE95EC8C19B944AC000798CF /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SettingsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -97,7 +118,6 @@
 		FEB337D519B8555200D2C2F3 /* AnyChatCallCenter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AnyChatCallCenter-Prefix.pch"; sourceTree = "<group>"; };
 		FEB337D619B8555200D2C2F3 /* AnyChatAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyChatAppDelegate.h; sourceTree = "<group>"; };
 		FEB337D719B8555200D2C2F3 /* AnyChatAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnyChatAppDelegate.m; sourceTree = "<group>"; };
-		FEB337D919B8555200D2C2F3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FEB337E019B8555200D2C2F3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		FEB337F819B8575B00D2C2F3 /* libaudio_processing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing.a; sourceTree = "<group>"; };
 		FEB337F919B8575B00D2C2F3 /* libsignal_processing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsignal_processing.a; sourceTree = "<group>"; };
@@ -187,6 +207,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE673EC51A1EE76800C18ACD /* video_footer */ = {
+			isa = PBXGroup;
+			children = (
+				FE673EC61A1EE77600C18ACD /* bg_video_footer.png */,
+				FE673EC71A1EE77600C18ACD /* Icon_EndCall.png */,
+				FE673EC81A1EE77600C18ACD /* Icon_noCamera.png */,
+				FE673EC91A1EE77600C18ACD /* Icon_camera.png */,
+				FE673ECA1A1EE77600C18ACD /* Icon_voice.png */,
+				FE673ECB1A1EE77600C18ACD /* Icon_noVoice.png */,
+				FE673ECC1A1EE77600C18ACD /* Icon_camera_w.png */,
+				FE673ECD1A1EE77600C18ACD /* Icon_camera_w_b.png */,
+			);
+			name = video_footer;
+			sourceTree = "<group>";
+		};
 		FEB337BB19B8555200D2C2F3 = {
 			isa = PBXGroup;
 			children = (
@@ -233,7 +268,6 @@
 				FEB337D719B8555200D2C2F3 /* AnyChatAppDelegate.m */,
 				FEB3388C19B862B400D2C2F3 /* AnyChatNavigationController.h */,
 				FEB3388D19B862B400D2C2F3 /* AnyChatNavigationController.m */,
-				FEB337D919B8555200D2C2F3 /* Images.xcassets */,
 				FE95EC8F19B944AC000798CF /* LoginViewController.h */,
 				FE95EC9019B944AC000798CF /* LoginViewController.m */,
 				FE95EC9119B944AC000798CF /* LoginViewController.xib */,
@@ -262,6 +296,7 @@
 				FEB337D019B8555200D2C2F3 /* InfoPlist.strings */,
 				FEB337D319B8555200D2C2F3 /* main.m */,
 				FEB337D519B8555200D2C2F3 /* AnyChatCallCenter-Prefix.pch */,
+				FE673EBF1A1ED9E300C18ACD /* Settings.bundle */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -343,9 +378,12 @@
 		FEB3388319B8615800D2C2F3 /* bk */ = {
 			isa = PBXGroup;
 			children = (
+				FE673EC11A1EE70E00C18ACD /* bg_video@2x.png */,
+				FE673EC21A1EE70E00C18ACD /* bg_video-568h@2x.png */,
 				FEB3388719B861FD00D2C2F3 /* Default@2x.png */,
 				FEB3388819B861FD00D2C2F3 /* Default-568h@2x.png */,
 				FEB3388419B861E800D2C2F3 /* login_bk.png */,
+				FE673EC51A1EE76800C18ACD /* video_footer */,
 				FEB3386C19B8608300D2C2F3 /* HeadPortrait */,
 			);
 			name = bk;
@@ -414,19 +452,29 @@
 				FE95ECA819B944AC000798CF /* HallViewController.xib in Resources */,
 				FEB3387B19B8608300D2C2F3 /* 2.png in Resources */,
 				FEB3387819B8608300D2C2F3 /* 1.png in Resources */,
+				FE673ED31A1EE77600C18ACD /* Icon_noVoice.png in Resources */,
+				FE673ED41A1EE77600C18ACD /* Icon_camera_w.png in Resources */,
 				FEB3388219B8608300D2C2F3 /* 9.png in Resources */,
 				FEB337D219B8555200D2C2F3 /* InfoPlist.strings in Resources */,
 				FEB3387A19B8608300D2C2F3 /* 120x120.png in Resources */,
 				FEB3387F19B8608300D2C2F3 /* 6.png in Resources */,
 				FEB3387D19B8608300D2C2F3 /* 4.png in Resources */,
+				FE673EC31A1EE70E00C18ACD /* bg_video@2x.png in Resources */,
 				FEB3388519B861E800D2C2F3 /* login_bk.png in Resources */,
+				FE673ED21A1EE77600C18ACD /* Icon_voice.png in Resources */,
+				FE673EC01A1ED9E300C18ACD /* Settings.bundle in Resources */,
 				FEB3387E19B8608300D2C2F3 /* 5.png in Resources */,
 				FE95ECA019B944AC000798CF /* SettingsViewController.xib in Resources */,
+				FE673ECF1A1EE77600C18ACD /* Icon_EndCall.png in Resources */,
+				FE673EC41A1EE70E00C18ACD /* bg_video-568h@2x.png in Resources */,
+				FE673ED01A1EE77600C18ACD /* Icon_noCamera.png in Resources */,
+				FE673ECE1A1EE77600C18ACD /* bg_video_footer.png in Resources */,
 				FEB3388A19B861FD00D2C2F3 /* Default@2x.png in Resources */,
+				FE673ED11A1EE77600C18ACD /* Icon_camera.png in Resources */,
+				FE673ED51A1EE77600C18ACD /* Icon_camera_w_b.png in Resources */,
 				FEB3388B19B861FD00D2C2F3 /* Default-568h@2x.png in Resources */,
 				FEB3387C19B8608300D2C2F3 /* 3.png in Resources */,
 				FE95ECA519B944AC000798CF /* VideoViewController.xib in Resources */,
-				FEB337DA19B8555200D2C2F3 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,7 +585,6 @@
 		FEB337F119B8555200D2C2F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -566,7 +613,6 @@
 		FEB337F219B8555200D2C2F3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

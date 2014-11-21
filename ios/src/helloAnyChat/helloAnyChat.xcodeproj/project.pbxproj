@@ -15,6 +15,7 @@
 		FE20E49B19D968A800189A8A /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = FE20E49A19D968A800189A8A /* bg.png */; };
 		FE3EAB6019E5233A00030ECA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */; };
 		FE3EAB6119E5233A00030ECA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5F19E5233A00030ECA /* Default@2x.png */; };
+		FE673EBE1A1ED19700C18ACD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FE673EBD1A1ED19700C18ACD /* Settings.bundle */; };
 		FE85404619D515A800253FA0 /* tableVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE85404519D515A800253FA0 /* tableVCell.xib */; };
 		FE8E0AC719EE18A00038782A /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8E0AC519EE18A00038782A /* libyuv_neon.a */; };
 		FE8E0AC819EE18A00038782A /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8E0AC619EE18A00038782A /* libyuv.a */; };
@@ -85,6 +86,7 @@
 		FE20E49A19D968A800189A8A /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = helloAnyChat/Resources/bg.png; sourceTree = "<group>"; };
 		FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "helloAnyChat/Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		FE3EAB5F19E5233A00030ECA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "helloAnyChat/Resources/Default@2x.png"; sourceTree = "<group>"; };
+		FE673EBD1A1ED19700C18ACD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FE85404519D515A800253FA0 /* tableVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = tableVCell.xib; sourceTree = "<group>"; };
 		FE8E0AC519EE18A00038782A /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
 		FE8E0AC619EE18A00038782A /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				FEBBA25919C2CC0B009EE02C /* InfoPlist.strings */,
 				FEBBA25C19C2CC0B009EE02C /* main.m */,
 				FEBBA25E19C2CC0B009EE02C /* helloAnyChat-Prefix.pch */,
+				FE673EBD1A1ED19700C18ACD /* Settings.bundle */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				FECF537719EFA72100338859 /* bg_video_footer.png in Resources */,
 				FE9DD09F19DA4F92008889EC /* 3.png in Resources */,
 				FEBBA2BB19C2CF67009EE02C /* AnyChatViewController.xib in Resources */,
+				FE673EBE1A1ED19700C18ACD /* Settings.bundle in Resources */,
 				FE9DD09E19DA4F92008889EC /* 2.png in Resources */,
 				FB3679A819D8453E008D9C5E /* VideoViewController.xib in Resources */,
 				FECF53B919EFCB8A00338859 /* Icon_camera_w.png in Resources */,

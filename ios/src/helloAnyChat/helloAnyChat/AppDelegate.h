@@ -17,4 +17,7 @@
 @property (strong, nonatomic) UINavigationController    *navController;
 @property (strong, nonatomic) AnyChatViewController     *anychatVC;
 
+// 获取默认设置
+- (void)registerDefaultsFromSettingsBundle;
+
 @end

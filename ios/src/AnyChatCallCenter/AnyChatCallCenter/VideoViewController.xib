@@ -7,8 +7,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoViewController">
             <connections>
+                <outlet property="cameraBtn" destination="GIr-Ah-FFS" id="WiP-KQ-82D"/>
+                <outlet property="endCallBtn" destination="4Tb-z8-91U" id="sq4-k7-wlP"/>
+                <outlet property="switchCameraBtn" destination="LVM-Xo-5dA" id="2cF-eD-8dO"/>
+                <outlet property="theLocalView" destination="pcW-8H-Quo" id="dun-08-Pdq"/>
                 <outlet property="theUIImageView" destination="gvn-o5-Q4l" id="duD-cW-3La"/>
                 <outlet property="view" destination="1" id="3"/>
+                <outlet property="voiceBtn" destination="2mU-5a-LFE" id="PhR-oQ-eXP"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -16,28 +21,114 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="gvn-o5-Q4l">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video.png" id="gvn-o5-Q4l">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <navigationBar contentMode="scaleToFill" id="xa5-yi-1pC">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <items>
-                        <navigationItem title="Video Chat" id="zUM-XN-6bb">
-                            <barButtonItem key="leftBarButtonItem" title="Finish" id="RTU-qa-2vX">
-                                <connections>
-                                    <action selector="FinishVideoChat:" destination="-1" id="3xk-aY-Zsz"/>
-                                </connections>
-                            </barButtonItem>
-                        </navigationItem>
-                    </items>
-                </navigationBar>
+                <view contentMode="scaleToFill" id="pcW-8H-Quo" userLabel="LocalView">
+                    <rect key="frame" x="216" y="315" width="100" height="130"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                </view>
+                <view contentMode="scaleToFill" id="own-Im-rUY" userLabel="View - footer">
+                    <rect key="frame" x="0.0" y="450" width="320" height="30"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <imageView alpha="0.94999998807907104" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video_footer.png" highlightedImage="bg_video_footer.png" id="n43-47-Ycs">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </imageView>
+                        <view alpha="0.30000001192092896" contentMode="scaleToFill" id="fD0-NM-IKH" userLabel="View - line1">
+                            <rect key="frame" x="31" y="0.0" width="1" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view alpha="0.30000001192092896" contentMode="scaleToFill" id="IiE-mw-qtz" userLabel="View - line2">
+                            <rect key="frame" x="61" y="0.0" width="1" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view alpha="0.30000001192092896" contentMode="scaleToFill" id="a76-xx-kBj" userLabel="View - line3">
+                            <rect key="frame" x="290" y="0.0" width="1" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2mU-5a-LFE" userLabel="Button - voice">
+                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <state key="normal" image="Icon_voice.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="Icon_noVoice.png"/>
+                            <connections>
+                                <action selector="OnCloseVoiceBtnClicked:" destination="-1" eventType="touchUpInside" id="eq3-y4-O5t"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="GIr-Ah-FFS" userLabel="Button - camera">
+                            <rect key="frame" x="31" y="0.0" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <state key="normal" image="Icon_camera.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="Icon_noCamera.png"/>
+                            <connections>
+                                <action selector="OnCloseCameraBtnClicked:" destination="-1" eventType="touchUpInside" id="nB4-o4-uiS"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4Tb-z8-91U" userLabel="Button - EndCall">
+                            <rect key="frame" x="62" y="0.0" width="227" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" image="Icon_EndCall.png">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="Icon_EndCall.png">
+                                <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="FinishVideoChatBtnClicked:" destination="-1" eventType="touchUpInside" id="F5h-CZ-Jfo"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LVM-Xo-5dA" userLabel="Button - toCamera">
+                            <rect key="frame" x="290" y="0.0" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <state key="normal" image="Icon_camera_w.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="Icon_camera_w_b.png"/>
+                            <state key="highlighted" image="Icon_camera_w_b.png"/>
+                            <connections>
+                                <action selector="OnSwitchCameraBtnClicked:" destination="-1" eventType="touchUpInside" id="oXb-aW-GZa"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.96603671757736009" green="1" blue="0.96739653493915279" alpha="1" colorSpace="calibratedRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
+    <resources>
+        <image name="Icon_EndCall.png" width="454" height="60"/>
+        <image name="Icon_camera.png" width="48" height="48"/>
+        <image name="Icon_camera_w.png" width="48" height="48"/>
+        <image name="Icon_camera_w_b.png" width="48" height="48"/>
+        <image name="Icon_noCamera.png" width="48" height="48"/>
+        <image name="Icon_noVoice.png" width="48" height="48"/>
+        <image name="Icon_voice.png" width="48" height="48"/>
+        <image name="bg_video.png" width="320" height="480"/>
+        <image name="bg_video_footer.png" width="640" height="60"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

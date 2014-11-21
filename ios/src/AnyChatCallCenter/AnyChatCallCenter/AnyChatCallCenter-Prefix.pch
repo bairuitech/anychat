@@ -14,3 +14,30 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#pragma mark - Define VideoVC Function Parameters & Method
+
+#define kSelfView_Width                     self.view.frame.size.width
+#define kSelfView_Height                    self.view.frame.size.height
+#define kDegreesToRadian(degrees)           (M_PI * (degrees) / 180.0)
+#define kLayer_Z_Axis_3DRotation(degrees)    CATransform3DMakeRotation(kDegreesToRadian(degrees), 0.0, 0.0, 1.0)
+
+#define kLocalVideo_Width                   (float)100.0f
+#define kLocalVideo_Height                  (float)130.0f
+#define kBar_Height                         (float)30.0f
+#define kUI_Spacing                         (float)2.0f
+
+#define kLocalVideoPortrait_X_Axis          kSelfView_Width - kUI_Spacing - kLocalVideo_Width
+#define kLocalVideoPortrait_Y_Axis          kSelfView_Height - kLocalVideo_Height - kUI_Spacing - kBar_Height
+#define kLocalVideoLandscape_X_Axis         kSelfView_Width - kUI_Spacing - kLocalVideo_Height
+#define kLocalVideoLandscape_Y_Axis         kSelfView_Height - kLocalVideo_Width - kUI_Spacing - kBar_Height
+
+#define kLocalVideoPortrait_CGRect          CGRectMake(kLocalVideoPortrait_X_Axis, kLocalVideoPortrait_Y_Axis, kLocalVideo_Width, kLocalVideo_Height)
+#define kLocalVideoLandscape_CGRect         CGRectMake(kLocalVideoLandscape_X_Axis, kLocalVideoLandscape_Y_Axis, kLocalVideo_Height, kLocalVideo_Width)
+
+
+#pragma mark - Device Type
+
+#define	 k_isRetina	 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
+#define	 k_iPhone5 	([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#define	 k_isPad 	(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)

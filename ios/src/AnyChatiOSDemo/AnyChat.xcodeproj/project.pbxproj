@@ -230,7 +230,6 @@
 				FE8CF3CC13EFC08100B4C34B /* AnyChatViewController.h */,
 				FE8CF3CD13EFC08100B4C34B /* AnyChatViewController.m */,
 				FE8CF3CF13EFC08100B4C34B /* AnyChatViewController.xib */,
-				FE8CF3BE13EFC08100B4C34B /* Supporting Files */,
 				FE8C9A301786E1F3001F8A5D /* RoomViewController.h */,
 				FE8C9A311786E1F3001F8A5D /* RoomViewController.m */,
 				FE8C9A321786E1F3001F8A5D /* RoomViewController.xib */,
@@ -246,7 +245,7 @@
 				FE88271F147BC90500A2125F /* VideoChatController.h */,
 				FE882720147BC90500A2125F /* VideoChatController.m */,
 				FE882721147BC90500A2125F /* VideoChatController.xib */,
-				FE8C7A1117AEBADE00A26E8B /* Settings.bundle */,
+				FE8CF3BE13EFC08100B4C34B /* Supporting Files */,
 			);
 			path = AnyChat;
 			sourceTree = "<group>";
@@ -254,6 +253,7 @@
 		FE8CF3BE13EFC08100B4C34B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FE8C7A1117AEBADE00A26E8B /* Settings.bundle */,
 				FE8CF3BF13EFC08100B4C34B /* AnyChat-Info.plist */,
 				FE8CF3C013EFC08100B4C34B /* InfoPlist.strings */,
 				FE8CF3C313EFC08100B4C34B /* AnyChat-Prefix.pch */,

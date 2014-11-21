@@ -37,12 +37,12 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <items>
                         <navigationItem title="Title" id="A6E-1r-ZSp">
-                            <barButtonItem key="leftBarButtonItem" title="Leave" id="B01-z8-BtF">
+                            <barButtonItem key="leftBarButtonItem" systemItem="reply" id="B01-z8-BtF">
                                 <connections>
                                     <action selector="LeaveBtn_Onclick" destination="-1" id="WQN-QH-TO5"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem key="rightBarButtonItem" title="ClearDatas" id="sGl-t8-BSc">
+                            <barButtonItem key="rightBarButtonItem" systemItem="trash" id="sGl-t8-BSc">
                                 <connections>
                                     <action selector="clearDatas_OnClick" destination="-1" id="Q2j-3M-618"/>
                                 </connections>

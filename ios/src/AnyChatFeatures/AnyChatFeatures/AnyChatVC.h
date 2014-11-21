@@ -66,4 +66,7 @@ kGCD_SINGLETON_FOR_HEADER(AnyChatVC);
 
 - (NSMutableArray *) getOnlineUserArray;
 
+// 更新本地参数设置
+- (void) updateLocalSettings;
+
 @end

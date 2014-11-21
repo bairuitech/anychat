@@ -54,7 +54,8 @@
 
 - (NSString *) showInfoAlertView:(NSString *)titleCN : (NSString *)titleEN;
 
-
+// 更新本地参数设置
+- (void) updateLocalSettings;
 
 
 @end

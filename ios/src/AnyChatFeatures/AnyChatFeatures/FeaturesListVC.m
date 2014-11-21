@@ -115,6 +115,18 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
 }
 
 
+- (IBAction)videoSettingFUNBtnClick:(id)sender
+{
+    //ios8
+    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
+
+
+
+
 #pragma mark - Instance Method
 
 - (void)sharedFeaturesInfo:(NSString *)featuresName FeaturesNO:(int)featuresNO
