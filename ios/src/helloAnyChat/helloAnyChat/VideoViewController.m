@@ -50,8 +50,6 @@
     [super viewDidAppear:YES];
 }
 
-#pragma mark - Memory Warning method
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

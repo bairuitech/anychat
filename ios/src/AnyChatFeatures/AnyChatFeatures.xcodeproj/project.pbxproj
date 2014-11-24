@@ -34,6 +34,8 @@
 		FE9DD19119DA916C008889EC /* cell_01.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD19019DA916C008889EC /* cell_01.png */; };
 		FE9E5D281A1B2FC500F48575 /* sound_phoneCall.wav in Resources */ = {isa = PBXBuildFile; fileRef = FE9E5D261A1B2FC500F48575 /* sound_phoneCall.wav */; };
 		FE9E5D291A1B2FC500F48575 /* sound_takePhoto.wav in Resources */ = {isa = PBXBuildFile; fileRef = FE9E5D271A1B2FC500F48575 /* sound_takePhoto.wav */; };
+		FEA7EFDE1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA7EFDD1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png */; };
+		FEA7F0121A1DF0DC00BF4F53 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FEA7F0111A1DF0DC00BF4F53 /* Settings.bundle */; };
 		FEA9107F1A0231E300798D1D /* TransFileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA9107C1A0231E300798D1D /* TransFileVC.m */; };
 		FEA910801A0231E300798D1D /* TransFileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA9107D1A0231E300798D1D /* TransFileVC.xib */; };
 		FEA910811A0231E300798D1D /* theTransFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA9107E1A0231E300798D1D /* theTransFileCell.xib */; };
@@ -142,6 +144,8 @@
 		FE9DD19019DA916C008889EC /* cell_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_01.png; sourceTree = "<group>"; };
 		FE9E5D261A1B2FC500F48575 /* sound_phoneCall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sound_phoneCall.wav; path = Resources/audio/sound_phoneCall.wav; sourceTree = "<group>"; };
 		FE9E5D271A1B2FC500F48575 /* sound_takePhoto.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sound_takePhoto.wav; path = Resources/audio/sound_takePhoto.wav; sourceTree = "<group>"; };
+		FEA7EFDD1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_featuresBtn_8.png; path = Icon_featuresBtn/Icon_featuresBtn_8.png; sourceTree = "<group>"; };
+		FEA7F0111A1DF0DC00BF4F53 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FEA9107B1A0231E300798D1D /* TransFileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransFileVC.h; sourceTree = "<group>"; };
 		FEA9107C1A0231E300798D1D /* TransFileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransFileVC.m; sourceTree = "<group>"; };
 		FEA9107D1A0231E300798D1D /* TransFileVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransFileVC.xib; sourceTree = "<group>"; };
@@ -277,10 +281,10 @@
 		FE0D8AFF19FF8F1100D5FD3E /* TextMsg_TransBuffer */ = {
 			isa = PBXGroup;
 			children = (
+				FEAE1A7D1A008E7300842D66 /* theMsgCell.xib */,
 				FE0D8B0019FF8F5D00D5FD3E /* TextMsg_TransBufferVC.h */,
 				FE0D8B0119FF8F5D00D5FD3E /* TextMsg_TransBufferVC.m */,
 				FE0D8B0219FF8F5D00D5FD3E /* TextMsg_TransBufferVC.xib */,
-				FEAE1A7D1A008E7300842D66 /* theMsgCell.xib */,
 			);
 			name = TextMsg_TransBuffer;
 			sourceTree = "<group>";
@@ -350,6 +354,7 @@
 		FEAD382B1A1352E20036F8B6 /* Icon_featuresBtn */ = {
 			isa = PBXGroup;
 			children = (
+				FEA7EFDD1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png */,
 				FEAD382C1A1353010036F8B6 /* Icon_featuresBtn_1.png */,
 				FEAD382D1A1353010036F8B6 /* Icon_featuresBtn_2.png */,
 				FEAD382E1A1353010036F8B6 /* Icon_featuresBtn_3.png */,
@@ -421,6 +426,7 @@
 		FEBBA25719C2CC0B009EE02C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FEA7F0111A1DF0DC00BF4F53 /* Settings.bundle */,
 				FE9E5D211A1AF7CF00F48575 /* audio */,
 				FECF538119EFBB3A00338859 /* images */,
 				FEBBA25819C2CC0B009EE02C /* AnyChatFeatures-Info.plist */,
@@ -645,6 +651,7 @@
 				FE9361D81A0CA05B00A1A597 /* Icon_SnapShot.png in Resources */,
 				FEB863E019F0E6BE00594BF5 /* bg_video@2x.png in Resources */,
 				FEAD38371A1353010036F8B6 /* Icon_featuresBtn_4.png in Resources */,
+				FEA7F0121A1DF0DC00BF4F53 /* Settings.bundle in Resources */,
 				FEA910811A0231E300798D1D /* theTransFileCell.xib in Resources */,
 				FE9361D61A0C626000A1A597 /* Icon_offRecordVideo.png in Resources */,
 				FE9361D51A0C626000A1A597 /* Icon_onRecordVideo.png in Resources */,
@@ -654,6 +661,7 @@
 				FEE6C85119F630A300477365 /* AnyChatVC.xib in Resources */,
 				FE9E5D281A1B2FC500F48575 /* sound_phoneCall.wav in Resources */,
 				FEAD38351A1353010036F8B6 /* Icon_featuresBtn_2.png in Resources */,
+				FEA7EFDE1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png in Resources */,
 				FEDEE6811A15AE57006FB454 /* bg_loginTitle.png in Resources */,
 				FEE6C84419F628A300477365 /* Icon_switchCamera_w.png in Resources */,
 				FE9DD19119DA916C008889EC /* cell_01.png in Resources */,
@@ -741,7 +749,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "735a6371-8b93-41f9-867a-0a03a1f74ba0";
 				SDKROOT = iphoneos;
@@ -775,7 +783,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "735a6371-8b93-41f9-867a-0a03a1f74ba0";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

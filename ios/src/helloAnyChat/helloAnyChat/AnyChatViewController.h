@@ -58,5 +58,7 @@
 
 - (void) saveSettings;
 
+// 更新本地参数设置
+- (void) updateLocalSettings;
 
 @end

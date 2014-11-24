@@ -22,6 +22,12 @@
 {
     AnyChatPlatform *theAnyChat;
     AVAudioPlayer   *theAudioPlayer;
+    NSTimer *theNSTimer;
+    
+    int theTime_Interval;
+    int theTimes_Hours;
+    int theTimes_Minutes;
+    int theTimes_Seconds;
 }
 
 
@@ -37,6 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIButton               *theServerFunBtn;
 @property (weak, nonatomic) IBOutlet UIView                 *leftLineView;
 @property (weak, nonatomic) IBOutlet UIView                 *rightLineView;
+@property (weak, nonatomic) IBOutlet UILabel                *theRecordTimeLab;
 
 @property int iRemoteUserId;
 

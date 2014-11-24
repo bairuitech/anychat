@@ -8,7 +8,6 @@
 
 #import "LoginViewController.h"
 
-
 @interface LoginViewController ()
 
 @end
@@ -64,7 +63,6 @@
     [theHideKeyboardBtn setTitle:@"" forState:UIControlStateSelected];
     
     [theVersion setText:[AnyChatPlatform GetSDKVersion]];
-    
 }
 
 

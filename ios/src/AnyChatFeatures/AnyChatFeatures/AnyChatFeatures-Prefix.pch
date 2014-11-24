@@ -31,7 +31,7 @@
 #define kContentCell_LableTag               2002
 
 
-#pragma mark - Define AnyChatVC Function Parameter
+#pragma mark - Define AnyChatVC Function Parameter & Method
 
 #define kTableVCell_NameLabTag              1001
 #define kTableVCell_UserIDLabTag            1002

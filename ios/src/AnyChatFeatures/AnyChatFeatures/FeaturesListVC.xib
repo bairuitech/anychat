@@ -17,6 +17,7 @@
                 <outlet property="transBufferFUNBtn" destination="brU-fv-JoW" id="dM5-PN-liK"/>
                 <outlet property="transFileFUNBtn" destination="Ery-e1-c2F" id="3gj-mm-eNF"/>
                 <outlet property="videoFUNBtn" destination="rQ5-gt-NCq" id="ggo-lj-MGX"/>
+                <outlet property="videoSettingFUNBtn" destination="LS1-8p-HiX" id="qcK-dS-DbF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -187,6 +188,24 @@
                         <action selector="CallCenterFUNBtnClick:" destination="-1" eventType="touchUpInside" id="AhJ-ta-mb2"/>
                     </connections>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="LS1-8p-HiX" userLabel="视频设置">
+                    <rect key="frame" x="125" y="246" width="68" height="68"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="Icon_featuresBtn_8.png">
+                        <attributedString key="attributedTitle">
+                            <fragment content="视频设置">
+                                <attributes>
+                                    <color key="NSColor" red="0.098039217293262482" green="0.098039217293262482" blue="0.098039217293262482" alpha="1" colorSpace="calibratedRGB"/>
+                                    <font key="NSFont" size="11" name="STHeitiSC-Medium"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="6"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </state>
+                    <connections>
+                        <action selector="videoSettingFUNBtnClick:" destination="-1" eventType="touchUpInside" id="3LN-WA-Ur2"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
@@ -201,6 +220,7 @@
         <image name="Icon_featuresBtn_5.png" width="128" height="128"/>
         <image name="Icon_featuresBtn_6.png" width="128" height="128"/>
         <image name="Icon_featuresBtn_7.png" width="128" height="128"/>
+        <image name="Icon_featuresBtn_8.png" width="128" height="128"/>
         <image name="bg.png" width="640" height="1136"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
