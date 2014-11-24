@@ -49,7 +49,7 @@ public class VideoConfigActivity extends Activity{
 	private Spinner videoQualitySpinner;
 	private Spinner videoPresetSpinner;
 
-	private final String[] videoSizeString={"176 x 144", "320 x 240（默认）", "352 x 288", "640 x 240", "720 x 480", "1280 x 720"};
+	private final String[] videoSizeString={"176 x 144", "320 x 240（默认）", "352 x 288", "640 x 480", "720 x 480", "1280 x 720"};
 	private final int[] videoWidthValue={176,320,352,640, 720, 1280};
 	private final int[] videoHeightValue={144,240,288,480, 480, 720};
 	
