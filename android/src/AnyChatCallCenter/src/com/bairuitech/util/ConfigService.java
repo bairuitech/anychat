@@ -1,7 +1,5 @@
 package com.bairuitech.util;
 
-import com.bairuitech.anychat.AnyChatDefine;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
