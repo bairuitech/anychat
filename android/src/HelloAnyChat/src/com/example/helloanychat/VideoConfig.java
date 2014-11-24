@@ -7,17 +7,13 @@ import com.example.helloanychat.R;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -184,30 +180,7 @@ public class VideoConfig extends Activity{
     	mSaveBtn.setText("保存设置");
     	mSaveBtn.setOnClickListener(onClickListener);
 	}
-	
-	OnTouchListener onTouchListener =  new OnTouchListener() {
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			 switch (event.getAction()) 
-		        {
-		    		case MotionEvent.ACTION_DOWN:
-		    			try
-		    			{
-		    				((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(VideoConfig.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); 
-		    			}
-		    			catch(Exception excp)
-		    			{
-		    				
-		    			}
-		    			break;
-		    		case MotionEvent.ACTION_UP:
-
-		    			break;
-		        }
-			return false;
-		}
-	};
-	
+		
 	OnClickListener onClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {

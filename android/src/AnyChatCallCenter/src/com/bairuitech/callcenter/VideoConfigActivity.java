@@ -2,17 +2,12 @@ package com.bairuitech.callcenter;
 
 import com.bairuitech.util.ConfigService;
 import com.bairuitech.util.ConfigEntity;
-import com.bairuitech.util.ScreenInfo;
 
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -67,16 +62,9 @@ public class VideoConfigActivity extends Activity{
         super.onCreate(savedInstanceState);
         configEntity = ConfigService.LoadConfig(this);
         setContentView(R.layout.videoconfig);
-        getScrennInfo();
         InitialLayout();
     }
-    private void getScrennInfo()
-    {
-    	DisplayMetrics dMetrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(dMetrics);
-		ScreenInfo.WIDTH=dMetrics.widthPixels;
-		ScreenInfo.HEIGHT=dMetrics.heightPixels;
-    }
+    
     private void InitialLayout()
     {   
         this.setTitle("配置");
@@ -240,33 +228,7 @@ public class VideoConfigActivity extends Activity{
 		this.setResult(RESULT_OK);
 		this.finish();
     }
-    
-    
-    OnTouchListener touchListener =  new OnTouchListener()
-    {
-		@Override
-		public boolean onTouch(View v, MotionEvent e) {
-			// TODO Auto-generated method stub
-	        switch (e.getAction()) 
-	        {
-	    		case MotionEvent.ACTION_DOWN:
-	    			try
-	    			{
-	    				((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(VideoConfigActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); 
-	    			}
-	    			catch(Exception excp)
-	    			{
-	    				
-	    			}
-	    			break;
-	    		case MotionEvent.ACTION_UP:
-
-	    			break;
-	        }
-	        return false;
-		}
-    };
-    
+   
     private Spinner InsertSpinnerInterface(int spinnerIndex, String[] context, int[] value, int select) {
     	Spinner spinner = null;
 		if (spinnerIndex == 1){
