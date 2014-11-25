@@ -1,10 +1,14 @@
 package com.example.funcActivity;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatRecordEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
+import com.example.common.BaseMethod;
 import com.example.common.CustomApplication;
 import com.example.common.DialogFactory;
 import com.example.anychatfeatures.FuncMenu;
@@ -18,6 +22,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -38,6 +43,11 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	boolean bOnPaused = false;
 	private boolean bSelfVideoOpened = false; // 本地视频是否已打开
 	private boolean bOtherVideoOpened = false; // 对方视频是否已打开
+	private int dwFlags = 0;
+	private static final int MSG_VIDEOGESPREK = 1;
+	private static final int MSG_VIDEORECORD = 2;
+	private int mVideogesprekSec = 0;
+	private int mVideoRecordTimeSec = 0;
 
 	private SurfaceView mOtherView;
 	private SurfaceView mMyView;
@@ -57,10 +67,15 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private int mServerRecordState; // 1表示服务器录制打开着，0表示服务器录制关闭着
 	private ImageButton mIBTakePhotoSelf;
 	private ImageButton mIBTakePhotoOther;
-	private int dwFlags = 0;
 	private CustomApplication mCustomApplication;
 	private Dialog mDialog;
-
+	private TextView mVideogesprekTimeTV;  // 视频对话时间
+	private TextView mVideoRecordTimeTV;   // 视频录制时间
+	private Timer mVideogesprekTimer;
+	private Timer mVideoRecordTimer;
+	private TimerTask mTimerTask;
+	private Handler mHandler;
+	
 	private final String mStrBasePath = "/AnyChat";
 
 	public AnyChatCoreSDK anyChatSDK;
@@ -78,6 +93,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 		InitSDK();
 		InitLayout();
+		updateTime();
 		
 		//如果视频流过来了，则把背景设置成透明的
 		handler.postDelayed(runnable, 200);
@@ -115,6 +131,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mBtnCameraCtrl = (ImageButton) findViewById(R.id.btn_cameraControl);
 		mIBLocalRecording = (ImageButton) findViewById(R.id.btn_LocalRecording);
 		mIBServerRecording = (ImageButton) findViewById(R.id.btn_ServerRecording);
+		mVideogesprekTimeTV = (TextView) findViewById(R.id.videogesprekTime);
+		mVideoRecordTimeTV = (TextView) findViewById(R.id.videoRecordTime);
 		mLocalRecordState = 0;
 		mServerRecordState = 0;
 		mIBTakePhotoSelf = (ImageButton) findViewById(R.id.btn_TakePhotoSelf);
@@ -214,7 +232,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	
 	Handler handler = new Handler();
 	Runnable runnable = new Runnable() {
-		
 		@Override
 		public void run() {
 			try {
@@ -231,6 +248,59 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			}
 		}
 	};
+	
+	private void updateTime() {
+		mHandler = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				switch (msg.what) {
+				case MSG_VIDEOGESPREK:
+					mVideogesprekTimeTV.setText(BaseMethod.getTimeShowStr(mVideogesprekSec++));
+					break;
+				case MSG_VIDEORECORD:
+					mVideoRecordTimeTV.setText(BaseMethod.getTimeShowStr(mVideoRecordTimeSec++));
+					break;
+				default:
+					break;
+				}
+			}
+			
+		};
+		
+		initVideogesprek();
+	}
+	
+	private void initVideogesprek()
+	{
+		if (mVideogesprekTimer == null)
+			mVideogesprekTimer = new Timer();
+		
+		mTimerTask = new TimerTask() {		
+			@Override
+			public void run() {
+				mHandler.sendEmptyMessage(MSG_VIDEOGESPREK);
+			}
+		};
+		
+		mVideogesprekTimer.schedule(mTimerTask, 1000, 1000);
+	}
+	
+	private void initVideoRecord() {
+		if (mVideoRecordTimer == null){
+			mVideoRecordTimer = new Timer();
+		}
+		
+		mTimerTask = new TimerTask() {
+			@Override
+			public void run() {
+				mHandler.sendEmptyMessage(MSG_VIDEORECORD);				
+			}
+		};
+		
+		mVideoRecordTimer.schedule(mTimerTask, 10, 1000);
+		mVideoRecordTimeTV.setVisibility(View.VISIBLE);
+	}
 
 	private OnClickListener onClickListener = new OnClickListener() {
 		int dwFlagsBase = AnyChatDefine.BRAC_RECORD_FLAGS_AUDIO
@@ -310,23 +380,34 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					dwFlags = dwFlagsBase
 							+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_SERVER;
 					anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "打开视频录制");
-					mIBServerRecording
-							.setImageResource(mArrServerRecordingImg[mServerRecordState]);
+					mIBServerRecording.setImageResource(mArrServerRecordingImg[mServerRecordState]);
+					
+					mVideoRecordTimeTV.setVisibility(View.GONE);
+					mVideoRecordTimer.cancel();
+					mVideoRecordTimer = null;
 				}
 
 				dwFlags = dwFlagsBase;
 				if (mLocalRecordState == 1) {
 					mLocalRecordState = 0;
-					anyChatSDK
-							.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭本地视频录制");
+					anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭本地视频录制");
+					
+					mVideoRecordTimeTV.setVisibility(View.GONE);
+					mVideoRecordTimer.cancel();
+					mVideoRecordTimer = null;
+					
 				} else {
 					mLocalRecordState = 1;
-					anyChatSDK
-							.StreamRecordCtrlEx(-1, 1, dwFlags, 0, "打开本地视频录制");
+					anyChatSDK.StreamRecordCtrlEx(-1, 1, dwFlags, 0, "打开本地视频录制");
+					
+					mVideoRecordTimeSec = 0;
+					mVideoRecordTimeTV.setText("00:00:00");
+					mVideoRecordTimeTV.setVisibility(View.VISIBLE);
+					initVideoRecord();
 				}
 
-				mIBLocalRecording
-						.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
+				mIBLocalRecording.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
+						
 				break;
 			case R.id.btn_ServerRecording:
 				dwFlags = dwFlagsBase;
@@ -336,6 +417,10 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 							.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭本地视频录制");
 					mIBLocalRecording
 							.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
+					
+					mVideoRecordTimeTV.setVisibility(View.GONE);
+					mVideoRecordTimer.cancel();
+					mVideoRecordTimer = null;
 				}
 
 				dwFlags = dwFlagsBase
@@ -344,14 +429,23 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					mServerRecordState = 0;
 					anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0,
 							"关闭服务器视频录制");
+					
+					mVideoRecordTimeTV.setVisibility(View.GONE);
+					mVideoRecordTimer.cancel();
+					mVideoRecordTimer = null;
 				} else {
 					mServerRecordState = 1;
 					anyChatSDK.StreamRecordCtrlEx(-1, 1, dwFlags, 0,
 							"打开服务器视频录制");
+					
+					initVideoRecord();
+					mVideoRecordTimeSec = 0;
+					mVideoRecordTimeTV.setText("00:00:00");
+					mVideoRecordTimeTV.setVisibility(View.VISIBLE);
 				}
 
-				mIBServerRecording
-						.setImageResource(mArrServerRecordingImg[mServerRecordState]);
+				mIBServerRecording.setImageResource(mArrServerRecordingImg[mServerRecordState]);
+				
 				break;
 			case R.id.btn_TakePhotoSelf:
 				anyChatSDK.SnapShot(-1,
@@ -400,6 +494,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private void destroyCurActivity() {
 		onPause();
 		onDestroy();
+		
+		if (mVideoRecordTimer != null)
+			mVideoRecordTimer.cancel();
 	}
 
 	protected void onRestart() {

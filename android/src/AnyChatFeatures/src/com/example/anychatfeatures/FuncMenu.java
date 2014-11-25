@@ -3,6 +3,7 @@ package com.example.anychatfeatures;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.example.anychatfeatures.R;
@@ -17,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -26,8 +28,9 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class FuncMenu extends Activity {
+public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	public static final int FUNC_VOICEVIDEO = 1;
 	public static final int FUNC_TEXTCHAT = 2;
 	public static final int FUNC_ALPHACHANNEL = 3;
@@ -46,6 +49,8 @@ public class FuncMenu extends Activity {
 	private final int mMenuCount = 8;
 	private CustomApplication mCustomApplication;
 	private ArrayList<HashMap<String, Object>> mArrItem;
+	
+	AnyChatCoreSDK anyChatSDK;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,10 @@ public class FuncMenu extends Activity {
 		setContentView(R.layout.funcmenu);
 		
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  
+		
+		anyChatSDK = AnyChatCoreSDK.getInstance(this);
+		anyChatSDK.SetBaseEvent(this);
+		
 		InitLayout();
 		registerBoradcastReceiver();
 	}
@@ -124,7 +133,6 @@ public class FuncMenu extends Activity {
 			destroyCurActivity();
 		}
 	};
-
 	// 音视频交互
 	private void openRolesListActivity(int sEnterRoomID) {
 		Intent intent = new Intent(this, RolesListActivity.class);
@@ -232,21 +240,74 @@ public class FuncMenu extends Activity {
 	}
 
 	private void destroyCurActivity() {
+		this.setResult(RESULT_OK);
+		
 		onPause();
 		onDestroy();
+		finish();
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		Intent mIntent = new Intent("NetworkDiscon");
-		// 发送广播
-		sendBroadcast(mIntent);
-		finish();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+	}
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		anyChatSDK.SetBaseEvent(this);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK){
+			this.setResult(RESULT_OK);			
+		}		
+
+		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void OnAnyChatConnectMessage(boolean bSuccess) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
+		// 销毁当前界面
+		destroyCurActivity();
+		Intent mIntent = new Intent("NetworkDiscon");
+		// 发送广播
+		sendBroadcast(mIntent);
 	}
 }

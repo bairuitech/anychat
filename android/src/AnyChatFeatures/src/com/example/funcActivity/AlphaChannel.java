@@ -164,6 +164,12 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		super.onResume();
 	}
 
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		anyChatSDK.SetBaseEvent(this);
+	}
+	
 	private void destroyCurActivity() {
 		onPause();
 		onDestroy();

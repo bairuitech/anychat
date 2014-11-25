@@ -7,7 +7,6 @@ import com.bairuitech.anychat.AnyChatDefine;
 import com.example.common.CustomApplication;
 import com.example.common.ScreenInfo;
 import com.example.common.ValueUtils;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,6 +27,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private EditText mEditIP;
@@ -41,6 +41,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private LinearLayout mWaitingLayout;
 	private LinearLayout mProgressLayout;
 	private CustomApplication mCustomApplication;
+	private Toast mToast;
 
 	private String mStrIP = "demo.anychat.cn";
 	private String mStrName = "name";
@@ -49,6 +50,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private final int SHOWLOGINSTATEFLAG = 1; // 显示的按钮是登陆状态的标识
 	private final int SHOWWAITINGSTATEFLAG = 2; // 显示的按钮是等待状态的标识
 	private final int LOCALVIDEOAUTOROTATION = 1; // 本地视频自动旋转控制
+	private final int ACTIVITY_ID_MAINUI = 1;
 	private boolean bNeedRelease = false;
 
 	public AnyChatCoreSDK anyChatSDK;
@@ -279,6 +281,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	protected void onRestart() {
 		super.onRestart();
 		anyChatSDK.SetBaseEvent(this);
+		mToast = null;
 	}
 
 	@Override
@@ -286,6 +289,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		if (!bSuccess) {
 			setBtnVisible(SHOWLOGINSTATEFLAG);
 			mBottomConnMsg.setText("连接服务器失败，自动重连，请稍后...");
+			setBtnVisible(SHOWWAITINGSTATEFLAG);
 		}
 	}
 
@@ -300,9 +304,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			bNeedRelease = false;
 
 			Intent intent = new Intent(this, FuncMenu.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
+			startActivityForResult(intent, ACTIVITY_ID_MAINUI);			
 		} else {
 			setBtnVisible(SHOWLOGINSTATEFLAG);
 			mBottomConnMsg.setText("登录失败，errorCode：" + dwErrorCode);
@@ -329,6 +331,16 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		setBtnVisible(SHOWLOGINSTATEFLAG);
 		mBottomConnMsg.setText("连接关闭，errorCode：" + dwErrorCode);
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK && requestCode == ACTIVITY_ID_MAINUI){
+			anyChatSDK.Logout();
+			setBtnVisible(SHOWLOGINSTATEFLAG);
+			mBottomConnMsg.setText("No content to the server");	
+		}		
+	}
 
 	// 广播
 	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
@@ -339,6 +351,12 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				anyChatSDK.Logout();
 				setBtnVisible(SHOWLOGINSTATEFLAG);
 				mBottomConnMsg.setText("No content to the server");
+				
+				if (mToast == null)
+				{
+					mToast = Toast.makeText(MainActivity.this, "网络断开", Toast.LENGTH_SHORT);
+					mToast.show();
+				}				
 			}
 		}
 	};

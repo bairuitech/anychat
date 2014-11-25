@@ -255,6 +255,13 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 				mDialog.dismiss();
 			}
 		}
+		
+		Intent mIntent = new Intent("NetworkDiscon");
+		// 发送广播
+		sendBroadcast(mIntent);
+
+		// 销毁当前界面
+		destroyCurActivity();
 	}
 
 	// 广播

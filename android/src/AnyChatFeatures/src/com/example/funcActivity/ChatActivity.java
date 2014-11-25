@@ -162,6 +162,12 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		super.onResume();
 	}
 
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		anyChatSDK.SetBaseEvent(this);
+	}
+	
 	private void destroyCurActivity() {
 		onPause();
 		onDestroy();
@@ -205,11 +211,12 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-		// 销毁当前界面
-		destroyCurActivity();
 		Intent mIntent = new Intent("NetworkDiscon");
 		// 发送广播
 		sendBroadcast(mIntent);
+		
+		// 销毁当前界面
+		destroyCurActivity();
 	}
 
 }

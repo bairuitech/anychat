@@ -53,7 +53,7 @@
             android:onClick="onEndCall"
             android:textSize="23sp"
             android:text="@string/str_endCall"
-            android:textColor="#ff3333" />
+            android:textColor="@color/shollow_red" />
 
         <View
             android:layout_width="1dp"

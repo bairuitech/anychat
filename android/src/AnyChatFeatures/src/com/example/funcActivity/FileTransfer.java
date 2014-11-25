@@ -317,7 +317,12 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-
+		Intent mIntent = new Intent("NetworkDiscon");
+		// 发送广播
+		sendBroadcast(mIntent);
+		
+		// 销毁当前界面
+		destroyCurActivity();
 	}
 
 }
