@@ -17,6 +17,8 @@ import com.example.anychatfeatures.MessageListView;
 import com.example.anychatfeatures.R;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -45,7 +47,7 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 	private Button mBtnOpen;
 	private Button mBtnSend;
 	private TextView mTVFileFathMsg;
-	private ProgressBar mSendFileProgressBar;
+	private ProgressDialog mProgressDialog;
 	private MessageListView mMessageListView;
 	private LinearLayout mFullLayout;
 	private LinearLayout mMainLayout;
@@ -123,9 +125,6 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 		bottonLayout.setBackgroundDrawable(getResources().getDrawable(R.drawable.et_wideborder));
 		bottonLayout.setBackgroundColor(Color.parseColor("#FFFFE0"));
 		
-		LinearLayout ProgressBarLayout = new LinearLayout(this);
-		ProgressBarLayout.setVerticalGravity(Gravity.TOP);
-		ProgressBarLayout.setPadding(ScreenInfo.WIDTH/2 - ScreenInfo.WIDTH * 1 / 5, 0, 0, 0);
 		LinearLayout pathLayout = new LinearLayout(this);
 		pathLayout.setPadding(30, 10, 30, 10);
 
@@ -144,10 +143,6 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 		mBtnSend.setText("发送");
 		mBtnSend.setTextSize(20);
 		mBtnSend.setOnClickListener(onClickListener);
-
-		mSendFileProgressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
-		mSendFileProgressBar.setProgress(0);
-		mSendFileProgressBar.setVisibility(View.GONE);
 		
 		pathLayout.setOrientation(LinearLayout.VERTICAL);
 		pathLayout.addView(mTVFileFathMsg,  new LayoutParams(
@@ -161,11 +156,6 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 		bottonLayout.addView(mBtnSend, new LayoutParams(
 				ScreenInfo.WIDTH * 1 / 5, LayoutParams.FILL_PARENT));
 
-		ProgressBarLayout.addView(mSendFileProgressBar, new LayoutParams(
-				ScreenInfo.WIDTH * 2 / 5, 50));
-		
-		mMainLayout.addView(ProgressBarLayout, new LayoutParams(
-				LayoutParams.FILL_PARENT, ScreenInfo.HEIGHT * 2 / 10));
 		mMainLayout.addView(bottonLayout, new LayoutParams(
 				LayoutParams.FILL_PARENT, ScreenInfo.HEIGHT / 10));
 
@@ -271,8 +261,8 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 								mAnyChatOutParam);
 				
 				if (returnFlag == 0){
-					mSendFileProgressBar.setVisibility(View.VISIBLE);
-					mSendFileProgressBar.setProgress(mAnyChatOutParam.GetIntValue());
+					handleProgressDlg();
+					mProgressDialog.setProgress(mAnyChatOutParam.GetIntValue());
 				}
 				else {
 					handler.removeCallbacks(runnable);
@@ -280,8 +270,7 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 				}
 
 				if (mAnyChatOutParam.GetIntValue() == 100) {
-					mSendFileProgressBar.setVisibility(View.GONE);
-					mSendFileProgressBar.setProgress(0);
+					mProgressDialog.dismiss();
 					handler.removeCallbacks(runnable);
 					return;
 				} 
@@ -292,6 +281,30 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 			}
 		}
 	};
+	
+	private void handleProgressDlg(){
+		if (mProgressDialog == null){
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			mProgressDialog.setMax(100);
+			mProgressDialog.setMessage("正在传送");
+			mProgressDialog.setCanceledOnTouchOutside(false);
+			mProgressDialog.setButton("取消", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if (mAnyChatOutParam != null){
+						anyChatSDK.CancelTransTask(-1, mAnyChatOutParam.GetIntValue());
+						handler.removeCallbacks(runnable);
+						mProgressDialog.cancel();
+						mProgressDialog = null;
+					}
+				}
+			});
+		}
+		
+		mProgressDialog.show();
+	}
 	
 	private void destroyCurActivity() {
 		onPause();
