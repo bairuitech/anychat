@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
         android:paddingBottom="5dp"
-        android:paddingLeft="5dp" />
+        android:paddingLeft="5dp" />  
 
     <LinearLayout
         android:id="@+id/frame_local_area"

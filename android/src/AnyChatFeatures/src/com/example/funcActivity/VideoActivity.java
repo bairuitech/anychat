@@ -50,10 +50,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private boolean bSelfVideoOpened = false; // 本地视频是否已打开
 	private boolean bOtherVideoOpened = false; // 对方视频是否已打开
 	private int dwFlags = 0;
-	private static final int MSG_VIDEOGESPREK = 1;
-	private static final int MSG_VIDEORECORD = 2;
-	private static final int MSG_PREVIEWPIC = 3;
-	private static final int MSG_PREVIEWVIDEO = 4;
 	private int mVideogesprekSec = 0;
 	private int mVideoRecordTimeSec = 0;
 	private int mPreviewPicSec = 0;
@@ -67,6 +63,11 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private String mPreviewPicPathStr = "";
 	private String mPreviewVideoPathStr = "";
 
+	private static final int MSG_VIDEOGESPREK = 1;
+	private static final int MSG_VIDEORECORD = 2;
+	private static final int MSG_PREVIEWPIC = 3;
+	private static final int MSG_PREVIEWVIDEO = 4;
+	
 	private SurfaceView mOtherView;
 	private SurfaceView mMyView;
 	private ImageButton mImgBtnReturn;
