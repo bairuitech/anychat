@@ -10,6 +10,7 @@ import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatOutParam;
 import com.bairuitech.anychat.AnyChatTransDataEvent;
+import com.example.common.BaseMethod;
 import com.example.common.CustomApplication;
 import com.example.common.ScreenInfo;
 import com.example.anychatfeatures.MessageListView;
@@ -26,6 +27,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -107,6 +110,7 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 
 		mMessageListView = new MessageListView(this);
 		mMessageListView.SetFileList(mMessageList);
+		mMessageListView.setOnItemClickListener(onItemClickListener);
 
 		LinearLayout.LayoutParams messLayoutParams = new LinearLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -192,7 +196,59 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 
 		}
 	};
-
+	
+	OnItemClickListener onItemClickListener = new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			
+			Intent intent = null;
+			String strDotType = "";
+			String strFileName = "";
+			String strFile = mMessageList.get(position);
+			if ((strFile != null) && (strFile.length() > 0))
+			{
+				int dotIndex = strFile.lastIndexOf('.');
+				int nameIndex = strFile.lastIndexOf('/');
+				if ((dotIndex > -1) && (dotIndex < (strFile.length() - 1))){
+					strDotType = strFile.substring(dotIndex + 1);
+					strFileName = strFile.substring(nameIndex + 1, dotIndex);
+					java.lang.System.out.println("" + strFileName + "::" + strDotType);
+				}				
+				
+				String strFileMes = SAVE_PATH + strFileName + "." + strDotType;
+				if (strDotType.equalsIgnoreCase("html")){
+					intent = BaseMethod.getIntent(strFileMes, "text/html");
+				}else if (strDotType.equalsIgnoreCase("jpg") || strDotType.equalsIgnoreCase("png") || strDotType.equalsIgnoreCase("bmp")) {
+					intent = BaseMethod.getIntent(strFileMes, "image/*");
+				}else if (strDotType.equalsIgnoreCase("pdf")) {
+					intent = BaseMethod.getIntent(strFileMes, "application/pdf");
+				}else if (strDotType.equalsIgnoreCase("txt")) {
+					intent = BaseMethod.getIntent(strFileMes, "text/plain");
+				}else if (strDotType.equalsIgnoreCase("avi") || strDotType.equalsIgnoreCase("mp4") || strDotType.equalsIgnoreCase("wmv")
+						|| strDotType.equalsIgnoreCase("3gp")  || strDotType.equalsIgnoreCase("flv")  || strDotType.equalsIgnoreCase("mov")) {
+					intent = BaseMethod.getIntent(strFileMes, "video/*");
+				}else if (strDotType.equalsIgnoreCase("mp3")) {
+					intent = BaseMethod.getIntent(strFileMes, "audio/*");
+				}else if (strDotType.equalsIgnoreCase("doc") || strDotType.equalsIgnoreCase("docx")) {
+					intent = BaseMethod.getIntent(strFileMes, "application/msword");
+				}else if (strDotType.equalsIgnoreCase("xls") || strDotType.equalsIgnoreCase("xlsx")) {
+					intent = BaseMethod.getIntent(strFileMes, "application/vnd.ms-excel");
+				}else if (strDotType.equalsIgnoreCase("ppt") || strDotType.equalsIgnoreCase("pptx")) {
+					intent = BaseMethod.getIntent(strFileMes,  "application/vnd.ms-powerpoint");
+				}else {
+					intent = new Intent();
+					File file = new File(SAVE_PATH);
+					Uri uri = Uri.fromFile(file);
+					intent.setData(uri);
+				}
+				
+				if (intent != null)
+					startActivity(intent);
+			}
+		}
+	};
+	
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		if (resultCode == RESULT_OK) {

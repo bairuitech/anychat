@@ -1,11 +1,12 @@
 package com.example.common;
 
-import android.app.Activity;
-import android.widget.Toast;
+import java.io.File;
+
+import android.content.Intent;
+import android.net.Uri;
 
 public class BaseMethod{
-	public static String getTimeShowStr(int seconds)
-	{
+	public static String getTimeShowStr(int seconds){
 		String strShow=new String();
 		int hour = seconds / (60*60);
 		int min = (seconds/60) % 60;
@@ -15,5 +16,14 @@ public class BaseMethod{
 		String seondStr = (s >= 10) ? "" + s : "0" + s;
 		strShow = hourStr + ":" + minStr + ":" + seondStr;
 		return strShow;		
+	}
+	
+	public static Intent getIntent(String filePath, String fileType){
+		 Intent intent = new Intent("android.intent.action.VIEW");
+	     intent.addCategory("android.intent.category.DEFAULT");
+	     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	     Uri uri = Uri.fromFile(new File(filePath ));
+	     intent.setDataAndType(uri, fileType);
+	     return intent;
 	}
 }

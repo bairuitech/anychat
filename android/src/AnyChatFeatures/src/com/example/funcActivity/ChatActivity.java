@@ -130,7 +130,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		if (ValueUtils.isStrEmpty(strSendMsg))
 			return;
 
-		anyChatSDK.SendTextMessage(userID, 1, strSendMsg);
+		int codeIndex = anyChatSDK.SendTextMessage(userID, 1, strSendMsg);
 		mMessageList.add("我: " + strSendMsg);
 		mMessageListView.SetFileList(mMessageList);
 		mMessagEditText.setText("");

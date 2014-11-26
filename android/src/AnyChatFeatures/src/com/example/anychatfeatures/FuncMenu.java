@@ -28,7 +28,6 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	public static final int FUNC_VOICEVIDEO = 1;
