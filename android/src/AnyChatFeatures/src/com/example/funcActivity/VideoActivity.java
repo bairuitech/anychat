@@ -300,6 +300,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					}else {
 						mPreviewVideoSec -= 1;
 					}
+					break;
 				default:
 					break;
 				}
