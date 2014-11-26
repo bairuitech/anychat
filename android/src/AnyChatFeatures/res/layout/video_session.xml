@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/video_session"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
     <SurfaceView
         android:id="@+id/surface_remote"
@@ -15,22 +15,38 @@
         android:id="@+id/videogesprekTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingRight="20dp"
         android:layout_gravity="top|right"
-        android:textSize="20sp"
-        android:textColor="@color/shollow_red" />
+        android:paddingRight="20dp"
+        android:paddingTop="5dp"
+        android:textColor="@color/shollow_red"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/videoRecordTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
         android:paddingBottom="5dp"
         android:paddingLeft="20dp"
-        android:layout_gravity="bottom|left"
-        android:textSize="20sp"
         android:textColor="@color/shollow_red"
+        android:textSize="20sp"
         android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/previewPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp" />
+
+    <ImageView
+        android:id="@+id/previewVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp" />
 
     <LinearLayout
         android:id="@+id/frame_local_area"

@@ -1,5 +1,6 @@
 package com.example.funcActivity;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,11 +19,15 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -33,6 +38,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -46,8 +52,20 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private int dwFlags = 0;
 	private static final int MSG_VIDEOGESPREK = 1;
 	private static final int MSG_VIDEORECORD = 2;
+	private static final int MSG_PREVIEWPIC = 3;
+	private static final int MSG_PREVIEWVIDEO = 4;
 	private int mVideogesprekSec = 0;
 	private int mVideoRecordTimeSec = 0;
+	private int mPreviewPicSec = 0;
+	private int mPreviewVideoSec = 0;
+	private int[] mArrLocalRecordingImg = { R.drawable.local_recording_off,
+			R.drawable.local_recording_on };
+	private int[] mArrServerRecordingImg = { R.drawable.server_recording_off,
+			R.drawable.server_recording_on };
+	private int mLocalRecordState; // 1表示本地录制打开着，0表示本地录制关闭着
+	private int mServerRecordState; // 1表示服务器录制打开着，0表示服务器录制关闭着
+	private String mPreviewPicPathStr = "";
+	private String mPreviewVideoPathStr = "";
 
 	private SurfaceView mOtherView;
 	private SurfaceView mMyView;
@@ -59,12 +77,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private ImageButton mBtnSpeakCtrl; // 控制音频的按钮
 	private ImageButton mIBLocalRecording; // 混合录制
 	private ImageButton mIBServerRecording; // 服务器录制
-	private int[] mArrLocalRecordingImg = { R.drawable.local_recording_off,
-			R.drawable.local_recording_on };
-	private int[] mArrServerRecordingImg = { R.drawable.server_recording_off,
-			R.drawable.server_recording_on };
-	private int mLocalRecordState; // 1表示本地录制打开着，0表示本地录制关闭着
-	private int mServerRecordState; // 1表示服务器录制打开着，0表示服务器录制关闭着
+	private ImageView mPreviewPicIV;
+	private ImageView mPreviewVideIV;
 	private ImageButton mIBTakePhotoSelf;
 	private ImageButton mIBTakePhotoOther;
 	private CustomApplication mCustomApplication;
@@ -73,6 +87,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private TextView mVideoRecordTimeTV;   // 视频录制时间
 	private Timer mVideogesprekTimer;
 	private Timer mVideoRecordTimer;
+	private Timer mPreviewPicTimer = null;
+	private Timer mPreviewVideoTimer = null;
 	private TimerTask mTimerTask;
 	private Handler mHandler;
 	
@@ -133,6 +149,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mIBServerRecording = (ImageButton) findViewById(R.id.btn_ServerRecording);
 		mVideogesprekTimeTV = (TextView) findViewById(R.id.videogesprekTime);
 		mVideoRecordTimeTV = (TextView) findViewById(R.id.videoRecordTime);
+		mPreviewPicIV = (ImageView) findViewById(R.id.previewPhoto);
+		mPreviewVideIV = (ImageView) findViewById(R.id.previewVideo);
 		mLocalRecordState = 0;
 		mServerRecordState = 0;
 		mIBTakePhotoSelf = (ImageButton) findViewById(R.id.btn_TakePhotoSelf);
@@ -177,6 +195,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mIBServerRecording.setOnClickListener(onClickListener);
 		mIBTakePhotoSelf.setOnClickListener(onClickListener);
 		mIBTakePhotoOther.setOnClickListener(onClickListener);
+		mPreviewPicIV.setOnClickListener(onClickListener);
+		mPreviewVideIV.setOnClickListener(onClickListener);
 		// 如果是采用Java视频采集，则需要设置Surface的CallBack
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
@@ -261,6 +281,24 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				case MSG_VIDEORECORD:
 					mVideoRecordTimeTV.setText(BaseMethod.getTimeShowStr(mVideoRecordTimeSec++));
 					break;
+				case MSG_PREVIEWPIC:
+					if (mPreviewPicSec <= 0){
+						mPreviewPicTimer.cancel();
+						mPreviewPicTimer = null;
+						mPreviewPicIV.setVisibility(View.GONE);
+					}
+					else {
+						mPreviewPicSec -= 1;
+					}
+					break;
+				case MSG_PREVIEWVIDEO:
+					if (mPreviewVideoSec <= 0){
+						mPreviewVideoTimer.cancel();
+						mPreviewVideoTimer = null;
+						mPreviewVideIV.setVisibility(View.GONE);
+					}else {
+						mPreviewVideoSec -= 1;
+					}
 				default:
 					break;
 				}
@@ -268,10 +306,10 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			
 		};
 		
-		initVideogesprek();
+		initVideogesprekTimer();
 	}
 	
-	private void initVideogesprek()
+	private void initVideogesprekTimer()
 	{
 		if (mVideogesprekTimer == null)
 			mVideogesprekTimer = new Timer();
@@ -286,7 +324,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mVideogesprekTimer.schedule(mTimerTask, 1000, 1000);
 	}
 	
-	private void initVideoRecord() {
+	private void initVideoRecordTimer() {
 		if (mVideoRecordTimer == null){
 			mVideoRecordTimer = new Timer();
 		}
@@ -301,6 +339,38 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mVideoRecordTimer.schedule(mTimerTask, 10, 1000);
 		mVideoRecordTimeTV.setVisibility(View.VISIBLE);
 	}
+	
+	private void initPreviewPicTimer() {
+		if (mPreviewPicTimer == null){
+			mPreviewPicTimer = new Timer();
+		}
+		
+		mTimerTask = new TimerTask() {
+			@Override
+			public void run() {
+				mHandler.sendEmptyMessage(MSG_PREVIEWPIC);				
+			}
+		};
+		
+		mPreviewPicTimer.schedule(mTimerTask, 10, 1000);
+		mPreviewPicIV.setVisibility(View.VISIBLE);
+	}
+	
+	private void initPreviewVideoTimer(){
+		if(mPreviewVideoTimer == null){
+			mPreviewVideoTimer = new Timer();
+		}
+		
+		mTimerTask = new TimerTask() {
+			@Override
+			public void run() {
+				mHandler.sendEmptyMessage(MSG_PREVIEWVIDEO);				
+			}
+		};
+		
+		mPreviewVideoTimer.schedule(mTimerTask, 10, 1000);
+		mPreviewVideIV.setVisibility(View.VISIBLE);
+	}
 
 	private OnClickListener onClickListener = new OnClickListener() {
 		int dwFlagsBase = AnyChatDefine.BRAC_RECORD_FLAGS_AUDIO
@@ -313,6 +383,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 		@Override
 		public void onClick(View view) {
+			Intent intent;
 			switch (view.getId()) {
 			case (R.id.returnImgBtn): {
 				if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
@@ -403,7 +474,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					mVideoRecordTimeSec = 0;
 					mVideoRecordTimeTV.setText("00:00:00");
 					mVideoRecordTimeTV.setVisibility(View.VISIBLE);
-					initVideoRecord();
+					initVideoRecordTimer();
 				}
 
 				mIBLocalRecording.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
@@ -438,7 +509,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					anyChatSDK.StreamRecordCtrlEx(-1, 1, dwFlags, 0,
 							"打开服务器视频录制");
 					
-					initVideoRecord();
+					initVideoRecordTimer();
 					mVideoRecordTimeSec = 0;
 					mVideoRecordTimeTV.setText("00:00:00");
 					mVideoRecordTimeTV.setVisibility(View.VISIBLE);
@@ -448,12 +519,18 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				
 				break;
 			case R.id.btn_TakePhotoSelf:
-				anyChatSDK.SnapShot(-1,
-						AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
+				anyChatSDK.SnapShot(-1, AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
 				break;
 			case R.id.btn_TakePhotoOther:
-				anyChatSDK.SnapShot(userID,
-						AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
+				anyChatSDK.SnapShot(userID, AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
+				break;
+			case R.id.previewPhoto:
+			    intent = BaseMethod.getIntent(mPreviewPicPathStr, "image/*");
+				startActivity(intent);
+				break;
+			case R.id.previewVideo:
+				intent = BaseMethod.getIntent(mPreviewVideoPathStr, "video/*");
+				startActivity(intent);
 				break;
 			default:
 				break;
@@ -680,17 +757,88 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	public void OnAnyChatRecordEvent(int dwUserId, String lpFileName,
 			int dwElapse, int dwFlags, int dwParam, String lpUserStr) {
 		Log.d("helloanychat", "录像文件文件路径：" + lpFileName);
+		mPreviewVideoPathStr = lpFileName;
+		
+		File file = new File(lpFileName);
+		if (file.exists()){
+			mPreviewVideIV.setImageBitmap(getVideoThumbnail(lpFileName, 300, 400, MediaStore.Images.Thumbnails.MICRO_KIND));
+			if (mPreviewVideoTimer != null){
+				mPreviewVideoTimer.cancel();
+				mPreviewVideoTimer = null;
+			}
+			
+			initPreviewVideoTimer();
+			mPreviewVideoSec = 3;
+		}
+		
 	}
 
 	@Override
 	public void OnAnyChatSnapShotEvent(int dwUserId, String lpFileName,
 			int dwFlags, int dwParam, String lpUserStr) {
-
+		
+		Log.d("AnyChatx", "拍照图片路径：" + lpFileName);
+		mPreviewPicPathStr = lpFileName;
+		
+		File file = new File(lpFileName);
+		if (file.exists()){
+			mPreviewPicIV.setImageBitmap(getImageThumbnail(lpFileName, 300, 400));
+			
+			if (mPreviewPicTimer != null){
+				mPreviewPicTimer.cancel();
+				mPreviewPicTimer = null;
+			}
+			
+			initPreviewPicTimer();
+			mPreviewPicSec = 3;
+		}		
 	}
-
+	
 	@Override
 	public void OnAnyChatVideoCallEvent(int dwEventType, int dwUserId,
 			int dwErrorCode, int dwFlags, int dwParam, String userStr) {
 		this.finish();
 	}
+
+	private Bitmap getImageThumbnail(String imagePath, int width, int height) {  
+        Bitmap bitmap = null;  
+        BitmapFactory.Options options = new BitmapFactory.Options();  
+        options.inJustDecodeBounds = true;  
+        // 获取这个图片的宽和高，注意此处的bitmap为null  
+        bitmap = BitmapFactory.decodeFile(imagePath, options);  
+        options.inJustDecodeBounds = false; // 设为 false  
+        // 计算缩放比  
+        int h = options.outHeight;  
+        int w = options.outWidth;  
+        int beWidth = w / width;  
+        int beHeight = h / height;  
+        int be = 1;  
+        if (beWidth < beHeight) {  
+            be = beWidth;  
+        } else {  
+            be = beHeight;  
+        }  
+        if (be <= 0) {  
+            be = 1;  
+        }  
+        options.inSampleSize = be;  
+        // 重新读入图片，读取缩放后的bitmap，注意这次要把options.inJustDecodeBounds 设为 false  
+        bitmap = BitmapFactory.decodeFile(imagePath, options);  
+        // 利用ThumbnailUtils来创建缩略图，这里要指定要缩放哪个Bitmap对象  
+        bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,  
+                ThumbnailUtils.OPTIONS_RECYCLE_INPUT);  
+        return bitmap;  
+    }  
+	
+	private Bitmap getVideoThumbnail(String videoPath, int width, int height,  
+	            int kind) {  
+	        Bitmap bitmap = null;  
+	        // 获取视频的缩略图  
+	        bitmap = ThumbnailUtils.createVideoThumbnail(videoPath, kind);  
+	        System.out.println("w"+bitmap.getWidth());  
+	        System.out.println("h"+bitmap.getHeight());  
+	        bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,  
+	                ThumbnailUtils.OPTIONS_RECYCLE_INPUT);  
+	        return bitmap;  
+	}  
 }
