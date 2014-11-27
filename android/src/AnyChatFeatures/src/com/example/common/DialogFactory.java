@@ -97,6 +97,8 @@ public class DialogFactory extends Activity{
 
 			@Override
 			public void onClick(View v) {
+				CallingCenter.getInstance().stopSessionMusic();
+				
 				CallingCenter.getInstance().VideoCallControl(
 						AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY,
 						userId,
@@ -122,8 +124,7 @@ public class DialogFactory extends Activity{
 		Button btnCall = (Button) view.findViewById(R.id.btn_call);
 		btnCall.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				// TODO Auto-generate)d method stub
+			public void onClick(View v) {				
 				CallingCenter.getInstance().VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST, userId, 0,	0, 0, "");
 				mDialog.dismiss();
 			}
@@ -150,7 +151,7 @@ public class DialogFactory extends Activity{
 		buttonPuase.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) {				
 				CallingCenter.getInstance().VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userId, 0,
 						0, -1, "");
 				
@@ -162,7 +163,8 @@ public class DialogFactory extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				CallingCenter.getInstance().stopSessionMusic();
+				
 				dialog.dismiss();
 			}
 		});
@@ -181,8 +183,7 @@ public class DialogFactory extends Activity{
 		buttonAccept.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-				// TODO Auto-generate)d method stub
+			public void onClick(View v) {				
 				CallingCenter.getInstance().VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
 						AnyChatDefine.BRAC_ERRORCODE_SUCCESS, 0, 0, "");
 				dialog.dismiss();
@@ -191,8 +192,7 @@ public class DialogFactory extends Activity{
 		
 		buttonRefuse.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
+			public void onClick(View v) {			
 				CallingCenter.getInstance().VideoCallControl(
 						AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
 						AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE, 0, 0,
@@ -226,7 +226,8 @@ public class DialogFactory extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				CallingCenter.getInstance().stopSessionMusic();
+				
 				dialog.dismiss();
 			}
 		});
@@ -244,7 +245,6 @@ public class DialogFactory extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if (mCurrentDialogId == DIALOGID_CALLING) {
 
 				} else if (mCurrentDialogId == DIALOGID_REQUEST) {
@@ -266,7 +266,6 @@ public class DialogFactory extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if (mCurrentDialogId == DIALOGID_CALLING) {
 					CallingCenter.getInstance().VideoCallControl(
 							AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,

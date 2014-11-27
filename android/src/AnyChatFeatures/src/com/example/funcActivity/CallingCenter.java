@@ -62,8 +62,8 @@ public class CallingCenter {
 	 * 播放接收到呼叫音乐提示
 	 * @param context	上下文    
 	 */
-	private void playCallReceivedMusic(Context context) {
-		mMediaPlayer = MediaPlayer.create(context, R.raw.call);
+	public void playCallReceivedMusic(Context context) {
+		mMediaPlayer = MediaPlayer.create(context, R.raw.call);		
 		mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
 
 			@Override

@@ -1,5 +1,6 @@
 package com.example.funcActivity;
 
+import com.example.common.BaseMethod;
 import com.example.config.ConfigEntity;
 import com.example.config.ConfigService;
 import com.example.anychatfeatures.R;
@@ -184,13 +185,13 @@ public class VideoConfig extends Activity{
 	OnClickListener onClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if (v == mSaveBtn){
+			if (v == mSaveBtn){	
 				SaveConfig();
 			}else if (v == mCustomModelConfigBtn) {
 				CustomControlsShow(true);
 			}else if (v == mServerModelConfigBtn) {
 				CustomControlsShow(false);
-			}else if (v == mImgBtnReturn) {
+			}else if (v == mImgBtnReturn) {			
 				destroyCurActivity();
 			}
 		}

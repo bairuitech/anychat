@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatTextMsgEvent;
+import com.example.common.BaseMethod;
 import com.example.common.ScreenInfo;
 import com.example.common.ValueUtils;
 import com.example.anychatfeatures.MessageListView;
@@ -117,9 +118,9 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 
 	OnClickListener onClickListener = new OnClickListener() {
 		public void onClick(View v) {
-			if (v == mSendBtn) {
+			if (v == mSendBtn) {	
 				sendMessage();
-			}else if (v == mImgBtnReturn) {
+			}else if (v == mImgBtnReturn) {	
 				destroyCurActivity();
 			}
 		}

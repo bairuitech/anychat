@@ -46,7 +46,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		AnyChatRecordEvent, AnyChatVideoCallEvent {
 
 	int userID;
-	boolean bOnPaused = false;
 	private boolean bSelfVideoOpened = false; // 本地视频是否已打开
 	private boolean bOtherVideoOpened = false; // 对方视频是否已打开
 	private int dwFlags = 0;
@@ -387,7 +386,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		public void onClick(View view) {
 			Intent intent;
 			switch (view.getId()) {
-			case (R.id.returnImgBtn): {
+			case (R.id.returnImgBtn): {	
 				if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
 					CallingCenter.getInstance().VideoCallControl(
 							AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userID,
@@ -397,8 +396,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				destroyCurActivity();
 				break;
 			}
-			case (R.id.ImgSwichVideo): {
-
+			case (R.id.ImgSwichVideo): {	
 				// 如果是采用Java视频采集，则在Java层进行摄像头切换
 				if (AnyChatCoreSDK
 						.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER) == AnyChatDefine.VIDEOCAP_DRIVER_JAVA) {
@@ -419,7 +417,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				}
 			}
 				break;
-			case (R.id.endCall): {
+			case (R.id.endCall): {			
 				if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_VIDEOCALL) {
 					showEndVideoCallDialog();
 				}else {
@@ -428,7 +426,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	
 				break;
 			}
-			case R.id.btn_speakControl:
+			case R.id.btn_speakControl:		
 				if ((anyChatSDK.GetSpeakState(-1) == 1)) {
 					mBtnSpeakCtrl.setImageResource(R.drawable.speak_off);
 					anyChatSDK.UserSpeakControl(-1, 0);
@@ -438,7 +436,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				}
 
 				break;
-			case R.id.btn_cameraControl:
+			case R.id.btn_cameraControl:			
 				if ((anyChatSDK.GetCameraState(-1) == 2)) {
 					mBtnCameraCtrl.setImageResource(R.drawable.camera_off);
 					anyChatSDK.UserCameraControl(-1, 0);
@@ -447,7 +445,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					anyChatSDK.UserCameraControl(-1, 1);
 				}
 				break;
-			case R.id.btn_LocalRecording:
+			case R.id.btn_LocalRecording:	
 				if (mServerRecordState == 1) {
 					mServerRecordState = 0;
 					dwFlags = dwFlagsBase
@@ -522,9 +520,14 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				break;
 			case R.id.btn_TakePhotoSelf:
 				anyChatSDK.SnapShot(-1, AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
+				
+				BaseMethod.playSound(VideoActivity.this, BaseMethod.PHOTOSSOUNDID);
+				
 				break;
 			case R.id.btn_TakePhotoOther:
 				anyChatSDK.SnapShot(userID, AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
+				BaseMethod.playSound(VideoActivity.this, BaseMethod.PHOTOSSOUNDID);
+				
 				break;
 			case R.id.previewPhoto:
 			    intent = BaseMethod.getIntent(mPreviewPicPathStr, "image/*");
@@ -580,9 +583,10 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	protected void onRestart() {
 		super.onRestart();
-
 		anyChatSDK.SetBaseEvent(this);
 		anyChatSDK.SetVideoCallEvent(this);
+		anyChatSDK.SetRecordSnapShotEvent(this);
+		
 		// 如果是采用Java视频显示，则需要设置Surface的CallBack
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
@@ -592,16 +596,20 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		}
 
 		refreshAV();
-		bOnPaused = false;
 	}
 
 	protected void onResume() {
 		super.onResume();
+		CallingCenter.mContext = VideoActivity.this;
 	}
 
 	protected void onPause() {
 		super.onPause();
-		bOnPaused = true;
+	}
+
+	protected void onDestroy() {
+		super.onDestroy();
+		
 		anyChatSDK.UserCameraControl(userID, 0);
 		anyChatSDK.UserSpeakControl(userID, 0);
 		anyChatSDK.UserCameraControl(-1, 0);
@@ -610,15 +618,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mLocalRecordState = 0;
 		mServerRecordState = 0;
 		anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭视频录制");
-		mIBLocalRecording
-				.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
-		mIBServerRecording
-				.setImageResource(mArrServerRecordingImg[mServerRecordState]);
-	}
-
-	protected void onDestroy() {
-		super.onDestroy();
-
+		mIBLocalRecording.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
+		mIBServerRecording.setImageResource(mArrServerRecordingImg[mServerRecordState]);
+		
 		anyChatSDK.mSensorHelper.DestroySensor();
 		finish();
 	}
@@ -723,8 +725,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			if (userID != 0)
 				return;
 
-			int index = anyChatSDK.mVideoHelper.bindVideo(mOtherView
-					.getHolder());
+			int index = anyChatSDK.mVideoHelper.bindVideo(mOtherView.getHolder());
 			anyChatSDK.mVideoHelper.SetVideoUser(index, dwUserId);
 
 			anyChatSDK.UserCameraControl(dwUserId, 1);
@@ -764,6 +765,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		File file = new File(lpFileName);
 		if (file.exists()){
 			mPreviewVideIV.setImageBitmap(getVideoThumbnail(lpFileName, 300, 400, MediaStore.Images.Thumbnails.MICRO_KIND));
+			
 			if (mPreviewVideoTimer != null){
 				mPreviewVideoTimer.cancel();
 				mPreviewVideoTimer = null;

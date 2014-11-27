@@ -2,10 +2,19 @@ package com.example.common;
 
 import java.io.File;
 
+import com.example.anychatfeatures.R;
+
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 
 public class BaseMethod{
+	public static final int CALLSOUNDID = 1;
+	public static final int PHOTOSSOUNDID = 2;
+	public static SoundPool mPhotoSoundPool = null;
+	
 	public static String getTimeShowStr(int seconds){
 		String strShow=new String();
 		int hour = seconds / (60*60);
@@ -25,5 +34,16 @@ public class BaseMethod{
 	     Uri uri = Uri.fromFile(new File(filePath ));
 	     intent.setDataAndType(uri, fileType);
 	     return intent;
+	}
+	
+	public static void playSound( Context context, int soundIndxe) {		
+		if (mPhotoSoundPool == null){
+			mPhotoSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 5);
+		}
+		
+		if (soundIndxe == PHOTOSSOUNDID){
+			mPhotoSoundPool.load(context, R.raw.photossound, 1);
+			mPhotoSoundPool.play(1, 1, 1, 0, 0, 1);
+		}
 	}
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatTransDataEvent;
+import com.example.common.BaseMethod;
 import com.example.common.ScreenInfo;
 import com.example.common.ValueUtils;
 import com.example.anychatfeatures.MessageListView;

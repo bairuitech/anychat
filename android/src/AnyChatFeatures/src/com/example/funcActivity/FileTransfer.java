@@ -34,7 +34,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class FileTransfer extends Activity implements AnyChatBaseEvent,
@@ -167,20 +166,20 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 	OnClickListener onClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if (v == mBtnOpen) {
+			if (v == mBtnOpen) {	
 				Intent intent = new Intent();
 				intent.setDataAndType(Uri.fromFile(new File("/mnt/sdcard")), "*/*");
 				intent.setClass(FileTransfer.this, FileExplorer.class);
 
 				startActivityForResult(intent, REQUEST_EX);
-			}else if (v == mBtnSend) {
+			}else if (v == mBtnSend) {		
 				String strFilePath = mTVFileFathMsg.getText().toString().trim();
 				anyChatSDK.TransFile(userID, strFilePath, 0, 0, 0, mAnyChatOutParam);
 				mTVFileFathMsg.setText("");
 				
 				mTastID = mAnyChatOutParam.GetIntValue();
 				handler.postDelayed(runnable, 500); //每隔1s执行 
-			}else if (v == mImgBtnReturn) {
+			}else if (v == mImgBtnReturn) {		
 				destroyCurActivity();
 			}
 

@@ -7,6 +7,7 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.example.anychatfeatures.R;
+import com.example.common.BaseMethod;
 import com.example.common.CustomApplication;
 import com.example.config.ConfigEntity;
 import com.example.config.ConfigService;
@@ -109,7 +110,6 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
-			
 			//设置参数部分
 			if (arg2 + 1 == FUNC_CONFIG)
 			{
@@ -129,6 +129,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	OnClickListener onBtnClick = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			
 			destroyCurActivity();
 		}
 	};

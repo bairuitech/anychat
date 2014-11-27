@@ -4,9 +4,11 @@ import com.example.anychatfeatures.R;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
+import com.example.common.BaseMethod;
 import com.example.common.CustomApplication;
 import com.example.common.ScreenInfo;
 import com.example.common.ValueUtils;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -81,25 +83,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			anyChatSDK = AnyChatCoreSDK.getInstance(this);
 			anyChatSDK.SetBaseEvent(this);
 			anyChatSDK.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
-			
-			/*
-			// 视频采集驱动设置
-			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_LOCALVIDEO_CAPDRIVER,
-					AnyChatDefine.VIDEOCAP_DRIVER_JAVA);
-			// 视频显示驱动设置
-			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL,
-					AnyChatDefine.VIDEOSHOW_DRIVER_JAVA);
-			// 音频播放驱动设置
-			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_AUDIO_PLAYDRVCTRL,
-					AnyChatDefine.AUDIOPLAY_DRIVER_JAVA);
-			// 音频采集驱动设置
-			AnyChatCoreSDK.SetSDKOptionInt(
-					AnyChatDefine.BRAC_SO_AUDIO_RECORDDRVCTRL,
-					AnyChatDefine.AUDIOREC_DRIVER_JAVA);
-			*/
+		
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_AUTOROTATION,
 					LOCALVIDEOAUTOROTATION);
@@ -250,12 +234,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		getWindowManager().getDefaultDisplay().getMetrics(dMetrics);
 		ScreenInfo.WIDTH = dMetrics.widthPixels;
 		ScreenInfo.HEIGHT = dMetrics.heightPixels;
-	}
-	
-	private void destroyCurActivity() {
-		onPause();
-		onDestroy();
-		finish();
 	}
 	
 	@Override

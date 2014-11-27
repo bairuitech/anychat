@@ -10,6 +10,7 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
+import com.example.common.BaseMethod;
 import com.example.common.CustomApplication;
 import com.example.common.DialogFactory;
 import com.example.common.DragListView;
@@ -127,7 +128,7 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 					long arg3) {
 				if (arg2 == 0)
 					return;
-
+				
 				onSelectItem(arg2);
 			}
 		});
