@@ -58,7 +58,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 	private void InitLayout() {
 		this.setContentView(R.layout.video_frame);
-		this.setTitle("与" + anychatSDK.GetUserName(userID)+"对话中");
+		this.setTitle("与 \"" + anychatSDK.GetUserName(userID)+"\" 对话中");
 		mMyView = (SurfaceView) findViewById(R.id.surface_local);
 		mOtherView = (SurfaceView) findViewById(R.id.surface_remote);
 		mImgSwitchVideo = (ImageButton) findViewById(R.id.ImgSwichVideo);
