@@ -293,8 +293,7 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 					dwParam, userStr);
 			if (mDialog != null && mDialog.isShowing())
 				mDialog.dismiss();
-			mDialog = DialogFactory.getDialog(DialogFactory.DIALOGID_REQUEST,
-					dwUserId, this);
+			mDialog = DialogFactory.getDialog(DialogFactory.DIALOGID_REQUEST, dwUserId, this);
 			mDialog.show();
 			break;
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY:
@@ -309,6 +308,8 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 			} else {
 				if (mDialog != null && mDialog.isShowing()) {
 					mDialog.dismiss();
+					
+					Toast.makeText(this, getCodeMsg(dwErrorCode), Toast.LENGTH_LONG).show();;
 				}
 			}
 			break;
@@ -326,5 +327,35 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 
 			break;
 		}
+	}
+	
+	private String getCodeMsg(int dwErrorCode) {
+		String strMessage = null;
+		switch (dwErrorCode) {
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_BUSY:
+			strMessage = getString(R.string.str_returncode_bussiness);
+			break;
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE:
+			strMessage = getString(R.string.str_returncode_requestrefuse);
+			break;
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_OFFLINE:
+			strMessage = getString(R.string.str_returncode_offline);
+			break;
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT:
+			strMessage = getString(R.string.str_returncode_requestcancel);
+			break;
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_TIMEOUT:
+			strMessage = getString(R.string.str_returncode_timeout);
+			break;
+		case AnyChatDefine.BRAC_ERRORCODE_SESSION_DISCONNECT:
+			strMessage = getString(R.string.str_returncode_disconnect);
+			break;
+		case AnyChatDefine.BRAC_ERRORCODE_SUCCESS:
+			break;
+		default:
+			break;
+		}
+		
+		return strMessage;
 	}
 }

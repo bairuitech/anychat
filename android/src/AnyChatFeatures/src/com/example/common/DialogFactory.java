@@ -277,7 +277,7 @@ public class DialogFactory extends Activity{
 							AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE, 0,
 							0, "");
 					
-					//BussinessCenter.getBussinessCenter().stopSessionMusic();
+					CallingCenter.getInstance().stopSessionMusic();
 				}
 				mDialog.dismiss();
 			}

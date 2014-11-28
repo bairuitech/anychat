@@ -4,7 +4,6 @@ import com.example.anychatfeatures.R;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
-import com.example.common.BaseMethod;
 import com.example.common.CustomApplication;
 import com.example.common.ScreenInfo;
 import com.example.common.ValueUtils;
@@ -83,7 +82,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			anyChatSDK = AnyChatCoreSDK.getInstance(this);
 			anyChatSDK.SetBaseEvent(this);
 			anyChatSDK.InitSDK(android.os.Build.VERSION.SDK_INT, 0);
-		
+
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_AUTOROTATION,
 					LOCALVIDEOAUTOROTATION);
@@ -199,7 +198,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			mBtnWaiting.setVisibility(View.VISIBLE);
 
 			mProgressLayout.setVisibility(View.VISIBLE);
-		} 
+		}
 	}
 
 	// init登陆等待状态UI
@@ -235,20 +234,20 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		ScreenInfo.WIDTH = dMetrics.widthPixels;
 		ScreenInfo.HEIGHT = dMetrics.heightPixels;
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
 	}
 
+	
 	protected void onDestroy() {
-
+		super.onDestroy();
+		
 		if (bNeedRelease) {
 			anyChatSDK.Logout();
 			anyChatSDK.Release();
 		}
-
-		super.onDestroy();
 	}
 
 	protected void onResume() {
@@ -282,7 +281,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			bNeedRelease = false;
 
 			Intent intent = new Intent(this, FuncMenu.class);
-			startActivityForResult(intent, ACTIVITY_ID_MAINUI);			
+			startActivityForResult(intent, ACTIVITY_ID_MAINUI);
 		} else {
 			setBtnVisible(SHOWLOGINSTATEFLAG);
 			mBottomConnMsg.setText("登录失败，errorCode：" + dwErrorCode);
@@ -309,15 +308,15 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		setBtnVisible(SHOWLOGINSTATEFLAG);
 		mBottomConnMsg.setText("连接关闭，errorCode：" + dwErrorCode);
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK && requestCode == ACTIVITY_ID_MAINUI){
+		if (resultCode == RESULT_OK && requestCode == ACTIVITY_ID_MAINUI) {
 			anyChatSDK.Logout();
 			setBtnVisible(SHOWLOGINSTATEFLAG);
-			mBottomConnMsg.setText("No content to the server");	
-		}		
+			mBottomConnMsg.setText("No content to the server");
+		}
 	}
 
 	// 广播
@@ -329,12 +328,12 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				anyChatSDK.Logout();
 				setBtnVisible(SHOWLOGINSTATEFLAG);
 				mBottomConnMsg.setText("No content to the server");
-				
-				if (mToast == null)
-				{
-					mToast = Toast.makeText(MainActivity.this, "网络断开", Toast.LENGTH_SHORT);
+
+				if (mToast == null) {
+					mToast = Toast.makeText(MainActivity.this, "网络断开",
+							Toast.LENGTH_SHORT);
 					mToast.show();
-				}				
+				}
 			}
 		}
 	};

@@ -336,10 +336,9 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 				+ "=" + TempFilePath + "=" + dwFileLength + "=" + dwTaskId);
 
 		mMessageList.add("收到" + anyChatSDK.GetUserName(dwUserid) + "的"
-				+ SAVE_PATH + FileName);
+				+ TempFilePath);
 		mMessageListView.SetFileList(mMessageList);
-		mMessageListView
-				.setSelection(mMessageListView.getAdapter().getCount() + 1);
+		mMessageListView.setSelection(mMessageListView.getAdapter().getCount() + 1);
 	}
 
 	@Override
