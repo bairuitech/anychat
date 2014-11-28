@@ -5,12 +5,15 @@ import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -170,7 +173,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 			}
 				break;
 			case (R.id.endCall): {
-				destroyCurActivity();
+				exitVideoDialog();
 			}
 			case R.id.btn_speakControl:
 				if ((anychatSDK.GetSpeakState(-1) == 1)) {
@@ -208,11 +211,41 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		bSelfVideoOpened = false;
 	}
 
+	private void exitVideoDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Are you sure to exit ?")
+				.setCancelable(false)
+				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						destroyCurActivity();
+					}
+				})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				})
+				.show();
+	}
+	
 	private void destroyCurActivity() {
 		onPause();
 		onDestroy();
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK){
+		exitVideoDialog();
+		}
+
+		return super.onKeyDown(keyCode, event);
+	}
+	
 	protected void onRestart() {
 		super.onRestart();
 		// 如果是采用Java视频显示，则需要设置Surface的CallBack
