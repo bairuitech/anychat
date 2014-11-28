@@ -23,7 +23,7 @@
             <LinearLayout
                 android:layout_width="90dip"
                 android:layout_height="25dip"
-                android:layout_marginLeft="85dip"
+                android:layout_marginLeft="110dip"
                 android:layout_marginTop="10dip"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
@@ -43,15 +43,16 @@
                     android:background="@android:color/transparent"
                     android:hint="demo.anychat.cn"
                     android:textColorHint="#bfbfbf"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" 
+                    android:textColor="@color/white"/>
             </LinearLayout>
         </TableRow>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dip"
-            android:layout_marginLeft="95dp"
-            android:layout_marginRight="95dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
             android:layout_marginTop="2dp"
             android:background="#FFFFFF" />
 
@@ -60,7 +61,7 @@
             <LinearLayout
                 android:layout_width="90dip"
                 android:layout_height="25dip"
-                android:layout_marginLeft="85dip"
+                android:layout_marginLeft="110dip"
                 android:layout_marginTop="30dip"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
@@ -81,15 +82,16 @@
                     android:hint="8906"
                     android:inputType="number"
                     android:textColorHint="#bfbfbf"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" 
+                    android:textColor="@color/white"/>
             </LinearLayout>
         </TableRow>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dip"
-            android:layout_marginLeft="95dp"
-            android:layout_marginRight="95dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
             android:layout_marginTop="2dp"
             android:background="#FFFFFF" />
 
@@ -98,7 +100,7 @@
             <LinearLayout
                 android:layout_width="90dip"
                 android:layout_height="25dip"
-                android:layout_marginLeft="85dip"
+                android:layout_marginLeft="110dip"
                 android:layout_marginTop="30dip"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
@@ -118,15 +120,16 @@
                     android:background="@android:color/transparent"
                     android:hint="name"
                     android:textColorHint="#bfbfbf"
-                    android:textSize="14sp" />
+                    android:textSize="15sp"
+                    android:textColor="@color/white" />
             </LinearLayout>
         </TableRow>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dip"
-            android:layout_marginLeft="95dp"
-            android:layout_marginRight="95dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
             android:layout_marginTop="2dp"
             android:background="#FFFFFF" />
     </TableLayout>
