@@ -50,7 +50,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private boolean bOtherVideoOpened = false; // 对方视频是否已打开
 	private int dwFlags = 0;
 	private int mVideogesprekSec = 0;
-	private int mVideoRecordTimeSec = 0;
+	private int mLocalRecordTimeSec = 0;
+	private int mServerRecordTimeSec = 0;
 	private int mPreviewPicSec = 0;
 	private int mPreviewVideoSec = 0;
 	private int[] mArrLocalRecordingImg = { R.drawable.local_recording_off,
@@ -63,9 +64,10 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private String mPreviewVideoPathStr = "";
 
 	private static final int MSG_VIDEOGESPREK = 1;
-	private static final int MSG_VIDEORECORD = 2;
-	private static final int MSG_PREVIEWPIC = 3;
-	private static final int MSG_PREVIEWVIDEO = 4;
+	private static final int MSG_LOCALRECORD = 2;
+	private static final int MSG_SERVERRECORD = 3;
+	private static final int MSG_PREVIEWPIC = 4;
+	private static final int MSG_PREVIEWVIDEO = 5;
 	
 	private SurfaceView mOtherView;
 	private SurfaceView mMyView;
@@ -79,14 +81,17 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private ImageButton mIBServerRecording; // 服务器录制
 	private ImageView mPreviewPicIV;
 	private ImageView mPreviewVideIV;
+	private TextView mPreviewFilePath;
 	private ImageButton mIBTakePhotoSelf;
 	private ImageButton mIBTakePhotoOther;
 	private CustomApplication mCustomApplication;
 	private Dialog mDialog;
 	private TextView mVideogesprekTimeTV;  // 视频对话时间
-	private TextView mVideoRecordTimeTV;   // 视频录制时间
+	private TextView mLocalRecordTimeTV;   // 显示本地视频录制时间
+	private TextView mServerRecordTimeTV;  // 显示服务器视频录制时间
 	private Timer mVideogesprekTimer;
-	private Timer mVideoRecordTimer;
+	private Timer mLcoalRecordTimer;
+	private Timer mServerRecordTimer;
 	private Timer mPreviewPicTimer = null;
 	private Timer mPreviewVideoTimer = null;
 	private TimerTask mTimerTask;
@@ -148,9 +153,11 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mIBLocalRecording = (ImageButton) findViewById(R.id.btn_LocalRecording);
 		mIBServerRecording = (ImageButton) findViewById(R.id.btn_ServerRecording);
 		mVideogesprekTimeTV = (TextView) findViewById(R.id.videogesprekTime);
-		mVideoRecordTimeTV = (TextView) findViewById(R.id.videoRecordTime);
+		mLocalRecordTimeTV = (TextView) findViewById(R.id.localRecordTime);
+		mServerRecordTimeTV = (TextView) findViewById(R.id.serverRecordTime);
 		mPreviewPicIV = (ImageView) findViewById(R.id.previewPhoto);
 		mPreviewVideIV = (ImageView) findViewById(R.id.previewVideo);
+		mPreviewFilePath = (TextView) findViewById(R.id.previewFilePath);
 		mLocalRecordState = 0;
 		mServerRecordState = 0;
 		mIBTakePhotoSelf = (ImageButton) findViewById(R.id.btn_TakePhotoSelf);
@@ -278,24 +285,33 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				case MSG_VIDEOGESPREK:
 					mVideogesprekTimeTV.setText(BaseMethod.getTimeShowStr(mVideogesprekSec++));
 					break;
-				case MSG_VIDEORECORD:
-					mVideoRecordTimeTV.setText(BaseMethod.getTimeShowStr(mVideoRecordTimeSec++));
+				// 刷新本来录制时间
+				case MSG_LOCALRECORD:
+					mLocalRecordTimeTV.setText("本地录制: " + BaseMethod.getTimeShowStr(mLocalRecordTimeSec++));
 					break;
+				// 刷新服务器录制时间
+				case MSG_SERVERRECORD:
+					mServerRecordTimeTV.setText("服务器录制: " + BaseMethod.getTimeShowStr(mServerRecordTimeSec++));
+					break;
+				// 拍照预览3秒后隐藏
 				case MSG_PREVIEWPIC:
 					if (mPreviewPicSec <= 0){
 						mPreviewPicTimer.cancel();
 						mPreviewPicTimer = null;
 						mPreviewPicIV.setVisibility(View.GONE);
+						mPreviewFilePath.setVisibility(View.GONE);
 					}
 					else {
 						mPreviewPicSec -= 1;
 					}
 					break;
+				// 视频预览3秒后隐藏
 				case MSG_PREVIEWVIDEO:
 					if (mPreviewVideoSec <= 0){
 						mPreviewVideoTimer.cancel();
 						mPreviewVideoTimer = null;
 						mPreviewVideIV.setVisibility(View.GONE);
+						mPreviewFilePath.setVisibility(View.GONE);
 					}else {
 						mPreviewVideoSec -= 1;
 					}
@@ -325,22 +341,37 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mVideogesprekTimer.schedule(mTimerTask, 1000, 1000);
 	}
 	
-	private void initVideoRecordTimer() {
-		if (mVideoRecordTimer == null){
-			mVideoRecordTimer = new Timer();
+	private void initLocalRecordTimer() {
+		if (mLcoalRecordTimer == null){
+			mLcoalRecordTimer = new Timer();
 		}
 		
 		mTimerTask = new TimerTask() {
 			@Override
 			public void run() {
-				mHandler.sendEmptyMessage(MSG_VIDEORECORD);				
+				mHandler.sendEmptyMessage(MSG_LOCALRECORD);				
 			}
 		};
 		
-		mVideoRecordTimer.schedule(mTimerTask, 10, 1000);
-		mVideoRecordTimeTV.setVisibility(View.VISIBLE);
+		mLcoalRecordTimer.schedule(mTimerTask, 10, 1000);
+		mLocalRecordTimeTV.setVisibility(View.VISIBLE);
 	}
 	
+	private void initServerRecordTimer() {
+		if (mServerRecordTimer == null){
+			mServerRecordTimer = new Timer();
+		}
+		
+		mTimerTask = new TimerTask() {
+			@Override
+			public void run() {
+				mHandler.sendEmptyMessage(MSG_SERVERRECORD);				
+			}
+		};
+		
+		mServerRecordTimer.schedule(mTimerTask, 10, 1000);
+		mServerRecordTimeTV.setVisibility(View.VISIBLE);
+	}
 	private void initPreviewPicTimer() {
 		if (mPreviewPicTimer == null){
 			mPreviewPicTimer = new Timer();
@@ -355,6 +386,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		
 		mPreviewPicTimer.schedule(mTimerTask, 10, 1000);
 		mPreviewPicIV.setVisibility(View.VISIBLE);
+		mPreviewFilePath.setVisibility(View.VISIBLE);
 	}
 	
 	private void initPreviewVideoTimer(){
@@ -371,6 +403,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		
 		mPreviewVideoTimer.schedule(mTimerTask, 10, 1000);
 		mPreviewVideIV.setVisibility(View.VISIBLE);
+		mPreviewFilePath.setVisibility(View.VISIBLE);
 	}
 
 	private OnClickListener onClickListener = new OnClickListener() {
@@ -446,54 +479,29 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				}
 				break;
 			case R.id.btn_LocalRecording:	
-				if (mServerRecordState == 1) {
-					mServerRecordState = 0;
-					dwFlags = dwFlagsBase
-							+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_SERVER;
-					anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "打开视频录制");
-					mIBServerRecording.setImageResource(mArrServerRecordingImg[mServerRecordState]);
-					
-					mVideoRecordTimeTV.setVisibility(View.GONE);
-					mVideoRecordTimer.cancel();
-					mVideoRecordTimer = null;
-				}
-
 				dwFlags = dwFlagsBase;
 				if (mLocalRecordState == 1) {
 					mLocalRecordState = 0;
 					anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭本地视频录制");
 					
-					mVideoRecordTimeTV.setVisibility(View.GONE);
-					mVideoRecordTimer.cancel();
-					mVideoRecordTimer = null;
+					mLocalRecordTimeTV.setVisibility(View.GONE);
+					mLcoalRecordTimer.cancel();
+					mLcoalRecordTimer = null;
 					
 				} else {
 					mLocalRecordState = 1;
 					anyChatSDK.StreamRecordCtrlEx(-1, 1, dwFlags, 0, "打开本地视频录制");
 					
-					mVideoRecordTimeSec = 0;
-					mVideoRecordTimeTV.setText("00:00:00");
-					mVideoRecordTimeTV.setVisibility(View.VISIBLE);
-					initVideoRecordTimer();
+					mLocalRecordTimeSec = 0;
+					mLocalRecordTimeTV.setText("本地录制: 00:00:00");
+					mLocalRecordTimeTV.setVisibility(View.VISIBLE);
+					initLocalRecordTimer();
 				}
 
 				mIBLocalRecording.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
 						
 				break;
 			case R.id.btn_ServerRecording:
-				dwFlags = dwFlagsBase;
-				if (mLocalRecordState == 1) {
-					mLocalRecordState = 0;
-					anyChatSDK
-							.StreamRecordCtrlEx(-1, 0, dwFlags, 0, "关闭本地视频录制");
-					mIBLocalRecording
-							.setImageResource(mArrLocalRecordingImg[mLocalRecordState]);
-					
-					mVideoRecordTimeTV.setVisibility(View.GONE);
-					mVideoRecordTimer.cancel();
-					mVideoRecordTimer = null;
-				}
-
 				dwFlags = dwFlagsBase
 						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_SERVER;
 				if (mServerRecordState == 1) {
@@ -501,18 +509,18 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					anyChatSDK.StreamRecordCtrlEx(-1, 0, dwFlags, 0,
 							"关闭服务器视频录制");
 					
-					mVideoRecordTimeTV.setVisibility(View.GONE);
-					mVideoRecordTimer.cancel();
-					mVideoRecordTimer = null;
+					mServerRecordTimeTV.setVisibility(View.GONE);
+					mServerRecordTimer.cancel();
+					mServerRecordTimer = null;
 				} else {
 					mServerRecordState = 1;
 					anyChatSDK.StreamRecordCtrlEx(-1, 1, dwFlags, 0,
 							"打开服务器视频录制");
 					
-					initVideoRecordTimer();
-					mVideoRecordTimeSec = 0;
-					mVideoRecordTimeTV.setText("00:00:00");
-					mVideoRecordTimeTV.setVisibility(View.VISIBLE);
+					initServerRecordTimer();
+					mServerRecordTimeSec = 0;
+					mServerRecordTimeTV.setText("服务器录制: 00:00:00");
+					mServerRecordTimeTV.setVisibility(View.VISIBLE);
 				}
 
 				mIBServerRecording.setImageResource(mArrServerRecordingImg[mServerRecordState]);
@@ -577,8 +585,11 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		onPause();
 		onDestroy();
 		
-		if (mVideoRecordTimer != null)
-			mVideoRecordTimer.cancel();
+		if (mLcoalRecordTimer != null)
+			mLcoalRecordTimer.cancel();
+		
+		if (mServerRecordTimer != null)
+			mServerRecordTimer.cancel();
 	}
 
 	protected void onRestart() {
@@ -765,16 +776,15 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		File file = new File(lpFileName);
 		if (file.exists()){
 			mPreviewVideIV.setImageBitmap(getVideoThumbnail(lpFileName, 300, 400, MediaStore.Images.Thumbnails.MICRO_KIND));
-			
+			mPreviewFilePath.setText(lpFileName);
 			if (mPreviewVideoTimer != null){
 				mPreviewVideoTimer.cancel();
 				mPreviewVideoTimer = null;
 			}
 			
 			initPreviewVideoTimer();
-			mPreviewVideoSec = 3;
+			mPreviewVideoSec = 10;
 		}
-		
 	}
 
 	@Override
@@ -787,14 +797,14 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		File file = new File(lpFileName);
 		if (file.exists()){
 			mPreviewPicIV.setImageBitmap(getImageThumbnail(lpFileName, 300, 400));
-			
+			mPreviewFilePath.setText(lpFileName);
 			if (mPreviewPicTimer != null){
 				mPreviewPicTimer.cancel();
 				mPreviewPicTimer = null;
 			}
 			
 			initPreviewPicTimer();
-			mPreviewPicSec = 3;
+			mPreviewPicSec = 10;
 		}		
 	}
 	
