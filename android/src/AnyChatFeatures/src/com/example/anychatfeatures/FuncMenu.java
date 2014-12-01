@@ -58,6 +58,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 		setContentView(R.layout.funcmenu);
 		
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  
+		ApplyVideoConfig();
 		
 		anyChatSDK = AnyChatCoreSDK.getInstance(this);
 		anyChatSDK.SetBaseEvent(this);

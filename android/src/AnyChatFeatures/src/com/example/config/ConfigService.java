@@ -46,7 +46,7 @@ public class ConfigService {
         
         editor.putInt("ConfigMode", configEntity.mConfigMode);
         editor.putInt("ResolutionWidth", configEntity.mResolutionWidth);
-        editor.putInt("ResolutionWidth", configEntity.mResolutionWidth);
+        editor.putInt("ResolutionHeight", configEntity.mResolutionHeight);
 
         editor.putInt("VideoBitrate", configEntity.mVideoBitrate);
         editor.putInt("VideoFps", configEntity.mVideoFps);
