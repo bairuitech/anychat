@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -31,7 +32,7 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		AnyChatTransDataEvent {
 
 	private int mUserID;
-	private Button mBtnTrans;
+	private TextView mBtnTrans;
 	private EditText mETInputMessag;	// 输入指令的view
 	private ImageButton mImgBtnReturn;	// 返回
 	private TextView mTitleName;
@@ -103,17 +104,18 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		
 		mETInputMessag = new EditText(this);
 		mETInputMessag.setHint("请输入内容...");
-		mBtnTrans = new Button(this);
+		mBtnTrans = new TextView(this);
 		mBtnTrans.setText("传送");
-		mBtnTrans.setTextSize(24);
+		mBtnTrans.setGravity(Gravity.CENTER);
+		mBtnTrans.setTextSize(25);
 		mBtnTrans.setOnClickListener(onClickListener);
 
 		sendLayout.addView(mETInputMessag, new LayoutParams(
-				ScreenInfo.WIDTH * 4 / 5 - 60, LayoutParams.FILL_PARENT));
+				ScreenInfo.WIDTH * 4 / 5 - 60, 100));
 		sendLayout.addView(mBtnTrans, new LayoutParams(ScreenInfo.WIDTH / 5,
-				LayoutParams.FILL_PARENT));
+				100));
 		mMainLayout.addView(sendLayout, new LayoutParams(
-				LayoutParams.FILL_PARENT, ScreenInfo.HEIGHT / 10));
+				LayoutParams.FILL_PARENT, 140));
 
 		mFullLayout.addView(mMainLayout, new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
@@ -142,7 +144,7 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 			e.printStackTrace();
 		}
 		anyChatSDK.TransBuffer(mUserID, strByteMsg, 1000);
-		mMessageList.add("我传送: " + strTransMsg);
+		mMessageList.add("我: " + strTransMsg);
 		mMessageListView.SetFileList(mMessageList);
 		mETInputMessag.setText("");
 		mMessageListView.setSelection(mMessageListView.getAdapter().getCount() + 1);
@@ -225,7 +227,7 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		mMessageList.add(anyChatSDK.GetUserName(dwUserid) + "传送: " + srtReceMsg);
+		mMessageList.add(anyChatSDK.GetUserName(dwUserid) + ": " + srtReceMsg);
 		mMessageListView.SetFileList(mMessageList);
 		mMessageListView
 				.setSelection(mMessageListView.getAdapter().getCount() - 1);

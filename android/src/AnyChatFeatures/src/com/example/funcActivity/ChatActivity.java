@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
@@ -30,7 +31,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		AnyChatTextMsgEvent, OnDismissCallback {
 
 	private int userID;
-	private Button mSendBtn;					// 发送按钮
+	private TextView mSendTV;					// 发送按钮
 	private EditText mMessagEditText;			// 发送输入的内容view
 	private ImageButton mImgBtnReturn;			// 返回
 	private TextView mTitleName;
@@ -99,17 +100,18 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		sendLayout.setPadding(30, 20, 30, 20);
 		mMessagEditText = new EditText(this);
 		mMessagEditText.setHint("请输入内容...");
-		mSendBtn = new Button(this);
-		mSendBtn.setText("发送");
-		mSendBtn.setTextSize(22);
-		mSendBtn.setOnClickListener(onClickListener);
+		mSendTV = new TextView(this);
+		mSendTV.setGravity(Gravity.CENTER);
+		mSendTV.setText("发送");
+		mSendTV.setTextSize(25);
+		mSendTV.setOnClickListener(onClickListener);
 
 		sendLayout.addView(mMessagEditText, new LayoutParams(
-				ScreenInfo.WIDTH * 4 / 5 - 60, LayoutParams.FILL_PARENT));
-		sendLayout.addView(mSendBtn, new LayoutParams(ScreenInfo.WIDTH / 5,
-				LayoutParams.FILL_PARENT));
+				ScreenInfo.WIDTH * 4 / 5 - 60, 100));
+		sendLayout.addView(mSendTV, new LayoutParams(ScreenInfo.WIDTH / 5,
+				100));
 		mMainLayout.addView(sendLayout, new LayoutParams(
-				LayoutParams.FILL_PARENT, ScreenInfo.HEIGHT / 10));
+				LayoutParams.FILL_PARENT, 140));
 
 		mFullLayout.addView(mMainLayout, new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
@@ -118,7 +120,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 
 	OnClickListener onClickListener = new OnClickListener() {
 		public void onClick(View v) {
-			if (v == mSendBtn) {	
+			if (v == mSendTV) {	
 				sendMessage();//发送信息
 			}else if (v == mImgBtnReturn) {	
 				destroyCurActivity();
