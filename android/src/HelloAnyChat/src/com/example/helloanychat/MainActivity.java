@@ -78,6 +78,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		// 初始化登陆配置数据
 		initLoginConfig();
 		initWaitingTips();
+		ApplyVideoConfig();
 		// 注册广播
 		registerBoradcastReceiver();
 	}
