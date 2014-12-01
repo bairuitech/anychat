@@ -82,7 +82,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		tvMessage.setBackgroundColor(Color.GRAY);
 		mMainLayout.addView(tvMessage, new LayoutParams(
 				LayoutParams.FILL_PARENT,
-				android.support.v4.view.ViewPager.LayoutParams.WRAP_CONTENT));
+				LayoutParams.WRAP_CONTENT));
 
 		mMessageListView = new MessageListView(this);
 		mMessageListView.SetFileList(mMessageList);
@@ -95,9 +95,10 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		LinearLayout sendLayout = new LinearLayout(this);
 		sendLayout.setOrientation(LinearLayout.HORIZONTAL);
 		sendLayout.setBackgroundDrawable(getResources().getDrawable(R.drawable.et_wideborder));
-		sendLayout.setBackgroundColor(Color.parseColor("#FFFFE0"));
+		sendLayout.setBackgroundColor(Color.parseColor("#E8E8E8"));
 		sendLayout.setPadding(30, 20, 30, 20);
 		mMessagEditText = new EditText(this);
+		mMessagEditText.setHint("请输入内容...");
 		mSendBtn = new Button(this);
 		mSendBtn.setText("发送");
 		mSendBtn.setTextSize(22);

@@ -72,12 +72,13 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private Dialog mDialog;
 	private TextView mVideogesprekTimeTV;  	  // 视频对话时间
 	private Timer mVideogesprekTimer;	
+	
 	private TimerTask mTimerTask;
 	private Handler mHandler;
 
 	public AnyChatCoreSDK anyChatSDK;	
 	
-	//------------------------------录像-
+	//------------------------------录像--
 	private int dwFlags = 0;		
 	private int mLocalRecordTimeSec = 0;      // 本地录制的时间
 	private int mServerRecordTimeSec = 0;     // 服务器录制的时间
@@ -100,16 +101,16 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	// 服务器录制开关图片
 	private int[] mArrServerRecordingImg = { R.drawable.server_recording_off,
 			R.drawable.server_recording_on };
-	//-录像------------------------------
+	//--录像------------------------------
 	
-	//------------------------------拍照-
+	//------------------------------拍照--
 	private String mPreviewPicPathStr = "";  // 拍照图片存储路径
 	private ImageView mPreviewPicIV;		 // 拍照图片预览view
 	private ImageButton mIBTakePhotoSelf;	 // 自拍
 	private ImageButton mIBTakePhotoOther;   // 拍照	
 	private Timer mPreviewPicTimer = null;
 	private int mPreviewPicSec = 0;			   // 预览图片的剩余时间
-	//-拍照------------------------------
+	//--拍照------------------------------
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

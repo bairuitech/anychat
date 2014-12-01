@@ -98,10 +98,11 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		LinearLayout sendLayout = new LinearLayout(this);
 		sendLayout.setOrientation(LinearLayout.HORIZONTAL);
 		sendLayout.setBackgroundDrawable(getResources().getDrawable(R.drawable.et_wideborder));
-		sendLayout.setBackgroundColor(Color.parseColor("#FFFFE0"));
+		sendLayout.setBackgroundColor(Color.parseColor("#E8E8E8"));
 		sendLayout.setPadding(30, 20, 30, 20);
 		
 		mETInputMessag = new EditText(this);
+		mETInputMessag.setHint("请输入内容...");
 		mBtnTrans = new Button(this);
 		mBtnTrans.setText("传送");
 		mBtnTrans.setTextSize(24);
