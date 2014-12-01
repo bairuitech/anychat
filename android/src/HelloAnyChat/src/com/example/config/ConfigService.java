@@ -9,11 +9,7 @@ public class ConfigService {
 		ConfigEntity configEntity = new ConfigEntity();
 		SharedPreferences sharedPreferences = context.getSharedPreferences(
 				"featuresConfig", Context.MODE_WORLD_WRITEABLE);
-
-		configEntity.mIp = sharedPreferences.getString("Ip", "demo.anychat.cn");
-		configEntity.mPort = sharedPreferences.getInt("Port", 8906);
-		configEntity.mName = sharedPreferences.getString("Name", "");
-
+		
 		configEntity.mConfigMode = sharedPreferences.getInt("ConfigMode", ConfigEntity.VIDEO_MODE_CUSTOMCONFIG);
 		configEntity.mResolutionWidth = sharedPreferences.getInt("ResolutionWidth", 320);
 		configEntity.mResolutionHeight = sharedPreferences.getInt("ResolutionHeight", 240);
@@ -39,10 +35,6 @@ public class ConfigService {
 	{
     	SharedPreferences  share = context.getSharedPreferences("featuresConfig",  Context.MODE_WORLD_WRITEABLE);  
         Editor editor = share.edit();//取得编辑器
-        
-        editor.putString("Ip", configEntity.mIp);
-        editor.putInt("Port", configEntity.mPort);
-        editor.putString("Name", configEntity.mName);
         
         editor.putInt("ConfigMode", configEntity.mConfigMode);
         editor.putInt("ResolutionWidth", configEntity.mResolutionWidth);

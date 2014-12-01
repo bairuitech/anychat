@@ -7,10 +7,6 @@ public class ConfigEntity {
 	public static final int VIDEO_QUALITY_NORMAL = 2;		// 普通视频质量
 	public static final int VIDEO_QUALITY_GOOD = 3;			// 中等视频质量
 	public static final int VIDEO_QUALITY_BEST = 4;			// 较好视频质量
-
-	public String mIp = "";
-	public int mPort;
-	public String mName = "";
 	
 	public int mConfigMode = VIDEO_MODE_SERVERCONFIG;
 	public int mResolutionWidth = 0;
