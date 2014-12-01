@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatTransDataEvent;
-import com.example.common.BaseMethod;
 import com.example.common.ScreenInfo;
 import com.example.common.ValueUtils;
 import com.example.anychatfeatures.MessageListView;
@@ -27,19 +26,20 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+//透明通道
 public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		AnyChatTransDataEvent {
 
-	private int userID;
+	private int mUserID;
 	private Button mBtnTrans;
-	private EditText mETInputMessag;
-	private ImageButton mImgBtnReturn;
+	private EditText mETInputMessag;	// 输入指令的view
+	private ImageButton mImgBtnReturn;	// 返回
 	private TextView mTitleName;
-	private MessageListView mMessageListView;
+	private MessageListView mMessageListView;//已发送的指令列表
 	private LinearLayout mFullLayout;
 	private LinearLayout mMainLayout;
 
-	private ArrayList<String> mMessageList = new ArrayList<String>();
+	private ArrayList<String> mMessageList = new ArrayList<String>();// 用于存储发出的指令
 
 	private AnyChatCoreSDK anyChatSDK;
 
@@ -49,7 +49,7 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		Intent intent = getIntent();
-		userID = Integer.parseInt(intent.getStringExtra("UserID"));
+		mUserID = Integer.parseInt(intent.getStringExtra("UserID"));
 
 		initSDK();
 		initLayout();
@@ -58,7 +58,7 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
 		mImgBtnReturn.setOnClickListener(onClickListener);
-		mTitleName.setText("与 \"" + anyChatSDK.GetUserName(userID) + "\" 发送指令中");
+		mTitleName.setText("与 \"" + anyChatSDK.GetUserName(mUserID) + "\" 发送指令中");
 	}
 
 	private void initSDK() {
@@ -85,7 +85,7 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		tvMessage.setBackgroundColor(Color.GRAY);
 		mMainLayout.addView(tvMessage, new LayoutParams(
 				LayoutParams.FILL_PARENT,
-				android.support.v4.view.ViewPager.LayoutParams.WRAP_CONTENT));
+				LayoutParams.WRAP_CONTENT));
 
 		mMessageListView = new MessageListView(this);
 		mMessageListView.SetFileList(mMessageList);
@@ -140,17 +140,15 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		anyChatSDK.TransBuffer(userID, strByteMsg, 1000);
+		anyChatSDK.TransBuffer(mUserID, strByteMsg, 1000);
 		mMessageList.add("我传送: " + strTransMsg);
 		mMessageListView.SetFileList(mMessageList);
 		mETInputMessag.setText("");
-		mMessageListView
-				.setSelection(mMessageListView.getAdapter().getCount() + 1);
+		mMessageListView.setSelection(mMessageListView.getAdapter().getCount() + 1);
 	}
 	
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 	}
 
@@ -242,5 +240,4 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 	public void OnAnyChatSDKFilterData(byte[] lpBuf, int dwLen) {
 		Log.d("helloanychat", "OnAnyChatSDKFilterData");
 	}
-
 }

@@ -42,17 +42,17 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 	private static final int REQUEST_EX = 1;
 	private static final String SAVE_PATH = "/mnt/sdcard/AnyChat/FileRec/";
 
-	private int userID;
-	private Button mBtnOpen;
-	private Button mBtnSend;
-	private TextView mTVFileFathMsg;
-	private ProgressDialog mProgressDialog;
-	private MessageListView mMessageListView;
+	private int mUserID;
+	private Button mBtnOpen;					// 打开文件按钮
+	private Button mBtnSend;					// 发送文件按钮
+	private TextView mTVFileFathMsg;			// 打开文件的文件路径view
+	private ProgressDialog mProgressDialog;		// 发送文件进度框
+	private MessageListView mMessageListView;	// 用于显示对方发送来的文件列表
 	private LinearLayout mFullLayout;
 	private LinearLayout mMainLayout;
 	private ImageButton mImgBtnReturn;
 	private TextView mTitleName;
-	private int mTastID = 0;
+	private int mTastID = 0;					// 当前发送文件
 
 	private ArrayList<String> mMessageList = new ArrayList<String>();
 
@@ -67,7 +67,7 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		
 		Intent intent = getIntent();
-		userID = Integer.parseInt(intent.getStringExtra("UserID"));
+		mUserID = Integer.parseInt(intent.getStringExtra("UserID"));
 		mCustomApplication = (CustomApplication) getApplication();
 		
 		initSDK();
@@ -76,7 +76,7 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
 		mImgBtnReturn.setOnClickListener(onClickListener);
-		mTitleName.setText("与 \"" + anyChatSDK.GetUserName(userID) + "\" 传输文件中");
+		mTitleName.setText("与 \"" + anyChatSDK.GetUserName(mUserID) + "\" 传输文件中");
 	}
 
 	private void initSDK() {
@@ -163,29 +163,31 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 		this.setContentView(mFullLayout);
 	}
 
+	// 按钮响应事件
 	OnClickListener onClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if (v == mBtnOpen) {	
+			if (v == mBtnOpen) {	// 打开文件
 				Intent intent = new Intent();
 				intent.setDataAndType(Uri.fromFile(new File("/mnt/sdcard")), "*/*");
 				intent.setClass(FileTransfer.this, FileExplorer.class);
 
 				startActivityForResult(intent, REQUEST_EX);
-			}else if (v == mBtnSend) {		
+			}else if (v == mBtnSend) {		// 发送文件
 				String strFilePath = mTVFileFathMsg.getText().toString().trim();
-				anyChatSDK.TransFile(userID, strFilePath, 0, 0, 0, mAnyChatOutParam);
+				anyChatSDK.TransFile(mUserID, strFilePath, 0, 0, 0, mAnyChatOutParam);
 				mTVFileFathMsg.setText("");
 				
 				mTastID = mAnyChatOutParam.GetIntValue();
 				handler.postDelayed(runnable, 500); //每隔1s执行 
-			}else if (v == mImgBtnReturn) {		
+			}else if (v == mImgBtnReturn) {		// 返回
 				destroyCurActivity();
 			}
 
 		}
 	};
 	
+	// 传送的文件信息条响应事件
 	OnItemClickListener onItemClickListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,

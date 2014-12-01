@@ -1,6 +1,5 @@
 package com.example.funcActivity;
 
-import com.example.common.BaseMethod;
 import com.example.config.ConfigEntity;
 import com.example.config.ConfigService;
 import com.example.anychatfeatures.R;

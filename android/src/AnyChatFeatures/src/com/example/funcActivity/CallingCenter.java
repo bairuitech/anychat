@@ -15,7 +15,6 @@ public class CallingCenter {
 	private MediaPlayer mMediaPlayer;
 	private static CallingCenter mCallingCenter;
 	public static Activity mContext;
-	public static boolean bBack = false;// 程序是否在后台
 	
 	private CallingCenter() {
 		initParams();

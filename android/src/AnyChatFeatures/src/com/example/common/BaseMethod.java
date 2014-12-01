@@ -36,6 +36,7 @@ public class BaseMethod{
 	     return intent;
 	}
 	
+	// 播放拍照的声音
 	public static void playSound( Context context, int soundIndxe) {		
 		if (mPhotoSoundPool == null){
 			mPhotoSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 5);

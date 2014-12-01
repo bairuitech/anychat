@@ -31,6 +31,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements AnyChatBaseEvent {
+	private String mStrIP = "demo.anychat.cn";
+	private String mStrName = "name";
+	private int mSPort = 8906;
+
+	private final int SHOWLOGINSTATEFLAG = 1; // 显示的按钮是登陆状态的标识
+	private final int SHOWWAITINGSTATEFLAG = 2; // 显示的按钮是等待状态的标识
+	private final int LOCALVIDEOAUTOROTATION = 1; // 本地视频自动旋转控制
+	private final int ACTIVITY_ID_MAINUI = 1;
+	
 	private EditText mEditIP;
 	private EditText mEditPort;
 	private EditText mEditName;
@@ -43,16 +52,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private LinearLayout mProgressLayout;
 	private CustomApplication mCustomApplication;
 	private Toast mToast;
-
-	private String mStrIP = "demo.anychat.cn";
-	private String mStrName = "name";
-	private int mSPort = 8906;
-
-	private final int SHOWLOGINSTATEFLAG = 1; // 显示的按钮是登陆状态的标识
-	private final int SHOWWAITINGSTATEFLAG = 2; // 显示的按钮是等待状态的标识
-	private final int LOCALVIDEOAUTOROTATION = 1; // 本地视频自动旋转控制
-	private final int ACTIVITY_ID_MAINUI = 1;
-	private boolean bNeedRelease = false;
 
 	public AnyChatCoreSDK anyChatSDK;
 
@@ -86,8 +85,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_AUTOROTATION,
 					LOCALVIDEOAUTOROTATION);
-
-			bNeedRelease = true;
 		}
 	}
 
@@ -110,13 +107,14 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				+ anyChatSDK.GetSDKBuildTime());
 		mBottomBuildMsg.setGravity(Gravity.CENTER_HORIZONTAL);
 		mBtnStart.setOnClickListener(OnClickListener);
-		mBtnLogout.setOnClickListener(OnClickListener);
+		mBtnLogout.setOnClickListener(OnClickListener);//现在无用
 	}
 
 	OnClickListener OnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
+			// 登录
 			case R.id.mainUIStartBtn:
 				if (checkInputData()) {
 					setBtnVisible(SHOWWAITINGSTATEFLAG);
@@ -129,6 +127,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 					anyChatSDK.Login(mStrName, "");
 				}
 				break;
+			//现在无用
 			case R.id.mainUILogoutBtn:
 				setBtnVisible(SHOWLOGINSTATEFLAG);
 
@@ -165,6 +164,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		preferencesEditor.commit();
 	}
 
+	// 判断ip、端口和姓名是否是空
 	private boolean checkInputData() {
 		String ip = mEditIP.getText().toString().trim();
 		String port = mEditPort.getText().toString().trim();
@@ -219,6 +219,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		}
 	}
 
+	// 对键盘显示进行控制
 	private void hideKeyboard() {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		if (imm.isActive()) {
@@ -244,10 +245,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	protected void onDestroy() {
 		super.onDestroy();
 		
-		if (bNeedRelease) {
-			anyChatSDK.Logout();
-			anyChatSDK.Release();
-		}
+		anyChatSDK.Logout();
+		anyChatSDK.Release();
 	}
 
 	protected void onResume() {
@@ -278,7 +277,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 			mCustomApplication.setUserID(dwUserId);
 			mBottomConnMsg.setText("Connect to the server success.");
-			bNeedRelease = false;
 
 			Intent intent = new Intent(this, FuncMenu.class);
 			startActivityForResult(intent, ACTIVITY_ID_MAINUI);

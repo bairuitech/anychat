@@ -7,7 +7,6 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.example.anychatfeatures.R;
-import com.example.common.BaseMethod;
 import com.example.common.CustomApplication;
 import com.example.config.ConfigEntity;
 import com.example.config.ConfigService;
@@ -43,12 +42,11 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	// 视频配置界面标识
 	public static final int ACTIVITY_ID_VIDEOCONFIG = 1;
 	
-	private ImageButton mImgBtnReturn;
+	private ImageButton mImgBtnReturn;	// 返回
 	private TextView mTitleName;
 	private GridView mMenuGridView;
-	private final int mMenuCount = 8;
 	private CustomApplication mCustomApplication;
-	private ArrayList<HashMap<String, Object>> mArrItem;
+	private ArrayList<HashMap<String, Object>> mArrItem;// 存储功能菜单图标和描述
 	
 	AnyChatCoreSDK anyChatSDK;
 
@@ -87,7 +85,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 				R.drawable.config};
 
 		mArrItem = new ArrayList<HashMap<String, Object>>();
-		for (int index = 0; index < mMenuCount; ++index) {
+		for (int index = 0; index < arrFuncNames.length; ++index) {
 			HashMap<String, Object> itemMap = new HashMap<String, Object>();
 			itemMap.put("ItemImage", arrFuncIcons[index]);
 			itemMap.put("ItemText", arrFuncNames[index]);

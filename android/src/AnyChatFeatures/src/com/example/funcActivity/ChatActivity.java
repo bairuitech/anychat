@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatTextMsgEvent;
-import com.example.common.BaseMethod;
 import com.example.common.ScreenInfo;
 import com.example.common.ValueUtils;
 import com.example.anychatfeatures.MessageListView;
@@ -31,15 +30,15 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		AnyChatTextMsgEvent, OnDismissCallback {
 
 	private int userID;
-	private Button mSendBtn;
-	private EditText mMessagEditText;
-	private ImageButton mImgBtnReturn;
+	private Button mSendBtn;					// 发送按钮
+	private EditText mMessagEditText;			// 发送输入的内容view
+	private ImageButton mImgBtnReturn;			// 返回
 	private TextView mTitleName;
-	private MessageListView mMessageListView;
+	private MessageListView mMessageListView;	// 已发送信息列表
 	private LinearLayout mFullLayout;
 	private LinearLayout mMainLayout;
 
-	private ArrayList<String> mMessageList = new ArrayList<String>();
+	private ArrayList<String> mMessageList = new ArrayList<String>(); // 存储已发送的信息
 
 	private AnyChatCoreSDK anyChatSDK;
 
@@ -119,7 +118,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 	OnClickListener onClickListener = new OnClickListener() {
 		public void onClick(View v) {
 			if (v == mSendBtn) {	
-				sendMessage();
+				sendMessage();//发送信息
 			}else if (v == mImgBtnReturn) {	
 				destroyCurActivity();
 			}

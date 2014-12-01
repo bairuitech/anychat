@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.anychatfeatures.R;
-import com.example.common.BaseMethod;
 import com.example.common.ScreenInfo;
 
 import android.view.LayoutInflater;

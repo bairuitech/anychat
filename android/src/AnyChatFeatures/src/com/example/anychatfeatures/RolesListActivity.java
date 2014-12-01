@@ -10,7 +10,6 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
-import com.example.common.BaseMethod;
 import com.example.common.CustomApplication;
 import com.example.common.DialogFactory;
 import com.example.common.DragListView;
@@ -39,16 +38,17 @@ import android.widget.Toast;
 public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 		AnyChatVideoCallEvent {
 
-	private int mUserselfID;
-	private int mRoomID;
+	private int mUserselfID;		// 自己id
+	private int mRoomID;			// 进入房间ID
 	private ImageButton mImgBtnReturn;
 	private TextView mTitleName;
-	private DragListView mRolesListView;
+	private DragListView mRolesListView;	// 角色列表
 	private CustomApplication mCustomApplication;
 	private AnyChatCoreSDK anyChatSDK;
 
 	private List<RoleInfo> mRolesInfoList = new ArrayList<RoleInfo>();
 	private RoleListAdapter mAdapter;
+	// 呼叫中心用到的对话框
 	private Dialog mDialog;
 
 	@Override
@@ -103,6 +103,7 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 		onDestroy();
 	}
 
+	// 更新用户列表
 	private void updateListData() {
 		mRolesInfoList.clear();
 		int[] userID = anyChatSDK.GetOnlineUser();
@@ -126,7 +127,7 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				if (arg2 == 0)
+				if (arg2 == 0)//点击角色列表中的自己返回，不做处理
 					return;
 				
 				onSelectItem(arg2);

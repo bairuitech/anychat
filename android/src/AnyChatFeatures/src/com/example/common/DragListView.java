@@ -11,6 +11,7 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.animation.TranslateAnimation;
 import android.widget.ListView;
 
+// 改写ListView,使其能够上下滑动
 public class DragListView extends ListView {
 	private boolean outBound = false;
 	private int distance;
