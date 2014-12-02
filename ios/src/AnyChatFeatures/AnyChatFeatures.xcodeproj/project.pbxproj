@@ -19,6 +19,8 @@
 		FE20E49B19D968A800189A8A /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = FE20E49A19D968A800189A8A /* bg.png */; };
 		FE3EAB6019E5233A00030ECA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */; };
 		FE3EAB6119E5233A00030ECA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5F19E5233A00030ECA /* Default@2x.png */; };
+		FE5574501A25635C00342F39 /* ShowVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE55744D1A25635C00342F39 /* ShowVC.xib */; };
+		FE5574511A25635C00342F39 /* ShowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE55744E1A25635C00342F39 /* ShowVC.m */; };
 		FE57D7061A075F8900F87D8E /* icon_text3.png in Resources */ = {isa = PBXBuildFile; fileRef = FE57D7051A075F8900F87D8E /* icon_text3.png */; };
 		FE6CD55619FA3C07008BC6E4 /* bg_menu.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE6CD55419FA3C07008BC6E4 /* bg_menu.jpg */; };
 		FE8E0AC719EE18A00038782A /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8E0AC519EE18A00038782A /* libyuv_neon.a */; };
@@ -34,6 +36,9 @@
 		FE9DD19119DA916C008889EC /* cell_01.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD19019DA916C008889EC /* cell_01.png */; };
 		FE9E5D281A1B2FC500F48575 /* sound_phoneCall.wav in Resources */ = {isa = PBXBuildFile; fileRef = FE9E5D261A1B2FC500F48575 /* sound_phoneCall.wav */; };
 		FE9E5D291A1B2FC500F48575 /* sound_takePhoto.wav in Resources */ = {isa = PBXBuildFile; fileRef = FE9E5D271A1B2FC500F48575 /* sound_takePhoto.wav */; };
+		FE9EC5E71A26D14400FE2E5D /* Icon_playList2_140.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9EC5E61A26D14400FE2E5D /* Icon_playList2_140.png */; };
+		FE9EC5F31A26EF3000FE2E5D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9EC5F01A26EF3000FE2E5D /* MBProgressHUD.m */; };
+		FE9EC5F41A26EF3000FE2E5D /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9EC5F21A26EF3000FE2E5D /* MZTimerLabel.m */; };
 		FEA7EFDE1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA7EFDD1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png */; };
 		FEA7F0121A1DF0DC00BF4F53 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FEA7F0111A1DF0DC00BF4F53 /* Settings.bundle */; };
 		FEA9107F1A0231E300798D1D /* TransFileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA9107C1A0231E300798D1D /* TransFileVC.m */; };
@@ -50,7 +55,6 @@
 		FEAD38381A1353010036F8B6 /* Icon_featuresBtn_5.png in Resources */ = {isa = PBXBuildFile; fileRef = FEAD38301A1353010036F8B6 /* Icon_featuresBtn_5.png */; };
 		FEAD38391A1353010036F8B6 /* Icon_featuresBtn_6.png in Resources */ = {isa = PBXBuildFile; fileRef = FEAD38311A1353010036F8B6 /* Icon_featuresBtn_6.png */; };
 		FEAD383A1A1353010036F8B6 /* Icon_featuresBtn_7.png in Resources */ = {isa = PBXBuildFile; fileRef = FEAD38321A1353010036F8B6 /* Icon_featuresBtn_7.png */; };
-		FEAD553119F497BF009CAD8C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAD552F19F497BF009CAD8C /* MBProgressHUD.m */; };
 		FEAE1A7E1A008E7300842D66 /* theMsgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEAE1A7D1A008E7300842D66 /* theMsgCell.xib */; };
 		FEB052821A1055A50044B495 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB052811A1055A50044B495 /* QuickLook.framework */; };
 		FEB863E019F0E6BE00594BF5 /* bg_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB863DF19F0E6BE00594BF5 /* bg_video@2x.png */; };
@@ -129,6 +133,9 @@
 		FE20E49A19D968A800189A8A /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		FE3EAB5F19E5233A00030ECA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		FE55744D1A25635C00342F39 /* ShowVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowVC.xib; sourceTree = "<group>"; };
+		FE55744E1A25635C00342F39 /* ShowVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowVC.m; sourceTree = "<group>"; };
+		FE55744F1A25635C00342F39 /* ShowVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowVC.h; sourceTree = "<group>"; };
 		FE57D7051A075F8900F87D8E /* icon_text3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_text3.png; sourceTree = "<group>"; };
 		FE6CD55419FA3C07008BC6E4 /* bg_menu.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg_menu.jpg; sourceTree = "<group>"; };
 		FE8E0AC519EE18A00038782A /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
@@ -144,6 +151,11 @@
 		FE9DD19019DA916C008889EC /* cell_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_01.png; sourceTree = "<group>"; };
 		FE9E5D261A1B2FC500F48575 /* sound_phoneCall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sound_phoneCall.wav; path = Resources/audio/sound_phoneCall.wav; sourceTree = "<group>"; };
 		FE9E5D271A1B2FC500F48575 /* sound_takePhoto.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sound_takePhoto.wav; path = Resources/audio/sound_takePhoto.wav; sourceTree = "<group>"; };
+		FE9EC5E61A26D14400FE2E5D /* Icon_playList2_140.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_playList2_140.png; sourceTree = "<group>"; };
+		FE9EC5EF1A26EF3000FE2E5D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		FE9EC5F01A26EF3000FE2E5D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		FE9EC5F11A26EF3000FE2E5D /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZTimerLabel.h; sourceTree = "<group>"; };
+		FE9EC5F21A26EF3000FE2E5D /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZTimerLabel.m; sourceTree = "<group>"; };
 		FEA7EFDD1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_featuresBtn_8.png; path = Icon_featuresBtn/Icon_featuresBtn_8.png; sourceTree = "<group>"; };
 		FEA7F0111A1DF0DC00BF4F53 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FEA9107B1A0231E300798D1D /* TransFileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransFileVC.h; sourceTree = "<group>"; };
@@ -161,8 +173,6 @@
 		FEAD38301A1353010036F8B6 /* Icon_featuresBtn_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_featuresBtn_5.png; path = Icon_featuresBtn/Icon_featuresBtn_5.png; sourceTree = "<group>"; };
 		FEAD38311A1353010036F8B6 /* Icon_featuresBtn_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_featuresBtn_6.png; path = Icon_featuresBtn/Icon_featuresBtn_6.png; sourceTree = "<group>"; };
 		FEAD38321A1353010036F8B6 /* Icon_featuresBtn_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_featuresBtn_7.png; path = Icon_featuresBtn/Icon_featuresBtn_7.png; sourceTree = "<group>"; };
-		FEAD552F19F497BF009CAD8C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = AnyChatFeatures/MBProgressHUD.m; sourceTree = "<group>"; };
-		FEAD553019F497BF009CAD8C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = AnyChatFeatures/MBProgressHUD.h; sourceTree = "<group>"; };
 		FEAE1A7D1A008E7300842D66 /* theMsgCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = theMsgCell.xib; sourceTree = "<group>"; };
 		FEB052811A1055A50044B495 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		FEB863DF19F0E6BE00594BF5 /* bg_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_video@2x.png"; sourceTree = "<group>"; };
@@ -240,6 +250,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEB052821A1055A50044B495 /* QuickLook.framework in Frameworks */,
 				FE8E0AC719EE18A00038782A /* libyuv_neon.a in Frameworks */,
 				FE8E0AC819EE18A00038782A /* libyuv.a in Frameworks */,
 				FEBBA2B619C2CE36009EE02C /* CoreMedia.framework in Frameworks */,
@@ -254,7 +265,6 @@
 				FEBBA29F19C2CD0D009EE02C /* libmediacore.a in Frameworks */,
 				FEBBA29A19C2CD0D009EE02C /* libanychatcore.a in Frameworks */,
 				FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */,
-				FEB052821A1055A50044B495 /* QuickLook.framework in Frameworks */,
 				FEBBA25319C2CC0B009EE02C /* CoreGraphics.framework in Frameworks */,
 				FEBBA29819C2CD0D009EE02C /* libsignal_processing.a in Frameworks */,
 				FEBBA2A519C2CD0D009EE02C /* libswscale.a in Frameworks */,
@@ -302,6 +312,9 @@
 		FE8CF22319FA203A005E2F71 /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				FE55744F1A25635C00342F39 /* ShowVC.h */,
+				FE55744E1A25635C00342F39 /* ShowVC.m */,
+				FE55744D1A25635C00342F39 /* ShowVC.xib */,
 				FE1B2E7219C692F300773FE6 /* VideoVC.h */,
 				FE1B2E7319C692F300773FE6 /* VideoVC.m */,
 				FEE6C84E19F630A300477365 /* VideoVC.xib */,
@@ -340,6 +353,18 @@
 			name = audio;
 			sourceTree = "<group>";
 		};
+		FE9EC5EE1A26EF3000FE2E5D /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FE9EC5EF1A26EF3000FE2E5D /* MBProgressHUD.h */,
+				FE9EC5F01A26EF3000FE2E5D /* MBProgressHUD.m */,
+				FE9EC5F11A26EF3000FE2E5D /* MZTimerLabel.h */,
+				FE9EC5F21A26EF3000FE2E5D /* MZTimerLabel.m */,
+			);
+			name = Utilities;
+			path = AnyChatFeatures/Utilities;
+			sourceTree = "<group>";
+		};
 		FEA910701A01D7FB00798D1D /* TransFile */ = {
 			isa = PBXGroup;
 			children = (
@@ -371,7 +396,7 @@
 			children = (
 				FEBBA25619C2CC0B009EE02C /* AnyChat */,
 				FEBBA25719C2CC0B009EE02C /* Supporting Files */,
-				FECF537D19EFB5D200338859 /* Utilities */,
+				FE9EC5EE1A26EF3000FE2E5D /* Utilities */,
 				FEBBA24F19C2CC0B009EE02C /* Frameworks */,
 				FEBBA24E19C2CC0B009EE02C /* Products */,
 			);
@@ -512,18 +537,10 @@
 			path = Resources/video_footer;
 			sourceTree = "<group>";
 		};
-		FECF537D19EFB5D200338859 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				FEAD552F19F497BF009CAD8C /* MBProgressHUD.m */,
-				FEAD553019F497BF009CAD8C /* MBProgressHUD.h */,
-			);
-			name = Utilities;
-			sourceTree = "<group>";
-		};
 		FECF538119EFBB3A00338859 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FE9EC5E61A26D14400FE2E5D /* Icon_playList2_140.png */,
 				FEDEE6801A15AE57006FB454 /* bg_loginTitle.png */,
 				FEAD382B1A1352E20036F8B6 /* Icon_featuresBtn */,
 				FE57D7051A075F8900F87D8E /* icon_text3.png */,
@@ -644,6 +661,7 @@
 				FEE6C84519F628A300477365 /* Icon_switchCamera_b.png in Resources */,
 				FEAD38391A1353010036F8B6 /* Icon_featuresBtn_6.png in Resources */,
 				FEAD38341A1353010036F8B6 /* Icon_featuresBtn_1.png in Resources */,
+				FE5574501A25635C00342F39 /* ShowVC.xib in Resources */,
 				FEBBA25B19C2CC0B009EE02C /* InfoPlist.strings in Resources */,
 				FECF536D19EF721A00338859 /* bg_video-568h@2x.png in Resources */,
 				FEA9264719E4EE7400FC42AC /* Icon_port.png in Resources */,
@@ -680,6 +698,7 @@
 				FE9DD09E19DA4F92008889EC /* 2.png in Resources */,
 				FEE6C84B19F628A300477365 /* bg_video_footer.png in Resources */,
 				FEA9264B19E4EEB300FC42AC /* Icon_room.png in Resources */,
+				FE9EC5E71A26D14400FE2E5D /* Icon_playList2_140.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,11 +711,13 @@
 			files = (
 				FEBBA26119C2CC0B009EE02C /* AppDelegate.m in Sources */,
 				FEBBA25D19C2CC0B009EE02C /* main.m in Sources */,
-				FEAD553119F497BF009CAD8C /* MBProgressHUD.m in Sources */,
 				FE0D8B0319FF8F5D00D5FD3E /* TextMsg_TransBufferVC.m in Sources */,
 				FE1B2E7519C692F300773FE6 /* VideoVC.m in Sources */,
+				FE9EC5F41A26EF3000FE2E5D /* MZTimerLabel.m in Sources */,
 				FEA9107F1A0231E300798D1D /* TransFileVC.m in Sources */,
 				FEF0B78519FA521A00FB9EEA /* UserListVC.m in Sources */,
+				FE5574511A25635C00342F39 /* ShowVC.m in Sources */,
+				FE9EC5F31A26EF3000FE2E5D /* MBProgressHUD.m in Sources */,
 				FEBBA2BA19C2CF67009EE02C /* AnyChatVC.m in Sources */,
 				FE04EB4D19F642B3006A5E5F /* FeaturesListVC.m in Sources */,
 			);
@@ -732,8 +753,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -749,9 +770,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "735a6371-8b93-41f9-867a-0a03a1f74ba0";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -772,8 +793,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -783,8 +804,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "735a6371-8b93-41f9-867a-0a03a1f74ba0";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -794,8 +815,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AnyChatFeatures/AnyChatFeatures-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -812,7 +833,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = AnyChatFeatures;
-				PROVISIONING_PROFILE = "735a6371-8b93-41f9-867a-0a03a1f74ba0";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -823,8 +844,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AnyChatFeatures/AnyChatFeatures-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -840,7 +861,7 @@
 					../../sdk/libs/audioprocess,
 				);
 				PRODUCT_NAME = AnyChatFeatures;
-				PROVISIONING_PROFILE = "735a6371-8b93-41f9-867a-0a03a1f74ba0";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

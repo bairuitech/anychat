@@ -43,7 +43,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self setUIControls];
+    [self setUI];
 }
 
 - (void)didReceiveMemoryWarning
@@ -325,7 +325,7 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
 
 #pragma mark - UI Controls
 
-- (void)setUIControls
+- (void)setUI
 {
     self.myUserID = [AnyChatVC sharedAnyChatVC].theMyUserID;
     self.onlineUserNItem.title = @"在线用户";

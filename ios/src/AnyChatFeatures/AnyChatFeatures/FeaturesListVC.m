@@ -48,7 +48,7 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
 {
     [super viewWillAppear:YES];
     
-    [self setUIControls];
+    [self setUI];
 }
 
 - (void)didReceiveMemoryWarning
@@ -117,11 +117,14 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
 
 - (IBAction)videoSettingFUNBtnClick:(id)sender
 {
-    //ios8
-    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-    if ([[UIApplication sharedApplication] canOpenURL:url]) {
-        [[UIApplication sharedApplication] openURL:url];
+    if (k_sysVersion >= 8.0f)
+    {   //iOS 8.0
+        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
     }
+    
 }
 
 
@@ -151,13 +154,22 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
 
 #pragma mark - UI Controls
 
-- (void)setUIControls
+- (void)setUI
 {
+    if(k_sysVersion >= 8.0f)
+    {
+        self.videoSettingFUNBtn.hidden = NO;
+    }
+    else
+    {
+        self.videoSettingFUNBtn.hidden = YES;
+    }
+    
     [self.navigationController setNavigationBarHidden:YES];
     self.theAnyChatVersionLab.text = [AnyChatVC sharedAnyChatVC].theVersionLab.text;
     self.theMyUserIDLab.text = [[NSString alloc] initWithFormat:@"Self userid:%i",[AnyChatVC sharedAnyChatVC].theMyUserID];
     
-    if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0)
+    if (k_sysVersion < 7.0)
     {
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
