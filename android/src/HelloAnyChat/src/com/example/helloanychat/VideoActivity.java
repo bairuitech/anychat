@@ -430,7 +430,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	public void OnAnyChatP2PConnectStateMessage(int dwUserId, int dwState) {
-		if(dwState == 0 && dwUserId == userID)
-			Toast.makeText(this, "\" " + anychatSDK.GetUserName(dwUserId) + "\" 已离开", Toast.LENGTH_LONG).show();
+
 	}
 }
