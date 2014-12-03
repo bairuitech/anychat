@@ -270,6 +270,10 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		// TODO Auto-generated method stub
 		super.onRestart();
 		anyChatSDK.SetBaseEvent(this);
+		
+		// 一种简便的方法，当断网的时候，返回到登录界面，不去刷新用户列表，下面广播已经清空了列表
+		if(mBtnStart.getVisibility() != View.VISIBLE)
+			updateUserList();
 	}
 
 	@Override
@@ -310,6 +314,10 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	@Override
 	public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId) {
 		mBottomConnMsg.setText("进入房间成功！");
+		updateUserList();
+	}
+
+	private void updateUserList() {
 		mRoleInfoList.clear();
 		int[] userID = anyChatSDK.GetOnlineUser();
 		RoleInfo userselfInfo = new RoleInfo();
@@ -342,7 +350,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			}
 		});
 	}
-
 	private void onSelectItem(int postion) {
 		String strUserID = mRoleInfoList.get(postion).getUserID();
 		Intent intent = new Intent();

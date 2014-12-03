@@ -3,6 +3,7 @@ package com.example.helloanychat;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
+import com.bairuitech.anychat.AnyChatStateChgEvent;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,8 +22,10 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-public class VideoActivity extends Activity implements AnyChatBaseEvent {
+public class VideoActivity extends Activity implements AnyChatBaseEvent,
+		AnyChatStateChgEvent {
 
 	int userID;
 	boolean bOnPaused = false;
@@ -47,21 +50,22 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 		InitSDK();
 		InitLayout();
-		
-		//如果视频流过来了，则把背景设置成透明的
+
+		// 如果视频流过来了，则把背景设置成透明的
 		handler.postDelayed(runnable, 200);
 	}
 
 	private void InitSDK() {
 		anychatSDK = new AnyChatCoreSDK();
 		anychatSDK.SetBaseEvent(this);
+		anychatSDK.SetStateChgEvent(this);
 		anychatSDK.mSensorHelper.InitSensor(this);
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
 	}
 
 	private void InitLayout() {
 		this.setContentView(R.layout.video_frame);
-		this.setTitle("与 \"" + anychatSDK.GetUserName(userID)+"\" 对话中");
+		this.setTitle("与 \"" + anychatSDK.GetUserName(userID) + "\" 对话中");
 		mMyView = (SurfaceView) findViewById(R.id.surface_local);
 		mOtherView = (SurfaceView) findViewById(R.id.surface_remote);
 		mImgSwitchVideo = (ImageButton) findViewById(R.id.ImgSwichVideo);
@@ -124,27 +128,26 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		anychatSDK.UserSpeakControl(-1, 1);// -1表示对本地音频进行控制，打开本地音频
 
 	}
-	
+
 	Handler handler = new Handler();
 	Runnable runnable = new Runnable() {
-		
+
 		@Override
 		public void run() {
 			try {
-				int videoBitrate = anychatSDK.QueryUserStateInt(userID, AnyChatDefine.BRAC_USERSTATE_VIDEOBITRATE);
-				if (videoBitrate > 0)
-				{
+				int videoBitrate = anychatSDK.QueryUserStateInt(userID,
+						AnyChatDefine.BRAC_USERSTATE_VIDEOBITRATE);
+				if (videoBitrate > 0) {
 					handler.removeCallbacks(runnable);
 					mOtherView.setBackgroundColor(Color.TRANSPARENT);
 				}
-				
+
 				handler.postDelayed(runnable, 200);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	};
-
 
 	private OnClickListener onClickListener = new OnClickListener() {
 		@Override
@@ -215,23 +218,24 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Are you sure to exit ?")
 				.setCancelable(false)
-				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						destroyCurActivity();
-					}
-				})
+				.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								destroyCurActivity();
+							}
+						})
 				.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					
+
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
 					}
-				})
-				.show();
+				}).show();
 	}
-	
+
 	private void destroyCurActivity() {
 		onPause();
 		onDestroy();
@@ -239,13 +243,13 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK){
-		exitVideoDialog();
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			exitVideoDialog();
 		}
 
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	protected void onRestart() {
 		super.onRestart();
 		// 如果是采用Java视频显示，则需要设置Surface的CallBack
@@ -356,16 +360,15 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 	@Override
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
 		if (!bEnter) {
-			if(dwUserId == userID)
-			{
-				userID=0;
+			if (dwUserId == userID) {
+				userID = 0;
 				anychatSDK.UserCameraControl(dwUserId, 0);
 				anychatSDK.UserSpeakControl(dwUserId, 0);
 				bOtherVideoOpened = false;
 			}
-		
+
 		} else {
-			if(userID != 0)
+			if (userID != 0)
 				return;
 
 			int index = anychatSDK.mVideoHelper.bindVideo(mOtherView
@@ -374,7 +377,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 			anychatSDK.UserCameraControl(dwUserId, 1);
 			anychatSDK.UserSpeakControl(dwUserId, 1);
-			userID=dwUserId;
+			userID = dwUserId;
 		}
 	}
 
@@ -397,5 +400,37 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		Intent mIntent = new Intent("VideoActivity");
 		// 发送广播
 		sendBroadcast(mIntent);
+	}
+
+	@Override
+	public void OnAnyChatMicStateChgMessage(int dwUserId, boolean bOpenMic) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void OnAnyChatCameraStateChgMessage(int dwUserId, int dwState) {
+		String strNameStr = anychatSDK.GetUserName(dwUserId);
+		if (dwState == 1 && dwUserId == userID) {
+			Toast.makeText(this, "\" "+strNameStr+"\" 已离开", Toast.LENGTH_LONG).show();
+		}
+	}
+
+	@Override
+	public void OnAnyChatChatModeChgMessage(int dwUserId, boolean bPublicChat) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void OnAnyChatActiveStateChgMessage(int dwUserId, int dwState) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void OnAnyChatP2PConnectStateMessage(int dwUserId, int dwState) {
+		if(dwState == 0)
+			Toast.makeText(this, "\" " + anychatSDK.GetUserName(dwUserId) + "\" 已离开", Toast.LENGTH_LONG).show();
 	}
 }
