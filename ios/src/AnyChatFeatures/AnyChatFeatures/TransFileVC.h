@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "AnyChatVC.h"
+#import "ShowVC.h"
 #import "MBProgressHUD.h"
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-@interface TransFileVC : UIViewController<MBProgressHUDDelegate,UITableViewDelegate,UITableViewDataSource,NSCoding,UIAlertViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
+@interface TransFileVC : UIViewController <MBProgressHUDDelegate,UITableViewDelegate,UITableViewDataSource,NSCoding,UIAlertViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 {
     MBProgressHUD   *HUD;
     UIActionSheet *myActionSheet;
@@ -43,5 +44,6 @@ kGCD_SINGLETON_FOR_HEADER(TransFileVC);
 
 - (void)TableViewReload;
 
+- (NSString *)getTimeNow;
 
 @end

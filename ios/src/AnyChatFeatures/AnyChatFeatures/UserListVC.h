@@ -24,11 +24,11 @@
 }
 
 @property (weak, nonatomic) IBOutlet UINavigationItem       *onlineUserNItem;
+@property (strong, nonatomic) IBOutlet UITableView          *onLineUserTableView;
 @property (strong, nonatomic) AVAudioPlayer                 *theAudioPlayer;
 @property (strong, nonatomic) UIAlertView                   *theReplyAlertView;
 @property (strong, nonatomic) UIAlertView                   *theRejectAlertView;
 @property (strong, nonatomic) UIAlertView                   *theWaitingAlertView;
-@property (strong, nonatomic) IBOutlet UITableView          *onLineUserTableView;
 @property (strong, nonatomic) NSMutableArray                *onlineUserMArray;
 @property int myUserID;
 

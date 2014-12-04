@@ -13,6 +13,7 @@
 #import "UserListVC.h"
 #import "FeaturesListVC.h"
 #import "TextMsg_TransBufferVC.h"
+
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
@@ -20,7 +21,7 @@
 
 @class VideoVC;
 
-@interface AnyChatVC : UIViewController<NSCoding,UITextFieldDelegate,MBProgressHUDDelegate,AnyChatNotifyMessageDelegate,AnyChatTextMsgDelegate,AnyChatTransDataDelegate,AnyChatRecordSnapShotDelegate,AnyChatVideoCallDelegate>
+@interface AnyChatVC : UIViewController <NSCoding,UITextFieldDelegate,UIAlertViewDelegate,MBProgressHUDDelegate,AnyChatNotifyMessageDelegate,AnyChatTextMsgDelegate,AnyChatTransDataDelegate,AnyChatRecordSnapShotDelegate,AnyChatVideoCallDelegate>
 {
     MBProgressHUD   *HUD;
 }
@@ -32,12 +33,15 @@
 @property (weak, nonatomic) IBOutlet UIButton               *theHideKeyboardBtn;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
 @property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
-@property (strong, nonatomic) VideoVC                       *videoVC;
-@property (strong, nonatomic) AnyChatPlatform               *anyChat;
+@property (strong, nonatomic) UIAlertView                   *theVideoRecordAlertView;
+@property (strong, nonatomic) UIAlertView                   *theSnapShotAlertView;
 @property (strong, nonatomic) NSMutableArray                *onlineUserMArray;
+@property (strong, nonatomic) NSMutableArray                *theVideoRecordMArray;
 @property (strong, nonatomic) NSString                      *theFeaturesName;
 @property (strong, nonatomic) NSString                      *theMyUserName;
 @property (strong, nonatomic) NSString                      *theTargetUserName;
+@property (strong, nonatomic) VideoVC                       *videoVC;
+@property (strong, nonatomic) AnyChatPlatform               *anyChat;
 @property int   theFeaturesNO;
 @property int   theMyUserID;
 @property int   theTargetUserID;
@@ -63,6 +67,8 @@ kGCD_SINGLETON_FOR_HEADER(AnyChatVC);
 - (void) dimissAlertView:(UIAlertView *)alert;
 
 - (NSString *)showInfoAlertView:(NSString *)Title : (NSString *)subTitle;
+
+- (void)showSnapShotPhoto:(NSString *)theFilePath transform:(NSString *)transformParam;
 
 - (NSMutableArray *) getOnlineUserArray;
 

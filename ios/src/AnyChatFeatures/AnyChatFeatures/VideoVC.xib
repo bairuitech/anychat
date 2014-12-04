@@ -12,11 +12,14 @@
                 <outlet property="remoteVideoSurface" destination="gvn-o5-Q4l" id="kS7-qC-Obz"/>
                 <outlet property="rightLineView" destination="0Me-R1-Fby" id="Nsx-2m-Ogi"/>
                 <outlet property="switchCameraBtn" destination="6q6-sG-3qN" id="YhM-wm-1Wv"/>
+                <outlet property="theLocalRecordTimeLab" destination="PJP-wK-Oe5" id="xvZ-Ub-wrP"/>
                 <outlet property="theLocalView" destination="1lf-gF-ocb" id="d2E-Cp-0lO"/>
                 <outlet property="theLocolFunBtn" destination="ptg-sB-CMj" id="STH-HJ-qEs"/>
-                <outlet property="theRecordTimeLab" destination="PJP-wK-Oe5" id="IJW-oH-W3e"/>
                 <outlet property="theServerFunBtn" destination="lQ6-fx-4cT" id="7ne-3n-Xlg"/>
+                <outlet property="theServerRecordTimeLab" destination="sd7-15-2ha" id="iZY-K9-jrM"/>
                 <outlet property="theVideoNItem" destination="Ogv-2w-Te1" id="p1c-Ou-hYF"/>
+                <outlet property="theVideoPlayBackBtn" destination="yc3-9g-Jg4" id="d0k-pa-5cM"/>
+                <outlet property="theVideoTimeLab" destination="y3P-zD-NvO" id="Xzw-5x-DL0"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -38,7 +41,7 @@
                     <rect key="frame" x="0.0" y="450" width="320" height="30"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <imageView alpha="0.94999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video_footer.png" highlightedImage="bg_video_footer.png" id="YZT-Zh-QcL">
+                        <imageView alpha="0.74999999999999978" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video_footer.png" highlightedImage="bg_video_footer.png" id="YZT-Zh-QcL">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -102,12 +105,12 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <items>
                         <navigationItem title="Title" id="Ogv-2w-Te1">
-                            <barButtonItem key="rightBarButtonItem" id="1eA-4M-uUx">
+                            <barButtonItem key="rightBarButtonItem" id="1eA-4M-uUx" userLabel="Bar Button Item - Right">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6q6-sG-3qN" userLabel="Button - switchCamera">
-                                    <rect key="frame" x="293" y="11" width="22" height="20"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <rect key="frame" x="294" y="12" width="22" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <state key="normal" image="Icon_switchCamera_w_102.png">
+                                    <state key="normal" image="Icon_switchCamera_w_102.png" backgroundImage="Icon_switchCamera_w_102.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <state key="selected" image="Icon_switchCamera_b_102.png" backgroundImage="Icon_switchCamera_b_102.png"/>
@@ -120,8 +123,31 @@
                         </navigationItem>
                     </items>
                 </navigationBar>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Record Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PJP-wK-Oe5">
-                    <rect key="frame" x="8" y="421" width="105" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y3P-zD-NvO" userLabel="VideoTime">
+                    <rect key="frame" x="192" y="46" width="120" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                    <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </label>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yc3-9g-Jg4" userLabel="videolist">
+                    <rect key="frame" x="8" y="13" width="22" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="list" image="Icon_playList2_140.png" backgroundImage="Icon_playList2_140.png"/>
+                    <connections>
+                        <action selector="theVideoPlayBackBtn_OnClicked" destination="-1" eventType="touchUpInside" id="36d-f8-WgS"/>
+                    </connections>
+                </button>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loacl Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PJP-wK-Oe5" userLabel="LocalRecordTime">
+                    <rect key="frame" x="192" y="65" width="120" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sd7-15-2ha" userLabel="ServerRecordTime">
+                    <rect key="frame" x="192" y="82" width="120" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -135,6 +161,7 @@
     </objects>
     <resources>
         <image name="Icon_EndCall.png" width="454" height="60"/>
+        <image name="Icon_playList2_140.png" width="140" height="140"/>
         <image name="Icon_switchCamera_b_102.png" width="102" height="102"/>
         <image name="Icon_switchCamera_w_102.png" width="102" height="102"/>
         <image name="bg_video.png" width="320" height="480"/>

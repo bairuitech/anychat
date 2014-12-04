@@ -188,7 +188,7 @@
                         <action selector="CallCenterFUNBtnClick:" destination="-1" eventType="touchUpInside" id="AhJ-ta-mb2"/>
                     </connections>
                 </button>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="LS1-8p-HiX" userLabel="视频设置">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="LS1-8p-HiX" userLabel="视频设置">
                     <rect key="frame" x="125" y="246" width="68" height="68"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="Icon_featuresBtn_8.png">

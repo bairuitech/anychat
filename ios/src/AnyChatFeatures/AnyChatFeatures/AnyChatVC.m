@@ -40,7 +40,9 @@ NSString* const kVideoQuality = @"videoquality";
 @synthesize onlineUserMArray;
 @synthesize theTargetUserID;
 @synthesize theTargetUserName;
-
+@synthesize theSnapShotAlertView;
+@synthesize theVideoRecordAlertView;
+@synthesize theVideoRecordMArray;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -69,12 +71,14 @@ NSString* const kVideoQuality = @"videoquality";
     anyChat.transDataDelegate = self;
     anyChat.recordSnapShotDelegate = self;
     anyChat.videoCallDelegate = self;
+    
+    self.theVideoRecordMArray = [[NSMutableArray alloc] initWithCapacity:5];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self setUIControls];
+    [self setUI];
 }
 
 #pragma mark - Memory Warning Method
@@ -281,25 +285,31 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 录像完成事件
 - (void) OnAnyChatRecordCallBack:(int) dwUserid : (NSString*) lpFileName : (int) dwElapse : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr
 {
-    NSLog(@"\n 视频保存地址：%@ \n",lpFileName);
-    UIAlertView *s_videoPathAlert = [[UIAlertView alloc] initWithTitle:@"视频保存地址!"
-                                                            message:lpFileName
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"确定"
-                                                  otherButtonTitles: nil];
-    [s_videoPathAlert show];
+    theVideoRecordAlertView = [[UIAlertView alloc] initWithTitle:@"视频保存:"
+                                                         message:lpFileName
+                                                        delegate:self
+                                               cancelButtonTitle:nil
+                                               otherButtonTitles:@"预览录制",@"取消",nil];
+    [theVideoRecordAlertView show];
+    
+    NSMutableDictionary *theVideoRecordCellMDict = [NSMutableDictionary dictionaryWithCapacity:4];
+    [theVideoRecordCellMDict setValue:[[NSNumber alloc] initWithInt:dwUserid] forKey:@"targetUserIDNum"];
+    [theVideoRecordCellMDict setValue:[TransFileVC sharedTransFileVC].getTimeNow forKey:@"productTimeStr"];
+    [theVideoRecordCellMDict setValue:@"mp4" forKey:@"fileTypeStr"];
+    [theVideoRecordCellMDict setValue:lpFileName forKey:@"contentPathStr"];
+    //Save the record
+    [self.theVideoRecordMArray addObject:theVideoRecordCellMDict];
 }
 
-// 拍照完成事件
+// 抓拍完成事件
 - (void) OnAnyChatSnapShotCallBack:(int) dwUserid : (NSString*) lpFileName : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr
 {
-    NSLog(@"\n 照片保存地址：%@ \n",lpFileName);
-    UIAlertView *s_photoPathAlert = [[UIAlertView alloc] initWithTitle:@"照片保存地址!"
-                                                               message:lpFileName
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"确定"
-                                                     otherButtonTitles: nil];
-    [s_photoPathAlert show];
+    theSnapShotAlertView = [[UIAlertView alloc] initWithTitle:@"照片保存:"
+                                                      message:lpFileName
+                                                     delegate:self
+                                            cancelButtonTitle:nil
+                                            otherButtonTitles:@"抓拍预览",@"取消",nil];
+    [theSnapShotAlertView show];
 }
 
 
@@ -413,7 +423,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
             }
             [[UserListVC sharedUserListVC].theAudioPlayer stop];
             
-            [AnyChatPlatform EnterRoom:dwParam :@""];
+            //[AnyChatPlatform EnterRoom:dwParam :@""];
             [self.navigationController pushViewController:[[UserListVC sharedUserListVC] pushVC] animated:YES];
             
             break;
@@ -421,11 +431,10 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
             
         case BRAC_VIDEOCALL_EVENT_FINISH:
         {
-            [videoVC FinishVideoChat];
-            [AnyChatPlatform LeaveRoom:-1];
+            VideoVC *s_videoVC = [VideoVC new];
+            [s_videoVC FinishVideoChat];
             [self showInfoAlertView:@"会话结束!" :@"Finish"];
-            
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2]
                                                   animated:YES];
             break;
         }
@@ -595,6 +604,51 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     return YES;
 }
 
+- (void)showSnapShotPhoto:(NSString *)theFilePath transform:(NSString *)transformParam
+{   //Read the photo
+    NSString *s_filesName = [theFilePath lastPathComponent];
+    UIImage *s_Image = [UIImage imageWithContentsOfFile:theFilePath];
+
+    UIImageView *theSnapShotImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 44,kSelfView_Width,kSelfView_Height-44)];
+    theSnapShotImageView.image = s_Image;
+    theSnapShotImageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    if ([transformParam isEqualToString:@"Portrait"])
+    {
+        theSnapShotImageView.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
+    }
+    
+    ShowVC *theShowPhotoVC = [ShowVC new];
+    [theShowPhotoVC.view addSubview:theSnapShotImageView];
+    theShowPhotoVC.theShowVCNItem.title = s_filesName;
+    theShowPhotoVC.theVideoRecordTableView.hidden = YES;
+    theShowPhotoVC.theShowVCNItem.hidesBackButton = YES;
+    theShowPhotoVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self.navigationController presentViewController:theShowPhotoVC animated:YES completion:nil];
+}
+
+#pragma mark - AlertView delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == theSnapShotAlertView)
+    {
+        if (buttonIndex == 0)
+        {
+            [self showSnapShotPhoto:theSnapShotAlertView.message transform:@"Portrait"];
+        }
+    }
+    if (alertView == theVideoRecordAlertView)
+    {
+        if (buttonIndex == 0)
+        {
+            ShowVC *theShowVC = [ShowVC new];
+            theShowVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+            [self.navigationController presentViewController:theShowVC animated:YES completion:nil];
+        }
+    }
+}
+
 
 #pragma mark - AlertView method
 
@@ -721,7 +775,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 
 #pragma mark - UI Controls
 
-- (void)setUIControls
+- (void)setUI
 {
     [self.navigationController setNavigationBarHidden:YES];
     
@@ -733,7 +787,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theUserName addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     
-    if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0)
+    if (k_sysVersion < 7.0)
     {
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }

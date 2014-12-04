@@ -44,7 +44,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self setUIControls];
+    [self setUI];
 }
 
 - (void)didReceiveMemoryWarning
@@ -304,7 +304,7 @@ kGCD_SINGLETON_FOR_CLASS(TextMsg_TransBufferVC);
     return YES;
 }
 
-- (void)setUIControls
+- (void)setUI
 {
     //Title
     NSString *targetUserName = [AnyChatVC sharedAnyChatVC].theTargetUserName;

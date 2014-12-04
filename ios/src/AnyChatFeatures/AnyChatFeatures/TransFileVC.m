@@ -46,7 +46,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self setUIControls];
+    [self setUI];
 }
 
 - (void)didReceiveMemoryWarning
@@ -124,7 +124,11 @@ kGCD_SINGLETON_FOR_CLASS(TransFileVC);
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSDictionary *s_selectRowDataMDict = [self.theTableViewDataMArray objectAtIndex:[indexPath row]];
+    NSString *s_selectRowContentPath = [s_selectRowDataMDict objectForKey:@"contentPathStr"];
+    
+    //Read the photo
+    [[AnyChatVC sharedAnyChatVC] showSnapShotPhoto:s_selectRowContentPath transform:nil];
 }
 
 - (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -146,7 +150,7 @@ kGCD_SINGLETON_FOR_CLASS(TransFileVC);
     self.theTransFileTaskID = [AnyChatPlatform TransFile:s_targetUserIDInt :contentPathStr :0 :0 :0];
     if (self.theTransFileTaskID > 0)
     {
-        self.theTableViewRowDataMDict = [NSMutableDictionary dictionaryWithCapacity:3];
+        self.theTableViewRowDataMDict = [NSMutableDictionary dictionaryWithCapacity:6];
         [self.theTableViewRowDataMDict setValue:s_targetUserIDNum forKey:@"targetUserIDNum"];
         [self.theTableViewRowDataMDict setValue:s_targetUserNameStr forKey:@"targetUserNameStr"];
         [self.theTableViewRowDataMDict setValue:s_fileTypeStr forKey:@"fileTypeStr"];
@@ -187,7 +191,7 @@ kGCD_SINGLETON_FOR_CLASS(TransFileVC);
     
     NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
 
-    [formatter setDateFormat:@"MMdd_hhmmss"];
+    [formatter setDateFormat:@"MMdd_hh:mm:ss"];
     timeNow = [formatter stringFromDate:[NSDate date]];
     
     return timeNow;
@@ -359,7 +363,7 @@ kGCD_SINGLETON_FOR_CLASS(TransFileVC);
     return YES;
 }
 
-- (void)setUIControls
+- (void)setUI
 {
     //Title
     NSString *targetUserName = [AnyChatVC sharedAnyChatVC].theTargetUserName;
