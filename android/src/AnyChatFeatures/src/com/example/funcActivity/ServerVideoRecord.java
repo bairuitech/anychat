@@ -40,7 +40,7 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 	// handle send msg
 	private final int MSG_VIDEOGESPREK = 1;		// 视频对话时间刷新消息
 	private final int MSG_SERVERRECORD = 2; 	// 服务器录制时间刷新消息
-	private final int UPDATEVIDEOBITDELAYMILLIS = 500; //监听音频视频的码率的间隔刷新时间（毫秒）
+	private final int UPDATEVIDEOBITDELAYMILLIS = 200; //监听音频视频的码率的间隔刷新时间（毫秒）
 
 	int mUserID;
 	private boolean bSelfVideoOpened = false; 	// 本地视频是否已打开

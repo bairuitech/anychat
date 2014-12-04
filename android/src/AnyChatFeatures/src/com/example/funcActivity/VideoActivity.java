@@ -45,7 +45,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	// handle send msg 
 	private static final int MSG_VIDEOGESPREK = 1;	// 视频对话时间刷新消息
 	private static final int MSG_PREVIEWPIC = 2;    // 拍照预览倒计时刷新消息
-	private final int UPDATEVIDEOBITDELAYMILLIS = 500; //监听音频视频的码率的间隔刷新时间（毫秒）
+	private final int UPDATEVIDEOBITDELAYMILLIS = 200; //监听音频视频的码率的间隔刷新时间（毫秒）
 	
 	private final String mStrBasePath = "/AnyChat"; 
 	

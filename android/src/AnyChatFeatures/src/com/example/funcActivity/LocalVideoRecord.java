@@ -47,7 +47,7 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 	private final int MSG_LOCALRECORD = 2; 		// 本地录制时间刷新消息
 	private final int MSG_PREVIEWVIDEO = 3; 	// 视频录制预览倒计时时间刷新消息
 	
-	private final int UPDATEVIDEOBITDELAYMILLIS = 500; //监听音频视频的码率的间隔刷新时间（毫秒）
+	private final int UPDATEVIDEOBITDELAYMILLIS = 200; //监听音频视频的码率的间隔刷新时间（毫秒）
 
 	int mUserID;
 	private final String mStrBasePath = "/AnyChat";
