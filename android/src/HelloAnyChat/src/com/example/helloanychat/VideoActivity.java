@@ -3,7 +3,6 @@ package com.example.helloanychat;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
-import com.bairuitech.anychat.AnyChatStateChgEvent;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,13 +23,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class VideoActivity extends Activity implements AnyChatBaseEvent,
-		AnyChatStateChgEvent {
+public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
+	private final int UPDATEVIDEOBITDELAYMILLIS = 200; //监听音频视频的码率的间隔刷新时间（毫秒）
+	
 	int userID;
 	boolean bOnPaused = false;
 	private boolean bSelfVideoOpened = false; // 本地视频是否已打开
 	private boolean bOtherVideoOpened = false; // 对方视频是否已打开
+	private Boolean mFirstGetVideoBitrate = false; //"第一次"获得视频码率的标致
+	private Boolean mFirstGetAudioBitrate = false; //"第一次"获得音频码率的标致
 
 	private SurfaceView mOtherView;
 	private SurfaceView mMyView;
@@ -52,13 +54,12 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		InitLayout();
 
 		// 如果视频流过来了，则把背景设置成透明的
-		handler.postDelayed(runnable, 200);
+		handler.postDelayed(runnable, UPDATEVIDEOBITDELAYMILLIS);
 	}
 
 	private void InitSDK() {
 		anychatSDK = new AnyChatCoreSDK();
 		anychatSDK.SetBaseEvent(this);
-		anychatSDK.SetStateChgEvent(this);
 		anychatSDK.mSensorHelper.InitSensor(this);
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
 	}
@@ -137,12 +138,37 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			try {
 				int videoBitrate = anychatSDK.QueryUserStateInt(userID,
 						AnyChatDefine.BRAC_USERSTATE_VIDEOBITRATE);
-				if (videoBitrate > 0) {
-					handler.removeCallbacks(runnable);
+				int audioBitrate = anychatSDK.QueryUserStateInt(userID,
+						AnyChatDefine.BRAC_USERSTATE_AUDIOBITRATE);
+				if (videoBitrate > 0)
+				{
+					//handler.removeCallbacks(runnable);
+					mFirstGetVideoBitrate = true;
 					mOtherView.setBackgroundColor(Color.TRANSPARENT);
 				}
+				
+				if(audioBitrate > 0){
+					mFirstGetAudioBitrate = true;
+				}
+				
+				if (mFirstGetVideoBitrate)
+				{
+					if (videoBitrate <= 0){						
+						Toast.makeText(VideoActivity.this, "视频中断了!", Toast.LENGTH_SHORT).show();
+						// 重置下，如果对方退出了，有进去了的情况
+						mFirstGetVideoBitrate = false;
+					}
+				}
+				
+				if (mFirstGetAudioBitrate){
+					if (audioBitrate <= 0){
+						Toast.makeText(VideoActivity.this, "音频中断了", Toast.LENGTH_SHORT).show();
+						// 重置下，如果对方退出了，有进去了的情况
+						mFirstGetAudioBitrate = false;
+					}
+				}
 
-				handler.postDelayed(runnable, 200);
+				handler.postDelayed(runnable, UPDATEVIDEOBITDELAYMILLIS);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -400,36 +426,5 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		Intent mIntent = new Intent("VideoActivity");
 		// 发送广播
 		sendBroadcast(mIntent);
-	}
-
-	@Override
-	public void OnAnyChatMicStateChgMessage(int dwUserId, boolean bOpenMic) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void OnAnyChatCameraStateChgMessage(int dwUserId, int dwState) {
-		String strNameStr = anychatSDK.GetUserName(dwUserId);
-		if (dwState == 1 && dwUserId == userID) {
-			Toast.makeText(this, "\" "+strNameStr+"\" 已离开", Toast.LENGTH_LONG).show();
-		}
-	}
-
-	@Override
-	public void OnAnyChatChatModeChgMessage(int dwUserId, boolean bPublicChat) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void OnAnyChatActiveStateChgMessage(int dwUserId, int dwState) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void OnAnyChatP2PConnectStateMessage(int dwUserId, int dwState) {
-
 	}
 }
