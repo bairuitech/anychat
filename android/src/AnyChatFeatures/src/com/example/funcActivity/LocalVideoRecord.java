@@ -37,6 +37,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 		AnyChatRecordEvent {
@@ -45,6 +46,8 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 	private final int MSG_VIDEOGESPREK = 1;		// 视频对话时间刷新消息
 	private final int MSG_LOCALRECORD = 2; 		// 本地录制时间刷新消息
 	private final int MSG_PREVIEWVIDEO = 3; 	// 视频录制预览倒计时时间刷新消息
+	
+	private final int UPDATEVIDEOBITDELAYMILLIS = 500; //监听音频视频的码率的间隔刷新时间（毫秒）
 
 	int mUserID;
 	private final String mStrBasePath = "/AnyChat";
@@ -63,6 +66,8 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 	private TextView mLocalRecordTimeTV; 		// 显示本地视频录制时间
 	private Timer mLcoalRecordTimer;
 	private Timer mPreviewVideoTimer = null;
+	private Boolean mFirstGetVideoBitrate = false; //"第一次"获得视频码率的标致
+	private Boolean mFirstGetAudioBitrate = false; //"第一次"获得音频码率的标致
 
 	// 存储本地录制开关图片
 	private int[] mArrLocalRecordingImg = { R.drawable.local_recording_off,
@@ -100,7 +105,7 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 		updateTime();
 
 		// 如果视频流过来了，则把背景设置成透明的
-		handler.postDelayed(runnable, 200);
+		handler.postDelayed(runnable, UPDATEVIDEOBITDELAYMILLIS);
 	}
 
 	private void InitSDK() {
@@ -201,12 +206,37 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 			try {
 				int videoBitrate = anyChatSDK.QueryUserStateInt(mUserID,
 						AnyChatDefine.BRAC_USERSTATE_VIDEOBITRATE);
-				if (videoBitrate > 0) {
-					handler.removeCallbacks(runnable);
+				int audioBitrate = anyChatSDK.QueryUserStateInt(mUserID,
+						AnyChatDefine.BRAC_USERSTATE_AUDIOBITRATE);
+				if (videoBitrate > 0)
+				{
+					//handler.removeCallbacks(runnable);
+					mFirstGetVideoBitrate = true;
 					mOtherView.setBackgroundColor(Color.TRANSPARENT);
 				}
-
-				handler.postDelayed(runnable, 200);
+				
+				if(audioBitrate > 0){
+					mFirstGetAudioBitrate = true;
+				}
+				
+				if (mFirstGetVideoBitrate)
+				{
+					if (videoBitrate <= 0){						
+						Toast.makeText(LocalVideoRecord.this, "视频中断了!", Toast.LENGTH_SHORT).show();
+						// 重置下，如果对方退出了，有进去了的情况
+						mFirstGetVideoBitrate = false;
+					}
+				}
+				
+				if (mFirstGetAudioBitrate){
+					if (audioBitrate <= 0){
+						Toast.makeText(LocalVideoRecord.this, "音频中断了", Toast.LENGTH_SHORT).show();
+						// 重置下，如果对方退出了，有进去了的情况
+						mFirstGetAudioBitrate = false;
+					}
+				}
+				
+				handler.postDelayed(runnable, UPDATEVIDEOBITDELAYMILLIS);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

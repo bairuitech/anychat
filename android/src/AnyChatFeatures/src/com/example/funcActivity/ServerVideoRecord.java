@@ -23,6 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
@@ -39,6 +40,7 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 	// handle send msg
 	private final int MSG_VIDEOGESPREK = 1;		// 视频对话时间刷新消息
 	private final int MSG_SERVERRECORD = 2; 	// 服务器录制时间刷新消息
+	private final int UPDATEVIDEOBITDELAYMILLIS = 500; //监听音频视频的码率的间隔刷新时间（毫秒）
 
 	int mUserID;
 	private boolean bSelfVideoOpened = false; 	// 本地视频是否已打开
@@ -48,6 +50,8 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 	private int mCurRecordUserID =-1;
 	private int mServerRecordTimeSec = 0;	 	// 服务器录制的时间
 	private int mServerRecordState; 			// 1表示服务器录制打开着，0表示服务器录制关闭着
+	private Boolean mFirstGetVideoBitrate = false; //"第一次"获得视频码率的标致
+	private Boolean mFirstGetAudioBitrate = false; //"第一次"获得音频码率的标致
 
 	private SurfaceView mOtherView;
 	private SurfaceView mMyView;
@@ -87,7 +91,7 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 		updateTime();
 
 		// 如果视频流过来了，则把背景设置成透明的
-		handler.postDelayed(runnable, 200);
+		handler.postDelayed(runnable, UPDATEVIDEOBITDELAYMILLIS);
 	}
 
 	private void InitSDK() {
@@ -180,12 +184,37 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 			try {
 				int videoBitrate = anyChatSDK.QueryUserStateInt(mUserID,
 						AnyChatDefine.BRAC_USERSTATE_VIDEOBITRATE);
-				if (videoBitrate > 0) {
-					handler.removeCallbacks(runnable);
+				int audioBitrate = anyChatSDK.QueryUserStateInt(mUserID,
+						AnyChatDefine.BRAC_USERSTATE_AUDIOBITRATE);
+				if (videoBitrate > 0)
+				{
+					//handler.removeCallbacks(runnable);
+					mFirstGetVideoBitrate = true;
 					mOtherView.setBackgroundColor(Color.TRANSPARENT);
 				}
+				
+				if(audioBitrate > 0){
+					mFirstGetAudioBitrate = true;
+				}
+				
+				if (mFirstGetVideoBitrate)
+				{
+					if (videoBitrate <= 0){						
+						Toast.makeText(ServerVideoRecord.this, "视频中断了!", Toast.LENGTH_SHORT).show();
+						// 重置下，如果对方退出了，有进去了的情况
+						mFirstGetVideoBitrate = false;
+					}
+				}
+				
+				if (mFirstGetAudioBitrate){
+					if (audioBitrate <= 0){
+						Toast.makeText(ServerVideoRecord.this, "音频中断了", Toast.LENGTH_SHORT).show();
+						// 重置下，如果对方退出了，有进去了的情况
+						mFirstGetAudioBitrate = false;
+					}
+				}
 
-				handler.postDelayed(runnable, 200);
+				handler.postDelayed(runnable, UPDATEVIDEOBITDELAYMILLIS);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
