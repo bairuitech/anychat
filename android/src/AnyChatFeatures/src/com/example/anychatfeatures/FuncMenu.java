@@ -12,6 +12,7 @@ import com.example.config.ConfigEntity;
 import com.example.config.ConfigService;
 import com.example.funcActivity.VideoConfig;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,10 +35,11 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	public static final int FUNC_TEXTCHAT = 2;
 	public static final int FUNC_ALPHACHANNEL = 3;
 	public static final int FUNC_FILETRANSFER = 4;
-	public static final int FUNC_VIDEO = 5;
-	public static final int FUNC_PHOTOGRAPH = 6;
-	public static final int FUNC_VIDEOCALL = 7;
-	public static final int FUNC_CONFIG = 8;
+	public static final int FUNC_LOCALVIDEO = 5;
+	public static final int FUNC_SERVERVIDEO = 6;
+	public static final int FUNC_PHOTOGRAPH = 7;
+	public static final int FUNC_VIDEOCALL = 8;
+	public static final int FUNC_CONFIG = 9;
 
 	// 视频配置界面标识
 	public static final int ACTIVITY_ID_VIDEOCONFIG = 1;
@@ -76,13 +78,14 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 
 		String[] arrFuncNames = { getString(R.string.voiceVideoInteraction),
 				getString(R.string.textChat), getString(R.string.alphaChannel),
-				getString(R.string.fileTransfer), getString(R.string.video),
-				getString(R.string.photograph), getString(R.string.videoCall),
-				getString(R.string.config)};
+				getString(R.string.fileTransfer), getString(R.string.lovalVideoRecord),
+				getString(R.string.serverVideoRecord), getString(R.string.photograph), 
+				getString(R.string.videoCall), getString(R.string.config)};
 
 		int[] arrFuncIcons = { R.drawable.voicevideo, R.drawable.textchat,
 				R.drawable.alphachannel, R.drawable.filetransfer,
-				R.drawable.video, R.drawable.photograph, R.drawable.videocall,
+				R.drawable.localvideorecord, R.drawable.servervideorecord,
+				R.drawable.photograph, R.drawable.videocall,
 				R.drawable.config};
 
 		mArrItem = new ArrayList<HashMap<String, Object>>();

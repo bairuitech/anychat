@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/servervideorecord_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -8,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        layout="@layout/video_session"
+        layout="@layout/servervideorecord_session"
         android:gravity="center_vertical" />
 
     <LinearLayout
@@ -19,18 +20,11 @@
         android:orientation="horizontal" >
 
         <ImageButton
-            android:id="@+id/btn_TakePhotoSelf"
+            android:id="@+id/btn_serverRecording"
             android:layout_width="52dp"
             android:layout_height="fill_parent"
             android:background="@drawable/button_background"
-            android:src="@drawable/takephotoself" />
-
-        <ImageButton
-            android:id="@+id/btn_speakControl"
-            android:layout_width="52dp"
-            android:layout_height="fill_parent"
-            android:background="@drawable/button_background"
-            android:src="@drawable/speak_on" />
+            android:src="@drawable/server_recording_off" />
 
         <View
             android:layout_width="1dp"
@@ -38,7 +32,7 @@
             android:background="@color/trans_white" />
 
         <Button
-            android:id="@+id/endCall"
+            android:id="@+id/serverRecordEndCall"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -47,25 +41,6 @@
             android:text="@string/str_endCall"
             android:textColor="@color/shollow_red"
             android:textSize="23sp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/trans_white" />
-
-        <ImageButton
-            android:id="@+id/btn_TakePhotoOther"
-            android:layout_width="52dp"
-            android:layout_height="fill_parent"
-            android:background="@drawable/button_background"
-            android:src="@drawable/takephotoother" />
-
-        <ImageButton
-            android:id="@+id/btn_cameraControl"
-            android:layout_width="52dp"
-            android:layout_height="fill_parent"
-            android:background="@drawable/button_background"
-            android:src="@drawable/camera_on" />
     </LinearLayout>
 
 </LinearLayout>

@@ -17,6 +17,8 @@ import com.example.funcActivity.AlphaChannel;
 import com.example.funcActivity.CallingCenter;
 import com.example.funcActivity.ChatActivity;
 import com.example.funcActivity.FileTransfer;
+import com.example.funcActivity.LocalVideoRecord;
+import com.example.funcActivity.ServerVideoRecord;
 import com.example.funcActivity.VideoActivity;
 
 import android.app.Activity;
@@ -221,8 +223,10 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 			intent.setClass(this, AlphaChannel.class);
 		} else if (mRoomID == FuncMenu.FUNC_FILETRANSFER) {
 			intent.setClass(this, FileTransfer.class);
-		} else if (mRoomID == FuncMenu.FUNC_VIDEO) {
-			intent.setClass(this, VideoActivity.class);
+		} else if (mRoomID == FuncMenu.FUNC_LOCALVIDEO) {
+			intent.setClass(this, LocalVideoRecord.class);
+		} else if (mRoomID == FuncMenu.FUNC_SERVERVIDEO) {
+			intent.setClass(this, ServerVideoRecord.class);
 		} else if (mRoomID == FuncMenu.FUNC_PHOTOGRAPH) {
 			intent.setClass(this, VideoActivity.class);
 		}

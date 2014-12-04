@@ -8,7 +8,8 @@
     <string name ="textChat">文字聊天</string>
     <string name ="alphaChannel">透明通道</string>
     <string name ="fileTransfer">文件传输</string>
-    <string name ="video">视频录像</string>
+    <string name ="lovalVideoRecord">本地录像</string>
+    <string name ="serverVideoRecord">服务器录像</string>
     <string name ="photograph">视频抓拍</string>
     <string name ="videoCall">呼叫中心</string>
     <string name ="config">设置</string>
