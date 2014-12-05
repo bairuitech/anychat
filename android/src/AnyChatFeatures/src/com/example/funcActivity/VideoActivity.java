@@ -605,7 +605,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			anyChatSDK.UserSpeakControl(-1, 0);
 			bSelfVideoOpened = false;
 		}
-
+		
 		Intent mIntent = new Intent("NetworkDiscon");
 		// 发送广播
 		sendBroadcast(mIntent);

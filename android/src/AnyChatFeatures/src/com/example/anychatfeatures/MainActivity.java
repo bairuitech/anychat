@@ -328,7 +328,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				mBottomConnMsg.setText("No content to the server");
 
 				if (mToast == null) {
-					mToast = Toast.makeText(MainActivity.this, "网络断开",
+					mToast = Toast.makeText(MainActivity.this, "网络已断开!",
 							Toast.LENGTH_SHORT);
 					mToast.show();
 				}
