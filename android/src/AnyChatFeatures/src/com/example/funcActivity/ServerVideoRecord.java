@@ -200,7 +200,7 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 				if (mFirstGetVideoBitrate)
 				{
 					if (videoBitrate <= 0){						
-						Toast.makeText(ServerVideoRecord.this, "视频中断了!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ServerVideoRecord.this, "对方视频中断了!", Toast.LENGTH_SHORT).show();
 						// 重置下，如果对方退出了，有进去了的情况
 						mFirstGetVideoBitrate = false;
 					}
@@ -208,7 +208,7 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 				
 				if (mFirstGetAudioBitrate){
 					if (audioBitrate <= 0){
-						Toast.makeText(ServerVideoRecord.this, "音频中断了", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ServerVideoRecord.this, "对方音频中断了!", Toast.LENGTH_SHORT).show();
 						// 重置下，如果对方退出了，有进去了的情况
 						mFirstGetAudioBitrate = false;
 					}
@@ -430,12 +430,9 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 				.setImageResource(mArrServerRecordingImg[mServerRecordState]);
 	}
 
-	private void destroyCurActivity() {
+	private void destroyCurActivity() {	
 		onPause();
 		onDestroy();
-
-		if (mServerRecordTimer != null)
-			mServerRecordTimer.cancel();
 	}
 
 	protected void onRestart() {
@@ -484,6 +481,8 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 			mMenuWindow.dismiss();
 			mMenuWindow = null;
 		}
+		
+		handler.removeCallbacks(runnable);
 		
 		anyChatSDK.mSensorHelper.DestroySensor();
 
@@ -596,6 +595,7 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
 		if (!bEnter) {
 			if (dwUserId == mUserID) {
+				Toast.makeText(ServerVideoRecord.this, "对方已离开！", Toast.LENGTH_SHORT).show();
 				mUserID = 0;
 				anyChatSDK.UserCameraControl(dwUserId, 0);
 				anyChatSDK.UserSpeakControl(dwUserId, 0);

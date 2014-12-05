@@ -222,7 +222,7 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 				if (mFirstGetVideoBitrate)
 				{
 					if (videoBitrate <= 0){						
-						Toast.makeText(LocalVideoRecord.this, "视频中断了!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(LocalVideoRecord.this, "对方视频中断了!", Toast.LENGTH_SHORT).show();
 						// 重置下，如果对方退出了，有进去了的情况
 						mFirstGetVideoBitrate = false;
 					}
@@ -230,7 +230,7 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 				
 				if (mFirstGetAudioBitrate){
 					if (audioBitrate <= 0){
-						Toast.makeText(LocalVideoRecord.this, "音频中断了", Toast.LENGTH_SHORT).show();
+						Toast.makeText(LocalVideoRecord.this, "对方音频中断了!", Toast.LENGTH_SHORT).show();
 						// 重置下，如果对方退出了，有进去了的情况
 						mFirstGetAudioBitrate = false;
 					}
@@ -486,9 +486,6 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 	private void destroyCurActivity() {
 		onPause();
 		onDestroy();
-
-		if (mLcoalRecordTimer != null)
-			mLcoalRecordTimer.cancel();
 	}
 
 	protected void onRestart() {
@@ -533,6 +530,9 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 			mLcoalRecordTimer.cancel();
 			mLcoalRecordTimer = null;
 		}
+		
+		handler.removeCallbacks(runnable);
+		
 		anyChatSDK.mSensorHelper.DestroySensor();
 
 		finish();
@@ -659,6 +659,7 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
 		if (!bEnter) {
 			if (dwUserId == mUserID) {
+				Toast.makeText(LocalVideoRecord.this, "对方已离开！", Toast.LENGTH_SHORT).show();
 				mUserID = 0;
 				anyChatSDK.UserCameraControl(dwUserId, 0);
 				anyChatSDK.UserSpeakControl(dwUserId, 0);

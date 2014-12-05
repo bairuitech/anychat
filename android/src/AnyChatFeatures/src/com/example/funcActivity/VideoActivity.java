@@ -231,7 +231,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				if (mFirstGetVideoBitrate)
 				{
 					if (videoBitrate <= 0){						
-						Toast.makeText(VideoActivity.this, "视频中断了!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(VideoActivity.this, "对方视频中断了!", Toast.LENGTH_SHORT).show();
 						// 重置下，如果对方退出了，有进去了的情况
 						mFirstGetVideoBitrate = false;
 					}
@@ -239,7 +239,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				
 				if (mFirstGetAudioBitrate){
 					if (audioBitrate <= 0){
-						Toast.makeText(VideoActivity.this, "音频中断了", Toast.LENGTH_SHORT).show();
+						Toast.makeText(VideoActivity.this, "对方音频中断了！", Toast.LENGTH_SHORT).show();
 						// 重置下，如果对方退出了，有进去了的情况
 						mFirstGetAudioBitrate = false;
 					}
@@ -470,6 +470,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	protected void onDestroy() {
 		super.onDestroy();
 		
+		handler.removeCallbacks(runnable);
 		anyChatSDK.UserCameraControl(userID, 0);
 		anyChatSDK.UserSpeakControl(userID, 0);
 		anyChatSDK.UserCameraControl(-1, 0);
@@ -571,6 +572,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
 		if (!bEnter) {
 			if (dwUserId == userID) {
+				Toast.makeText(VideoActivity.this, "对方已离开！", Toast.LENGTH_SHORT).show();
 				userID = 0;
 				anyChatSDK.UserCameraControl(dwUserId, 0);
 				anyChatSDK.UserSpeakControl(dwUserId, 0);
