@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements AnyChatBaseEvent {
 	// 视频配置界面标识
@@ -469,6 +470,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
 			if (action.equals("VideoActivity")) {
+				Toast.makeText(MainActivity.this, "网络已断开！", Toast.LENGTH_SHORT).show();
 				setBtnVisible(SHOWLOGINSTATEFLAG);
 				mRoleList.setAdapter(null);
 				mBottomConnMsg.setText("No content to the server");
