@@ -304,6 +304,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		setBtnVisible(SHOWLOGINSTATEFLAG);
+		anyChatSDK.Logout();
 		mBottomConnMsg.setText("连接关闭，errorCode：" + dwErrorCode);
 	}
 

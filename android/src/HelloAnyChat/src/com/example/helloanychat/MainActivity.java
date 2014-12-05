@@ -461,6 +461,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		setBtnVisible(SHOWLOGINSTATEFLAG);
 		mRoleList.setAdapter(null);
+		anyChatSDK.Logout();
 		mBottomConnMsg.setText("连接关闭，errorCode：" + dwErrorCode);
 	}
 
@@ -474,6 +475,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				setBtnVisible(SHOWLOGINSTATEFLAG);
 				mRoleList.setAdapter(null);
 				mBottomConnMsg.setText("No content to the server");
+				anyChatSDK.Logout();
 			}
 		}
 	};
