@@ -28,6 +28,10 @@
 		FE9361D51A0C626000A1A597 /* Icon_onRecordVideo.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9361D31A0C626000A1A597 /* Icon_onRecordVideo.png */; };
 		FE9361D61A0C626000A1A597 /* Icon_offRecordVideo.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9361D41A0C626000A1A597 /* Icon_offRecordVideo.png */; };
 		FE9361D81A0CA05B00A1A597 /* Icon_SnapShot.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9361D71A0CA05B00A1A597 /* Icon_SnapShot.png */; };
+		FE9B1CB01A315A12006638F6 /* RecordLocalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9B1CAE1A315A12006638F6 /* RecordLocalVC.m */; };
+		FE9B1CB11A315A12006638F6 /* RecordLocalVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE9B1CAF1A315A12006638F6 /* RecordLocalVC.xib */; };
+		FE9B1CB51A315B0C006638F6 /* RecordServerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9B1CB31A315B0C006638F6 /* RecordServerVC.m */; };
+		FE9B1CB61A315B0C006638F6 /* RecordServerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE9B1CB41A315B0C006638F6 /* RecordServerVC.xib */; };
 		FE9DD09C19DA4F92008889EC /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD09219DA4F92008889EC /* 1.png */; };
 		FE9DD09E19DA4F92008889EC /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD09419DA4F92008889EC /* 2.png */; };
 		FE9DD09F19DA4F92008889EC /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD09519DA4F92008889EC /* 3.png */; };
@@ -40,7 +44,6 @@
 		FE9EC5F31A26EF3000FE2E5D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9EC5F01A26EF3000FE2E5D /* MBProgressHUD.m */; };
 		FE9EC5F41A26EF3000FE2E5D /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9EC5F21A26EF3000FE2E5D /* MZTimerLabel.m */; };
 		FEA7EFDE1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA7EFDD1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png */; };
-		FEA7F0121A1DF0DC00BF4F53 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FEA7F0111A1DF0DC00BF4F53 /* Settings.bundle */; };
 		FEA9107F1A0231E300798D1D /* TransFileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA9107C1A0231E300798D1D /* TransFileVC.m */; };
 		FEA910801A0231E300798D1D /* TransFileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA9107D1A0231E300798D1D /* TransFileVC.xib */; };
 		FEA910811A0231E300798D1D /* theTransFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA9107E1A0231E300798D1D /* theTransFileCell.xib */; };
@@ -90,6 +93,12 @@
 		FEBBA2B419C2CE2B009EE02C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA2B319C2CE2B009EE02C /* AVFoundation.framework */; };
 		FEBBA2B619C2CE36009EE02C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA2B519C2CE36009EE02C /* CoreMedia.framework */; };
 		FEBBA2BA19C2CF67009EE02C /* AnyChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBBA2B819C2CF67009EE02C /* AnyChatVC.m */; };
+		FEBC7CCE1A2FF51000F81D3B /* SettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC7CCC1A2FF51000F81D3B /* SettingVC.m */; };
+		FEBC7CCF1A2FF51000F81D3B /* SettingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEBC7CCD1A2FF51000F81D3B /* SettingVC.xib */; };
+		FEBC7CD21A2FF57F00F81D3B /* UserVideoSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEBC7CD01A2FF57F00F81D3B /* UserVideoSettings.plist */; };
+		FEBC7CD31A2FF57F00F81D3B /* VideoSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEBC7CD11A2FF57F00F81D3B /* VideoSettings.plist */; };
+		FEBC7CD71A2FF58A00F81D3B /* DetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC7CD51A2FF58A00F81D3B /* DetailVC.m */; };
+		FEBC7CD81A2FF58A00F81D3B /* DetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEBC7CD61A2FF58A00F81D3B /* DetailVC.xib */; };
 		FEC56CBD19D7B0320008EA42 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEC56CBC19D7B0320008EA42 /* Icon@2x.png */; };
 		FECF536D19EF721A00338859 /* bg_video-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FECF536C19EF721A00338859 /* bg_video-568h@2x.png */; };
 		FEDEE67F1A15A698006FB454 /* bg_login.png in Resources */ = {isa = PBXBuildFile; fileRef = FEDEE67E1A15A698006FB454 /* bg_login.png */; };
@@ -143,6 +152,12 @@
 		FE9361D31A0C626000A1A597 /* Icon_onRecordVideo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_onRecordVideo.png; path = AnyChatFeatures/Resources/video_footer/Icon_onRecordVideo.png; sourceTree = SOURCE_ROOT; };
 		FE9361D41A0C626000A1A597 /* Icon_offRecordVideo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_offRecordVideo.png; path = AnyChatFeatures/Resources/video_footer/Icon_offRecordVideo.png; sourceTree = SOURCE_ROOT; };
 		FE9361D71A0CA05B00A1A597 /* Icon_SnapShot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_SnapShot.png; path = AnyChatFeatures/Resources/video_footer/Icon_SnapShot.png; sourceTree = SOURCE_ROOT; };
+		FE9B1CAD1A315A12006638F6 /* RecordLocalVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordLocalVC.h; sourceTree = "<group>"; };
+		FE9B1CAE1A315A12006638F6 /* RecordLocalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordLocalVC.m; sourceTree = "<group>"; };
+		FE9B1CAF1A315A12006638F6 /* RecordLocalVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordLocalVC.xib; sourceTree = "<group>"; };
+		FE9B1CB21A315B0C006638F6 /* RecordServerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordServerVC.h; sourceTree = "<group>"; };
+		FE9B1CB31A315B0C006638F6 /* RecordServerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordServerVC.m; sourceTree = "<group>"; };
+		FE9B1CB41A315B0C006638F6 /* RecordServerVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordServerVC.xib; sourceTree = "<group>"; };
 		FE9DD09219DA4F92008889EC /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		FE9DD09419DA4F92008889EC /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		FE9DD09519DA4F92008889EC /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
@@ -157,7 +172,6 @@
 		FE9EC5F11A26EF3000FE2E5D /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZTimerLabel.h; sourceTree = "<group>"; };
 		FE9EC5F21A26EF3000FE2E5D /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZTimerLabel.m; sourceTree = "<group>"; };
 		FEA7EFDD1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_featuresBtn_8.png; path = Icon_featuresBtn/Icon_featuresBtn_8.png; sourceTree = "<group>"; };
-		FEA7F0111A1DF0DC00BF4F53 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FEA9107B1A0231E300798D1D /* TransFileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransFileVC.h; sourceTree = "<group>"; };
 		FEA9107C1A0231E300798D1D /* TransFileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransFileVC.m; sourceTree = "<group>"; };
 		FEA9107D1A0231E300798D1D /* TransFileVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransFileVC.xib; sourceTree = "<group>"; };
@@ -217,6 +231,14 @@
 		FEBBA2B519C2CE36009EE02C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		FEBBA2B719C2CF67009EE02C /* AnyChatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatVC.h; sourceTree = "<group>"; };
 		FEBBA2B819C2CF67009EE02C /* AnyChatVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AnyChatVC.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		FEBC7CCB1A2FF51000F81D3B /* SettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingVC.h; sourceTree = "<group>"; };
+		FEBC7CCC1A2FF51000F81D3B /* SettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingVC.m; sourceTree = "<group>"; };
+		FEBC7CCD1A2FF51000F81D3B /* SettingVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingVC.xib; sourceTree = "<group>"; };
+		FEBC7CD01A2FF57F00F81D3B /* UserVideoSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserVideoSettings.plist; sourceTree = "<group>"; };
+		FEBC7CD11A2FF57F00F81D3B /* VideoSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = VideoSettings.plist; sourceTree = "<group>"; };
+		FEBC7CD41A2FF58A00F81D3B /* DetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailVC.h; sourceTree = "<group>"; };
+		FEBC7CD51A2FF58A00F81D3B /* DetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailVC.m; sourceTree = "<group>"; };
+		FEBC7CD61A2FF58A00F81D3B /* DetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailVC.xib; sourceTree = "<group>"; };
 		FEC56CBC19D7B0320008EA42 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		FECF536C19EF721A00338859 /* bg_video-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_video-568h@2x.png"; sourceTree = "<group>"; };
 		FEDEE67E1A15A698006FB454 /* bg_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_login.png; sourceTree = "<group>"; };
@@ -332,6 +354,26 @@
 			name = FeaturesList;
 			sourceTree = "<group>";
 		};
+		FE9B1CAB1A3158E3006638F6 /* RecordLocal */ = {
+			isa = PBXGroup;
+			children = (
+				FE9B1CAD1A315A12006638F6 /* RecordLocalVC.h */,
+				FE9B1CAE1A315A12006638F6 /* RecordLocalVC.m */,
+				FE9B1CAF1A315A12006638F6 /* RecordLocalVC.xib */,
+			);
+			name = RecordLocal;
+			sourceTree = "<group>";
+		};
+		FE9B1CAC1A3158F2006638F6 /* RecordServer */ = {
+			isa = PBXGroup;
+			children = (
+				FE9B1CB21A315B0C006638F6 /* RecordServerVC.h */,
+				FE9B1CB31A315B0C006638F6 /* RecordServerVC.m */,
+				FE9B1CB41A315B0C006638F6 /* RecordServerVC.xib */,
+			);
+			name = RecordServer;
+			sourceTree = "<group>";
+		};
 		FE9DD09119DA4F92008889EC /* HeadPortrait */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,7 +484,10 @@
 				FEF0B78719FA522000FB9EEA /* UesrList */,
 				FE0D8AFF19FF8F1100D5FD3E /* TextMsg_TransBuffer */,
 				FEA910701A01D7FB00798D1D /* TransFile */,
+				FE9B1CAB1A3158E3006638F6 /* RecordLocal */,
+				FE9B1CAC1A3158F2006638F6 /* RecordServer */,
 				FE8CF22319FA203A005E2F71 /* Video */,
+				FEBC7CCA1A2FF4F400F81D3B /* Setting */,
 			);
 			name = AnyChat;
 			path = AnyChatFeatures;
@@ -451,7 +496,6 @@
 		FEBBA25719C2CC0B009EE02C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FEA7F0111A1DF0DC00BF4F53 /* Settings.bundle */,
 				FE9E5D211A1AF7CF00F48575 /* audio */,
 				FECF538119EFBB3A00338859 /* images */,
 				FEBBA25819C2CC0B009EE02C /* AnyChatFeatures-Info.plist */,
@@ -508,6 +552,21 @@
 				FEBBA28719C2CD0D009EE02C /* libsystem_wrappers.a */,
 			);
 			path = audioprocess;
+			sourceTree = "<group>";
+		};
+		FEBC7CCA1A2FF4F400F81D3B /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				FEBC7CCB1A2FF51000F81D3B /* SettingVC.h */,
+				FEBC7CCC1A2FF51000F81D3B /* SettingVC.m */,
+				FEBC7CCD1A2FF51000F81D3B /* SettingVC.xib */,
+				FEBC7CD41A2FF58A00F81D3B /* DetailVC.h */,
+				FEBC7CD51A2FF58A00F81D3B /* DetailVC.m */,
+				FEBC7CD61A2FF58A00F81D3B /* DetailVC.xib */,
+				FEBC7CD01A2FF57F00F81D3B /* UserVideoSettings.plist */,
+				FEBC7CD11A2FF57F00F81D3B /* VideoSettings.plist */,
+			);
+			name = Setting;
 			sourceTree = "<group>";
 		};
 		FECF537019EFA72100338859 /* video_footer */ = {
@@ -635,6 +694,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEDEE6851A15DA04006FB454 /* Icon_switchCamera_w_102.png in Resources */,
+				FEBC7CD21A2FF57F00F81D3B /* UserVideoSettings.plist in Resources */,
 				FE0D8B0419FF8F5D00D5FD3E /* TextMsg_TransBufferVC.xib in Resources */,
 				FEE6C85019F630A300477365 /* VideoVC.xib in Resources */,
 				FEAD38361A1353010036F8B6 /* Icon_featuresBtn_3.png in Resources */,
@@ -647,6 +707,7 @@
 				FEAE1A7E1A008E7300842D66 /* theMsgCell.xib in Resources */,
 				FEAD38381A1353010036F8B6 /* Icon_featuresBtn_5.png in Resources */,
 				FEE6C84A19F628A300477365 /* Icon_camera_off.png in Resources */,
+				FEBC7CCF1A2FF51000F81D3B /* SettingVC.xib in Resources */,
 				FEF0B78619FA521A00FB9EEA /* UserListVC.xib in Resources */,
 				FEDEE6831A15D7D6006FB454 /* Icon_switchCamera_b_102.png in Resources */,
 				FEA910801A0231E300798D1D /* TransFileVC.xib in Resources */,
@@ -654,10 +715,14 @@
 				FEA9264A19E4EEB300FC42AC /* Icon_name.png in Resources */,
 				FE20E49B19D968A800189A8A /* bg.png in Resources */,
 				FE3EAB6019E5233A00030ECA /* Default-568h@2x.png in Resources */,
+				FE9B1CB11A315A12006638F6 /* RecordLocalVC.xib in Resources */,
+				FEBC7CD81A2FF58A00F81D3B /* DetailVC.xib in Resources */,
 				FE20E49819D960C200189A8A /* btn_login_01.png in Resources */,
 				FEDEE6911A15F124006FB454 /* Icon_takePhoto_Server.png in Resources */,
 				FEDEE68A1A15EA74006FB454 /* Icon_offRecordVideo_Local.png in Resources */,
+				FEBC7CD31A2FF57F00F81D3B /* VideoSettings.plist in Resources */,
 				FEE6C84919F628A300477365 /* Icon_camera_on.png in Resources */,
+				FE9B1CB61A315B0C006638F6 /* RecordServerVC.xib in Resources */,
 				FEE6C84519F628A300477365 /* Icon_switchCamera_b.png in Resources */,
 				FEAD38391A1353010036F8B6 /* Icon_featuresBtn_6.png in Resources */,
 				FEAD38341A1353010036F8B6 /* Icon_featuresBtn_1.png in Resources */,
@@ -669,7 +734,6 @@
 				FE9361D81A0CA05B00A1A597 /* Icon_SnapShot.png in Resources */,
 				FEB863E019F0E6BE00594BF5 /* bg_video@2x.png in Resources */,
 				FEAD38371A1353010036F8B6 /* Icon_featuresBtn_4.png in Resources */,
-				FEA7F0121A1DF0DC00BF4F53 /* Settings.bundle in Resources */,
 				FEA910811A0231E300798D1D /* theTransFileCell.xib in Resources */,
 				FE9361D61A0C626000A1A597 /* Icon_offRecordVideo.png in Resources */,
 				FE9361D51A0C626000A1A597 /* Icon_onRecordVideo.png in Resources */,
@@ -714,11 +778,15 @@
 				FE0D8B0319FF8F5D00D5FD3E /* TextMsg_TransBufferVC.m in Sources */,
 				FE1B2E7519C692F300773FE6 /* VideoVC.m in Sources */,
 				FE9EC5F41A26EF3000FE2E5D /* MZTimerLabel.m in Sources */,
+				FE9B1CB51A315B0C006638F6 /* RecordServerVC.m in Sources */,
 				FEA9107F1A0231E300798D1D /* TransFileVC.m in Sources */,
 				FEF0B78519FA521A00FB9EEA /* UserListVC.m in Sources */,
+				FEBC7CD71A2FF58A00F81D3B /* DetailVC.m in Sources */,
 				FE5574511A25635C00342F39 /* ShowVC.m in Sources */,
 				FE9EC5F31A26EF3000FE2E5D /* MBProgressHUD.m in Sources */,
+				FEBC7CCE1A2FF51000F81D3B /* SettingVC.m in Sources */,
 				FEBBA2BA19C2CF67009EE02C /* AnyChatVC.m in Sources */,
+				FE9B1CB01A315A12006638F6 /* RecordLocalVC.m in Sources */,
 				FE04EB4D19F642B3006A5E5F /* FeaturesListVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

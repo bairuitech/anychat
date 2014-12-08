@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeaturesListVC">
             <connections>
                 <outlet property="callCenterFUNBtn" destination="yWp-Rs-QOm" id="0pB-hT-jl4"/>
-                <outlet property="recordFUNBtn" destination="LK8-TQ-RCr" id="QGL-Vt-EFE"/>
+                <outlet property="recordLocalFUNBtn" destination="LK8-TQ-RCr" id="otd-jW-yLp"/>
+                <outlet property="recordServerFUNBtn" destination="yLb-74-TNE" id="EEr-fF-I9J"/>
                 <outlet property="snapShotFUNBtn" destination="LSA-s6-bHv" id="Sxw-Hr-RFq"/>
                 <outlet property="textMsgFUNBtn" destination="0RO-E6-1RB" id="ABQ-Rd-Pkf"/>
                 <outlet property="theAnyChatVersionLab" destination="mbq-t3-oOL" id="aBT-Qf-GZA"/>
@@ -63,15 +64,15 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="rQ5-gt-NCq">
-                    <rect key="frame" x="19" y="62" width="68" height="68"/>
+                    <rect key="frame" x="21" y="62" width="68" height="68"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="Icon_featuresBtn_1.png">
                         <attributedString key="attributedTitle">
                             <fragment content="音视频交互">
                                 <attributes>
                                     <color key="NSColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="11" name="STHeitiSC-Medium"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="6"/>
+                                    <font key="NSFont" size="10" name="STHeitiSC-Medium"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="6.3499999999999996"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
@@ -81,7 +82,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="0RO-E6-1RB">
-                    <rect key="frame" x="123" y="62" width="68" height="68"/>
+                    <rect key="frame" x="125" y="62" width="68" height="68"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="Icon_featuresBtn_2.png">
                         <attributedString key="attributedTitle">
@@ -99,7 +100,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="brU-fv-JoW">
-                    <rect key="frame" x="224" y="62" width="68" height="68"/>
+                    <rect key="frame" x="226" y="62" width="68" height="68"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="Icon_featuresBtn_3.png">
                         <attributedString key="attributedTitle">
@@ -134,12 +135,12 @@
                         <action selector="TransFileFUNBtnClick:" destination="-1" eventType="touchUpInside" id="pQv-w8-927"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="LK8-TQ-RCr">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="LK8-TQ-RCr" userLabel="本地视频录像">
                     <rect key="frame" x="125" y="155" width="68" height="68"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="Icon_featuresBtn_5.png">
                         <attributedString key="attributedTitle">
-                            <fragment content="视频录像">
+                            <fragment content="本地录像">
                                 <attributes>
                                     <color key="NSColor" red="0.098039217293262482" green="0.098039217293262482" blue="0.098039217293262482" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="11" name="STHeitiSC-Medium"/>
@@ -149,11 +150,11 @@
                         </attributedString>
                     </state>
                     <connections>
-                        <action selector="RecordFUNBtnClick:" destination="-1" eventType="touchUpInside" id="Zsp-qZ-PGP"/>
+                        <action selector="RecordLocalFUNBtnClick:" destination="-1" eventType="touchUpInside" id="eSo-De-kU2"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="LSA-s6-bHv">
-                    <rect key="frame" x="226" y="155" width="68" height="68"/>
+                    <rect key="frame" x="21" y="246" width="68" height="68"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="Icon_featuresBtn_6.png">
                         <attributedString key="attributedTitle">
@@ -171,7 +172,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="yWp-Rs-QOm">
-                    <rect key="frame" x="21" y="246" width="68" height="68"/>
+                    <rect key="frame" x="125" y="246" width="68" height="68"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="Icon_featuresBtn_7.png">
                         <attributedString key="attributedTitle">
@@ -189,7 +190,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="LS1-8p-HiX" userLabel="视频设置">
-                    <rect key="frame" x="125" y="246" width="68" height="68"/>
+                    <rect key="frame" x="226" y="246" width="68" height="68"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="Icon_featuresBtn_8.png">
                         <attributedString key="attributedTitle">
@@ -204,6 +205,24 @@
                     </state>
                     <connections>
                         <action selector="videoSettingFUNBtnClick:" destination="-1" eventType="touchUpInside" id="3LN-WA-Ur2"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="yLb-74-TNE" userLabel="服务器视频录像">
+                    <rect key="frame" x="226" y="155" width="68" height="68"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="Icon_featuresBtn_5.png">
+                        <attributedString key="attributedTitle">
+                            <fragment content="服务器录像">
+                                <attributes>
+                                    <color key="NSColor" red="0.098039217293262482" green="0.098039217293262482" blue="0.098039217293262482" alpha="1" colorSpace="calibratedRGB"/>
+                                    <font key="NSFont" size="10" name="STHeitiSC-Medium"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="charWrapping" baseWritingDirection="natural" lineHeightMultiple="6.3499999999999996"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </state>
+                    <connections>
+                        <action selector="RecordServerFUNBtnClick:" destination="-1" eventType="touchUpInside" id="P9o-gn-6po"/>
                     </connections>
                 </button>
             </subviews>

@@ -8,15 +8,6 @@
 
 #import "AnyChatVC.h"
 
-// Local Settings Parameter Key Define
-NSString* const kUseP2P = @"usep2p";
-NSString* const kUseServerParam = @"useserverparam";
-NSString* const kVideoSolution = @"videosolution";
-NSString* const kVideoFrameRate = @"videoframerate";
-NSString* const kVideoBitrate = @"videobitrate";
-NSString* const kVideoPreset = @"videopreset";
-NSString* const kVideoQuality = @"videoquality";
-
 @interface AnyChatVC ()
 
 @end
@@ -126,7 +117,8 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
-        [self updateLocalSettings];
+        //更新系统默认视频参数设置
+        //[self updateLocalSettings];
         
         theOnLineLoginState = YES;
         self.theMyUserID = dwUserId;
@@ -146,6 +138,9 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 用户进入房间消息
 - (void) OnAnyChatEnterRoom:(int) dwRoomId : (int) dwErrorCode
 {
+    //更新用户自定义视频参数设置
+    [[SettingVC sharedSettingVC] updateUserVideoSettings];
+    
     if (dwErrorCode != 0)
     {
         theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
@@ -635,7 +630,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     {
         if (buttonIndex == 0)
         {
-            [self showSnapShotPhoto:theSnapShotAlertView.message transform:@"Portrait"];
+            [self showSnapShotPhoto:theSnapShotAlertView.message transform:@""];
         }
     }
     if (alertView == theVideoRecordAlertView)
@@ -722,54 +717,6 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 - (BOOL)shouldAutorotate
 {
     return NO;
-}
-
-
-#pragma mark - Video Setting
-// 更新本地参数设置
-- (void) updateLocalSettings
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults synchronize];
-    
-    BOOL bUseP2P = [[defaults objectForKey:kUseP2P] boolValue];
-    BOOL bUseServerVideoParam = [[defaults objectForKey:kUseServerParam] boolValue];
-    int iVideoSolution =    [[defaults objectForKey:kVideoSolution] intValue];
-    int iVideoBitrate =     [[defaults objectForKey:kVideoBitrate] intValue];
-    int iVideoFrameRate =   [[defaults objectForKey:kVideoFrameRate] intValue];
-    int iVideoPreset =      [[defaults objectForKey:kVideoPreset] intValue];
-    int iVideoQuality =     [[defaults objectForKey:kVideoQuality] intValue];
-    
-    // P2P
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_NETWORK_P2PPOLITIC : (bUseP2P ? 1 : 0)];
-    
-    if(bUseServerVideoParam)
-    {
-        // 屏蔽本地参数，采用服务器视频参数设置
-        [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_APPLYPARAM :0];
-    }
-    else
-    {
-        int iWidth, iHeight;
-        switch (iVideoSolution) {
-            case 0:     iWidth = 1280;  iHeight = 720;  break;
-            case 1:     iWidth = 640;   iHeight = 480;  break;
-            case 2:     iWidth = 480;   iHeight = 360;  break;
-            case 3:     iWidth = 352;   iHeight = 288;  break;
-            case 4:     iWidth = 192;   iHeight = 144;  break;
-            default:    iWidth = 352;   iHeight = 288;  break;
-        }
-        [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_WIDTHCTRL :iWidth];
-        [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_HEIGHTCTRL :iHeight];
-        [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_BITRATECTRL :iVideoBitrate];
-        [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_FPSCTRL :iVideoFrameRate];
-        [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_PRESETCTRL :iVideoPreset];
-        [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_QUALITYCTRL :iVideoQuality];
-        
-        // 采用本地视频参数设置，使参数设置生效
-        [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_APPLYPARAM :1];
-    }
-    
 }
 
 

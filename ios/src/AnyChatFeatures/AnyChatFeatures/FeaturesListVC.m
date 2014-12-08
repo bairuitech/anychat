@@ -19,7 +19,7 @@
 @synthesize textMsgFUNBtn;
 @synthesize transBufferFUNBtn;
 @synthesize transFileFUNBtn;
-@synthesize recordFUNBtn;
+@synthesize recordLocalFUNBtn;
 @synthesize snapShotFUNBtn;
 @synthesize callCenterFUNBtn;
 @synthesize theMyUserIDLab;
@@ -87,24 +87,31 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
     [self.navigationController pushViewController:[UserListVC new] animated:YES];
 }
 
-- (IBAction)RecordFUNBtnClick:(id)sender
+- (IBAction)RecordLocalFUNBtnClick:(id)sender
 {
-    [self sharedFeaturesInfo:self.recordFUNBtn.titleLabel.text FeaturesNO:5];
+    [self sharedFeaturesInfo:self.recordLocalFUNBtn.titleLabel.text FeaturesNO:5];
     [AnyChatPlatform EnterRoom:5 :@""];
+    [self.navigationController pushViewController:[UserListVC new] animated:YES];
+}
+
+- (IBAction)RecordServerFUNBtnClick:(id)sender
+{
+    [self sharedFeaturesInfo:self.recordServerFUNBtn.titleLabel.text FeaturesNO:6];
+    [AnyChatPlatform EnterRoom:6 :@""];
     [self.navigationController pushViewController:[UserListVC new] animated:YES];
 }
 
 - (IBAction)SnapShotFUNBtnClick:(id)sender
 {
-    [self sharedFeaturesInfo:self.snapShotFUNBtn.titleLabel.text FeaturesNO:6];
-    [AnyChatPlatform EnterRoom:6 :@""];
+    [self sharedFeaturesInfo:self.snapShotFUNBtn.titleLabel.text FeaturesNO:7];
+    [AnyChatPlatform EnterRoom:7 :@""];
     [self.navigationController pushViewController:[UserListVC new] animated:YES];
 }
 
 - (IBAction)CallCenterFUNBtnClick:(id)sender
 {
-    [self sharedFeaturesInfo:self.callCenterFUNBtn.titleLabel.text FeaturesNO:7];
-    [AnyChatPlatform EnterRoom:7 :@""];
+    [self sharedFeaturesInfo:self.callCenterFUNBtn.titleLabel.text FeaturesNO:8];
+    [AnyChatPlatform EnterRoom:8 :@""];
     [self.navigationController pushViewController:[UserListVC new] animated:YES];
 }
 
@@ -117,14 +124,15 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
 
 - (IBAction)videoSettingFUNBtnClick:(id)sender
 {
-    if (k_sysVersion >= 8.0f)
-    {   //iOS 8.0
-        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-        if ([[UIApplication sharedApplication] canOpenURL:url]) {
-            [[UIApplication sharedApplication] openURL:url];
-        }
-    }
+    //    if (k_sysVersion >= 8.0f)
+    //    {   //iOS 8.0
+    //        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    //        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+    //            [[UIApplication sharedApplication] openURL:url];
+    //        }
+    //    }
     
+    [self.navigationController pushViewController:[SettingVC sharedSettingVC] animated:YES];
 }
 
 
@@ -156,15 +164,6 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
 
 - (void)setUI
 {
-    if(k_sysVersion >= 8.0f)
-    {
-        self.videoSettingFUNBtn.hidden = NO;
-    }
-    else
-    {
-        self.videoSettingFUNBtn.hidden = YES;
-    }
-    
     [self.navigationController setNavigationBarHidden:YES];
     self.theAnyChatVersionLab.text = [AnyChatVC sharedAnyChatVC].theVersionLab.text;
     self.theMyUserIDLab.text = [[NSString alloc] initWithFormat:@"Self userid:%i",[AnyChatVC sharedAnyChatVC].theMyUserID];

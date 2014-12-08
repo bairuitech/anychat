@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UserListVC.h"
 #import "AnyChatVC.h"
+#import "SettingVC.h"
 
 @interface FeaturesListVC : UIViewController<UIAlertViewDelegate>
 
@@ -17,7 +18,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *textMsgFUNBtn;
 @property (weak, nonatomic) IBOutlet UIButton *transBufferFUNBtn;
 @property (weak, nonatomic) IBOutlet UIButton *transFileFUNBtn;
-@property (weak, nonatomic) IBOutlet UIButton *recordFUNBtn;
+@property (weak, nonatomic) IBOutlet UIButton *recordLocalFUNBtn;
+@property (weak, nonatomic) IBOutlet UIButton *recordServerFUNBtn;
 @property (weak, nonatomic) IBOutlet UIButton *snapShotFUNBtn;
 @property (weak, nonatomic) IBOutlet UIButton *callCenterFUNBtn;
 @property (weak, nonatomic) IBOutlet UIButton *videoSettingFUNBtn;
@@ -34,7 +36,9 @@ kGCD_SINGLETON_FOR_HEADER(FeaturesListVC);
 
 - (IBAction)TransFileFUNBtnClick:(id)sender;
 
-- (IBAction)RecordFUNBtnClick:(id)sender;
+- (IBAction)RecordLocalFUNBtnClick:(id)sender;
+
+- (IBAction)RecordServerFUNBtnClick:(id)sender;
 
 - (IBAction)SnapShotFUNBtnClick:(id)sender;
 

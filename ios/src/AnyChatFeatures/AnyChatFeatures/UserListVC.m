@@ -276,19 +276,26 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
             
         case 5:
         {
-            VideoVC *videoVC = [VideoVC new];
-            thePushVC = videoVC;
+            RecordLocalVC *recordLocalVC = [RecordLocalVC new];
+            thePushVC = recordLocalVC;
             break;
         }
             
         case 6:
+        {
+            RecordServerVC *recordServerVC = [RecordServerVC new];
+            thePushVC = recordServerVC;
+            break;
+        }
+            
+        case 7:
         {
             VideoVC *videoVC = [VideoVC new];
             thePushVC = videoVC;
             break;
         }
             
-        case 7:
+        case 8:
         {
             VideoVC *videoVC = [VideoVC new];
             thePushVC = videoVC;

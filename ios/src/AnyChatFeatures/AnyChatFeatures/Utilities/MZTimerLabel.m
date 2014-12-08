@@ -172,7 +172,8 @@
 -(void)updateLabel:(NSTimer*)timer{
     
     NSTimeInterval timeDiff = [[[NSDate alloc] init] timeIntervalSinceDate:startCountDate];
-    NSDate *timeToShow = [NSDate date];
+//    NSDate *timeToShow = [NSDate date];
+    NSDate *timeToShow;
     
     if(_timerType == MZTimerLabelTypeStopWatch){
         

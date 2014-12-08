@@ -28,7 +28,6 @@
 @synthesize theServerFunBtn;
 @synthesize theFeaturesName;
 @synthesize theTakePhotoPath;
-@synthesize theTakePhotoImageView;
 @synthesize theCurrentRotation;
 @synthesize theVideoPlayBackBtn;
 @synthesize theLocalRecordTimeLab;

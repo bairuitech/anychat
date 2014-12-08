@@ -12,6 +12,8 @@
 #import "VideoVC.h"
 #import "TransFileVC.h"
 #import "TextMsg_TransBufferVC.h"
+#import "RecordLocalVC.h"
+#import "RecordServerVC.h"
 
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
