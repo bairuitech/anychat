@@ -56,6 +56,7 @@
 {
     [super viewWillAppear:YES];
     [self setUI];
+    [self startNSTimer];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -86,13 +87,10 @@
         if (buttonIndex == 0)
         {
                 [self FinishVideoChat];
-                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2]
-                                                      animated:YES];
+                [self.navigationController popViewControllerAnimated:YES];
         }
     }
     
-    //Record types
-    int isSuccess = 1;
     if (actionSheet == self.theRecordVideoTypeActSheet)
     {
         switch (buttonIndex)
@@ -102,11 +100,11 @@
                 //Self recording
                 theRecordId = -1;
                 theServerRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_LOCALCB + ANYCHAT_RECORD_FLAGS_SERVER;
-                isSuccess = [AnyChatPlatform StreamRecordCtrlEx: theRecordId
-                                                               : YES
-                                                               : theServerRecordFlags
-                                                               : 0
-                                                               : @"StarServerSelfRecord"];
+                [AnyChatPlatform StreamRecordCtrlEx: theRecordId
+                                                   : YES
+                                                   : theServerRecordFlags
+                                                   : 0
+                                                   : @"StarServerSelfRecord"];
                 break;
             }
             case 1:
@@ -114,11 +112,11 @@
                 //Remote recording
                 theRecordId = self.iRemoteUserId;
                 theServerRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_LOCALCB + ANYCHAT_RECORD_FLAGS_SERVER;
-                isSuccess = [AnyChatPlatform StreamRecordCtrlEx: theRecordId
-                                                               : YES
-                                                               : theServerRecordFlags
-                                                               : 0
-                                                               : @"StarServerRemoteRecord"];
+                [AnyChatPlatform StreamRecordCtrlEx: theRecordId
+                                                   : YES
+                                                   : theServerRecordFlags
+                                                   : 0
+                                                   : @"StarServerRemoteRecord"];
                 break;
             }
             case 2:
@@ -126,11 +124,11 @@
                 //Max recording
                 theRecordId = self.iRemoteUserId;
                 theServerRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_MIXAUDIO + ANYCHAT_RECORD_FLAGS_MIXVIDEO + ANYCHAT_RECORD_FLAGS_ABREAST + ANYCHAT_RECORD_FLAGS_STEREO + ANYCHAT_RECORD_FLAGS_LOCALCB + ANYCHAT_RECORD_FLAGS_SERVER;
-                isSuccess = [AnyChatPlatform StreamRecordCtrlEx: theRecordId
-                                                               : YES
-                                                               : theServerRecordFlags
-                                                               : 0
-                                                               : @"StarServerMaxRecord"];
+                [AnyChatPlatform StreamRecordCtrlEx: theRecordId
+                                                   : YES
+                                                   : theServerRecordFlags
+                                                   : 0
+                                                   : @"StarServerMaxRecord"];
                 break;
             }
         }
@@ -143,12 +141,6 @@
             [theServerRecordMZTimer start];
             
             theServerFunBtn.selected = YES;
-            
-            if (isSuccess != 0 )
-            {
-                [[AnyChatVC sharedAnyChatVC] showInfoAlertView:@"网络异常，请再试。"
-                                                              :@"Network is unusual, please try again."];
-            }
         }
     }
     
@@ -254,10 +246,9 @@
 
 - (IBAction)theServerFunBtn_OnClicked:(id)sender
 {
-    int isSuccess = 1;
-    //Server to record
     if (theServerFunBtn.selected == NO)
     {
+        //Server to record
         self.theRecordVideoTypeActSheet = [[UIActionSheet alloc]
                                            initWithTitle:@"请选择录制的类型。"
                                            delegate:self
@@ -271,22 +262,16 @@
     else
     {
         //Stop the server record
-        isSuccess = [AnyChatPlatform StreamRecordCtrlEx: theRecordId
-                                                       : NO
-                                                       : theServerRecordFlags
-                                                       : 0
-                                                       : @"StopServerRecord"];
+        [AnyChatPlatform StreamRecordCtrlEx: theRecordId
+                                           : NO
+                                           : theServerRecordFlags
+                                           : 0
+                                           : @"StopServerRecord"];
         //Close ServerRecord Time
         self.theServerRecordTimeLab.hidden = YES;
         [theServerRecordMZTimer pause];
         
         theServerFunBtn.selected = NO;
-        
-        if (isSuccess != 0 )
-        {
-            [[AnyChatVC sharedAnyChatVC] showInfoAlertView:@"网络异常，请再试。"
-                                                          :@"Network is unusual, please try again."];
-        }
     }
 }
 
@@ -394,6 +379,75 @@
     
     theServerRecordMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theServerRecordTimeLab];
     theServerRecordMZTimer.timeFormat = @"HH:mm:ss";
+}
+
+- (void)startNSTimer
+{
+    theNSTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                  target:self
+                                                selector:@selector(checkRecordServerVCStatus)
+                                                userInfo:nil
+                                                 repeats:YES];
+    
+    NSRunLoop *runloop = [NSRunLoop currentRunLoop];
+    [runloop addTimer:theNSTimer forMode:NSDefaultRunLoopMode];
+    [theNSTimer fire];
+}
+
+-(void)checkRecordServerVCStatus
+{
+    int videoBitrate = [AnyChatPlatform QueryUserStateInt: [AnyChatVC sharedAnyChatVC].theTargetUserID :BRAC_USERSTATE_VIDEOBITRATE];
+    
+    int audioBitrate = [AnyChatPlatform QueryUserStateInt: [AnyChatVC sharedAnyChatVC].theTargetUserID :BRAC_USERSTATE_AUDIOBITRATE];
+    
+    if (videoBitrate > 0)
+    {
+        theFirstGetVideoBitrate = YES;
+    }
+    
+    if(audioBitrate > 0)
+    {
+        theFirstGetAudioBitrate = YES;
+    }
+    
+    if (theFirstGetVideoBitrate)
+    {
+        if (videoBitrate <= 0)
+        {
+            if (self.theVideoBitrateAlertView == nil)
+            {
+                self.theVideoBitrateAlertView = [[UIAlertView alloc] initWithTitle:@"对方视频中断了!"
+                                                                           message:@"The remote user video interrupted."
+                                                                          delegate:self
+                                                                 cancelButtonTitle:nil
+                                                                 otherButtonTitles:@"挂断",@"取消",nil];
+                [self.theVideoBitrateAlertView show];
+            }
+            
+            self.remoteVideoSurface.image = [UIImage imageNamed:@"bg_video"];
+            // Reset status
+            theFirstGetVideoBitrate = NO;
+        }
+    }
+    
+    if (theFirstGetAudioBitrate)
+    {
+        if (audioBitrate <= 0)
+        {
+            if (self.theVideoBitrateAlertView == nil)
+            {
+                self.theVideoBitrateAlertView = [[UIAlertView alloc] initWithTitle:@"对方音频中断了!"
+                                                                           message:@"The remote user Audio interrupted."
+                                                                          delegate:self
+                                                                 cancelButtonTitle:nil
+                                                                 otherButtonTitles:@"挂断",@"取消",nil];
+                [self.theVideoBitrateAlertView show];
+            }
+            
+            theFirstGetAudioBitrate = NO;
+        }
+    }
+    
 }
 
 - (void)setUI

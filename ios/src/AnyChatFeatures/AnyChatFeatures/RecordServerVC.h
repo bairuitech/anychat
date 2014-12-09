@@ -13,20 +13,24 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-@interface RecordServerVC : UIViewController <UIActionSheetDelegate>
+@interface RecordServerVC : UIViewController <UIActionSheetDelegate,UIAlertViewDelegate>
 {
     AnyChatPlatform     *theAnyChat;
     AVAudioPlayer       *theAudioPlayer;
     NSString            *theServerRecordMZTimerStatus;
+    NSTimer             *theNSTimer;
     
     int theServerRecordFlags;
     int theRecordId;
+    BOOL theFirstGetVideoBitrate;
+    BOOL theFirstGetAudioBitrate;
 }
 
 
 @property (strong, nonatomic) AVCaptureVideoPreviewLayer    *localVideoSurface;
 @property (strong, nonatomic) UIActionSheet                 *isFinishVideoActSheet;
 @property (strong, nonatomic) UIActionSheet                 *theRecordVideoTypeActSheet;
+@property (strong, nonatomic) UIAlertView                   *theVideoBitrateAlertView;
 @property (strong, nonatomic) IBOutlet UIImageView          *remoteVideoSurface;
 @property (strong, nonatomic) IBOutlet UIView               *theLocalView;
 @property (weak, nonatomic) IBOutlet UINavigationItem       *theVideoNItem;

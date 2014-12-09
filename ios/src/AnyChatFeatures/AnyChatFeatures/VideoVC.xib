@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoVC">
@@ -12,11 +12,9 @@
                 <outlet property="remoteVideoSurface" destination="gvn-o5-Q4l" id="kS7-qC-Obz"/>
                 <outlet property="rightLineView" destination="0Me-R1-Fby" id="Nsx-2m-Ogi"/>
                 <outlet property="switchCameraBtn" destination="6q6-sG-3qN" id="YhM-wm-1Wv"/>
-                <outlet property="theLocalRecordTimeLab" destination="PJP-wK-Oe5" id="xvZ-Ub-wrP"/>
                 <outlet property="theLocalView" destination="1lf-gF-ocb" id="d2E-Cp-0lO"/>
                 <outlet property="theLocolFunBtn" destination="ptg-sB-CMj" id="STH-HJ-qEs"/>
                 <outlet property="theServerFunBtn" destination="lQ6-fx-4cT" id="7ne-3n-Xlg"/>
-                <outlet property="theServerRecordTimeLab" destination="sd7-15-2ha" id="iZY-K9-jrM"/>
                 <outlet property="theVideoNItem" destination="Ogv-2w-Te1" id="p1c-Ou-hYF"/>
                 <outlet property="theVideoPlayBackBtn" destination="yc3-9g-Jg4" id="d0k-pa-5cM"/>
                 <outlet property="theVideoTimeLab" destination="y3P-zD-NvO" id="Xzw-5x-DL0"/>
@@ -107,7 +105,7 @@
                         <navigationItem title="Title" id="Ogv-2w-Te1">
                             <barButtonItem key="rightBarButtonItem" id="1eA-4M-uUx" userLabel="Bar Button Item - Right">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6q6-sG-3qN" userLabel="Button - switchCamera">
-                                    <rect key="frame" x="294" y="12" width="22" height="20"/>
+                                    <rect key="frame" x="293" y="12" width="22" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" image="Icon_switchCamera_w_102.png" backgroundImage="Icon_switchCamera_w_102.png">
@@ -139,23 +137,8 @@
                         <action selector="theVideoPlayBackBtn_OnClicked" destination="-1" eventType="touchUpInside" id="36d-f8-WgS"/>
                     </connections>
                 </button>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loacl Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PJP-wK-Oe5" userLabel="LocalRecordTime">
-                    <rect key="frame" x="192" y="65" width="120" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sd7-15-2ha" userLabel="ServerRecordTime">
-                    <rect key="frame" x="192" y="82" width="120" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
@@ -167,9 +150,4 @@
         <image name="bg_video.png" width="320" height="480"/>
         <image name="bg_video_footer.png" width="640" height="60"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>
