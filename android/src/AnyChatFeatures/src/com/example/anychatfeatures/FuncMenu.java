@@ -12,7 +12,6 @@ import com.example.config.ConfigEntity;
 import com.example.config.ConfigService;
 import com.example.funcActivity.VideoConfig;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;

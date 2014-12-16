@@ -130,7 +130,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			//现在无用
 			case R.id.mainUILogoutBtn:
 				setBtnVisible(SHOWLOGINSTATEFLAG);
-
+				anyChatSDK.LeaveRoom(-1);
 				anyChatSDK.Logout();
 				mBottomConnMsg.setText("No connnect to the server");
 				break;
@@ -244,7 +244,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	
 	protected void onDestroy() {
 		super.onDestroy();
-		
+		anyChatSDK.LeaveRoom(-1);
 		anyChatSDK.Logout();
 		anyChatSDK.Release();
 	}
@@ -304,6 +304,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		setBtnVisible(SHOWLOGINSTATEFLAG);
+		anyChatSDK.LeaveRoom(-1);
 		anyChatSDK.Logout();
 		mBottomConnMsg.setText("连接关闭，errorCode：" + dwErrorCode);
 	}
@@ -312,6 +313,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK && requestCode == ACTIVITY_ID_MAINUI) {
+			anyChatSDK.LeaveRoom(-1);
 			anyChatSDK.Logout();
 			setBtnVisible(SHOWLOGINSTATEFLAG);
 			mBottomConnMsg.setText("No content to the server");
@@ -324,6 +326,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
 			if (action.equals("NetworkDiscon")) {
+				anyChatSDK.LeaveRoom(-1);
 				anyChatSDK.Logout();
 				setBtnVisible(SHOWLOGINSTATEFLAG);
 				mBottomConnMsg.setText("No content to the server");

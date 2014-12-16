@@ -2,14 +2,11 @@ package com.example.common;
 
 import com.example.anychatfeatures.R;
 
-import android.R.integer;
-import android.R.layout;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
