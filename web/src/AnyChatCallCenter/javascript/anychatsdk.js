@@ -220,6 +220,15 @@ var BRAC_USERINFO_CTRLCODE_ROTATION	=		8;	// 让指定的用户视频在显示时旋转，wPara
 var BRAC_USERINFO_CTRLCODE_DEBUGLOG	=		9;	// 输出本地用户的调试日志，wParam为调试日志类型
 var BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;	// 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
 
+// 视频显示插件设置参数
+var ANYCHATWEB_VIDEO_SO_OVERLAYMODE	=		1;	// 图片迭加模式（整形）：0 禁止（默认），1 透明，2 混合
+var ANYCHATWEB_VIDEO_SO_TRANSCOLOR	=		2;	// 透明颜色（整形），透明迭加模式有效
+var ANYCHATWEB_VIDEO_SO_OPACITY		=		3;	// 透明度（整形），混合迭加模式有效
+var ANYCHATWEB_VIDEO_SO_XPOS		=		4;	// 迭加位置（整形）
+var ANYCHATWEB_VIDEO_SO_YPOS		=		5;	// 迭加位置（整形）
+var ANYCHATWEB_VIDEO_SO_UPDATEPOS	=		6;	// 更新位置（整形）
+var ANYCHATWEB_VIDEO_SO_OVERLAYFILE	=		7;	// 迭加图片（字符串类型），含路径，可为本地文件，也可为URL地址，目前只支持jpg文件
+
 // 插件最低需求版本号
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
 var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.4";

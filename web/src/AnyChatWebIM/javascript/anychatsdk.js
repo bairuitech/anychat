@@ -182,6 +182,7 @@ var WM_GV_PRIVATEEXIT		=	WM_GV + 23;		// 用户退出私聊，wParam（INT）表示退出者的
 var WM_GV_SDKWARNING      	=   WM_GV + 41;		// SDK警告信息，当SDK在运行过程中自检发现异常状态时，将向上层发送该消息，wParam（INT）表示警告代码，定义为：GV_ERR_WARNING_XXXX
 var WM_GV_USERINFOUPDATE	=	WM_GV + 16;		// 用户信息更新通知，wParam（INT）表示用户ID号，lParam（INT）表示更新类别
 var WM_GV_FRIENDSTATUS		=	WM_GV + 17;		// 好友在线状态变化，wParam（INT）表示好友用户ID号，lParam（INT）表示用户的当前活动状态：0 离线， 1 上线
+var WM_GV_VIDEOSIZECHG		=	WM_GV + 15;		// 用户视频分辩率发生变化，wParam（INT）表示用户ID号，lParam（INT）表示用户的视频分辨率组合值（低16位表示宽度，高16位表示高度）
 
 // 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
 var BRAC_VIDEOCALL_EVENT_REQUEST =			1;	// 呼叫请求
@@ -218,6 +219,15 @@ var BRAC_ROTATION_FLAGS_ROTATION270	=	0x8000;	// 顺时针旋转270度
 var BRAC_USERINFO_CTRLCODE_ROTATION	=		8;	// 让指定的用户视频在显示时旋转，wParam为旋转角度参数
 var BRAC_USERINFO_CTRLCODE_DEBUGLOG	=		9;	// 输出本地用户的调试日志，wParam为调试日志类型
 var BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;	// 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
+
+// 视频显示插件设置参数
+var ANYCHATWEB_VIDEO_SO_OVERLAYMODE	=		1;	// 图片迭加模式（整形）：0 禁止（默认），1 透明，2 混合
+var ANYCHATWEB_VIDEO_SO_TRANSCOLOR	=		2;	// 透明颜色（整形），透明迭加模式有效
+var ANYCHATWEB_VIDEO_SO_OPACITY		=		3;	// 透明度（整形），混合迭加模式有效
+var ANYCHATWEB_VIDEO_SO_XPOS		=		4;	// 迭加位置（整形）
+var ANYCHATWEB_VIDEO_SO_YPOS		=		5;	// 迭加位置（整形）
+var ANYCHATWEB_VIDEO_SO_UPDATEPOS	=		6;	// 更新位置（整形）
+var ANYCHATWEB_VIDEO_SO_OVERLAYFILE	=		7;	// 迭加图片（字符串类型），含路径，可为本地文件，也可为URL地址，目前只支持jpg文件
 
 // 插件最低需求版本号
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
