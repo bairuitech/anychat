@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "MBProgressHUD.h"
 #import "VideoVC.h"
+#import "SettingVC.h"
 #import "UserListVC.h"
 #import "FeaturesListVC.h"
 #import "TextMsg_TransBufferVC.h"
@@ -71,8 +72,5 @@ kGCD_SINGLETON_FOR_HEADER(AnyChatVC);
 - (void)showSnapShotPhoto:(NSString *)theFilePath transform:(NSString *)transformParam;
 
 - (NSMutableArray *) getOnlineUserArray;
-
-// 更新本地参数设置
-- (void) updateLocalSettings;
 
 @end

@@ -24,19 +24,15 @@
 @synthesize leftLineView;
 @synthesize rightLineView;
 @synthesize isFinishVideoActSheet;
+@synthesize theVideoBitrateAlertView;
 @synthesize theVideoNItem;
 @synthesize theServerFunBtn;
 @synthesize theFeaturesName;
 @synthesize theTakePhotoPath;
-@synthesize theTakePhotoImageView;
 @synthesize theCurrentRotation;
 @synthesize theVideoPlayBackBtn;
-@synthesize theLocalRecordTimeLab;
-@synthesize theServerRecordTimeLab;
 @synthesize theVideoTimeLab;
 @synthesize theVideoMZTimer;
-@synthesize theLocalRecordMZTimer;
-@synthesize theServerRecordMZTimer;
 
 
 #pragma mark -
@@ -45,7 +41,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self){
     }
     return self;
 }
@@ -58,6 +54,7 @@
     self.theFeaturesName = [AnyChatVC sharedAnyChatVC].theFeaturesName;
     [self StartVideoChat:self.iRemoteUserId];
     [self setTheTimer];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -66,15 +63,11 @@
     [self setUI];
 }
 
--(void)viewDidDisappear:(BOOL)animated
+- (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
     //The Timer Pause
     [self.theVideoMZTimer pause];
-    [self.theLocalRecordMZTimer pause];
-    theLocalRecordMZTimerStatus = @"pause";
-    [self.theServerRecordMZTimer pause];
-    theServerRecordMZTimerStatus = @"pause";
 }
 
 
@@ -102,11 +95,26 @@
             else
             {
                 [self FinishVideoChat];
-                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2]
-                                                      animated:YES];
+                [self.navigationController popViewControllerAnimated:YES];
             }
         }
     }
+}
+
+#pragma mark - AlertView delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == self.theVideoBitrateAlertView)
+    {
+        if (buttonIndex == 0)
+        {
+            [self FinishVideoChat];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+    
+    self.theVideoBitrateAlertView = nil;
 }
 
 
@@ -209,46 +217,20 @@
 
 - (IBAction)theLocolFunBtn_OnClicked:(id)sender
 {
-    int isSuccess = 1;
-
     if (theLocolFunBtn.selected == NO)
-    {   //Local recording
-        if ([self.theFeaturesName isEqualToString:@"视频录像"])
-        {
-            theLocalRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_MIXAUDIO + ANYCHAT_RECORD_FLAGS_MIXVIDEO + ANYCHAT_RECORD_FLAGS_ABREAST + ANYCHAT_RECORD_FLAGS_STEREO;
-            isSuccess = [AnyChatPlatform StreamRecordCtrlEx:self.iRemoteUserId
-                                                           : YES
-                                                           : theLocalRecordFlags
-                                                           : 0
-                                                           : @"StarLocolRecord"];
-            //Show LocalRecord Time
-            self.theLocalRecordTimeLab.hidden = NO;
-            [theLocalRecordMZTimer reset];
-            [theLocalRecordMZTimer start];
-        }
-        else if ([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
+    {
+        if([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
         {   //本地声源.关
-            isSuccess = [AnyChatPlatform UserSpeakControl:-1 :NO];
+            [AnyChatPlatform UserSpeakControl:-1 :NO];
         }
 
         theLocolFunBtn.selected = YES;
     }
     else
     {
-        if ([self.theFeaturesName isEqualToString:@"视频录像"])
-        {   //Stop recording local
-            isSuccess = [AnyChatPlatform StreamRecordCtrlEx:self.iRemoteUserId
-                                                           : NO
-                                                           : theLocalRecordFlags
-                                                           : 0
-                                                           : @"StopLocolRecord"];
-            //Close LocalRecord Time
-            self.theLocalRecordTimeLab.hidden = YES;
-            [theLocalRecordMZTimer pause];
-        }
-        else if ([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
+        if([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
         {   //本地声源.开
-            isSuccess = [AnyChatPlatform UserSpeakControl: -1:YES];
+            [AnyChatPlatform UserSpeakControl: -1:YES];
         }
 
         theLocolFunBtn.selected = NO;
@@ -257,42 +239,21 @@
     if ([self.theFeaturesName isEqualToString:@"视频抓拍"])
     {   // Local video SnapShot
         [theAudioPlayer play];
-        isSuccess = [AnyChatPlatform SnapShot:-1 :BRAC_RECORD_FLAGS_SNAPSHOT :0];
-    }
-    
-    if (isSuccess != 0 )
-    {
-        [[AnyChatVC sharedAnyChatVC] showInfoAlertView:@"网络异常，请再试。"
-                                                      :@"Network is unusual, please try again."];
+        [AnyChatPlatform SnapShot:-1 :BRAC_RECORD_FLAGS_SNAPSHOT :0];
     }
 }
 
 - (IBAction)theServerFunBtn_OnClicked:(id)sender
 {
-    int isSuccess = 1;
-    
     if (theServerFunBtn.selected == NO)
     {
-        if ([self.theFeaturesName isEqualToString:@"视频录像"])
-        {   //Server to record
-            theServerRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_MIXAUDIO + ANYCHAT_RECORD_FLAGS_MIXVIDEO + ANYCHAT_RECORD_FLAGS_ABREAST + ANYCHAT_RECORD_FLAGS_STEREO + ANYCHAT_RECORD_FLAGS_LOCALCB + ANYCHAT_RECORD_FLAGS_SERVER;
-            isSuccess = [AnyChatPlatform StreamRecordCtrlEx:self.iRemoteUserId
-                                                           : YES
-                                                           : theServerRecordFlags
-                                                           : 0
-                                                           : @"StarServerRecord"];
-            //Show ServerRecord Time
-            self.theServerRecordTimeLab.hidden = NO;
-            [theServerRecordMZTimer reset];
-            [theServerRecordMZTimer start];
-        }
-        else if ([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
+
+        if([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
         {
             if ([AnyChatPlatform GetCameraState:-1] == 2)
             {   //close local Camera
                 [AnyChatPlatform UserCameraControl:-1 :NO];
                 self.theLocalView.hidden = YES;
-                isSuccess = 0;
             }
         }
         
@@ -300,25 +261,13 @@
     }
     else
     {
-        if ([self.theFeaturesName isEqualToString:@"视频录像"])
-        {   //Stop the server record
-            isSuccess = [AnyChatPlatform StreamRecordCtrlEx:self.iRemoteUserId
-                                                           : NO
-                                                           : theServerRecordFlags
-                                                           : 0
-                                                           : @"StopServerRecord"];
-            //Close ServerRecord Time
-            self.theServerRecordTimeLab.hidden = YES;
-            [theServerRecordMZTimer pause];
-        }
-        else if ([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
+        if([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
         {
             if ([AnyChatPlatform GetCameraState:-1] == 1)
             {   //open local Camera
                 [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
                 [AnyChatPlatform UserCameraControl:-1 : YES];
                 self.theLocalView.hidden = NO;
-                isSuccess = 0;
             }
         }
         
@@ -328,13 +277,7 @@
     if ([self.theFeaturesName isEqualToString:@"视频抓拍"])
     {   // RemoteUser video SnapShot
         [theAudioPlayer play];
-        isSuccess = [AnyChatPlatform SnapShot:self.iRemoteUserId :BRAC_RECORD_FLAGS_SNAPSHOT :0];
-    }
-    
-    if (isSuccess != 0 )
-    {
-        [[AnyChatVC sharedAnyChatVC] showInfoAlertView:@"网络异常，请再试。"
-                                                      :@"Network is unusual, please try again."];
+        [AnyChatPlatform SnapShot:self.iRemoteUserId :BRAC_RECORD_FLAGS_SNAPSHOT :0];
     }
 }
 
@@ -458,11 +401,6 @@
     theVideoMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theVideoTimeLab];
     theVideoMZTimer.timeFormat = @"▷ HH:mm:ss";
     [theVideoMZTimer start];
-    
-    theLocalRecordMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theLocalRecordTimeLab];
-    theLocalRecordMZTimer.timeFormat = @"◉ HH:mm:ss";
-    theServerRecordMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theServerRecordTimeLab];
-    theServerRecordMZTimer.timeFormat = @"◎ HH:mm:ss";
 }
 
 - (void)setUI
@@ -502,14 +440,6 @@
     theLocalView.layer.masksToBounds = YES;
     
     [theVideoMZTimer start];
-    if ([theLocalRecordMZTimerStatus isEqualToString:@"pause"])
-    {
-        [self.theLocalRecordMZTimer start];
-    }
-    if ([theServerRecordMZTimerStatus isEqualToString:@"pause"])
-    {
-        [self.theServerRecordMZTimer start];
-    }
 }
 
 
