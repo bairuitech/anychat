@@ -143,7 +143,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				setBtnVisible(SHOWLOGINSTATEFLAG);
-
+				anyChatSDK.LeaveRoom(-1);
 				anyChatSDK.Logout();
 				mRoleList.setAdapter(null);
 				mBottomConnMsg.setText("No connnect to the server");
@@ -461,6 +461,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		setBtnVisible(SHOWLOGINSTATEFLAG);
 		mRoleList.setAdapter(null);
+		anyChatSDK.LeaveRoom(-1);
 		anyChatSDK.Logout();
 		mBottomConnMsg.setText("连接关闭，errorCode：" + dwErrorCode);
 	}
@@ -475,6 +476,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				setBtnVisible(SHOWLOGINSTATEFLAG);
 				mRoleList.setAdapter(null);
 				mBottomConnMsg.setText("No content to the server");
+				anyChatSDK.LeaveRoom(-1);
 				anyChatSDK.Logout();
 			}
 		}
