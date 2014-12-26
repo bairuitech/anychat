@@ -36,7 +36,6 @@
 		FE4EE11C1A4CFE14005A1E66 /* libmediashow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1021A4CFE14005A1E66 /* libmediashow.a */; };
 		FE4EE11D1A4CFE14005A1E66 /* libmediautil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1031A4CFE14005A1E66 /* libmediautil.a */; };
 		FE4EE11E1A4CFE14005A1E66 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1041A4CFE14005A1E66 /* libmp3lame.a */; };
-		FE4EE11F1A4CFE14005A1E66 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1051A4CFE14005A1E66 /* libopencore-amrnb.a */; };
 		FE4EE1201A4CFE14005A1E66 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1061A4CFE14005A1E66 /* libopencore-amrwb.a */; };
 		FE4EE1211A4CFE14005A1E66 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1071A4CFE14005A1E66 /* libswresample.a */; };
 		FE4EE1221A4CFE14005A1E66 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1081A4CFE14005A1E66 /* libswscale.a */; };
@@ -304,7 +303,6 @@
 				FEBBA2AE19C2CE06009EE02C /* CoreAudio.framework in Frameworks */,
 				FE4EE10E1A4CFE14005A1E66 /* libaudio_processing.a in Frameworks */,
 				FE4EE1271A4CFE15005A1E66 /* libyuv.a in Frameworks */,
-				FE4EE11F1A4CFE14005A1E66 /* libopencore-amrnb.a in Frameworks */,
 				FEBBA2AC19C2CDEB009EE02C /* libstdc++.dylib in Frameworks */,
 				FE4EE11E1A4CFE14005A1E66 /* libmp3lame.a in Frameworks */,
 				FE4EE1131A4CFE14005A1E66 /* libcommon_audio_sse2.a in Frameworks */,

@@ -40,7 +40,6 @@
 		FEA910081A4D1581001CA696 /* libmediashow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90FEE1A4D1581001CA696 /* libmediashow.a */; };
 		FEA910091A4D1581001CA696 /* libmediautil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90FEF1A4D1581001CA696 /* libmediautil.a */; };
 		FEA9100A1A4D1581001CA696 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90FF01A4D1581001CA696 /* libmp3lame.a */; };
-		FEA9100B1A4D1581001CA696 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90FF11A4D1581001CA696 /* libopencore-amrnb.a */; };
 		FEA9100C1A4D1581001CA696 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90FF21A4D1581001CA696 /* libopencore-amrwb.a */; };
 		FEA9100D1A4D1581001CA696 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90FF31A4D1581001CA696 /* libswresample.a */; };
 		FEA9100E1A4D1581001CA696 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90FF41A4D1581001CA696 /* libswscale.a */; };
@@ -191,7 +190,6 @@
 				FEBBA2B019C2CE12009EE02C /* CoreVideo.framework in Frameworks */,
 				FEA90FFA1A4D1581001CA696 /* libaudio_processing.a in Frameworks */,
 				FEA910131A4D1581001CA696 /* libyuv.a in Frameworks */,
-				FEA9100B1A4D1581001CA696 /* libopencore-amrnb.a in Frameworks */,
 				FEBBA2AE19C2CE06009EE02C /* CoreAudio.framework in Frameworks */,
 				FEA9100A1A4D1581001CA696 /* libmp3lame.a in Frameworks */,
 				FEA90FFF1A4D1581001CA696 /* libcommon_audio_sse2.a in Frameworks */,
@@ -623,6 +621,7 @@
 		FEBBA27A19C2CC0B009EE02C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -653,6 +652,7 @@
 		FEBBA27B19C2CC0B009EE02C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";

@@ -92,7 +92,6 @@
         {
             // 传送文本消息
             int photoTaskID = [AnyChatPlatform TransFile:0 :photoFilePath :0 :0 :0];
-            // 传送文本消息
             int videoTaskID = [AnyChatPlatform TransFile:0 :videoFilePath :0 :0 :0];
             
             NSMutableDictionary *theMDict = [NSMutableDictionary dictionaryWithCapacity:3];
@@ -137,24 +136,6 @@
 
 #pragma mark - TransFile Loading Animation
 
-- (void)showTransFileLoadingAnimated:(int)transFileTaskID :(NSString *)fileType
-{
-    
-    NSMutableDictionary *theMDict = [NSMutableDictionary dictionaryWithCapacity:3];
-    [theMDict setValue:[[NSNumber alloc] initWithInt:transFileTaskID] forKey:@"transFileTaskID"];
-    [theMDict setValue:fileType forKey:@"fileType"];
-    
-    //创建定时器
-    theNSTimer =  [NSTimer scheduledTimerWithTimeInterval:0.6
-                                                   target:self
-                                                 selector:@selector(progressLoading:)
-                                                 userInfo:theMDict
-                                                  repeats:YES];
-    
-    NSRunLoop *runloop = [NSRunLoop currentRunLoop];
-    [runloop addTimer:theNSTimer forMode:NSDefaultRunLoopMode];
-}
-
 - (void)progressLoading:(NSTimer *)timer
 {
     int photoTaskID = [[[timer userInfo] objectForKey:@"photoTaskID"] intValue];
@@ -181,17 +162,10 @@
     NSString *thephotoProgressStr = [[NSString alloc] initWithFormat:@"%i",thephotoProgress];
     self.thePhotoProgressLab.text = [thephotoProgressStr stringByAppendingString:@"%"];
     
-    NSLog(@"\n\n photo 进度 : %i",thephotoProgress);
-    
-    
-    
     //LoadingView
     self.theVideoProgressView.progress = thevideoProgress;
     NSString *thevideoProgressStr = [[NSString alloc] initWithFormat:@"%i",thevideoProgress];
     self.theVideoProgressLab.text = [thevideoProgressStr stringByAppendingString:@"%"];
-    
-    NSLog(@"\n\n video 进度 : %i",thevideoProgress);
-    
     
     if (thevideoProgress == 100 && thephotoProgress == 100)
     {

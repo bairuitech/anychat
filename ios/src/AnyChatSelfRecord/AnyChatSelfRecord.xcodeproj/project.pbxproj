@@ -93,7 +93,6 @@
 		FEA910781A4D378E001CA696 /* libmediashow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA9105E1A4D378E001CA696 /* libmediashow.a */; };
 		FEA910791A4D378E001CA696 /* libmediautil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA9105F1A4D378E001CA696 /* libmediautil.a */; };
 		FEA9107A1A4D378E001CA696 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA910601A4D378E001CA696 /* libmp3lame.a */; };
-		FEA9107B1A4D378E001CA696 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA910611A4D378E001CA696 /* libopencore-amrnb.a */; };
 		FEA9107C1A4D378E001CA696 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA910621A4D378E001CA696 /* libopencore-amrwb.a */; };
 		FEA9107D1A4D378E001CA696 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA910631A4D378E001CA696 /* libswresample.a */; };
 		FEA9107E1A4D378E001CA696 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA910641A4D378E001CA696 /* libswscale.a */; };
@@ -257,7 +256,6 @@
 				FE1E88B51A442C400093E935 /* CoreAudio.framework in Frameworks */,
 				FEA9106A1A4D378E001CA696 /* libaudio_processing.a in Frameworks */,
 				FEA910831A4D378E001CA696 /* libyuv.a in Frameworks */,
-				FEA9107B1A4D378E001CA696 /* libopencore-amrnb.a in Frameworks */,
 				FE1E88B31A442C390093E935 /* CoreVideo.framework in Frameworks */,
 				FEA9107A1A4D378E001CA696 /* libmp3lame.a in Frameworks */,
 				FEA9106F1A4D378E001CA696 /* libcommon_audio_sse2.a in Frameworks */,

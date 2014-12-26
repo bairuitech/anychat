@@ -63,7 +63,6 @@
 		FEA90F4D1A4D0DB9001CA696 /* libmediashow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90F331A4D0DB8001CA696 /* libmediashow.a */; };
 		FEA90F4E1A4D0DB9001CA696 /* libmediautil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90F341A4D0DB8001CA696 /* libmediautil.a */; };
 		FEA90F4F1A4D0DB9001CA696 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90F351A4D0DB8001CA696 /* libmp3lame.a */; };
-		FEA90F501A4D0DB9001CA696 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90F361A4D0DB8001CA696 /* libopencore-amrnb.a */; };
 		FEA90F511A4D0DB9001CA696 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90F371A4D0DB8001CA696 /* libopencore-amrwb.a */; };
 		FEA90F521A4D0DB9001CA696 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90F381A4D0DB8001CA696 /* libswresample.a */; };
 		FEA90F531A4D0DB9001CA696 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90F391A4D0DB8001CA696 /* libswscale.a */; };
@@ -179,7 +178,6 @@
 				FE8CF40E13EFE3E800B4C34B /* AVFoundation.framework in Frameworks */,
 				FEA90F441A4D0DB9001CA696 /* libcommon_audio_sse2.a in Frameworks */,
 				FEA90F411A4D0DB8001CA696 /* libaudio_processing_sse2.a in Frameworks */,
-				FEA90F501A4D0DB9001CA696 /* libopencore-amrnb.a in Frameworks */,
 				FE8CF40C13EFE3CA00B4C34B /* AudioToolbox.framework in Frameworks */,
 				FE8CF40213EFE3A000B4C34B /* CoreVideo.framework in Frameworks */,
 				FE8CF3B813EFC08100B4C34B /* UIKit.framework in Frameworks */,

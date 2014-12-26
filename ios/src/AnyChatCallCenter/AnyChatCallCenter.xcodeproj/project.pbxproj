@@ -46,7 +46,6 @@
 		FEA90EAC1A4D045F001CA696 /* libmediashow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90E921A4D045E001CA696 /* libmediashow.a */; };
 		FEA90EAD1A4D045F001CA696 /* libmediautil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90E931A4D045E001CA696 /* libmediautil.a */; };
 		FEA90EAE1A4D045F001CA696 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90E941A4D045E001CA696 /* libmp3lame.a */; };
-		FEA90EAF1A4D045F001CA696 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90E951A4D045E001CA696 /* libopencore-amrnb.a */; };
 		FEA90EB01A4D045F001CA696 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90E961A4D045E001CA696 /* libopencore-amrwb.a */; };
 		FEA90EB11A4D045F001CA696 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90E971A4D045E001CA696 /* libswresample.a */; };
 		FEA90EB21A4D045F001CA696 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90E981A4D045E001CA696 /* libswscale.a */; };
@@ -186,7 +185,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEA90E821A4D03DF001CA696 /* libc++.dylib in Frameworks */,
-				FEA90EAF1A4D045F001CA696 /* libopencore-amrnb.a in Frameworks */,
 				FEA90EA41A4D045E001CA696 /* librtc_base_approved.a in Frameworks */,
 				FEA90E9E1A4D045E001CA696 /* libaudio_processing.a in Frameworks */,
 				FEA90EB21A4D045F001CA696 /* libswscale.a in Frameworks */,
@@ -616,6 +614,7 @@
 		FEB337F119B8555200D2C2F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -645,6 +644,7 @@
 		FEB337F219B8555200D2C2F3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
