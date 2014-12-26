@@ -130,7 +130,7 @@
         <image name="Icon_Obj_Process.png" width="909" height="200"/>
         <image name="Icon_offRecordVideo_Local.png" width="70" height="72"/>
         <image name="Icon_onRecordVideo_Local.png" width="70" height="72"/>
-        <image name="bg_videoWait.png" width="320" height="480"/>
+        <image name="bg_videoWait.png" width="640" height="1136"/>
         <image name="bg_video_footer.png" width="640" height="60"/>
     </resources>
 </document>
