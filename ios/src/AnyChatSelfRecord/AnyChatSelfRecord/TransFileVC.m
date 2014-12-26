@@ -158,12 +158,10 @@
     
     
     //LoadingView
-    self.thePhotoProgressView.progress = thephotoProgress;
     NSString *thephotoProgressStr = [[NSString alloc] initWithFormat:@"%i",thephotoProgress];
     self.thePhotoProgressLab.text = [thephotoProgressStr stringByAppendingString:@"%"];
     
     //LoadingView
-    self.theVideoProgressView.progress = thevideoProgress;
     NSString *thevideoProgressStr = [[NSString alloc] initWithFormat:@"%i",thevideoProgress];
     self.theVideoProgressLab.text = [thevideoProgressStr stringByAppendingString:@"%"];
     

@@ -23,10 +23,7 @@
 }
 
 
-@property (weak, nonatomic) IBOutlet UIProgressView         *thePhotoProgressView;
 @property (weak, nonatomic) IBOutlet UILabel                *thePhotoProgressLab;
-
-@property (weak, nonatomic) IBOutlet UIProgressView         *theVideoProgressView;
 @property (weak, nonatomic) IBOutlet UILabel                *theVideoProgressLab;
 
 @property int theTransFileBtnTimes;
