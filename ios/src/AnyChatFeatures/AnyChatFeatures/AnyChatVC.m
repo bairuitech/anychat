@@ -64,6 +64,11 @@
     anyChat.videoCallDelegate = self;
     
     self.theVideoRecordMArray = [[NSMutableArray alloc] initWithCapacity:5];
+    
+    // 用户信息控制(开启网络状态信息的调试模式)
+    int infotype = 5;
+    [AnyChatPlatform UserInfoControl:-1 :BRAC_USERINFO_CTRLCODE_DEBUGLOG :infotype :1 :@""];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated

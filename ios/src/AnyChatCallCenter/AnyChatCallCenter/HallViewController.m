@@ -114,7 +114,7 @@ NSString* const kVideoQuality = @"videoquality";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int selectID = [[[self.onlineUserMArray objectAtIndex:[indexPath row]] theUserInfoID] integerValue];
+    int selectID = [[[self.onlineUserMArray objectAtIndex:[indexPath row]] theUserInfoID] intValue];
     
     [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REQUEST :selectID :0 :0 :0 :nil];
     

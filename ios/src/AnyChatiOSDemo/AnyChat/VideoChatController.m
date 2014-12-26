@@ -57,6 +57,7 @@
 - (void) OnLocalVideoInit:(id)session
 {
     self.localVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
+NSLog(@"\n\n\n session : %@ \n\n",session);
     self.localVideoSurface.frame = CGRectMake(0, 0, 120, 160);
     self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
@@ -183,5 +184,23 @@
     self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
     self.theLocalView.frame = kLocalVideoLandscape_CGRect;
 }
+
+#pragma mark - UITouch
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    static int clicked = 1;
+    if (clicked % 2)
+    {
+        self.theNavBar.hidden = YES;
+        clicked++;
+    }
+    else
+    {
+        self.theNavBar.hidden = NO;
+        clicked++;
+    }
+}
+
 
 @end

@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="remoteVideoSurface" destination="14" id="15"/>
                 <outlet property="theLocalView" destination="1dU-NF-TwT" id="5JP-xO-0Oz"/>
+                <outlet property="theNavBar" destination="4" id="Q3a-rO-gr7"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -18,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="14">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                    <rect key="frame" x="-6" y="0.0" width="326" height="480"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <view contentMode="scaleToFill" id="1dU-NF-TwT" userLabel="LocalView">

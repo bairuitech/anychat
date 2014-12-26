@@ -50,6 +50,8 @@
     [super viewDidAppear:YES];
 }
 
+#pragma mark - Memory Warning method
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -151,7 +153,7 @@
     [AnyChatPlatform UserCameraControl:userid : YES];
     
     self.iRemoteUserId = userid;
-    
+    //远程视频显示时随设备的方向改变而旋转（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
 }
 
@@ -273,30 +275,6 @@
     {
         button.selected = YES;
     }
-}
-
-//iRemote user video loading status
--(BOOL)remoteVideoDidLoadStatus
-{
-    BOOL isDidLoad;
-    int videoHeight = 0;
-    int theTimes = 0;
-    
-    while (isDidLoad == NO && theTimes < 5000)
-    {
-        videoHeight = [AnyChatPlatform GetUserVideoHeight:self.iRemoteUserId];
-        
-        if (videoHeight > 0) {
-            isDidLoad = YES;
-        }
-        else
-        {
-            isDidLoad = NO;
-            theTimes++;
-        }
-    }
-    
-    return isDidLoad;
 }
 
 @end
