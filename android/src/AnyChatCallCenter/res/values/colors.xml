@@ -21,6 +21,7 @@
     <color name="solid_green">#f0f0</color>
     <color name="solid_yellow">#ffffff00</color>
     <color name="dancen">#CCCC33</color>
+    <color name="transparent">#00000000</color>
  	<drawable name="user_moble_click">#E099CCFF</drawable>
  	<drawable name="user_moble_normal">#E0efefef</drawable>
  	<drawable name="user_addiontion_normal">#00000000</drawable>

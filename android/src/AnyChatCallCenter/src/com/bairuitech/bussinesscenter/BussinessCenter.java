@@ -28,6 +28,7 @@ public class BussinessCenter{
 	public static Activity mContext;
 	public static ArrayList<UserItem> mOnlineFriendItems;
 	public static ArrayList<Integer> mOnlineFriendIds;
+	public int mCallingRoleSrcID;
 
 	public static int selfUserId;
 	public static boolean bBack = false;// 程序是否在后台
@@ -276,4 +277,15 @@ public class BussinessCenter{
 		}
 	}
 
+	// 设置呼叫的那个人的资源头像ID
+	public void setCallingRoleSrcID(int srcID)
+	{
+		mCallingRoleSrcID = srcID;
+	}
+	
+	// 获得呼叫的那个人的资源头像ID
+	public int getCallingRoleSrcID()
+	{
+		return mCallingRoleSrcID;
+	}
 }

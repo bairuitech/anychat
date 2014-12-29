@@ -19,7 +19,7 @@
         <item name="android:backgroundDimEnabled">true</item>
         <!--
         <item name="android:windowTitleStyle">@style/dialog_title</item>
-        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:backgroundDimAmount">0.6</item>
         -->
         <item name="android:textColor">@android:color/black</item>
     </style>
@@ -35,14 +35,12 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    
     <style name="common_view">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-         <item name="android:textSize">18sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/t_bg1</item>
-         <item name="android:gravity">center</item>
-        
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="common_txt_style">
@@ -50,6 +48,10 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-    
+
+    <style name="Dialog_Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
 </resources>
