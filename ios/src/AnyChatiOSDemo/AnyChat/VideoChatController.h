@@ -36,6 +36,7 @@
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer    *localVideoSurface;
 @property (nonatomic, strong) UIImageView                   *remoteVideoSurface;
 
+@property (weak, nonatomic) IBOutlet UINavigationBar        *theNavBar;
 
 - (void) OnLocalVideoInit:(id)session;
 

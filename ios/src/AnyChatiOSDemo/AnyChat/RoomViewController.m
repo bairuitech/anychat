@@ -68,15 +68,15 @@
     
     NSUInteger row = [indexPath row];
     
-    NSString* username = [AnyChatPlatform GetUserName:[[onlineUserList objectAtIndex:row] integerValue] ];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@(%d)", username, [[onlineUserList objectAtIndex:row] integerValue]];
+    NSString* username = [AnyChatPlatform GetUserName:[[onlineUserList objectAtIndex:row] intValue]];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@(%i)", username, [[onlineUserList objectAtIndex:row] intValue]];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int userid = [[self.onlineUserList objectAtIndex:[indexPath row]] integerValue];
+    int userid = [[self.onlineUserList objectAtIndex:[indexPath row]] intValue];
     
     [[AnyChatAppDelegate GetApp].viewController showVideoChatView:userid];
 }

@@ -83,7 +83,7 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
         Cell = [nibs objectAtIndex:0];
     }
     
-    NSInteger userID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] intValue];
+    int userID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] intValue];
     NSString *name = [AnyChatPlatform GetUserName:userID];
     
     UILabel *userIDLabel = (UILabel *)[Cell.contentView viewWithTag:kTableVCell_UserIDLabTag];
@@ -114,7 +114,7 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int selectID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] integerValue];
+    int selectID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] intValue];
     
     if (selectID != self.myUserID)
     {
