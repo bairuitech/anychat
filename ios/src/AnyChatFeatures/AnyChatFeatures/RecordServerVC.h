@@ -18,7 +18,6 @@
     AnyChatPlatform     *theAnyChat;
     AVAudioPlayer       *theAudioPlayer;
     NSString            *theServerRecordMZTimerStatus;
-    NSTimer             *theNSTimer;
     
     int theServerRecordFlags;
     int theRecordId;

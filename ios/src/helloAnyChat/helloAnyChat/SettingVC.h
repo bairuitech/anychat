@@ -5,7 +5,11 @@
 
 #import <UIKit/UIKit.h>
 #import "DetailVC.h"
-#import "AnyChatVC.h"
+#import "AnyChatViewController.h"
+
+#import "AnyChatPlatform.h"
+#import "AnyChatDefine.h"
+#import "AnyChatErrorCode.h"
 
 @interface SettingVC : UIViewController <UITableViewDelegate,UITableViewDataSource>
 
@@ -37,8 +41,6 @@
 @property (strong,nonatomic) NSString               *theQualityStr;
 
 
-kGCD_SINGLETON_FOR_HEADER(SettingVC);
-
 - (IBAction)saveBtn_OnClick;
 
 - (NSMutableDictionary *)readPListToMDictionaryAtSandboxPList:(NSString *)thePListName;
@@ -46,7 +48,9 @@ kGCD_SINGLETON_FOR_HEADER(SettingVC);
 - (id)getValuesFromMDict:(NSMutableDictionary *)mainMDict firstMDictKey:(NSString *)firstKey secondValuesKey:(NSString *)secondKey;
 
 //用户自定义视频参数设置
-- (void)updateUserVideoSettings;
+- (void) updateUserVideoSettings;
+
+kGCD_SINGLETON_FOR_HEADER(SettingVC);
 
 @end
 

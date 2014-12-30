@@ -56,7 +56,6 @@
 {
     [super viewWillAppear:YES];
     [self setUI];
-    [self startNSTimer];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -310,7 +309,7 @@
     NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
     if(cameraDeviceArray.count == 2)
     {
-        CurrentCameraDevice = (++CurrentCameraDevice) % 2;
+        CurrentCameraDevice = (CurrentCameraDevice+1) % 2;
         [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
     }
     
@@ -379,75 +378,6 @@
     
     theServerRecordMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theServerRecordTimeLab];
     theServerRecordMZTimer.timeFormat = @"HH:mm:ss";
-}
-
-- (void)startNSTimer
-{
-    theNSTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
-                                                  target:self
-                                                selector:@selector(checkRecordServerVCStatus)
-                                                userInfo:nil
-                                                 repeats:YES];
-    
-    NSRunLoop *runloop = [NSRunLoop currentRunLoop];
-    [runloop addTimer:theNSTimer forMode:NSDefaultRunLoopMode];
-    [theNSTimer fire];
-}
-
--(void)checkRecordServerVCStatus
-{
-    int videoBitrate = [AnyChatPlatform QueryUserStateInt: [AnyChatVC sharedAnyChatVC].theTargetUserID :BRAC_USERSTATE_VIDEOBITRATE];
-    
-    int audioBitrate = [AnyChatPlatform QueryUserStateInt: [AnyChatVC sharedAnyChatVC].theTargetUserID :BRAC_USERSTATE_AUDIOBITRATE];
-    
-    if (videoBitrate > 0)
-    {
-        theFirstGetVideoBitrate = YES;
-    }
-    
-    if(audioBitrate > 0)
-    {
-        theFirstGetAudioBitrate = YES;
-    }
-    
-    if (theFirstGetVideoBitrate)
-    {
-        if (videoBitrate <= 0)
-        {
-            if (self.theVideoBitrateAlertView == nil)
-            {
-                self.theVideoBitrateAlertView = [[UIAlertView alloc] initWithTitle:@"对方视频中断了!"
-                                                                           message:@"The remote user video interrupted."
-                                                                          delegate:self
-                                                                 cancelButtonTitle:nil
-                                                                 otherButtonTitles:@"挂断",@"取消",nil];
-                [self.theVideoBitrateAlertView show];
-            }
-            
-            self.remoteVideoSurface.image = [UIImage imageNamed:@"bg_video"];
-            // Reset status
-            theFirstGetVideoBitrate = NO;
-        }
-    }
-    
-    if (theFirstGetAudioBitrate)
-    {
-        if (audioBitrate <= 0)
-        {
-            if (self.theVideoBitrateAlertView == nil)
-            {
-                self.theVideoBitrateAlertView = [[UIAlertView alloc] initWithTitle:@"对方音频中断了!"
-                                                                           message:@"The remote user Audio interrupted."
-                                                                          delegate:self
-                                                                 cancelButtonTitle:nil
-                                                                 otherButtonTitles:@"挂断",@"取消",nil];
-                [self.theVideoBitrateAlertView show];
-            }
-            
-            theFirstGetAudioBitrate = NO;
-        }
-    }
-    
 }
 
 - (void)setUI

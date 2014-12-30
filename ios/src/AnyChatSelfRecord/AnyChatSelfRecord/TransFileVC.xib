@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TransFileVC">
             <connections>
                 <outlet property="thePhotoProgressLab" destination="2fn-XM-H4A" id="qyY-kd-HVV"/>
+                <outlet property="thePhotoProgressView" destination="oy7-vc-fHr" id="C7f-v2-fkh"/>
                 <outlet property="theVideoProgressLab" destination="64W-FH-qA0" id="eK2-AR-kVm"/>
+                <outlet property="theVideoProgressView" destination="LN9-KQ-gE1" id="nNB-4Q-Q30"/>
                 <outlet property="view" destination="elz-x0-yLi" id="8Jw-mV-WLl"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="elz-x0-yLi">
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" alpha="0.74999999999999978" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_TestMsg.jpg" id="06z-PB-tft" userLabel="Image View - bg">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -110,6 +111,14 @@
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <progressView hidden="YES" appearanceType="aqua" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" id="oy7-vc-fHr" userLabel="Progress View - Photo">
+                    <rect key="frame" x="57" y="166" width="180" height="2"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </progressView>
+                <progressView hidden="YES" appearanceType="aqua" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" id="LN9-KQ-gE1" userLabel="Progress View - Video">
+                    <rect key="frame" x="57" y="252" width="180" height="2"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </progressView>
                 <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2fn-XM-H4A">
                     <rect key="frame" x="175" y="134" width="69" height="21"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>

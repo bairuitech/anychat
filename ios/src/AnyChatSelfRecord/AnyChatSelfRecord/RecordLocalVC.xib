@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecordLocalVC">
             <connections>
-                <outlet property="remoteVideoSurface" destination="epf-Cp-e94" id="Dhh-Im-Wvs"/>
                 <outlet property="theLocalRecordTimeLab" destination="6pY-tK-0Em" id="OOX-dR-VKB"/>
                 <outlet property="theLocalView" destination="39h-kC-zCb" id="EFG-8S-h6D"/>
                 <outlet property="theLocolFunBtn" destination="9D8-KI-Nz2" id="XFE-9g-jQK"/>

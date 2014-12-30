@@ -45,7 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
     
     [AnyChatPlatform InitSDK:0];
@@ -106,7 +106,7 @@
     
     if (theMyUserID == userID)
     {
-        nameLabel.text = [name stringByAppendingString:@"(自己)"];
+        nameLabel.text = [name stringByAppendingString:@"(自己)[视频设置]"];
     }
     else
     {
@@ -123,17 +123,6 @@
     return Cell;
 }
 
--(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row)
-    {   //Display Cell end of loading
-        theOnLineLoginState = YES;
-    }
-    else
-    {
-        theOnLineLoginState = NO;
-    }
-}
 
 #pragma mark - Table view delegate
 
@@ -145,6 +134,11 @@
         videoVC = [VideoViewController new];
         videoVC.iRemoteUserId = selectID;
         [self.navigationController pushViewController:videoVC animated:YES];
+    }
+    else
+    {
+        SettingVC *settingVC = [SettingVC new];
+        [self.navigationController pushViewController:settingVC animated:YES];
     }
 }
 
@@ -214,7 +208,7 @@
     {
         [self timeOutMsg];
     }
-
+    
     [onLineUserTableView reloadData];
 }
 
@@ -320,13 +314,13 @@
         
         if([userName length] == 0)
         {
-            theUserName.text = @"HelloAnyChat";
+            theUserName.text = @"AnyChat";
             userName = theServerIP.text;
         }
     }
     else
     {
-        theUserName.text = @"HelloAnyChat";
+        theUserName.text = @"AnyChat";
         userName = theUserName.text;
     }
     return userName;
@@ -427,17 +421,14 @@
 
 - (void) OnLogout
 {
-    if (theOnLineLoginState == YES)
-    {
-        [AnyChatPlatform LeaveRoom:-1];
-        [AnyChatPlatform Logout];
-        
-        theOnLineLoginState = NO;
-        [onlineUserMArray removeAllObjects];
-        [onLineUserTableView reloadData];
-        theStateInfo.text = @"• Logout Server.";
-        [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
-    }
+    [AnyChatPlatform LeaveRoom:-1];
+    [AnyChatPlatform Logout];
+    
+    theOnLineLoginState = NO;
+    [onlineUserMArray removeAllObjects];
+    [onLineUserTableView reloadData];
+    theStateInfo.text = @"• Logout Server.";
+    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
 }
 
 - (int)getRandomNumber:(int)from to:(int)to
@@ -469,12 +460,13 @@
 - (void)onLoginLoadingAnimatedRunTime
 {
     int theTimes = 0;
-    while (theOnLineLoginState == NO && theTimes < 6)
+    while (theOnLineLoginState == NO && theTimes < 10)
     {
         sleep(1);
         theTimes++;
         
-        if (theTimes == 5 ) {
+        if (theTimes == 9 )
+        {
             [self timeOutMsg];
         }
     }
@@ -508,7 +500,7 @@
     {
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
-
+    
     if (k_iPhone4)
     {
         onLineUserTableView.frame = CGRectMake(0, 240, 320, 210);

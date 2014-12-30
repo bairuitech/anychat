@@ -1,7 +1,4 @@
 //
-//  SettingsViewController.m
-//  AnyChatCallCenter
-//
 //  Created by alexChen  .
 //  Copyright (c) 2014年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
 //
@@ -81,9 +78,6 @@
 
 - (IBAction)returnBtn_OnClick
 {
-    RecordLocalVC *recordLocalVC = [RecordLocalVC new];
-    [recordLocalVC StartVideoChat:123456];  //DIYServerID
-    
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2]
                                           animated:YES];
 }

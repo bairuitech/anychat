@@ -20,13 +20,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <items>
-                        <navigationItem title="回放录制视频" id="M2m-Ov-et2">
-                            <barButtonItem key="leftBarButtonItem" systemItem="reply" id="nDo-75-55k" userLabel="Item - 返回">
-                                <connections>
-                                    <action selector="returnBtn_OnClick" destination="-1" id="HZn-Sg-qLh"/>
-                                </connections>
-                            </barButtonItem>
-                        </navigationItem>
+                        <navigationItem title="回放录制视频" id="M2m-Ov-et2"/>
                     </items>
                 </navigationBar>
                 <view appearanceType="aqua" contentMode="scaleToFill" id="XRn-Nh-KUV">

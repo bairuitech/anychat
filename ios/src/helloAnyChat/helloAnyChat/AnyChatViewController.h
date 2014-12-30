@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "MBProgressHUD.h"
 #import "VideoViewController.h"
+#import "SettingVC.h"
 
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"

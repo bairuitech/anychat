@@ -353,11 +353,12 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
     else
     {
         UIAlertView *showInfoAlertView = [[UIAlertView alloc] initWithTitle:@"参数不能为空."
-                                                                    message:@"Video Settings cannot be empty."
-                                                                   delegate:self
-                                                          cancelButtonTitle:nil
-                                                          otherButtonTitles:@"确定",nil];
+                                                                   message:@"Video Settings cannot be empty."
+                                                                  delegate:self
+                                                         cancelButtonTitle:nil
+                                                         otherButtonTitles:@"确定",nil];
         [showInfoAlertView show];
+
     }
 }
 
@@ -411,7 +412,7 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
 
 #pragma mark - User-defined video parameter Settings
 // 更新用户自定义视频参数设置
-- (void)updateUserVideoSettings
+- (void) updateUserVideoSettings
 {
     //read user data
     NSMutableDictionary *theMDict = [self readPListToMDictionaryAtSandboxPList:@"UserVideoSettings.plist"];

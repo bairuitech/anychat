@@ -1,7 +1,4 @@
 //
-//  TakePhotoVC.m
-//  AnyChatCallCenter
-//
 //  Created by alexChen  .
 //  Copyright (c) 2014年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
 //
@@ -14,13 +11,9 @@
 
 @implementation TakePhotoVC
 
-@synthesize iRemoteUserId;
-@synthesize remoteVideoSurface;
 @synthesize localVideoSurface;
 @synthesize theLocalView;
 @synthesize isFinishVideoActSheet;
-@synthesize theVideoBitrateAlertView;
-@synthesize theTakePhotoPath;
 
 
 #pragma mark -
@@ -37,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self StartVideoChat:self.iRemoteUserId];
+    [self StartVideoChat:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -97,29 +90,20 @@
     [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
     [AnyChatPlatform UserCameraControl:-1 : YES];
     
-    // request other user video
-    [AnyChatPlatform UserSpeakControl: userid:YES];
-    [AnyChatPlatform SetVideoPos:userid: self.remoteVideoSurface:0:0:0:0];
-    [AnyChatPlatform UserCameraControl:userid : YES];
-    
-    self.iRemoteUserId = userid;
-    
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
 }
 
 - (IBAction)takePhotoBtn_OnClicked:(id)sender
 {
-    AudioServicesPlaySystemSound(1108);
-    [AnyChatPlatform SnapShot:-1 :BRAC_RECORD_FLAGS_SNAPSHOT :0];   //DIYServerID
+    //"0" parameter ： Uploaded to the server
+    [AnyChatPlatform SnapShot:-1 :BRAC_RECORD_FLAGS_SNAPSHOT :0];
 }
 
 - (void) FinishVideoChat
 {
+    // close local video
     [AnyChatPlatform UserSpeakControl: -1 : NO];
     [AnyChatPlatform UserCameraControl: -1 : NO];
-    
-    [AnyChatPlatform UserSpeakControl: self.iRemoteUserId : NO];
-    [AnyChatPlatform UserCameraControl: self.iRemoteUserId : NO];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -165,8 +149,6 @@
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_HEIGHTCTRL :288];
     
     RecordLocalVC *recordLocalVC = [RecordLocalVC new];
-    [recordLocalVC StartVideoChat:123456];   //DIYServerID
-    
     [self.navigationController pushViewController:recordLocalVC animated:YES];
 }
 

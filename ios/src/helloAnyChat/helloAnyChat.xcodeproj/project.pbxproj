@@ -53,6 +53,12 @@
 		FEA9264A19E4EEB300FC42AC /* Icon_name.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA9264819E4EEB300FC42AC /* Icon_name.png */; };
 		FEA9264B19E4EEB300FC42AC /* Icon_room.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA9264919E4EEB300FC42AC /* Icon_room.png */; };
 		FEAD553119F497BF009CAD8C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FEAD552F19F497BF009CAD8C /* MBProgressHUD.m */; };
+		FEB0A3711A523BE50065FDB7 /* SettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB0A3691A523BE50065FDB7 /* SettingVC.m */; };
+		FEB0A3721A523BE50065FDB7 /* DetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB0A36C1A523BE50065FDB7 /* DetailVC.m */; };
+		FEB0A3731A523BE50065FDB7 /* DetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEB0A36D1A523BE50065FDB7 /* DetailVC.xib */; };
+		FEB0A3741A523BE50065FDB7 /* SettingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEB0A36E1A523BE50065FDB7 /* SettingVC.xib */; };
+		FEB0A3751A523BE50065FDB7 /* UserVideoSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEB0A36F1A523BE50065FDB7 /* UserVideoSettings.plist */; };
+		FEB0A3761A523BE50065FDB7 /* VideoSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEB0A3701A523BE50065FDB7 /* VideoSettings.plist */; };
 		FEB863E019F0E6BE00594BF5 /* bg_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB863DF19F0E6BE00594BF5 /* bg_video@2x.png */; };
 		FEBBA25119C2CC0B009EE02C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA25019C2CC0B009EE02C /* Foundation.framework */; };
 		FEBBA25319C2CC0B009EE02C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBBA25219C2CC0B009EE02C /* CoreGraphics.framework */; };
@@ -134,6 +140,14 @@
 		FEA9264919E4EEB300FC42AC /* Icon_room.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_room.png; path = helloAnyChat/Resources/Icon_room.png; sourceTree = "<group>"; };
 		FEAD552F19F497BF009CAD8C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = helloAnyChat/MBProgressHUD.m; sourceTree = "<group>"; };
 		FEAD553019F497BF009CAD8C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = helloAnyChat/MBProgressHUD.h; sourceTree = "<group>"; };
+		FEB0A3691A523BE50065FDB7 /* SettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingVC.m; path = helloAnyChat/SettingVC.m; sourceTree = "<group>"; };
+		FEB0A36A1A523BE50065FDB7 /* SettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingVC.h; path = helloAnyChat/SettingVC.h; sourceTree = "<group>"; };
+		FEB0A36B1A523BE50065FDB7 /* DetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailVC.h; path = helloAnyChat/DetailVC.h; sourceTree = "<group>"; };
+		FEB0A36C1A523BE50065FDB7 /* DetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailVC.m; path = helloAnyChat/DetailVC.m; sourceTree = "<group>"; };
+		FEB0A36D1A523BE50065FDB7 /* DetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailVC.xib; path = helloAnyChat/DetailVC.xib; sourceTree = "<group>"; };
+		FEB0A36E1A523BE50065FDB7 /* SettingVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingVC.xib; path = helloAnyChat/SettingVC.xib; sourceTree = "<group>"; };
+		FEB0A36F1A523BE50065FDB7 /* UserVideoSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = UserVideoSettings.plist; path = helloAnyChat/UserVideoSettings.plist; sourceTree = "<group>"; };
+		FEB0A3701A523BE50065FDB7 /* VideoSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = VideoSettings.plist; path = helloAnyChat/VideoSettings.plist; sourceTree = "<group>"; };
 		FEB863DF19F0E6BE00594BF5 /* bg_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_video@2x.png"; path = "helloAnyChat/Resources/bg_video@2x.png"; sourceTree = "<group>"; };
 		FEBBA24D19C2CC0B009EE02C /* helloAnyChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = helloAnyChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEBBA25019C2CC0B009EE02C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -267,7 +281,9 @@
 		FEBBA24419C2CC0B009EE02C = {
 			isa = PBXGroup;
 			children = (
+				FED273EF1A5160FA00DC64AD /* AnyChatSDK */,
 				FEBBA25619C2CC0B009EE02C /* helloAnyChat */,
+				FED273F01A51610D00DC64AD /* Setting */,
 				FE01D91119D41858005D1189 /* Resources */,
 				FECF537D19EFB5D200338859 /* Reference */,
 				FEBBA24F19C2CC0B009EE02C /* Frameworks */,
@@ -306,8 +322,6 @@
 		FEBBA25619C2CC0B009EE02C /* helloAnyChat */ = {
 			isa = PBXGroup;
 			children = (
-				FEBBA27F19C2CD0D009EE02C /* include */,
-				FEBBA28319C2CD0D009EE02C /* libs */,
 				FEBBA25F19C2CC0B009EE02C /* AppDelegate.h */,
 				FEBBA26019C2CC0B009EE02C /* AppDelegate.m */,
 				FEBBA2B719C2CF67009EE02C /* AnyChatViewController.h */,
@@ -415,6 +429,31 @@
 			name = images;
 			sourceTree = "<group>";
 		};
+		FED273EF1A5160FA00DC64AD /* AnyChatSDK */ = {
+			isa = PBXGroup;
+			children = (
+				FEBBA27F19C2CD0D009EE02C /* include */,
+				FEBBA28319C2CD0D009EE02C /* libs */,
+			);
+			name = AnyChatSDK;
+			path = helloAnyChat;
+			sourceTree = "<group>";
+		};
+		FED273F01A51610D00DC64AD /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				FEB0A3691A523BE50065FDB7 /* SettingVC.m */,
+				FEB0A36A1A523BE50065FDB7 /* SettingVC.h */,
+				FEB0A36B1A523BE50065FDB7 /* DetailVC.h */,
+				FEB0A36C1A523BE50065FDB7 /* DetailVC.m */,
+				FEB0A36D1A523BE50065FDB7 /* DetailVC.xib */,
+				FEB0A36E1A523BE50065FDB7 /* SettingVC.xib */,
+				FEB0A36F1A523BE50065FDB7 /* UserVideoSettings.plist */,
+				FEB0A3701A523BE50065FDB7 /* VideoSettings.plist */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -466,11 +505,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEB0A3751A523BE50065FDB7 /* UserVideoSettings.plist in Resources */,
 				FE9DD09C19DA4F92008889EC /* 1.png in Resources */,
 				FE85404619D515A800253FA0 /* tableVCell.xib in Resources */,
 				FEA9264A19E4EEB300FC42AC /* Icon_name.png in Resources */,
 				FE20E49B19D968A800189A8A /* bg.png in Resources */,
 				FE3EAB6019E5233A00030ECA /* Default-568h@2x.png in Resources */,
+				FEB0A3731A523BE50065FDB7 /* DetailVC.xib in Resources */,
 				FECF537B19EFA72100338859 /* Icon_noVoice.png in Resources */,
 				FE20E49819D960C200189A8A /* btn_login_01.png in Resources */,
 				FEBBA25B19C2CC0B009EE02C /* InfoPlist.strings in Resources */,
@@ -486,8 +527,10 @@
 				FE20E49719D960C200189A8A /* btn_logout_01.png in Resources */,
 				FECF537A19EFA72100338859 /* Icon_noCamera.png in Resources */,
 				FEC56CBD19D7B0320008EA42 /* Icon@2x.png in Resources */,
+				FEB0A3741A523BE50065FDB7 /* SettingVC.xib in Resources */,
 				FE9DD0A019DA4F92008889EC /* 4.png in Resources */,
 				FE3EAB6119E5233A00030ECA /* Default@2x.png in Resources */,
+				FEB0A3761A523BE50065FDB7 /* VideoSettings.plist in Resources */,
 				FECF537719EFA72100338859 /* bg_video_footer.png in Resources */,
 				FE9DD09F19DA4F92008889EC /* 3.png in Resources */,
 				FEBBA2BB19C2CF67009EE02C /* AnyChatViewController.xib in Resources */,
@@ -507,7 +550,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEBBA26119C2CC0B009EE02C /* AppDelegate.m in Sources */,
+				FEB0A3711A523BE50065FDB7 /* SettingVC.m in Sources */,
 				FEBBA25D19C2CC0B009EE02C /* main.m in Sources */,
+				FEB0A3721A523BE50065FDB7 /* DetailVC.m in Sources */,
 				FEAD553119F497BF009CAD8C /* MBProgressHUD.m in Sources */,
 				FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */,
 				FEBBA2BA19C2CF67009EE02C /* AnyChatViewController.m in Sources */,

@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TakePhotoVC">
             <connections>
-                <outlet property="remoteVideoSurface" destination="gvn-o5-Q4l" id="kS7-qC-Obz"/>
                 <outlet property="theLocalView" destination="1lf-gF-ocb" id="d2E-Cp-0lO"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>

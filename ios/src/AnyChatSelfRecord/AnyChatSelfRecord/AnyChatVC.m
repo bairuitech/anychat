@@ -1,7 +1,4 @@
 //
-//  AnyChatVC.m
-//  AnyChatFeatures
-//
 //  Created by alexChen .
 //  Copyright (c) 2014年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
 //
@@ -119,6 +116,9 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
+        //用户自定义视频参数设置
+        [[SettingVC sharedSettingVC] updateUserVideoSettings];
+        
         theLoginState = YES;
         self.theMyUserID = dwUserId;
         self.theMyUserName = self.theUserName.text;
@@ -138,15 +138,11 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 进入房间消息
 - (void) OnAnyChatEnterRoom:(int) dwRoomId : (int) dwErrorCode
 {
-    //用户自定义视频参数设置
-    [[SettingVC sharedSettingVC] updateUserVideoSettings];
-    
     //拍照最佳像素
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_WIDTHCTRL :1280];
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_HEIGHTCTRL :720];
     
     TakePhotoVC *takePhotoVC = [[TakePhotoVC alloc] init];
-    [takePhotoVC StartVideoChat:123456];  //DIYServerID
     [self.navigationController pushViewController:takePhotoVC animated:YES];
 }
 
@@ -212,8 +208,6 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     
     ShowVC *showVC = [ShowVC new];
     [self.navigationController pushViewController:showVC animated:YES];
-    
-//    NSLog(@"\n\n lpFileName %@",lpFileName);
 }
 
 // 抓拍完成事件
@@ -227,7 +221,6 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     if (lpFileName)
     {
         self.thePhotoPath = lpFileName;
-//        NSLog(@"\n %@",self.thePhotoPath);
     }
     
 }

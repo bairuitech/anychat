@@ -1,7 +1,4 @@
 //
-//  RecordLocalVC.m
-//  AnyChatFeatures
-//
 //  Created by alexChen  .
 //  Copyright (c) 2014年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
 //
@@ -14,18 +11,11 @@
 
 @implementation RecordLocalVC
 
-@synthesize iRemoteUserId;
-@synthesize remoteVideoSurface;
 @synthesize localVideoSurface;
 @synthesize theLocalView;
 @synthesize theLocolFunBtn;
-@synthesize theTakePhotoPath;
-@synthesize theCurrentRotation;
 @synthesize theLocalRecordTimeLab;
 @synthesize theLocalRecordMZTimer;
-@synthesize theRecordVideoTypeActSheet;
-@synthesize theVideoBitrateAlertView;
-@synthesize theTimes;
 
 
 #pragma mark -
@@ -43,7 +33,7 @@
 {
     [super viewDidLoad];
     
-    [self StartVideoChat:self.iRemoteUserId];
+    [self StartVideoChat:0];
     [self setTheTimer];
 }
 
@@ -101,19 +91,12 @@
     [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
     [AnyChatPlatform UserCameraControl:-1 : YES];
     
-    // request other user video
-    [AnyChatPlatform UserSpeakControl: userid:YES];
-    [AnyChatPlatform SetVideoPos:userid: self.remoteVideoSurface:0:0:0:0];
-    [AnyChatPlatform UserCameraControl:userid : YES];
-    
-    self.iRemoteUserId = userid;
-    
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
 }
 
 - (IBAction)recordLocolBtn_OnClicked:(id)sender
 {
-    theRecordId = -1;     //DIYServerID
+    int theRecordId = -1;
     theLocalRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_LOCALCB;
     
     if (theLocolFunBtn.selected == NO)
@@ -154,22 +137,11 @@
 {
     [AnyChatPlatform UserSpeakControl: -1 : NO];
     [AnyChatPlatform UserCameraControl: -1 : NO];
-    
-    [AnyChatPlatform UserSpeakControl: self.iRemoteUserId : NO];
-    [AnyChatPlatform UserCameraControl: self.iRemoteUserId : NO];
-
 }
 
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
-}
-
-- (IBAction)videoPlayBackBtn_OnClicked
-{
-    ProviewPhotoVC *theShowVC = [ProviewPhotoVC new];
-    theShowVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self.navigationController presentViewController:theShowVC animated:YES completion:nil];
 }
 
 - (void) OnLocalVideoRelease:(id)sender
@@ -219,9 +191,6 @@
 - (IBAction)returnBtn_OnClick
 {
     [self FinishVideoChat];
-    TakePhotoVC *takePhotoVC = [TakePhotoVC new];
-    [takePhotoVC StartVideoChat:123456];  //DIYServerID
-    
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]
                                           animated:YES];
 }

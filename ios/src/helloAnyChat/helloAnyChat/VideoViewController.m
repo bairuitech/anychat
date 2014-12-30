@@ -225,7 +225,7 @@
     NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
     if(cameraDeviceArray.count == 2)
     {
-        CurrentCameraDevice = (++CurrentCameraDevice) % 2;
+        CurrentCameraDevice = (CurrentCameraDevice+1) % 2;
         [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
     }
     

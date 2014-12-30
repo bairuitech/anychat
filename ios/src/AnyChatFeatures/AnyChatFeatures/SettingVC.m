@@ -1,7 +1,4 @@
 //
-//  SettingVC.m
-//  AnyChatFeatures
-//
 //  Created by alexChen  .
 //  Copyright (c) 2014年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
 //
@@ -355,7 +352,12 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
     }
     else
     {
-        [[AnyChatVC sharedAnyChatVC] showInfoAlertView:@"参数不能为空." :@"Video Settings cannot be empty."];
+        UIAlertView *showInfoAlertView = [[UIAlertView alloc] initWithTitle:@"参数不能为空."
+                                                                    message:@"Video Settings cannot be empty."
+                                                                   delegate:self
+                                                          cancelButtonTitle:nil
+                                                          otherButtonTitles:@"确定",nil];
+        [showInfoAlertView show];
     }
 }
 

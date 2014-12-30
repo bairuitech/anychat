@@ -1,7 +1,4 @@
 //
-//  TransFileVC.m
-//  AnyChatFeatures
-//
 //  Created by alexChen  .
 //  Copyright (c) 2014年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
 //
@@ -20,7 +17,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.theTransFileBtnTimes = 0;
     }
     return self;
 }
@@ -31,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.theTransFileBtnTimes = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -45,8 +42,7 @@
     
     self.theTransFileBtnTimes = 0;
     
-    //关闭定时器
-    [theNSTimer setFireDate:[NSDate distantFuture]];
+    //close NSTimer
     [theNSTimer invalidate];
     theNSTimer = nil;
 }
@@ -75,7 +71,6 @@
 {
     RecordLocalVC *recordLocalVC = [RecordLocalVC new];
     [recordLocalVC FinishVideoChat];
-    [recordLocalVC StartVideoChat:123456];  //DIYServerID
     
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2]
                                           animated:YES];
@@ -98,8 +93,7 @@
             [theMDict setValue:[[NSNumber alloc] initWithInt:photoTaskID] forKey:@"photoTaskID"];
             [theMDict setValue:[[NSNumber alloc] initWithInt:videoTaskID] forKey:@"videoTaskID"];
             
-            //创建定时器
-            theNSTimer =  [NSTimer scheduledTimerWithTimeInterval:0.6
+            theNSTimer =  [NSTimer scheduledTimerWithTimeInterval:0.5
                                                            target:self
                                                          selector:@selector(progressLoading:)
                                                          userInfo:theMDict
@@ -111,6 +105,7 @@
         {
             [[AnyChatVC sharedAnyChatVC] showInfoAlertView:@"上传失败，信息内容完整。"
                                                           :@"Warning"];
+            self.theTransFileBtnTimes = 0;
         }
     }
     
@@ -125,6 +120,7 @@
     
     return formatStr;
 }
+
 
 #pragma mark - Rotation
 
@@ -157,18 +153,19 @@
     int thevideoProgress = [[self newFloat:videoTaskIDProgress withNumber:0] intValue];
     
     
-    //LoadingView
+    //Photo Progress
+    self.thePhotoProgressView.progress = thephotoProgress;
     NSString *thephotoProgressStr = [[NSString alloc] initWithFormat:@"%i",thephotoProgress];
     self.thePhotoProgressLab.text = [thephotoProgressStr stringByAppendingString:@"%"];
     
-    //LoadingView
+    //Video Progress
+    self.theVideoProgressView.progress = thevideoProgress;
     NSString *thevideoProgressStr = [[NSString alloc] initWithFormat:@"%i",thevideoProgress];
     self.theVideoProgressLab.text = [thevideoProgressStr stringByAppendingString:@"%"];
     
     if (thevideoProgress == 100 && thephotoProgress == 100)
     {
-        //关闭定时器
-        [theNSTimer setFireDate:[NSDate distantFuture]];
+        //close NSTimer
         [theNSTimer invalidate];
         theNSTimer = nil;
         

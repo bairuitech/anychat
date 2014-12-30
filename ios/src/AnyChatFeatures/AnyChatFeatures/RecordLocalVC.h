@@ -23,7 +23,6 @@
     AVAudioPlayer       *theAudioPlayer;
     NSString            *theLocalRecordMZTimerStatus;
     NSString            *theServerRecordMZTimerStatus;
-    NSTimer             *theNSTimer;
     
     BOOL theFirstGetVideoBitrate;
     BOOL theFirstGetAudioBitrate;
