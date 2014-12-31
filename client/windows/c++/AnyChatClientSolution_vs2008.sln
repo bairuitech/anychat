@@ -1,11 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BRAnyChatSDKDemo", "BRAnyChatSDKDemo\BRAnyChatSDKDemo.vcproj", "{37F7F182-1EDC-423B-A654-BAF178379D2C}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BRAnyChatSDKDemo", "BRAnyChatSDKDemo\BRAnyChatSDKDemo.vcxproj", "{37F7F182-1EDC-423B-A654-BAF178379D2C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnyChatInputVideo", "AnyChatInputVideo\AnyChatInputVideo.vcproj", "{3F8BC1C6-4D75-4350-81E6-D19F85DDEEDB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnyChatVideoMixer", "AnyChatVideoMixer\AnyChatVideoMixer.vcproj", "{9E00D5BE-A553-4A4D-A392-420F572E2588}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnyChatVideoMixer", "AnyChatVideoMixer\AnyChatVideoMixer.vcxproj", "{9E00D5BE-A553-4A4D-A392-420F572E2588}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hello AnyChat", "Hello AnyChat\Hello AnyChat.vcxproj", "{217166EB-5150-1FA2-E8C5-1835A860F09D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{9E00D5BE-A553-4A4D-A392-420F572E2588}.Debug|Win32.Build.0 = Debug|Win32
 		{9E00D5BE-A553-4A4D-A392-420F572E2588}.Release|Win32.ActiveCfg = Release|Win32
 		{9E00D5BE-A553-4A4D-A392-420F572E2588}.Release|Win32.Build.0 = Release|Win32
+		{217166EB-5150-1FA2-E8C5-1835A860F09D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{217166EB-5150-1FA2-E8C5-1835A860F09D}.Debug|Win32.Build.0 = Debug|Win32
+		{217166EB-5150-1FA2-E8C5-1835A860F09D}.Release|Win32.ActiveCfg = Release|Win32
+		{217166EB-5150-1FA2-E8C5-1835A860F09D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
