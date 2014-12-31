@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>AnyChatUDP追踪</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<!-- 加载AnyChat for Web SDK库  -->
+		<script language="javascript" type="text/javascript" src="js/anychatsdk.js"></script>
+		<!-- 加载业务逻辑控制脚本  -->
+		<script language="javascript" type="text/javascript" src="js/logicfunc.js"></script>
+		<script language="javascript" type="text/javascript" src="js/anychatevent.js"></script>
+		<!-- 样式 -->
+		<link href="css/demo.css" rel="Stylesheet" type="text/css" />
+
+	</head>
+
+	<body onload="LogicInit()">
+	<div id="getIp"></div>
+		<!--灰色背景透明层 -->
+		<div id="LOADING_GREY_DIV"></div>
+		<!--操作等待层 -->
+		<div id="LOADING_DIV">
+			<img src="img/LoadImg.gif" alt="请等待..." style="height: 50px;" />
+		</div>
+
+		<div id="div_body">
+			<div id="banner">
+
+			</div>
+			<div id="mainer">
+				<!--登录层 -->
+				<div id="login_div">
+					<div id="login_div_child">
+
+						<div style="height: 55px;">
+							<div id="login_title">
+							</div>
+							<div id="cutoff_div"></div>
+						</div>
+						<div class="wordage">
+							用户名:&nbsp;
+							<input type="text" id="username" />
+						</div>
+						<div class="wordage">
+							服务器:&nbsp;
+							<input type="text" id="ServerAddr" />
+						</div>
+
+						<div class="wordage">
+							端&nbsp;&nbsp;口&nbsp;:&nbsp;
+							<input type="text" id="ServerPort" />
+						</div>
+
+						<div id="newControl">
+							<label for="sendRadio">
+								发送方
+							</label>
+							<input type="radio" id="sendRadio" name="radiobutton" value="0"/>
+							&nbsp;&nbsp;&nbsp;
+							<label for="reciveRadio">
+								接收方
+							</label>
+							<input type="radio" id="reciveRadio" name="radiobutton" value="1"/>
+						</div>
+
+						<div id="Btn_div">
+							<div id="loginRoom" onmouseover="loginBtn('0')" onmouseout="loginBtn('1')">
+								立&nbsp;&nbsp;即&nbsp;&nbsp;体&nbsp;&nbsp;验
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<center>
+					<!--安装插件提示层 -->
+					<div id="prompt_div">
+						<div class="close_div">
+							<div id="prompt_div_headline1">
+								插件安装提示
+							</div>
+							<div id="prompt_div_headline2">
+								刷新
+							</div>
+						</div>
+						<div>
+							<div id="prompt_div_line1"></div>
+							<div id="prompt_div_line2">
+								控件安装完成后，请重启浏览器
+							</div>
+							<div id="prompt_div_btn_load" onclick=window.open('http://anychat.oss.aliyuncs.com/AnyChatWebSetup.exe');>
+								下载安装
+							</div>
+						</div>
+						<div style="height: 85px;">
+							<div id="prompt_div_BR">
+								<a href="http://www.anychat.cn/">AnyChat</a>&nbsp|&nbsp
+								<a href="http://www.bairuitech.com/">佰锐科技</a>
+							</div>
+						</div>
+					</div>
+
+					<!--AnyChatUDP追踪  -->
+					<div id="main_box">
+						<div class="box">
+							<fieldset>
+								<legend>
+									<em id="sendName">用户名1</em>
+								</legend>
+								<br />
+								<div>
+									<p>
+										IP地址:
+									</p>
+									<span id="sendIP">127.0.0.1</span>
+								</div>
+								<div>
+									<p>
+										归属地:
+									</p>
+									<span id="sendLocaltion">地址</span>
+								</div>
+								<div class="computer1"></div>
+
+								<div class="msgBox">
+
+									<p>
+										发送数据包:
+									</p>
+									<span id="local_send">0</span>
+									<br />
+									<br />
+									<div id="hidden">
+									<p>
+										收到的数据:
+									</p>
+									<span id="local_recv">0</span>
+									<br />
+									<br />
+									<p>
+										丢包率:
+									</p>
+									<span id="lostPercent">0.00%</span>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="box">
+							<fieldset>
+								<legend>
+									<em>服务器</em>
+								</legend>
+								<br/>
+<p> IP地址: </p>
+<span id="serverIP"></span>
+<br/>
+<p> 归属地: </p><span id="serverLocaltion"></span>
+								<div id="serverImg" class="server1"></div>
+
+								<div class="msgBox">
+									<p>
+										收到数据包:
+									</p>
+									<span id="server_recv">0</span>
+									
+									
+								</div>
+							</fieldset>
+						</div>
+						<div class="box">
+							<fieldset id="otherUser">
+								<legend>
+									<em id="remoteName">用户名2</em>
+								</legend>
+								<br />
+								<div>
+									<p>
+										IP地址:
+									</p>
+									<span id="remoteIP">IP地址</span>
+								</div>
+
+								<div>
+									<p>
+										归属地:
+									</p>
+									<span id="remotelocaltion">地址</span>
+								</div>
+
+								<div class="computer2"></div>
+
+								<div class="msgBox">
+									
+									<p>
+										收到数据包:
+									</p>
+									<span id="remote_recv">0</span>
+									<br />
+									<br />
+									<p>
+										丢包率:
+									</p>
+									<span id="remote_percent">0.00%</span>
+								</div>
+							</fieldset>
+							<fieldset id="UDP_control" style="display: none;">
+								<legend>
+									<em>控制器</em>
+								</legend>
+								<br />
+								<div id="inputBox">
+									速率：
+									<input type="text" id="uploadKbps" />&nbsp;Kbps
+									<input type="button" id="uploadStart" value="开始测试" />
+									<input type="button" id="uploadStop" value="停止测试" />
+								</div>
+								<h2 style="color: red;">
+									操作指南
+								</h2>
+								<p>
+									输入速率后点击“开始测试”即可获取UDP网络通畅情况
+									&nbsp;(<strong style="background:yellow">注意:</strong>在发送方和接收方同时登录后方可开始测试)
+								</p>
+							</fieldset>
+						</div>
+						<div id="u1_send" title="发送方发送至服务器">
+							><span>></span>>>>>
+						</div>
+						<div id="server_sendtoU1" title="服务器转发">
+							<<<<span><</span><<
+						</div>
+						<div id="server_sendtoU2" title="服务器发送至接收方">
+							>>><span>></span>>>
+						</div>
+						<div id="close">
+×
+<div>
+					</div>
+				</center>
+			</div>
+			
+		</div>
+	</body>
+	
+</html>
