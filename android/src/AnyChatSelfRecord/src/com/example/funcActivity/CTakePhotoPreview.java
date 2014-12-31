@@ -55,7 +55,7 @@ public class CTakePhotoPreview extends Activity implements AnyChatBaseEvent{
 		if (file.exists()) {
 			mPreviewPicIV.setImageBitmap(BaseMethod.getImageThumbnail(
 					mCustomApplication.getTakePhotoPath(),
-					ScreenInfo.WIDTH - 120, ScreenInfo.HEIGHT - 160));
+					ScreenInfo.WIDTH, ScreenInfo.HEIGHT - 60));
 		}
 	}
 

@@ -96,8 +96,7 @@ public class CSingleVideo extends Activity implements AnyChatBaseEvent,
 						+ "/Recording/");
 
 		mdwFlags = AnyChatDefine.BRAC_RECORD_FLAGS_AUDIO
-				+ AnyChatDefine.BRAC_RECORD_FLAGS_VIDEO
-				+ AnyChatDefine.BRAC_RECORD_FLAGS_STREAM;
+				+ AnyChatDefine.BRAC_RECORD_FLAGS_VIDEO;
 	}
 
 	private void InitLayout() {

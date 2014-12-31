@@ -75,7 +75,7 @@ public class CVideoRecordPreview extends Activity implements AnyChatBaseEvent{
 		if (file.exists()) {
 			mVideoPreviewIV.setImageBitmap(BaseMethod.getVideoThumbnail(
 					mCustomApplication.getVideoRecordingPath(),
-					ScreenInfo.WIDTH, ScreenInfo.HEIGHT - 60,
+					ScreenInfo.WIDTH, ScreenInfo.HEIGHT/2 - 60,
 					MediaStore.Images.Thumbnails.MICRO_KIND));
 		}
 
