@@ -260,7 +260,7 @@ kGCD_SINGLETON_FOR_CLASS(TransFileVC);
 -(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSString *s_type = [info objectForKey:UIImagePickerControllerMediaType];
-    NSString *s_ImageName = [[NSString alloc] initWithFormat:@"%@_%@.png",[self getTimeNow],[AnyChatVC sharedAnyChatVC].theMyUserName];
+    NSString *s_ImageName = [[NSString alloc] initWithFormat:@"%@.png",[self getTimeNow]];
     NSString *s_Path_ImageName = [[NSString alloc] initWithFormat:@"/%@",s_ImageName];
     
     //photo type
