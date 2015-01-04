@@ -59,10 +59,8 @@
     
     self.theVideoRecordMArray = [[NSMutableArray alloc] initWithCapacity:5];
     
-    // 用户信息控制(开启网络状态信息的调试模式)
-    int infotype = 3;
-    [AnyChatPlatform UserInfoControl:-1 :BRAC_USERINFO_CTRLCODE_DEBUGLOG :infotype :1 :@""];
-
+    //创建默认视频参数
+    [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
 }
 
 - (void)viewWillAppear:(BOOL)animated

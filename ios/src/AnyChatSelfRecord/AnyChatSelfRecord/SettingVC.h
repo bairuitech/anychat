@@ -45,6 +45,8 @@ kGCD_SINGLETON_FOR_HEADER(SettingVC);
 
 - (id)getValuesFromMDict:(NSMutableDictionary *)mainMDict firstMDictKey:(NSString *)firstKey secondValuesKey:(NSString *)secondKey;
 
+- (void)createObjPlistFileToDocumentsPath;
+
 //用户自定义视频参数设置
 - (void)updateUserVideoSettings;
 

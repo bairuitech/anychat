@@ -442,8 +442,8 @@
 		FED273F01A51610D00DC64AD /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				FEB0A3691A523BE50065FDB7 /* SettingVC.m */,
 				FEB0A36A1A523BE50065FDB7 /* SettingVC.h */,
+				FEB0A3691A523BE50065FDB7 /* SettingVC.m */,
 				FEB0A36B1A523BE50065FDB7 /* DetailVC.h */,
 				FEB0A36C1A523BE50065FDB7 /* DetailVC.m */,
 				FEB0A36D1A523BE50065FDB7 /* DetailVC.xib */,
@@ -685,6 +685,7 @@
 					../../sdk/libs,
 					../../sdk/libs/audioprocess,
 				);
+				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -716,6 +717,7 @@
 					../../sdk/libs,
 					../../sdk/libs/audioprocess,
 				);
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
