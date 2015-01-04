@@ -55,7 +55,7 @@
         <RelativeLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="65dp"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
 
@@ -65,15 +65,16 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/str_isSavepass"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btn_setting"
-                android:layout_width="40dip"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/et_border"
-                android:text="@string/str_setting" />
+                android:text="@string/str_setting"
+                android:textSize="16sp" />
         </RelativeLayout>
     </LinearLayout>
 
