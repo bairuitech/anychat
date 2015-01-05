@@ -18,6 +18,8 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
+    [application setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    
     self.anychatVC =  [[AnyChatVC alloc]init];
     self.navController = [[UINavigationController alloc] initWithRootViewController:self.anychatVC];
     self.window.rootViewController = self.navController;

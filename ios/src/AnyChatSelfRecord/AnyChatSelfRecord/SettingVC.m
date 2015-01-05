@@ -45,7 +45,6 @@
 {
     [super viewDidLoad];
     
-    [self createObjPlistFileToDocumentsPath];
     [self readDataWithPList];
 }
 

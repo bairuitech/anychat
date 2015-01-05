@@ -52,6 +52,9 @@
     
     anyChat = [[AnyChatPlatform alloc] init];
     anyChat.notifyMsgDelegate = self;
+    
+    //创建默认视频参数
+    [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
 }
 
 
@@ -130,7 +133,11 @@
 {
     int selectID = [[onlineUserMArray objectAtIndex:[indexPath row]] intValue];
     
-    if (selectID != theMyUserID) {
+    if (selectID != theMyUserID)
+    {
+        //更新用户自定义视频参数设置
+        [[SettingVC sharedSettingVC] updateUserVideoSettings];
+        
         videoVC = [VideoViewController new];
         videoVC.iRemoteUserId = selectID;
         [self.navigationController pushViewController:videoVC animated:YES];

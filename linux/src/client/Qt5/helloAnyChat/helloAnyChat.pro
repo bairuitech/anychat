@@ -21,10 +21,6 @@ FORMS    += widget.ui
 INCLUDEPATH += $$PWD/../../../../sdk/client/c++/
 DEPENDPATH +=  $$PWD/../../../../sdk/client/c++/
 
-#ifdef WIN32
-LIBS += -L$$PWD/../../../../bin/client/ -lBRAnyChatCore
-
-#else UNIX
-#LIBS += -L$$PWD/../../../../bin/client/ -lanychatcore
+LIBS += -L$$PWD/../../../../bin/client/ -lanychatcore
 
 
