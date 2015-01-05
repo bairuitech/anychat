@@ -19,6 +19,7 @@
 		FE20E49B19D968A800189A8A /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = FE20E49A19D968A800189A8A /* bg.png */; };
 		FE3EAB6019E5233A00030ECA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */; };
 		FE3EAB6119E5233A00030ECA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5F19E5233A00030ECA /* Default@2x.png */; };
+		FE439E131A5A3EA000629E8E /* Icon_featuresBtn_5_2.png in Resources */ = {isa = PBXBuildFile; fileRef = FE439E121A5A3EA000629E8E /* Icon_featuresBtn_5_2.png */; };
 		FE4EE10E1A4CFE14005A1E66 /* libaudio_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0F41A4CFE14005A1E66 /* libaudio_processing.a */; };
 		FE4EE10F1A4CFE14005A1E66 /* libaudio_processing_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0F51A4CFE14005A1E66 /* libaudio_processing_neon.a */; };
 		FE4EE1101A4CFE14005A1E66 /* libaudio_processing_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0F61A4CFE14005A1E66 /* libaudio_processing_sse2.a */; };
@@ -148,6 +149,7 @@
 		FE20E49A19D968A800189A8A /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		FE3EAB5F19E5233A00030ECA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		FE439E121A5A3EA000629E8E /* Icon_featuresBtn_5_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_featuresBtn_5_2.png; path = Icon_featuresBtn/Icon_featuresBtn_5_2.png; sourceTree = "<group>"; };
 		FE4EE0F41A4CFE14005A1E66 /* libaudio_processing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing.a; sourceTree = "<group>"; };
 		FE4EE0F51A4CFE14005A1E66 /* libaudio_processing_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_neon.a; sourceTree = "<group>"; };
 		FE4EE0F61A4CFE14005A1E66 /* libaudio_processing_sse2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_sse2.a; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 		FEAD382B1A1352E20036F8B6 /* Icon_featuresBtn */ = {
 			isa = PBXGroup;
 			children = (
+				FE439E121A5A3EA000629E8E /* Icon_featuresBtn_5_2.png */,
 				FEA7EFDD1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png */,
 				FEAD382C1A1353010036F8B6 /* Icon_featuresBtn_1.png */,
 				FEAD382D1A1353010036F8B6 /* Icon_featuresBtn_2.png */,
@@ -755,6 +758,7 @@
 				FE5574501A25635C00342F39 /* ShowVC.xib in Resources */,
 				FEBBA25B19C2CC0B009EE02C /* InfoPlist.strings in Resources */,
 				FECF536D19EF721A00338859 /* bg_video-568h@2x.png in Resources */,
+				FE439E131A5A3EA000629E8E /* Icon_featuresBtn_5_2.png in Resources */,
 				FEA9264719E4EE7400FC42AC /* Icon_port.png in Resources */,
 				FEDEE68C1A15EA74006FB454 /* Icon_onRecordVideo_Local.png in Resources */,
 				FE9361D81A0CA05B00A1A597 /* Icon_SnapShot.png in Resources */,
