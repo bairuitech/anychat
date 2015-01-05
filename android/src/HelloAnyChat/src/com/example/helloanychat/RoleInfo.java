@@ -3,6 +3,7 @@ package com.example.helloanychat;
 public class RoleInfo {
 	private String mStrName;
 	private String mStrUserID;
+	private int mRoleIconID;
 
 	public void setName(String strName) {
 		mStrName = strName;
@@ -19,5 +20,12 @@ public class RoleInfo {
 	public String getUserID() {
 		return mStrUserID;
 	}
+	
+	public void setRoleIconID(int iconID) {
+		mRoleIconID = iconID;
+	}
 
+	public int getRoleIconID() {
+		return mRoleIconID;
+	}
 }

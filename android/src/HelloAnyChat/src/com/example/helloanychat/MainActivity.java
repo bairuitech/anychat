@@ -2,6 +2,7 @@ package com.example.helloanychat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
@@ -325,12 +326,14 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		userselfInfo.setName(anyChatSDK.GetUserName(UserselfID)
 				+ "(自己) 【点击可设置】");
 		userselfInfo.setUserID(String.valueOf(UserselfID));
+		userselfInfo.setRoleIconID(getRoleRandomIconID());
 		mRoleInfoList.add(userselfInfo);
 
 		for (int index = 0; index < userID.length; ++index) {
 			RoleInfo info = new RoleInfo();
 			info.setName(anyChatSDK.GetUserName(userID[index]));
 			info.setUserID(String.valueOf(userID[index]));
+			info.setRoleIconID(getRoleRandomIconID());
 			mRoleInfoList.add(info);
 		}
 
@@ -359,6 +362,22 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		startActivity(intent);
 	}
 
+	private int getRoleRandomIconID() {
+		int number = new Random().nextInt(5) + 1;
+		if (number == 1) {
+			return R.drawable.role_1;
+		} else if (number == 2) {
+			return R.drawable.role_2;
+		} else if (number == 3) {
+			return R.drawable.role_3;
+		} else if (number == 4) {
+			return R.drawable.role_4;
+		} else if (number == 5) {
+			return R.drawable.role_5;
+		}
+		
+		return R.drawable.role_1;
+	}
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		if (resultCode == RESULT_OK && requestCode == ACTIVITY_ID_VIDEOCONFIG) {
@@ -444,6 +463,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			RoleInfo info = new RoleInfo();
 			info.setUserID(String.valueOf(dwUserId));
 			info.setName(anyChatSDK.GetUserName(dwUserId));
+			info.setRoleIconID(getRoleRandomIconID());
 			mRoleInfoList.add(info);
 			mAdapter.notifyDataSetChanged();
 		} else {

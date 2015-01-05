@@ -1,7 +1,6 @@
 package com.example.helloanychat;
 
 import java.util.List;
-import java.util.Random;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -45,16 +44,8 @@ public class RoleListAdapter extends BaseAdapter {
 					R.layout.role_list, null);
 			holder.mname = (TextView) convertView.findViewById(R.id.mname);
 			holder.mRoleID = (TextView) convertView.findViewById(R.id.mRoleID);
+			holder.mRoleIcon = (ImageView) convertView.findViewById(R.id.roleHeaderImg);
 			convertView.setTag(holder);
-			
-			// 设置白色底图透明度
-			ImageView imageView = (ImageView) convertView
-					.findViewById(R.id.cellBackground);
-			
-			imageView.setAlpha(position * 25);
-			
-			// 随机设置角色头像
-			setRoleHeader(convertView);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
@@ -62,29 +53,13 @@ public class RoleListAdapter extends BaseAdapter {
 		RoleInfo info = mRoleList.get(position);
 		holder.mname.setText("" + info.getName());
 		holder.mRoleID.setText("" + info.getUserID());
-
+		holder.mRoleIcon.setImageResource(info.getRoleIconID());
 		return convertView;
-	}
-
-	private void setRoleHeader(View convertView) {
-		ImageView roleHeaderImg = (ImageView) convertView
-				.findViewById(R.id.roleHeaderImg);
-		int number = new Random().nextInt(5) + 1;
-		if (number == 1) {
-			roleHeaderImg.setImageResource(R.drawable.role_1);
-		} else if (number == 2) {
-			roleHeaderImg.setImageResource(R.drawable.role_2);
-		} else if (number == 3) {
-			roleHeaderImg.setImageResource(R.drawable.role_3);
-		} else if (number == 4) {
-			roleHeaderImg.setImageResource(R.drawable.role_4);
-		} else if (number == 5) {
-			roleHeaderImg.setImageResource(R.drawable.role_5);
-		}
 	}
 
 	public class ViewHolder {
 		TextView mname;
 		TextView mRoleID;
+		ImageView mRoleIcon;
 	}
 }
