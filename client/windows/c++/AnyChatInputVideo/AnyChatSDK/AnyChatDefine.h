@@ -194,7 +194,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_MCPOLITIC_DISABLE				0	///< 执行服务器路由策略，禁止所有组播发送[默认]
 #define BRAC_MCPOLITIC_ONLYLOCALMC			1	///< 忽略服务器路由策略，只向客户端本地组播组广播媒体流
 #define BRAC_MCPOLITIC_SERVERANDLOCALMC		2	///< 执行服务器路由策略，同时在客户端本地发送组播数据
-#define BRAC_MCPOLITIC_ONLYSERVERMC			3	///< 忽略服务器路由策略，只向客户端本地组播组广播媒体流
+#define BRAC_MCPOLITIC_ONLYSERVERMC			3	///< 忽略服务器路由策略，只向服务器本地组播组广播媒体流
 #define BRAC_MCPOLITIC_SERVERANDSERVERMC	4	///< 执行服务器路由策略，同时在服务器端发送组播数据
 
 // 组播功能标志定义

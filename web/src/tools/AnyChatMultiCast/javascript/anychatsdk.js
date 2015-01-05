@@ -149,7 +149,7 @@ var ANYCHAT_VIDEOCLIPMODE_DYNAMIC	=		4;	// ถฏฬฌฤฃสฝฃฌำษษฯฒใำฆำรธ๙พÝทึฑ็ยสภดต๗ี๛ฯ
 var BRAC_MCPOLITIC_DISABLE			=		0;	// ึดะะทþฮ๑ฦ๗ยทำษฒ฿ยิฃฌฝ๛ึนห๙ำะื้ฒฅทขหอ[ฤฌศฯ]
 var BRAC_MCPOLITIC_ONLYLOCALMC		=		1;	// บ๖ยิทþฮ๑ฦ๗ยทำษฒ฿ยิฃฌึปฯ๒ฟอปงถหฑพตุื้ฒฅื้นใฒฅรฝฬๅม๗
 var BRAC_MCPOLITIC_SERVERANDLOCALMC	=		2;	// ึดะะทþฮ๑ฦ๗ยทำษฒ฿ยิฃฌอฌสฑิฺฟอปงถหฑพตุทขหอื้ฒฅสýพÝ
-var BRAC_MCPOLITIC_ONLYSERVERMC		=		3;	// บ๖ยิทþฮ๑ฦ๗ยทำษฒ฿ยิฃฌึปฯ๒ฟอปงถหฑพตุื้ฒฅื้นใฒฅรฝฬๅม๗
+var BRAC_MCPOLITIC_ONLYSERVERMC		=		3;	// บ๖ยิทþฮ๑ฦ๗ยทำษฒ฿ยิฃฌึปฯ๒ทþฮ๑ฦ๗ฑพตุื้ฒฅื้นใฒฅรฝฬๅม๗
 var BRAC_MCPOLITIC_SERVERANDSERVERMC=		4;	// ึดะะทþฮ๑ฦ๗ยทำษฒ฿ยิฃฌอฌสฑิฺทþฮ๑ฦ๗ถหทขหอื้ฒฅสýพÝ
 
 // ื้ฒฅนฆฤÜฑ๊ึพถจาๅ
