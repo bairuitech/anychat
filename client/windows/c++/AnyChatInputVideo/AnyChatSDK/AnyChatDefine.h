@@ -130,7 +130,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_NETWORK_P2PBREAK			42	///< 断开与指定用户的P2P连接（参数为int型，表示目标用户ID）[暂不支持，保留]
 #define BRAC_SO_NETWORK_TCPSERVICEPORT		43	///< 设置本地TCP服务端口（参数为int型），连接服务器之前设置有效
 #define BRAC_SO_NETWORK_UDPSERVICEPORT		44	///< 设置本地UDP服务端口（参数为int型），连接服务器之前设置有效
-#define BRAC_SO_NETWORK_MULTICASTPOLITIC	45	///< 组播策略控制（参数为int型：0 执行服务器路由策略，禁止组播发送[默认]， 1 忽略服务器路由策略，只向组播组广播媒体流， 2 执行服务器路由策略，同时组播）
+#define BRAC_SO_NETWORK_MULTICASTPOLITIC	45	///< 组播策略控制（参数为int型，定义为常量：BRAC_MCPOLITIC_XXXX）
 #define BRAC_SO_NETWORK_TRANSBUFMAXBITRATE	46	///< 传输缓冲区、文件最大码率控制（参数为int型，0 不限制，以最快速率传输[默认]， 否则表示限制码率，单位为：bps）
 #define BRAC_SO_NETWORK_AUTORECONNECT		47	///< 网络掉线自动重连功能控制（参数为int型，0 关闭， 1 开启[默认]）
 #define BRAC_SO_NETWORK_MTUSIZE				48	///< 设置网络层MTU大小（参数为int型）
@@ -175,6 +175,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_RECORD_FLAGS_STEREO	0x00000200	///< 录制音频时，将其它人的声音混合为立体声后录制
 #define BRAC_RECORD_FLAGS_SNAPSHOT	0x00000400	///< 拍照
 #define BRAC_RECORD_FLAGS_LOCALCB	0x00000800	///< 触发本地回调
+#define BRAC_RECORD_FLAGS_STREAM	0x00001000	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
 
 // 客户端、服务器端录制标志定义保持统一
 #define ANYCHAT_RECORD_FLAGS_VIDEO		BRAC_RECORD_FLAGS_VIDEO
@@ -186,8 +187,15 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_RECORD_FLAGS_STEREO		BRAC_RECORD_FLAGS_STEREO
 #define ANYCHAT_RECORD_FLAGS_SNAPSHOT	BRAC_RECORD_FLAGS_SNAPSHOT
 #define ANYCHAT_RECORD_FLAGS_LOCALCB	BRAC_RECORD_FLAGS_LOCALCB
+#define ANYCHAT_RECORD_FLAGS_STREAM		BRAC_RECORD_FLAGS_STREAM
 
 
+// 组播策略定义
+#define BRAC_MCPOLITIC_DISABLE				0	///< 执行服务器路由策略，禁止所有组播发送[默认]
+#define BRAC_MCPOLITIC_ONLYLOCALMC			1	///< 忽略服务器路由策略，只向客户端本地组播组广播媒体流
+#define BRAC_MCPOLITIC_SERVERANDLOCALMC		2	///< 执行服务器路由策略，同时在客户端本地发送组播数据
+#define BRAC_MCPOLITIC_ONLYSERVERMC			3	///< 忽略服务器路由策略，只向服务器本地组播组广播媒体流
+#define BRAC_MCPOLITIC_SERVERANDSERVERMC	4	///< 执行服务器路由策略，同时在服务器端发送组播数据
 
 // 组播功能标志定义
 #define BRAC_MCFLAGS_JOINGROUP		0x00000001	///< 加入多播组
@@ -243,6 +251,9 @@ enum BRAC_VideoShowDriver{
 
 // 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
 #define BRAC_USERINFO_CTRLCODE_ROTATION		8	///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
+#define BRAC_USERINFO_CTRLCODE_DEBUGLOG		9	///< 输出本地用户的调试日志，wParam为调试日志类型
+#define BRAC_USERINFO_CTRLCODE_LVORIENTFIX	10	///< 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
+
 
 // 数据加（解）密标志定义（DataEncDec回调参数）
 #define BRAC_DATAENCDEC_FLAGS_ENCMODE	0x01	///< 加密模式

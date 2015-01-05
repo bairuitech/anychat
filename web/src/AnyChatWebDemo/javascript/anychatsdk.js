@@ -82,7 +82,7 @@ var BRAC_SO_NETWORK_P2PCONNECT = 			41;	// ³¢ÊÔÓëÖ¸¶¨ÓÃ»§½¨Á¢P2PÁ¬½Ó£¨²ÎÊýÎªintÐ
 var BRAC_SO_NETWORK_P2PBREAK = 				42;	// ¶Ï¿ªÓëÖ¸¶¨ÓÃ»§µÄP2PÁ¬½Ó£¨²ÎÊýÎªintÐÍ£¬±íÊ¾Ä¿±êÓÃ»§ID£©[ÔÝ²»Ö§³Ö£¬±£Áô]
 var BRAC_SO_NETWORK_TCPSERVICEPORT = 		43;	// ÉèÖÃ±¾µØTCP·þÎñ¶Ë¿Ú£¨²ÎÊýÎªintÐÍ£©£¬Á¬½Ó·þÎñÆ÷Ö®Ç°ÉèÖÃÓÐÐ§
 var BRAC_SO_NETWORK_UDPSERVICEPORT = 		44;	// ÉèÖÃ±¾µØUDP·þÎñ¶Ë¿Ú£¨²ÎÊýÎªintÐÍ£©£¬Á¬½Ó·þÎñÆ÷Ö®Ç°ÉèÖÃÓÐÐ§
-var BRAC_SO_NETWORK_MULTICASTPOLITIC = 		45;	// ×é²¥²ßÂÔ¿ØÖÆ£¨²ÎÊýÎªintÐÍ£º0 Ö´ÐÐ·þÎñÆ÷Â·ÓÉ²ßÂÔ£¬½ûÖ¹×é²¥·¢ËÍ[Ä¬ÈÏ]£¬ 1 ºöÂÔ·þÎñÆ÷Â·ÓÉ²ßÂÔ£¬Ö»Ïò×é²¥×é¹ã²¥Ã½ÌåÁ÷£¬ 2 Ö´ÐÐ·þÎñÆ÷Â·ÓÉ²ßÂÔ£¬Í¬Ê±×é²¥£©
+var BRAC_SO_NETWORK_MULTICASTPOLITIC = 		45;	// ×é²¥²ßÂÔ¿ØÖÆ£¨²ÎÊýÎªintÐÍ£¬¶¨ÒåÎª³£Á¿£ºBRAC_MCPOLITIC_XXXX£©
 var BRAC_SO_NETWORK_TRANSBUFMAXBITRATE = 	46;	// ´«Êä»º³åÇø¡¢ÎÄ¼þ×î´óÂëÂÊ¿ØÖÆ£¨²ÎÊýÎªintÐÍ£¬0 ²»ÏÞÖÆ£¬ÒÔ×î¿ìËÙÂÊ´«Êä[Ä¬ÈÏ]£¬ ·ñÔò±íÊ¾ÏÞÖÆÂëÂÊ£¬µ¥Î»Îª£ºbps£©
 var BRAC_SO_NETWORK_AUTORECONNECT =			47;	// ÍøÂçµôÏß×Ô¶¯ÖØÁ¬¹¦ÄÜ¿ØÖÆ£¨²ÎÊýÎªintÐÍ£¬0 ¹Ø±Õ£¬ 1 ¿ªÆô[Ä¬ÈÏ]£©
 
@@ -145,23 +145,35 @@ var ANYCHAT_VIDEOCLIPMODE_SHRINK	=		2;	// ËõÐ¡Ä£Ê½£¬ËõÐ¡µ½ºÏÊÊµÄ±ÈÀý£¬²»½øÐÐ²Ã¼ô
 var ANYCHAT_VIDEOCLIPMODE_STRETCH	=		3;	// Æ½ÆÌÄ£Ê½£¬²»½øÐÐ²Ã¼ô£¬µ«¿ÉÄÜµ¼ÖÂ»­Ãæ²»³É±ÈÀý
 var ANYCHAT_VIDEOCLIPMODE_DYNAMIC	=		4;	// ¶¯Ì¬Ä£Ê½£¬ÓÉÉÏ²ãÓ¦ÓÃ¸ù¾Ý·Ö±çÂÊÀ´µ÷ÕûÏÔÊ¾±íÃæ£¬±£³Ö»­Ãæ²»±äÐÎ
 
+// ×é²¥²ßÂÔ¶¨Òå
+var BRAC_MCPOLITIC_DISABLE			=		0;	// Ö´ÐÐ·þÎñÆ÷Â·ÓÉ²ßÂÔ£¬½ûÖ¹ËùÓÐ×é²¥·¢ËÍ[Ä¬ÈÏ]
+var BRAC_MCPOLITIC_ONLYLOCALMC		=		1;	// ºöÂÔ·þÎñÆ÷Â·ÓÉ²ßÂÔ£¬Ö»Ïò¿Í»§¶Ë±¾µØ×é²¥×é¹ã²¥Ã½ÌåÁ÷
+var BRAC_MCPOLITIC_SERVERANDLOCALMC	=		2;	// Ö´ÐÐ·þÎñÆ÷Â·ÓÉ²ßÂÔ£¬Í¬Ê±ÔÚ¿Í»§¶Ë±¾µØ·¢ËÍ×é²¥Êý¾Ý
+var BRAC_MCPOLITIC_ONLYSERVERMC		=		3;	// ºöÂÔ·þÎñÆ÷Â·ÓÉ²ßÂÔ£¬Ö»Ïò·þÎñÆ÷±¾µØ×é²¥×é¹ã²¥Ã½ÌåÁ÷
+var BRAC_MCPOLITIC_SERVERANDSERVERMC=		4;	// Ö´ÐÐ·þÎñÆ÷Â·ÓÉ²ßÂÔ£¬Í¬Ê±ÔÚ·þÎñÆ÷¶Ë·¢ËÍ×é²¥Êý¾Ý
+
+// ×é²¥¹¦ÄÜ±êÖ¾¶¨Òå
+var BRAC_MCFLAGS_JOINGROUP		=	0x00000001;	// ¼ÓÈë¶à²¥×é
+var BRAC_MCFLAGS_LEAVEGROUP		=	0x00000002;	// Àë¿ª¶à²¥×é
+var BRAC_MCFLAGS_SENDDATA		=	0x00000010;	// Êý¾Ý·¢ËÍ±êÖ¾£¬Ö¸Ê¾¸Ã¶à²¥×éÓÃÓÚ·¢ËÍÊý¾Ý
+var BRAC_MCFLAGS_RECVDATA		=	0x00000020;	// Êý¾Ý½ÓÊÕ±êÖ¾£¬Ö¸Ê¾¸Ã¶à²¥×éÓÃÓÚ½ÓÊÕÊý¾Ý
 
 // ÓÃ»§×´Ì¬±êÖ¾¶¨Òå£¨API£ºBRAC_QueryUserState ´«Èë²ÎÊý£©
-var BRAC_USERSTATE_CAMERA = 				1;	// ÓÃ»§ÉãÏñÍ·×´Ì¬£¨²ÎÊýÎªDWORDÐÍ£©
-var BRAC_USERSTATE_HOLDMIC = 				2;	// ÓÃ»§ÒôÆµÉè±¸×´Ì¬£¨²ÎÊýÎªDWORDÐÍ£¬·µ»ØÖµ£º0 ÒôÆµ²É¼¯¹Ø±Õ£¬ 1 ÒôÆµ²É¼¯¿ªÆô£©
-var BRAC_USERSTATE_SPEAKVOLUME = 			3;	// ÓÃ»§µ±Ç°Ëµ»°ÒôÁ¿£¨²ÎÊýÎªDOUBLEÀàÐÍ£¨0.0 ~ 100.0£©£©
-var BRAC_USERSTATE_RECORDING = 				4;	// ÓÃ»§Â¼Ïñ£¨Òô£©×´Ì¬£¨²ÎÊýÎªDWORDÐÍ£©
-var	BRAC_USERSTATE_LEVEL = 					5;	// ÓÃ»§¼¶±ð£¨²ÎÊýÎªDWORDÐÍ£©
-var BRAC_USERSTATE_NICKNAME = 				6;	// ÓÃ»§êÇ³Æ£¨²ÎÊýÎª×Ö·û´®TCHARÀàÐÍ£©
-var BRAC_USERSTATE_LOCALIP = 				7;	// ÓÃ»§±¾µØIPµØÖ·£¨ÄÚÍø£¬²ÎÊýÎª×Ö·û´®TCHARÀàÐÍ£©
-var BRAC_USERSTATE_INTERNETIP = 			8;	// ÓÃ»§»¥ÁªÍøIPµØÖ·£¨²ÎÊýÎª×Ö·û´®TCHARÀàÐÍ£©
+var BRAC_USERSTATE_CAMERA 		= 			1;	// ÓÃ»§ÉãÏñÍ·×´Ì¬£¨²ÎÊýÎªDWORDÐÍ£©
+var BRAC_USERSTATE_HOLDMIC 		= 			2;	// ÓÃ»§ÒôÆµÉè±¸×´Ì¬£¨²ÎÊýÎªDWORDÐÍ£¬·µ»ØÖµ£º0 ÒôÆµ²É¼¯¹Ø±Õ£¬ 1 ÒôÆµ²É¼¯¿ªÆô£©
+var BRAC_USERSTATE_SPEAKVOLUME 	= 			3;	// ÓÃ»§µ±Ç°Ëµ»°ÒôÁ¿£¨²ÎÊýÎªDOUBLEÀàÐÍ£¨0.0 ~ 100.0£©£©
+var BRAC_USERSTATE_RECORDING 	= 			4;	// ÓÃ»§Â¼Ïñ£¨Òô£©×´Ì¬£¨²ÎÊýÎªDWORDÐÍ£©
+var	BRAC_USERSTATE_LEVEL 		= 			5;	// ÓÃ»§¼¶±ð£¨²ÎÊýÎªDWORDÐÍ£©
+var BRAC_USERSTATE_NICKNAME 	= 			6;	// ÓÃ»§êÇ³Æ£¨²ÎÊýÎª×Ö·û´®TCHARÀàÐÍ£©
+var BRAC_USERSTATE_LOCALIP 		= 			7;	// ÓÃ»§±¾µØIPµØÖ·£¨ÄÚÍø£¬²ÎÊýÎª×Ö·û´®TCHARÀàÐÍ£©
+var BRAC_USERSTATE_INTERNETIP 	= 			8;	// ÓÃ»§»¥ÁªÍøIPµØÖ·£¨²ÎÊýÎª×Ö·û´®TCHARÀàÐÍ£©
 var BRAC_USERSTATE_VIDEOBITRATE = 			9;	// ÓÃ»§µ±Ç°µÄÊÓÆµÂëÂÊ£¨²ÎÊýÎªDWORDÀàÐÍ£¬Bps£©
 var BRAC_USERSTATE_AUDIOBITRATE = 			10;	// ÓÃ»§µ±Ç°µÄÒôÆµÂëÂÊ£¨²ÎÊýÎªDWORDÀàÐÍ£¬Bps£©
-var BRAC_USERSTATE_P2PCONNECT = 			11;	// ²éÑ¯±¾µØÓÃ»§ÓëÖ¸¶¨ÓÃ»§µÄµ±Ç°P2PÁ¬½Ó×´Ì¬£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£º0 P2P²»Í¨£¬ 1 P2PÁ¬½Ó³É¹¦[TCP]£¬2 P2PÁ¬½Ó³É¹¦[UDP]£¬3 P2PÁ¬½Ó³É¹¦[TCP¡¢UDP]£©
-var BRAC_USERSTATE_NETWORKSTATUS = 			12;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄÍøÂç×´Ì¬£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£º0 ÓÅÁ¼£¬1 ½ÏºÃ£¬2 Ò»°ã£¬3 ½Ï²î£¬4 ·Ç³£²î£©£¬×¢£º²éÑ¯¼ä¸ôÐèÒª>1s
-var BRAC_USERSTATE_VIDEOSIZE = 				13;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄÊÓÆµ·Ö±æÂÊ£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£ºµÍ16Î»±íÊ¾¿í¶È£¬¸ß16Î»±íÊ¾¸ß¶È£©
+var BRAC_USERSTATE_P2PCONNECT 	= 			11;	// ²éÑ¯±¾µØÓÃ»§ÓëÖ¸¶¨ÓÃ»§µÄµ±Ç°P2PÁ¬½Ó×´Ì¬£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£º0 P2P²»Í¨£¬ 1 P2PÁ¬½Ó³É¹¦[TCP]£¬2 P2PÁ¬½Ó³É¹¦[UDP]£¬3 P2PÁ¬½Ó³É¹¦[TCP¡¢UDP]£©
+var BRAC_USERSTATE_NETWORKSTATUS= 			12;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄÍøÂç×´Ì¬£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£º0 ÓÅÁ¼£¬1 ½ÏºÃ£¬2 Ò»°ã£¬3 ½Ï²î£¬4 ·Ç³£²î£©£¬×¢£º²éÑ¯¼ä¸ôÐèÒª>1s
+var BRAC_USERSTATE_VIDEOSIZE 	= 			13;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄÊÓÆµ·Ö±æÂÊ£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£ºµÍ16Î»±íÊ¾¿í¶È£¬¸ß16Î»±íÊ¾¸ß¶È£©
 var BRAC_USERSTATE_PACKLOSSRATE = 			14;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄÍøÂçÁ÷Ã½ÌåÊý¾Ý¶ª°üÂÊ£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£º0 - 100£¬Èç£º·µ»ØÖµÎª5£¬±íÊ¾¶ª°üÂÊÎª5%£©
-var BRAC_USERSTATE_DEVICETYPE =				15; // ²éÑ¯Ö¸¶¨ÓÃ»§µÄÖÕ¶ËÀàÐÍ£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£º0 Unknow£¬ 1 Windows£¬2 Android£¬3 iOS£¬4 Web£¬5 Linux£¬6 Mac£¬7 Win Phone£¬8 WinCE£©
+var BRAC_USERSTATE_DEVICETYPE 	=			15; // ²éÑ¯Ö¸¶¨ÓÃ»§µÄÖÕ¶ËÀàÐÍ£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£º0 Unknow£¬ 1 Windows£¬2 Android£¬3 iOS£¬4 Web£¬5 Linux£¬6 Mac£¬7 Win Phone£¬8 WinCE£©
 
 // SDKÏûÏ¢¶¨Òå£¨ÓÃÓÚOnNotifyMessageÊÂ¼þÖÐÅÐ¶ÏÊÂ¼þµÄÀàÐÍ£©
 var WM_GV = 0x0400 + 200;
@@ -185,14 +197,14 @@ var WM_GV_FRIENDSTATUS		=	WM_GV + 17;		// ºÃÓÑÔÚÏß×´Ì¬±ä»¯£¬wParam£¨INT£©±íÊ¾ºÃÓ
 var WM_GV_VIDEOSIZECHG		=	WM_GV + 15;		// ÓÃ»§ÊÓÆµ·Ö±çÂÊ·¢Éú±ä»¯£¬wParam£¨INT£©±íÊ¾ÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾ÓÃ»§µÄÊÓÆµ·Ö±æÂÊ×éºÏÖµ£¨µÍ16Î»±íÊ¾¿í¶È£¬¸ß16Î»±íÊ¾¸ß¶È£©
 
 // ÊÓÆµºô½ÐÊÂ¼þÀàÐÍ¶¨Òå£¨API£ºBRAC_VideoCallControl ´«Èë²ÎÊý¡¢VideoCallEvent»Øµ÷²ÎÊý£©
-var BRAC_VIDEOCALL_EVENT_REQUEST =			1;	// ºô½ÐÇëÇó
-var BRAC_VIDEOCALL_EVENT_REPLY =			2;	// ºô½ÐÇëÇó»Ø¸´
-var BRAC_VIDEOCALL_EVENT_START =			3;	// ÊÓÆµºô½Ð»á»°¿ªÊ¼ÊÂ¼þ
+var BRAC_VIDEOCALL_EVENT_REQUEST=			1;	// ºô½ÐÇëÇó
+var BRAC_VIDEOCALL_EVENT_REPLY 	=			2;	// ºô½ÐÇëÇó»Ø¸´
+var BRAC_VIDEOCALL_EVENT_START 	=			3;	// ÊÓÆµºô½Ð»á»°¿ªÊ¼ÊÂ¼þ
 var BRAC_VIDEOCALL_EVENT_FINISH =			4;	// ¹Ò¶Ï£¨½áÊø£©ºô½Ð»á»°
 
 // ÊÓÆµºô½Ð±êÖ¾¶¨Òå£¨API£ºBRAC_VideoCallControl ´«Èë²ÎÊý£©
-var BRAC_VIDEOCALL_FLAGS_AUDIO =			1;	// ÓïÒôÍ¨»°
-var BRAC_VIDEOCALL_FLAGS_VIDEO =			2;	// ÊÓÆµÍ¨»°
+var BRAC_VIDEOCALL_FLAGS_AUDIO 		=		1;	// ÓïÒôÍ¨»°
+var BRAC_VIDEOCALL_FLAGS_VIDEO 		=		2;	// ÊÓÆµÍ¨»°
 var BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO =		16;	// ½ûÖ¹Ô´£¨ºô½Ð¶Ë£©ÒôÆµ
 var BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO =		32;	// ½ûÖ¹Ô´£¨ºô½Ð¶Ë£©ÊÓÆµ
 var BRAC_VIDEOCALL_FLAGS_FBTARAUDIO =		64;	// ½ûÖ¹Ä¿±ê£¨±»ºô½Ð¶Ë£©ÒôÆµ

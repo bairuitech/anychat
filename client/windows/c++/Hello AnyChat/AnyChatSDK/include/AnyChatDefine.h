@@ -130,7 +130,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_NETWORK_P2PBREAK			42	///< 断开与指定用户的P2P连接（参数为int型，表示目标用户ID）[暂不支持，保留]
 #define BRAC_SO_NETWORK_TCPSERVICEPORT		43	///< 设置本地TCP服务端口（参数为int型），连接服务器之前设置有效
 #define BRAC_SO_NETWORK_UDPSERVICEPORT		44	///< 设置本地UDP服务端口（参数为int型），连接服务器之前设置有效
-#define BRAC_SO_NETWORK_MULTICASTPOLITIC	45	///< 组播策略控制（参数为int型：0 执行服务器路由策略，禁止组播发送[默认]， 1 忽略服务器路由策略，只向组播组广播媒体流， 2 执行服务器路由策略，同时组播）
+#define BRAC_SO_NETWORK_MULTICASTPOLITIC	45	///< 组播策略控制（参数为int型，定义为常量：BRAC_MCPOLITIC_XXXX）
 #define BRAC_SO_NETWORK_TRANSBUFMAXBITRATE	46	///< 传输缓冲区、文件最大码率控制（参数为int型，0 不限制，以最快速率传输[默认]， 否则表示限制码率，单位为：bps）
 #define BRAC_SO_NETWORK_AUTORECONNECT		47	///< 网络掉线自动重连功能控制（参数为int型，0 关闭， 1 开启[默认]）
 #define BRAC_SO_NETWORK_MTUSIZE				48	///< 设置网络层MTU大小（参数为int型）
@@ -190,6 +190,12 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_RECORD_FLAGS_STREAM		BRAC_RECORD_FLAGS_STREAM
 
 
+// 组播策略定义
+#define BRAC_MCPOLITIC_DISABLE				0	///< 执行服务器路由策略，禁止所有组播发送[默认]
+#define BRAC_MCPOLITIC_ONLYLOCALMC			1	///< 忽略服务器路由策略，只向客户端本地组播组广播媒体流
+#define BRAC_MCPOLITIC_SERVERANDLOCALMC		2	///< 执行服务器路由策略，同时在客户端本地发送组播数据
+#define BRAC_MCPOLITIC_ONLYSERVERMC			3	///< 忽略服务器路由策略，只向服务器本地组播组广播媒体流
+#define BRAC_MCPOLITIC_SERVERANDSERVERMC	4	///< 执行服务器路由策略，同时在服务器端发送组播数据
 
 // 组播功能标志定义
 #define BRAC_MCFLAGS_JOINGROUP		0x00000001	///< 加入多播组

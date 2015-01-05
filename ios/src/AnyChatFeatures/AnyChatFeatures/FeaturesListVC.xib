@@ -210,7 +210,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="yLb-74-TNE" userLabel="服务器视频录像">
                     <rect key="frame" x="226" y="155" width="68" height="68"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" backgroundImage="Icon_featuresBtn_5.png">
+                    <state key="normal" backgroundImage="Icon_featuresBtn_5_2.png">
                         <attributedString key="attributedTitle">
                             <fragment content="服务器录像">
                                 <attributes>
@@ -237,6 +237,7 @@
         <image name="Icon_featuresBtn_3.png" width="128" height="128"/>
         <image name="Icon_featuresBtn_4.png" width="128" height="128"/>
         <image name="Icon_featuresBtn_5.png" width="128" height="128"/>
+        <image name="Icon_featuresBtn_5_2.png" width="128" height="128"/>
         <image name="Icon_featuresBtn_6.png" width="128" height="128"/>
         <image name="Icon_featuresBtn_7.png" width="128" height="128"/>
         <image name="Icon_featuresBtn_8.png" width="128" height="128"/>
