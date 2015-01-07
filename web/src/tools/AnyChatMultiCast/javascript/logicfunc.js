@@ -458,9 +458,18 @@ function reVideoDivSize()
 function OnChangeMultiCastPolitic(dwPolitic) {
 	var errorcode = BRAC_SetSDKOption(BRAC_SO_NETWORK_MULTICASTPOLITIC, dwPolitic);
 	AddLog("BRAC_SetSDKOption(MULTICASTPOLITIC, " + dwPolitic + ")=" + errorcode, LOG_TYPE_API);
-	// 服务器端组播建议关闭本地P2P（注：不是必须）
+	
 	if(dwPolitic==BRAC_MCPOLITIC_ONLYSERVERMC || dwPolitic==BRAC_MCPOLITIC_SERVERANDSERVERMC) {
+		// 服务器端组播建议关闭本地P2P（注：不是必须）
 		BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 0);
+		
+		var szMultiCastAddr = GetID("MultiCastAddr").value;
+		var dwMultiCastPort = parseInt(GetID("MultiCastPort").value);
+		var dwTTL = 50;		// 需要根据实际情况设置TTL值
+		var dwFlags = BRAC_MCFLAGS_SENDDATA;
+		// 将组播地址通知到服务器
+		var errorcode = BRAC_MultiCastControl(szMultiCastAddr, dwMultiCastPort, "", dwTTL, dwFlags);
+		AddLog("BRAC_MultiCastControl(" + szMultiCastAddr + ", " + dwMultiCastPort + " ,SENDDATA)=" + errorcode, LOG_TYPE_API);
 	}
 }
 
