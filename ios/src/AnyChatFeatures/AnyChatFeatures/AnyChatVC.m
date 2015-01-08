@@ -65,12 +65,22 @@
     
     self.theVideoRecordMArray = [[NSMutableArray alloc] initWithCapacity:5];
     
+    //创建默认视频参数
+    [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
+    
     //用户信息控制(开启网络状态信息的调试模式)
     int infotype = 5;
     [AnyChatPlatform UserInfoControl:-1 :BRAC_USERINFO_CTRLCODE_DEBUGLOG :infotype :1 :@""];
     
-    //创建默认视频参数
-    [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
+    //获取APP沙盒路径
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    //设置自定义录像储存路径
+    NSString  *myRecordDirectory = [documentsDirectory stringByAppendingPathComponent:@"Record_mp4"];
+    [AnyChatPlatform SetSDKOptionString:BRAC_SO_RECORD_TMPDIR :myRecordDirectory];
+    //设置自定义抓图储存路径
+    NSString  *myPhotoDirectory = [documentsDirectory stringByAppendingPathComponent:@"Photo_jpg"];
+    [AnyChatPlatform SetSDKOptionString:BRAC_SO_SNAPSHOT_TMPDIR :myPhotoDirectory];
 }
 
 - (void)viewWillAppear:(BOOL)animated
