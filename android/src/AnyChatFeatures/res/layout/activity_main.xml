@@ -1,38 +1,32 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/background_login"
     android:orientation="vertical" >
 
-     <TextView
-        android:id="@+id/mainUITitle"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="70dip"
-        android:gravity="center|center_vertical"
-        android:layout_weight="1"
-         />
-
-    <TableLayout
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:stretchColumns="0" >
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
 
-        <TableRow>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical" >
 
             <LinearLayout
-                android:layout_width="90dip"
-                android:layout_height="25dip"
-                android:layout_marginLeft="110dip"
-                android:layout_marginTop="10dip"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:gravity="center|center_vertical" >
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginRight="10dip"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:src="@drawable/smalltip_1" />
 
                 <EditText
@@ -43,34 +37,32 @@
                     android:background="@android:color/transparent"
                     android:hint="demo.anychat.cn"
                     android:textColorHint="#bfbfbf"
-                    android:textSize="15sp" 
-                    android:textColor="@color/white"/>
+                    android:textSize="20sp" />
             </LinearLayout>
-        </TableRow>
 
-        <View
+            <View
+                android:layout_width="273dp"
+                android:layout_height="1dip"
+                android:layout_marginBottom="5dip"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:layout_marginLeft="120dp"
-            android:layout_marginRight="120dp"
-            android:layout_marginTop="2dp"
-            android:background="#FFFFFF" />
-
-        <TableRow>
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical" >
 
             <LinearLayout
-                android:layout_width="90dip"
-                android:layout_height="25dip"
-                android:layout_marginLeft="110dip"
-                android:layout_marginTop="30dip"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:gravity="center|center_vertical" >
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginRight="10dip"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:src="@drawable/smalltip_2" />
 
                 <EditText
@@ -80,36 +72,33 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:hint="8906"
-                    android:inputType="number"
                     android:textColorHint="#bfbfbf"
-                    android:textSize="15sp" 
-                    android:textColor="@color/white"/>
+                    android:textSize="20sp" />
             </LinearLayout>
-        </TableRow>
 
-        <View
+            <View
+                android:layout_width="273dp"
+                android:layout_height="1dip"
+                android:layout_marginBottom="5dip"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:layout_marginLeft="120dp"
-            android:layout_marginRight="120dp"
-            android:layout_marginTop="2dp"
-            android:background="#FFFFFF" />
-
-        <TableRow>
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical" >
 
             <LinearLayout
-                android:layout_width="90dip"
-                android:layout_height="25dip"
-                android:layout_marginLeft="110dip"
-                android:layout_marginTop="30dip"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:gravity="center|center_vertical" >
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginRight="10dip"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:src="@drawable/smalltip_3" />
 
                 <EditText
@@ -120,29 +109,21 @@
                     android:background="@android:color/transparent"
                     android:hint="name"
                     android:textColorHint="#bfbfbf"
-                    android:textSize="15sp"
-                    android:textColor="@color/white" />
+                    android:textSize="20sp" />
             </LinearLayout>
-        </TableRow>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:layout_marginLeft="120dp"
-            android:layout_marginRight="120dp"
-            android:layout_marginTop="2dp"
-            android:background="#FFFFFF" />
-    </TableLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2" >
+            <View
+                android:layout_width="273dp"
+                android:layout_height="1dip"
+                android:layout_marginBottom="5dip"
+                android:background="#FFFFFF" />
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" >
+            android:layout_gravity="center"
+            android:layout_marginTop="60dip" >
 
             <Button
                 android:id="@+id/mainUIStartBtn"
@@ -185,15 +166,6 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/mainUIbottomConnMsg"
-        android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:background="@android:color/darker_gray"
-        android:gravity="center"
-        android:text="Not connect to the server"
-        android:textColor="#000000" />
-
-    <TextView
         android:id="@+id/mainUIbottomBuildMsg"
         android:layout_width="fill_parent"
         android:layout_height="20dip"
@@ -203,4 +175,14 @@
         android:text="Not connect to 192.168.1.1"
         android:textColor="#ffffff" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/mainUIbottomConnMsg"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:layout_above="@id/mainUIbottomBuildMsg"
+        android:background="@android:color/darker_gray"
+        android:gravity="center"
+        android:text="Not connect to the server"
+        android:textColor="#000000" />
+
+</RelativeLayout>
