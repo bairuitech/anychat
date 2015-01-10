@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //透明通道
 public class AlphaChannel extends Activity implements AnyChatBaseEvent,
@@ -198,7 +199,12 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
-
+		if(!bEnter){
+			if (dwUserId == mUserID) {
+				Toast.makeText(this,"\"" + anyChatSDK.GetUserName(mUserID)+ "\" " + "已离开", Toast.LENGTH_LONG).show();
+				destroyCurActivity();
+			}
+		}
 	}
 
 	@Override

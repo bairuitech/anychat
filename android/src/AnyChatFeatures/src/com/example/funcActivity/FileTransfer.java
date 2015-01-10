@@ -35,6 +35,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FileTransfer extends Activity implements AnyChatBaseEvent,
 		AnyChatTransDataEvent {
@@ -381,7 +382,12 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
-
+		if(!bEnter){
+			if (dwUserId == mUserID) {
+				Toast.makeText(this,"\"" + anyChatSDK.GetUserName(mUserID)+ "\" " + "已离开", Toast.LENGTH_LONG).show();
+				destroyCurActivity();
+			}
+		}
 	}
 
 	@Override
@@ -393,5 +399,4 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 		// 销毁当前界面
 		destroyCurActivity();
 	}
-
 }

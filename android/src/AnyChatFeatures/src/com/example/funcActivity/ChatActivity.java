@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
@@ -29,7 +30,7 @@ import com.example.anychatfeatures.R;
 public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		AnyChatTextMsgEvent, OnDismissCallback {
 
-	private int userID;
+	private int mUserID;
 	private TextView mSendTV;					// 发送按钮
 	private EditText mMessagEditText;			// 发送输入的内容view
 	private ImageButton mImgBtnReturn;			// 返回
@@ -47,7 +48,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		Intent intent = getIntent();
-		userID = Integer.parseInt(intent.getStringExtra("UserID"));
+		mUserID = Integer.parseInt(intent.getStringExtra("UserID"));
 
 		InitSDK();
 		InitLayout();
@@ -55,7 +56,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
 		mImgBtnReturn.setOnClickListener(onClickListener);
-		mTitleName.setText("与 \"" + anyChatSDK.GetUserName(userID) + "\" 聊天中");
+		mTitleName.setText("与 \"" + anyChatSDK.GetUserName(mUserID) + "\" 聊天中");
 	}
 
 	private void InitSDK() {
@@ -132,7 +133,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		if (ValueUtils.isStrEmpty(strSendMsg))
 			return;
 
-		anyChatSDK.SendTextMessage(userID, 1, strSendMsg);
+		anyChatSDK.SendTextMessage(mUserID, 1, strSendMsg);
 		mMessageList.add("我: " + strSendMsg);
 		mMessageListView.SetFileList(mMessageList);
 		mMessagEditText.setText("");
@@ -208,7 +209,12 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
-
+		if(!bEnter){
+			if (dwUserId == mUserID) {
+				Toast.makeText(this,"\"" + anyChatSDK.GetUserName(mUserID)+ "\" " + "已离开", Toast.LENGTH_LONG).show();
+				destroyCurActivity();
+			}
+		}
 	}
 
 	@Override
