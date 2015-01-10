@@ -230,6 +230,9 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
 - (IBAction)LeaveRoomBtn_OnClick
 {
     [AnyChatPlatform LeaveRoom:-1];
+    [[UserListVC sharedUserListVC].onlineUserMArray removeAllObjects];
+    [[UserListVC sharedUserListVC].onLineUserTableView reloadData];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

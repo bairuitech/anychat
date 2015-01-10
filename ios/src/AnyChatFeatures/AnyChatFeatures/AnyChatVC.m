@@ -68,9 +68,8 @@
     //创建默认视频参数
     [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
     
-    //用户信息控制(开启网络状态信息的调试模式)
-    int infotype = 5;
-    [AnyChatPlatform UserInfoControl:-1 :BRAC_USERINFO_CTRLCODE_DEBUGLOG :infotype :1 :@""];
+    //调试模式（传输）
+//    [AnyChatPlatform UserInfoControl:-1 :BRAC_USERINFO_CTRLCODE_DEBUGLOG :4 :1 :@""]; //
     
     //获取APP沙盒路径
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -183,12 +182,16 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 用户退出房间消息
 - (void) OnAnyChatUserLeaveRoom:(int) dwUserId
 {
-    if (videoVC.iRemoteUserId == dwUserId )
-    {
-        [videoVC FinishVideoChat];
-        videoVC.iRemoteUserId = -1;
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    VideoVC *theVideoVC = [[VideoVC alloc] init];
+    [theVideoVC FinishVideoChat];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    NSString *theLeaveRoomName = [[NSString alloc] initWithFormat:@"\"%@\"已离开房间!",[AnyChatVC sharedAnyChatVC].theTargetUserName];
+    NSString *theLeaveRoomID = [[NSString alloc] initWithFormat:@"\"%i\"Leave Room!",[AnyChatVC sharedAnyChatVC].theTargetUserID];
+    [self showInfoAlertView:theLeaveRoomName :theLeaveRoomID];
+    
+    [AnyChatVC sharedAnyChatVC].theTargetUserID = -1;
     
     self.onlineUserMArray = [self getOnlineUserArray];
     [[UserListVC sharedUserListVC].onLineUserTableView reloadData];

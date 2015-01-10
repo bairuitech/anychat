@@ -101,7 +101,7 @@
     }
     
     int userID = [[onlineUserMArray objectAtIndex:[indexPath row]] intValue];
-    NSString *name = [AnyChatPlatform GetUserName:userID];;
+    NSString *name = [AnyChatPlatform GetUserName:userID];
     
     UILabel *userIDLabel = (UILabel *)[Cell.contentView viewWithTag:kUserIDValueTag];
     UILabel *nameLabel = (UILabel *)[Cell.contentView viewWithTag:kNameValueTag];
@@ -236,8 +236,17 @@
 // 用户退出房间消息
 - (void) OnAnyChatUserLeaveRoom:(int) dwUserId
 {
-    if (videoVC.iRemoteUserId == dwUserId ) {
+    if (videoVC.iRemoteUserId == dwUserId )
+    {
         [videoVC FinishVideoChat];
+        NSString *name = [AnyChatPlatform GetUserName:dwUserId];
+        NSString *theLeaveRoomName = [[NSString alloc] initWithFormat:@"\"%@\"已离开房间!",name];
+        UIAlertView *leaveRoomAlertView = [[UIAlertView alloc] initWithTitle:theLeaveRoomName
+                                                                   message:@"The remote user Leave Room."
+                                                                  delegate:self
+                                                         cancelButtonTitle:nil
+                                                         otherButtonTitles:@"确定",nil];
+        [leaveRoomAlertView show];
         videoVC.iRemoteUserId = -1;
     }
     onlineUserMArray = [self getOnlineUserArray];
