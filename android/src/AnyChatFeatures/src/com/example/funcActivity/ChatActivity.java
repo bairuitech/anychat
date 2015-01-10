@@ -211,7 +211,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
 		if(!bEnter){
 			if (dwUserId == mUserID) {
-				Toast.makeText(this,"\"" + anyChatSDK.GetUserName(mUserID)+ "\" " + "已离开", Toast.LENGTH_LONG).show();
+				Toast.makeText(this,"\"" + anyChatSDK.GetUserName(mUserID)+ "\" " + "已离开房间", Toast.LENGTH_LONG).show();
 				destroyCurActivity();
 			}
 		}
