@@ -36,11 +36,20 @@
                                     <action selector="LeaveBtn_OnClick" destination="-1" id="ECb-Bh-AJo"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem key="rightBarButtonItem" systemItem="trash" id="iRZ-bk-Q9k" userLabel="item - ClearDatas">
+                                <connections>
+                                    <action selector="clearDatas_OnClick" destination="-1" id="rm1-gs-GCf"/>
+                                </connections>
+                            </barButtonItem>
                         </navigationItem>
                     </items>
                 </navigationBar>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>

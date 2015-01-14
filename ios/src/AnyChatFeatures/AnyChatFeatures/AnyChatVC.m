@@ -68,8 +68,8 @@
     //创建默认视频参数
     [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
     
-    //调试模式（传输）
-//    [AnyChatPlatform UserInfoControl:-1 :BRAC_USERINFO_CTRLCODE_DEBUGLOG :4 :1 :@""]; //
+    //传输文件的开发调试模式
+    //[AnyChatPlatform UserInfoControl:-1 :BRAC_USERINFO_CTRLCODE_DEBUGLOG :4 :1 :@""];
     
     //获取APP沙盒路径
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -78,8 +78,11 @@
     NSString  *myRecordDirectory = [documentsDirectory stringByAppendingPathComponent:@"Record_mp4"];
     [AnyChatPlatform SetSDKOptionString:BRAC_SO_RECORD_TMPDIR :myRecordDirectory];
     //设置自定义抓图储存路径
-    NSString  *myPhotoDirectory = [documentsDirectory stringByAppendingPathComponent:@"Photo_jpg"];
+    NSString  *myPhotoDirectory = [documentsDirectory stringByAppendingPathComponent:@"ShotPhoto_jpg"];
     [AnyChatPlatform SetSDKOptionString:BRAC_SO_SNAPSHOT_TMPDIR :myPhotoDirectory];
+    //设置自定义接收文件储存路径
+    NSString  *myTransFileDirectory = [documentsDirectory stringByAppendingPathComponent:@"TransFile"];
+    [AnyChatPlatform SetSDKOptionString:BRAC_SO_CORESDK_TMPDIR :myTransFileDirectory];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -182,16 +185,19 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 用户退出房间消息
 - (void) OnAnyChatUserLeaveRoom:(int) dwUserId
 {
-    VideoVC *theVideoVC = [[VideoVC alloc] init];
-    [theVideoVC FinishVideoChat];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
-    NSString *theLeaveRoomName = [[NSString alloc] initWithFormat:@"\"%@\"已离开房间!",[AnyChatVC sharedAnyChatVC].theTargetUserName];
-    NSString *theLeaveRoomID = [[NSString alloc] initWithFormat:@"\"%i\"Leave Room!",[AnyChatVC sharedAnyChatVC].theTargetUserID];
-    [self showInfoAlertView:theLeaveRoomName :theLeaveRoomID];
-    
-    [AnyChatVC sharedAnyChatVC].theTargetUserID = -1;
+    if (self.theTargetUserID == dwUserId)
+    {
+        VideoVC *theVideoVC = [[VideoVC alloc] init];
+        [theVideoVC FinishVideoChat];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        NSString *theLeaveRoomName = [[NSString alloc] initWithFormat:@"\"%@\"已离开房间!",self.theTargetUserName];
+        NSString *theLeaveRoomID = [[NSString alloc] initWithFormat:@"\"%i\"Leave Room!",self.theTargetUserID];
+        [self showInfoAlertView:theLeaveRoomName :theLeaveRoomID];
+        
+        self.theTargetUserID = -1;
+    }
     
     self.onlineUserMArray = [self getOnlineUserArray];
     [[UserListVC sharedUserListVC].onLineUserTableView reloadData];

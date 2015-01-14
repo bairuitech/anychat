@@ -107,4 +107,11 @@ return shared##classname;   \
 #define k_sysVersion (float)[[[UIDevice currentDevice] systemVersion] floatValue]
 
 
+#pragma mark - Sandbox Directory
+
+#define k_documentDirectory (NSString *)[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+#define k_sandboxPathsArray (NSArray *)NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+
+
+
 
