@@ -102,7 +102,8 @@ var BRAC_SO_VIDEOSHOW_CLIPMODE =			86;	// Ô¶³ÌÊÓÆµÏÔÊ¾Ðý×ª²Ã¼ôÄ£Ê½£¨²ÎÊýÎªintÐÍ£
 var BRAC_SO_CORESDK_TICKOUTUSER	=			110;// ´Ó·þÎñÆ÷ÉÏÌßµôÖ¸¶¨ÓÃ»§£¨²ÎÊýÎªintÐÍ£¬±íÊ¾Ä¿±êÓÃ»§ID£©
 var BRAC_SO_CORESDK_DEVICEMODE	=			130;// Éè±¸Ä£Ê½¿ØÖÆ£¨¾ÖÓòÍøÉè±¸Ö®¼ä¿ÉÒÔ»¥ÏàÍ¨ÐÅ£¬²»ÒÀÀµ·þÎñÆ÷£»²ÎÊýÎªintÐÍ£¬0 ¹Ø±Õ[Ä¬ÈÏ]£¬1 ¿ªÆô£©
 var BRAC_SO_CORESDK_SCREENCAMERACTRL =		131;// ×ÀÃæ¹²Ïí¹¦ÄÜ¿ØÖÆ£¨²ÎÊýÎª£ºintÐÍ£¬ 0 ¹Ø±Õ[Ä¬ÈÏ]£¬ 1 ¿ªÆô£©
-var BRAC_SO_CORESDK_UPLOADLOGINFO =			134;// ÉÏ´«ÈÕÖ¾ÐÅÏ¢µ½¿Í»§¶Ë£¨²ÎÊýÎª£ºintÐÍ£¬0 ¹Ø±Õ[Ä¬ÈÏ]£¬ 1 ¿ªÆô£©
+var BRAC_SO_CORESDK_UPLOADLOGINFO =			134;// ÉÏ´«ÈÕÖ¾ÐÅÏ¢µ½·þÎñÆ÷£¨²ÎÊýÎª£ºintÐÍ£¬0 ¹Ø±Õ[Ä¬ÈÏ]£¬ 1 ¿ªÆô£©
+var BRAC_SO_CORESDK_WRITELOG	=			135;// Ð´Èëµ÷ÊÔÐÅÏ¢µ½±¾µØÈÕÖ¾ÎÄ¼þÖÐ
 
 var BRAC_SO_ENABLEWEBSERVICE =			11002;	// Æô¶¯±¾µØWeb·þÎñ
 var BRAC_SO_LOCALPATH2URL =				11003;	// ½«±¾µØÂ·¾¶×ª»»ÎªURLµØÖ·

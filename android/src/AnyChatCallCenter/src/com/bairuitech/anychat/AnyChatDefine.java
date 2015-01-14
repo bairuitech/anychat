@@ -69,6 +69,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_RECORD_WIDTH			=	141;///< 录制视频宽度设置（参数为：int型，如：320）
 	public static final int BRAC_SO_RECORD_HEIGHT			=	142;///< 录制文件高度设置（参数为：int型，如：240）
 	public static final int BRAC_SO_RECORD_FILENAMERULE		=	143;///< 录制文件名命名规则（参数为：int型）
+	public static final int BRAC_SO_RECORD_CLIPMODE			=	144;///< 录制视频裁剪模式（参数为：int型）
 	
 	public static final int BRAC_SO_CORESDK_TMPDIR			=	14;	///< 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 	public static final int BRAC_SO_CORESDK_LOADCODEC		=	16;	///< 加载外部编解码器（参数为字符串TCHAR类型，必须是完整的绝对路径，包含文件名，或包含文件名的绝对路径）
@@ -127,10 +128,14 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_VIDEOSHOW_SETOVERLAYUSER=	82;	///< 设置迭加显示用户编号（参数为：int型，用户ID号）
 	public static final int BRAC_SO_VIDEOSHOW_DRIVERCTRL	=	83;	///< 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL, 4 Android2X, 5 Android Java）
 	public static final int BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER =	84;	///< 视频数据经过GPU直接渲染，将解码后的视频数据直接传输到GPU的物理地址（参数为：int型， 0 关闭[默认]， 1 打开），与硬件平台相关
+	public static final int BRAC_SO_VIDEOSHOW_AUTOROTATION	=	85;	///< 远程视频显示自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
+	public static final int BRAC_SO_VIDEOSHOW_CLIPMODE		=	86;	///< 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
 
 	public static final int BRAC_SO_CORESDK_DEVICEMODE		=	130;///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
 	public static final int BRAC_SO_CORESDK_SCREENCAMERACTRL=	131;///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
 	public static final int BRAC_SO_CORESDK_DATAENCRYPTION	=	132;///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
+	public static final int BRAC_SO_CORESDK_UPLOADLOGINFO	=	134;///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
+	public static final int BRAC_SO_CORESDK_WRITELOG		=	135;///< 写入调试信息到客户端日志文件中
 	
 	// 传输任务信息参数定义
 	public static final int BRAC_TRANSTASK_PROGRESS			=	1;	///< 传输任务进度查询（参数为：int型（0 ~ 100））
@@ -147,10 +152,6 @@ public class AnyChatDefine {
 	public static final int BRAC_RECORD_FLAGS_ABREAST		=	0x00000100;	///< 录制视频时，将其它人的视频并列录制
 	public static final int BRAC_RECORD_FLAGS_STEREO		=	0x00000200;	///< 录制音频时，将其它人的声音混合为立体声后录制
 	public static final int BRAC_RECORD_FLAGS_STREAM	    =   0x00001000;	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
-
-
-
-
 
 
 	// 用户状态标志定义（API：BRAC_QueryUserState 传入参数）

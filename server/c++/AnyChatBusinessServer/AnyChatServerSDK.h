@@ -50,6 +50,8 @@
 #define BRAS_SO_RECORD_WIDTH				5	///< 录制视频宽度设置（参数为：int型，如：320）
 #define BRAS_SO_RECORD_HEIGHT				6	///< 录制文件高度设置（参数为：int型，如：240）
 #define BRAS_SO_RECORD_FILENAMERULE			7	///< 录制文件名命名规则（参数为：int型）
+#define BRAS_SO_RECORD_CLIPMODE				8	///< 录制视频裁剪模式（参数为：int型）
+#define BRAS_SO_CORESDK_WRITELOG			20	///< 写入调试信息到日志文件中
 
 // 初始化标志（API：BRAS_InitSDK 传入参数）
 #define BRAS_INITFLAGS_MULTITHREADS		0x01	///< 多线程模式
@@ -86,8 +88,6 @@
 #define ANYCHAT_RECORD_FLAGS_STEREO		0x00000200	// 录制音频时，将其它人的声音混合为立体声后录制
 #define ANYCHAT_RECORD_FLAGS_SNAPSHOT	0x00000400	// 拍照
 #define ANYCHAT_RECORD_FLAGS_LOCALCB	0x00000800	// 触发本地回调
-#define ANYCHAT_RECORD_FLAGS_STREAM		0x00001000	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
-
 
 
 // 服务器应用程序消息回调函数定义

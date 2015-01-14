@@ -59,6 +59,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_AUDIO_SOFTVOLMODE		=	73;	///< 设置软件音量模式控制（参数为int型，1打开，0关闭[默认]），使用软件音量模式，将不会改变系统的音量设置
 	public static final int BRAC_SO_AUDIO_RECORDDRVCTRL		=	74;	///< 音频采集驱动控制（参数为int型，0默认驱动， 1 DSound驱动， 2 WaveIn驱动， 3 Java采集[Android平台使用]）
 	public static final int BRAC_SO_AUDIO_ECHODELAY			=	75;	///< 音频回声消除延迟参数设置（参数为int型，单位：ms）
+	public static final int BRAC_SO_AUDIO_NSLEVEL			=	76;	///< 音频噪音抑制水平参数设置（参数为int型，0 - 3，默认为2，值越大抑制水平越高，抑制噪音的能力越强）
 	
 	public static final int BRAC_SO_RECORD_VIDEOBR			=	10;	///< 录像视频码率设置（参数为：int型，单位：bps）
 	public static final int BRAC_SO_RECORD_AUDIOBR			=	11;	///< 录像音频码率设置（参数为：int型，单位：bps）
@@ -68,6 +69,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_RECORD_WIDTH			=	141;///< 录制视频宽度设置（参数为：int型，如：320）
 	public static final int BRAC_SO_RECORD_HEIGHT			=	142;///< 录制文件高度设置（参数为：int型，如：240）
 	public static final int BRAC_SO_RECORD_FILENAMERULE		=	143;///< 录制文件名命名规则（参数为：int型）
+	public static final int BRAC_SO_RECORD_CLIPMODE			=	144;///< 录制视频裁剪模式（参数为：int型）
 	
 	public static final int BRAC_SO_CORESDK_TMPDIR			=	14;	///< 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 	public static final int BRAC_SO_CORESDK_LOADCODEC		=	16;	///< 加载外部编解码器（参数为字符串TCHAR类型，必须是完整的绝对路径，包含文件名，或包含文件名的绝对路径）
@@ -126,10 +128,14 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_VIDEOSHOW_SETOVERLAYUSER=	82;	///< 设置迭加显示用户编号（参数为：int型，用户ID号）
 	public static final int BRAC_SO_VIDEOSHOW_DRIVERCTRL	=	83;	///< 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL, 4 Android2X, 5 Android Java）
 	public static final int BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER =	84;	///< 视频数据经过GPU直接渲染，将解码后的视频数据直接传输到GPU的物理地址（参数为：int型， 0 关闭[默认]， 1 打开），与硬件平台相关
+	public static final int BRAC_SO_VIDEOSHOW_AUTOROTATION	=	85;	///< 远程视频显示自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
+	public static final int BRAC_SO_VIDEOSHOW_CLIPMODE		=	86;	///< 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
 
 	public static final int BRAC_SO_CORESDK_DEVICEMODE		=	130;///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
 	public static final int BRAC_SO_CORESDK_SCREENCAMERACTRL=	131;///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
 	public static final int BRAC_SO_CORESDK_DATAENCRYPTION	=	132;///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
+	public static final int BRAC_SO_CORESDK_UPLOADLOGINFO	=	134;///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
+	public static final int BRAC_SO_CORESDK_WRITELOG		=	135;///< 写入调试信息到客户端日志文件中
 	
 	// 传输任务信息参数定义
 	public static final int BRAC_TRANSTASK_PROGRESS			=	1;	///< 传输任务进度查询（参数为：int型（0 ~ 100））
@@ -195,8 +201,8 @@ public class AnyChatDefine {
 
 	// 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
 	public static final int BRAC_USERINFO_CTRLCODE_ROTATION	=	8;	///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
-	public static final int BRAC_USERINFO_CTRLCODE_DEBUGLO	=	9;	///< 输出本地用户的调试日志，wParam为调试日志类型
-	public static final int BRAC_USERINFO_CTRLCODE_LVORIENTFIX =10;	///< 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
+	public static final int BRAC_USERINFO_CTRLCODE_DEBUGLOG =   9;	///< 输出本地用户的调试日志，wParam为调试日志类型
+	public static final int BRAC_USERINFO_CTRLCODE_LVORIENTFIX=	10;	///< 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
 	
 	// 常见出错代码定义
     public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< 没有错误
@@ -206,7 +212,8 @@ public class AnyChatDefine {
     public static final int BRAC_ERRORCODE_SESSION_REFUSE	= 100104;///< 目标用户拒绝会话
     public static final int BRAC_ERRORCODE_SESSION_TIMEOUT	= 100105;///< 会话请求超时
     public static final int BRAC_ERRORCODE_SESSION_DISCONNECT=100106;///< 网络断线
-	
+    
+    
     // 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
 	public static final int ANYCHAT_RECORD_FLAGS_VIDEO		= 0x00000001;	///< 录制视频
 	public static final int ANYCHAT_RECORD_FLAGS_AUDIO		= 0x00000002;	///< 录制音频
@@ -218,6 +225,8 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_RECORD_FLAGS_SNAPSHOT	= 0x00000400;	///< 拍照
 	public static final int ANYCHAT_RECORD_FLAGS_LOCALCB	= 0x00000800;	///< 触发本地回调
 	public static final int ANYCHAT_RECORD_FLAGS_STREAM		= 0x00001000;	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+
+	
 	
 	
 }

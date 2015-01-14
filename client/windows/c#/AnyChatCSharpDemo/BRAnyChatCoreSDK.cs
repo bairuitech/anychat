@@ -71,11 +71,15 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_VIDEOSHOW_SETPRIMARYUSER=	81;	// 设置主显示用户编号（参数为：int型，用户ID号）
 		public const int BRAC_SO_VIDEOSHOW_SETOVERLAYUSER=	82;	// 设置迭加显示用户编号（参数为：int型，用户ID号）
 		public const int BRAC_SO_VIDEOSHOW_DRIVERCTRL	=	83;	// 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL）
+		public const int BRAC_SO_VIDEOSHOW_AUTOROTATION	=	85;	// 远程视频显示自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
+		public const int BRAC_SO_VIDEOSHOW_CLIPMODE		=	86;	// 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
 		
 		public const int BRAC_SO_CORESDK_TICKOUTUSER	=	110;// 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
 		public const int BRAC_SO_CORESDK_DEVICEMODE		=	130;// 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
 		public const int BRAC_SO_CORESDK_SCREENCAMERACTRL =	131;// 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
 		public const int BRAC_SO_CORESDK_DATAENCRYPTION	=	132;// 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
+		public const int BRAC_SO_CORESDK_UPLOADLOGINFO	=	134;// 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
+		public const int BRAC_SO_CORESDK_WRITELOG		=	135;// 写入调试信息到客户端日志文件中
 		
         // 用户状态标志定义，API：BRAC_QueryUserState 传入参数
         public const int BRAC_USERSTATE_CAMERA		    =	1;	// 用户摄像头状态（参数为DWORD型）
@@ -96,6 +100,13 @@ namespace ANYCHATAPI
 		public const int BRAC_USERSTATE_SELFUSERSTATUS	=	16;	// 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
 		public const int BRAC_USERSTATE_SELFUSERID		=	17;	// 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
 		
+		// 组播策略定义
+		public const int BRAC_MCPOLITIC_DISABLE			=	0;	// 执行服务器路由策略，禁止所有组播发送[默认]
+		public const int BRAC_MCPOLITIC_ONLYLOCALMC		=	1;	// 忽略服务器路由策略，只向客户端本地组播组广播媒体流
+		public const int BRAC_MCPOLITIC_SERVERANDLOCALMC=	2;	// 执行服务器路由策略，同时在客户端本地发送组播数据
+		public const int BRAC_MCPOLITIC_ONLYSERVERMC	=	3;	// 忽略服务器路由策略，只向服务器本地组播组广播媒体流
+		public const int BRAC_MCPOLITIC_SERVERANDSERVERMC=	4;	// 执行服务器路由策略，同时在服务器端发送组播数据
+
 		// 组播功能标志定义（API：BRAC_MultiCastControl 传入参数）
 		public const int BRAC_MCFLAGS_JOINGROUP	= 0x00000001;	// 加入多播组
 		public const int BRAC_MCFLAGS_LEAVEGROUP= 0x00000002;	// 离开多播组
@@ -118,7 +129,7 @@ namespace ANYCHATAPI
 		public const int BRAC_RECORD_FLAGS_STEREO		= 0x200;// 录制音频时，将其它人的声音混合为立体声后录制
 		public const int BRAC_RECORD_FLAGS_SNAPSHOT     = 0x400;// 拍照
 		public const int BRAC_RECORD_FLAGS_LOCALCB      = 0x800;// 触发本地回调
-		public const int BRAC_RECORD_FLAGS_STREAM		= 0x00001000;// 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+		public const int BRAC_RECORD_FLAGS_STREAM		=0x1000;// 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
 
 		// 客户端、服务器端录制标志定义保持统一
 		public const int ANYCHAT_RECORD_FLAGS_VIDEO     = BRAC_RECORD_FLAGS_VIDEO;

@@ -67,6 +67,8 @@ namespace ANYCHATAPI
 		public const int BRAS_SO_RECORD_WIDTH			= 5;	// 录制视频宽度设置（参数为：int型，如：320）
 		public const int BRAS_SO_RECORD_HEIGHT			= 6;	// 录制文件高度设置（参数为：int型，如：240）
 		public const int BRAS_SO_RECORD_FILENAMERULE	= 7;	// 录制文件名命名规则（参数为：int型）
+		public const int BRAS_SO_RECORD_CLIPMODE		= 8;	// 录制视频裁剪模式（参数为：int型）
+		public const int BRAS_SO_CORESDK_WRITELOG		= 20;	// 写入调试信息到日志文件中
 
 		// 初始化标志（API：BRAS_InitSDK 传入参数）
 		public const int BRAS_INITFLAGS_MULTITHREADS	= 1;	///< 多线程模式
