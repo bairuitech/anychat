@@ -69,8 +69,8 @@
 
             <Button
                 android:id="@+id/btn_setting"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="32dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/et_border"
                 android:text="@string/str_setting"
