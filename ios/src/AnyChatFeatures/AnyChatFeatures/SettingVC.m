@@ -150,7 +150,6 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 3;
 }
 

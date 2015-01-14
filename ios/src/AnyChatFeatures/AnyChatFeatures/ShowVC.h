@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSMutableArray                *theVideoRecordList;
 @property (strong, nonatomic) NSString                      *theSelectContentPath;
 
+- (IBAction)clearDatas_OnClick;
 - (IBAction)LeaveBtn_OnClick;
 
 @end

@@ -135,6 +135,12 @@
     [self LeaveBtn_OnClick];
 }
 
+- (IBAction)clearDatas_OnClick
+{
+    [self.theVideoRecordList removeAllObjects];
+    [self.theVideoRecordTableView reloadData];
+}
+
 
 #pragma mark - UI Controls
 
