@@ -4,6 +4,7 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.bussinesscenter.BussinessCenter;
 import com.bairuitech.callcenter.R;
+
 import com.bairuitech.util.*;
 
 import android.app.Activity;
@@ -22,12 +23,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class LoginActivity extends Activity implements AnyChatBaseEvent,
 		 OnClickListener {
 	private Button configBtn;
-	private TextView loginBtn;
+	private Button loginBtn;
 	private CheckBox mCheckRemember;
 	private ConfigEntity configEntity;
 	private EditText mEditAccount;
@@ -108,7 +108,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 		mEditAccount = (EditText) findViewById(R.id.edit_account);
 		mCheckRemember = (CheckBox) findViewById(R.id.check_issavepass);
 		mCheckRemember.setTextColor(Color.BLACK);
-		loginBtn = (TextView) findViewById(R.id.btn_login);
+		loginBtn = (Button) findViewById(R.id.btn_login);
 		loginBtn.setOnClickListener(this);
 		configBtn = (Button) findViewById(R.id.btn_setting);
 		configBtn.setOnClickListener(this);

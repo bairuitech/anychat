@@ -1,7 +1,5 @@
 package com.bairuitech.util;
 
-import java.util.Random;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -84,12 +82,7 @@ public class DialogFactory {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 		mCurrentDialogId = dwDialogId;
-		if (dwDialogId == DIALOGID_CALLING || dwDialogId == DIALOGID_REQUEST) {
-			mDialog = new Dialog(mContext, R.style.Dialog_Fullscreen);
-		}else {
-			mDialog = new Dialog(mContext, R.style.CommonDialog);
-		}
-		
+		mDialog = new Dialog(mContext, R.style.CommonDialog);
 		mDialog.setCanceledOnTouchOutside(false);
 		mDialog.setCancelable(false);
 		switch (dwDialogId) {
@@ -195,8 +188,6 @@ public class DialogFactory {
 		final int userId = (Integer) object;
 		View view = mLayoutInlater.inflate(R.layout.dialog_calling, null);
 		ImageView buttonCancel = (ImageView) view.findViewById(R.id.btn_cancel);
-		ImageView callWaitingRoleIcon = (ImageView)view.findViewById(R.id.Img_callingWaitingIcon);
-		callWaitingRoleIcon.setImageResource(BussinessCenter.getBussinessCenter().getCallingRoleSrcID());
 		buttonCancel.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -233,34 +224,14 @@ public class DialogFactory {
 				mDialog.dismiss();
 			}
 		});
-		
-		// 设置呼叫头像
-		ImageView roleIconImageView = (ImageView)view.findViewById(R.id.Img_callAffirmRoleIcon);
-		BussinessCenter.getBussinessCenter().setCallingRoleSrcID(getRandomResID());
-		roleIconImageView.setImageResource(BussinessCenter.getBussinessCenter().getCallingRoleSrcID());
 		String strTitle = "";
 		UserItem userItem = BussinessCenter.getBussinessCenter().getUserItemByUserId(userId);
 		if (userItem != null)
-			strTitle = userItem.getUserName();
+			strTitle = "准备向" + userItem.getUserName() + "发起视频会话";
 		initDialogTitle(view, strTitle);
 		dialog.setContentView(view);
 	}
-    private int getRandomResID() {
-		int randoNum = new Random().nextInt(5) + 1;
-		if (randoNum == 1) {
-			return R.drawable.role_1;
-		} else if (randoNum == 2) {
-			return R.drawable.role_2;
-		} else if (randoNum == 3) {
-			return R.drawable.role_3;
-		} else if (randoNum == 4) {
-			return R.drawable.role_4;
-		} else if (randoNum == 5) {
-			return R.drawable.role_5;
-		}
-		
-		return R.drawable.role_1;
-	}
+
 	/***
 	 * 初始化确认对话框
 	 * 
@@ -333,8 +304,7 @@ public class DialogFactory {
 		View view = mLayoutInlater.inflate(R.layout.dialog_requesting, null);
 		ImageView buttonAccept = (ImageView) view.findViewById(R.id.btn_accept);
 		ImageView buttonRefuse = (ImageView) view.findViewById(R.id.btn_refuse);
-		ImageView callReceRoleIconImageView = (ImageView)view.findViewById(R.id.Img_requestingcallingIcon);
-		callReceRoleIconImageView.setImageResource(getRandomResID());
+		
 		// buttonAccept.setText(mContext.getString(R.string.str_resume));
 		buttonAccept.setOnClickListener(new OnClickListener() {
 
@@ -363,7 +333,7 @@ public class DialogFactory {
 		UserItem userItem = BussinessCenter.getBussinessCenter().getUserItemByUserId(userId);
 		String strTitle = "";
 		if (userItem != null)
-			strTitle = userItem.getUserName()+"\" " + mContext.getString(R.string.sessioning_reqite);
+			strTitle = userItem.getUserName() + mContext.getString(R.string.sessioning_reqite);
 		initDialogTitle(view, strTitle, userId);
 		dialog.setContentView(view);
 	}
