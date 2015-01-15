@@ -63,8 +63,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	private List<RoleInfo> mRoleInfoList = new ArrayList<RoleInfo>();
 	private RoleListAdapter mAdapter;
-
-	private boolean bNeedRelease = false;
 	private int UserselfID;
 
 	public AnyChatCoreSDK anyChatSDK;
@@ -251,13 +249,9 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	}
 
 	protected void onDestroy() {
-
-		if (bNeedRelease) {
-			anyChatSDK.LeaveRoom(-1);
-			anyChatSDK.Logout();
-			anyChatSDK.Release();
-		}
-
+		anyChatSDK.LeaveRoom(-1);
+		anyChatSDK.Logout();
+		anyChatSDK.Release();
 		super.onDestroy();
 	}
 
@@ -313,7 +307,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	@Override
 	public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId) {
 		mBottomConnMsg.setText("进入房间成功！");
-		bNeedRelease = true;
 		updateUserList();
 	}
 
@@ -484,7 +477,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		anyChatSDK.LeaveRoom(-1);
 		anyChatSDK.Logout();
 		mBottomConnMsg.setText("连接关闭，errorCode：" + dwErrorCode);
-		bNeedRelease = false;
 	}
 
 	// 广播
@@ -500,7 +492,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				mBottomConnMsg.setText("No content to the server");
 				anyChatSDK.LeaveRoom(-1);
 				anyChatSDK.Logout();
-				bNeedRelease = false;
 			}
 		}
 	};
