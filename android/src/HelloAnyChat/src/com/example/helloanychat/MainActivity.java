@@ -93,8 +93,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_AUTOROTATION,
 					LOCALVIDEOAUTOROTATION);
-
-			bNeedRelease = true;
 		}
 	}
 
@@ -272,9 +270,9 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		// TODO Auto-generated method stub
 		super.onRestart();
 		anyChatSDK.SetBaseEvent(this);
-		
+
 		// 一种简便的方法，当断网的时候，返回到登录界面，不去刷新用户列表，下面广播已经清空了列表
-		if(mBtnStart.getVisibility() != View.VISIBLE)
+		if (mBtnStart.getVisibility() != View.VISIBLE)
 			updateUserList();
 	}
 
@@ -294,7 +292,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			hideKeyboard();
 
 			mBottomConnMsg.setText("Connect to the server success.");
-			bNeedRelease = false;
 			int sHourseID = Integer.valueOf(mEditRoomID.getEditableText()
 					.toString());
 			anyChatSDK.EnterRoom(sHourseID, "");
@@ -316,6 +313,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	@Override
 	public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId) {
 		mBottomConnMsg.setText("进入房间成功！");
+		bNeedRelease = true;
 		updateUserList();
 	}
 
@@ -354,6 +352,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			}
 		});
 	}
+
 	private void onSelectItem(int postion) {
 		String strUserID = mRoleInfoList.get(postion).getUserID();
 		Intent intent = new Intent();
@@ -375,9 +374,10 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		} else if (number == 5) {
 			return R.drawable.role_5;
 		}
-		
+
 		return R.drawable.role_1;
 	}
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		if (resultCode == RESULT_OK && requestCode == ACTIVITY_ID_VIDEOCONFIG) {
@@ -484,6 +484,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		anyChatSDK.LeaveRoom(-1);
 		anyChatSDK.Logout();
 		mBottomConnMsg.setText("连接关闭，errorCode：" + dwErrorCode);
+		bNeedRelease = false;
 	}
 
 	// 广播
@@ -492,12 +493,14 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
 			if (action.equals("VideoActivity")) {
-				Toast.makeText(MainActivity.this, "网络已断开！", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MainActivity.this, "网络已断开！", Toast.LENGTH_SHORT)
+						.show();
 				setBtnVisible(SHOWLOGINSTATEFLAG);
 				mRoleList.setAdapter(null);
 				mBottomConnMsg.setText("No content to the server");
 				anyChatSDK.LeaveRoom(-1);
 				anyChatSDK.Logout();
+				bNeedRelease = false;
 			}
 		}
 	};
