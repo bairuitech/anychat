@@ -241,6 +241,7 @@ var ANYCHATWEB_VIDEO_SO_XPOS		=		4;	// 迭加位置（整形）
 var ANYCHATWEB_VIDEO_SO_YPOS		=		5;	// 迭加位置（整形）
 var ANYCHATWEB_VIDEO_SO_UPDATEPOS	=		6;	// 更新位置（整形）
 var ANYCHATWEB_VIDEO_SO_OVERLAYFILE	=		7;	// 迭加图片（字符串类型），含路径，可为本地文件，也可为URL地址，目前只支持jpg文件
+var ANYCHATWEB_VIDEO_SO_OVERLAYMSG	=		8;	// 迭加文字消息
 
 // 插件最低需求版本号
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
