@@ -234,14 +234,7 @@ var BRAC_USERINFO_CTRLCODE_DEBUGLOG	=		9;	// йДЁЖ╠╬╣ьсц╩╖╣д╣Вйтхуж╬ё╛wParamн╙╣Вй
 var BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;	// ╠╬╣ьйсф╣╡и╪╞╥╫оРпчуЩё╛wParamн╙╥╫оР╡нйЩё╛lParamн╙пчуЩ╫г╤х
 
 // йсф╣отй╬╡Е╪ЧиХжц╡нйЩ
-var ANYCHATWEB_VIDEO_SO_OVERLAYMODE	=		1;	// м╪ф╛╣Э╪сдёй╫ё╗уШпнё╘ё╨0 ╫Шж╧ё╗д╛хоё╘ё╛1 м╦цВё╛2 ╩Л╨о
-var ANYCHATWEB_VIDEO_SO_TRANSCOLOR	=		2;	// м╦цВяуи╚ё╗уШпнё╘ё╛м╦цВ╣Э╪сдёй╫спп╖
-var ANYCHATWEB_VIDEO_SO_OPACITY		=		3;	// м╦цВ╤хё╗уШпнё╘ё╛╩Л╨о╣Э╪сдёй╫спп╖
-var ANYCHATWEB_VIDEO_SO_XPOS		=		4;	// ╣Э╪сн╩жцё╗уШпнё╘
-var ANYCHATWEB_VIDEO_SO_YPOS		=		5;	// ╣Э╪сн╩жцё╗уШпнё╘
-var ANYCHATWEB_VIDEO_SO_UPDATEPOS	=		6;	// ╦Эпбн╩жцё╗уШпнё╘
-var ANYCHATWEB_VIDEO_SO_OVERLAYFILE	=		7;	// ╣Э╪см╪ф╛ё╗вж╥Ш╢╝юЮпмё╘ё╛╨╛б╥╬╤ё╛©ин╙╠╬╣ьнд╪Чё╛р╡©ин╙URL╣ьж╥ё╛д©г╟ж╩ж╖Ёжjpgнд╪Ч
-var ANYCHATWEB_VIDEO_SO_OVERLAYMSG	=		8;	// ╣Э╪сндвжоШо╒
+var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// тзйсф╣ио╣Э╪сндвж║╒м╪ф╛╣хдзхщ
 
 // ╡Е╪ЧвН╣мпХгС╟Ф╠╬╨е
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";

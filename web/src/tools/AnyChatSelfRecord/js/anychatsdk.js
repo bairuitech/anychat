@@ -234,7 +234,7 @@ var BRAC_USERINFO_CTRLCODE_DEBUGLOG	=		9;	// йДЁЖ╠╬╣ьсц╩╖╣д╣Вйтхуж╬ё╛wParamн╙╣Вй
 var BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;	// ╠╬╣ьйсф╣╡и╪╞╥╫оРпчуЩё╛wParamн╙╥╫оР╡нйЩё╛lParamн╙пчуЩ╫г╤х
 
 // йсф╣отй╬╡Е╪ЧиХжц╡нйЩ
-var ANYCHATWEB_VIDEO_SO_OVERLAYMSG	=		8;	// тзйсф╣ио╣Э╪сндвж║╒м╪ф╛╣хдзхщ
+var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// тзйсф╣ио╣Э╪сндвж║╒м╪ф╛╣хдзхщ
 
 // ╡Е╪ЧвН╣мпХгС╟Ф╠╬╨е
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
