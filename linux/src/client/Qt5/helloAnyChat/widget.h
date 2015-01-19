@@ -10,6 +10,7 @@
 #include <QCloseEvent>
 #include <QLabel>
 #include <QDesktopWidget>
+#include <QModelIndex>
 
 #include "BRAnyChatCoreSDK.h"
 
