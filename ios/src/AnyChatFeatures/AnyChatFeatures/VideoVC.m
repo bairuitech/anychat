@@ -359,6 +359,18 @@
     }
 }
 
+- (IBAction)changeContentModeFromImageView:(id)sender
+{
+    if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFit)
+    {
+        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    else if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFill)
+    {
+        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFit;
+    }
+}
+
 //iRemote user video loading status
 -(BOOL)remoteVideoDidLoadStatus
 {
@@ -441,6 +453,5 @@
     
     [theVideoMZTimer start];
 }
-
 
 @end

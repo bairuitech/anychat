@@ -21,9 +21,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video.png" id="gvn-o5-Q4l">
+                <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video.png" id="gvn-o5-Q4l">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="0Iw-m0-5a2" appends="YES" id="Zns-RQ-dIW"/>
+                    </connections>
                 </imageView>
                 <view contentMode="scaleToFill" id="pcW-8H-Quo" userLabel="LocalView">
                     <rect key="frame" x="216" y="315" width="100" height="130"/>
@@ -114,9 +118,15 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.96603671757736009" green="1" blue="0.96739653493915279" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
+        <tapGestureRecognizer numberOfTapsRequired="2" id="0Iw-m0-5a2">
+            <connections>
+                <action selector="changeContentModeFromImageView" destination="-1" id="k7N-SV-G2h"/>
+                <outlet property="delegate" destination="-1" id="IVJ-nv-m3Z"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="Icon_EndCall.png" width="454" height="60"/>

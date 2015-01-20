@@ -47,6 +47,7 @@
 @property (strong, nonatomic) MZTimerLabel                  *theVideoMZTimer;
 @property int iRemoteUserId;
 
+- (IBAction)changeContentModeFromImageView:(id)sender;
 
 - (IBAction) FinishVideoChatBtnClicked:(id)sender;
 

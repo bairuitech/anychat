@@ -16,7 +16,7 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-@interface VideoViewController : UIViewController<UIActionSheetDelegate>
+@interface VideoViewController : UIViewController<UIActionSheetDelegate,UIGestureRecognizerDelegate>
 {
     AnyChatPlatform *theAnyChat;
 }

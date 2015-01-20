@@ -157,6 +157,18 @@
     }
 }
 
+- (IBAction)changeContentModeFromImageView
+{
+    if (self.theUIImageView.contentMode == UIViewContentModeScaleAspectFit)
+    {
+        self.theUIImageView.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    else if (self.theUIImageView.contentMode == UIViewContentModeScaleAspectFill)
+    {
+        self.theUIImageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+}
+
 - (void) btnSelectedOnClicked:(UIButton*)button
 {
     if (button.selected)

@@ -130,7 +130,6 @@
 		FEA90E921A4D045E001CA696 /* libmediashow.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediashow.a; sourceTree = "<group>"; };
 		FEA90E931A4D045E001CA696 /* libmediautil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediautil.a; sourceTree = "<group>"; };
 		FEA90E941A4D045E001CA696 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
-		FEA90E951A4D045E001CA696 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
 		FEA90E961A4D045E001CA696 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
 		FEA90E971A4D045E001CA696 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswresample.a; sourceTree = "<group>"; };
 		FEA90E981A4D045E001CA696 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
@@ -349,7 +348,6 @@
 				FEA90E921A4D045E001CA696 /* libmediashow.a */,
 				FEA90E931A4D045E001CA696 /* libmediautil.a */,
 				FEA90E941A4D045E001CA696 /* libmp3lame.a */,
-				FEA90E951A4D045E001CA696 /* libopencore-amrnb.a */,
 				FEA90E961A4D045E001CA696 /* libopencore-amrwb.a */,
 				FEA90E971A4D045E001CA696 /* libswresample.a */,
 				FEA90E981A4D045E001CA696 /* libswscale.a */,

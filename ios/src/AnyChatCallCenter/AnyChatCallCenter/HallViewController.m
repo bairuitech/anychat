@@ -374,6 +374,14 @@ NSString* const kVideoQuality = @"videoquality";
 {
     [videoVC FinishVideoChat];
     [AnyChatPlatform Logout];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    UIAlertView *networkAlertView = [[UIAlertView alloc] initWithTitle:@"网络断开,请重新登录."
+                                                               message:@"Network disconnection."
+                                                              delegate:self
+                                                     cancelButtonTitle:nil
+                                                     otherButtonTitles:@"确定",nil];
+    [networkAlertView show];
 }
 
 

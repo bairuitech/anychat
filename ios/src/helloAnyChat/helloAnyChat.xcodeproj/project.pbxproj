@@ -122,7 +122,6 @@
 		FEA90FEE1A4D1581001CA696 /* libmediashow.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediashow.a; sourceTree = "<group>"; };
 		FEA90FEF1A4D1581001CA696 /* libmediautil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediautil.a; sourceTree = "<group>"; };
 		FEA90FF01A4D1581001CA696 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
-		FEA90FF11A4D1581001CA696 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
 		FEA90FF21A4D1581001CA696 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
 		FEA90FF31A4D1581001CA696 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswresample.a; sourceTree = "<group>"; };
 		FEA90FF41A4D1581001CA696 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
@@ -368,7 +367,6 @@
 				FEA90FEE1A4D1581001CA696 /* libmediashow.a */,
 				FEA90FEF1A4D1581001CA696 /* libmediautil.a */,
 				FEA90FF01A4D1581001CA696 /* libmp3lame.a */,
-				FEA90FF11A4D1581001CA696 /* libopencore-amrnb.a */,
 				FEA90FF21A4D1581001CA696 /* libopencore-amrwb.a */,
 				FEA90FF31A4D1581001CA696 /* libswresample.a */,
 				FEA90FF41A4D1581001CA696 /* libswscale.a */,
@@ -482,6 +480,11 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "GuangZhou BaiRui NetWork Technology Co.,Ltd.";
+				TargetAttributes = {
+					FEBBA24C19C2CC0B009EE02C = {
+						DevelopmentTeam = 5NQ3495ZY9;
+					};
+				};
 			};
 			buildConfigurationList = FEBBA24819C2CC0B009EE02C /* Build configuration list for PBXProject "helloAnyChat" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -671,6 +674,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libstdc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "helloAnyChat/helloAnyChat-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -703,6 +708,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libstdc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "helloAnyChat/helloAnyChat-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
