@@ -26,10 +26,8 @@ var recordstart=0;
 var timecontrol=1;
 var time;
 var XPOS=605;
-
-var butterfly,btfNum=1,btfdown=0,fontSizeCtrl=30,fontColorCtrl=false;//动画控制器，蝴蝶张开标识，蝴蝶关闭标识，字体初始大小，字体颜色标识
-var localHref,effect1=false,effect2=false,effect3=false,fontChange=false,butterFly=false;//图片本地路径，效果标识按钮1，效果标识按钮2，效果标识按钮3，字体变换标识，蝴蝶动态标识
-
+var butterfly,btfNum=1,btfdown=0,fontSizeCtrl=30,fontColorCtrl=false;
+var localHref,effect1=false,effect2=false,effect3=false,fontChange=false,butterFly=false;
 function LogicInit() {
     setTimeout(function () {
 		if (navigator.plugins && navigator.plugins.length) {
@@ -40,14 +38,10 @@ function LogicInit() {
 																// API Level
         var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	// 初始化插件
         if (errorcode == GV_ERR_SUCCESS) {
-  	      	// 视频抓拍文件存储路径
-						BRAC_SetSDKOption(BRAC_SO_SNAPSHOT_TMPDIR,"d:\\ScreenShot");
-						// 视频录制文件存储路径
-						BRAC_SetSDKOption(BRAC_SO_RECORD_TMPDIR,"d:\\videoRecord");
-						// 设置录制文件格式，0 MP4[默认], 1 WMV, 2 FLV, 3 MP3
-			    	BRAC_SetSDKOption(BRAC_SO_RECORD_FILETYPE,0);
-			    	// 启动本地Web服务
-						BRAC_SetSDKOption(BRAC_SO_ENABLEWEBSERVICE, 1);                
+						BRAC_SetSDKOption(BRAC_SO_SNAPSHOT_TMPDIR,"d:\\ScreenShot");// 视频抓拍文件存储路径
+						BRAC_SetSDKOption(BRAC_SO_RECORD_TMPDIR,"d:\\videoRecord");// 视频录制文件存储路径
+			    		BRAC_SetSDKOption(BRAC_SO_RECORD_FILETYPE,0);// 0 MP4[默认], 1 WMV, 2 FLV, 3 MP3
+						BRAC_SetSDKOption(BRAC_SO_ENABLEWEBSERVICE, 1);                // 启动本地Web服务
 						if(mRefreshPluginTimer != -1)
 							clearInterval(mRefreshPluginTimer); 			// 清除插件安装检测定时器
 						GetID("prompt_div").style.display = "none"; 		// 隐藏插件安装提示界面
@@ -290,12 +284,8 @@ function InitInterfaceUI() {
 				setvideoImg(localHref+"recordTip.png",0,350);
        },300);
     }
-    /**
-    *动态效果已在anychatevent.js底下用计时器打开
-    *通过标识控制字体颜色大小改变(动态文字)，蝴蝶动态效果(动态图片)
-    *由aminateC()这个函数控制effect2,effect3
-    */
- // effect1透明背景
+    
+ // effect1拍照效果
     GetID("effect1").onclick = function () {
     	if(effect1){
     		setvideoImg("",0,0);
@@ -312,14 +302,14 @@ function InitInterfaceUI() {
     	effect1=!effect1;
     }
     
- // effect2动态图片
+ // effect2蝴蝶抖动
     GetID("effect2").onclick = function () {
     	if(effect2){
     		clearInterval(aminateC);
     	}
     	effect2=!effect2;
     }
- // effect3动态文字
+ // effect3文字效果
     GetID("effect3").onclick = function () {
     	
     	if(fontChange){
@@ -392,8 +382,8 @@ function Mp4Player(mp4){
 	GetID("videotag").innerHTML="";
 	GetID("videotag").innerHTML=embed;
 }
-
 // 录制时间设置
+
 function formatSeconds(value) {
    var s = parseInt(value);// 秒
    var min = 0;// 分
@@ -506,12 +496,12 @@ function aminateC(){
 	//在本地视频上迭加图片
 	var szOverlayImage = "<IMAGE2><VALUE>"+localHref+"btf"+btfNum+".png</VALUE><XPOS>510</XPOS><YPOS>10</YPOS></IMAGE2>";
 	if(effect2){
-		GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, szOverlayImage);
+	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, szOverlayImage);
 	}
 
 if(btfdown==1){
-		btfNum-=1;
-		fontSizeCtrl-=2;
+	btfNum-=1;
+	fontSizeCtrl-=2;
 	if(btfNum==1)
 		btfdown=0;
 	}else{
