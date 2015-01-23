@@ -88,17 +88,15 @@ function OnAnyChatSDKFilterData(lpBuf, dwLen) {
 
 // 收到录像或拍照完成事件
 function OnAnyChatRecordSnapShot(dwUserId, lpFileName, dwParam, bRecordType) {
-
 	var szUrl = BRAC_GetSDKOptionStringEx(BRAC_SO_LOCALPATH2URL, lpFileName, 0);
-
-	BRAC_UserCameraControl(mSelfUserId, 0); // 关闭本地视频
-	BRAC_UserSpeakControl(mSelfUserId, 0); // 关闭本地语音
-
-
+	// 关闭本地视频
+	BRAC_UserCameraControl(mSelfUserId, 0);
+	// 关闭本地语音
+	BRAC_UserSpeakControl(mSelfUserId, 0); 
+	clearVideoOverlayEffect();
 	if (bRecordType == 0) {
-		clearInterval(butterfly);
+		clearInterval(videoOverlayEffectTimer);
 		displayList("AnyChatLocalVideoDiv,advanceset_iframe,ScreenShot", "none");
-
 		displayList("AnyChatFileTransDiv,reScreenShot,enterRecord,uScreenShot",
 				"block");
 		picPath = lpFileName;
@@ -106,15 +104,12 @@ function OnAnyChatRecordSnapShot(dwUserId, lpFileName, dwParam, bRecordType) {
 		GetID("recordmsg").innerHTML = "照片抓拍完成";
 		GetID("recordmsg").style.display = "block";
 		GetID("effectBtn").style.display = "none";
-
 		setTimeout(function() {
 			GetID("recordmsg").style.display = "none";
 		}, 1000);
 
 	} else if (bRecordType == 1) {
-		
 		displayList("tip,record_ready,recordtime,advanceset_iframe", "none");
-
 		displayList("advanceset_iframe,recordmsg,backRecord,Recordplay,next","block");
 		GetID("recordmsg").innerHTML = "视频录制完成";
 		lpLocalPathName = lpFileName;
@@ -161,16 +156,16 @@ function OnAnyChatEnterRoom(dwRoomId, errorcode) {
 		ShowLoginDiv(false);
 		ShowVideoRecordDiv(true);
 		ApplyVideoConfig(0, 3, 640, 480, 15, 3);
-		BRAC_UserCameraControl(-1, 1); // 打开本地视频
-		BRAC_UserSpeakControl(-1, 1); // 打开本地语音
+		// 打开本地视频
+		BRAC_UserCameraControl(-1, 1);
+		// 打开本地语音
+		BRAC_UserSpeakControl(-1, 1); 
 		// 设置本地视频显示位置
 		BRAC_SetVideoPos(mSelfUserId, GetID("AnyChatLocalVideoDiv"),
 				"ANYCHAT_VIDEO_LOCAL");
-				
 		GetID("advanceset_iframe").style.display = "none";
 		//蝴蝶等动画
-        butterfly=setInterval(aminateC,500);
-
+        videoOverlayEffectTimer=setInterval(videoOverlayEffect,500);
 	} else {
 		DisplayLoadingDiv(false);
 	}
@@ -227,6 +222,7 @@ function OnAnyChatPrivateEcho(dwUserId, errorcode) {
 
 // 用户退出私聊，dwUserId表示退出者的用户ID号，errorcode为出错代码
 function OnAnyChatPrivateExit(dwUserId, errorcode) {
+
 
 }
 
