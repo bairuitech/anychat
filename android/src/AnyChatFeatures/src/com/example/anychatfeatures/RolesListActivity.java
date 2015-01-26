@@ -19,6 +19,7 @@ import com.example.funcActivity.ChatActivity;
 import com.example.funcActivity.FileTransfer;
 import com.example.funcActivity.LocalVideoRecord;
 import com.example.funcActivity.ServerVideoRecord;
+import com.example.funcActivity.SingleSelfVideo;
 import com.example.funcActivity.VideoActivity;
 
 import android.app.Activity;
@@ -93,7 +94,6 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 	}
 
 	OnClickListener onClickListener = new OnClickListener() {
-		
 		@Override
 		public void onClick(View v) {
 			destroyCurActivity();
@@ -129,9 +129,17 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				if (arg2 == 0)//点击角色列表中的自己返回，不做处理
+				if (arg2 == 0 &&( mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_LOCALVIDEO ||
+						mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_PHOTOGRAPH)){
+					Intent intent = new Intent();
+					intent.setClass(RolesListActivity.this, SingleSelfVideo.class);
+					startActivity(intent);
 					return;
-				
+				}else if(arg2 == 0) {
+					//如果点击的不是本地录制和拍照，则点击角色列表中的自己返回，不做处理
+					return;
+				}
+					
 				onSelectItem(arg2);
 			}
 		});
