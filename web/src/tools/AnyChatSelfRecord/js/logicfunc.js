@@ -24,11 +24,14 @@ var lpLocalPathName,picPath;
 var control=false;
 var recordstart=0;
 var timecontrol=1;
-var time;
+var reocordVideoOverlayTimer;//发起录制后，在视频上面叠加“正在录制”文字
 var XPOS=605;
-
-var butterfly,btfNum=1,btfdown=0,fontSizeCtrl=30,fontColorCtrl=false;//动画控制器，蝴蝶张开标识，蝴蝶关闭标识，字体初始大小，字体颜色标识
-var localHref,effect1=false,effect2=false,effect3=false,fontChange=false,butterFly=false;//图片本地路径，效果标识按钮1，效果标识按钮2，效果标识按钮3，字体变换标识，蝴蝶动态标识
+var videoOverlayEffectTimer=0;//视频叠加动态效果定时器
+var effectTransparentBgSwitch=false;//透明背景效果功能控制开关
+var effectDymcMessageSwitch=false,dynamicFontSize=30,fontColorCtrl=false;//动态文字效果功能控制开关，动态字体大小，蝴蝶关闭标识，字体颜色控制
+var effectDymcImageSwitch=false,btfIndex=1,btfCloseTag=0;//动态文字效果功能控制开关，蝴蝶图片显示位置，蝴蝶关闭标识
+var constTransparentImg="recordTip.png";
+var localHref;//动态图片源路径
 
 function LogicInit() {
     setTimeout(function () {
@@ -41,27 +44,26 @@ function LogicInit() {
         var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	// 初始化插件
         if (errorcode == GV_ERR_SUCCESS) {
   	      	// 视频抓拍文件存储路径
-						BRAC_SetSDKOption(BRAC_SO_SNAPSHOT_TMPDIR,"d:\\ScreenShot");
-						// 视频录制文件存储路径
-						BRAC_SetSDKOption(BRAC_SO_RECORD_TMPDIR,"d:\\videoRecord");
-						// 设置录制文件格式，0 MP4[默认], 1 WMV, 2 FLV, 3 MP3
-			    	BRAC_SetSDKOption(BRAC_SO_RECORD_FILETYPE,0);
-			    	// 启动本地Web服务
-						BRAC_SetSDKOption(BRAC_SO_ENABLEWEBSERVICE, 1);                
-						if(mRefreshPluginTimer != -1)
-							clearInterval(mRefreshPluginTimer); 			// 清除插件安装检测定时器
-						GetID("prompt_div").style.display = "none"; 		// 隐藏插件安装提示界面
-						ShowLoginDiv(true);
-						// 初始化界面元素
-						InitInterfaceUI();
+			BRAC_SetSDKOption(BRAC_SO_SNAPSHOT_TMPDIR,"d:\\ScreenShot");
+			// 视频录制文件存储路径
+			BRAC_SetSDKOption(BRAC_SO_RECORD_TMPDIR,"d:\\videoRecord");
+			// 设置录制文件格式，0 MP4[默认], 1 WMV, 2 FLV, 3 MP3
+			 BRAC_SetSDKOption(BRAC_SO_RECORD_FILETYPE,0);
+			// 启动本地Web服务
+			BRAC_SetSDKOption(BRAC_SO_ENABLEWEBSERVICE, 1);                
+			if(mRefreshPluginTimer != -1)
+				clearInterval(mRefreshPluginTimer); 			// 清除插件安装检测定时器
+			GetID("prompt_div").style.display = "none"; 		// 隐藏插件安装提示界面
+			ShowLoginDiv(true);
+			// 初始化界面元素
+			InitInterfaceUI();
         } else { 						// 没有安装插件，或是插件版本太旧，显示插件下载界面
             GetID("prompt_div").style.display = "block";
            // SetDivTop("prompt_div", 300);
             if (errorcode == GV_ERR_PLUGINNOINSTALL)
                 GetID("prompt_div_line1").innerHTML = "首次进入需要安装插件，请点击下载按钮进行安装！";
             else if (errorcode == GV_ERR_PLUGINOLDVERSION)
-                GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";
-				
+                GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";			
 			if(mRefreshPluginTimer == -1) {
 				mRefreshPluginTimer = setInterval(function(){ LogicInit(); }, 1000);
 			}
@@ -85,12 +87,11 @@ function InitInterfaceUI() {
     GetID("prompt_div_headline2").onclick = function () {
         document.URL = location.href;
     }
-
-    
+  
   // 登录AnyChat服务器，准备录像
-    GetID("loginRoom").onclick = function () {
+    GetID("startEnjoy").onclick = function () {
     	if (GetID("username").value != "") {
-				DisplayLoadingDiv(true);
+			DisplayLoadingDiv(true);
     		var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); // 连接服务器
             errorcode = BRAC_Login(GetID("username").value, "", 0);
     		BRAC_EnterRoom(3, "", 0);
@@ -102,52 +103,36 @@ function InitInterfaceUI() {
     }
 	// 拍照
     GetID("ScreenShot").onclick = function () {
-			BRAC_SnapShot(-1, 0, 0);
+		BRAC_SnapShot(-1, 0, 0);
 	}
 	// 重拍
 	GetID("reScreenShot").onclick = function () {
 		GetID("effectBtn").style.display = "block";
-
 		//蝴蝶等动画
-		butterfly=setInterval(aminateC,500);
+		videoOverlayEffectTimer=setInterval(videoOverlayEffect,500);
 		displayList("AnyChatFileTransDiv,advanceset_iframe,uScreenShot,reScreenShot,enterRecord","none");
 		GetID("AnyChatLocalVideoDiv").style.display="block";
-    	
-				BRAC_UserCameraControl(-1, 1); 	  // 打开本地视频
-        BRAC_UserSpeakControl(-1, 1); 		// 打开本地语音
+    	BRAC_UserCameraControl(-1, 1); 	 // 打开本地视频
+        BRAC_UserSpeakControl(-1, 1); 	// 打开本地语音
         // 设置本地视频显示位置
        	BRAC_SetVideoPos(mSelfUserId, GetID("AnyChatLocalVideoDiv"), "ANYCHAT_VIDEO_LOCAL");
-		
 		GetID("ScreenShot").style.display="block";
 	}
 	// 进入录制
 	GetID("enterRecord").onclick = function () {
-		clearInterval(butterfly);
-
+		clearInterval(videoOverlayEffectTimer);
 		displayList("AnyChatFileTransDiv,advanceset_iframe,enterRecord,reScreenShot,uScreenShot","none");
 		GetID("tip").getElementsByTagName("div")[0].innerHTML="<p>请将人脸正对摄像头，用普</p><p>通话朗读以下内容：</p><p>1.我是张三，自愿申请开户</p><p>2.我已阅读数字证书文件、</p><p>理解合同并接受相关条款</p>";
-
 		GetID("regist-process").className="step2";
-		
-		
 		GetID("AnyChatLocalVideoDiv").style.display="block";
-				ApplyVideoConfig(150000,3,320,240,15,3);
-			
-				BRAC_UserCameraControl(-1, 1); 	// 打开本地视频
+		ApplyVideoConfig(150000,3,320,240,15,3);
+		BRAC_UserCameraControl(-1, 1); 	// 打开本地视频
         BRAC_UserSpeakControl(-1, 1); 		// 打开本地语音
         // 设置本地视频显示位置
         BRAC_SetVideoPos(mSelfUserId, GetID("AnyChatLocalVideoDiv"), "ANYCHAT_VIDEO_LOCAL");
-		
 		setTimeout(function(){
-			//取消文字，设置视频图片
-			GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE1></MESSAGE1>");
-			GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE2></MESSAGE2>");
-			GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE3></MESSAGE3>");
-			GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE4></MESSAGE4>");
-			GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE5></MESSAGE5>");
-			GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<IMAGE2></IMAGE2>");
-			
-			setvideoImg(localHref+"recordTip.png",0,350);
+		//视频顶部叠加图片
+		setVideoImg(localHref+"constTransparentImg",0,350);
     },300);
 		
 		GetID("recordtime").style.display="block";
@@ -155,46 +140,41 @@ function InitInterfaceUI() {
 	}
   // 录制
     GetID("record_ready").onclick = function () {
-    	setvideoImg(localHref+"topTip.png",0,0);
-
+    	setVideoImg(localHref+"topTip.png",0,0);
     	// 录制本地音视频
-    
-    		var tag=BRAC_RECORD_FLAGS_VIDEO+BRAC_RECORD_FLAGS_AUDIO;
-    		
-    		BRAC_StreamRecordCtrl(-1,control?0:1,tag, 0);
-			GetID("record_ready").title =control?"开始录制":"录制中";
-		
+    	var tag=BRAC_RECORD_FLAGS_VIDEO+BRAC_RECORD_FLAGS_AUDIO;
+    	BRAC_StreamRecordCtrl(-1,control?0:1,tag, 0);
+		GetID("record_ready").title =control?"开始录制":"录制中";
 		if(timecontrol==1){
-		time=setInterval(function(){GetID("recordtime").innerHTML="录制时间："+formatSeconds(recordstart);recordstart++;
-	
-			// 在本地视频上迭加文字
-			var messageFont = "<MESSAGE1><VALUE>视频录制中...</VALUE><XPOS>"+XPOS+"</XPOS><YPOS>5</YPOS><FONTCOLOR>#FAFAF9</FONTCOLOR></MESSAGE1>";
-			GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, messageFont);
-			XPOS-=30;
-			if(XPOS<(-135)){XPOS=605;}
+			reocordVideoOverlayTimer=setInterval(function(){GetID("recordtime").innerHTML="录制时间："+formatSeconds(recordstart);recordstart++;
+				// 在本地视频上迭加文字
+				var messageFont = "<MESSAGE1><VALUE>视频录制中...</VALUE><XPOS>"+XPOS+"</XPOS><YPOS>5</YPOS><FONTCOLOR>#FAFAF9</FONTCOLOR></MESSAGE1>";
+				GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, messageFont);
+				XPOS-=30;
+				if(XPOS<(-135)){
+					XPOS=605;
+				}
 			},1000);
-			
-	timecontrol=0;
+			timecontrol=0;
 	
-	}else if(timecontrol==0){
-		clearInterval(time);
-		timecontrol=1;
+		}else if(timecontrol==0){
+			clearInterval(reocordVideoOverlayTimer);
+			timecontrol=1;
 		}
-			if(!control){
-				colorTSet=setInterval(function() {
-					GetID("record_ready").style.background=change?"url('./img/recordon.png') no-repeat":"url('./img/recordoff.png') no-repeat";
-					change=!change;
+		if(!control){
+			colorTSet=setInterval(function() {
+				GetID("record_ready").style.background=change?"url('./img/recordon.png') no-repeat":"url('./img/recordoff.png') no-repeat";
+				change=!change;
 				}, 650);
-			}else{
-				
-				clearInterval(colorTSet);
-				recordstart=0;
-				GetID("recordtime").innerHTML="录制停止：0时0分0秒";
-				colorTSet=-1;
-				change=false;
-			}
-			control=!control;
-    }
+		}else{	
+			clearInterval(colorTSet);
+			recordstart=0;
+			GetID("recordtime").innerHTML="录制停止：0时0分0秒";
+			colorTSet=-1;
+			change=false;
+		}
+		control=!control;
+	}
     // 文件传输
     var file1,t1,bTimeSet,t2,file2,y;// 文件，文件进度，计时器标识,子div
     GetID("upload").onclick = function () {
@@ -205,15 +185,13 @@ function InitInterfaceUI() {
     	GetID("uploadCancel").style.display="block";
     	GetID("upload").style.display="none";
     	file1=BRAC_TransFile(0,lpLocalPathName,0,0,0);
-    	file2=BRAC_TransFile(0,picPath,0,0,0);
-    	
+    	file2=BRAC_TransFile(0,picPath,0,0,0);	
     	bTimeSet=setInterval(function() {
     		taskInfo1= BRAC_QueryTransTaskInfo(mSelfUserId, file1, BRAC_TRANSTASK_PROGRESS);
     		taskInfo2=BRAC_QueryTransTaskInfo(mSelfUserId, file2, BRAC_TRANSTASK_PROGRESS);
     		
 		    GetID("rateOfProgress").style.width = 10+370 * taskInfo1 / 100 + "px";
-				GetID("rateOfProgress2").style.width = 10+370 * taskInfo2 / 100 + "px";
-					
+				GetID("rateOfProgress2").style.width = 10+370 * taskInfo2 / 100 + "px";	
 				GetID("rate").innerHTML= taskInfo1+"%";
 				GetID("rate2").innerHTML= taskInfo2+"%";
     		if(taskInfo1==100&&taskInfo2==100){
@@ -223,11 +201,9 @@ function InitInterfaceUI() {
 						displayList("uploadCancel,video_shadow","none");
 						displayList("recordTip1,return","block");
     			}
-			}, 100);
-		}
-		   
+		}, 100);
+	}
 
-    
     // 上传取消
     GetID("uploadCancel").onclick = function () {
     	BRAC_CancelTransTask(mSelfUserId, file1);
@@ -246,11 +222,10 @@ function InitInterfaceUI() {
     	
     	displayList("advanceset_iframe,recordmsg,backRecord,Recordplay,next,AnyChatLocalVideoDiv,AnyChatFileTransDiv","none");
     	displayList("personVideo,videotag,return","block");
-        
     	Mp4Player(lpLocalPathUrl);
     	
     }
- 		// 返回
+ 	// 返回
     GetID("return").onclick = function () {
     	GetID("videotag").innerHTML="";
     	GetID("regist-process").className="step2";
@@ -262,10 +237,10 @@ function InitInterfaceUI() {
         displayList("videotag,return,AnyChatFileTransDiv,recordTip1,upload","none");
         displayList("AnyChatLocalVideoDiv,backRecord,Recordplay,next","block");
     }
- 		// 下一步
+ 	// 下一步
     GetID("next").onclick = function () {
     	displayList("AnyChatLocalVideoDiv,recordmsg,backRecord,Recordplay,next,recordmsg","none");
-			GetID("AnyChatFileTransDiv").style.display="block";
+		GetID("AnyChatFileTransDiv").style.display="block";
     	GetID("AnyChatFileTransDiv").style.background="#B5B2B2";
     	GetID("video_shadow").getElementsByTagName("b")[0].style.backgroundColor=""; 	
     	GetID("video_shadow").getElementsByTagName("b")[0].innerHTML="请点击上传按钮，上传文件";
@@ -280,73 +255,72 @@ function InitInterfaceUI() {
     	GetID("recordtime").innerHTML="录制时间:0时0分0秒";
     	displayList("recordmsg,backRecord,Recordplay,next,recordmsg,advanceset_iframe","none");
     	displayList("tip,record_ready,recordtime","block");
-		
-    		BRAC_UserCameraControl(mSelfUserId, 1); 	// 打开本地视频
+    	BRAC_UserCameraControl(mSelfUserId, 1); 	// 打开本地视频
         BRAC_UserSpeakControl(mSelfUserId, 1); 		// 打开本地语音
         BRAC_SetVideoPos(mSelfUserId, GetID("AnyChatLocalVideoDiv"), "ANYCHAT_VIDEO_LOCAL");
 				GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE1></MESSAGE1>");
-       
-       setTimeout(function(){
-				setvideoImg(localHref+"recordTip.png",0,350);
-       },300);
+		setTimeout(function(){
+			setVideoImg(localHref+"constTransparentImg",0,350);
+		},300);
     }
     /**
     *动态效果已在anychatevent.js底下用计时器打开
     *通过标识控制字体颜色大小改变(动态文字)，蝴蝶动态效果(动态图片)
-    *由aminateC()这个函数控制effect2,effect3
+    *由videoOverlay()这个函数控制effectDymcImageSwitch,effect3
     */
- // effect1透明背景
-    GetID("effect1").onclick = function () {
-    	if(effect1){
-    		setvideoImg("",0,0);
+ // 透明背景效果控制开关
+    GetID("effectTransparentBg").onclick = function () {
+    	if(effectTransparentBgSwitch){
+    		setVideoImg("",0,0);
 			GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE2></MESSAGE2>");
 
     	}else{
-    		setTimeout(function(){setvideoImg(localHref+"screenShotTip.png",0,0);
+    		setTimeout(function(){setVideoImg(localHref+"screenShotTip.png",0,0);
     		// 在本地视频上迭加文字
     		var szOverlayMessage2 = "<MESSAGE2><VALUE>请离我近点，再近点，使劲戳下面拍照按钮，让我一睹您的尊容~</VALUE><XPOS>13</XPOS><YPOS>385</YPOS><FONTCOLOR>#FAFAF9</FONTCOLOR></MESSAGE2>";
     		GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, szOverlayMessage2);
-    		GetID("ANYCHAT_VIDEO_LOCAL").setAttribute("ondblclick", "javascript:return false;");
     		},250);
     	}
-    	effect1=!effect1;
+    	effectTransparentBgSwitch=!effectTransparentBgSwitch;
     }
     
- // effect2动态图片
-    GetID("effect2").onclick = function () {
-    	if(effect2){
-    		clearInterval(aminateC);
+ // 动态图片效果控制开关
+    GetID("effectDymcImage").onclick = function () {
+    	if(effectDymcImageSwitch){
+			//清空动态图片
+			GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<IMAGE2></IMAGE2>");
     	}
-    	effect2=!effect2;
+    	effectDymcImageSwitch=!effectDymcImageSwitch;
     }
- // effect3动态文字
-    GetID("effect3").onclick = function () {
+ // 动态文字效果控制开关
+    GetID("effectDymcMessage").onclick = function () {
     	
-    	if(fontChange){
+    	if(effectDymcMessageSwitch){
+			//清空动态文字
     		GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE1></MESSAGE1>");
     		GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE3></MESSAGE3>");
     		GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE4></MESSAGE4>");
     		GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE5></MESSAGE5>");	
     	}
-    	fontChange=!fontChange;
+    	effectDymcMessageSwitch=!effectDymcMessageSwitch;
     }
 }
 function showPopWindow(divid,showtime)
 {
-		GetID(divid).style.display="block";
+	GetID(divid).style.display="block";
     setTimeout(function(){GetID(divid).style.display="none";},showtime);
 }
 
 // 显示等待进度条，提示用户操作正在进行中
 function DisplayLoadingDiv(bShow) {
     if (bShow) {
-    		displayList("LOADING_GREY_DIV,LOADING_DIV","block");
+    	displayList("LOADING_GREY_DIV,LOADING_DIV","block");
         var TheWidth = document.body.offsetWidth;
         GetID("LOADING_DIV").style.marginTop = "250px";
         GetID("LOADING_DIV").style.marginLeft = (TheWidth - 130) / 2 + "px";
     }
     else {
-    		displayList("LOADING_DIV,LOADING_GREY_DIV","none");
+    	displayList("LOADING_DIV,LOADING_GREY_DIV","none");
     }
 }
 
@@ -395,28 +369,26 @@ function Mp4Player(mp4){
 
 // 录制时间设置
 function formatSeconds(value) {
-   var s = parseInt(value);// 秒
-   var min = 0;// 分
-   var hour = 0;// 小时
-   if(s > 60) {
+	var s = parseInt(value);// 秒
+	var min = 0;// 分
+	var hour = 0;// 小时
+	if(s > 60) {
       min = parseInt(s/60);
       s = parseInt(s%60);
-      if(min > 60) {
-         hour = parseInt(min/60);
-         min = parseInt(min%60);
-       }
-   }
-       var result = ""+parseInt(s)+"秒";
-       if(min > 0) {
-       result = ""+parseInt(min)+"分"+result;
-       }
-       if(hour > 0) {
+		if(min > 60) {
+			hour = parseInt(min/60);
+			min = parseInt(min%60);
+		}
+	}
+	var result = ""+parseInt(s)+"秒";
+	if(min > 0) {
+		result = ""+parseInt(min)+"分"+result;
+	}
+	if(hour > 0) {
        result = ""+parseInt(hour)+"小时"+result;
-       }
-       
-       tt=""+parseInt(hour)+"小时"+parseInt(min)+"分"+parseInt(s)+"秒";
-       
-       return tt;
+    }  
+    tt=""+parseInt(hour)+"小时"+parseInt(min)+"分"+parseInt(s)+"秒";
+    return tt;
 }
 //录制按钮
 function record_readyBtn(i){
@@ -433,23 +405,23 @@ function Btn(id,i) {
 	if(i==0){
 		GetID(id).style.color = "#fff";
 		GetID(id).style.background="url('./img/video_btn.png') no-repeat right 0";
-		}else{
-			GetID(id).style.backgroundPosition="0 0";
-			GetID(id).style.width="143px";
-			GetID(id).style.textAlign="center";
-			GetID(id).style.height="43px";
-			GetID(id).style.lineHeight="43px";
-			GetID(id).style.color="#adabab";
-			GetID(id).style.position="relative";
-			GetID(id).style.top="3px";
-		}
+	}else{
+		GetID(id).style.backgroundPosition="0 0";
+		GetID(id).style.width="143px";
+		GetID(id).style.textAlign="center";
+		GetID(id).style.height="43px";
+		GetID(id).style.lineHeight="43px";
+		GetID(id).style.color="#adabab";
+		GetID(id).style.position="relative";
+		GetID(id).style.top="3px";
+	}
 }
 
-function loginBtn(i){
+function startEnjoy(i){
 	if(i==0){
-		GetID("loginRoom").style.backgroundColor = "#ABCB64";
+		GetID("startEnjoy").style.backgroundColor = "#ABCB64";
 	}else{
-		GetID("loginRoom").style.backgroundColor=  "#7CAF00";
+		GetID("startEnjoy").style.backgroundColor=  "#7CAF00";
 	}
 }
 /**
@@ -473,6 +445,7 @@ function ApplyVideoConfig(bitrate,quality,videoWidth,videoHeight,fps,preset) {
 	// 让视频参数生效
 	BRAC_SetSDKOption(BRAC_SO_LOCALVIDEO_APPLYPARAM, 1);
 }
+//用于控制界面层的显示和隐藏
 function displayList(list,type){
 	var list=list.split(",");
 	for (var i = 0; i < list.length; i++) {
@@ -480,42 +453,81 @@ function displayList(list,type){
 	}
 }
 
-function setvideoImg(pic,xpos,ypos){
+function setVideoImg(pic,xpos,ypos){
 	// 在本地视频上迭加图片
 	var szOverlayImage = "<IMAGE1><VALUE>"+pic+"</VALUE><XPOS>"+xpos+"</XPOS><YPOS>"+ypos+"</YPOS></IMAGE1>";
 	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, szOverlayImage);
 }
-//蝴蝶等动画
-function aminateC(){
-
-	var fontSty=fontColorCtrl?"#FF0000":"#FFFF80";
+//定时器执行定时执行这个函数，实现动态效果
+function videoOverlayEffect(){
+	
+	if(effectDymcMessageSwitch){
+		effectDymcMessage();
+	}
+	if(effectDymcImageSwitch){
+		effectDymcImage();
+	}
+}
+/**
+**动态文字效果
+*/
+var tempCount=1,temp=0;
+function effectDymcMessage(){
+	var fontColor=fontColorCtrl?"#FF0000":"#FFFF80";
 	// 在本地视频上迭加文字
-	var szOverlayMessage1 = "<MESSAGE1><VALUE>开放 互联</VALUE><XPOS>5</XPOS><YPOS>5</YPOS><FONTCOLOR>#FFFFFF</FONTCOLOR><FONTSIZE>"+fontSizeCtrl+"</FONTSIZE><FONTNAME>微软雅黑</FONTNAME></MESSAGE1>";
-	var szOverlayMessage3 = "<MESSAGE3><VALUE>跨平台</VALUE><XPOS>130</XPOS><YPOS>5</YPOS><FONTCOLOR>"+fontSty+"</FONTCOLOR><FONTSIZE>"+fontSizeCtrl+"</FONTSIZE><FONTNAME>微软雅黑</FONTNAME></MESSAGE3>";
-	var szOverlayMessage4 = "<MESSAGE4><VALUE>Windows、Wdb、iOS、Linux、Android等平台</VALUE><XPOS>5</XPOS><YPOS>35</YPOS><FONTCOLOR>#00FF00</FONTCOLOR><FONTSIZE>20</FONTSIZE><FONTNAME>微软雅黑</FONTNAME></MESSAGE4>";
-	var szOverlayMessage5 = "<MESSAGE5><VALUE>提供音视频交互、数据通信能力</VALUE><XPOS>5</XPOS><YPOS>50</YPOS><FONTCOLOR>#00FF00</FONTCOLOR><FONTSIZE>20</FONTSIZE><FONTNAME>微软雅黑</FONTNAME></MESSAGE5>";
-	if(fontChange){
+	var szOverlayMessage1 = "<MESSAGE1><VALUE>开放  互联</VALUE><XPOS>5</XPOS><YPOS>5</YPOS><FONTCOLOR>#FFFFFF</FONTCOLOR><FONTSIZE>"+dynamicFontSize+"</FONTSIZE><FONTNAME>微软雅黑</FONTNAME></MESSAGE1>";
+	var szOverlayMessage3 = "<MESSAGE3><VALUE> 跨平台</VALUE><XPOS>130</XPOS><YPOS>5</YPOS><FONTCOLOR>"+fontColor+"</FONTCOLOR><FONTSIZE>"+dynamicFontSize+"</FONTSIZE><FONTNAME>微软雅黑</FONTNAME></MESSAGE3>";
+	var szOverlayMessage4 = "<MESSAGE4><VALUE>支 持 Windows 、Web 、Android、iOS、Linux 等 平 台</VALUE><XPOS>5</XPOS><YPOS>45</YPOS><FONTCOLOR>#00FF00</FONTCOLOR><FONTSIZE>20</FONTSIZE><FONTNAME>微软雅黑</FONTNAME></MESSAGE4>";
+	var szOverlayMessage5 = "<MESSAGE5><VALUE>提 供 音 视 频 交 互 、 数 据 通 信 能 力</VALUE><XPOS>5</XPOS><YPOS>70</YPOS><FONTCOLOR>#00FF00</FONTCOLOR><FONTSIZE>20</FONTSIZE><FONTNAME>微软雅黑</FONTNAME></MESSAGE5>";
 	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, szOverlayMessage1);
 	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, szOverlayMessage3);
 	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, szOverlayMessage4);
 	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, szOverlayMessage5);
-	}
 	fontColorCtrl=!fontColorCtrl;
-	
-	
-	//在本地视频上迭加图片
-	var szOverlayImage = "<IMAGE2><VALUE>"+localHref+"btf"+btfNum+".png</VALUE><XPOS>510</XPOS><YPOS>10</YPOS></IMAGE2>";
-	if(effect2){
-		GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, szOverlayImage);
-	}
-
-if(btfdown==1){
-		btfNum-=1;
-		fontSizeCtrl-=2;
-	if(btfNum==1)
-		btfdown=0;
+	//字体大小动态变化
+	if(temp==1){
+		tempCount-=1;
+		dynamicFontSize-=2;
+		if(tempCount==1){
+			temp=0;
+		}
 	}else{
-		if(btfNum==4){btfdown=1;}
-		if(btfNum<4){btfNum+=1;fontSizeCtrl+=2;}
+		if(tempCount==4){temp=1;}
+		if(tempCount<4){tempCount+=1;dynamicFontSize+=2;}
 	}
 }
+/**
+**动态图片效果
+*/
+function effectDymcImage(){
+	//在本地视频上迭加图片
+	var szOverlayImage = "<IMAGE2><VALUE>"+localHref+"btf"+btfIndex+".png</VALUE><XPOS>510</XPOS><YPOS>10</YPOS></IMAGE2>";
+	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, szOverlayImage);
+	//图片显示动态变化
+	if(btfCloseTag==1){
+		btfIndex-=1;
+		dynamicFontSize-=2;
+		if(btfIndex==1){
+			btfCloseTag=0;
+		}
+	}else{
+		if(btfIndex==4){btfCloseTag=1;}
+		if(btfIndex<4){btfIndex+=1;dynamicFontSize+=2;}
+	}
+}
+/**
+**清空之前视频界面叠加的文字、图片
+*/
+function clearVideoOverlayEffect(){
+	//在本地视频上迭加图片
+	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE1></MESSAGE1>");
+	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE2></MESSAGE2>");
+	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE3></MESSAGE3>");
+	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE4></MESSAGE4>");
+	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<MESSAGE5></MESSAGE5>");
+	GetID("ANYCHAT_VIDEO_LOCAL").SetSDKOptionString(ANYCHATWEB_VIDEO_SO_OVERLAY, "<IMAGE2></IMAGE2>");
+	effectDymcImageSwitch=false;
+	effectDymcMessageSwitch=false;
+
+}
+	
