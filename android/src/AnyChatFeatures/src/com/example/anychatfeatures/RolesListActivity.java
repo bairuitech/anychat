@@ -110,10 +110,16 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 		mRolesInfoList.clear();
 		int[] userID = anyChatSDK.GetOnlineUser();
 		RoleInfo userselfInfo = new RoleInfo();
-		userselfInfo.setName(anyChatSDK.GetUserName(mUserselfID) + "(自己)");
+		mRolesInfoList.add(userselfInfo);
 		userselfInfo.setUserID(String.valueOf(mUserselfID));
 		userselfInfo.setRoleIconID(getRandomResID());
-		mRolesInfoList.add(userselfInfo);
+		if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_LOCALVIDEO) {
+			userselfInfo.setName(anyChatSDK.GetUserName(mUserselfID) + "(录制自己)");
+		}else if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_PHOTOGRAPH) {
+			userselfInfo.setName(anyChatSDK.GetUserName(mUserselfID) + "(自拍)");
+		}else {
+			userselfInfo.setName(anyChatSDK.GetUserName(mUserselfID) + "(自己)");
+		}
 
 		for (int index = 0; index < userID.length; ++index) {
 			RoleInfo info = new RoleInfo();
