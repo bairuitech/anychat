@@ -14,6 +14,8 @@
 #import "TextMsg_TransBufferVC.h"
 #import "RecordLocalVC.h"
 #import "RecordServerVC.h"
+#import "RecordSelfVC.h"
+#import "AutodyneVC.h"
 
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"

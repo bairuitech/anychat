@@ -191,7 +191,9 @@ kGCD_SINGLETON_FOR_CLASS(TransFileVC);
     
     NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
 
-    [formatter setDateFormat:@"MMdd_hh:mm:ss"];
+//    [formatter setDateFormat:@"MMdd_hh:mm:ss"];
+    [formatter setDateFormat:@"hh:mm:ss"];
+    
     timeNow = [formatter stringFromDate:[NSDate date]];
     
     return timeNow;

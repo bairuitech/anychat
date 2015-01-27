@@ -6,25 +6,21 @@
 //  Copyright (c) 2014年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
 //
 
-#import "RecordLocalVC.h"
+#import "RecordSelfVC.h"
 
-@interface RecordLocalVC ()
+@interface RecordSelfVC ()
 
 @end
 
-@implementation RecordLocalVC
+@implementation RecordSelfVC
 
-@synthesize iRemoteUserId;
 @synthesize remoteVideoSurface;
 @synthesize localVideoSurface;
 @synthesize theLocalView;
-@synthesize endCallBtn;
 @synthesize switchCameraBtn;
 @synthesize theLocolFunBtn;
-@synthesize leftLineView;
 @synthesize isFinishVideoActSheet;
 @synthesize theVideoNItem;
-@synthesize theFeaturesName;
 @synthesize theTakePhotoPath;
 @synthesize theCurrentRotation;
 @synthesize theVideoPlayBackBtn;
@@ -50,10 +46,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.iRemoteUserId = [AnyChatVC sharedAnyChatVC].theTargetUserID;
-    self.theFeaturesName = [AnyChatVC sharedAnyChatVC].theFeaturesName;
-    [self StartVideoChat:self.iRemoteUserId];
+
+    [self StartVideoChat:0];
     [self setTheTimer];
 }
 
@@ -92,59 +86,6 @@
         {
             [self FinishVideoChat];
             [self.navigationController popViewControllerAnimated:YES];
-        }
-    }
-
-    if (actionSheet == self.theRecordVideoTypeActSheet)
-    {
-        switch (buttonIndex)
-        {
-            case 0:
-            {
-                //Self recording
-                theRecordId = -1;
-                theLocalRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_LOCALCB;
-                [AnyChatPlatform StreamRecordCtrlEx: theRecordId
-                                                   : YES
-                                                   : theLocalRecordFlags
-                                                   : 0
-                                                   : @"StarLocolSelfRecord"];
-                break;
-            }
-            case 1:
-            {
-                //Remote recording
-                theRecordId = self.iRemoteUserId;
-                theLocalRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_LOCALCB;
-                [AnyChatPlatform StreamRecordCtrlEx: theRecordId
-                                                   : YES
-                                                   : theLocalRecordFlags
-                                                   : 0
-                                                   : @"StarLocolRemoteRecord"];
-                break;
-            }
-            case 2:
-            {
-                //Max recording
-                theRecordId = self.iRemoteUserId;
-                theLocalRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_LOCALCB + ANYCHAT_RECORD_FLAGS_MIXAUDIO + ANYCHAT_RECORD_FLAGS_MIXVIDEO + ANYCHAT_RECORD_FLAGS_ABREAST + ANYCHAT_RECORD_FLAGS_STEREO;
-                [AnyChatPlatform StreamRecordCtrlEx: theRecordId
-                                                   : YES
-                                                   : theLocalRecordFlags
-                                                   : 0
-                                                   : @"StarLocolMaxRecord"];
-                break;
-            }
-        }
-        
-        if (buttonIndex != 3)
-        {
-            //Show LocalRecord Time
-            self.theLocalRecordTimeLab.hidden = NO;
-            [theLocalRecordMZTimer reset];
-            [theLocalRecordMZTimer start];
-            
-            theLocolFunBtn.selected = YES;
         }
     }
 }
@@ -237,29 +178,30 @@
     [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
     [AnyChatPlatform UserCameraControl:-1 : YES];
     
-    // request other user video
-    [AnyChatPlatform UserSpeakControl: userid:YES];
-    [AnyChatPlatform SetVideoPos:userid: self.remoteVideoSurface:0:0:0:0];
-    [AnyChatPlatform UserCameraControl:userid : YES];
-    
-    self.iRemoteUserId = userid;
-    
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
 }
 
 - (IBAction)theLocolFunBtn_OnClicked:(id)sender
 {
+
+    theRecordId = -1;
+    theLocalRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_LOCALCB;
+    
     if (theLocolFunBtn.selected == NO)
     {
-        self.theRecordVideoTypeActSheet = [[UIActionSheet alloc]
-                                           initWithTitle:@"请选择录制的类型。"
-                                           delegate:self
-                                           cancelButtonTitle:nil
-                                           destructiveButtonTitle:nil
-                                           otherButtonTitles:@"录制自己",@"录制对方",@"合成录制",@"取消", nil];
+        //Self recording
+        [AnyChatPlatform StreamRecordCtrlEx: theRecordId
+                                           : YES
+                                           : theLocalRecordFlags
+                                           : -1
+                                           : @"StarLocolSelfRecord"];
         
-        self.theRecordVideoTypeActSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-        [self.theRecordVideoTypeActSheet showInView:self.view];
+        //Show LocalRecord Time
+        self.theLocalRecordTimeLab.hidden = NO;
+        [theLocalRecordMZTimer reset];
+        [theLocalRecordMZTimer start];
+        
+        theLocolFunBtn.selected = YES;
     }
     else
     {
@@ -267,8 +209,8 @@
         [AnyChatPlatform StreamRecordCtrlEx: theRecordId
                                            : NO
                                            : theLocalRecordFlags
-                                           : 0
-                                           : @"StopLocolRecord"];
+                                           : -1
+                                           : @"StopLocolSelfRecord"];
         //Close LocalRecord Time
         self.theLocalRecordTimeLab.hidden = YES;
         [theLocalRecordMZTimer pause];
@@ -280,7 +222,7 @@
 - (IBAction)FinishVideoChatBtnClicked:(id)sender
 {
     self.isFinishVideoActSheet = [[UIActionSheet alloc]
-                                  initWithTitle:@"确定结束会话?"
+                                  initWithTitle:@"确定结束?"
                                   delegate:self
                                   cancelButtonTitle:nil
                                   destructiveButtonTitle:nil
@@ -294,11 +236,6 @@
 {
     [AnyChatPlatform UserSpeakControl: -1 : NO];
     [AnyChatPlatform UserCameraControl: -1 : NO];
-    
-    [AnyChatPlatform UserSpeakControl: self.iRemoteUserId : NO];
-    [AnyChatPlatform UserCameraControl: self.iRemoteUserId : NO];
-    
-    self.iRemoteUserId = -1;
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -326,21 +263,21 @@
     [self.navigationController presentViewController:theShowVC animated:YES completion:nil];
 }
 
+- (void) OnLocalVideoInit:(id)session
+{
+    self.localVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
+    self.localVideoSurface.frame = CGRectMake(0, 0, self.theLocalView.frame.size.width,self.theLocalView.frame.size.height);
+    self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    
+    [self.theLocalView.layer addSublayer:self.localVideoSurface];
+}
+
 - (void) OnLocalVideoRelease:(id)sender
 {
     if(self.localVideoSurface)
     {
         self.localVideoSurface = nil;
     }
-}
-
-- (void) OnLocalVideoInit:(id)session
-{
-    self.localVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
-    self.localVideoSurface.frame = CGRectMake(0, 0, kLocalVideo_Width, kLocalVideo_Height);
-    self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    
-    [self.theLocalView.layer addSublayer:self.localVideoSurface];
 }
 
 - (void) btnSelectedOnClicked:(UIButton*)button
@@ -352,18 +289,6 @@
     else
     {
         button.selected = YES;
-    }
-}
-
-- (IBAction)changeContentModeFromImageView
-{
-    if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFit)
-    {
-        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFill;
-    }
-    else if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFill)
-    {
-        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFit;
     }
 }
 
@@ -380,15 +305,7 @@
 
 - (void)setUI
 {
-    NSString *targetUserName = [AnyChatVC sharedAnyChatVC].theTargetUserName;
-    self.theVideoNItem.title = [[NSString alloc] initWithFormat:@"与“%@”视频中",targetUserName];
-    
-    //Local View line
-    theLocalView.layer.borderColor = [[UIColor whiteColor] CGColor];
-    theLocalView.layer.borderWidth = 1.0f;
-    //Rounded corners
-    theLocalView.layer.cornerRadius = 4;
-    theLocalView.layer.masksToBounds = YES;
+    self.theVideoNItem.title = @"录制自己";
     
     [theVideoMZTimer start];
     if ([theLocalRecordMZTimerStatus isEqualToString:@"pause"])

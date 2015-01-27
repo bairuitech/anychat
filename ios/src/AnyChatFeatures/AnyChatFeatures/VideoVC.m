@@ -359,6 +359,18 @@
     }
 }
 
+- (IBAction)changeContentModeFromImageView:(id)sender
+{
+    if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFit)
+    {
+        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    else if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFill)
+    {
+        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFit;
+    }
+}
+
 //iRemote user video loading status
 -(BOOL)remoteVideoDidLoadStatus
 {
@@ -440,7 +452,9 @@
     theLocalView.layer.masksToBounds = YES;
     
     [theVideoMZTimer start];
+    
+    //disable the “idle timer” to avert system sleep.
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
-
 
 @end

@@ -38,6 +38,7 @@
 @property (strong, nonatomic) UIAlertView                   *theSnapShotAlertView;
 @property (strong, nonatomic) NSMutableArray                *onlineUserMArray;
 @property (strong, nonatomic) NSMutableArray                *theVideoRecordMArray;
+@property (strong, nonatomic) NSMutableArray                *theVideoRecordSelfMArray;
 @property (strong, nonatomic) NSString                      *theFeaturesName;
 @property (strong, nonatomic) NSString                      *theMyUserName;
 @property (strong, nonatomic) NSString                      *theTargetUserName;
@@ -46,6 +47,7 @@
 @property int   theFeaturesNO;
 @property int   theMyUserID;
 @property int   theTargetUserID;
+@property int   theShowVCType;
 @property BOOL  theOnLineLoginState;
 
 
