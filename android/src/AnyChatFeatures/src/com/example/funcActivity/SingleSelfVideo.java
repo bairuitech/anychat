@@ -48,15 +48,15 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 	private ImageButton mImageBtnReturn;
 	private TextView mTitleName;
 	private ImageButton mImgSwitchVideo;
-	private Button mEndCallBtn;
 	private CustomApplication mCustomApplication;
 	private int mRecordTimeSec;
-	private ImageButton mRecordBtn;
+	private ImageView mRecordIV;
 	private TextView mVideRecordTimeTV;
 	private Timer mVideoRecordTimer;
 	private TimerTask mTimerTask;
 	private Handler mHandler;
-	private ImageButton mTakePhotoBtn; 	   // 自拍
+	private ImageView mTakePhotoBtn; 	   // 自拍
+	
 	
 	private Timer mPreviewPicTimer = null;
 	private int mPreviewPicSec = 0; 	   // 预览图片或录像的剩余时间
@@ -65,8 +65,8 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 	private ImageView mPreviewPicIV;
 	private String mPreviewPicPathStr = ""; // 拍照图片或录制自己的视频存储路径
 	// 存储本地录制开关图片
-	private int[] mArrLocalRecordingImg = { R.drawable.local_recording_off,
-			R.drawable.local_recording_on };
+	private int[] mArrLocalRecordingImg = { R.drawable.singlevideorecordoff,
+			R.drawable.singlevideorecordon };
 	private int mdwFlags = AnyChatDefine.BRAC_RECORD_FLAGS_AUDIO
 			+ AnyChatDefine.BRAC_RECORD_FLAGS_VIDEO
 			+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_LOCALCB;
@@ -76,7 +76,7 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		setContentView(R.layout.singlevideo_frame);
+		setContentView(R.layout.singlevideo_session);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
 				R.layout.titlebar);
 
@@ -112,12 +112,11 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 		mImageBtnReturn = (ImageButton) findViewById(R.id.returnImgBtn);
 		mTitleName = (TextView)findViewById(R.id.titleName);
 		mImgSwitchVideo = (ImageButton) findViewById(R.id.ImgSwichVideo);
-		mEndCallBtn = (Button) findViewById(R.id.singleVideoEndCall);
 		mPreviewPicIV = (ImageView) findViewById(R.id.singleVideoPreviewImg);
 		mVideRecordTimeTV = (TextView) findViewById(R.id.SingleVideoRecordTime);
-		mTakePhotoBtn = (ImageButton)findViewById(R.id.singleVideo_TakePhoto);
+		mTakePhotoBtn = (ImageView)findViewById(R.id.singleVideo_TakePhoto);
 		mPreviewFilePath = (TextView) findViewById(R.id.singleVideoPreviewImgPath);
-		mRecordBtn = (ImageButton) findViewById(R.id.singleVideo_Recording);
+		mRecordIV = (ImageView) findViewById(R.id.singleVideo_Recording);
 
 		mRecordState = 0;
 		mRecordTimeSec = 0;
@@ -127,15 +126,14 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 			mTakePhotoBtn.setVisibility(View.GONE);
 		} else {
 			mTitleName.setText("拍照");
-			mRecordBtn.setVisibility(View.GONE);
+			mRecordIV.setVisibility(View.GONE);
 		}
 
 		mImgSwitchVideo.setVisibility(View.VISIBLE);
 
 		mImageBtnReturn.setOnClickListener(onClickListener);
 		mImgSwitchVideo.setOnClickListener(onClickListener);
-		mEndCallBtn.setOnClickListener(onClickListener);
-		mRecordBtn.setOnClickListener(onClickListener);
+		mRecordIV.setOnClickListener(onClickListener);
 		mTakePhotoBtn.setOnClickListener(onClickListener);
 		mPreviewPicIV.setOnClickListener(onClickListener);
 
@@ -274,7 +272,7 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 		anyChatSDK.StreamRecordCtrlEx(-1, 0, mdwFlags, 0, "关闭视频录制");
 		mRecordState = 0;
 		
-		mRecordBtn.setImageResource(mArrLocalRecordingImg[mRecordState]);
+		mRecordIV.setImageResource(mArrLocalRecordingImg[mRecordState]);
 	}
 
 	private void destroyCurActivity() {
@@ -378,9 +376,6 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 					}
 				}
 				break;
-			case (R.id.singleVideoEndCall):
-				exitVideoDialog();
-				break;
 			case (R.id.singleVideo_Recording):
 				if (mRecordState == 0){
 					
@@ -406,7 +401,7 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 					mVideoRecordTimer = null;
 				}
 				
-				mRecordBtn.setImageResource(mArrLocalRecordingImg[mRecordState]);
+				mRecordIV.setImageResource(mArrLocalRecordingImg[mRecordState]);
 				break;
 			case (R.id.singleVideo_TakePhoto):
 				anyChatSDK.SnapShot(-1, AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);

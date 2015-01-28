@@ -114,9 +114,9 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 		userselfInfo.setUserID(String.valueOf(mUserselfID));
 		userselfInfo.setRoleIconID(getRandomResID());
 		if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_LOCALVIDEO) {
-			userselfInfo.setName(anyChatSDK.GetUserName(mUserselfID) + "(录制自己)");
+			userselfInfo.setName(anyChatSDK.GetUserName(mUserselfID) + "(点击录制自己)");
 		}else if (mCustomApplication.getCurOpenFuncUI() == FuncMenu.FUNC_PHOTOGRAPH) {
-			userselfInfo.setName(anyChatSDK.GetUserName(mUserselfID) + "(自拍)");
+			userselfInfo.setName(anyChatSDK.GetUserName(mUserselfID) + "(点击自拍)");
 		}else {
 			userselfInfo.setName(anyChatSDK.GetUserName(mUserselfID) + "(自己)");
 		}

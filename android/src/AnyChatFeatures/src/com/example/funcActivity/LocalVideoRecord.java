@@ -406,6 +406,12 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 			mMenuWindow.dismiss();
 			mMenuWindow = null;
 			Boolean bCanRecord = false;
+			if (mPreviewVideoIV.getVisibility() == View.VISIBLE){
+				mPreviewVideoSec = 0;
+				mPreviewVideoIV.setVisibility(View.GONE);
+				mPreviewFilePath.setVisibility(View.GONE);
+			}
+			
 			switch (v.getId()) {
 			// 给自己录像
 			case R.id.btn_recordself:
