@@ -28,7 +28,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-       
     }
     return self;
 }
@@ -83,7 +82,7 @@
 {
     //device orientation
     UIDeviceOrientation devOrientation = [UIDevice currentDevice].orientation;
-    
+
     if (devOrientation == UIDeviceOrientationLandscapeLeft)
     {
         [self setFrameOfLandscapeLeft];
@@ -92,7 +91,7 @@
     {
         [self setFrameOfLandscapeRight];
     }
-    if (devOrientation == UIDeviceOrientationPortrait)
+    else if (devOrientation == UIDeviceOrientationPortrait)
     {
         [self setFrameOfPortrait];
     }
@@ -253,19 +252,7 @@
     return YES;
 }
 
-- (void)setUIControls
-{
-    [switchCameraBtn setBackgroundImage:[UIImage imageNamed:@"Icon_camera_w_b"] forState:UIControlStateSelected];
-    
-    //Local View line
-    theLocalView.layer.borderColor = [[UIColor whiteColor] CGColor];
-    theLocalView.layer.borderWidth = 1.0f;
-    //Rounded corners
-    theLocalView.layer.cornerRadius = 4;
-    theLocalView.layer.masksToBounds = YES;
-}
-
-- (void) btnSelectedOnClicked:(UIButton*)button
+- (void)btnSelectedOnClicked:(UIButton*)button
 {
     if (button.selected)
     {
@@ -276,5 +263,33 @@
         button.selected = YES;
     }
 }
+
+- (IBAction)changeContentModeFromImageView:(id)sender
+{
+    if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFit)
+    {
+        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    else if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFill)
+    {
+        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFit;
+    }
+}
+
+- (void)setUIControls
+{
+    [switchCameraBtn setBackgroundImage:[UIImage imageNamed:@"Icon_camera_w_b"] forState:UIControlStateSelected];
+    
+    //Local View line
+    theLocalView.layer.borderColor = [[UIColor whiteColor] CGColor];
+    theLocalView.layer.borderWidth = 1.0f;
+    //Rounded corners
+    theLocalView.layer.cornerRadius = 4;
+    theLocalView.layer.masksToBounds = YES;
+    
+    //disable the “idle timer” to avert system sleep.
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+}
+
 
 @end

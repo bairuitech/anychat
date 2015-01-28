@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UITableView          *theVideoRecordTableView;
 @property (strong, nonatomic) NSMutableArray                *theVideoRecordList;
 @property (strong, nonatomic) NSString                      *theSelectContentPath;
+@property int   theObjType;
 
 - (IBAction)clearDatas_OnClick;
 - (IBAction)LeaveBtn_OnClick;
