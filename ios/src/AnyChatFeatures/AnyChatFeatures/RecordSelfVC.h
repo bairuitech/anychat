@@ -40,11 +40,9 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem       *theVideoNItem;
 @property (weak, nonatomic) IBOutlet UIButton               *switchCameraBtn;
 @property (weak, nonatomic) IBOutlet UIButton               *theLocolFunBtn;
-@property (weak, nonatomic) IBOutlet UILabel                *theVideoTimeLab;
 @property (weak, nonatomic) IBOutlet UILabel                *theLocalRecordTimeLab;
 @property (strong, nonatomic) NSString                      *theTakePhotoPath;
 @property (strong, nonatomic) NSString                      *theCurrentRotation;
-@property (strong, nonatomic) MZTimerLabel                  *theVideoMZTimer;
 @property (strong, nonatomic) MZTimerLabel                  *theLocalRecordMZTimer;
 
 

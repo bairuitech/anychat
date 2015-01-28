@@ -14,7 +14,6 @@
                 <outlet property="theLocolFunBtn" destination="9D8-KI-Nz2" id="XFE-9g-jQK"/>
                 <outlet property="theVideoNItem" destination="d7M-Zg-BOK" id="zgo-Da-v4D"/>
                 <outlet property="theVideoPlayBackBtn" destination="GjE-mQ-bye" id="3v8-dU-7Xn"/>
-                <outlet property="theVideoTimeLab" destination="ySm-Ls-HGW" id="bEf-Xp-AHD"/>
                 <outlet property="view" destination="QSo-mU-X5B" id="P9Q-3v-Pha"/>
             </connections>
         </placeholder>
@@ -78,14 +77,6 @@
                         <action selector="theLocolFunBtn_OnClicked:" destination="-1" eventType="touchUpInside" id="6zi-5k-3SY"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ySm-Ls-HGW" userLabel="theVideoTimeLab">
-                    <rect key="frame" x="192" y="46" width="120" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                    <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                </label>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loacl Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6pY-tK-0Em" userLabel="LocalRecordTime">
                     <rect key="frame" x="115" y="400" width="100" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>

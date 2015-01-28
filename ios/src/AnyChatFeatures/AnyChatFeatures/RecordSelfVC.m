@@ -25,8 +25,6 @@
 @synthesize theCurrentRotation;
 @synthesize theVideoPlayBackBtn;
 @synthesize theLocalRecordTimeLab;
-@synthesize theVideoTimeLab;
-@synthesize theVideoMZTimer;
 @synthesize theLocalRecordMZTimer;
 @synthesize theRecordVideoTypeActSheet;
 @synthesize theVideoBitrateAlertView;
@@ -61,7 +59,6 @@
 {
     [super viewDidDisappear:YES];
     //The Timer Pause
-    [self.theVideoMZTimer pause];
     [self.theLocalRecordMZTimer pause];
     theLocalRecordMZTimerStatus = @"pause";
 }
@@ -101,62 +98,7 @@
 
 - (BOOL)shouldAutorotate
 {
-    return YES;
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    //device orientation
-    UIDeviceOrientation devOrientation = [UIDevice currentDevice].orientation;
-    
-    if (devOrientation == UIDeviceOrientationLandscapeLeft)
-    {
-        [self setFrameOfLandscapeLeft];
-    }
-    else if (devOrientation == UIDeviceOrientationLandscapeRight)
-    {
-        [self setFrameOfLandscapeRight];
-    }
-    if (devOrientation == UIDeviceOrientationPortrait)
-    {
-        [self setFrameOfPortrait];
-    }
-}
-
-
-#pragma mark - Video Rotation
-
--(void)setFrameOfPortrait
-{
-    self.theCurrentRotation =@"Portrait";
-    //Rotate
-    remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(0.0);
-    self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(0.0);
-    //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
-    self.theLocalView.frame = kLocalVideoPortrait_CGRect;
-}
-
--(void)setFrameOfLandscapeLeft
-{
-    self.theCurrentRotation =@"LandscapeLeft";
-    //Rotate
-    remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(-90.0);
-    self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(-90.0);
-    //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
-    self.theLocalView.frame = kLocalVideoLandscape_CGRect;
-}
-
--(void)setFrameOfLandscapeRight
-{
-    self.theCurrentRotation =@"LandscapeRight";
-    //Rotate
-    remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
-    self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
-    //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
-    self.theLocalView.frame = kLocalVideoLandscape_CGRect;
+    return NO;
 }
 
 
@@ -295,10 +237,6 @@
 - (void)setTheTimer
 {
     //The Timer Init
-    theVideoMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theVideoTimeLab];
-    theVideoMZTimer.timeFormat = @"▷ HH:mm:ss";
-    [theVideoMZTimer start];
-    
     theLocalRecordMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theLocalRecordTimeLab];
     theLocalRecordMZTimer.timeFormat = @"HH:mm:ss";
 }
@@ -307,7 +245,6 @@
 {
     self.theVideoNItem.title = @"录制自己";
     
-    [theVideoMZTimer start];
     if ([theLocalRecordMZTimerStatus isEqualToString:@"pause"])
     {
         [self.theLocalRecordMZTimer start];

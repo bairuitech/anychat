@@ -66,62 +66,7 @@
 
 - (BOOL)shouldAutorotate
 {
-    return YES;
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    //device orientation
-    UIDeviceOrientation devOrientation = [UIDevice currentDevice].orientation;
-    
-    if (devOrientation == UIDeviceOrientationLandscapeLeft)
-    {
-        [self setFrameOfLandscapeLeft];
-    }
-    else if (devOrientation == UIDeviceOrientationLandscapeRight)
-    {
-        [self setFrameOfLandscapeRight];
-    }
-    if (devOrientation == UIDeviceOrientationPortrait)
-    {
-        [self setFrameOfPortrait];
-    }
-}
-
-
-#pragma mark - Video Rotation
-
--(void)setFrameOfPortrait
-{
-    self.theCurrentRotation =@"Portrait";
-    //Rotate
-    remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(0.0);
-    self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(0.0);
-    //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
-    self.theLocalView.frame = kLocalVideoPortrait_CGRect;
-}
-
--(void)setFrameOfLandscapeLeft
-{
-    self.theCurrentRotation =@"LandscapeLeft";
-    //Rotate
-    remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(-90.0);
-    self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(-90.0);
-    //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
-    self.theLocalView.frame = kLocalVideoLandscape_CGRect;
-}
-
--(void)setFrameOfLandscapeRight
-{
-    self.theCurrentRotation =@"LandscapeRight";
-    //Rotate
-    remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
-    self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
-    //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
-    self.theLocalView.frame = kLocalVideoLandscape_CGRect;
+    return NO;
 }
 
 
