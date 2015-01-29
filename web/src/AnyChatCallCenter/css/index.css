@@ -24,8 +24,8 @@
 #setting_div{ width:320px; height:55px; display:none;}
 #setting_div_input{ font-size:13px; text-align:center; padding-top:18px; border-top:1px solid black;}
 
-#hall_div{ background-color:#9CAAC1; border:1px solid black; width:750px; height:520px; margin-left: auto; margin-right:auto; display:none;}
-#ExitSystemBtn{ float:right; margin-right:15px; margin-top:3px; cursor:pointer; font-size:13px;}
+#hall_div{ background-color:#9CAAC1; border:1px solid black; width:765px; height:545px; margin-left: auto; margin-right:auto; display:none;}
+#ExitSystemBtn{ float:right; margin-right:5px; margin-top:3px; cursor:pointer; font-size:13px;}
 
 #Shade_Div
 {

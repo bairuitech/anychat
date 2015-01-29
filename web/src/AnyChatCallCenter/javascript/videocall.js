@@ -51,7 +51,8 @@ function DisplayOnLineUser(userid) {
 
     var right_name= document.createElement("div");
     right_name.className = "UserInfo";
-    right_name.innerHTML = UserName;
+    right_name.innerHTML = UserName.length>8?UserName.substring(0,8)+"...":UserName;
+    right_name.title = UserName;
     right_div.appendChild(right_name);
 	
 	var right_ip = document.createElement("div");
@@ -91,7 +92,7 @@ function ForSession(message) {
     Getdmo("SessionPrompt_Div").style.color = "White";
     Getdmo("SessionPrompt_Div").innerHTML = message;
     $("#SessionPrompt_Div").fadeTo("slow", 1);
-	setTimeout("$('#SessionPrompt_Div').fadeTo('slow', 0 , BusyDivOut)", 2000);
+	setTimeout("$('#SessionPrompt_Div').fadeTo('slow', 0 )", 2000);
     //$("#SessionPrompt_Div").css("left", (document.body.offsetWidth - 600) / 2 + "px");
 }
 
