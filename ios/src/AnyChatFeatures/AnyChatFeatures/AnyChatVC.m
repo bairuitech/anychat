@@ -34,6 +34,8 @@
 @synthesize theSnapShotAlertView;
 @synthesize theVideoRecordAlertView;
 @synthesize theVideoRecordMArray;
+@synthesize theVideoRecordSelfMArray;
+@synthesize theShowVCType;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -64,6 +66,7 @@
     anyChat.videoCallDelegate = self;
     
     self.theVideoRecordMArray = [[NSMutableArray alloc] initWithCapacity:5];
+    self.theVideoRecordSelfMArray = [[NSMutableArray alloc] initWithCapacity:5];
     
     //创建默认视频参数
     [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
@@ -313,13 +316,37 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                                                otherButtonTitles:@"预览录制",@"取消",nil];
     [theVideoRecordAlertView show];
     
-    NSMutableDictionary *theVideoRecordCellMDict = [NSMutableDictionary dictionaryWithCapacity:4];
-    [theVideoRecordCellMDict setValue:[[NSNumber alloc] initWithInt:dwUserid] forKey:@"targetUserIDNum"];
-    [theVideoRecordCellMDict setValue:[TransFileVC sharedTransFileVC].getTimeNow forKey:@"productTimeStr"];
-    [theVideoRecordCellMDict setValue:@"mp4" forKey:@"fileTypeStr"];
-    [theVideoRecordCellMDict setValue:lpFileName forKey:@"contentPathStr"];
-    //Save the record
-    [self.theVideoRecordMArray addObject:theVideoRecordCellMDict];
+    NSString *s_useNameStr;
+
+    if ([lpUserStr isEqual: @"StarLocolSelfRecord"])
+    {
+        s_useNameStr = self.theMyUserName;
+    }
+    else if ([lpUserStr isEqual: @"StarLocolRemoteRecord"])
+    {
+        s_useNameStr = self.theTargetUserName;
+    }
+    else if ([lpUserStr isEqual: @"StarLocolMaxRecord"])
+    {
+        s_useNameStr = @"合成录制";
+    }
+    
+    NSMutableDictionary *theVideoRecordParamMDict = [NSMutableDictionary dictionaryWithCapacity:5];
+    [theVideoRecordParamMDict setValue:s_useNameStr forKey:@"useNameStr"];
+    [theVideoRecordParamMDict setValue:[[NSNumber alloc] initWithInt:dwUserid] forKey:@"targetUserIDNum"];
+    [theVideoRecordParamMDict setValue:[TransFileVC sharedTransFileVC].getTimeNow forKey:@"productTimeStr"];
+    [theVideoRecordParamMDict setValue:@"mp4" forKey:@"fileTypeStr"];
+    [theVideoRecordParamMDict setValue:lpFileName forKey:@"contentPathStr"];
+    //Save the recordFileUrl
+    self.theShowVCType = dwParam;
+    if (dwParam == -1)
+    {
+        [self.theVideoRecordSelfMArray addObject:theVideoRecordParamMDict];
+    }
+    else
+    {
+        [self.theVideoRecordMArray addObject:theVideoRecordParamMDict];
+    }
 }
 
 // 抓拍完成事件

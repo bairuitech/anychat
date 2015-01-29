@@ -92,7 +92,18 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
     
     if (self.myUserID == userID)
     {
-        nameLabel.text = [name stringByAppendingString:@"(自己)"];
+        if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"本地录像"])
+        {
+            nameLabel.text = [name stringByAppendingString:@"[录制自己]"];
+        }
+        else if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"视频抓拍"])
+        {
+            nameLabel.text = [name stringByAppendingString:@"[自拍]"];
+        }
+        else
+        {
+            nameLabel.text = [name stringByAppendingString:@"(自己)"];
+        }
     }
     else
     {
@@ -138,9 +149,28 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
             [self.navigationController pushViewController:[self pushVC] animated:YES];
         }
     }
+    
+    if (selectID == self.myUserID)
+    {
+        if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"本地录像"])
+        {
+            RecordSelfVC *theRecordSelfVC = [RecordSelfVC new];
+            [self.navigationController pushViewController:theRecordSelfVC animated:YES];
+        }
+        else if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"视频抓拍"])
+        {
+            //拍照最佳像素
+            [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_WIDTHCTRL :1280];
+            [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_HEIGHTCTRL :720];
+            
+            AutodyneVC *theAutodyneVC = [AutodyneVC new];
+            [self.navigationController pushViewController:theAutodyneVC animated:YES];
+        }
+    }
 }
 
-- (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
 	return 70.0f;
 }
 

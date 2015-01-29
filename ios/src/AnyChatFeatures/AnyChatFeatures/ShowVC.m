@@ -18,6 +18,8 @@
 @synthesize theVideoRecordTableView;
 @synthesize theVideoRecordList;
 @synthesize theSelectContentPath;
+@synthesize theObjType;
+
 
 #pragma mark - Life cycle
 
@@ -32,6 +34,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.theObjType = [AnyChatVC sharedAnyChatVC].theShowVCType;
+    
+    if (self.theObjType == -1)
+    {
+        self.theVideoRecordList = [AnyChatVC sharedAnyChatVC].theVideoRecordSelfMArray;
+    }
+    else
+    {
+        self.theVideoRecordList = [AnyChatVC sharedAnyChatVC].theVideoRecordMArray;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -55,20 +68,30 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    self.theVideoRecordList = [AnyChatVC sharedAnyChatVC].theVideoRecordMArray;
+//???:删除
+//    if (self.theObjType == -1)
+//    {
+//        self.theVideoRecordList = [AnyChatVC sharedAnyChatVC].theVideoRecordSelfMArray;
+//    }
+//    else
+//    {
+//        self.theVideoRecordList = [AnyChatVC sharedAnyChatVC].theVideoRecordMArray;
+//    }
+
     return self.theVideoRecordList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.theVideoRecordList = [AnyChatVC sharedAnyChatVC].theVideoRecordMArray;
+//???:删除
+//    self.theVideoRecordList = [AnyChatVC sharedAnyChatVC].theVideoRecordMArray;
     static NSString *cellIdentifier = @"Cell";
     
     UITableViewCell *s_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (s_cell == nil)
     {
-       s_cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+       s_cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
     
     s_cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -76,10 +99,19 @@
     NSDictionary *s_cellDataMDict = [self.theVideoRecordList objectAtIndex:[indexPath row]];
     //Dict info
     NSString *s_targetUserID = [[s_cellDataMDict objectForKey:@"targetUserIDNum"] stringValue];
+    NSString *s_useNameStr = [s_cellDataMDict objectForKey:@"useNameStr"];
     NSString *s_productTime = [s_cellDataMDict objectForKey:@"productTimeStr"];
     
-    s_cell.textLabel.text = s_productTime;
-    s_cell.detailTextLabel.text = s_targetUserID;
+    if ([s_useNameStr isEqual:@"合成录制"])
+    {
+        s_cell.textLabel.text = [[NSString alloc] initWithFormat:@"%@",s_useNameStr];
+    }
+    else
+    {
+        s_cell.textLabel.text = [[NSString alloc] initWithFormat:@"%@(%@)",s_useNameStr,s_targetUserID];
+    }
+
+    s_cell.detailTextLabel.text = s_productTime;
     
     return s_cell;
 }
@@ -127,6 +159,7 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 #pragma mark - UITouch
 

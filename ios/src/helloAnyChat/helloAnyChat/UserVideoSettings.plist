@@ -31,11 +31,11 @@
 		<key>KeyEN</key>
 		<string>videosolution</string>
 		<key>Titles</key>
-		<string>352x288</string>
+		<string>480x360</string>
 		<key>Values</key>
-		<integer>3</integer>
+		<integer>2</integer>
 		<key>DefaultValue</key>
-		<integer>3</integer>
+		<integer>2</integer>
 	</dict>
 	<key>videobitrate</key>
 	<dict>
