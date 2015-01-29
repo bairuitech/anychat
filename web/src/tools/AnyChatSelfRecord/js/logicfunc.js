@@ -66,9 +66,9 @@ function LogicInit() {
 //设置AnyChat参数，需要在收到登录成功回调之后调用
 function ConfigAnyChatParameter(){
  	// 视频抓拍文件存储路径
-	BRAC_SetSDKOption(BRAC_SO_SNAPSHOT_TMPDIR,"d:\\ScreenShot");
+	BRAC_SetSDKOption(BRAC_SO_SNAPSHOT_TMPDIR,"d:\\AnyChatSnapShot");
 	// 视频录制文件存储路径
-	BRAC_SetSDKOption(BRAC_SO_RECORD_TMPDIR,"d:\\videoRecord");
+	BRAC_SetSDKOption(BRAC_SO_RECORD_TMPDIR,"d:\\AnyChatRecord");
 	// 设置录制文件格式，0 MP4[默认], 1 WMV, 2 FLV, 3 MP3
 	BRAC_SetSDKOption(BRAC_SO_RECORD_FILETYPE,0);
 	// 启动本地Web服务
