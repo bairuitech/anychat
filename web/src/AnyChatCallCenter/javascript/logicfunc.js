@@ -57,6 +57,11 @@ function LogicInit() {
     }, 500);
 }
 
+//设置AnyChat参数，需要在收到登录成功回调之后调用
+function ConfigAnyChatParameter(){
+	
+}
+
 // 初始化界面元素
 function InitInterfaceUI() {
     //设置按钮

@@ -87,7 +87,8 @@ function OnAnyChatConnect(bSuccess, errorcode) {
 function OnAnyChatLoginSystem(dwUserId, errorcode) {
 	DisplayLoadingDiv(false);
 	AddLog("OnAnyChatLoginSystem(userid=" + dwUserId + ", errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
-    if (errorcode == 0) {
+    if (errorcode == 0) {	
+		ConfigAnyChatParameter();
 		mSelfUserId = dwUserId;	
 		ShowHallDiv(true);
     } else {

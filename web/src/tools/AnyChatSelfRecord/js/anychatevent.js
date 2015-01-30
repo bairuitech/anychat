@@ -139,6 +139,7 @@ function OnAnyChatConnect(bSuccess, errorcode) {
 // 客户端登录系统，dwUserId表示自己的用户ID号，errorcode表示登录结果：0 成功，否则为出错代码，参考出错代码定义
 function OnAnyChatLoginSystem(dwUserId, errorcode) {
 	if (errorcode == 0) {
+		ConfigAnyChatParameter();
 		mSelfUserId = dwUserId;
 	} else {
 		DisplayLoadingDiv(false);

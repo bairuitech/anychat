@@ -2,12 +2,13 @@
 {
 	color:#6A2A04;
 	position:relative;
-	width:720px;
-	height:500px;
+	width:740px;
+	height:475px;
 	overflow:hidden;
 	font-size:9pt;
 	font-family:arial;
-	padding:10px 10px 10px 15px;
+	padding:12px;
+	overflow-y: auto;
 }
 .UserImg_Holder
 {

@@ -42,15 +42,7 @@ function LogicInit() {
         var NEED_ANYCHAT_APILEVEL = "0"; 						// 定义业务层需要的AnyChat
 																// API Level
         var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	// 初始化插件
-        if (errorcode == GV_ERR_SUCCESS) {
-  	      	// 视频抓拍文件存储路径
-			BRAC_SetSDKOption(BRAC_SO_SNAPSHOT_TMPDIR,"d:\\ScreenShot");
-			// 视频录制文件存储路径
-			BRAC_SetSDKOption(BRAC_SO_RECORD_TMPDIR,"d:\\videoRecord");
-			// 设置录制文件格式，0 MP4[默认], 1 WMV, 2 FLV, 3 MP3
-			 BRAC_SetSDKOption(BRAC_SO_RECORD_FILETYPE,0);
-			// 启动本地Web服务
-			BRAC_SetSDKOption(BRAC_SO_ENABLEWEBSERVICE, 1);                
+        if (errorcode == GV_ERR_SUCCESS) {           
 			if(mRefreshPluginTimer != -1)
 				clearInterval(mRefreshPluginTimer); 			// 清除插件安装检测定时器
 			GetID("prompt_div").style.display = "none"; 		// 隐藏插件安装提示界面
@@ -69,6 +61,18 @@ function LogicInit() {
 			}
 		}
     }, 500);
+}
+
+//设置AnyChat参数，需要在收到登录成功回调之后调用
+function ConfigAnyChatParameter(){
+ 	// 视频抓拍文件存储路径
+	BRAC_SetSDKOption(BRAC_SO_SNAPSHOT_TMPDIR,"d:\\AnyChatSnapShot");
+	// 视频录制文件存储路径
+	BRAC_SetSDKOption(BRAC_SO_RECORD_TMPDIR,"d:\\AnyChatRecord");
+	// 设置录制文件格式，0 MP4[默认], 1 WMV, 2 FLV, 3 MP3
+	BRAC_SetSDKOption(BRAC_SO_RECORD_FILETYPE,0);
+	// 启动本地Web服务
+	BRAC_SetSDKOption(BRAC_SO_ENABLEWEBSERVICE, 1);     
 }
 
 // 初始化界面元素

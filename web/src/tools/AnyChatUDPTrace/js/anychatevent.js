@@ -116,6 +116,7 @@ function OnAnyChatConnect(bSuccess, errorcode) {
 function OnAnyChatLoginSystem(dwUserId, errorcode) {
 	
 	if (errorcode == 0) {
+		ConfigAnyChatParameter();
 		mSelfUserId = dwUserId;
 	}
 
