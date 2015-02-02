@@ -416,8 +416,7 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 			// 给自己录像
 			case R.id.btn_recordself:
 				mdwFlags = AnyChatDefine.BRAC_RECORD_FLAGS_AUDIO
-						+ AnyChatDefine.BRAC_RECORD_FLAGS_VIDEO
-						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_LOCALCB;
+						+ AnyChatDefine.BRAC_RECORD_FLAGS_VIDEO;
 				mCurRecordUserID = -1;
 				bCanRecord = true;
 				break;
@@ -437,7 +436,6 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_MIXAUDIO
 						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_MIXVIDEO
 						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_STEREO
-						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_LOCALCB
 						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_ABREAST;
 				mCurRecordUserID = -1;
 				bCanRecord = true;
