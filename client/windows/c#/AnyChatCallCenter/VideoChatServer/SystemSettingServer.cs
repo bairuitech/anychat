@@ -95,7 +95,7 @@ namespace ANYCHATAPI
         // 文件传输回调函数定义
         public delegate void OnTransFile_Received(int dwUserId, string lpFileName, string lpTempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId, int lpUserValue);
         //视频呼叫回调函数定义
-        public delegate void OnVideoCall_Received(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue);
+        public delegate int OnVideoCall_Received(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue);
         
 
         public static OnServerAppMessageEx_Received OnServerAppMessageExReceived = null;
@@ -128,11 +128,12 @@ namespace ANYCHATAPI
         // 用户申请进入房间回调函数定义
         public static int OnPrepareEnterRoomCallBack(int userId, int roomId, string roomName, string password, int userValue)
         {
+            int ret = 0;
             if (OnPrepareEnterRoomReceived != null)
             {
-                OnPrepareEnterRoomReceived(userId, roomId, roomName, password, userValue);
+                ret=OnPrepareEnterRoomReceived(userId, roomId, roomName, password, userValue);
             }
-            return 0;
+            return ret;
         }
 
 
@@ -221,9 +222,10 @@ namespace ANYCHATAPI
         //视频呼叫时间回调函数定义
         public static int onVideoVideoCallEventCallBack(int dwEventType, int dwSrcUserId, int dwTarUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue)
         {
+            int ret = 0;
             if(OnVideoCallReceived!=null)
-                 OnVideoCallReceived(dwEventType,dwSrcUserId,dwTarUserId,dwErrorCode, dwFlags, dwParam,  lpUserStr,  lpUserValue);
-            return 0;
+                 ret=OnVideoCallReceived(dwEventType,dwSrcUserId,dwTarUserId,dwErrorCode, dwFlags, dwParam,  lpUserStr,  lpUserValue);
+            return ret;
         }
     }
 }
