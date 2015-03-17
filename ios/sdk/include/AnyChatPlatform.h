@@ -13,6 +13,8 @@
 #import <UIKit/UIKitDefines.h>
 #import <UIKit/UIView.h>
 
+#pragma pack(push, 1)
+
 #if !defined(BITMAPINFOHEADER_DEFINE)
 #define BITMAPINFOHEADER_DEFINE
 typedef struct tagBITMAPINFOHEADER {
@@ -42,6 +44,9 @@ typedef struct tagWAVEFORMATEX{
     short  cbSize;
 }WAVEFORMATEX,*LPWAVEFORMATEX;
 #endif
+
+#pragma pack(pop)
+
 
 /**
  *	AnyChat 异步消息事件协议
