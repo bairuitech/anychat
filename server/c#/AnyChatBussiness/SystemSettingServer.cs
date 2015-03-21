@@ -131,11 +131,12 @@ namespace AnyChatBussiness
         // 用户申请进入房间回调函数定义
         public static int OnPrepareEnterRoomCallBack(int userId, int roomId, string roomName, string password, int userValue)
         {
+            int ret = 0;
             if (OnPrepareEnterRoomReceived != null)
             {
-                OnPrepareEnterRoomReceived(userId, roomId, roomName, password, userValue);
+                ret=OnPrepareEnterRoomReceived(userId, roomId, roomName, password, userValue);
             }
-            return 0;
+            return ret;
         }
 
 

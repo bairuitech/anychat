@@ -43,6 +43,23 @@
 #define WM_GV_SDKWARNING			WM_GV + 41		///< SDK警告信息，当SDK在运行过程中自检发现异常状态时，将向上层发送该消息，wParam（INT）表示警告代码，定义为：GV_ERR_WARNING_XXXX
 
 
+// 视频图像格式定义
+enum BRAC_PixelFormat{
+	BRAC_PIX_FMT_RGB24 = 0,						///< Packed RGB 8:8:8, 24bpp, RGBRGB...（MEDIASUBTYPE_RGB24）
+	BRAC_PIX_FMT_RGB32,							///< 对应于：MEDIASUBTYPE_RGB32，Packed RGB 8:8:8, 32bpp, (msb)8A 8R 8G 8B(lsb), in cpu endianness
+	BRAC_PIX_FMT_YV12,							///< 对应于：MEDIASUBTYPE_YV12，Planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
+	BRAC_PIX_FMT_YUY2,							///< 对应于：MEDIASUBTYPE_YUY2，Packed YUV 4:2:2, 16bpp, Y0 Cb Y1 Cr
+	BRAC_PIX_FMT_YUV420P,						///< Planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
+	BRAC_PIX_FMT_RGB565,						///< 对应于：MEDIASUBTYPE_RGB565
+	BRAC_PIX_FMT_RGB555,						///< 对应于：MEDIASUBTYPE_RGB555
+	BRAC_PIX_FMT_NV12,							///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is U and V
+	BRAC_PIX_FMT_NV21,							///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is V and U
+	BRAC_PIX_FMT_NV16,							///< YUV422SP
+	
+	BRAC_PIX_FMT_MJPEG = 200,
+	BRAC_PIX_FMT_H264,
+};
+
 // 功能模式定义
 #define BRAC_FUNC_VIDEO_CBDATA		0x00000001L	///< 通过回调函数输出视频数据
 #define BRAC_FUNC_VIDEO_AUTODISP	0x00000002L	///< 由SDK包处理视频，将视频显示在指定的窗口上
@@ -128,6 +145,7 @@
 #define BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER	84	///< 视频数据经过GPU直接渲染，将解码后的视频数据直接传输到GPU的物理地址（参数为：int型， 0 关闭[默认]， 1 打开），与硬件平台相关
 #define BRAC_SO_VIDEOSHOW_AUTOROTATION		85	///< 远程视频显示自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
 #define BRAC_SO_VIDEOSHOW_CLIPMODE			86	///< 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
+#define BRAC_SO_VIDEOSHOW_CBPIXFMT			87	///< 视频数据回调格式（参数为int型）
 
 #define BRAC_SO_CORESDK_DEVICEMODE			130	///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
 #define BRAC_SO_CORESDK_DATAENCRYPTION		132	///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）

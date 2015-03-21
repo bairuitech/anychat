@@ -16,32 +16,33 @@
 #if !defined(BITMAPINFOHEADER_DEFINE)
 #define BITMAPINFOHEADER_DEFINE
 typedef struct tagBITMAPINFOHEADER {
-    int biSize;
-    int biWidth;
-    int biHeight;
-    short biPlanes;
-    short biBitCount;
-    int biCompression;
-    int biSizeImage;
-    int biXPelsPerMeter;
-    int biYPelsPerMeter;
-    int biClrUsed;
-    int biClrImportant;
-}BITMAPINFOHEADER;
+    uint32_t biSize;
+    uint32_t biWidth;
+    uint32_t biHeight;
+    uint16_t biPlanes;
+    uint16_t biBitCount;
+    uint32_t biCompression;
+    uint32_t biSizeImage;
+    uint32_t biXPelsPerMeter;
+    uint32_t biYPelsPerMeter;
+    uint32_t biClrUsed;
+    uint32_t biClrImportant;
+}__attribute__((packed)) BITMAPINFOHEADER;
 #endif
 
 #if !defined(WAVEFORMATEX_DEFINE)
 #define WAVEFORMATEX_DEFINE
 typedef struct tagWAVEFORMATEX{
-    short  wFormatTag;
-    short  nChannels;
-    int nSamplesPerSec;
-    int nAvgBytesPerSec;
-    short  nBlockAlign;
-    short  wBitsPerSample;
-    short  cbSize;
-}WAVEFORMATEX,*LPWAVEFORMATEX;
+    uint16_t  wFormatTag;
+    uint16_t  nChannels;
+    uint32_t nSamplesPerSec;
+    uint32_t nAvgBytesPerSec;
+    uint16_t  nBlockAlign;
+    uint16_t  wBitsPerSample;
+    uint16_t  cbSize;
+}__attribute__((packed)) WAVEFORMATEX,*LPWAVEFORMATEX;
 #endif
+
 
 /**
  *	AnyChat 异步消息事件协议

@@ -42,6 +42,7 @@
 @property (strong, nonatomic) NSString                      *theFeaturesName;
 @property (strong, nonatomic) NSString                      *theMyUserName;
 @property (strong, nonatomic) NSString                      *theTargetUserName;
+@property (strong, nonatomic) NSString                      *theUDPTraceType;
 @property (strong, nonatomic) VideoVC                       *videoVC;
 @property (strong, nonatomic) AnyChatPlatform               *anyChat;
 @property int   theFeaturesNO;

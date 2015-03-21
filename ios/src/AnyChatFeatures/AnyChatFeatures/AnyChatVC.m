@@ -36,6 +36,7 @@
 @synthesize theVideoRecordMArray;
 @synthesize theVideoRecordSelfMArray;
 @synthesize theShowVCType;
+@synthesize theUDPTraceType;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -674,6 +675,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     theShowPhotoVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.navigationController presentViewController:theShowPhotoVC animated:YES completion:nil];
 }
+
 
 #pragma mark - AlertView delegate
 

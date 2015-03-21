@@ -23,6 +23,7 @@
 @synthesize snapShotFUNBtn;
 @synthesize callCenterFUNBtn;
 @synthesize theMyUserIDLab;
+@synthesize theUDPTraceFUNBtn;
 
 
 kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
@@ -54,6 +55,28 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+
+#pragma mark - UIActionSheet Delegate Method
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self sharedFeaturesInfo:self.theUDPTraceFUNBtn.titleLabel.text FeaturesNO:9];
+    [AnyChatPlatform EnterRoom:9 :@""];
+    
+        //发送方
+        if (buttonIndex == 0)
+        {
+            [self.navigationController pushViewController:[SendDataVC new] animated:NO];
+        }
+        //接收方
+        if (buttonIndex == 1)
+        {
+            [self.navigationController pushViewController:[ReceiveDataVC new] animated:NO];
+        }
+    
+//    NSLog(@"\n\n  buttonIndex: %i \n\n",(int)buttonIndex);
 }
 
 
@@ -135,7 +158,17 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
     [self.navigationController pushViewController:[SettingVC sharedSettingVC] animated:YES];
 }
 
-
+- (IBAction)UDPTraceBtnClicked:(id)sender
+{
+    UIActionSheet *UDPTraceActSheet = [[UIActionSheet alloc]
+                               initWithTitle:@"请选择操作角色?"
+                               delegate:self
+                               cancelButtonTitle:nil
+                               destructiveButtonTitle:nil
+                               otherButtonTitles:@"发送方",@"接收方", nil];
+    UDPTraceActSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [UDPTraceActSheet showInView:self.view];
+}
 
 
 #pragma mark - Instance Method
