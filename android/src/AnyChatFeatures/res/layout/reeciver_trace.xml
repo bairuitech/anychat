@@ -13,43 +13,44 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="2"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="发送者" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
                 android:src="@drawable/senderdevice" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发送者"
+                android:textSize="18dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/rSenderIPAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="IP地址：" />
+                android:text="IP地址："
+                android:textSize="17dp" />
 
             <TextView
                 android:id="@+id/senderPacket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="发送数据包：0" />
+                android:text="发送数据包：0"
+                android:textSize="17dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -69,18 +70,24 @@
                 android:id="@+id/RSendDown1"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/red_down" />
 
             <ImageView
                 android:id="@+id/RSendDown2"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/blue_down" />
 
             <ImageView
                 android:id="@+id/RSendDown3"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/blue_down" />
         </LinearLayout>
 
@@ -95,19 +102,33 @@
                 android:id="@+id/RSendUp1"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/blue_up" />
 
             <ImageView
                 android:id="@+id/RSendUp2"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/blue_up" />
 
             <ImageView
                 android:id="@+id/RSendUp3"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/red_up" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical" >
         </LinearLayout>
     </LinearLayout>
 
@@ -120,44 +141,45 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="2"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="服务器" />
 
             <ImageView
                 android:id="@+id/rServerIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
                 android:src="@drawable/server1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="服务器"
+                android:textSize="18dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/rServerIPAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="IP地址：demo.anychat.cn" />
+                android:text="IP地址：demo.anychat.cn"
+                android:textSize="17dp" />
 
             <TextView
                 android:id="@+id/rServerReceiverPacket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="收到数据包：" />
+                android:text="收到数据包："
+                android:textSize="17dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -191,6 +213,14 @@
                 android:layout_height="10dp"
                 android:src="@drawable/blue_down" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -202,50 +232,52 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="2"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="接收者" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
                 android:src="@drawable/receiverdevice" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="接收者"
+                android:textSize="18dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/rReceiverIPAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="IP地址：" />
+                android:text="IP地址："
+                android:textSize="17dp" />
 
             <TextView
                 android:id="@+id/rReceiverGetPacket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="收到数据包：0" />
+                android:text="收到数据包：0"
+                android:textSize="17dp" />
 
             <TextView
                 android:id="@+id/rReceiverLostRate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="丢包率：0" />
+                android:text="丢包率：0"
+                android:textSize="17dp" />
         </LinearLayout>
     </LinearLayout>
 
