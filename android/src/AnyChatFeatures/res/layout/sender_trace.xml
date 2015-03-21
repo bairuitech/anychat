@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:background="@drawable/trace_border"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发送者" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:src="@drawable/senderdevice" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="3"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/clientIPAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="IP地址：" />
+
+            <TextView
+                android:id="@+id/clientSenderPacket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="发送数据包：1234" />
+
+            <TextView
+                android:id="@+id/clentReceiverPacket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收到的数据：1234" />
+
+            <TextView
+                android:id="@+id/lostPacketRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="丢包率：0.01%" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/senderDown1"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:src="@drawable/red_down" />
+
+            <ImageView
+                android:id="@+id/senderDown2"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:src="@drawable/blue_down" />
+
+            <ImageView
+                android:id="@+id/senderDown3"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:src="@drawable/blue_down" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/senderUp1"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:src="@drawable/blue_up" />
+
+            <ImageView
+                android:id="@+id/senderUp2"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:src="@drawable/blue_up" />
+
+            <ImageView
+                android:id="@+id/senderUp3"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:src="@drawable/red_up" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:background="@drawable/trace_border"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="服务器" />
+
+            <ImageView
+                android:id="@+id/senderServerIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:src="@drawable/server1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="3"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/serverIPAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="IP地址：demo.anychat.cn" />
+
+            <TextView
+                android:id="@+id/serverReceiverPacket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="收到数据包：0" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:background="@drawable/trace_border"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="3"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="3dp"
+                    android:text="控制器" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="速度：" />
+
+                    <EditText
+                        android:id="@+id/controlSpeed"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="Kbps" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/startDebug"
+                        android:layout_width="130dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:text="开始测试"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/endDebug"
+                        android:layout_width="130dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:text="停止测试"
+                        android:textSize="20sp"
+                        android:visibility="gone" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="3dp"
+                android:background="#6600ff" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:gravity="center"
+                    android:text="操作指南"
+                    android:textColor="#ff0000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="输入速率后点击“开始测试”即可获取UDP网络通畅情况  (注意:在发送方和接收方同时登录后方可开始测试) " />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
