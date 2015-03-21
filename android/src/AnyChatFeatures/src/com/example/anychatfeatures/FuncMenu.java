@@ -8,8 +8,13 @@ import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.example.anychatfeatures.R;
 import com.example.common.CustomApplication;
+import com.example.common.RecordListMenu;
+import com.example.common.ScreenInfo;
+import com.example.common.TraceSelectDialog;
 import com.example.config.ConfigEntity;
 import com.example.config.ConfigService;
+import com.example.funcActivity.ReceiverTrace;
+import com.example.funcActivity.SenderTrace;
 import com.example.funcActivity.VideoConfig;
 
 import android.app.Activity;
@@ -18,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,7 +44,8 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	public static final int FUNC_SERVERVIDEO = 6;
 	public static final int FUNC_PHOTOGRAPH = 7;
 	public static final int FUNC_VIDEOCALL = 8;
-	public static final int FUNC_CONFIG = 9;
+	public static final int FUNC_UDPTRACE = 9;
+	public static final int FUNC_CONFIG = 10;
 
 	// 视频配置界面标识
 	public static final int ACTIVITY_ID_VIDEOCONFIG = 1;
@@ -48,6 +55,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	private GridView mMenuGridView;
 	private CustomApplication mCustomApplication;
 	private ArrayList<HashMap<String, Object>> mArrItem;// 存储功能菜单图标和描述
+	private TraceSelectDialog mTraceSelectDialog;
 	
 	AnyChatCoreSDK anyChatSDK;
 
@@ -79,13 +87,14 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 				getString(R.string.textChat), getString(R.string.alphaChannel),
 				getString(R.string.fileTransfer), getString(R.string.lovalVideoRecord),
 				getString(R.string.serverVideoRecord), getString(R.string.photograph), 
-				getString(R.string.videoCall), getString(R.string.config)};
+				getString(R.string.videoCall), getString(R.string.udpTrace),
+				getString(R.string.config)};
 
 		int[] arrFuncIcons = { R.drawable.voicevideo, R.drawable.textchat,
 				R.drawable.alphachannel, R.drawable.filetransfer,
 				R.drawable.localvideorecord, R.drawable.servervideorecord,
 				R.drawable.photograph, R.drawable.videocall,
-				R.drawable.config};
+				R.drawable.alphachannel, R.drawable.config};
 
 		mArrItem = new ArrayList<HashMap<String, Object>>();
 		for (int index = 0; index < arrFuncNames.length; ++index) {
@@ -103,7 +112,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 		mMenuGridView.setAdapter(sMenuItemAdapter);
 		mMenuGridView.setOnItemClickListener(onListClickListener);
 		mTitleName.setText(R.string.str_funcTitle);
-		mImgBtnReturn.setOnClickListener(onBtnClick);
+		mImgBtnReturn.setOnClickListener(onClickListener);
 	}
 
 	OnItemClickListener onListClickListener = new OnItemClickListener() {
@@ -119,6 +128,16 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 				startActivityForResult(intent, ACTIVITY_ID_VIDEOCONFIG);
 				
 				return;
+			}else if (arg2 + 1 == FUNC_UDPTRACE) {
+				if (mTraceSelectDialog != null && mTraceSelectDialog.isShowing()) {	
+					return;
+				}
+				
+				mTraceSelectDialog = new TraceSelectDialog(FuncMenu.this, onClickListener);
+				mTraceSelectDialog.showAtLocation(FuncMenu.this.findViewById(R.id.funcmenuGridView), 
+						Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 300, 400);
+								
+				return;
 			}
 			
 			// 不同的功能模块进入不同的房间，从1开始，1~7房间，如语音视频聊天进入1号房间，文字聊天进入2号房间。。。
@@ -127,11 +146,34 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 		}
 	};
 	
-	OnClickListener onBtnClick = new OnClickListener() {
+	OnClickListener onClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			
-			destroyCurActivity();
+			switch (v.getId()) {
+			case R.id.returnImgBtn:
+				destroyCurActivity();
+				break;
+			case R.id.udpTraceConfirm:
+				int curSelcetTraceIndex = mTraceSelectDialog.getCurSelectTraceRole();
+				Intent intent = new Intent();
+				if (curSelcetTraceIndex == 0) {
+					intent.setClass(FuncMenu.this, SenderTrace.class);
+				}else {
+					intent.setClass(FuncMenu.this, ReceiverTrace.class);
+				}
+				
+				anyChatSDK.EnterRoom(FUNC_UDPTRACE, "");
+				startActivity(intent);
+				mTraceSelectDialog.dismiss();
+				mTraceSelectDialog = null;
+				break;
+			case R.id.udpTraceCancel:
+				mTraceSelectDialog.dismiss();
+				mTraceSelectDialog = null;
+				break;
+			default:
+				break;
+			}			
 		}
 	};
 	// 音视频交互

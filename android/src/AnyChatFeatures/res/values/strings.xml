@@ -12,6 +12,7 @@
     <string name ="serverVideoRecord">服务器录像</string>
     <string name ="photograph">视频抓拍</string>
     <string name ="videoCall">呼叫中心</string>
+    <string name ="udpTrace">网络检测工具</string>
     <string name ="config">设置</string>
     <string name ="dialog_read_from_dir">Open from dir</string>
     <string name="str_dialog_title_protip">提示</string>
