@@ -165,7 +165,7 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
                                delegate:self
                                cancelButtonTitle:nil
                                destructiveButtonTitle:nil
-                               otherButtonTitles:@"发送方",@"接收方", nil];
+                               otherButtonTitles:@"发送方",@"接收方",@"取消", nil];
     UDPTraceActSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     [UDPTraceActSheet showInView:self.view];
 }

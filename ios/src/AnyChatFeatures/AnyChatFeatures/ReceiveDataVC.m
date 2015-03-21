@@ -26,6 +26,7 @@
 
 @synthesize theSendViewIPLable;
 @synthesize theRecvViewIPLable;
+@synthesize theServerViewIPLable;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -52,11 +53,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    [self TheTimersActionStart];
     
+    //IP
     self.theSendViewIPLable.text = [AnyChatPlatform QueryUserStateString:[AnyChatPlatform GetSDKOptionInt:167] :BRAC_USERSTATE_INTERNETIP];
     self.theRecvViewIPLable.text = [AnyChatPlatform QueryUserStateString:-1 :BRAC_USERSTATE_INTERNETIP];
-    
-    [self TheTimersActionStart];
+    self.theServerViewIPLable.text = [AnyChatVC sharedAnyChatVC].theServerIP.text;
+
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -83,7 +86,7 @@
     [self TheTimersActionStop];
 
     [AnyChatPlatform LeaveRoom:-1];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 
@@ -117,18 +120,12 @@
     //close NSTimer
     if (theTimers)
     {
-//        NSLog(@"调用 theTimers为真！！");
-        
-        //如果定时器在运行
-        if ([theTimers isValid])
+        if ([theTimers isValid]) //NSTimer is runing
         {
-//            NSLog(@"单击停止按钮，取消定时器！！");
-            
             [theTimers invalidate];
             theTimers = nil;
         }
     }
-
     
 }
 
@@ -142,13 +139,26 @@
     self.theRecvViewRecvLable.text = [[NSString alloc] initWithFormat:@"%i",self.theRecvData];
     self.theServerViewRecvLable.text = [[NSString alloc] initWithFormat:@"%i",self.theServerGetData];
     self.theRecvViewLossLable.text = [self DownloadFrameLossRate:self.theSendData :self.theServerGetData :self.theRecvData];
+
+    if ([self.theSendViewIPLable.text isEqualToString:@""])
+    {
+        self.theSendViewIPLable.text = [AnyChatPlatform QueryUserStateString:[AnyChatPlatform GetSDKOptionInt:167] :BRAC_USERSTATE_INTERNETIP];
+    }
+    
+//    NSLog(@"\n\n ip:%d \n\n",[AnyChatPlatform GetSDKOptionInt:167]);
+//    NSLog(@"\n\n 地址STR:%@ \n\n",[AnyChatPlatform QueryUserStateString:[AnyChatPlatform GetSDKOptionInt:167] :BRAC_USERSTATE_INTERNETIP]);
     
 }
 
 - (NSString *)DownloadFrameLossRate:(int)send :(int)serverGet :(int)recv
 {
+    
     float theLossRate = ((send-recv)/(float)serverGet)*100;
-//        NSLog(@"\n\n send :%i \n server:%i \n 上行丢包率： %f \n\n",send,serverGet,theLossRate);
+    if (theLossRate<0.0f)
+    {
+        theLossRate = 0.00;
+    }
+//        NSLog(@"\n\n send :%i \n server:%i \n DownloadFrameLossRate： %f \n\n",send,serverGet,theLossRate);
     
     return [[self newFloat:theLossRate withNumber:2] stringByAppendingString:@"%"];
 }
@@ -166,6 +176,14 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+
+#pragma mark - Rotation
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
 }
 
 
