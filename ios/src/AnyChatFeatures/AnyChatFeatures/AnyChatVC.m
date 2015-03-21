@@ -66,6 +66,11 @@
     anyChat.recordSnapShotDelegate = self;
     anyChat.videoCallDelegate = self;
     
+    //视频数据回调设置
+    anyChat.mediaDataDelegate = self;
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_VIDEOSHOW_CBPIXFMT :BRAC_PIX_FMT_RGB24];
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :0];
+    
     self.theVideoRecordMArray = [[NSMutableArray alloc] initWithCapacity:5];
     self.theVideoRecordSelfMArray = [[NSMutableArray alloc] initWithCapacity:5];
     
@@ -119,6 +124,20 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     return YES;
+}
+
+
+#pragma mark - AnyChatMediaDataDelegate
+
+// 视频数据回调
+- (void) OnAnyChatVideoDataExCallBack:(int) dwUserid : (NSData*) lpBuf : (BITMAPINFOHEADER) bmiHeader : (int) dwTimeStamp
+{
+    NSLog(@"\n\n 视频数据回调 \n  dwUserid:%d  \n  wxh=%d x %d \n  size:%d \n dwTimeStamp:%i \n",dwUserid,bmiHeader.biWidth,bmiHeader.biHeight,(int)sizeof(bmiHeader),dwTimeStamp);
+}
+// 音频数据回调
+- (void) OnAnyChatAudioDataExCallBack:(int) dwUserid : (NSData*) lpBuf : (WAVEFORMATEX) waveFormatEx : (int) dwTimeStamp
+{
+    NSLog(@"\n\n 视频回调 \n  dwUserid:%d  \n  [lpBuf length]=%d \n  waveFormatEx.cbSize:%d  \n  dwTimeStamp:%i  \r\n ",dwUserid,(int)[lpBuf length],waveFormatEx.cbSize,dwTimeStamp);
 }
 
 

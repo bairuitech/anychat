@@ -4,6 +4,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AnyChatVC.h"
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
@@ -24,6 +25,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel          *theSendViewIPLable;
 @property (strong, nonatomic) IBOutlet UILabel          *theRecvViewIPLable;
+@property (strong, nonatomic) IBOutlet UILabel          *theServerViewIPLable;
 
 @property   int   theSendData;
 @property   int   theRecvData;

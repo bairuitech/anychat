@@ -23,12 +23,15 @@
 @property (strong, nonatomic) IBOutlet UILabel          *theSendViewRecvLable;
 @property (strong, nonatomic) IBOutlet UILabel          *theSendViewLossLable;
 @property (strong, nonatomic) IBOutlet UILabel          *theServerViewRecvLable;
+
 @property (strong, nonatomic) IBOutlet UILabel          *theSendViewIPLable;
+@property (strong, nonatomic) IBOutlet UILabel          *theServerViewIPLable;
 
 @property (strong, nonatomic) IBOutlet UITextField      *theSendBitLable;
 
 @property (strong, nonatomic) IBOutlet UIButton         *theStartBtn;
-@property (strong, nonatomic) IBOutlet UIButton         *theEndBtn;
+
+@property   BOOL  theStartBtnOnClickState;
 
 @property   int   theSendData;
 @property   int   theRecvData;
@@ -36,7 +39,6 @@
 
 
 - (IBAction)theStartBtn_Click:(id)sender;
-- (IBAction)theEndBtn_Click:(id)sender;
 
 
 @end

@@ -8,7 +8,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendDataVC">
             <connections>
                 <outlet property="theControlView" destination="ITx-IR-TQI" id="MGD-Fb-jbk"/>
-                <outlet property="theEndBtn" destination="zfX-SY-v9b" id="W1u-E7-m0M"/>
                 <outlet property="theSendBitLable" destination="V34-ud-h4r" id="GMp-Qs-tp6"/>
                 <outlet property="theSendView" destination="cBe-5r-p5S" id="eTM-Fc-Xll"/>
                 <outlet property="theSendViewIPLable" destination="q3E-c5-D43" id="JrB-KS-hB3"/>
@@ -16,6 +15,7 @@
                 <outlet property="theSendViewRecvLable" destination="ZSl-Ig-e8q" id="pf0-ea-aZ6"/>
                 <outlet property="theSendViewSendLable" destination="OTD-cJ-fwL" id="B3L-qw-iYA"/>
                 <outlet property="theServerView" destination="Dt4-76-poJ" id="fTU-tr-vE5"/>
+                <outlet property="theServerViewIPLable" destination="KYs-Kf-2bd" id="rMK-W0-vhG"/>
                 <outlet property="theServerViewRecvLable" destination="ezF-lA-c8c" id="J5z-Dr-vcW"/>
                 <outlet property="theStartBtn" destination="PmW-Dm-Fuk" id="FsX-xP-lbE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -58,7 +58,7 @@
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="192.168.0.1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="q3E-c5-D43">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0.0.0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="q3E-c5-D43">
                                     <rect key="frame" x="149" y="20" width="126" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -147,7 +147,7 @@
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="demo.anychat.cn" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KYs-Kf-2bd">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0.0.0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KYs-Kf-2bd">
                                     <rect key="frame" x="149" y="38" width="151" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -176,26 +176,26 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="C0N-Uf-2Oh" userLabel="control">
-                    <rect key="frame" x="0.0" y="327" width="320" height="153"/>
+                    <rect key="frame" x="0.0" y="331" width="320" height="137"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="ITx-IR-TQI" userLabel="controlView">
-                            <rect key="frame" x="5" y="10" width="310" height="137"/>
+                            <rect key="frame" x="5" y="10" width="310" height="117"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" id="xpe-wu-G5j" userLabel="说明">
-                                    <rect key="frame" x="8" y="76" width="183" height="47"/>
+                                    <rect key="frame" x="9" y="73" width="289" height="34"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="                输入速率后点击“开始测试”即可获取UDP网络通畅情况（注意:在发送方和接收方同时登录后方可开始测试）" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="M9l-7V-ono">
-                                            <rect key="frame" x="0.0" y="0.0" width="175" height="47"/>
+                                            <rect key="frame" x="0.0" y="-6" width="289" height="47"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="操作说明" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vzS-gW-WbE">
-                                            <rect key="frame" x="0.0" y="5" width="44" height="14"/>
+                                            <rect key="frame" x="3" y="5" width="44" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                             <color key="textColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -225,7 +225,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="PmW-Dm-Fuk">
-                                    <rect key="frame" x="202" y="21" width="100" height="36"/>
+                                    <rect key="frame" x="199" y="26" width="96" height="31"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                     <state key="normal" title="开始测试">
@@ -233,17 +233,6 @@
                                     </state>
                                     <connections>
                                         <action selector="theStartBtn_Click:" destination="-1" eventType="touchUpInside" id="uZS-ug-WFk"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zfX-SY-v9b">
-                                    <rect key="frame" x="202" y="84" width="100" height="36"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                    <state key="normal" title="停止测试">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="theEndBtn_Click:" destination="-1" eventType="touchUpInside" id="juv-dL-KUQ"/>
                                     </connections>
                                 </button>
                             </subviews>

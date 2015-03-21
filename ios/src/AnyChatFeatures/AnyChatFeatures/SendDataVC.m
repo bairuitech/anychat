@@ -20,16 +20,19 @@
 @synthesize theSendViewRecvLable;
 @synthesize theSendViewLossLable;
 @synthesize theServerViewRecvLable;
+
 @synthesize theSendViewIPLable;
+@synthesize theServerViewIPLable;
 
 @synthesize theSendBitLable;
 
 @synthesize theStartBtn;
-@synthesize theEndBtn;
 
 @synthesize theSendData;
 @synthesize theRecvData;
 @synthesize theServerGetData;
+
+@synthesize theStartBtnOnClickState;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -54,8 +57,10 @@
 {
     [super viewWillAppear:YES];
     
-    onClickTimes = 0;
+    theStartBtnOnClickState = NO;
+    
     self.theSendViewIPLable.text = [AnyChatPlatform QueryUserStateString:-1 :BRAC_USERSTATE_INTERNETIP];
+    self.theServerViewIPLable.text = [AnyChatVC sharedAnyChatVC].theServerIP.text;
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -81,27 +86,23 @@
 - (IBAction)LeaveRoomBtn_OnClick
 {
     [AnyChatPlatform LeaveRoom:-1];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (IBAction)theStartBtn_Click:(id)sender
 {
-    if (onClickTimes < 1)
+    if (theStartBtnOnClickState == NO)
     {
-        onClickTimes = 2;
+        [self.theStartBtn setTitle:@"停止测试" forState:UIControlStateNormal];
+        self.theStartBtn.backgroundColor = [UIColor colorWithWhite:0.902 alpha:1.000];
+        [self TheTimersActionStart];
     }
     else
     {
+        [self.theStartBtn setTitle:@"开始测试" forState:UIControlStateNormal];
+        self.theStartBtn.backgroundColor = [UIColor colorWithRed:0.800 green:0.941 blue:0.600 alpha:1.000];
         [self TheTimersActionStop];
-        onClickTimes = 0;
     }
-    
-    [self TheTimersActionStart];
-}
-
-- (IBAction)theEndBtn_Click:(id)sender
-{
-    [self TheTimersActionStop];
 }
 
 
@@ -109,6 +110,7 @@
 
 - (void)TheTimersActionStart
 {
+    theStartBtnOnClickState = YES;
     //set
     [AnyChatPlatform SetSDKOptionInt:161 :1000];
     [AnyChatPlatform SetSDKOptionInt:162 :([self.theSendBitLable.text intValue])*1000];
@@ -123,24 +125,21 @@
                                                     userInfo:nil
                                                      repeats:YES];
         [theNSTimer fire];
-//        NSLog(@"\n\n 开始theTimers:%@ \n\n",theNSTimer);
     }
-    
+
 }
 
 - (void)TheTimersActionStop
 {
+    theStartBtnOnClickState = NO;
     //stop
     [AnyChatPlatform SetSDKOptionInt:163 :0];
     
     //close NSTimer
     if (theNSTimer)
     {
-        //如果定时器在运行
         if ([theNSTimer isValid])
         {
-//            NSLog(@"\n\n 取消定时器theTimers:%@ \n\n",theNSTimer);
-
             [theNSTimer invalidate];
             theNSTimer = nil;
         }
@@ -150,7 +149,7 @@
     self.theSendViewRecvLable.text = @"0";
     self.theSendViewLossLable.text = @"0.00%";
     self.theServerViewRecvLable.text = @"0";
-    
+
 }
 
 - (void)ReflashDataDisplay:(NSTimer *)timer
@@ -169,7 +168,11 @@
 - (NSString *)UploadFrameLossRate:(int)send :(int)serverGet
 {
     float theLossRate = ((send-serverGet)/(float)send)*100;
-//    NSLog(@"\n\n send :%i \n server:%i \n 上行丢包率： %f \n\n",send,serverGet,theLossRate);
+    if (theLossRate<0.0f)
+    {
+        theLossRate = 0.00;
+    }
+//    NSLog(@"\n\n send :%i \n server:%i \n UploadFrameLossRate： %f \n\n",send,serverGet,theLossRate);
     
     return [[self newFloat:theLossRate withNumber:2] stringByAppendingString:@"%"];
 }
@@ -190,6 +193,14 @@
 }
 
 
+#pragma mark - Rotation
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+
 #pragma mark - UI
 
 - (void)setUI
@@ -197,6 +208,11 @@
     if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0)
     {
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    }
+    else
+    {
+        self.theStartBtn.backgroundColor = [UIColor colorWithRed:0.567 green:0.918 blue:0.535 alpha:1.000]
+        ;
     }
     [self prefersStatusBarHidden];
     
