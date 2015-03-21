@@ -107,6 +107,10 @@
 		FEBC7CD81A2FF58A00F81D3B /* DetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEBC7CD61A2FF58A00F81D3B /* DetailVC.xib */; };
 		FEC56CBD19D7B0320008EA42 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEC56CBC19D7B0320008EA42 /* Icon@2x.png */; };
 		FECF536D19EF721A00338859 /* bg_video-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FECF536C19EF721A00338859 /* bg_video-568h@2x.png */; };
+		FED686BD1AB97B0400F8E211 /* SendDataVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED686BA1AB97B0400F8E211 /* SendDataVC.xib */; };
+		FED686BE1AB97B0400F8E211 /* SendDataVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FED686BB1AB97B0400F8E211 /* SendDataVC.m */; };
+		FED686C21AB97BA700F8E211 /* ReceiveDataVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FED686C01AB97BA700F8E211 /* ReceiveDataVC.m */; };
+		FED686C31AB97BA700F8E211 /* ReceiveDataVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED686C11AB97BA700F8E211 /* ReceiveDataVC.xib */; };
 		FEDD96CD1A7724C80093CAF9 /* Icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = FEDD96CC1A7724C80093CAF9 /* Icon_back.png */; };
 		FEDD96CF1A7736040093CAF9 /* VideoSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEDD96CE1A7736040093CAF9 /* VideoSettings.plist */; };
 		FEDEE67F1A15A698006FB454 /* bg_login.png in Resources */ = {isa = PBXBuildFile; fileRef = FEDEE67E1A15A698006FB454 /* bg_login.png */; };
@@ -119,6 +123,11 @@
 		FEDEE68D1A15EA74006FB454 /* Icon_onRecordVideo_Server.png in Resources */ = {isa = PBXBuildFile; fileRef = FEDEE6891A15EA74006FB454 /* Icon_onRecordVideo_Server.png */; };
 		FEDEE6901A15F124006FB454 /* Icon_takePhoto_Local.png in Resources */ = {isa = PBXBuildFile; fileRef = FEDEE68E1A15F124006FB454 /* Icon_takePhoto_Local.png */; };
 		FEDEE6911A15F124006FB454 /* Icon_takePhoto_Server.png in Resources */ = {isa = PBXBuildFile; fileRef = FEDEE68F1A15F124006FB454 /* Icon_takePhoto_Server.png */; };
+		FEDF93221ABA7D4400C1DFC0 /* UDP_server3.png in Resources */ = {isa = PBXBuildFile; fileRef = FEDF931D1ABA7D4400C1DFC0 /* UDP_server3.png */; };
+		FEDF93231ABA7D4400C1DFC0 /* UDP_server2.png in Resources */ = {isa = PBXBuildFile; fileRef = FEDF931E1ABA7D4400C1DFC0 /* UDP_server2.png */; };
+		FEDF93241ABA7D4400C1DFC0 /* UDP_server1.png in Resources */ = {isa = PBXBuildFile; fileRef = FEDF931F1ABA7D4400C1DFC0 /* UDP_server1.png */; };
+		FEDF93251ABA7D4400C1DFC0 /* UDP_send.png in Resources */ = {isa = PBXBuildFile; fileRef = FEDF93201ABA7D4400C1DFC0 /* UDP_send.png */; };
+		FEDF93261ABA7D4400C1DFC0 /* UDP_receive.png in Resources */ = {isa = PBXBuildFile; fileRef = FEDF93211ABA7D4400C1DFC0 /* UDP_receive.png */; };
 		FEE6C84419F628A300477365 /* Icon_switchCamera_w.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE6C83C19F628A300477365 /* Icon_switchCamera_w.png */; };
 		FEE6C84519F628A300477365 /* Icon_switchCamera_b.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE6C83D19F628A300477365 /* Icon_switchCamera_b.png */; };
 		FEE6C84619F628A300477365 /* Icon_speak_on.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE6C83E19F628A300477365 /* Icon_speak_on.png */; };
@@ -259,6 +268,12 @@
 		FEBC7CD61A2FF58A00F81D3B /* DetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailVC.xib; sourceTree = "<group>"; };
 		FEC56CBC19D7B0320008EA42 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		FECF536C19EF721A00338859 /* bg_video-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_video-568h@2x.png"; sourceTree = "<group>"; };
+		FED686BA1AB97B0400F8E211 /* SendDataVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendDataVC.xib; sourceTree = "<group>"; };
+		FED686BB1AB97B0400F8E211 /* SendDataVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendDataVC.m; sourceTree = "<group>"; };
+		FED686BC1AB97B0400F8E211 /* SendDataVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendDataVC.h; sourceTree = "<group>"; };
+		FED686BF1AB97BA700F8E211 /* ReceiveDataVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiveDataVC.h; sourceTree = "<group>"; };
+		FED686C01AB97BA700F8E211 /* ReceiveDataVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiveDataVC.m; sourceTree = "<group>"; };
+		FED686C11AB97BA700F8E211 /* ReceiveDataVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiveDataVC.xib; sourceTree = "<group>"; };
 		FEDD96CC1A7724C80093CAF9 /* Icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_back.png; sourceTree = "<group>"; };
 		FEDD96CE1A7736040093CAF9 /* VideoSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = VideoSettings.plist; sourceTree = "<group>"; };
 		FEDEE67E1A15A698006FB454 /* bg_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_login.png; sourceTree = "<group>"; };
@@ -271,6 +286,11 @@
 		FEDEE6891A15EA74006FB454 /* Icon_onRecordVideo_Server.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_onRecordVideo_Server.png; path = AnyChatFeatures/Resources/video_footer/Icon_onRecordVideo_Server.png; sourceTree = SOURCE_ROOT; };
 		FEDEE68E1A15F124006FB454 /* Icon_takePhoto_Local.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_takePhoto_Local.png; path = AnyChatFeatures/Resources/video_footer/Icon_takePhoto_Local.png; sourceTree = SOURCE_ROOT; };
 		FEDEE68F1A15F124006FB454 /* Icon_takePhoto_Server.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_takePhoto_Server.png; path = AnyChatFeatures/Resources/video_footer/Icon_takePhoto_Server.png; sourceTree = SOURCE_ROOT; };
+		FEDF931D1ABA7D4400C1DFC0 /* UDP_server3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UDP_server3.png; path = UDP/UDP_server3.png; sourceTree = "<group>"; };
+		FEDF931E1ABA7D4400C1DFC0 /* UDP_server2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UDP_server2.png; path = UDP/UDP_server2.png; sourceTree = "<group>"; };
+		FEDF931F1ABA7D4400C1DFC0 /* UDP_server1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UDP_server1.png; path = UDP/UDP_server1.png; sourceTree = "<group>"; };
+		FEDF93201ABA7D4400C1DFC0 /* UDP_send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UDP_send.png; path = UDP/UDP_send.png; sourceTree = "<group>"; };
+		FEDF93211ABA7D4400C1DFC0 /* UDP_receive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UDP_receive.png; path = UDP/UDP_receive.png; sourceTree = "<group>"; };
 		FEE6C83C19F628A300477365 /* Icon_switchCamera_w.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_switchCamera_w.png; path = AnyChatFeatures/Resources/video_footer/Icon_switchCamera_w.png; sourceTree = SOURCE_ROOT; };
 		FEE6C83D19F628A300477365 /* Icon_switchCamera_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_switchCamera_b.png; path = AnyChatFeatures/Resources/video_footer/Icon_switchCamera_b.png; sourceTree = SOURCE_ROOT; };
 		FEE6C83E19F628A300477365 /* Icon_speak_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_speak_on.png; path = AnyChatFeatures/Resources/video_footer/Icon_speak_on.png; sourceTree = SOURCE_ROOT; };
@@ -536,6 +556,7 @@
 				FEBBA26019C2CC0B009EE02C /* AppDelegate.m */,
 				FE8CF22219FA1FC1005E2F71 /* Login */,
 				FE8CF22419FA206D005E2F71 /* FeaturesList */,
+				FED686B91AB979EF00F8E211 /* UDPTrace */,
 				FEF0B78719FA522000FB9EEA /* UesrList */,
 				FE0D8AFF19FF8F1100D5FD3E /* TextMsg_TransBuffer */,
 				FEA910701A01D7FB00798D1D /* TransFile */,
@@ -644,6 +665,7 @@
 		FECF538119EFBB3A00338859 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FEDF93121ABA7BA400C1DFC0 /* UDP */,
 				FEDD96CC1A7724C80093CAF9 /* Icon_back.png */,
 				FE9EC5E61A26D14400FE2E5D /* Icon_playList2_140.png */,
 				FEDEE6801A15AE57006FB454 /* bg_loginTitle.png */,
@@ -670,6 +692,31 @@
 			);
 			name = images;
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		FED686B91AB979EF00F8E211 /* UDPTrace */ = {
+			isa = PBXGroup;
+			children = (
+				FED686BC1AB97B0400F8E211 /* SendDataVC.h */,
+				FED686BB1AB97B0400F8E211 /* SendDataVC.m */,
+				FED686BA1AB97B0400F8E211 /* SendDataVC.xib */,
+				FED686BF1AB97BA700F8E211 /* ReceiveDataVC.h */,
+				FED686C01AB97BA700F8E211 /* ReceiveDataVC.m */,
+				FED686C11AB97BA700F8E211 /* ReceiveDataVC.xib */,
+			);
+			name = UDPTrace;
+			sourceTree = "<group>";
+		};
+		FEDF93121ABA7BA400C1DFC0 /* UDP */ = {
+			isa = PBXGroup;
+			children = (
+				FEDF931D1ABA7D4400C1DFC0 /* UDP_server3.png */,
+				FEDF931E1ABA7D4400C1DFC0 /* UDP_server2.png */,
+				FEDF931F1ABA7D4400C1DFC0 /* UDP_server1.png */,
+				FEDF93201ABA7D4400C1DFC0 /* UDP_send.png */,
+				FEDF93211ABA7D4400C1DFC0 /* UDP_receive.png */,
+			);
+			name = UDP;
 			sourceTree = "<group>";
 		};
 		FEF0B78719FA522000FB9EEA /* UesrList */ = {
@@ -776,6 +823,7 @@
 				FEAD38341A1353010036F8B6 /* Icon_featuresBtn_1.png in Resources */,
 				FE5574501A25635C00342F39 /* ShowVC.xib in Resources */,
 				FEBBA25B19C2CC0B009EE02C /* InfoPlist.strings in Resources */,
+				FED686C31AB97BA700F8E211 /* ReceiveDataVC.xib in Resources */,
 				FECF536D19EF721A00338859 /* bg_video-568h@2x.png in Resources */,
 				FE439E131A5A3EA000629E8E /* Icon_featuresBtn_5_2.png in Resources */,
 				FEA9264719E4EE7400FC42AC /* Icon_port.png in Resources */,
@@ -787,7 +835,10 @@
 				FEA910811A0231E300798D1D /* theTransFileCell.xib in Resources */,
 				FE9361D61A0C626000A1A597 /* Icon_offRecordVideo.png in Resources */,
 				FE9361D51A0C626000A1A597 /* Icon_onRecordVideo.png in Resources */,
+				FEDF93251ABA7D4400C1DFC0 /* UDP_send.png in Resources */,
 				FEA9264619E4EE7400FC42AC /* Icon_ip.png in Resources */,
+				FED686BD1AB97B0400F8E211 /* SendDataVC.xib in Resources */,
+				FEDF93231ABA7D4400C1DFC0 /* UDP_server2.png in Resources */,
 				FEE6C84619F628A300477365 /* Icon_speak_on.png in Resources */,
 				FEE6C84719F628A300477365 /* Icon_speak_off.png in Resources */,
 				FEE6C85119F630A300477365 /* AnyChatVC.xib in Resources */,
@@ -799,6 +850,7 @@
 				FE9DD19119DA916C008889EC /* cell_01.png in Resources */,
 				FE9DD0A119DA4F92008889EC /* 5.png in Resources */,
 				FE20E49719D960C200189A8A /* btn_logout_01.png in Resources */,
+				FEDF93241ABA7D4400C1DFC0 /* UDP_server1.png in Resources */,
 				FEC56CBD19D7B0320008EA42 /* Icon@2x.png in Resources */,
 				FE9DD0A019DA4F92008889EC /* 4.png in Resources */,
 				FE3EAB6119E5233A00030ECA /* Default@2x.png in Resources */,
@@ -806,8 +858,10 @@
 				FE9E5D291A1B2FC500F48575 /* sound_takePhoto.wav in Resources */,
 				FEDEE68D1A15EA74006FB454 /* Icon_onRecordVideo_Server.png in Resources */,
 				FEE6C84819F628A300477365 /* Icon_EndCall.png in Resources */,
+				FEDF93221ABA7D4400C1DFC0 /* UDP_server3.png in Resources */,
 				FE04EB5019F643B9006A5E5F /* FeaturesListVC.xib in Resources */,
 				FE9DD09F19DA4F92008889EC /* 3.png in Resources */,
+				FEDF93261ABA7D4400C1DFC0 /* UDP_receive.png in Resources */,
 				FEDEE67F1A15A698006FB454 /* bg_login.png in Resources */,
 				FE9DD09E19DA4F92008889EC /* 2.png in Resources */,
 				FEE6C84B19F628A300477365 /* bg_video_footer.png in Resources */,
@@ -832,11 +886,13 @@
 				FEA9107F1A0231E300798D1D /* TransFileVC.m in Sources */,
 				FEF0B78519FA521A00FB9EEA /* UserListVC.m in Sources */,
 				FEBC7CD71A2FF58A00F81D3B /* DetailVC.m in Sources */,
+				FED686BE1AB97B0400F8E211 /* SendDataVC.m in Sources */,
 				FE5574511A25635C00342F39 /* ShowVC.m in Sources */,
 				FE9EC5F31A26EF3000FE2E5D /* MBProgressHUD.m in Sources */,
 				FEEFD3341A721BB60099EAC9 /* RecordSelfVC.m in Sources */,
 				FEEFD3461A72506F0099EAC9 /* AutodyneVC.m in Sources */,
 				FEBC7CCE1A2FF51000F81D3B /* SettingVC.m in Sources */,
+				FED686C21AB97BA700F8E211 /* ReceiveDataVC.m in Sources */,
 				FEBBA2BA19C2CF67009EE02C /* AnyChatVC.m in Sources */,
 				FE9B1CB01A315A12006638F6 /* RecordLocalVC.m in Sources */,
 				FE04EB4D19F642B3006A5E5F /* FeaturesListVC.m in Sources */,
@@ -890,7 +946,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -925,7 +981,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -947,7 +1003,6 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "AnyChatFeatures/AnyChatFeatures-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_NO_PIE = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -977,7 +1032,6 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "AnyChatFeatures/AnyChatFeatures-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_NO_PIE = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

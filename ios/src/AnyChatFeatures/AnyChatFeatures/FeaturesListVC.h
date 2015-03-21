@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "UserListVC.h"
+#import "SendDataVC.h"
+#import "ReceiveDataVC.h"
 #import "AnyChatVC.h"
 #import "SettingVC.h"
 
-@interface FeaturesListVC : UIViewController<UIAlertViewDelegate>
+@interface FeaturesListVC : UIViewController<UIAlertViewDelegate,UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *theReturnBtn;
 @property (weak, nonatomic) IBOutlet UIButton *videoFUNBtn;
@@ -23,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *snapShotFUNBtn;
 @property (weak, nonatomic) IBOutlet UIButton *callCenterFUNBtn;
 @property (weak, nonatomic) IBOutlet UIButton *videoSettingFUNBtn;
+@property (weak, nonatomic) IBOutlet UIButton *theUDPTraceFUNBtn;
 @property (weak, nonatomic) IBOutlet UILabel  *theAnyChatVersionLab;
 @property (weak, nonatomic) IBOutlet UILabel  *theMyUserIDLab;
 
@@ -47,5 +50,7 @@ kGCD_SINGLETON_FOR_HEADER(FeaturesListVC);
 - (IBAction)ReturnLoginVCBtnClick:(id)sender;
 
 - (IBAction)videoSettingFUNBtnClick:(id)sender;
+
+- (IBAction)UDPTraceBtnClicked:(id)sender;
 
 @end
