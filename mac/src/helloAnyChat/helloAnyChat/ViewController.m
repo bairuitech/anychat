@@ -16,6 +16,8 @@
     // Do any additional setup after loading the view.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
     
+    
+    
     [AnyChatPlatform InitSDK:0];
     
     anychat = [[AnyChatPlatform alloc] init];
@@ -24,6 +26,8 @@
     [AnyChatPlatform Connect:@"demo.anychat.cn" :8906];
     [AnyChatPlatform Login:@"iMac" :@""];
     [AnyChatPlatform EnterRoom:1 :@""];
+    
+    
 }
 
 - (void)setRepresentedObject:(id)representedObject {
