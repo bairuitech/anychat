@@ -175,7 +175,7 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		onPause();
 		onDestroy();
 	}
-	
+	//聊天接受
 	@Override
 	public void OnAnyChatTextMessage(int dwFromUserid, int dwToUserid,
 			boolean bSecret, String message) {

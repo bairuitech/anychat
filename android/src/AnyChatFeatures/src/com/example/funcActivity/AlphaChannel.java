@@ -32,10 +32,10 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		AnyChatTransDataEvent {
 
 	private int mUserID;
-	private TextView mBtnTrans;
+	private TextView mBtnTrans;			// 传送按钮
 	private EditText mETInputMessag;	// 输入指令的view
 	private ImageButton mImgBtnReturn;	// 返回
-	private TextView mTitleName;
+	private TextView mTitleName;		// 标题名字
 	private MessageListView mMessageListView;//已发送的指令列表
 	private LinearLayout mFullLayout;
 	private LinearLayout mMainLayout;
@@ -132,6 +132,7 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		}
 	};
 
+	// 传送
 	private void transMessage() {
 		String strTransMsg = mETInputMessag.getText().toString().trim();
 		if (ValueUtils.isStrEmpty(strTransMsg))
@@ -143,6 +144,7 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+		// 传送接口
 		anyChatSDK.TransBuffer(mUserID, strByteMsg, 1000);
 		mMessageList.add("我: " + strTransMsg);
 		mMessageListView.SetFileList(mMessageList);
@@ -223,6 +225,7 @@ public class AlphaChannel extends Activity implements AnyChatBaseEvent,
 		Log.d("helloanychat", "OnAnyChatTransFile");
 	}
 
+	// 传送接受接口
 	@Override
 	public void OnAnyChatTransBuffer(int dwUserid, byte[] lpBuf, int dwLen) {
 		Log.d("helloanychat", "OnAnyChatTransBuffer");

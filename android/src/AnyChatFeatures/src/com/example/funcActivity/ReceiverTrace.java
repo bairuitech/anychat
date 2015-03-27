@@ -25,9 +25,9 @@ import android.widget.TextView;
 
 public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 	private final int MSG_UPDATETRACE = 1;
-	private int msClientSenderPacket;
-	private int msReceiverGetPacket;
-	private int msServerReceiverPacket;
+	private int msClientSenderPacket;			// 客户端发送的数据包
+	private int msReceiverGetPacket;			// 接受者受到的数据包
+	private int msServerReceiverPacket;			// 服务器接受到的数据包
 	
 	private TextView mRSenderIPAddress;
 	private TextView mRSenderPacket;
@@ -35,7 +35,7 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 	private TextView mRServerIPAddress;
 	private TextView mRServerReceiverPacket;
 	private ImageView mRServerIcon;
-	private int [] mRServerIconID = {R.drawable.server1, R.drawable.server2, R.drawable.server3};
+	private int [] mRServerIconID = {R.drawable.server1, R.drawable.server2, R.drawable.server3};// 服务器动画三图片
 	private int mServerIconIndex = 1;
 	
 	private TextView mRReceiverIPAddress;
@@ -45,6 +45,7 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 	private ImageButton mImgBtnReturn;		  // 返回
 	private TextView mTitleName;			  // 标题
 	
+	// 数据传送箭头动画图标
 	private ImageView []mRSendDown = new ImageView[3];
 	private ImageView []mRSendUp = new ImageView[3];
 	private ImageView []mReceiverDown = new ImageView[3];
@@ -128,6 +129,7 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 		}
 	};
 	
+	// 1秒刷新一下界面数据和动画
 	private void updateTime(){
 		mHandler = new Handler(){
 			@Override

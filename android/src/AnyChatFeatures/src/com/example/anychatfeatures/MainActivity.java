@@ -35,34 +35,32 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private String mStrName = "name";
 	private int mSPort = 8906;
 
-	private final int SHOWLOGINSTATEFLAG = 1; // 显示的按钮是登陆状态的标识
-	private final int SHOWWAITINGSTATEFLAG = 2; // 显示的按钮是等待状态的标识
-	private final int LOCALVIDEOAUTOROTATION = 1; // 本地视频自动旋转控制
-	private final int ACTIVITY_ID_MAINUI = 1;
+	private final int SHOWLOGINSTATEFLAG = 1; 		// 显示的按钮是登陆状态的标识
+	private final int SHOWWAITINGSTATEFLAG = 2; 	// 显示的按钮是等待状态的标识
+	private final int LOCALVIDEOAUTOROTATION = 1; 	// 本地视频自动旋转控制
+	private final int ACTIVITY_ID_MAINUI = 1; 	    // MainActivity的id标致，onActivityResult返回
 	
-	private EditText mEditIP;
-	private EditText mEditPort;
-	private EditText mEditName;
-	private TextView mBottomConnMsg;
-	private TextView mBottomBuildMsg;
-	private Button mBtnStart;
-	private Button mBtnLogout;
+	private EditText mEditIP;						// ip
+	private EditText mEditPort;						// 端口
+	private EditText mEditName;						// 用户名
+	private TextView mBottomConnMsg;				// 连接服务器状态
+	private TextView mBottomBuildMsg;				// 版本编译信息
+	private Button mBtnStart;						// 开始登录
 	private Button mBtnWaiting;
-	private LinearLayout mWaitingLayout;
-	private LinearLayout mProgressLayout;
+	private LinearLayout mWaitingLayout;			// 登录加载层
+	private LinearLayout mProgressLayout;			// 加载动画层
 	private CustomApplication mCustomApplication;
-	private Toast mToast;
+	private Toast mToast;						
 
 	public AnyChatCoreSDK anyChatSDK;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setDisPlayMetrics();
-
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 
+		setDisPlayMetrics();
 		mCustomApplication = (CustomApplication) getApplication();
 
 		InitSDK();
@@ -76,6 +74,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		registerBoradcastReceiver();
 	}
 
+	// 初始化SDK
 	private void InitSDK() {
 		if (anyChatSDK == null) {
 			anyChatSDK = AnyChatCoreSDK.getInstance(this);
@@ -88,6 +87,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		}
 	}
 
+	// 初始化布局层
 	private void InitLayout() {
 		mEditIP = (EditText) this.findViewById(R.id.mainUIEditIP);
 		mEditPort = (EditText) this.findViewById(R.id.mainUIEditPort);
@@ -96,7 +96,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mBottomBuildMsg = (TextView) this
 				.findViewById(R.id.mainUIbottomBuildMsg);
 		mBtnStart = (Button) this.findViewById(R.id.mainUIStartBtn);
-		mBtnLogout = (Button) this.findViewById(R.id.mainUILogoutBtn);
 		mBtnWaiting = (Button) this.findViewById(R.id.mainUIWaitingBtn);
 		mWaitingLayout = (LinearLayout) this.findViewById(R.id.waitingLayout);
 
@@ -107,7 +106,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				+ anyChatSDK.GetSDKBuildTime());
 		mBottomBuildMsg.setGravity(Gravity.CENTER_HORIZONTAL);
 		mBtnStart.setOnClickListener(OnClickListener);
-		mBtnLogout.setOnClickListener(OnClickListener);//现在无用
 	}
 
 	OnClickListener OnClickListener = new OnClickListener() {
@@ -127,19 +125,13 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 					anyChatSDK.Login(mStrName, "");
 				}
 				break;
-			//现在无用
-			case R.id.mainUILogoutBtn:
-				setBtnVisible(SHOWLOGINSTATEFLAG);
-				anyChatSDK.LeaveRoom(-1);
-				anyChatSDK.Logout();
-				mBottomConnMsg.setText("No connnect to the server");
-				break;
 			default:
 				break;
 			}
 		}
 	};
 
+	// 设置默认数据
 	private void initLoginConfig() {
 		mEditIP.setText(mStrIP);
 		mEditName.setText(mStrName);
@@ -188,13 +180,11 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private void setBtnVisible(int index) {
 		if (index == SHOWLOGINSTATEFLAG) {
 			mBtnStart.setVisibility(View.VISIBLE);
-			mBtnLogout.setVisibility(View.GONE);
 			mBtnWaiting.setVisibility(View.GONE);
 
 			mProgressLayout.setVisibility(View.GONE);
 		} else if (index == SHOWWAITINGSTATEFLAG) {
 			mBtnStart.setVisibility(View.GONE);
-			mBtnLogout.setVisibility(View.GONE);
 			mBtnWaiting.setVisibility(View.VISIBLE);
 
 			mProgressLayout.setVisibility(View.VISIBLE);
@@ -247,6 +237,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		anyChatSDK.LeaveRoom(-1);
 		anyChatSDK.Logout();
 		anyChatSDK.Release();
+		unregisterReceiver(mBroadcastReceiver);
 	}
 
 	protected void onResume() {
@@ -271,6 +262,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	@Override
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
+		// 连接成功
 		if (dwErrorCode == 0) {
 			saveLoginData();
 			hideKeyboard();
@@ -301,6 +293,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	}
 
+	// 网络端口
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		setBtnVisible(SHOWLOGINSTATEFLAG);
