@@ -94,8 +94,11 @@
 
 - (void) OnLocalVideoInit:(id)session
 {
+    self.theLocalView.wantsLayer =YES;
+    self.theLocalView.canDrawConcurrently = YES;
+    
     self.theLocalVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
-    self.theLocalVideoSurface.frame = CGRectMake(0, 0, 320, 240);
+    self.theLocalVideoSurface.frame = self.theLocalView.frame;
     self.theLocalVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
    [self.theLocalView.layer addSublayer:self.theLocalVideoSurface];
 }

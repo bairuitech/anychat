@@ -19,7 +19,7 @@
     AnyChatPlatform* anychat;
 
     IBOutlet NSImageView* theRemoteVideo;
-    IBOutlet NSImageView* theLocalView;
+    IBOutlet NSView* theLocalView;
     
     AVCaptureVideoPreviewLayer* theLocalVideoSurface;
 }

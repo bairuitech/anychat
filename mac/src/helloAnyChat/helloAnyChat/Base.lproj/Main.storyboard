@@ -685,9 +685,13 @@
                                 <rect key="frame" x="241" y="33" width="219" height="187"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="S42-H7-qkj"/>
                             </imageView>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qw4-US-Tu6">
+                                <rect key="frame" x="20" y="33" width="204" height="179"/>
+                            </customView>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="theLocalView" destination="qw4-US-Tu6" id="gaH-LY-DB5"/>
                         <outlet property="theRemoteVideo" destination="Ksy-BW-qoZ" id="iXT-vh-uWe"/>
                     </connections>
                 </viewController>
