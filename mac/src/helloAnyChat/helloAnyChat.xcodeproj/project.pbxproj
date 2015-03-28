@@ -10,8 +10,6 @@
 		46D8ECF01AC1098A0090910F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D8ECEF1AC1098A0090910F /* AppDelegate.m */; };
 		46D8ECF21AC1098A0090910F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D8ECF11AC1098A0090910F /* main.m */; };
 		46D8ECF51AC1098A0090910F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D8ECF41AC1098A0090910F /* ViewController.m */; };
-		46D8ECF71AC1098A0090910F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46D8ECF61AC1098A0090910F /* Images.xcassets */; };
-		46D8ECFA1AC1098A0090910F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46D8ECF81AC1098A0090910F /* Main.storyboard */; };
 		46D8ED061AC1098A0090910F /* helloAnyChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D8ED051AC1098A0090910F /* helloAnyChatTests.m */; };
 		46D8ED101AC10CE50090910F /* libanychatcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D8ED0F1AC10CE50090910F /* libanychatcore.a */; };
 		46D8ED121AC10CF50090910F /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D8ED111AC10CF50090910F /* libstdc++.dylib */; };
@@ -60,8 +58,6 @@
 		46D8ECF11AC1098A0090910F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		46D8ECF31AC1098A0090910F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		46D8ECF41AC1098A0090910F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		46D8ECF61AC1098A0090910F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		46D8ECF91AC1098A0090910F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		46D8ECFF1AC1098A0090910F /* helloAnyChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = helloAnyChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		46D8ED041AC1098A0090910F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46D8ED051AC1098A0090910F /* helloAnyChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = helloAnyChatTests.m; sourceTree = "<group>"; };
@@ -167,8 +163,6 @@
 				46D8ECEF1AC1098A0090910F /* AppDelegate.m */,
 				46D8ECF31AC1098A0090910F /* ViewController.h */,
 				46D8ECF41AC1098A0090910F /* ViewController.m */,
-				46D8ECF61AC1098A0090910F /* Images.xcassets */,
-				46D8ECF81AC1098A0090910F /* Main.storyboard */,
 				46D8ECEC1AC1098A0090910F /* Supporting Files */,
 			);
 			path = helloAnyChat;
@@ -316,8 +310,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46D8ECF71AC1098A0090910F /* Images.xcassets in Resources */,
-				46D8ECFA1AC1098A0090910F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,17 +351,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		46D8ECF81AC1098A0090910F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				46D8ECF91AC1098A0090910F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		46D8ED071AC1098A0090910F /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -405,7 +386,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -441,7 +422,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
