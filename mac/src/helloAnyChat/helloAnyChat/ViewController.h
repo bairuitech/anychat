@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <AVFoundation/AVFoundation.h>
 #import "../../../sdk/include/AnyChatPlatform.h"
 #import "../../../sdk/include/AnyChatDefine.h"
 #import "../../../sdk/include/AnyChatErrorCode.h"
@@ -17,9 +18,24 @@
 
     AnyChatPlatform* anychat;
 
+    IBOutlet NSImageView* theRemoteVideo;
+    IBOutlet NSView* theLocalView;
+    
+    AVCaptureVideoPreviewLayer* theLocalVideoSurface;
 }
 
+@property (nonatomic, strong) NSImageView* theRemoteVideo;
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer* theLocalVideoSurface;
+@property (nonatomic, strong) IBOutlet NSView* theLocalView;
+
+
+
+
 - (void)AnyChatNotifyHandler:(NSNotification*)notify;
+
+- (void) OnLocalVideoInit:(id)session;
+
+- (void) OnLocalVideoRelease:(id)sender;
 
 
 @end
