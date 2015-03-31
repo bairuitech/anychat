@@ -252,6 +252,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		anyChatSDK.LeaveRoom(-1);
 		anyChatSDK.Logout();
 		anyChatSDK.Release();
+		unregisterReceiver(mBroadcastReceiver);
 		super.onDestroy();
 	}
 
