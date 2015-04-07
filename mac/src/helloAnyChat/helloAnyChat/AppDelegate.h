@@ -1,15 +1,14 @@
 //
 //  AppDelegate.h
-//  helloAnyChat
+//  HelloAnyChat
 //
-//  Created by WangXL on 15/3/24.
-//  Copyright (c) 2015年 WangXL. All rights reserved.
+//  Created by Chen on 15-3-28.
+//  Copyright (c) 2015年 AlexChen. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
-
 
 @end
 
