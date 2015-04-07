@@ -206,11 +206,11 @@
     }
     if([self.pvUserNameTextField.stringValue length] == 0)
     {
-        self.pvUserNameTextField.stringValue = @"mAnyChat";
+        self.pvUserNameTextField.stringValue = @"AnyChat_iMac";
     }
     if([self.pvRoomNumTextField.stringValue length] == 0)
     {
-        self.pvRoomNumTextField.stringValue = @"10";
+        self.pvRoomNumTextField.stringValue = @"1";
     }
     
     [AnyChatPlatform Connect:self.pvServerIPTextField.stringValue :[self.pvServerPortTextField.stringValue intValue]];
