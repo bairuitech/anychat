@@ -154,6 +154,7 @@ public class SenderTrace extends Activity implements AnyChatBaseEvent{
 		}
 	};
 	
+	// 1秒刷新一下界面数据和动画
 	private void updateTime(){
 		mHandler = new Handler(){
 			@Override

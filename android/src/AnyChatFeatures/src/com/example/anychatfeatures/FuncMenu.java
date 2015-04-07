@@ -36,26 +36,26 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class FuncMenu extends Activity implements AnyChatBaseEvent {
-	public static final int FUNC_VOICEVIDEO = 1;
-	public static final int FUNC_TEXTCHAT = 2;
-	public static final int FUNC_ALPHACHANNEL = 3;
-	public static final int FUNC_FILETRANSFER = 4;
-	public static final int FUNC_LOCALVIDEO = 5;
-	public static final int FUNC_SERVERVIDEO = 6;
-	public static final int FUNC_PHOTOGRAPH = 7;
-	public static final int FUNC_VIDEOCALL = 8;
-	public static final int FUNC_UDPTRACE = 9;
-	public static final int FUNC_CONFIG = 10;
+	public static final int FUNC_VOICEVIDEO = 1;		// 音视频交互
+	public static final int FUNC_TEXTCHAT = 2;			// 文字聊天
+	public static final int FUNC_ALPHACHANNEL = 3;		// 透明通道
+	public static final int FUNC_FILETRANSFER = 4;		// 文件传输
+	public static final int FUNC_LOCALVIDEO = 5;		// 本地录像
+	public static final int FUNC_SERVERVIDEO = 6;		// 服务器录像
+	public static final int FUNC_PHOTOGRAPH = 7;		// 视频抓拍
+	public static final int FUNC_VIDEOCALL = 8;			// 呼叫中心
+	public static final int FUNC_UDPTRACE = 9;			// 网络检测
+	public static final int FUNC_CONFIG = 10;  			// 设置
 
 	// 视频配置界面标识
 	public static final int ACTIVITY_ID_VIDEOCONFIG = 1;
 	
-	private ImageButton mImgBtnReturn;	// 返回
-	private TextView mTitleName;
+	private ImageButton mImgBtnReturn;	// 标题返回
+	private TextView mTitleName;		// 标题名字
 	private GridView mMenuGridView;
 	private CustomApplication mCustomApplication;
 	private ArrayList<HashMap<String, Object>> mArrItem;// 存储功能菜单图标和描述
-	private TraceSelectDialog mTraceSelectDialog;
+	private TraceSelectDialog mTraceSelectDialog;		// 网络检测二次选择确认框
 	
 	AnyChatCoreSDK anyChatSDK;
 
@@ -83,6 +83,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
 
+		// 功能菜单名字数组
 		String[] arrFuncNames = { getString(R.string.voiceVideoInteraction),
 				getString(R.string.textChat), getString(R.string.alphaChannel),
 				getString(R.string.fileTransfer), getString(R.string.lovalVideoRecord),
@@ -90,6 +91,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 				getString(R.string.videoCall), getString(R.string.udpTrace),
 				getString(R.string.config)};
 
+		// 功能菜单图标
 		int[] arrFuncIcons = { R.drawable.voicevideo, R.drawable.textchat,
 				R.drawable.alphachannel, R.drawable.filetransfer,
 				R.drawable.localvideorecord, R.drawable.servervideorecord,
@@ -128,7 +130,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 				startActivityForResult(intent, ACTIVITY_ID_VIDEOCONFIG);
 				
 				return;
-			}else if (arg2 + 1 == FUNC_UDPTRACE) {
+			}else if (arg2 + 1 == FUNC_UDPTRACE) {//网络检测二次选择确认框
 				if (mTraceSelectDialog != null && mTraceSelectDialog.isShowing()) {	
 					return;
 				}
@@ -153,6 +155,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 			case R.id.returnImgBtn:
 				destroyCurActivity();
 				break;
+				// 网络检测选择二次框确定按钮
 			case R.id.udpTraceConfirm:
 				int curSelcetTraceIndex = mTraceSelectDialog.getCurSelectTraceRole();
 				Intent intent = new Intent();
@@ -167,6 +170,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 				mTraceSelectDialog.dismiss();
 				mTraceSelectDialog = null;
 				break;
+				// 网络检测选择二次框取消按钮
 			case R.id.udpTraceCancel:
 				mTraceSelectDialog.dismiss();
 				mTraceSelectDialog = null;
@@ -176,7 +180,8 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 			}			
 		}
 	};
-	// 音视频交互
+	
+	// 打开对应功能房间的用户列表
 	private void openRolesListActivity(int sEnterRoomID) {
 		Intent intent = new Intent(this, RolesListActivity.class);
 		intent.putExtra("roomID", sEnterRoomID);
@@ -275,6 +280,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 		}
 	};
 
+	// 注册广播
 	public void registerBoradcastReceiver() {
 		IntentFilter myIntentFilter = new IntentFilter();
 		myIntentFilter.addAction("NetworkDiscon");
@@ -345,6 +351,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 		
 	}
 
+	// 网络断开
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		// 销毁当前界面

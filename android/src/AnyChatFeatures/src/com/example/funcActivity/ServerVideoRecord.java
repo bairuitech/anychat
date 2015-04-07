@@ -46,8 +46,8 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 	private boolean bSelfVideoOpened = false; 	// 本地视频是否已打开
 	private boolean bOtherVideoOpened = false;  // 对方视频是否已打开
 	private int mVideogesprekSec = 0; 			// 音视频对话的时间
-	private int mdwFlags = 0;
-	private int mCurRecordUserID =-1;
+	private int mdwFlags = 0;					// 本地视频录制参数标致
+	private int mCurRecordUserID =-1;			// 当前录制角色的id
 	private int mServerRecordTimeSec = 0;	 	// 服务器录制的时间
 	private int mServerRecordState; 			// 1表示服务器录制打开着，0表示服务器录制关闭着
 	private Boolean mFirstGetVideoBitrate = false; //"第一次"获得视频码率的标致

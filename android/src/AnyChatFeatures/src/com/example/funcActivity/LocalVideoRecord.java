@@ -55,12 +55,12 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 	private boolean bSelfVideoOpened = false; 	// 本地视频是否已打开
 	private boolean bOtherVideoOpened = false;  // 对方视频是否已打开
 	private int mVideogesprekSec = 0; 			// 音视频对话的时间
-	private int mdwFlags = 0;
-	private int mCurRecordUserID=-1;
+	private int mdwFlags = 0;					// 本地视频录制参数标致
+	private int mCurRecordUserID=-1;			// 当前录制角色的id
 	private int mLocalRecordTimeSec = 0; 		// 本地录制的时间
 	private int mPreviewVideoSec = 0; 			// 视频录制预览声音时间
 	private int mLocalRecordState; 				// 1表示本地录制打开着，0表示本地录制关闭着
-	private String mPreviewVideoPathStr = "";
+	private String mPreviewVideoPathStr = "";   // 录制视频的保存路径
 	private ImageView mPreviewVideoIV; 			// 用于显示本地录制视频预览view
 	private ImageButton mIBLocalRecording; 		// 混合录制
 	private TextView mLocalRecordTimeTV; 		// 显示本地视频录制时间

@@ -331,6 +331,7 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 		anyChatSDK.SetTransDataEvent(this);
 	}
 
+	// 文件传输接受
 	@Override
 	public void OnAnyChatTransFile(int dwUserid, String FileName,
 			String TempFilePath, int dwFileLength, int wParam, int lParam,

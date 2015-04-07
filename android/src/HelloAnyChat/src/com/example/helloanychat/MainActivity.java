@@ -252,6 +252,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		anyChatSDK.LeaveRoom(-1);
 		anyChatSDK.Logout();
 		anyChatSDK.Release();
+		unregisterReceiver(mBroadcastReceiver);
 		super.onDestroy();
 	}
 
@@ -387,12 +388,12 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_BITRATECTRL,
 					configEntity.mVideoBitrate);
-			if (configEntity.mVideoBitrate == 0) {
+//			if (configEntity.mVideoBitrate == 0) {
 				// 设置本地视频编码的质量
 				AnyChatCoreSDK.SetSDKOptionInt(
 						AnyChatDefine.BRAC_SO_LOCALVIDEO_QUALITYCTRL,
 						configEntity.mVideoQuality);
-			}
+//			}
 			// 设置本地视频编码的帧率
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_FPSCTRL,
