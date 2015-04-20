@@ -14,7 +14,7 @@ body {
 	vertical-align: baseline;
 }
 
-#username,#ServerAddr,#ServerPort,#uploadKbps {
+#username,#ServerAddr,#ServerPort,#uploadKbps,#roomID {
 	padding-left: 5px;
 }
 
@@ -62,7 +62,7 @@ input {
 }
 
 #login_div_child {
-	margin: 24px 70px;
+	width:80%;
 }
 
 #login_title {
@@ -87,10 +87,10 @@ input {
 
 #loginRoom {
 	background-color: #7CAF00;
-	margin: 10px 85px;
-	padding: 10 60;
+	line-height: 35px;
+	width: 40%;
 	cursor: pointer;
-	border-radius: 15px;
+	border-radius: 5px;
 }
 
 #tip {

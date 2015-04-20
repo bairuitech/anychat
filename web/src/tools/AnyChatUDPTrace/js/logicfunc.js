@@ -13,6 +13,7 @@ var mDefaultServerAddr = "demo.anychat.cn";		// 默认服务器地址
 var mDefaultServerPort = 8906;					// 默认服务器端口号
 var mSelfUserId = -1; 							// 本地用户ID
 var mTargetUserId = -1;							// 目标用户ID（请求了对方的音视频）
+var roomID=5;
 var mUserName="AnyChat"
 var mRefreshPluginTimer = -1;					// 检查插件是否安装完成定时器
 var y=0,x=5,t=1,symbol=true,isSend=-1,timeSet,tipAlert=true;//动态控制标识
@@ -95,11 +96,6 @@ function LogicInit() {
 
 }
 
-//设置AnyChat参数，需要在收到登录成功回调之后调用
-function ConfigAnyChatParameter(){
-	
-}
-
 // 初始化界面元素
 function InitInterfaceUI() {
 	
@@ -130,13 +126,15 @@ function InitInterfaceUI() {
     		}else if(!GetID("sendRadio").checked&&!GetID("reciveRadio").checked){
     			alert("您需要先选择发送方或者接收方");
     			return
-    	}
+    		}
 		
     		if (GetID("username").value != "") {
 				DisplayLoadingDiv(true);
+				mDefaultServerAddr=GetID("ServerAddr").value;
+				mDefaultServerPort=parseInt(GetID("ServerPort").value);
 	    		var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); // 连接服务器
 	            errorcode = BRAC_Login(GetID("username").value, "", 0);
-	    		BRAC_EnterRoom(1205, "", 0);
+	    		BRAC_EnterRoom(GetID("roomID").value, "", 0);
 	    	}else{
 	    		alert("用户名不能为空！");
 	    		GetID("username").focus();
@@ -206,6 +204,7 @@ function ShowLoginDiv(bShow) {
 		GetID("username").focus();
 		GetID("ServerAddr").value = mDefaultServerAddr;
 		GetID("ServerPort").value = mDefaultServerPort;
+		GetID("roomID").value = roomID;
 		GetID("username").value= mUserName;
 	} else {
 		GetID("login_div").style.display="none";	// 隐藏登录界面
