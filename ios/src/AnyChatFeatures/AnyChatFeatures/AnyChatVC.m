@@ -10,6 +10,8 @@
 
 @interface AnyChatVC ()
 
+@property (strong)NSString *textField0;
+
 @end
 
 @implementation AnyChatVC
@@ -57,6 +59,9 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
     
+    //关闭 AnyChatSDK Log 打印
+    [AnyChatPlatform ActiveCallLog:NO];
+    
     [AnyChatPlatform InitSDK:0];
     
     anyChat = [[AnyChatPlatform alloc] init];
@@ -67,9 +72,9 @@
     anyChat.videoCallDelegate = self;
     
     //视频数据回调设置
-    anyChat.mediaDataDelegate = self;
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_VIDEOSHOW_CBPIXFMT :BRAC_PIX_FMT_RGB24];
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :0];
+//    anyChat.mediaDataDelegate = self;
+//    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_VIDEOSHOW_CBPIXFMT :BRAC_PIX_FMT_RGB32];
+//    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :0];
     
     self.theVideoRecordMArray = [[NSMutableArray alloc] initWithCapacity:5];
     self.theVideoRecordSelfMArray = [[NSMutableArray alloc] initWithCapacity:5];
@@ -132,12 +137,37 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 视频数据回调
 - (void) OnAnyChatVideoDataExCallBack:(int) dwUserid : (NSData*) lpBuf : (BITMAPINFOHEADER) bmiHeader : (int) dwTimeStamp
 {
-    NSLog(@"\n\n 视频数据回调 \n  dwUserid:%d  \n  wxh=%d x %d \n  size:%d \n dwTimeStamp:%i \n",dwUserid,bmiHeader.biWidth,bmiHeader.biHeight,(int)sizeof(bmiHeader),dwTimeStamp);
+    
+    /* Log var*/
+//    NSLog(@"\n\n 视频数据回调 \n  dwUserid:%d  \n  wxh=%d x %d \n  size:%d \n dwTimeStamp:%i \n",dwUserid,bmiHeader.biWidth,bmiHeader.biHeight,(int)sizeof(bmiHeader),dwTimeStamp);
+    
+    
+    // 通过(NSData*) lpBuf 返回的数据 绘制成 图片
+    /*Get information about the image*/
+    uint8_t *baseAddress = (uint8_t *)[lpBuf bytes];    // (NSData*) lpBuf 参数通过 [NSData bytes] 方法取地址
+    size_t bytesPerRow = bmiHeader.biWidth*4;   // RGB32 = pixel size = 4 CVPixelBufferGetBytesPerRow(imageBuffer);
+    
+    /*Create a CGImageRef from the CVImageBufferRef*/
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef newContext = CGBitmapContextCreate(baseAddress, bmiHeader.biWidth, bmiHeader.biHeight, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+    CGImageRef newImage = CGBitmapContextCreateImage(newContext);
+    
+    /*We release some components*/
+    CGContextRelease(newContext);
+    CGColorSpaceRelease(colorSpace);
+    
+    /*We display the result on the image view (We need to change the orientation of the image so that the video is displayed correctly).
+     Same thing as for the CALayer we are not in the main thread so ...UIImageOrientationRight */
+    UIImageOrientation imageOrientation = UIImageOrientationUp;
+    UIImage *image= [UIImage imageWithCGImage:newImage scale:1.0 orientation:imageOrientation];
+    
+    /*We relase the CGImageRef*/
+    CGImageRelease(newImage);
+
 }
+
 // 音频数据回调
-- (void) OnAnyChatAudioDataExCallBack:(int) dwUserid : (NSData*) lpBuf : (WAVEFORMATEX) waveFormatEx : (int) dwTimeStamp
-{
-    NSLog(@"\n\n 视频回调 \n  dwUserid:%d  \n  [lpBuf length]=%d \n  waveFormatEx.cbSize:%d  \n  dwTimeStamp:%i  \r\n ",dwUserid,(int)[lpBuf length],waveFormatEx.cbSize,dwTimeStamp);
+- (void) OnAnyChatAudioDataExCallBack:(int) dwUserid : (NSData*) lpBuf : (WAVEFORMATEX) waveFormatEx : (int) dwTimeStamp{
 }
 
 
@@ -652,6 +682,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     }
     
     [self hideKeyBoard];
+    
 }
 
 - (void) OnLogout
@@ -818,6 +849,9 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     [self prefersStatusBarHidden];
     
 }
+
+
+
 
 
 @end

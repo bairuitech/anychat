@@ -28,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *theUDPTraceFUNBtn;
 @property (weak, nonatomic) IBOutlet UILabel  *theAnyChatVersionLab;
 @property (weak, nonatomic) IBOutlet UILabel  *theMyUserIDLab;
+@property (strong, nonatomic) UIAlertView     *theUDPTraceAlertView;
+@property (strong, nonatomic) UITextField     *theUDPTraceTextField;
 
 kGCD_SINGLETON_FOR_HEADER(FeaturesListVC);
 

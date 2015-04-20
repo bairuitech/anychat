@@ -60,7 +60,7 @@
     theStartBtnOnClickState = NO;
     
     self.theSendViewIPLable.text = [AnyChatPlatform QueryUserStateString:-1 :BRAC_USERSTATE_INTERNETIP];
-    self.theServerViewIPLable.text = [AnyChatVC sharedAnyChatVC].theServerIP.text;
+    self.theServerViewIPLable.text = [[AnyChatVC sharedAnyChatVC] GetServerIP];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -198,6 +198,11 @@
 - (BOOL)shouldAutorotate
 {
     return NO;
+}
+
+- (IBAction)hideKeyBoard
+{
+    [self.theSendBitLable resignFirstResponder];
 }
 
 

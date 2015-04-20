@@ -15,6 +15,8 @@
 #import "FeaturesListVC.h"
 #import "TextMsg_TransBufferVC.h"
 
+#import "RecordLocalVC.h"
+
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"

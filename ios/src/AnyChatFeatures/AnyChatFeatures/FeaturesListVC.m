@@ -24,6 +24,9 @@
 @synthesize callCenterFUNBtn;
 @synthesize theMyUserIDLab;
 @synthesize theUDPTraceFUNBtn;
+@synthesize theReturnBtn;
+@synthesize theUDPTraceAlertView;
+@synthesize theUDPTraceTextField;
 
 
 kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
@@ -58,25 +61,47 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
 }
 
 
-#pragma mark - UIActionSheet Delegate Method
+#pragma mark - AlertView delegate
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self sharedFeaturesInfo:self.theUDPTraceFUNBtn.titleLabel.text FeaturesNO:9];
-    [AnyChatPlatform EnterRoom:9 :@""];
-    
-        //发送方
-        if (buttonIndex == 0)
+    if (alertView == theUDPTraceAlertView)
+    {
+
+        int roomNo = [theUDPTraceTextField.text intValue];
+        [self sharedFeaturesInfo:self.theUDPTraceFUNBtn.titleLabel.text FeaturesNO:roomNo];
+        [AnyChatPlatform EnterRoom:roomNo :@""];
+        
+        if (buttonIndex == 0)//发送方
         {
             [self.navigationController pushViewController:[SendDataVC new] animated:NO];
         }
-        //接收方
-        if (buttonIndex == 1)
+        else if (buttonIndex == 1)//接收方
         {
             [self.navigationController pushViewController:[ReceiveDataVC new] animated:NO];
         }
+        
+    }
+}
+
+
+#pragma mark - AlertView method
+
+- (void)showUDPTraceAlertView
+{
+    //（for iOS 5 and later）
+    self.theUDPTraceAlertView = [[UIAlertView alloc] initWithTitle:@"请输入房间号"
+                                                         message:nil
+                                                        delegate:self
+                                               cancelButtonTitle:nil
+                                               otherButtonTitles:@"发送方",@"接收方", nil];
     
-//    NSLog(@"\n\n  buttonIndex: %i \n\n",(int)buttonIndex);
+    self.theUDPTraceAlertView.alertViewStyle = UIAlertViewStylePlainTextInput ;
+    self.theUDPTraceTextField = [self.theUDPTraceAlertView textFieldAtIndex:0];
+    self.theUDPTraceTextField.keyboardType = UIKeyboardTypePhonePad;
+    self.theUDPTraceTextField.text = @"9";
+    
+    [self.theUDPTraceAlertView show];
 }
 
 
@@ -160,14 +185,7 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
 
 - (IBAction)UDPTraceBtnClicked:(id)sender
 {
-    UIActionSheet *UDPTraceActSheet = [[UIActionSheet alloc]
-                               initWithTitle:@"请选择操作角色?"
-                               delegate:self
-                               cancelButtonTitle:nil
-                               destructiveButtonTitle:nil
-                               otherButtonTitles:@"发送方",@"接收方",@"取消", nil];
-    UDPTraceActSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-    [UDPTraceActSheet showInView:self.view];
+    [self showUDPTraceAlertView];
 }
 
 
