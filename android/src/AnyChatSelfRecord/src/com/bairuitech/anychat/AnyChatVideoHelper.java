@@ -52,7 +52,14 @@ public class AnyChatVideoHelper {
 		VideoRenderer r = GetRenderByUserId(userid);
 		if(r == null)
 			return -1;
-		r.CreateBitmap(width, height);
+		try
+		{
+			r.CreateBitmap(width, height);
+		}
+		catch(Exception e)
+		{
+			
+		}
 		return 0;
 	}
 	
