@@ -152,6 +152,7 @@ public class AnyChatDefine {
 	public static final int BRAC_RECORD_FLAGS_ABREAST		=	0x00000100;	///< 录制视频时，将其它人的视频并列录制
 	public static final int BRAC_RECORD_FLAGS_STEREO		=	0x00000200;	///< 录制音频时，将其它人的声音混合为立体声后录制
 	public static final int BRAC_RECORD_FLAGS_STREAM	    =   0x00001000;	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+	public static final int BRAC_RECORD_FLAGS_USERFILENAME	=	0x00002000; ///< 用户自定义文件名
 
 
 	// 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
@@ -225,6 +226,7 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_RECORD_FLAGS_SNAPSHOT	= 0x00000400;	///< 拍照
 	public static final int ANYCHAT_RECORD_FLAGS_LOCALCB	= 0x00000800;	///< 触发本地回调
 	public static final int ANYCHAT_RECORD_FLAGS_STREAM		= 0x00001000;	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+	public static final int ANYCHAT_RECORD_FLAGS_USERFILENAME=0x00002000;	///< 用户自定义文件名
 
 	
 	
