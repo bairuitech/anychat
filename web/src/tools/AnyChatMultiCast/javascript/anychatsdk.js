@@ -194,6 +194,7 @@ var WM_GV_P2PCONNECTSTATE	=	WM_GV + 14;		// ±¾µØÓÃ»§ÓëÆäËüÓÃ»§µÄP2PÍøÂçÁ¬½Ó×´Ì¬·
 var WM_GV_PRIVATEREQUEST	=	WM_GV + 21;		// ÓÃ»§·¢ÆðË½ÁÄÇëÇó£¬wParam£¨INT£©±íÊ¾·¢ÆðÕßµÄÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾Ë½ÁÄÇëÇó±àºÅ£¬±êÊ¶¸ÃÇëÇó
 var WM_GV_PRIVATEECHO		=	WM_GV + 22;		// ÓÃ»§»Ø¸´Ë½ÁÄÇëÇó£¬wParam£¨INT£©±íÊ¾»Ø¸´ÕßµÄÓÃ»§IDºÅ£¬lParam£¨INT£©Îª³ö´í´úÂë
 var WM_GV_PRIVATEEXIT		=	WM_GV + 23;		// ÓÃ»§ÍË³öË½ÁÄ£¬wParam£¨INT£©±íÊ¾ÍË³öÕßµÄÓÃ»§IDºÅ£¬lParam£¨INT£©Îª³ö´í´úÂë
+var WM_GV_VIDEOFULLSCREEN	=	WM_GV + 32;		// ÓÃ»§ÊÓÆµÈ«ÆÁÍ¨Öª£¬wParam£¨INT£©±íÊ¾ÓÃ»§ID£¬lParam(DWORD)±íÊ¾µ±Ç°ÊÓÆµÊÇ·ñÈ«ÆÁÏÔÊ¾
 var WM_GV_SDKWARNING      	=   WM_GV + 41;		// SDK¾¯¸æÐÅÏ¢£¬µ±SDKÔÚÔËÐÐ¹ý³ÌÖÐ×Ô¼ì·¢ÏÖÒì³£×´Ì¬Ê±£¬½«ÏòÉÏ²ã·¢ËÍ¸ÃÏûÏ¢£¬wParam£¨INT£©±íÊ¾¾¯¸æ´úÂë£¬¶¨ÒåÎª£ºGV_ERR_WARNING_XXXX
 var WM_GV_USERINFOUPDATE	=	WM_GV + 16;		// ÓÃ»§ÐÅÏ¢¸üÐÂÍ¨Öª£¬wParam£¨INT£©±íÊ¾ÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾¸üÐÂÀà±ð
 var WM_GV_FRIENDSTATUS		=	WM_GV + 17;		// ºÃÓÑÔÚÏß×´Ì¬±ä»¯£¬wParam£¨INT£©±íÊ¾ºÃÓÑÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾ÓÃ»§µÄµ±Ç°»î¶¯×´Ì¬£º0 ÀëÏß£¬ 1 ÉÏÏß
