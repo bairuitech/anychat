@@ -49,6 +49,8 @@ typedef void (CALLBACK * BRAC_VideoScreenEvent_CallBack)(DWORD dwUserid, DWORD t
 typedef void (CALLBACK * BRAC_VideoCallEvent_CallBack)(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
 // 数据加密、解密回调函数定义
 typedef DWORD (CALLBACK * BRAC_DataEncDec_CallBack)(DWORD dwUserId, DWORD dwFlags, LPBYTE lpInBuf, DWORD dwInSize, LPBYTE lpOutBuf, LPDWORD lpOutSize, LPVOID lpUserValue);
+// 网络数据发送回调函数定义
+typedef DWORD (CALLBACK * BRAC_NetworkDataSend_CallBack)(DWORD hSocket, DWORD dwFlags, CHAR* lpBuf, DWORD dwSize, DWORD dwTargetAddr, DWORD dwTargetPort, LPVOID lpUserValue);
 
 /**
  *	API方法定义

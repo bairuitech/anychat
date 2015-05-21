@@ -285,6 +285,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_CBTYPE_VIDEOCALLEVENT			14	///< 视频通话消息通知回调
 #define BRAC_CBTYPE_DATAENCDEC				15	///< 数据加密、解密回调
 #define BRAC_CBTYPE_SCREENEVENT				16	///< 屏幕事件回调
+#define BRAC_CBTYPE_NETWORKDATASEND			17	///< 网络数据回调
 
 
 
