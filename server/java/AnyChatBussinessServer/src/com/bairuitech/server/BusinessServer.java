@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
+
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -482,6 +483,13 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 		String str = "OnAnyChatUserInfoCtrlCallBack: dwSendUserId:" + dwSendUserId + " dwUserId:" + dwUserId + " dwCtrlCode:" + 
 			dwCtrlCode + " wParam:" + wParam + " lParam:" + lParam + " lpStrValue:" + lpStrValue;
 		generateLog(str);
+		return 0;
+	}
+
+	@Override
+	public int OnAnyChatObjectEventCallBack(int dwObjectType, int dwObjectId,
+			int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrParam) {
+
 		return 0;
 	}
 	

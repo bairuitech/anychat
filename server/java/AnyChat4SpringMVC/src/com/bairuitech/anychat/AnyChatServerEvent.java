@@ -43,4 +43,7 @@ public interface AnyChatServerEvent {
 	
 	// 用户信息控制回调函数定义
 	public int OnAnyChatUserInfoCtrlCallBack(int dwSendUserId, int dwUserId, int dwCtrlCode, int wParam, int lParam, String lpStrValue);
+	
+	// 业务对象事件回调函数定义
+	public int OnAnyChatObjectEventCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrParam);
 }

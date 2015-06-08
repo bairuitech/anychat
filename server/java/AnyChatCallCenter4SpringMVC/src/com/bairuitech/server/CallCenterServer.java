@@ -223,7 +223,6 @@ public class CallCenterServer implements AnyChatServerEvent{
 	 * 服务器录像（扩展）回调函数，由中心录像服务器触发
 	 * 参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=20&extra=page%3D1
 	 */
-	@Override
 	public void OnAnyChatServerRecordExCallBack(int dwUserId, String szRecordFileName, int dwElapse, int dwFlags, int dwParam, String lpUserStr, int dwRecordServerId){
 		boolean bSnapShotEvent = ((dwFlags & AnyChatServerSDK.ANYCHAT_RECORD_FLAGS_SNAPSHOT) != 0);	// 是否为拍照事件
 		String eventStr;
@@ -254,6 +253,13 @@ public class CallCenterServer implements AnyChatServerEvent{
 		String str = "OnAnyChatUserInfoCtrlCallBack: dwSendUserId:" + dwSendUserId + " dwUserId:" + dwUserId + " dwCtrlCode:" + 
 			dwCtrlCode + " wParam:" + wParam + " lParam:" + lParam + " lpStrValue:" + lpStrValue;
 		System.out.print(getCurrentTime() + str + "\r\n");
+		return 0;
+	}
+
+	public int OnAnyChatObjectEventCallBack(int dwObjectType, int dwObjectId,
+			int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrParam) {
+
+		
 		return 0;
 	}
 

@@ -282,6 +282,13 @@ public class BusinessServer implements AnyChatServerEvent {
 		generateLog(str);
 		return 0;
 	}
+
+	@Override
+	public int OnAnyChatObjectEventCallBack(int dwObjectType, int dwObjectId,
+			int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrParam) {
+
+		return 0;
+	}
 	
 	
 }

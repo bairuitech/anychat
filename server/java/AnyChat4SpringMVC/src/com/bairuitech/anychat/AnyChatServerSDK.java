@@ -119,6 +119,19 @@ public class AnyChatServerSDK
 	public static native int SetSDKOptionInt(int optname, int dwValue);
 	// SDK内核参数设置（字符串）
 	public static native int SetSDKOptionString(int optname, String lpStrValue);
+	
+	// 获取业务对象列表
+	public static native int[] ObjectGetIdList(int dwObjectType);
+	// 获取业务对象参数值（整型）
+	public static native int ObjectGetValueInt(int dwObjectType, int dwObjectId, int dwInfoName);
+	// 获取业务对象参数值（字符串）
+	public static native String ObjectGetValueString(int dwObjectType, int dwObjectId, int dwInfoName);
+	// 业务对象参数设置（整形）
+	public static native int ObjectSetValueInt(int dwObjectType, int dwObjectId, int dwInfoName, int dwValue);
+	// 业务对象参数设置（字符串）
+	public static native int ObjectSetValueString(int dwObjectType, int dwObjectId, int dwInfoName, String lpStrValue);
+	// 业务对象参数控制
+	public static native int ObjectControl(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrValue);
 
 	
 	// 服务器应用程序消息回调函数定义
@@ -232,6 +245,15 @@ public class AnyChatServerSDK
 	{
 		if(this.event != null)
 			return this.event.OnAnyChatUserInfoCtrlCallBack(dwSendUserId, dwUserId, dwCtrlCode, wParam, lParam, lpStrValue);
+		else
+			return -1;
+	}
+	
+	// 业务对象事件回调函数定义
+	private int OnAnyChatObjectEventNotifyCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrParam)
+	{
+		if(this.event != null)
+			return this.event.OnAnyChatObjectEventCallBack(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, lpStrParam);
 		else
 			return -1;
 	}
