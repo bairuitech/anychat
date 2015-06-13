@@ -131,11 +131,22 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_VIDEOSHOW_AUTOROTATION	=	85;	///< 远程视频显示自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
 	public static final int BRAC_SO_VIDEOSHOW_CLIPMODE		=	86;	///< 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
 
-	public static final int BRAC_SO_CORESDK_DEVICEMODE		=	130;///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
-	public static final int BRAC_SO_CORESDK_SCREENCAMERACTRL=	131;///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
-	public static final int BRAC_SO_CORESDK_DATAENCRYPTION	=	132;///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
-	public static final int BRAC_SO_CORESDK_UPLOADLOGINFO	=	134;///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
-	public static final int BRAC_SO_CORESDK_WRITELOG		=	135;///< 写入调试信息到客户端日志文件中
+	public static final int BRAC_SO_CORESDK_DEVICEMODE		=	130; ///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+	public static final int BRAC_SO_CORESDK_SCREENCAMERACTRL=	131; ///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
+	public static final int BRAC_SO_CORESDK_DATAENCRYPTION	=	132; ///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
+	public static final int BRAC_SO_CORESDK_UPLOADLOGINFO	=	134; ///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
+	public static final int BRAC_SO_CORESDK_WRITELOG		=	135; ///< 写入调试信息到客户端日志文件中
+	
+	public static final int BRAC_SO_UDPTRACE_MODE			=	160; ///< UDP数据包跟踪模式
+	public static final int BRAC_SO_UDPTRACE_PACKSIZE		=	161; ///< UDP数据包跟踪的大小，单位：BYTE
+	public static final int BRAC_SO_UDPTRACE_BITRATE		=	162; ///< UDP数据包跟踪的包速率，单位：bps
+	public static final int BRAC_SO_UDPTRACE_START			=	163; ///< UDP数据包跟踪控制（参数为int型，1 启动， 0 停止）
+	public static final int BRAC_SO_UDPTRACE_LOCALRECVNUM	=	164; ///< UDP数据包跟踪本地接收包数量
+	public static final int BRAC_SO_UDPTRACE_SERVERRECVNUM	=	165; ///< UDP数据包跟踪服务器接收包数量
+	public static final int BRAC_SO_UDPTRACE_SOURCESENDNUM	=	166; ///< UDP数据包跟踪源发包数量
+	public static final int BRAC_SO_UDPTRACE_SENDUSERID		=	167; ///< UDP数据包跟踪源用户ID
+
+	public static final int BRAC_SO_OBJECT_INITFLAGS		=	200; ///< 业务对象身份初始化
 	
 	// 传输任务信息参数定义
 	public static final int BRAC_TRANSTASK_PROGRESS			=	1;	///< 传输任务进度查询（参数为：int型（0 ~ 100））
