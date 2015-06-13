@@ -21,6 +21,7 @@ public class AnyChatCoreSDK
 	AnyChatUserInfoEvent	userInfoEvent;
 	AnyChatDataEncDecEvent	encdecEvent;
 	AnyChatRecordEvent		recordEvent;
+	AnyChatObjectEvent		objectEvent;
 	
 	private static AnyChatCoreSDK mAnyChat = null;		// 单例模式对象
 	
@@ -38,6 +39,7 @@ public class AnyChatCoreSDK
 	private static int HANDLE_TYPE_SDKFILTER	= 6;	// SDK Filter Data
 	private static int HANDLE_TYPE_VIDEOCALL	= 7;	// 视频呼叫
 	private static int HANDLE_TYPE_RECORD		= 8;	// 录像、拍照
+	private static int HANDLE_TYPE_OBJECTEVENT	= 9;	// 业务对象事件
 	
 	// 获取单例模式对象
 	public synchronized static AnyChatCoreSDK getInstance(Context context)
@@ -101,6 +103,12 @@ public class AnyChatCoreSDK
 	{
 		RegisterNotify();
 		this.recordEvent = e;
+	}
+	// 设置业务对象事件通知接口
+	public void SetObjectEvent(AnyChatObjectEvent e)
+	{
+		RegisterNotify();
+		this.objectEvent = e;
 	}
 	
 	// 查询SDK主版本号
@@ -286,6 +294,20 @@ public class AnyChatCoreSDK
 	
 	// IP组播功能控制
 	public native int MultiCastControl(String lpMultiCastAddr, int dwPort, String lpNicAddr, int dwTTL, int dwFlags);
+	
+	// 获取业务对象列表
+	public static native int[] ObjectGetIdList(int dwObjectType);
+	// 获取业务对象参数值（整型）
+	public static native int ObjectGetIntValue(int dwObjectType, int dwObjectId, int dwInfoName);
+	// 获取业务对象参数值（字符串）
+	public static native String ObjectGetStringValue(int dwObjectType, int dwObjectId, int dwInfoName);
+	// 业务对象参数设置（整形）
+	public static native int ObjectSetIntValue(int dwObjectType, int dwObjectId, int dwInfoName, int dwValue);
+	// 业务对象参数设置（字符串）
+	public static native int ObjectSetStringValue(int dwObjectType, int dwObjectId, int dwInfoName, String lpStrValue);
+	// 业务对象参数控制
+	public static native int ObjectControl(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrValue);
+
     
     // 异步消息通知
     public void OnNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
@@ -484,6 +506,19 @@ public class AnyChatCoreSDK
                  		 anychat.recordEvent.OnAnyChatSnapShotEvent(dwUserId, filename, dwFlags, dwParam, userstr);
             	 }
              }
+             else if(type == HANDLE_TYPE_OBJECTEVENT)
+             {
+            	 int dwObjectType = tBundle.getInt("OBJECTTYPE");
+            	 int dwObjectId = tBundle.getInt("OBJECTID");
+            	 int dwEventType = tBundle.getInt("EVENTTYPE");
+            	 int dwParam1 = tBundle.getInt("PARAM1");
+            	 int dwParam2 = tBundle.getInt("PARAM2");
+            	 int dwParam3 = tBundle.getInt("PARAM3");
+            	 int dwParam4 = tBundle.getInt("PARAM4");
+            	 String strParam = tBundle.getString("STRPARAM");
+            	 if(anychat.objectEvent != null)
+            		 anychat.objectEvent.OnAnyChatObjectEvent(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+            }
         }
      }
    
@@ -631,6 +666,26 @@ public class AnyChatCoreSDK
 			return encdecEvent.OnAnyChatDataEncDec(userid, flags, buf, len, outParam);
 		else
 			return -1;
+	}
+	
+	// 业务对象事件回调函数定义
+	private void OnObjectEventNotifyCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrParam)
+	{
+		if(mHandler == null)
+			return;
+		Message tMsg=new Message();
+        Bundle tBundle=new Bundle();
+        tBundle.putInt("HANDLETYPE", HANDLE_TYPE_OBJECTEVENT);
+        tBundle.putInt("OBJECTTYPE", dwObjectType);
+        tBundle.putInt("OBJECTID", dwObjectId);
+        tBundle.putInt("EVENTTYPE", dwEventType);
+        tBundle.putInt("PARAM1", dwParam1);
+        tBundle.putInt("PARAM2", dwParam2);
+        tBundle.putInt("PARAM3", dwParam3);
+        tBundle.putInt("PARAM4", dwParam4);
+        tBundle.putString("STRPARAM", lpStrParam);
+        tMsg.setData(tBundle);
+        mHandler.sendMessage(tMsg);
 	}
 	
     static {

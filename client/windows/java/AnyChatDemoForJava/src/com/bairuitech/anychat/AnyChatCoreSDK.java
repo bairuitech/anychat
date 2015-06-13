@@ -2,6 +2,7 @@ package com.bairuitech.anychat;		// 不能修改包的名称
 
 import java.awt.Component;
 
+
 public class AnyChatCoreSDK
 {
 	AnyChatBaseEvent		baseEvent;
@@ -13,6 +14,7 @@ public class AnyChatCoreSDK
 	AnyChatUserInfoEvent	userInfoEvent;
 	AnyChatDataEncDecEvent	encdecEvent;
 	AnyChatRecordEvent		recordEvent;
+	AnyChatObjectEvent		objectEvent;
 	
 	private final int HANDLE_TYPE_NOTIFYMSG = 1;		// 消息通知
 	private final int HANDLE_TYPE_TEXTMSG 	= 2;		// 文字信息
@@ -22,6 +24,7 @@ public class AnyChatCoreSDK
 	private final int HANDLE_TYPE_SDKFILTER	= 6;		// SDK Filter Data
 	private static int HANDLE_TYPE_VIDEOCALL= 7;		// 视频呼叫
 	private static int HANDLE_TYPE_RECORD	= 8;		// 录像、拍照
+	private static int HANDLE_TYPE_OBJECTEVENT= 9;		// 业务对象事件
 	
 	// 设置AnyChat基本事件通知接口
 	public void SetBaseEvent(AnyChatBaseEvent e)
@@ -76,6 +79,12 @@ public class AnyChatCoreSDK
 	{
 		RegisterNotify();
 		this.recordEvent = e;
+	}
+	// 设置业务对象事件通知接口
+	public void SetObjectEvent(AnyChatObjectEvent e)
+	{
+		RegisterNotify();
+		this.objectEvent = e;
 	}
 		
 	// 查询SDK主版本号
@@ -248,6 +257,19 @@ public class AnyChatCoreSDK
 	// IP组播功能控制
 	public native int MultiCastControl(String lpMultiCastAddr, int dwPort, String lpNicAddr, int dwTTL, int dwFlags);
 	
+	// 获取业务对象列表
+	public static native int[] ObjectGetIdList(int dwObjectType);
+	// 获取业务对象参数值（整型）
+	public static native int ObjectGetIntValue(int dwObjectType, int dwObjectId, int dwInfoName);
+	// 获取业务对象参数值（字符串）
+	public static native String ObjectGetStringValue(int dwObjectType, int dwObjectId, int dwInfoName);
+	// 业务对象参数设置（整形）
+	public static native int ObjectSetIntValue(int dwObjectType, int dwObjectId, int dwInfoName, int dwValue);
+	// 业务对象参数设置（字符串）
+	public static native int ObjectSetStringValue(int dwObjectType, int dwObjectId, int dwInfoName, String lpStrValue);
+	// 业务对象参数控制
+	public static native int ObjectControl(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrValue);
+
 	
     // 异步消息通知
     public void OnNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
@@ -379,6 +401,13 @@ public class AnyChatCoreSDK
 			return AnyChatCoreSDK.this.encdecEvent.OnAnyChatDataEncDec(userid, flags, buf, len, outParam);
 		else
 			return -1;
+	}
+	
+	// 业务对象事件回调函数定义
+	private void OnObjectEventNotifyCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrParam)
+	{
+		 if(AnyChatCoreSDK.this.objectEvent != null)
+			 AnyChatCoreSDK.this.objectEvent.OnAnyChatObjectEvent(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, lpStrParam);
 	}
     
     static {
