@@ -147,10 +147,23 @@ enum BRAC_PixelFormat{
 #define BRAC_SO_VIDEOSHOW_CLIPMODE			86	///< 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
 #define BRAC_SO_VIDEOSHOW_CBPIXFMT			87	///< 视频数据回调格式（参数为int型）
 
+#define BRAC_SO_CORESDK_TICKOUTUSER			110	///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
 #define BRAC_SO_CORESDK_DEVICEMODE			130	///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
 #define BRAC_SO_CORESDK_DATAENCRYPTION		132	///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
 #define BRAC_SO_CORESDK_UPLOADLOGINFO		134	///< 上传日志信息到客户端（参数为：int型，0 关闭[默认]， 1 开启）
 #define BRAC_SO_CORESDK_WRITELOG			135	///< 写入调试信息到日志文件中
+
+#define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
+#define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
+#define BRAC_SO_UDPTRACE_BITRATE			162	///< UDP数据包跟踪的包速率，单位：bps
+#define BRAC_SO_UDPTRACE_START				163	///< UDP数据包跟踪控制（参数为int型，1 启动， 0 停止）
+#define BRAC_SO_UDPTRACE_LOCALRECVNUM		164 ///< UDP数据包跟踪本地接收包数量
+#define BRAC_SO_UDPTRACE_SERVERRECVNUM		165	///< UDP数据包跟踪服务器接收包数量
+#define BRAC_SO_UDPTRACE_SOURCESENDNUM		166	///< UDP数据包跟踪源发包数量
+#define BRAC_SO_UDPTRACE_SENDUSERID			167	///< UDP数据包跟踪源用户ID
+
+#define BRAC_SO_OBJECT_INITFLAGS			200	///< 业务对象身份初始化
+
 
 // 传输任务信息参数定义
 #define BRAC_TRANSTASK_PROGRESS				1	///< 传输任务进度查询（参数为：DOUBLE型（0.0 ~ 100.0））

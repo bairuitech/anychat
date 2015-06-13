@@ -10,12 +10,12 @@
 #define _ANYCHAT_PLATFORM_H_INCLUDEDED_
 
 #import <Foundation/Foundation.h>
-#if TARGET_OS_MAC
-#   import <AppKit/AppKitDefines.h>
-#   import <AppKit/NSView.h>
-#else
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 #   import <UIKit/UIKitDefines.h>
 #   import <UIKit/UIView.h>
+#else
+#   import <AppKit/AppKitDefines.h>
+#   import <AppKit/NSView.h>
 #endif
 
 #if !defined(BITMAPINFOHEADER_DEFINE)
@@ -168,6 +168,13 @@ typedef struct tagWAVEFORMATEX{
  - (void) OnAnyChatDataEncDecCallBack:(int) dwUserId : (int) dwFlags : (NSData*) lpInBuf : (NSData*) lpOutBuf;
 @end
 
+/**
+ *  业务对象事件协议
+ */
+@protocol AnyChatObjectEventDelegate <NSObject>
+- (void) OnAnyChatObjectEventCallBack: (int) dwObjectType : (int) dwObjectId : (int) dwEventType : (int) dwParam1 : (int) dwParam2 : (int) dwParam3 : (int) dwParam4 : (NSString*) lpStrParam;
+@end
+
 
 /**
  *	AnyChat for iOS API方法定义
@@ -184,6 +191,7 @@ typedef struct tagWAVEFORMATEX{
 	id<AnyChatVideoCallDelegate>		videoCallDelegate;
     id<AnyChatUserInfoDelegate>         userInfoDelegate;
 	id<AnyChatDataEncDecDelegate>		dataEncDecDelegate;
+    id<AnyChatObjectEventDelegate>      objectDelegate;
 }
 
 @property (nonatomic, assign) id<AnyChatNotifyMessageDelegate>  	notifyMsgDelegate;
@@ -196,6 +204,7 @@ typedef struct tagWAVEFORMATEX{
 @property (nonatomic, assign) id<AnyChatVideoCallDelegate>          videoCallDelegate;
 @property (nonatomic, assign) id<AnyChatUserInfoDelegate>           userInfoDelegate;
 @property (nonatomic, assign) id<AnyChatDataEncDecDelegate>			dataEncDecDelegate;
+@property (nonatomic, assign) id<AnyChatObjectEventDelegate>		objectDelegate;
 
 - (void) OnRecvAnyChatNotify:(NSDictionary*) dict;
 
@@ -357,6 +366,21 @@ typedef struct tagWAVEFORMATEX{
 + (NSString*) GetGroupName: (int) dwGroupId;
 // 用户信息控制
 + (int) UserInfoControl: (int) dwUserId : (int) dwCtrlCode : (int) wParam : (int) lParam : (NSString*) lpStrValue;
+
+
+// 获取业务对象列表
++ (NSMutableArray*) ObjectGetIdList: (int) dwObjectType;
+// 获取业务对象参数值（整型）
++ (int) ObjectGetIntValue: (int) dwObjectType : (int) dwObjectId : (int) dwInfoName;
+// 获取业务对象参数值（字符串）
++ (NSString*) ObjectGetStringValue: (int) dwObjectType : (int) dwObjectId : (int) dwInfoName;
+// 业务对象参数设置（整形）
++ (int) ObjectSetIntValue: (int) dwObjectType : (int) dwObjectId : (int) dwInfoName : (int) dwValue;
+// 业务对象参数设置（字符串）
++ (int) ObjectSetStringValue: (int) dwObjectType : (int) dwObjectId : (int) dwInfoName : (NSString*) lpStrValue;
+// 业务对象参数控制
++ (int) ObjectControl: (int) dwObjectType : (int) dwObjectId : (int) dwCtrlCode : (int) dwParam1 : (int) dwParam2 : (int) dwParam3 : (int) dwParam4 : (NSString*) lpStrValue;
+
 
 
 
