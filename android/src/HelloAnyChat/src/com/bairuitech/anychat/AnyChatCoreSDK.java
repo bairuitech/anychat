@@ -306,7 +306,7 @@ public class AnyChatCoreSDK
 	// 业务对象参数设置（字符串）
 	public static native int ObjectSetStringValue(int dwObjectType, int dwObjectId, int dwInfoName, String lpStrValue);
 	// 业务对象参数控制
-	public static native int ObjectControl(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrValue);
+	public static native int ObjectControl(int dwObjectType, int dwObjectId, int dwCtrlCode, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrValue);
 
     
     // 异步消息通知
