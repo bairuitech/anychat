@@ -105,6 +105,8 @@ var BRAC_SO_CORESDK_SCREENCAMERACTRL =		131;// 桌面共享功能控制（参数为：int型，
 var BRAC_SO_CORESDK_UPLOADLOGINFO =			134;// 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
 var BRAC_SO_CORESDK_WRITELOG	=			135;// 写入调试信息到本地日志文件中
 
+var BRAC_SO_OBJECT_INITFLAGS	=			200;// 业务对象身份初始化
+
 var BRAC_SO_ENABLEWEBSERVICE =			11002;	// 启动本地Web服务
 var BRAC_SO_LOCALPATH2URL =				11003;	// 将本地路径转换为URL地址
 var BRAC_SO_GETTASKPATHNAME	=			11004;	// 根据传输任务ID获取文件路径
@@ -254,6 +256,7 @@ var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.4";
  *******************************************/
 var anychat;									// AnyChat插件DMO对象，外部初始化
 var bSupportStreamRecordCtrlEx = false;			// 是否支持录像扩展API接口
+var bSupportObjectBusiness = false;				// 是否支持业务对象API接口
 
 // 初始化SDK，返回出错代码
 function BRAC_InitSDK(apilevel) {
@@ -290,6 +293,8 @@ function BRAC_InitSDK(apilevel) {
 	    var bRightVersion = ((anychatpluginver >= MIN_ANYCHAT_PLUGIN_VER) && (videopluginver >= MIN_VIDEO_PLUGIN_VER));
 		// 判断插件是否支持录像扩展API接口
 		bSupportStreamRecordCtrlEx = (anychatpluginver >= "1.0.1.0");
+		// 判断插件是否支持业务对象API接口
+		bSupportObjectBusiness = (anychatpluginver >= "1.0.2.3");
 		// 判断当前的API Level是否满足业务层的需要
 		if(apilevel > anychatobj.GetVersion(2))
 			bRightVersion = false;
@@ -317,6 +322,8 @@ function BRAC_InitSDK(apilevel) {
 				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShot', 	OnAnyChatRecordSnapShot);
 			if(typeof(OnAnyChatRecordSnapShotEx) == "function" && bSupportStreamRecordCtrlEx)
 				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx', OnAnyChatRecordSnapShotEx);
+			if(typeof(OnAnyChatObjectEvent) == "function" && bSupportObjectBusiness)
+				BRAC_RegisterCallBack(anychat, 'OnObjectEvent', OnAnyChatObjectEvent);		
 		} else {
 			document.body.removeChild(insertdiv);
 		}
@@ -688,7 +695,54 @@ function BRAC_UserInfoControl(dwUserId, dwCtrlCode, wParam, lParam, lpStrValue) 
 	return anychat.UserInfoControl(dwUserId, dwCtrlCode, wParam, lParam, lpStrValue);
 }
 
+// 获取业务对象ID列表（返回一个ObjectId的数组）
+function BRAC_ObjectGetIdList(dwObjectType) {
+	var idarray = new Array();
+	if(!bSupportObjectBusiness)
+		return idarray;
+	var size = anychat.PrepareFetchObjectIds(dwObjectType);
+	if(size) {
+		var idx = 0;
+		while(1) {
+			var objectid = anychat.FetchNextObjectId(dwObjectType);
+			if(objectid == -1)
+				break;
+			idarray[idx++] = objectid;
+		}
+	}
+	return idarray;
+}
 
+// 获取业务对象参数值（整形值）
+function BRAC_ObjectGetIntValue(dwObjectType, dwObjectId, dwInfoName) {
+	if(!bSupportObjectBusiness)
+		return -1;
+	return anychat.GetObjectIntValue(dwObjectType, dwObjectId, dwInfoName);
+}
+
+// 获取业务对象参数值（字符串）
+function BRAC_ObjectGetStringValue(dwObjectType, dwObjectId, dwInfoName) {
+	if(!bSupportObjectBusiness)
+		return -1;
+	return anychat.GetObjectStringValue(dwObjectType, dwObjectId, dwInfoName);
+}
+
+// 设置业务对象参数值
+function BRAC_ObjectSetValue(dwObjectType, dwObjectId, dwInfoName, value) {
+	if(!bSupportObjectBusiness)
+		return -1;
+	if(isNaN(value))
+		return anychat.SetObjectStringValue(dwObjectType, dwObjectId, dwInfoName, value);
+	else
+		return anychat.SetObjectIntValue(dwObjectType, dwObjectId, dwInfoName, value);
+}
+
+// 业务对象控制指令
+function BRAC_ObjectControl(dwObjectType, dwObjectId, dwCtrlCode, dwParam1, dwParam2, dwParam3, dwParam4, strParam) {
+	if(!bSupportObjectBusiness)
+		return -1;
+	return anychat.ObjectControl(dwObjectType, dwObjectId, dwCtrlCode, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+}
 
 
 
