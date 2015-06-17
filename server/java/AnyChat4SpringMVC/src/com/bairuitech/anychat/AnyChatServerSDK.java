@@ -250,10 +250,12 @@ public class AnyChatServerSDK
 	}
 	
 	// 业务对象事件回调函数定义
-	private void OnAnyChatObjectEventNotifyCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrParam)
+	private int OnAnyChatObjectEventNotifyCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrParam)
 	{
 		if(this.event != null)
-			this.event.OnAnyChatObjectEventCallBack(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, lpStrParam);
+			return this.event.OnAnyChatObjectEventCallBack(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, lpStrParam);
+		else
+			return -1;
 	}
 	
     static {
