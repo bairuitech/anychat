@@ -70,8 +70,10 @@ public class CallCenterServer implements AnyChatServerEvent{
 		// 设置队列业务类型
 		int dwQueueAbility = QUEUE_ABILITY_TYPE_PERSONAL;
 		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwQueueAbility);
-		
-		
+		// 设置队列整型标签值（上层业务自定义用途）
+		int dwQueueIntTag = 2;
+		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_INTTAG, dwQueueIntTag);
+				
 		dwQueueId = 102;
 		AnyChatServerSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId, 0, 0, 0, "");
 		AnyChatServerSDK.ObjectSetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME, "对公业务队列");
@@ -82,6 +84,9 @@ public class CallCenterServer implements AnyChatServerEvent{
 		// 设置队列业务类型
 		dwQueueAbility = QUEUE_ABILITY_TYPE_COMPANY;
 		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwQueueAbility);
+		// 设置队列整型标签值（上层业务自定义用途）
+		dwQueueIntTag = 3;
+		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_INTTAG, dwQueueIntTag);
 
 	
 		// 服务器端创建另一个营业厅对象，并设置属性（dwAreaId编号变化）
@@ -101,6 +106,10 @@ public class CallCenterServer implements AnyChatServerEvent{
 		// 设置队列业务类型
 		dwQueueAbility = QUEUE_ABILITY_TYPE_PERSONAL;
 		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwQueueAbility);
+		// 设置队列整型标签值（上层业务自定义用途）
+		dwQueueIntTag = 2;
+		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_INTTAG, dwQueueIntTag);
+
 		
 		dwQueueId = 202;
 		AnyChatServerSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId, 0, 0, 0, "");
@@ -112,7 +121,10 @@ public class CallCenterServer implements AnyChatServerEvent{
 		// 设置队列业务类型
 		dwQueueAbility = QUEUE_ABILITY_TYPE_COMPANY;
 		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwQueueAbility);
-		
+		// 设置队列整型标签值（上层业务自定义用途）
+		dwQueueIntTag = 3;
+		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_INTTAG, dwQueueIntTag);
+
 	}
 
 	/**
