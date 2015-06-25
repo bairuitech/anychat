@@ -75,14 +75,28 @@ public class SampleServer implements AnyChatServerEvent{
 		// 设置队列整型标签值（上层业务自定义用途）
 		int dwQueueIntTag = 2;
 		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_INTTAG, dwQueueIntTag);
-				
+
 		dwQueueId = 102;
+		AnyChatServerSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId, 0, 0, 0, "");
+		AnyChatServerSDK.ObjectSetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME, "个人业务队列(VIP)");
+		AnyChatServerSDK.ObjectSetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_DESCRIPTION, "开户、挂失、转帐");
+		// 设置队列优先级
+		dwPriority = 10;
+		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_PRIORITY, dwPriority);
+		// 设置队列业务类型
+		dwQueueAbility = QUEUE_ABILITY_TYPE_PERSONAL;
+		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwQueueAbility);
+		// 设置队列整型标签值（上层业务自定义用途）
+		dwQueueIntTag = 2;
+		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_INTTAG, dwQueueIntTag);
+		
+		dwQueueId = 103;
 		AnyChatServerSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId, 0, 0, 0, "");
 		AnyChatServerSDK.ObjectSetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME, "对公业务队列");
 		AnyChatServerSDK.ObjectSetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_DESCRIPTION, "支票、回单、基本户");
 		// 设置队列优先级
-		dwPriority = 10;
-		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwQueueAbility);
+		dwPriority = 0;
+		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_PRIORITY, dwPriority);
 		// 设置队列业务类型
 		dwQueueAbility = QUEUE_ABILITY_TYPE_COMPANY;
 		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwQueueAbility);
@@ -90,7 +104,7 @@ public class SampleServer implements AnyChatServerEvent{
 		dwQueueIntTag = 3;
 		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_INTTAG, dwQueueIntTag);
 
-	
+		
 		// 服务器端创建另一个营业厅对象，并设置属性（dwAreaId编号变化）
 		dwAreaId = 10002;
 		AnyChatServerSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, AnyChatObjectDefine.ANYCHAT_OBJECT_CTRL_CREATE, 0, 0, 0, 0, "");
@@ -104,7 +118,7 @@ public class SampleServer implements AnyChatServerEvent{
 		AnyChatServerSDK.ObjectSetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_DESCRIPTION, "基金、理财产品、贵金属");
 		// 设置队列优先级
 		dwPriority = 0;
-		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwPriority);
+		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_PRIORITY, dwPriority);
 		// 设置队列业务类型
 		dwQueueAbility = QUEUE_ABILITY_TYPE_PERSONAL;
 		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwQueueAbility);
@@ -119,14 +133,13 @@ public class SampleServer implements AnyChatServerEvent{
 		AnyChatServerSDK.ObjectSetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_DESCRIPTION, "房贷、车贷、公积金");
 		// 设置队列优先级
 		dwPriority = 10;
-		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwPriority);
+		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_PRIORITY, dwPriority);
 		// 设置队列业务类型
 		dwQueueAbility = QUEUE_ABILITY_TYPE_COMPANY;
 		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwQueueAbility);
 		// 设置队列整型标签值（上层业务自定义用途）
 		dwQueueIntTag = 3;
 		AnyChatServerSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_INTTAG, dwQueueIntTag);
-
 	}	
 	
 	/**
