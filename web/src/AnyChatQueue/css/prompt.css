@@ -1,0 +1,77 @@
+#prompt_div {
+	background-color: White;
+	border: 1px solid black;
+	width: 500px;
+	height: 300px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	display: none;
+}
+
+.close_div {
+	height: 45px;
+	width: 480px;
+	margin: 0px 10px 0px 10px;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+#prompt_div_BR {
+	border-top: 1px solid #CCCCCC;
+	height: 45px;
+	margin: 40px 10px 10px 10px;
+	width: 480px;
+	text-align: right;
+}
+
+#prompt_div_BR a {
+	font-size: 12px;
+	color: Blue;
+}
+
+#prompt_div_btn_load {
+	width: 110px;
+	height: 35px;
+	line-height: 35px;
+	color: White;
+	border: 1px solid #915700;
+	background-color: #ff8100;
+	margin-left: auto;
+	margin-right: auto;
+	cursor: pointer;
+}
+
+#prompt_div_line1 {
+	height: 70px;
+	line-height: 70px;
+	font-size: 12px;
+	color: #999999;
+	padding:0px 100px;
+}
+
+#prompt_div_line2 {
+	height: 60px;
+	line-height: 50px;
+	color: #FF9900;
+	font-size: 14px;
+	font-weight: bolder;
+}
+
+#prompt_div_headline1 {
+	font-size: 15px;
+	width: 100px;
+	height: 50px;
+	line-height: 60px;
+	text-align: center;
+	float: left;
+}
+
+#prompt_div_headline2 {
+	font-size: 12px;
+	width: 38px;
+	height: 50px;
+	line-height: 60px;
+	text-align: center;
+	float: right;
+	cursor: pointer;
+}

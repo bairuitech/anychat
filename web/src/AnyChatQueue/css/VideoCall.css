@@ -1,0 +1,83 @@
+#Initiative_Call_Div {
+	width: 300px;
+	height: 170px;
+	position: absolute;
+	background: url('../img/dialog/PrivateChat.png');
+	display: none;
+	z-index: 99999;
+}
+
+#Initiative_Cancel_Button {
+	cursor: pointer;
+	background: url('../img/others/CancelBtn.png');
+	width: 80px;
+	height: 30px;
+	line-height: 30px;
+	font-family: 微软雅黑;
+	font-size: 13px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#BeCalls_Div {
+	position: absolute;
+	width: 300px;
+	height: 170px;
+	background: url('../img/dialog/PrivateChat.png');
+	display: none;
+}
+
+.Div_HeadPart {
+	width: 285px;
+	height: 40px;
+	margin: 10px 10px 0px 5px;
+}
+
+.Div_HeadPart img {
+	cursor: pointer;
+	margin: 10px 0px 0px 250px
+}
+
+.Call_Div_Content {
+	text-align: center;
+	width: 285px;
+	height: 70px;
+	margin: 0px 10px 0px 5px;
+	font-family: 微软雅黑;
+	font-size: 13px;
+}
+
+.Call_Div_Button {
+	width: 285px;
+	height: 30px;
+	margin: 0px 10px 0px 5px;
+}
+
+.ButtonImg {
+	height: 30px;
+	width: 80px;
+	background: url('../img/others/Button1.png');
+	text-align: center;
+	line-height: 30px;
+	cursor: pointer;
+	color: #000000;
+	font-family: 微软雅黑;
+	font-size: 13px;
+	float: left;
+	margin-left: 40px;
+}
+
+#SessionPrompt_Div {
+	position:relative;
+	z-index:9999;
+	box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.45);
+	background-color: #666666;
+	border:1px solid white;
+	display: none;
+	height: 50px;
+	line-height: 50px;
+	position: absolute;
+	text-align: center;
+	width: 200px;
+	color: white;
+}

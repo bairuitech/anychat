@@ -1,0 +1,340 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei" ! important;
+}
+
+body {
+	background-image: url("./../img/bodybg.jpg");
+	background-size: 100%;
+}
+
+.normlTypeDiv {
+	border: 1px solid #CCCCCC;
+	width: 800px;
+	border-radius: 10px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	text-align: left;
+	background-image: url("./../img/logindivbg.jpg");
+}
+
+.footer {
+	background: #F4FCFF;
+	width: 100%;
+	height: 65px;
+	border-top: 1px solid #CBDCE4;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	text-align: center;
+	font-size: 12px;
+}
+
+.footer p:first-child {
+	margin-top: -15px;
+}
+
+.divTitle {
+	FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=##15A216, endColorStr=#fafafa); /*IE*/
+	background: -moz-linear-gradient(top, #D1CCC8, #fafafa); /*火狐*/
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#D1CCC8), to(#fafafa)); /*谷歌*/
+	background-image: -webkit-gradient(linear, left bottom, left top, color-start(0, #D1CCC8), color-stop(1, #fafafa)); /* Safari & Chrome*/
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#D1CCC8', endColorstr='#fafafa'); /*IE6 & IE7*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#D1CCC8', endColorstr='#fafafa')"; /* IE8 */
+	width: 100%;
+	line-height: 30px;
+	height: 30px;
+	border-bottom: 1px solid #CCCCCC;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.divTitle p {
+	margin-left: 10px;
+	font-size: 14px;
+}
+
+#enterRoom {
+	width: 900px;
+	position: relative;
+	display: none;
+}
+
+#enterRoom li {
+	box-shadow: 0 0 5px black;
+}
+
+#enterRoom button {
+	margin-top: 280px;
+	width: 100px;
+	height: 50px;
+}
+
+#loginOut {
+	display: none;
+	position: absolute;
+	bottom: 8px;
+	right: 57px;
+	background: white;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	top: 38px;
+	border: 3px solid gray;
+	border-radius: 20px;
+	box-shadow: 0 0 5px #888888;
+	font-size: 28px;
+	font-weight: bold;
+	line-height: 30px;
+	background: url("../img/back.png");
+}
+
+.room b {
+	position: absolute;
+	color: red;
+	font-size: 24px;
+}
+
+.buttonCls {
+	height: 50px ! important;
+	margin: 19px ! important;
+	width: 100px ! important;
+}
+
+.hangUp {
+	width: 280px !important;
+	height: 80px !important;
+	margin: 20px 55px !important;
+}
+
+#videoCall {
+	display: none;
+	border: 2px solid gray;
+	width: 980px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	padding: 8px;
+	text-align: left;
+	border: 2px solid gray;
+	background-color: white;
+	overflow: hidden;
+}
+
+#videoCall p:first-letter {
+	font-size: 120%;
+	color: #8A2BE2;
+	margin-left: 20px;
+}
+
+#hallList {
+	position: absolute;
+}
+
+#hallList li {
+	float: left;
+	list-style: none;
+	width: 226px;
+	height: 85px;
+	line-height: 85px;
+	cursor: pointer;
+	color: white;
+	margin: 5px;
+}
+
+/* poptip */
+.poptip {
+	font-size: 24px;
+	position: relative;
+	padding: 75px 30px;
+	line-height: 16px;
+	color: #DB7C22;
+	border: solid 1px #FFBB76;
+	border-radius: 2px;
+	box-shadow: 0 0 3px #ddd;
+}
+
+.poptip em {
+	position: absolute;
+	top: 55%;
+	left: 50%;
+	font-style: normal;
+	font-size: 24px;
+	color: #ffbb76;
+}
+
+.poptip i {
+	position: absolute;
+	top: 54%;
+	left: 50%;
+	font-style: normal;
+	font-size: 24px;
+}
+
+#selectList {
+	display: none;
+	list-style: none;
+	width: 750px;
+	background: url('./../img/li_bg2.jpg');
+	padding: 0px;
+	margin: 0px;
+	text-align: center;
+}
+
+#selectList .title {
+	margin: 0px;
+	padding: 13px 0px 13px 70px;
+	background: url('./../img/li_bg.jpg');
+	text-align: left;
+	color: white;
+}
+
+#selectList .content {
+	display: none;
+	font-size: 15px;
+	text-align: left;
+	text-indent: 2em;
+	width: 500px;
+	margin: 20px auto 0px auto;
+	padding-bottom: 20px;
+}
+
+#selectList li:first-child .content {
+	display: block;
+}
+
+#selectList .content:last-child {
+	padding-bottom: 50px;
+	margin: 0px auto;
+}
+
+#selectList .content a {
+	float: right;
+	background-color: white;
+	border: 1px solid gray;
+	border-radius: 5px;
+	color: red;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 40px;
+	margin-top: 15px;
+	text-align: center;
+	text-decoration: none;
+	text-indent: 0;
+	width: 135px;
+}
+
+#selectList .content b {
+	color: #df2175;
+}
+
+#callLayer {
+	display: none;
+	border-radius: 5px;
+	width: 600px;
+	height: 280px;
+	background-image: url('./../img/li_bg2.jpg');
+	line-height: 50px;
+	border: 1px solid gray;
+	box-shadow: 0 0 5px black;
+}
+
+#callLayer h3 {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	text-align: left;
+	background: url('./../img/li_bg.jpg');
+	color: white;
+	padding-left: 20px;
+	text-align: left;
+}
+
+strong {
+	color: red;
+}
+
+#queueMsg2 {
+	display: none;
+}
+
+.confirmMsg {
+	padding: 10px 20px;
+}
+
+#localVideoPos {
+	background: url("./../img/loUser.jpg") no-repeat;
+}
+
+#removeVideoPos {
+	background: url("./../img/reUser.jpg") no-repeat;
+	width: 530px;
+	height: 402px;
+}
+
+#remoteAudioVolume {
+	height: 5px;
+	background: green;
+	width: 530px;
+	position: absolute;
+}
+
+#localAudioVolume {
+	height: 5px;
+	background: green;
+	width: 380px;
+}
+
+#ServiceInfoDiv {
+	display: none;
+}
+
+th {
+	background-color: #DBEAF9;
+	color: #EF242A;
+	width: 200px;
+}
+
+td {
+	text-align: center;
+	font-size: 12px;
+	color: #1A2134;
+}
+
+#videoCallContent {
+	background: #E9E5E6;
+	padding: 15px;
+	position: relative;
+}
+
+.msgHover {
+	background-color: #f8f8f8;
+}
+
+.msgHover:hover {
+	border-color: #9a9fa4;
+	box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.85);
+	background-color: white;
+	cursor: pointer;
+}
+
+#clientList a {
+	color: white;
+	text-decoration: none;
+}
+
+#clientList a:hover {
+	text-decoration: underline;
+}
+
+#LOADING_GREY_DIV {
+	display: none;
+	background: rgba(255, 255, 255, 0.5) !important;
+	filter: Alpha(opacity = 40);
+	width: 100%;
+	height: 100%;
+	background-color: #999999;
+	position: absolute;
+	z-index: 44;
+	text-align: center;
+}
+
+#mDefaultServerAddr,#mDefaultServerPort {
+	padding: 3px;
+}

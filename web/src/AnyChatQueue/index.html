@@ -1,0 +1,167 @@
+
+<html>
+<head>
+    <title>AnyChat Queue for Web</title>
+    <meta charset="UTF-8" content="text/html" http-equiv="Content-Type">
+    <link type="text/css" rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" type="text/css" href="./css/advanceset.css" />
+    <link rel="stylesheet" type="text/css" href="./css/prompt.css" />
+    <link rel="stylesheet" type="text/css" href="./css/VideoCall.css" />
+    <link rel="stylesheet" type="text/css" href="./css/login.css" />
+
+    <script src="./js/jquery-2.1.1.js" ></script>
+    <script src="./js/anychatsdk.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/anychatobject.js" charset="GB2312"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/advanceset.js"></script>
+    <script src="./js/anychatevent.js"></script>
+    <script src="./js/videocall.js"></script>
+</head>
+<body style="overflow: hidden;">
+<!--灰色背景透明层 -->
+		<div id="LOADING_GREY_DIV">
+			<h2 style="margin:10px;color: orange;display: inline-block;font-weight: bold;padding: 5px;margin-top:20%;line-height:53px;height: 53px"><img title="请等待..." alt="请等待..." style="height: 35px;margin-top:10px" src="img/loading.gif"><span style="float: right;margin-left: 10px;"></span></h2>
+		</div>		
+	<center>
+		<!-- 顶部  -->
+		<div id="bodyHeader"></div>
+		<div id="SessionPrompt_Div"></div>
+		<!-- 登录层 -->
+		<div id="loginDiv">
+			<div id="page_01"></div>
+			<div id="page_02"></div>
+			<div id="page_03"></div>
+			<div id="page_04"></div>
+			<div id="page_05">
+				<div id="mainer">
+						<div class="contentL">
+							<strong style="color: #68E;letter-spacing: 1px;font-size: 20px;">AnyChat 排队客户端</strong><br><br> 身份选择：<select id="askSelect">
+								<option value="1">客户</option>
+								<option value="2">坐席</option>
+								<!--<option value="3">经理</option> -->
+							</select>
+						</div>
+						<div class="contentR">
+							<table>
+							  <tr style="height:38px;">
+							    <td style="width:226px;"></td>
+							    <td></td>
+							  </tr>
+							  <tr>
+							    <td>
+							    	<p>
+											<input id="username" type="text" value="请输入用户名!" style="color: #999;" />
+										</p>
+										<p>
+											<input id="password" type="password" />
+										</p>
+										<p><a id="loginRoom">登&nbsp;录</a></p>
+									</td>
+							    <td>
+								    <ol style="margin-top:-20px;margin-left: 35px; text-align: left">
+				　　　　　　　<li>客户,坐席无需密码验证</li>
+				　　　　　　　<li>用户名也均无限制</li>
+				　　　　　　　<li>服务器IP:<input type="text" id="mDefaultServerAddr"/>端口:<input type="text" id="mDefaultServerPort"/></li>
+			　　　　			</ol>
+									</td>
+							  </tr>
+							  <tr style="height:21px;">
+							    <td colspan="2">&nbsp;</td>
+							  </tr>
+							</table>
+						</div>
+				</div>
+			</div>
+			<div id="page_06"></div>
+			<div id="page_07"><span class="login-buttom-txt"><p>Copyright © 2014-2015 www.anychat.cn</p></span></div>
+			<div id="page_08"></div>
+			<div id="page_09"></div>
+			<div id="page_10"></div>
+		</div>
+		<!-- 选择层 -->
+		<div id="enterRoom">
+			<h2 style="letter-spacing: 5px;color: orange;margin-bottom: 30px;">标题</h2>
+			<ul id="hallList">
+			</ul>
+			<div id="loginOut" title="返回"></div>
+			<ul id="selectList">
+				
+			</ul>
+		<button id="roomOut">退出</button>
+		</div>
+		<!-- 等待呼叫层 -->
+		<div id="callLayer">
+			<h3>等待中</h3>
+			<br />
+			<div id="queueMsg1">
+				<!-- 当前排队人数：<strong></strong> 您的票号为：<strong></strong> 现在排在第<strong></strong>位 <br /> -->
+                当前排队人数共：<strong></strong> 人  您现在排在第 <strong></strong> 位 <br />
+
+				已等待时长：<strong></strong>
+				<br />
+				<button class="confirmMsg">取消排队</button>
+			</div>
+			<div id="queueMsg2">
+				<p>客服请求与您视频通话，是否接受？</p>
+				<br/>
+				<button class="confirmMsg" >接受</button>&nbsp;&nbsp;<button class="confirmMsg" >拒绝</button>
+			</div>
+		</div>
+		<!-- 视频通话服务层 -->
+		<div id="videoCall">
+			<div style="background:#f4fcff;padding:15px;">
+				<strong>视频通话界面</strong><br />
+				<p>1.请保持扬声器，话筒，摄像头工作正常。</p>
+				<p>2.在等待阶段、系统会随时为您接通视频认证，请耐心等待，请勿刷新界面。</p>
+				<div id="videoCallContent" ></div>
+			</div>
+		</div>
+		
+		<!-- 安装插件提示层 -->
+		<div id="prompt_div">
+			<div class="close_div">
+				<div id="prompt_div_headline1">插件安装提示</div>
+				<div id="prompt_div_headline2">刷新</div>
+			</div>
+			<div>
+				<div id="prompt_div_line1"></div>
+				<div id="prompt_div_line2">控件安装完成后，请重启浏览器</div>
+				<div id="prompt_div_btn_load" onclick="window.open('http://anychat.oss.aliyuncs.com/AnyChatWebSetup.exe')">下载安装</div>
+			</div>
+			<div style="height: 85px;">
+				<div id="prompt_div_BR">
+					<a href="http://www.anychat.cn/">AnyChat</a>&nbsp|&nbsp <a href="http://www.bairuitech.com/">佰锐科技</a>
+				</div>
+			</div>
+		</div>
+		<!-- 主动呼叫等待框 -->
+	    <div id="Initiative_Call_Div">
+	        <div class="Div_HeadPart">
+	            <img alt="取消呼叫" src="./img/others/close.png" onclick="CancelCall()" />
+	        </div>
+	        <div id="Initiative_Call_Div_Content" class="Call_Div_Content"></div>
+	        <div class="Call_Div_Button">
+	            <div id="Initiative_Cancel_Button" onclick="CancelCall()" style="">取消呼叫</div>
+	        </div>
+	    </div>
+	    <!-- 被呼叫询问框 -->
+	    <div id="BeCalls_Div">
+	        <div class="Div_HeadPart"></div>
+	        <div id="BeCalls_Div_Content" class="Call_Div_Content"></div>
+	        <div class="Call_Div_Button">
+	             <div class="ButtonImg" onclick="AcceptRequestBtnClick()">同意</div>
+	             <div class="ButtonImg" onclick="RejectRequestBtnClick()">拒绝</div>
+	        </div>
+	    </div>
+	</center>
+</body>
+<script>
+$(document).keypress(function(event){  
+    var keycode = (event.keyCode ? event.keyCode : event.which);  
+    if($("#loginDiv").css("display")=="block"){
+	    if(keycode == '13')
+	        $("#loginRoom").click();
+    }
+});
+</script>
+</html>
