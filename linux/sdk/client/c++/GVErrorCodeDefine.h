@@ -16,8 +16,14 @@
 //连接部分
 #define GV_ERR_CONNECT_TIMEOUT	100		///< 连接服务器超时
 #define GV_ERR_CONNECT_ABORT	101		///< 与服务器的连接中断
-#define GV_ERR_CONNECT_AUTHFAIL	102		///< 未能通过服务器的认证，属于非法连接
+#define GV_ERR_CONNECT_AUTHFAIL	102		///< 连接服务器认证失败（服务器设置了认证密码）
 #define GV_ERR_CONNECT_DNSERROR	103		///< 域名解析失败
+#define GV_ERR_CONNECT_OVERFLOW	104		///< 超过授权用户数
+#define	GV_ERR_CONNECT_FUNCLIMIT 105	///< 服务器功能受限制（演示模式）
+#define	GV_ERR_CONNECT_INTRANET	106		///< 只能在内网使用
+#define	GV_ERR_CONNECT_OLDVERSION 107	///< 版本太旧，不允许连接
+#define	GV_ERR_CONNECT_DEVICELIMIT 109	///< 嵌入式设备连接限制（没有授权）
+
 
 //登录部分
 #define GV_ERR_CERTIFY_FAIL		200		///< 认证失败，用户名或密码有误
@@ -26,8 +32,11 @@
 #define GV_ERR_IPADDR_LOCK		203		///< IP地址已被暂时锁定
 #define GV_ERR_VISITOR_DENY		204		///< 游客登录被禁止（登录时没有输入密码）
 #define GV_ERR_INVALID_USERID	205		///< 无效的用户ID（用户不存在）
-#define GV_ERR_SERVERSDK_FAIL		206		///< 与业务服务器连接失败，认证功能失效
-#define GV_ERR_SERVERSDK_TIMEOUT	207		///< 业务服务器执行任务超时
+#define GV_ERR_SERVERSDK_FAIL	206		///< 与业务服务器连接失败，认证功能失效
+#define GV_ERR_SERVERSDK_TIMEOUT 207	///< 业务服务器执行任务超时
+#define GV_ERR_NOTLOGIN			208		///< 没有登录
+#define	GV_ERR_LOGIN_NEWLOGIN	209		///< 该用户在其它计算机上登录
+
 
 //进入房间
 #define GV_ERR_ROOM_LOCK		300		///< 房间已被锁住，禁止进入

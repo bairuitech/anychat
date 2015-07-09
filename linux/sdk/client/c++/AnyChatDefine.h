@@ -53,7 +53,6 @@ enum BRAC_VideoShowDriver{
 #define BRAC_FUNC_AUDIO_FORBIDCFGHW	0x00001000	///< 禁止修改音频硬件配置
 #define BRAC_FUNC_CORE_FORBIDWINMSG	0x00002000	///< 禁止使用windows消息循环
 #define BRAC_FUNC_AUDIO_LARGEBUFFER	0x00004000	///< 音频大缓冲区模式，适合音乐播放类应用
-#define BRAC_FUNC_WEBMODE			0x00008000	///< Web工作模式
 #define BRAC_FUNC_NET_LARGEDELAY	0x00010000	///< 网络高延迟模式，适用于卫星网络环境
 
 
@@ -73,6 +72,8 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_AUDIO_SOFTVOLMODE			73	///< 设置软件音量模式控制（参数为int型，1打开[默认]，0关闭），使用软件音量模式，将不会改变系统的音量设置
 #define BRAC_SO_AUDIO_RECORDDRVCTRL			74	///< 音频采集驱动控制（参数为int型，0默认驱动， 1 DSound驱动， 2 WaveIn驱动， 3 Java采集[Android平台使用]）
 #define BRAC_SO_AUDIO_ECHODELAY				75	///< 音频回声消除延迟参数设置（参数为int型，单位：ms）
+#define BRAC_SO_AUDIO_NSLEVEL				76	///< 音频噪音抑制水平参数设置（参数为int型，0 - 3，默认为2，值越大抑制水平越高，抑制噪音的能力越强）
+#define BRAC_SO_AUDIO_CBCODEC				77	///< 音频数据回调编码器类型（参数为int型）
 
 #define BRAC_SO_RECORD_VIDEOBR				10	///< 录像视频码率设置（参数为：int型，单位：bps）
 #define BRAC_SO_RECORD_AUDIOBR				11	///< 录像音频码率设置（参数为：int型，单位：bps）
@@ -115,7 +116,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_LOCALVIDEO_PIXFMTCTRL		91	///< 本地视频采集优先格式控制（参数为int型，-1表示智能匹配，否则优先采用指定格式，参考：BRAC_PixelFormat）
 #define BRAC_SO_LOCALVIDEO_OVERLAY			92	///< 本地视频采用Overlay模式（参数为int型，1表示采用Overlay模式， 0表示普通模式[默认]）
 #define BRAC_SO_LOCALVIDEO_CODECID			93	///< 本地视频编码器ID设置（参数为int型，-1表示默认，如果设置的编码器ID不存在，则内核会采用默认的编码器）
-#define BRAC_SO_LOCALVIDEO_ROTATECTRL		94	///< 本地视频旋转控制（参数为int型，0表示不进行旋转，1表示垂直翻转）
+#define BRAC_SO_LOCALVIDEO_ROTATECTRL		94	///< 本地视频旋转控制（已失效，使用：BRAC_SO_LOCALVIDEO_CAMERAROTATION替代）
 #define BRAC_SO_LOCALVIDEO_CAPDRIVER		95	///< 本地视频采集驱动设置（参数为int型，0表示自动选择[默认]， 1 Video4Linux, 2 DirectShow, 3 Java采集[Android平台使用]）
 #define BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA	96	///< 修正视频采集颜色偏色（参数为int型，0表示关闭[默认]，1 开启）
 #define BRAC_SO_LOCALVIDEO_ORIENTATION		97	///< 本地视频设备方向（参数为：int型，定义为常量：ANYCHAT_DEVICEORIENTATION_XXXX）
@@ -126,16 +127,18 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_LOCALVIDEO_DEVICEROTATION	102	///< 设备旋转角度
 #define BRAC_SO_LOCALVIDEO_DEVICEMODE		103	///< 设备类型
 #define BRAC_SO_LOCALVIDEO_TVFORMAT			104	///< 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
+#define BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP	105	///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
 
 #define BRAC_SO_NETWORK_P2PPOLITIC			40	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 #define BRAC_SO_NETWORK_P2PCONNECT			41	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
 #define BRAC_SO_NETWORK_P2PBREAK			42	///< 断开与指定用户的P2P连接（参数为int型，表示目标用户ID）[暂不支持，保留]
 #define BRAC_SO_NETWORK_TCPSERVICEPORT		43	///< 设置本地TCP服务端口（参数为int型），连接服务器之前设置有效
 #define BRAC_SO_NETWORK_UDPSERVICEPORT		44	///< 设置本地UDP服务端口（参数为int型），连接服务器之前设置有效
-#define BRAC_SO_NETWORK_MULTICASTPOLITIC	45	///< 组播策略控制（参数为int型：0 执行服务器路由策略，禁止组播发送[默认]， 1 忽略服务器路由策略，只向组播组广播媒体流， 2 执行服务器路由策略，同时组播）
+#define BRAC_SO_NETWORK_MULTICASTPOLITIC	45	///< 组播策略控制（参数为int型，定义为常量：BRAC_MCPOLITIC_XXXX）
 #define BRAC_SO_NETWORK_TRANSBUFMAXBITRATE	46	///< 传输缓冲区、文件最大码率控制（参数为int型，0 不限制，以最快速率传输[默认]， 否则表示限制码率，单位为：bps）
 #define BRAC_SO_NETWORK_AUTORECONNECT		47	///< 网络掉线自动重连功能控制（参数为int型，0 关闭， 1 开启[默认]）
 #define BRAC_SO_NETWORK_MTUSIZE				48	///< 设置网络层MTU大小（参数为int型）
+#define BRAC_SO_NETWORK_UDPSTATUS			49	///< UDP网络通信状态查询（参数为int型）
 
 #define BRAC_SO_PROXY_FUNCTIONCTRL			50	///< 本地用户代理功能控制，（参数为：int型，1启动代理，0关闭代理[默认]）
 #define BRAC_SO_PROXY_VIDEOCTRL				51	///< 本地用户代理视频控制，将本地视频变为指定用户的视频对外发布（参数为int型，表示其它用户的userid）
@@ -151,6 +154,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER	84	///< 视频数据经过GPU直接渲染，将解码后的视频数据直接传输到GPU的物理地址（参数为：int型， 0 关闭[默认]， 1 打开），与硬件平台相关
 #define BRAC_SO_VIDEOSHOW_AUTOROTATION		85	///< 远程视频显示自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
 #define BRAC_SO_VIDEOSHOW_CLIPMODE			86	///< 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
+#define BRAC_SO_VIDEOSHOW_CBPIXFMT			87	///< 视频数据回调格式（参数为int型）
 
 #define BRAC_SO_CORESDK_TICKOUTUSER			110	///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
 
@@ -160,6 +164,18 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_MEDIAUTILLIB		133	///< 获取brMediaUtil.dll的库加载句柄
 #define BRAC_SO_CORESDK_UPLOADLOGINFO		134	///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
 #define BRAC_SO_CORESDK_WRITELOG			135	///< 写入调试信息到客户端日志文件中
+#define BRAC_SO_CORESDK_NEWLOGFILE			136	///< 产生新的日志文件
+
+#define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
+#define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
+#define BRAC_SO_UDPTRACE_BITRATE			162	///< UDP数据包跟踪的包速率，单位：bps
+#define BRAC_SO_UDPTRACE_START				163	///< UDP数据包跟踪控制（参数为int型，1 启动， 0 停止）
+#define BRAC_SO_UDPTRACE_LOCALRECVNUM		164 ///< UDP数据包跟踪本地接收包数量
+#define BRAC_SO_UDPTRACE_SERVERRECVNUM		165	///< UDP数据包跟踪服务器接收包数量
+#define BRAC_SO_UDPTRACE_SOURCESENDNUM		166	///< UDP数据包跟踪源发包数量
+#define BRAC_SO_UDPTRACE_SENDUSERID			167	///< UDP数据包跟踪源用户ID
+
+#define BRAC_SO_OBJECT_INITFLAGS			200	///< 业务对象身份初始化
 
 
 
@@ -168,30 +184,35 @@ enum BRAC_VideoShowDriver{
 #define BRAC_TRANSTASK_BITRATE				2	///< 传输任务当前传输码率（参数为：DWORD型，单位：bps）
 #define BRAC_TRANSTASK_STATUS				3	///< 传输任务当前状态（参数为：DWORD型）
 #define BRAC_TRANSTASK_SAVEASPATH			4	///< 文件传输任务另存为路径设置，含文件名（参数为字符串TCHAR类型）
+#define BRAC_TRANSTASK_SOURCEFILE			5	///< 源文件名（含路径，参数为字符串，TCHAR类型）
 
 // 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
-#define BRAC_RECORD_FLAGS_VIDEO		0x00000001	///< 录制视频
-#define BRAC_RECORD_FLAGS_AUDIO		0x00000002	///< 录制音频
-#define BRAC_RECORD_FLAGS_SERVER	0x00000004	///< 服务器端录制
-#define BRAC_RECORD_FLAGS_MIXAUDIO	0x00000010	///< 录制音频时，将其它人的声音混音后录制
-#define BRAC_RECORD_FLAGS_MIXVIDEO	0x00000020	///< 录制视频时，将其它人的视频迭加后录制
-#define BRAC_RECORD_FLAGS_ABREAST	0x00000100	///< 录制视频时，将其它人的视频并列录制
-#define BRAC_RECORD_FLAGS_STEREO	0x00000200	///< 录制音频时，将其它人的声音混合为立体声后录制
-#define BRAC_RECORD_FLAGS_SNAPSHOT	0x00000400	///< 拍照
-#define BRAC_RECORD_FLAGS_LOCALCB	0x00000800	///< 触发本地回调
-#define BRAC_RECORD_FLAGS_STREAM	0x00001000	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+#define BRAC_RECORD_FLAGS_VIDEO			0x00000001	///< 录制视频
+#define BRAC_RECORD_FLAGS_AUDIO			0x00000002	///< 录制音频
+#define BRAC_RECORD_FLAGS_SERVER		0x00000004	///< 服务器端录制
+#define BRAC_RECORD_FLAGS_MIXAUDIO		0x00000010	///< 录制音频时，将其它人的声音混音后录制
+#define BRAC_RECORD_FLAGS_MIXVIDEO		0x00000020	///< 录制视频时，将其它人的视频迭加后录制
+#define BRAC_RECORD_FLAGS_ABREAST		0x00000100	///< 录制视频时，将其它人的视频并列录制
+#define BRAC_RECORD_FLAGS_STEREO		0x00000200	///< 录制音频时，将其它人的声音混合为立体声后录制
+#define BRAC_RECORD_FLAGS_SNAPSHOT		0x00000400	///< 拍照
+#define BRAC_RECORD_FLAGS_LOCALCB		0x00000800	///< 触发本地回调
+#define BRAC_RECORD_FLAGS_STREAM		0x00001000	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+#define BRAC_RECORD_FLAGS_USERFILENAME	0x00002000	///< 用户自定义文件名
 
 // 客户端、服务器端录制标志定义保持统一
-#define ANYCHAT_RECORD_FLAGS_VIDEO		BRAC_RECORD_FLAGS_VIDEO
-#define ANYCHAT_RECORD_FLAGS_AUDIO		BRAC_RECORD_FLAGS_AUDIO
-#define ANYCHAT_RECORD_FLAGS_SERVER		BRAC_RECORD_FLAGS_SERVER
-#define ANYCHAT_RECORD_FLAGS_MIXAUDIO	BRAC_RECORD_FLAGS_MIXAUDIO
-#define ANYCHAT_RECORD_FLAGS_MIXVIDEO	BRAC_RECORD_FLAGS_MIXVIDEO
-#define ANYCHAT_RECORD_FLAGS_ABREAST	BRAC_RECORD_FLAGS_ABREAST
-#define ANYCHAT_RECORD_FLAGS_STEREO		BRAC_RECORD_FLAGS_STEREO
-#define ANYCHAT_RECORD_FLAGS_SNAPSHOT	BRAC_RECORD_FLAGS_SNAPSHOT
-#define ANYCHAT_RECORD_FLAGS_LOCALCB	BRAC_RECORD_FLAGS_LOCALCB
-#define ANYCHAT_RECORD_FLAGS_STREAM		BRAC_RECORD_FLAGS_STREAM
+#if !defined(ANYCHAT_RECORD_FLAGS_VIDEO)
+#define ANYCHAT_RECORD_FLAGS_VIDEO			BRAC_RECORD_FLAGS_VIDEO
+#define ANYCHAT_RECORD_FLAGS_AUDIO			BRAC_RECORD_FLAGS_AUDIO
+#define ANYCHAT_RECORD_FLAGS_SERVER			BRAC_RECORD_FLAGS_SERVER
+#define ANYCHAT_RECORD_FLAGS_MIXAUDIO		BRAC_RECORD_FLAGS_MIXAUDIO
+#define ANYCHAT_RECORD_FLAGS_MIXVIDEO		BRAC_RECORD_FLAGS_MIXVIDEO
+#define ANYCHAT_RECORD_FLAGS_ABREAST		BRAC_RECORD_FLAGS_ABREAST
+#define ANYCHAT_RECORD_FLAGS_STEREO			BRAC_RECORD_FLAGS_STEREO
+#define ANYCHAT_RECORD_FLAGS_SNAPSHOT		BRAC_RECORD_FLAGS_SNAPSHOT
+#define ANYCHAT_RECORD_FLAGS_LOCALCB		BRAC_RECORD_FLAGS_LOCALCB
+#define ANYCHAT_RECORD_FLAGS_STREAM			BRAC_RECORD_FLAGS_STREAM
+#define ANYCHAT_RECORD_FLAGS_USERFILENAME	BRAC_RECORD_FLAGS_USERFILENAME
+#endif
 
 
 // 组播策略定义
@@ -220,7 +241,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_USERSTATE_VIDEOBITRATE			9	///< 用户当前的视频码率（参数为DWORD类型，Bps）
 #define BRAC_USERSTATE_AUDIOBITRATE			10	///< 用户当前的音频码率（参数为DWORD类型，Bps）
 #define BRAC_USERSTATE_P2PCONNECT			11	///< 查询本地用户与指定用户的当前P2P连接状态（参数为DWORD类型，返回值：0 P2P不通， 1 P2P连接成功[TCP]，2 P2P连接成功[UDP]，3 P2P连接成功[TCP、UDP]）
-#define BRAC_USERSTATE_NETWORKSTATUS		12	///< 查询指定用户的网络状态（参数为DWORD类型，返回值：0 优良，1 较好，2 一般，3 较差，4 非常差），注：查询间隔需要>1s
+#define BRAC_USERSTATE_NETWORKSTATUS		12	///< 查询指定用户的网络状态（参数为DWORD类型，返回值：0 优良，1 较好，2 一般，3 较差，4 非常差）
 #define BRAC_USERSTATE_VIDEOSIZE			13	///< 查询指定用户的视频分辨率（参数为DWORD类型，返回值：低16位表示宽度，高16位表示高度）
 #define BRAC_USERSTATE_PACKLOSSRATE			14	///< 查询指定用户的网络流媒体数据丢包率（参数为DWORD类型，返回值：0 - 100，如：返回值为5，表示丢包率为5%）
 #define BRAC_USERSTATE_DEVICETYPE			15	///< 查询指定用户的终端类型（参数为DWORD类型，返回值：0 Unknow，1 Windows，2 Android，3 iOS，4 Web，5 Linux，6 Mac，7 Win Phone，8 WinCE）
@@ -228,6 +249,8 @@ enum BRAC_VideoShowDriver{
 #define BRAC_USERSTATE_SELFUSERID			17	///< 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
 #define BRAC_USERSTATE_VIDEOROTATION		18	///< 查询指定用户的当前视频旋转角度（参数为DWORD类型，返回角度值）
 #define BRAC_USERSTATE_VIDEOMIRRORED		19	///< 查询指定用户的视频是否需要镜像翻转
+#define BRAC_USERSTATE_AUDIOCODECID			20	///< 查询指定用户的音频编码器ID
+#define BRAC_USERSTATE_VIDEOCODECID			21	///< 查询指定用户的视频编码器ID
 
 // 房间状态标志定义（API：BRAC_QueryRoomState 传入参数）
 #define BRAC_ROOMSTATE_ROOMNAME				1	///< 房间名称（参数为字符串TCHAR类型）
@@ -255,7 +278,7 @@ enum BRAC_VideoShowDriver{
 
 // 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
 #define BRAC_USERINFO_CTRLCODE_ROTATION		8	///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
-#define BRAC_USERINFO_CTRLCODE_DEBUGLOG		9	///< 输出本地用户的调试日志，wParam为调试日志类型
+#define BRAC_USERINFO_CTRLCODE_DEBUGLOG		9	///< 输出本地用户的调试日志，wParam为调试日志类型，lParam为是否开启
 #define BRAC_USERINFO_CTRLCODE_LVORIENTFIX	10	///< 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
 
 // 数据加（解）密标志定义（DataEncDec回调参数）
@@ -283,6 +306,16 @@ enum BRAC_VideoShowDriver{
 #define BRAC_CBTYPE_VIDEOCALLEVENT			14	///< 视频通话消息通知回调
 #define BRAC_CBTYPE_DATAENCDEC				15	///< 数据加密、解密回调
 #define BRAC_CBTYPE_SCREENEVENT				16	///< 屏幕事件回调
+#define BRAC_CBTYPE_NETWORKDATASEND			17	///< 网络数据回调
+#define BRAC_CBTYPE_OBJECTEVENT				18	///< 业务对象事件通知
+
+
+// 视频裁剪模式定义
+#define ANYCHAT_VIDEOCLIPMODE_AUTO			0	///< 默认模式，以最大比例进行裁剪，然后再整体拉伸，画面保持比例，但被裁剪画面较大
+#define ANYCHAT_VIDEOCLIPMODE_OVERLAP		1	///< 重叠模式，只取最大有效部分，对边缘进行裁剪
+#define ANYCHAT_VIDEOCLIPMODE_SHRINK		2	///< 缩小模式，缩小到合适的比例，不进行裁剪
+#define ANYCHAT_VIDEOCLIPMODE_STRETCH		3	///< 平铺模式，不进行裁剪，但可能导致画面不成比例
+#define ANYCHAT_VIDEOCLIPMODE_DYNAMIC		4	///< 动态模式，由上层应用根据分辩率来调整显示表面，保持画面不变形
 
 
 

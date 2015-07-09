@@ -4,6 +4,7 @@
 #include <mmsystem.h>
 #include <wingdi.h>
 #include "AnyChatDefine.h"
+#include "AnyChatObjectDefine.h"
 #include "GVErrorCodeDefine.h"
 #include "GVMessageDefine.h"
 
@@ -51,6 +52,8 @@ typedef void (CALLBACK * BRAC_VideoCallEvent_CallBack)(DWORD dwEventType, DWORD 
 typedef DWORD (CALLBACK * BRAC_DataEncDec_CallBack)(DWORD dwUserId, DWORD dwFlags, LPBYTE lpInBuf, DWORD dwInSize, LPBYTE lpOutBuf, LPDWORD lpOutSize, LPVOID lpUserValue);
 // 网络数据发送回调函数定义
 typedef DWORD (CALLBACK * BRAC_NetworkDataSend_CallBack)(DWORD hSocket, DWORD dwFlags, CHAR* lpBuf, DWORD dwSize, DWORD dwTargetAddr, DWORD dwTargetPort, LPVOID lpUserValue);
+// 业务对象事件通知回调函数定义
+typedef void (CALLBACK * BRAC_ObjectEventNotify_CallBack)(DWORD dwObjectType, DWORD dwObjectId, DWORD dwEventType, DWORD dwParam1, DWORD dwParam2, DWORD dwParam3, DWORD dwParam4, LPCTSTR lpStrParam, LPVOID lpUserValue);
 
 /**
  *	API方法定义
@@ -238,6 +241,15 @@ BRAC_API DWORD BRAC_GetUserInfo(DWORD dwUserId, DWORD dwInfoId, TCHAR* lpInfoVal
 BRAC_API DWORD BRAC_GetGroupName(DWORD dwGroupId, TCHAR* lpGroupName, DWORD dwLen);
 // 用户信息控制
 BRAC_API DWORD BRAC_UserInfoControl(DWORD dwUserId, DWORD dwCtrlCode, DWORD wParam=0, DWORD lParam=0, LPCTSTR lpStrValue=NULL);
+
+// 获取对象ID列表
+BRAC_API DWORD BRAC_ObjectGetIdList(DWORD dwObjectType, LPDWORD lpIdArray, DWORD& dwIdNum);
+// 获取对象属性值
+BRAC_API DWORD BRAC_ObjectGetValue(DWORD dwObjectType, DWORD dwObjectId, DWORD dwInfoName, TCHAR* lpInfoValue, DWORD dwLen);
+// 设置对象属性值
+BRAC_API DWORD BRAC_ObjectSetValue(DWORD dwObjectType, DWORD dwObjectId, DWORD dwInfoName, TCHAR* lpInfoValue, DWORD dwLen);
+// 对象参数控制
+BRAC_API DWORD BRAC_ObjectControl(DWORD dwObjectType, DWORD dwObjectId, DWORD dwCtrlCode, DWORD dwParam1=0, DWORD dwParam2=0, DWORD dwParam3=0, DWORD dwParam4=0, LPCTSTR lpStrValue=NULL);
 
 
 #endif //BR_ANYCHAT_CORE_SDK_H__INCLUDED_

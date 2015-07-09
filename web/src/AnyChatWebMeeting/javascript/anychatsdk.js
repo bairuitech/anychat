@@ -39,6 +39,7 @@ var BRAC_SO_RECORD_WIDTH	=				141;// Â¼ÖÆÊÓÆµ¿í¶ÈÉèÖÃ£¨²ÎÊýÎª£ºintÐÍ£¬Èç£º320£©
 var BRAC_SO_RECORD_HEIGHT	=				142;// Â¼ÖÆÎÄ¼þ¸ß¶ÈÉèÖÃ£¨²ÎÊýÎª£ºintÐÍ£¬Èç£º240£©
 var BRAC_SO_RECORD_FILENAMERULE	=			143;// Â¼ÖÆÎÄ¼þÃûÃüÃû¹æÔò£¨²ÎÊýÎª£ºintÐÍ£©
 var BRAC_SO_RECORD_CLIPMODE	=				144;// Â¼ÖÆÊÓÆµ²Ã¼ôÄ£Ê½£¨²ÎÊýÎª£ºintÐÍ£©
+var BRAC_SO_RECORD_DISABLEDATEDIR =			145;// Â¼ÖÆÎÄ¼þ²»°´ÈÕÆÚ·ÖÄ¿Â¼±£´æ£¬È«²¿Éú³ÉÔÚÖ¸¶¨ÎÄ¼þ¼ÐÖÐ£¨²ÎÊýÎª£ºintÐÍ£¬ 0½ûÖ¹[Ä¬ÈÏ] 1 ¿ªÆô£©
 
 var BRAC_SO_CORESDK_TMPDIR = 				14;	// ÉèÖÃAnyChat Core SDKÁÙÊ±Ä¿Â¼£¨²ÎÊýÎª×Ö·û´®TCHARÀàÐÍ£¬±ØÐëÊÇÍêÕûµÄ¾ø¶ÔÂ·¾¶£©
 var BRAC_SO_CORESDK_MAGICADJUST = 			15;	// ÄÚºËµ÷ÊÔ²ÎÊý
@@ -239,13 +240,8 @@ var BRAC_USERINFO_CTRLCODE_DEBUGLOG	=		9;	// Êä³ö±¾µØÓÃ»§µÄµ÷ÊÔÈÕÖ¾£¬wParamÎªµ÷Ê
 var BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;	// ±¾µØÊÓÆµ²É¼¯·½ÏòÐÞÕý£¬wParamÎª·½Ïò²ÎÊý£¬lParamÎªÐÞÕý½Ç¶È
 
 // ÊÓÆµÏÔÊ¾²å¼þÉèÖÃ²ÎÊý
-var ANYCHATWEB_VIDEO_SO_OVERLAYMODE	=		1;	// Í¼Æ¬µü¼ÓÄ£Ê½£¨ÕûÐÎ£©£º0 ½ûÖ¹£¨Ä¬ÈÏ£©£¬1 Í¸Ã÷£¬2 »ìºÏ
-var ANYCHATWEB_VIDEO_SO_TRANSCOLOR	=		2;	// Í¸Ã÷ÑÕÉ«£¨ÕûÐÎ£©£¬Í¸Ã÷µü¼ÓÄ£Ê½ÓÐÐ§
-var ANYCHATWEB_VIDEO_SO_OPACITY		=		3;	// Í¸Ã÷¶È£¨ÕûÐÎ£©£¬»ìºÏµü¼ÓÄ£Ê½ÓÐÐ§
-var ANYCHATWEB_VIDEO_SO_XPOS		=		4;	// µü¼ÓÎ»ÖÃ£¨ÕûÐÎ£©
-var ANYCHATWEB_VIDEO_SO_YPOS		=		5;	// µü¼ÓÎ»ÖÃ£¨ÕûÐÎ£©
-var ANYCHATWEB_VIDEO_SO_UPDATEPOS	=		6;	// ¸üÐÂÎ»ÖÃ£¨ÕûÐÎ£©
-var ANYCHATWEB_VIDEO_SO_OVERLAYFILE	=		7;	// µü¼ÓÍ¼Æ¬£¨×Ö·û´®ÀàÐÍ£©£¬º¬Â·¾¶£¬¿ÉÎª±¾µØÎÄ¼þ£¬Ò²¿ÉÎªURLµØÖ·£¬Ä¿Ç°Ö»Ö§³ÖjpgÎÄ¼þ
+var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// ÔÚÊÓÆµÉÏµü¼ÓÎÄ×Ö¡¢Í¼Æ¬µÈÄÚÈÝ
+var ANYCHATWEB_VIDEO_SO_DISABLEFULLSCREEN = 9;	// ½ûÖ¹Ë«»÷ÊÓÆµÈ«ÆÁÏÔÊ¾
 
 // ²å¼þ×îµÍÐèÇó°æ±¾ºÅ
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
