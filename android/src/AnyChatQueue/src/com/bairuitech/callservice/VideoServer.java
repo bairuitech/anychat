@@ -1,0 +1,373 @@
+package com.bairuitech.callservice;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
+import com.bairuitech.anychat.AnyChatBaseEvent;
+import com.bairuitech.anychat.AnyChatCoreSDK;
+import com.bairuitech.anychat.AnyChatDefine;
+import com.bairuitech.anychat.AnyChatObjectDefine;
+import com.bairuitech.anychat.AnyChatObjectEvent;
+import com.bairuitech.anychat.AnyChatVideoCallEvent;
+import com.bairuitech.bussinesscenter.BussinessCenter;
+import com.bairuitech.bussinesscenter.SessionItem;
+import com.example.anychatqueue.MainActivity;
+import com.example.anychatqueue.R;
+import com.example.common.BaseConst;
+import com.example.common.BaseMethod;
+import com.example.common.ConfigEntity;
+import com.example.common.ConfigService;
+import com.example.common.CustomApplication;
+import com.example.common.DialogFactory;
+
+
+public class VideoServer extends Activity implements 
+		OnClickListener, AnyChatBaseEvent, AnyChatVideoCallEvent,AnyChatObjectEvent
+		 {
+	List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+	private AnyChatCoreSDK anychat;
+	private Dialog dialog;
+	private Button start;
+	private ConfigEntity configEntity;
+	private ImageButton mImgBtnReturn;	// 标题返回
+	private TextView mTitleName;		// 标题名字
+	private int[] ids;
+	private ListView listView;
+	private SimpleAdapter adapter;
+	private CustomApplication mApplication;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		//自定义标题栏
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		setContentView(R.layout.myvideo);
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
+		//初始化sdk
+		initSdk();
+		//初始化布局
+		initView();
+	}
+
+	private void initView() {
+		//全局变量
+		mApplication = (CustomApplication)getApplication();
+		//营业厅业务队列数组id
+		Intent intent =getIntent();
+		ids = intent.getIntArrayExtra("ids");
+		
+		for (int i = 0; i < ids.length; i++) {
+			
+	        	Map<String, Object> map = new HashMap<String, Object>();
+	        	//获取业务字符名称；
+	        	String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,ids[i], AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
+	        	//获取业务排队人数；
+	        	int number = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, ids[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
+	        	//添加数据
+	        	map.put("name", name);
+	        	map.put("number",number);
+	        	map.put("id", ids[i]);
+	        	//集合数据；
+	        	list.add(map);
+	        }
+		 
+		adapter = new SimpleAdapter(VideoServer.this, list, R.layout.videoserver_listviewitem, new String[]{"name","number"}, new int[]{R.id.id_tv_queue,R.id.id_tv_number});
+		listView = (ListView) findViewById(R.id.id_listview_server);
+		listView.setAdapter(adapter);
+		
+		mTitleName = (TextView) this.findViewById(R.id.titleName);
+		mTitleName.setText("营业大厅");
+		mTitleName.setTextColor(getResources().getColor(R.color.white));
+		
+		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
+		mImgBtnReturn.setOnClickListener(this);
+		
+		start = (Button) findViewById(R.id.id_btn_startserver);
+		start.setOnClickListener(this);
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			
+			 if (dialog != null && dialog.isShowing()) dialog.dismiss();
+		}
+	}
+
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		initSdk();
+		super.onRestart();
+	}
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		BussinessCenter.mContext = VideoServer.this;
+		initSdk();
+		super.onResume();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		BussinessCenter.getBussinessCenter().realseData();
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+	}
+
+	private void initSdk() {
+		if (anychat == null) {
+			anychat = new AnyChatCoreSDK();
+		}
+		anychat.SetBaseEvent(this);
+		anychat.SetVideoCallEvent(this);
+		anychat.SetObjectEvent(this);
+		Log.i("ANYCHAT", "initSdk");
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (event.getAction() == KeyEvent.ACTION_DOWN
+				&& event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("是否确定要退出通话")
+			.setPositiveButton("sure", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					configEntity = ConfigService.LoadConfig(VideoServer.this);
+					AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA,configEntity.CurrentObjectId, AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+				}
+			}).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			}).create().show();
+		}
+		
+		return super.dispatchKeyEvent(event);
+	}
+	@Override
+	public void OnAnyChatConnectMessage(boolean bSuccess) {
+		// TODO Auto-generated method stub
+		if (dialog != null
+				&& dialog.isShowing()
+				&& DialogFactory.getCurrentDialogId() == DialogFactory.DIALOGID_RESUME) {
+			dialog.dismiss();
+		}
+	}
+
+	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
+		// TODO Auto-generated method stub
+		if(dwErrorCode==0)
+		{
+			BussinessCenter.selfUserName=anychat.GetUserName(dwUserId);
+		} else {
+			BaseMethod.showToast(this.getString(R.string.str_login_failed) + "(ErrorCode:" + dwErrorCode + ")",	this);
+		}
+	}
+	//当用户请求进入房间的时候会触发
+	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
+		// TODO Auto-generated method stub
+		if (dwErrorCode == 0) {
+			Intent intent = new Intent();
+			intent.setClass(this, VideoActivity.class);
+			this.startActivity(intent);
+		} else {
+			BaseMethod.showToast(this.getString(R.string.str_enterroom_failed),
+					this);
+		}
+		if (dialog != null)
+			dialog.dismiss();
+	}
+
+	@Override
+	public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId) {
+
+	}
+
+	@Override
+	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
+
+	}
+
+	@Override
+	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
+
+		if (dwErrorCode == 0) {
+			if (dialog != null && dialog.isShowing())
+				dialog.dismiss();
+			dialog = DialogFactory.getDialog(DialogFactory.DIALOG_NETCLOSE,
+					DialogFactory.DIALOG_NETCLOSE, this);
+			dialog.show();
+		} else {
+			BaseMethod.showToast(this.getString(R.string.str_serverlink_close),
+					this);
+			Intent intent = new Intent();
+			intent.putExtra("INTENT", BaseConst.AGAIGN_LOGIN);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.setClass(this, MainActivity.class);
+			this.startActivity(intent);
+			this.finish();
+		}
+		Log.i("ANYCHAT", "OnAnyChatLinkCloseMessage:" + dwErrorCode);
+	}
+
+	public void OnAnyChatVideoCallEvent(int dwEventType, int dwUserId,
+			int dwErrorCode, int dwFlags, int dwParam, String userStr) {
+		// TODO Auto-generated method stub
+		switch (dwEventType) {
+
+		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST:
+			BussinessCenter.getBussinessCenter().onVideoCallRequest(
+					dwUserId, dwFlags, dwParam, userStr);
+			if (dialog != null && dialog.isShowing())
+				dialog.dismiss();
+			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_REQUEST,
+					dwUserId, this);
+			dialog.show();
+			break;
+		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY:
+			BussinessCenter.getBussinessCenter().onVideoCallReply(
+					dwUserId, dwErrorCode, dwFlags, dwParam, userStr);
+			if (dwErrorCode == AnyChatDefine.BRAC_ERRORCODE_SUCCESS) {
+				dialog = DialogFactory.getDialog(
+						DialogFactory.DIALOGID_CALLING, dwUserId,
+						VideoServer.this);
+				dialog.show();
+
+			} else {
+				if (dialog != null && dialog.isShowing()) {
+					dialog.dismiss();
+				}
+			}
+			break;
+		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_START:
+			if (dialog != null && dialog.isShowing())
+				dialog.dismiss();
+			BussinessCenter.sessionItem = new SessionItem(dwFlags, BussinessCenter.selfUserId, dwUserId);
+			BussinessCenter.sessionItem.setRoomId(dwParam);
+			//界面是在这里跳转的
+			Intent intent = new Intent();
+			intent.setClass(VideoServer.this, VideoActivity.class);
+			this.startActivity(intent);
+			break;
+		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
+			BussinessCenter.getBussinessCenter().onVideoCallEnd(dwUserId,
+					dwFlags, dwParam, userStr);
+			break;
+		}
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		switch (arg0.getId()) {
+		case R.id.id_btn_startserver:
+			//开始服务用自己的Id;
+			AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, BussinessCenter.selfUserId, AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_SERVICEREQUEST, 0, 0, 0, 0, "");
+			break;
+		case R.id.returnImgBtn:
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("是否确定要退出通话")
+			.setPositiveButton("sure", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					
+					configEntity = ConfigService.LoadConfig(VideoServer.this);
+					AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA,configEntity.CurrentObjectId, AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");	
+				}
+			}).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+						
+				@Override
+				public void onClick(DialogInterface dialog, int which) {	
+				}
+			}).create().show();		
+			break;
+		default:
+			break;
+		}
+	}
+
+
+	public void OnAnyChatObjectEvent(int dwObjectType, int dwObjectId,
+			int dwEventType, int dwParam1, int dwParam2, int dwParam3,
+			int dwParam4, String strParam) {
+
+		switch (dwEventType) {
+		
+		case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_SERVICENOTIFY:
+			//当客户角色是座席（服务器发的一个广播所有的座席都会触发到故需加限制条件)
+			if(mApplication.getUserType() == 2 && dwParam1 == BussinessCenter.selfUserId)
+			{
+				anychat.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST, dwParam2, 0, 0, 0, "");
+			}
+			break;	
+			
+		case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_WAITINGUSER:				
+			BaseMethod.showToast("暂时无人排队中...", VideoServer.this);		
+			break;
+			
+		case AnyChatObjectDefine.ANYCHAT_AREA_EVENT_LEAVERESULT:  finish();
+			break;
+			
+		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_STATUSCHANGE:
+			for(int i=0;i<ids.length;i++){
+				if(dwObjectId == ids[i]){
+					int number1 = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, ids[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
+					list.get(i).put("number", number1);
+					adapter.notifyDataSetChanged();
+				}
+				
+				
+			}
+			
+			break;
+		default:
+			break;
+		}
+	}
+
+
+}

@@ -1,0 +1,213 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_login"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:gravity="center|center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/smalltip_1" />
+
+                <EditText
+                    android:id="@+id/mainUIEditIP"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="www.anychat.cn"
+                    android:textColorHint="#bfbfbf"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="273dp"
+                android:layout_height="1dip"
+                android:layout_marginBottom="5dip"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:gravity="center|center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/smalltip_2" />
+
+                <EditText
+                    android:id="@+id/mainUIEditPort"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="8906"
+                    android:textColorHint="#bfbfbf"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="273dp"
+                android:layout_height="1dip"
+                android:layout_marginBottom="5dip"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:gravity="center|center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/smalltip_3" />
+
+                <EditText
+                    android:id="@+id/main_et_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="name"
+                    android:textColorHint="#bfbfbf"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="273dp"
+                android:layout_height="1dip"
+                android:layout_marginBottom="5dip"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+		<RadioGroup 
+		    android:id="@+id/id_rg_btn"
+		    android:layout_width="wrap_content"
+		    android:layout_height="35dp"
+		    android:orientation="horizontal"
+		    android:layout_marginTop="10dp"
+		    android:layout_gravity="center_horizontal">
+            
+		    <RadioButton
+		        android:id="@+id/customer" 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:checked="true"
+		        android:textColor="#FFFFFF"
+		        android:text="客户"/>
+		    
+		    <RadioButton
+		        android:id="@+id/server"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:checked="false" 
+		        android:textColor="#FFFFFF"
+		        android:layout_marginLeft="10dp"
+		        android:text="座席"/>
+		    
+		</RadioGroup>
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dip" >
+
+            <Button
+                android:id="@+id/mainUIStartBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_login_01"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/mainUILogoutBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_logout_01"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/mainUIWaitingBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_warting_01"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/waitingLayout"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal" >
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/mainUIbottomBuildMsg"
+        android:layout_width="fill_parent"
+        android:layout_height="20dip"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/black"
+        android:gravity="center"
+        android:text="Not connect to 192.168.1.1"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/mainUIbottomConnMsg"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:layout_above="@id/mainUIbottomBuildMsg"
+        android:background="@android:color/darker_gray"
+        android:gravity="center"
+        android:text="Not connect to the server"
+        android:textColor="#000000" />
+
+</RelativeLayout>

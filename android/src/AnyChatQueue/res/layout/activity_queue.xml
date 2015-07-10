@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  	android:background="@drawable/background"
+    tools:context=".QueueActivity" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:text="您已进入排队大厅" />
+
+    <TextView
+        android:id="@+id/queue_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:text="在您前面还有**多少人等待，请耐心等候..." />
+		<TextView 
+		    android:id="@+id/queue_time"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@+id/queue_show"
+		    android:layout_centerHorizontal="true"
+		    android:layout_marginTop="15dp"
+		    android:text="something show "
+		    android:textColor="@android:color/white"
+		    android:textSize="16sp"/>	
+    
+    <Button
+        android:id="@+id/queue_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/queue_time"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        android:background="@drawable/btn_selector"
+        android:textColor="@android:color/white"
+        android:text="取消" />
+
+</RelativeLayout>
