@@ -107,16 +107,16 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
     	if(anyChatSDK == null){
     		anyChatSDK = AnyChatCoreSDK.getInstance(this);
     	}
+    	
     	anyChatSDK.SetBaseEvent(this);
     	anyChatSDK.SetObjectEvent(this);
 	}
-    
     
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK){
 			
-			//与服务器同步函数（进营业厅，出营业厅，加入队列，出队列都是这个方法）
+			//退出营业厅（进营业厅，出营业厅，加入队列，出队列都是这个方法）
 			int id = configEntity.CurrentObjectId;
 			AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA, id,AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0,0, "");				
 		
@@ -179,9 +179,8 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 			startActivity(in);
 			pd.dismiss();
 			break;
-			
+		//离开服务区域回调
 		case AnyChatObjectDefine.ANYCHAT_AREA_EVENT_LEAVERESULT:	
-			
 			destroyCurActivity();
 			break;
 			
@@ -211,7 +210,6 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 				AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA, configEntity.CurrentObjectId,AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0,0, "");
 				finish();
 				break;
-
 			default:
 				break;
 			}

@@ -412,59 +412,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 	public void OnAnyChatObjectEvent(int dwObjectType, int dwObjectId,
 			int dwEventType, int dwParam1, int dwParam2, int dwParam3,
 			int dwParam4, String strParam) {
-		 /* switch (dwEventType) {
-	        case ANYCHAT_OBJECT_EVENT_UPDATE:// 1.业务对象数据更新事件
-	            [self AnyChatObjectUpdate:dwObjectType :dwObjectId];
-	            break;
-	        case ANYCHAT_AREA_EVENT_ENTERRESULT:// 2.进入服务区域通知事件
-	            [self AnyChatEnterAreaResult:dwObjectType :dwObjectId :dwParam1];
-	            break;
-	        case ANYCHAT_AREA_EVENT_LEAVERESULT:// 3.离开服务区域通知事件
-	            [self AnyChatLeaveAreaResult:dwObjectType :dwObjectId :dwParam1];
-	            break;
-	        case ANYCHAT_AREA_EVENT_USERENTER:// 4.用户进入服务区域
-	            [self AnyChatUserEnterArea:dwObjectType :dwObjectId :dwParam1 :dwParam2 :dwParam3 :dwParam4];
-	            break;
-	        case ANYCHAT_AREA_EVENT_USERLEAVE:// 5.用户离开服务区域
-	            [self AnyChatUserLeaveArea:dwObjectType :dwObjectId :dwParam1 :dwParam2];
-	            break;
-	            
-	        case ANYCHAT_QUEUE_EVENT_STATUSCHANGE:// 6.队列状态变化
-	            [self AnyChatQueueStatusChanged:dwObjectType :dwObjectId];
-	            break;
-	            
-	        case ANYCHAT_QUEUE_EVENT_ENTERRESULT:// 7.用户进入队列结果
-	            [self AnyChatEnterQueueResult:dwObjectType :dwObjectId :dwParam1];
-	            break;
-	            
-	        case ANYCHAT_QUEUE_EVENT_LEAVERESULT:// 8.用户离开队列结果
-	            [self AnyChatLeaveQueueResult:dwObjectType :dwObjectId :dwParam1];
-	            break;
-	            
-	        case ANYCHAT_QUEUE_EVENT_USERENTER:// 9.进入队列
-	            [self AnyChatUserEnterQueue:dwObjectType :dwObjectId :dwParam1];
-	            break;
-	            
-	        case ANYCHAT_QUEUE_EVENT_USERLEAVE:// 10.用户离开队列
-	            [self AnyChatUserLeaveQueue:dwObjectType :dwObjectId :dwParam1];
-	            break;
-	            
-	        case ANYCHAT_AGENT_EVENT_STATUSCHANGE:// 11.坐席状态变化
-	            [self AnyChatAgentStatusChanged:dwObjectType :dwObjectId];
-	            break;
-	        case ANYCHAT_AGENT_EVENT_SERVICENOTIFY:// 12.坐席服务通知
-	            [self AnyChatAgentServiceNotify: dwParam1 :dwParam2];
-	            break;
-	        case ANYCHAT_AGENT_EVENT_WAITINGUSER:// 13.坐席等待用户
-	            [self AnyChatAgentWaitingUser:dwObjectType :dwObjectId];
-	            break;
-	        case ANYCHAT_OBJECT_EVENT_SYNCDATAFINISH:// 14.同步完成
-	            [self AnyChatObjectSynDataFinish:dwObjectType];
-	            break;
-	        default:
-	            break;
-	    }*/
-
 
 	}
 
