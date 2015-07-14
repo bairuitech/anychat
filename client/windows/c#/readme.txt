@@ -6,7 +6,7 @@ AnyChatCSharpDemo	AnyChat C# Demo程序，VS2008工程，功能相对完善，演示了大多数API
 
 AnyChatforWPF		AnyChat在WPF框架下的Demo程序，VS2008工程
 
-AnyChatQueue	AnyChat C#业务队列示例程序，VS2010工程，演示AnyChat的业务队列功能，展示了坐席、客户两种身份的应用场景
+AnyChatQueue		AnyChat C#业务队列示例程序，VS2010工程，演示AnyChat的业务队列功能，展示了坐席、客户两种身份的应用场景
 
 
 注：编译完成之后，需要将SDK包的：bin\client\目录下的所有文件拷贝到.exe程序目录下，否则在运行或是调试时会提示加载“BRAnyChatCore.dll”失败的异常。

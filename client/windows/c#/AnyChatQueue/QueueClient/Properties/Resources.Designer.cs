@@ -172,6 +172,13 @@ namespace QueueClient.Properties {
             }
         }
         
+        internal static System.Drawing.Icon queue {
+            get {
+                object obj = ResourceManager.GetObject("queue", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.IO.UnmanagedMemoryStream ring {
             get {
                 return ResourceManager.GetStream("ring", resourceCulture);

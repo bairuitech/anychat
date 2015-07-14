@@ -1075,7 +1075,7 @@ namespace QueueClient
         /// <param name="dwErrorCode"></param>
         private void AnyChatUserEnterQueue_Handler(int dwObjectType, int dwObjectId, int dwErrorCode)
         {
-            refreshAgentServiceInfo();
+            //refreshAgentServiceInfo();
         }
 
         /// <summary>
@@ -1086,7 +1086,7 @@ namespace QueueClient
         /// <param name="dwErrorCode"></param>
         private void AnyChatUserLeaveQueue_Handler(int dwObjectType, int dwObjectId, int dwErrorCode)
         {
-            refreshAgentServiceInfo();
+            //refreshAgentServiceInfo();
         }
 
         /// <summary>
@@ -1101,6 +1101,13 @@ namespace QueueClient
                 if (selectedQueue != null)
                     if (selectedQueue.QueueID == dwObjectId)
                         refreshUserWaitingInfo(dwObjectId);
+
+                switch (m_userIdentity)
+                {
+                    case UserIdentityType.Agent:
+                        refreshAgentServiceInfo();
+                        break;
+                }
 
                 QueueInfo q = getQueueInfoByQueueID(dwObjectId);
                 refreshQueueInfoDisplay(q);
@@ -1627,7 +1634,7 @@ namespace QueueClient
             //获取当前队列人数
             AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_QUEUE_INFO_LENGTH, ref queueUserNum);
 
-            /**获取排在自己前面的用户数*/
+            //获取排在自己前面的用户数
             AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_QUEUE_INFO_BEFOREUSERNUM, ref beforeUserNum);
             beforeUserNum = beforeUserNum < 0 ? 0 : beforeUserNum;
             beforeUserNum++;

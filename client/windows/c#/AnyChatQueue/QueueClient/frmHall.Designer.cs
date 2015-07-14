@@ -51,6 +51,7 @@
             this.panel_area = new System.Windows.Forms.Panel();
             this.panel_queue = new System.Windows.Forms.Panel();
             this.panel_waitingMessage = new System.Windows.Forms.Panel();
+            this.lbl_waitingTime = new System.Windows.Forms.Label();
             this.lbl_waitingMessage = new System.Windows.Forms.Label();
             this.picBox_waiting = new System.Windows.Forms.PictureBox();
             this.timer_queueWaiting = new System.Windows.Forms.Timer(this.components);
@@ -66,7 +67,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lbl_agent_remoteUser = new System.Windows.Forms.Label();
             this.picBox_agent_remoteVideo = new System.Windows.Forms.PictureBox();
-            this.lbl_waitingTime = new System.Windows.Forms.Label();
             this.panel_top.SuspendLayout();
             this.panel_call.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_call)).BeginInit();
@@ -293,6 +293,17 @@
             this.panel_waitingMessage.TabIndex = 11;
             this.panel_waitingMessage.Visible = false;
             // 
+            // lbl_waitingTime
+            // 
+            this.lbl_waitingTime.AutoSize = true;
+            this.lbl_waitingTime.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_waitingTime.Location = new System.Drawing.Point(137, 124);
+            this.lbl_waitingTime.Name = "lbl_waitingTime";
+            this.lbl_waitingTime.Size = new System.Drawing.Size(160, 46);
+            this.lbl_waitingTime.TabIndex = 0;
+            this.lbl_waitingTime.Tag = "message";
+            this.lbl_waitingTime.Text = "等待时长";
+            // 
             // lbl_waitingMessage
             // 
             this.lbl_waitingMessage.AutoSize = true;
@@ -341,7 +352,7 @@
             this.btnStopService.Name = "btnStopService";
             this.btnStopService.Size = new System.Drawing.Size(97, 43);
             this.btnStopService.TabIndex = 14;
-            this.btnStopService.Text = "停止视频";
+            this.btnStopService.Text = "结束服务";
             this.btnStopService.UseVisualStyleBackColor = true;
             this.btnStopService.Click += new System.EventHandler(this.btnStopService_Click);
             // 
@@ -445,17 +456,6 @@
             this.picBox_agent_remoteVideo.TabIndex = 1;
             this.picBox_agent_remoteVideo.TabStop = false;
             // 
-            // lbl_waitingTime
-            // 
-            this.lbl_waitingTime.AutoSize = true;
-            this.lbl_waitingTime.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_waitingTime.Location = new System.Drawing.Point(137, 124);
-            this.lbl_waitingTime.Name = "lbl_waitingTime";
-            this.lbl_waitingTime.Size = new System.Drawing.Size(160, 46);
-            this.lbl_waitingTime.TabIndex = 0;
-            this.lbl_waitingTime.Tag = "message";
-            this.lbl_waitingTime.Text = "等待时长";
-            // 
             // frmHall
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -477,7 +477,7 @@
             this.MaximizeBox = false;
             this.Name = "frmHall";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AnyChat Queue客户端";
+            this.Text = "AnyChat智能排队示例程序";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Hall_FormClosed);
             this.Load += new System.EventHandler(this.Hall_Load);
             this.Shown += new System.EventHandler(this.Hall_Shown);
