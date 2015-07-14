@@ -4,6 +4,7 @@ helloAnyChat		AnyChat for AndroidÑİÊ¾¹¤³Ì£¬ÒÔ×î¾«¼òµÄ´úÂëÊµÏÖÁËÒ»¸öhello world!¹
 
 AnyChatFeatures		AnyChatÍêÕû¹¦ÄÜÑİÊ¾³ÌĞò£¬ÒÔÇåµ¥µÄ·½Ê½£¬ÑİÊ¾ÁËAnyChatµÄÖ÷Òª¹¦ÄÜ£¬¹©¶ÔAnyChat½øĞĞÉî¶È¿ª·¢µÄ³ÌĞòÔ±²Î¿¼£»
 
+AnyChatQueue	AnyChat AnddroidÒµÎñ¶ÓÁĞÊ¾Àı³ÌĞò,ÑİÊ¾AnyChatµÄÒµÎñ¶ÓÁĞ¹¦ÄÜ£¬Õ¹Ê¾ÁË×øÏ¯¡¢¿Í»§Á½ÖÖÉí·İµÄÓ¦ÓÃ³¡¾°
 
 ¿ÉÒÔ×Ô¼º¶ÀÁ¢²¿Êğ·şÎñÆ÷£¬²Î¿¼£ºhttp://bbs.anychat.cn/forum.php?mod=viewthread&tid=193&extra=page%3D1
 

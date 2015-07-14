@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">AnyChatQueue</string>
+    <string name="app_name">AnyChat智能排队</string>
     <string name="HelloTitle">AnyChatQueue</string>
     <string name="endCall1">End call</string>
     <string name="title_activity_func_menu">FuncMenu</string>

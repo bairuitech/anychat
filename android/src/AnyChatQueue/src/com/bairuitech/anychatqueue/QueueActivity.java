@@ -249,35 +249,25 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 			int dwEventType, int dwParam1, int dwParam2, int dwParam3,
 			int dwParam4, String strParam) {
 		// TODO Auto-generated method stub
-		
-		//有其他人进入队列；
-		if(dwEventType == AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_USERENTER)
-		{
-			//查询前面有多少人
+		switch (dwEventType) {
+		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_STATUSCHANGE:
 			int mbefore = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwObjectId, AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_BEFOREUSERNUM);
 			if(mbefore == -1) mbefore = 0;
 			showTextView.setText("在您前面还有："+mbefore+"人等待，请您耐心等候...");
-		}//有其他人离开队列
-		else if(dwEventType == AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_USERLEAVE)
-			{
-				//查询前面有多少人
-				int mbefore = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwObjectId, AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_BEFOREUSERNUM);
-				if(mbefore == -1) mbefore = 0;
-				showTextView.setText("在您前面还有："+mbefore+"人等待，请您耐心等候...");
-
-			//自己离开
-		}else if(dwEventType== AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_LEAVERESULT){
-			if(dwParam1 == 0){
-					finish();
-			}
+			break;
+		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_LEAVERESULT:
+				finish();
+			break;
 			
-		}	
+		default:
+			break;
+		}
 	}
+	
 	@Override
 	public void OnAnyChatVideoCallEvent(int dwEventType, int dwUserId,
 			int dwErrorCode, int dwFlags, int dwParam, String userStr) {
 		// TODO Auto-generated method stub
-		Log.e("queue","queue 有没有被触发");
 		switch (dwEventType) {
 
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST:
@@ -332,8 +322,24 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 		switch (v.getId()) {
 		case R.id.returnImgBtn://按下返回键
 			//leave area event;
-			AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,configEntity.CurrentQueueId, AnyChatObjectDefine.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");			
-			finish();
+			AlertDialog.Builder builder = new AlertDialog.Builder(QueueActivity.this);
+			builder.setMessage("Are you sure you want to exist!")
+					.setPositiveButton("sure", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,configEntity.CurrentQueueId, AnyChatObjectDefine.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+							System.out.println("退出队列语句执行，队列id号为："+configEntity.CurrentQueueId);
+							finish();
+						}
+					}).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							
+						}
+					}).create().show();
 			break;
 
 		default:

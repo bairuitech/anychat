@@ -97,9 +97,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				super.handleMessage(msg);
 				switch (msg.what) {
 				case MSG_CHECKAV:
-					//
+					//实时视频刷新
 					CheckVideoStatus();
-					//
+					//实时音频数据
 					updateVolume();
 					break;
 				case MSG_TIMEUPDATE:
@@ -152,14 +152,11 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
-	
-
 	}
 
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		
+
 		anychat.UserCameraControl(-1, 0);
 		anychat.UserSpeakControl(-1, 0);
 		anychat.UserSpeakControl(dwTargetUserId, 0);
@@ -179,7 +176,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		anychat.SetBaseEvent(this);
 		anychat.SetVideoCallEvent(this);
 		anychat.mSensorHelper.InitSensor(this);
-		// 鍒濆鍖朇amera涓婁笅鏂囧彞鏌�
+		// 
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
 
 	}
