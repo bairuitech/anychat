@@ -54,7 +54,7 @@ body {
 }
 
 #enterRoom {
-	width: 900px;
+	width: 920px;
 	position: relative;
 	display: none;
 }
@@ -73,12 +73,12 @@ body {
 	display: none;
 	position: absolute;
 	bottom: 8px;
-	right: 57px;
+	right: 65px;
 	background: white;
 	width: 32px;
 	height: 32px;
 	cursor: pointer;
-	top: 38px;
+	top: 45px;
 	border: 3px solid gray;
 	border-radius: 20px;
 	box-shadow: 0 0 5px #888888;
@@ -116,6 +116,7 @@ body {
 	border: 2px solid gray;
 	background-color: white;
 	overflow: hidden;
+	z-index:43;
 }
 
 #videoCall p:first-letter {
@@ -126,6 +127,8 @@ body {
 
 #hallList {
 	position: absolute;
+	height: 270px;
+    overflow-y: auto;
 }
 
 #hallList li {
@@ -133,7 +136,7 @@ body {
 	list-style: none;
 	width: 226px;
 	height: 85px;
-	line-height: 85px;
+	line-height: 45px;
 	cursor: pointer;
 	color: white;
 	margin: 5px;
@@ -143,12 +146,9 @@ body {
 .poptip {
 	font-size: 24px;
 	position: relative;
-	padding: 75px 30px;
-	line-height: 16px;
-	color: #DB7C22;
+	padding: 25px 30px;
 	border: solid 1px #FFBB76;
 	border-radius: 2px;
-	box-shadow: 0 0 3px #ddd;
 }
 
 .poptip em {
@@ -262,7 +262,7 @@ strong {
 	background: url("./../img/loUser.jpg") no-repeat;
 }
 
-#removeVideoPos {
+#remoteVideoPos {
 	background: url("./../img/reUser.jpg") no-repeat;
 	width: 530px;
 	height: 402px;
@@ -325,7 +325,7 @@ td {
 
 #LOADING_GREY_DIV {
 	display: none;
-	background: rgba(255, 255, 255, 0.5) !important;
+	background: rgba(0, 0, 0, 0.4) !important;
 	filter: Alpha(opacity = 40);
 	width: 100%;
 	height: 100%;
@@ -333,8 +333,4 @@ td {
 	position: absolute;
 	z-index: 44;
 	text-align: center;
-}
-
-#mDefaultServerAddr,#mDefaultServerPort {
-	padding: 3px;
 }

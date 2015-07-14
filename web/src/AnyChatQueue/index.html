@@ -1,7 +1,7 @@
 
 <html>
 <head>
-    <title>AnyChat Queue for Web</title>
+    <title>AnyChat 智能排队</title>
     <meta charset="UTF-8" content="text/html" http-equiv="Content-Type">
     <link type="text/css" rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" type="text/css" href="./css/advanceset.css" />
@@ -9,6 +9,9 @@
     <link rel="stylesheet" type="text/css" href="./css/VideoCall.css" />
     <link rel="stylesheet" type="text/css" href="./css/login.css" />
 
+	<link rel="icon" href="./img/queue.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="./img/queue.ico" type="image/x-icon" />
+	
     <script src="./js/jquery-2.1.1.js" ></script>
     <script src="./js/anychatsdk.js"></script>
     <script language="javascript" type="text/javascript" src="./js/anychatobject.js" charset="GB2312"></script>
@@ -17,7 +20,7 @@
     <script src="./js/anychatevent.js"></script>
     <script src="./js/videocall.js"></script>
 </head>
-<body style="overflow: hidden;">
+<body style="background:#C4CEDD;overflow: hidden">
 <!--灰色背景透明层 -->
 		<div id="LOADING_GREY_DIV">
 			<h2 style="margin:10px;color: orange;display: inline-block;font-weight: bold;padding: 5px;margin-top:20%;line-height:53px;height: 53px"><img title="请等待..." alt="请等待..." style="height: 35px;margin-top:10px" src="img/loading.gif"><span style="float: right;margin-left: 10px;"></span></h2>
@@ -34,41 +37,41 @@
 			<div id="page_04"></div>
 			<div id="page_05">
 				<div id="mainer">
-						<div class="contentL">
-							<strong style="color: #68E;letter-spacing: 1px;font-size: 20px;">AnyChat 排队客户端</strong><br><br> 身份选择：<select id="askSelect">
-								<option value="1">客户</option>
-								<option value="2">坐席</option>
-								<!--<option value="3">经理</option> -->
-							</select>
-						</div>
 						<div class="contentR">
-							<table>
-							  <tr style="height:38px;">
-							    <td style="width:226px;"></td>
-							    <td></td>
-							  </tr>
-							  <tr>
-							    <td>
-							    	<p>
-											<input id="username" type="text" value="请输入用户名!" style="color: #999;" />
-										</p>
-										<p>
-											<input id="password" type="password" />
-										</p>
-										<p><a id="loginRoom">登&nbsp;录</a></p>
-									</td>
-							    <td>
-								    <ol style="margin-top:-20px;margin-left: 35px; text-align: left">
-				　　　　　　　<li>客户,坐席无需密码验证</li>
-				　　　　　　　<li>用户名也均无限制</li>
-				　　　　　　　<li>服务器IP:<input type="text" id="mDefaultServerAddr"/>端口:<input type="text" id="mDefaultServerPort"/></li>
-			　　　　			</ol>
-									</td>
-							  </tr>
-							  <tr style="height:21px;">
-							    <td colspan="2">&nbsp;</td>
-							  </tr>
-							</table>
+							<div id="login_div" style="display: block; margin-top: 0px;">
+								<div style=" height:55px;">
+								<div style=" height:35px; line-height:35px; text-align:left; margin:10px 5px 0px 5px; text-align:center;">AnyChat 智能排队</div>
+									<div id="cutoff_div"></div>
+								</div>
+								<div class="wordage">用户名：<input id="username" type="text" value="请输入用户名!" style="color: #999;" /></div>
+								<div class="wordage">
+								&nbsp;身&nbsp;&nbsp;份：
+								<select id="askSelect">
+									<option value="1">客户</option>
+									<option value="2">坐席</option>
+									<!--<option value="3">经理</option> -->
+								</select>&nbsp;&nbsp;
+								优先级：
+								<select id="dwPrioritySelect">
+									<script>
+									var i;
+									for(i=15;i>4;i--)
+									document.write('<option value="'+i+'">'+i+'</option>');
+									$('#dwPrioritySelect').val(10);
+									</script>
+								</select>
+								</div>
+								<div id="Btn_div">
+									<a style="float: left; background-color: rgb(230, 230, 230);"  class="Btn" id="setting">设&nbsp;置</a>
+									<a style="float: right; background-color: rgb(230, 230, 230);" class="Btn" id="loginRoom">登&nbsp;录</a>
+								</div>
+								<div id="setting_div">
+									<div id="setting_div_input">
+										服务器IP:&nbsp;<input type="text" style="width:120px;" id="mDefaultServerAddr">&nbsp;&nbsp;&nbsp;
+										 端口:&nbsp;<input type="text" style="width:40px;" id="mDefaultServerPort">
+									</div>
+								</div>
+							</div>
 						</div>
 				</div>
 			</div>
@@ -154,6 +157,10 @@
 	        </div>
 	    </div>
 	</center>
+	<div id="LOG_DIV_BODY" style="display: block;">
+		<div id="LOG_DIV_TITLE">系统日志</div>
+		<div id="LOG_DIV_CONTENT"></div>
+	</div>
 </body>
 <script>
 $(document).keypress(function(event){  

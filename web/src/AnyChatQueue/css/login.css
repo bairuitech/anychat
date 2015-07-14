@@ -109,14 +109,12 @@ ol li {
 #mainer {
 	width: 80%;
 	height: 100%;
-	padding-left: 16%;
 }
 
-#mainer .contentL,#mainer .contentR {
-	padding-top: 200px;
+#mainer .contentR {
 	height: 300px;
 	width: 42%;
-	float: left;
+	padding-top: 150px;
 }
 
 #mainer .contentR p {
@@ -124,57 +122,129 @@ ol li {
 	padding-bottom: 7px;
 }
 
-#mainer .contentR {
-	padding-top: 150px;
-}
-
 #mainer .contentR table {
-	border-radius: 7px;
-	width: 415px;
-	height: 257px;
-	background: url('./../img/divByLogin.jpg') no-repeat;
-	border: 1px solid gray;
-	box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.85);
+	background: url("./../img/divByLogin.png") no-repeat -5px -5px;
+    height: 270px;
+    width: 450px;
+	padding:0 10px;
 }
 
-#askSelect {
-	width: 70px;
+#askSelect,#dwPrioritySelect {
+	width: 60px;
 	height: 30px;
 }
 
-#username,#password {
-	background: url("./../img/xtbPic.jpg") 0px 0px;
+#login_div {
+    background-color: #fafadd;
+    border: 1px solid black;
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+    width: 320px;
+}
+
+#cutoff_div {
+    border-bottom: 1px solid black;
+    height: 5px;
+    margin: 0 5px;
+}
+
+.wordage {
+    font-size: 15px;
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    width: 280px;
+}
+
+.Btn {
+    background-color: #e6e6e6;
+    border: 1px solid black;
+    cursor: pointer;
+    font-size: 12px;
+    height: 25px;
+    line-height: 25px;
+    margin: 10px 20px 20px;
+    text-align: center;
+    width: 80px;
+	border-radius: 5px;
+}
+
+#Btn_div {
+    height: 55px;
+    width: 320px;
+}
+
+#setting_div {
+    display: none;
+    height: 55px;
+    width: 320px;
+}
+
+
+#setting_div_input {
+    border-top: 1px solid black;
+    font-size: 13px;
+    padding-top: 18px;
+    text-align: center;
+}
+
+#username{
 	border: 1px solid #cccccc;
 	color: #919191;
 	height: 35px;
 	line-height: 35px;
-	padding-left: 38px;
+	padding: 5px;
 	width: 200px;
 }
 
-#username:focus,#password:focus {
+#username:focus {
 	border: 1px solid #cbdce4;
 	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.45);
 }
 
-#password {
-	background: url("./../img/xtbPic.jpg") 0px -50px;
+/*anychat日志*/
+#LOG_DIV_BODY {
+    bottom: 0;
+    display: none;
+    height: 200px;
+    position: fixed;
+    right: 20px;
+    width: 350px;
+    z-index: 40;
+}
+
+#LOG_DIV_TITLE {
+    font-size: 12px;
+    height: 15px;
+    line-height: 15px;
+    margin-left: 10px;
+    text-align: right;
+}
+
+#LOG_DIV_CONTENT {
+    font-size: 12px;
+    height: 155px;
+    padding: 10px;
+    text-align: right;
+    width: 350px;
+	overflow-y: auto;
+}
+
+#LOG_DIV_CONTENT:hover{
+	background-color: #fafadd;
+	border:1px solid black;
 }
 
 #loginRoom {
 	background-color: #69C526;
-	width: 120px;
-	cursor: pointer;
 	text-align: center;
-	line-height: 36px;
-	border-radius: 5px;
 	display: block;
-	font-size: 12px;
 	margin-left: 14px;
+	float:left;
 }
 
-#loginRoom:hover {
+.Btn:hover {
 	background-color: #A4D876;
-	color: white;
-	box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.85);
+	box-shadow: 0 0 6px 0 rgba(0, 0, 0, .65);
 }

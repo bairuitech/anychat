@@ -136,7 +136,7 @@ function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUse
 	BRAC_LeaveRoom(mSelfUserId);
 	
 	//关闭对方视频
-	startVideo(mTargetUserId, GetID("removeVideoPos"), "ANYCHAT_VIDEO_REMOTE",0);
+	startVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",0);
 	if(userType==1){
 		/**离开队列*/
 		BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE,0 ,0,0,0,"");
@@ -151,7 +151,7 @@ function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUse
 		$('#remoteAudioVolume').width(0);
 	}
 	clearInterval(mRefreshVolumeTimer); // 清除实时音量显示计时器
-	$("#removeVideoPos").text("");
+	$("#remoteVideoPos").text("");
 	$("#localVideoPos").text("");
 	ForSession("会话结束...", true); // 提示层
 
