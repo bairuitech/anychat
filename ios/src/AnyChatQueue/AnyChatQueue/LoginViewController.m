@@ -123,7 +123,6 @@
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode {
     if (dwErrorCode == 0) {
-        [MBProgressHUD hideHUD];
         self.selfUserId = dwUserId;
         // 初始化本地对象信息
         if ([self.role.text isEqualToString:@"普通用户"]) {
@@ -247,7 +246,7 @@
 -(void)AnyChatObjectSynDataFinish:(int)dwObjectType {
     NSLog(@"对象数据同步结束");
     if(dwObjectType == ANYCHAT_OBJECT_TYPE_AREA) { //营业厅
-        
+        [MBProgressHUD hideHUD];
         // 跳转到营业厅
         BusinessHallViewController *businessHallVC = [[BusinessHallViewController alloc] init];
         businessHallVC.businessHallObjectArr = self.businessHallObjArr;
@@ -369,6 +368,12 @@
         if ([self.navigationController.viewControllers[2] isKindOfClass:[ServerQueueViewController class]]) {
             ServerQueueViewController *serverQVC = self.navigationController.viewControllers[2];
             [serverQVC.tableView reloadData];
+        }
+        
+    }
+    if (controllersCount == 4) {
+        if ([self.navigationController.viewControllers[3] isKindOfClass:[QueueViewController class]]) {
+            [self updateQueueUserCountLabel:dwObjectId];
         }
     }
 }

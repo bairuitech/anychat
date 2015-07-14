@@ -517,6 +517,8 @@
 					"$(inherited)",
 					../../sdk/libs/audioprocess,
 					../../sdk/libs,
+					/Users/bairuitech/tim/bairuiGit/ios/sdk/libs/audioprocess,
+					/Users/bairuitech/tim/bairuiGit/ios/sdk/libs,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -535,6 +537,8 @@
 					"$(inherited)",
 					../../sdk/libs/audioprocess,
 					../../sdk/libs,
+					/Users/bairuitech/tim/bairuiGit/ios/sdk/libs/audioprocess,
+					/Users/bairuitech/tim/bairuiGit/ios/sdk/libs,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -12,7 +12,7 @@
 #define ANYCHAT_OBJECT_FLAGS_AGENT			2	///< 坐席用户
 #define ANYCHAT_OBJECT_FLAGS_MANANGER		4	///< 管理用户
 
-#define ANYCHAT_INVALID_OBJECT_ID	((DWORD)-1)	///< 无效的对象ID
+#define ANYCHAT_INVALID_OBJECT_ID           -1	///< 无效的对象ID
 
 // 坐席服务状态定义
 #define ANYCHAT_AGENT_STATUS_CLOSEED		0	///< 关闭，不对外提供服务
