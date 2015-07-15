@@ -47,7 +47,7 @@ import com.example.anychatqueue.R;
 
 
 
-@SuppressLint("HandlerLeak") public class VideoActivity extends Activity implements AnyChatBaseEvent,
+ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		OnClickListener, OnTouchListener,AnyChatObjectEvent, AnyChatVideoCallEvent {
 	private SurfaceView mSurfaceSelf;
 	private SurfaceView mSurfaceRemote;
