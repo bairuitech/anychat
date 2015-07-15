@@ -109,5 +109,5 @@ public class AnyChatObjectDefine {
 	public static final int ANYCHAT_AGENT_EVENT_WAITINGUSER	=	603;	///< 暂时没有客户，请等待
 
 	
-	
+	 
 }

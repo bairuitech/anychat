@@ -193,11 +193,11 @@ public class AnyChatCoreSDK
 	// 设置SDK参数（整型值）
 	public static native int SetSDKOptionInt(int optname, int optvalue);
 	// 设置SDK参数（字符串值）
-	public native int SetSDKOptionString(int optname, String optvalue);
+	public static native int SetSDKOptionString(int optname, String optvalue);
 	// 查询SDK参数（整型值）
 	public static native int GetSDKOptionInt(int optname);
 	// 查询SDK参数（字符串值）
-	public native String GetSDKOptionString(int optname);
+	public static native String GetSDKOptionString(int optname);
 	
 	// 发送文字消息
 	public native int SendTextMessage(int userid, int secret, String message);

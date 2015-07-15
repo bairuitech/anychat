@@ -67,6 +67,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			boolean bSetPreviewSize = false;
 			for (int i = 0; i < previewSizes.size(); i++) {
 				Size s = previewSizes.get(i);
+				AnyChatCoreSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_CORESDK_WRITELOG, "Camera Preview size: " + s.width + " x " + s.height);
 				if(s.width == iSettingsWidth && s.height == iSettingsHeight) {
 					bSetPreviewSize = true;
 					parameters.setPreviewSize(iSettingsWidth, iSettingsHeight);
@@ -78,12 +79,11 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 				parameters.setPreviewSize(320, 240);
 			
 			// 设置视频采集帧率
-			boolean bSetPreviewFrameRate = false;
 			List<int[]> fpsRange = parameters.getSupportedPreviewFpsRange();
 			for(int i=0; i<fpsRange.size(); i++) {
 				int[] r = fpsRange.get(i);
+				AnyChatCoreSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_CORESDK_WRITELOG, "Camera FrameRate: " + r[0] + " , " + r[1]);
 				if(r[0] >= 25000 && r[1] >= 25000) {
-					bSetPreviewFrameRate = true;
 					parameters.setPreviewFpsRange(r[0], r[1]);
 					break;
 				}
