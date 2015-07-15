@@ -58,12 +58,12 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
         	System.out.println("队列Id值==>"+queueIds[i]);
         	Map<String, Object> map = new HashMap<String, Object>();
         	//获取业务字符名称；
-        	String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,queueids[i], AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
+        	String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,queueIds[i], AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
         	//获取业务排队人数；
-        	int number = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueids[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
+        	int number = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueIds[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
         	map.put("name", name);
         	map.put("number",number);
-        	map.put("id", queueids[i]);
+        	map.put("id", queueIds[i]);
         	//集合数据；
         	list.add(map);
         }
