@@ -40,6 +40,31 @@
 		FE16D61D1B2C10F70054FBD5 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D61C1B2C10F70054FBD5 /* libstdc++.6.dylib */; };
 		FE16D61F1B2C11010054FBD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D61E1B2C11010054FBD5 /* libstdc++.dylib */; };
 		FE16D6211B2C11110054FBD5 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D6201B2C11110054FBD5 /* libc++.dylib */; };
+		FE6DCF9A1B56140F00F0DFA5 /* libaudio_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF811B56140F00F0DFA5 /* libaudio_processing.a */; };
+		FE6DCF9B1B56140F00F0DFA5 /* libaudio_processing_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF821B56140F00F0DFA5 /* libaudio_processing_neon.a */; };
+		FE6DCF9C1B56140F00F0DFA5 /* libaudio_processing_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF831B56140F00F0DFA5 /* libaudio_processing_sse2.a */; };
+		FE6DCF9D1B56140F00F0DFA5 /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF841B56140F00F0DFA5 /* libcommon_audio.a */; };
+		FE6DCF9E1B56140F00F0DFA5 /* libcommon_audio_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF851B56140F00F0DFA5 /* libcommon_audio_neon.a */; };
+		FE6DCF9F1B56140F00F0DFA5 /* libcommon_audio_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF861B56140F00F0DFA5 /* libcommon_audio_sse2.a */; };
+		FE6DCFA01B56140F00F0DFA5 /* librtc_base_approved.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF871B56140F00F0DFA5 /* librtc_base_approved.a */; };
+		FE6DCFA11B56140F00F0DFA5 /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF881B56140F00F0DFA5 /* libsystem_wrappers.a */; };
+		FE6DCFA21B56140F00F0DFA5 /* libanychatcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF891B56140F00F0DFA5 /* libanychatcore.a */; };
+		FE6DCFA31B56140F00F0DFA5 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF8A1B56140F00F0DFA5 /* libavcodec.a */; };
+		FE6DCFA41B56140F00F0DFA5 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF8B1B56140F00F0DFA5 /* libavformat.a */; };
+		FE6DCFA51B56140F00F0DFA5 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF8C1B56140F00F0DFA5 /* libavutil.a */; };
+		FE6DCFA61B56140F00F0DFA5 /* libcelt0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF8D1B56140F00F0DFA5 /* libcelt0.a */; };
+		FE6DCFA71B56140F00F0DFA5 /* libmediacore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF8E1B56140F00F0DFA5 /* libmediacore.a */; };
+		FE6DCFA81B56140F00F0DFA5 /* libmediashow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF8F1B56140F00F0DFA5 /* libmediashow.a */; };
+		FE6DCFA91B56140F00F0DFA5 /* libmediautil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF901B56140F00F0DFA5 /* libmediautil.a */; };
+		FE6DCFAA1B56140F00F0DFA5 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF911B56140F00F0DFA5 /* libmp3lame.a */; };
+		FE6DCFAB1B56140F00F0DFA5 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF921B56140F00F0DFA5 /* libopencore-amrwb.a */; };
+		FE6DCFAC1B56140F00F0DFA5 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF931B56140F00F0DFA5 /* libswresample.a */; };
+		FE6DCFAD1B56140F00F0DFA5 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF941B56140F00F0DFA5 /* libswscale.a */; };
+		FE6DCFAE1B56140F00F0DFA5 /* libvo-amrwbenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF951B56140F00F0DFA5 /* libvo-amrwbenc.a */; };
+		FE6DCFAF1B56140F00F0DFA5 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF961B56140F00F0DFA5 /* libvpx.a */; };
+		FE6DCFB01B56140F00F0DFA5 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF971B56140F00F0DFA5 /* libx264.a */; };
+		FE6DCFB11B56140F00F0DFA5 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF981B56140F00F0DFA5 /* libyuv.a */; };
+		FE6DCFB21B56140F00F0DFA5 /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF991B56140F00F0DFA5 /* libyuv_neon.a */; };
 		FEBCAD0E1B4175D700C86132 /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBCAD0D1B4175D700C86132 /* MZTimerLabel.m */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +122,31 @@
 		FE40F3C41B4E56B200EEC35A /* AnyChatErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatErrorCode.h; sourceTree = "<group>"; };
 		FE40F3C51B4E56B200EEC35A /* AnyChatObjectDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatObjectDefine.h; sourceTree = "<group>"; };
 		FE40F3C61B4E56B200EEC35A /* AnyChatPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatPlatform.h; sourceTree = "<group>"; };
+		FE6DCF811B56140F00F0DFA5 /* libaudio_processing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing.a; sourceTree = "<group>"; };
+		FE6DCF821B56140F00F0DFA5 /* libaudio_processing_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_neon.a; sourceTree = "<group>"; };
+		FE6DCF831B56140F00F0DFA5 /* libaudio_processing_sse2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_sse2.a; sourceTree = "<group>"; };
+		FE6DCF841B56140F00F0DFA5 /* libcommon_audio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio.a; sourceTree = "<group>"; };
+		FE6DCF851B56140F00F0DFA5 /* libcommon_audio_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio_neon.a; sourceTree = "<group>"; };
+		FE6DCF861B56140F00F0DFA5 /* libcommon_audio_sse2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio_sse2.a; sourceTree = "<group>"; };
+		FE6DCF871B56140F00F0DFA5 /* librtc_base_approved.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = librtc_base_approved.a; sourceTree = "<group>"; };
+		FE6DCF881B56140F00F0DFA5 /* libsystem_wrappers.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsystem_wrappers.a; sourceTree = "<group>"; };
+		FE6DCF891B56140F00F0DFA5 /* libanychatcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libanychatcore.a; sourceTree = "<group>"; };
+		FE6DCF8A1B56140F00F0DFA5 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavcodec.a; sourceTree = "<group>"; };
+		FE6DCF8B1B56140F00F0DFA5 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavformat.a; sourceTree = "<group>"; };
+		FE6DCF8C1B56140F00F0DFA5 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavutil.a; sourceTree = "<group>"; };
+		FE6DCF8D1B56140F00F0DFA5 /* libcelt0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcelt0.a; sourceTree = "<group>"; };
+		FE6DCF8E1B56140F00F0DFA5 /* libmediacore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediacore.a; sourceTree = "<group>"; };
+		FE6DCF8F1B56140F00F0DFA5 /* libmediashow.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediashow.a; sourceTree = "<group>"; };
+		FE6DCF901B56140F00F0DFA5 /* libmediautil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediautil.a; sourceTree = "<group>"; };
+		FE6DCF911B56140F00F0DFA5 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		FE6DCF921B56140F00F0DFA5 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
+		FE6DCF931B56140F00F0DFA5 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswresample.a; sourceTree = "<group>"; };
+		FE6DCF941B56140F00F0DFA5 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
+		FE6DCF951B56140F00F0DFA5 /* libvo-amrwbenc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libvo-amrwbenc.a"; sourceTree = "<group>"; };
+		FE6DCF961B56140F00F0DFA5 /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libvpx.a; sourceTree = "<group>"; };
+		FE6DCF971B56140F00F0DFA5 /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libx264.a; sourceTree = "<group>"; };
+		FE6DCF981B56140F00F0DFA5 /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
+		FE6DCF991B56140F00F0DFA5 /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
 		FEBCAD0C1B4175D700C86132 /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZTimerLabel.h; sourceTree = "<group>"; };
 		FEBCAD0D1B4175D700C86132 /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZTimerLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,14 +157,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE16D6211B2C11110054FBD5 /* libc++.dylib in Frameworks */,
+				FE6DCF9A1B56140F00F0DFA5 /* libaudio_processing.a in Frameworks */,
+				FE6DCFAD1B56140F00F0DFA5 /* libswscale.a in Frameworks */,
+				FE6DCFB01B56140F00F0DFA5 /* libx264.a in Frameworks */,
 				FE16D61F1B2C11010054FBD5 /* libstdc++.dylib in Frameworks */,
+				FE6DCFA41B56140F00F0DFA5 /* libavformat.a in Frameworks */,
+				FE6DCFA91B56140F00F0DFA5 /* libmediautil.a in Frameworks */,
+				FE6DCFAF1B56140F00F0DFA5 /* libvpx.a in Frameworks */,
+				FE6DCFAA1B56140F00F0DFA5 /* libmp3lame.a in Frameworks */,
+				FE6DCF9E1B56140F00F0DFA5 /* libcommon_audio_neon.a in Frameworks */,
+				FE6DCF9B1B56140F00F0DFA5 /* libaudio_processing_neon.a in Frameworks */,
+				FE6DCFA21B56140F00F0DFA5 /* libanychatcore.a in Frameworks */,
 				FE16D61D1B2C10F70054FBD5 /* libstdc++.6.dylib in Frameworks */,
 				FE16D61B1B2C10EC0054FBD5 /* CoreAudio.framework in Frameworks */,
+				FE6DCF9F1B56140F00F0DFA5 /* libcommon_audio_sse2.a in Frameworks */,
+				FE6DCFAC1B56140F00F0DFA5 /* libswresample.a in Frameworks */,
+				FE6DCF9C1B56140F00F0DFA5 /* libaudio_processing_sse2.a in Frameworks */,
+				FE6DCFAB1B56140F00F0DFA5 /* libopencore-amrwb.a in Frameworks */,
 				FE16D6191B2C10E40054FBD5 /* CoreVideo.framework in Frameworks */,
 				FE16D6171B2C10DB0054FBD5 /* CoreMedia.framework in Frameworks */,
 				FE16D6151B2C10D10054FBD5 /* QuartzCore.framework in Frameworks */,
+				FE6DCFAE1B56140F00F0DFA5 /* libvo-amrwbenc.a in Frameworks */,
+				FE6DCFA11B56140F00F0DFA5 /* libsystem_wrappers.a in Frameworks */,
+				FE6DCFA71B56140F00F0DFA5 /* libmediacore.a in Frameworks */,
+				FE6DCFA31B56140F00F0DFA5 /* libavcodec.a in Frameworks */,
+				FE6DCFA61B56140F00F0DFA5 /* libcelt0.a in Frameworks */,
 				FE16D6131B2C10C90054FBD5 /* AudioToolbox.framework in Frameworks */,
 				FE16D6111B2C10C00054FBD5 /* AVFoundation.framework in Frameworks */,
+				FE6DCFA51B56140F00F0DFA5 /* libavutil.a in Frameworks */,
+				FE6DCFA81B56140F00F0DFA5 /* libmediashow.a in Frameworks */,
+				FE6DCFB11B56140F00F0DFA5 /* libyuv.a in Frameworks */,
+				FE6DCF9D1B56140F00F0DFA5 /* libcommon_audio.a in Frameworks */,
+				FE6DCFB21B56140F00F0DFA5 /* libyuv_neon.a in Frameworks */,
+				FE6DCFA01B56140F00F0DFA5 /* librtc_base_approved.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +360,7 @@
 		FE40F3C11B4E56B200EEC35A /* sdk */ = {
 			isa = PBXGroup;
 			children = (
+				FE6DCF7F1B56140F00F0DFA5 /* libs */,
 				FE40F3C21B4E56B200EEC35A /* include */,
 			);
 			name = sdk;
@@ -309,6 +385,46 @@
 				FEBCAD0D1B4175D700C86132 /* MZTimerLabel.m */,
 			);
 			name = MZTimerLabel;
+			sourceTree = "<group>";
+		};
+		FE6DCF7F1B56140F00F0DFA5 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				FE6DCF801B56140F00F0DFA5 /* audioprocess */,
+				FE6DCF891B56140F00F0DFA5 /* libanychatcore.a */,
+				FE6DCF8A1B56140F00F0DFA5 /* libavcodec.a */,
+				FE6DCF8B1B56140F00F0DFA5 /* libavformat.a */,
+				FE6DCF8C1B56140F00F0DFA5 /* libavutil.a */,
+				FE6DCF8D1B56140F00F0DFA5 /* libcelt0.a */,
+				FE6DCF8E1B56140F00F0DFA5 /* libmediacore.a */,
+				FE6DCF8F1B56140F00F0DFA5 /* libmediashow.a */,
+				FE6DCF901B56140F00F0DFA5 /* libmediautil.a */,
+				FE6DCF911B56140F00F0DFA5 /* libmp3lame.a */,
+				FE6DCF921B56140F00F0DFA5 /* libopencore-amrwb.a */,
+				FE6DCF931B56140F00F0DFA5 /* libswresample.a */,
+				FE6DCF941B56140F00F0DFA5 /* libswscale.a */,
+				FE6DCF951B56140F00F0DFA5 /* libvo-amrwbenc.a */,
+				FE6DCF961B56140F00F0DFA5 /* libvpx.a */,
+				FE6DCF971B56140F00F0DFA5 /* libx264.a */,
+				FE6DCF981B56140F00F0DFA5 /* libyuv.a */,
+				FE6DCF991B56140F00F0DFA5 /* libyuv_neon.a */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		FE6DCF801B56140F00F0DFA5 /* audioprocess */ = {
+			isa = PBXGroup;
+			children = (
+				FE6DCF811B56140F00F0DFA5 /* libaudio_processing.a */,
+				FE6DCF821B56140F00F0DFA5 /* libaudio_processing_neon.a */,
+				FE6DCF831B56140F00F0DFA5 /* libaudio_processing_sse2.a */,
+				FE6DCF841B56140F00F0DFA5 /* libcommon_audio.a */,
+				FE6DCF851B56140F00F0DFA5 /* libcommon_audio_neon.a */,
+				FE6DCF861B56140F00F0DFA5 /* libcommon_audio_sse2.a */,
+				FE6DCF871B56140F00F0DFA5 /* librtc_base_approved.a */,
+				FE6DCF881B56140F00F0DFA5 /* libsystem_wrappers.a */,
+			);
+			path = audioprocess;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -517,8 +633,6 @@
 					"$(inherited)",
 					../../sdk/libs/audioprocess,
 					../../sdk/libs,
-					/Users/bairuitech/tim/bairuiGit/ios/sdk/libs/audioprocess,
-					/Users/bairuitech/tim/bairuiGit/ios/sdk/libs,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -537,8 +651,6 @@
 					"$(inherited)",
 					../../sdk/libs/audioprocess,
 					../../sdk/libs,
-					/Users/bairuitech/tim/bairuiGit/ios/sdk/libs/audioprocess,
-					/Users/bairuitech/tim/bairuiGit/ios/sdk/libs,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
