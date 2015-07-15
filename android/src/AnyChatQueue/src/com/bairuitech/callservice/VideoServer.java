@@ -31,14 +31,14 @@ import com.bairuitech.anychat.AnyChatObjectEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
 import com.bairuitech.bussinesscenter.BussinessCenter;
 import com.bairuitech.bussinesscenter.SessionItem;
-import com.example.anychatqueue.MainActivity;
+import com.bairuitech.common.BaseConst;
+import com.bairuitech.common.BaseMethod;
+import com.bairuitech.common.ConfigEntity;
+import com.bairuitech.common.ConfigService;
+import com.bairuitech.common.CustomApplication;
+import com.bairuitech.common.DialogFactory;
+import com.bairuitech.main.MainActivity;
 import com.example.anychatqueue.R;
-import com.example.common.BaseConst;
-import com.example.common.BaseMethod;
-import com.example.common.ConfigEntity;
-import com.example.common.ConfigService;
-import com.example.common.CustomApplication;
-import com.example.common.DialogFactory;
 
 
 public class VideoServer extends Activity implements 
@@ -51,7 +51,7 @@ public class VideoServer extends Activity implements
 	private ConfigEntity configEntity;
 	private ImageButton mImgBtnReturn;	// 标题返回
 	private TextView mTitleName;		// 标题名字
-	private int[] ids;
+	private int[] queueIds;
 	private ListView listView;
 	private SimpleAdapter adapter;
 	private CustomApplication mApplication;
@@ -74,19 +74,19 @@ public class VideoServer extends Activity implements
 		mApplication = (CustomApplication)getApplication();
 		//营业厅业务队列数组id
 		Intent intent =getIntent();
-		ids = intent.getIntArrayExtra("ids");
+		queueIds = intent.getIntArrayExtra("ids");
 		
-		for (int i = 0; i < ids.length; i++) {
+		for (int i = 0; i < queueIds.length; i++) {
 			
 	        	Map<String, Object> map = new HashMap<String, Object>();
 	        	//获取业务字符名称；
-	        	String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,ids[i], AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
+	        	String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,queueIds[i], AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
 	        	//获取业务排队人数；
-	        	int number = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, ids[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
+	        	int number = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueIds[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
 	        	//添加数据
 	        	map.put("name", name);
 	        	map.put("number",number);
-	        	map.put("id", ids[i]);
+	        	map.put("id", queueIds[i]);
 	        	//集合数据；
 	        	list.add(map);
 	        }
@@ -311,7 +311,6 @@ public class VideoServer extends Activity implements
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage("是否确定要退出通话")
 			.setPositiveButton("sure", new DialogInterface.OnClickListener() {
-				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					
@@ -349,13 +348,14 @@ public class VideoServer extends Activity implements
 			BaseMethod.showToast("暂时无人排队中...", VideoServer.this);		
 			break;
 			
-		case AnyChatObjectDefine.ANYCHAT_AREA_EVENT_LEAVERESULT:  finish();
+		case AnyChatObjectDefine.ANYCHAT_AREA_EVENT_LEAVERESULT:  
+			finish();
 			break;
 			
 		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_STATUSCHANGE:
-			for(int i=0;i<ids.length;i++){
-				if(dwObjectId == ids[i]){
-					int number1 = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, ids[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
+			for(int i=0;i<queueIds.length;i++){
+				if(dwObjectId == queueIds[i]){
+					int number1 = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueIds[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
 					list.get(i).put("number", number1);
 					adapter.notifyDataSetChanged();
 				}

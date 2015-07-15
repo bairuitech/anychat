@@ -3,6 +3,7 @@ package com.bairuitech.anychatqueue;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -33,23 +34,21 @@ import android.widget.TextView;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
-import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
-import com.bairuitech.anychat.AnyChatUserInfoEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
 import com.bairuitech.bussinesscenter.BussinessCenter;
-import com.example.anychatqueue.MainActivity;
+import com.bairuitech.common.BaseConst;
+import com.bairuitech.common.BaseMethod;
+import com.bairuitech.common.ConfigEntity;
+import com.bairuitech.common.ConfigService;
+import com.bairuitech.common.DialogFactory;
+import com.bairuitech.main.MainActivity;
 import com.example.anychatqueue.R;
-import com.example.common.BaseConst;
-import com.example.common.BaseMethod;
-import com.example.common.DialogFactory;
-import com.example.common.ConfigEntity;
-import com.example.common.ConfigService;
 
 
 
-public class VideoActivity extends Activity implements AnyChatBaseEvent,
-		OnClickListener, OnTouchListener,AnyChatObjectEvent, AnyChatVideoCallEvent, AnyChatUserInfoEvent {
+@SuppressLint("HandlerLeak") public class VideoActivity extends Activity implements AnyChatBaseEvent,
+		OnClickListener, OnTouchListener,AnyChatObjectEvent, AnyChatVideoCallEvent {
 	private SurfaceView mSurfaceSelf;
 	private SurfaceView mSurfaceRemote;
 	private ProgressBar mProgressSelf;
@@ -80,7 +79,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		//去掉标题栏；
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
@@ -117,13 +116,11 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 	}
 
 	@Override
 	protected void onRestart() {
-		// TODO Auto-generated method stub
 		if (anychat == null){
 			anychat = new AnyChatCoreSDK();
 		}
@@ -131,7 +128,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		anychat.SetVideoCallEvent(this);
 		anychat.SetObjectEvent(this);
 		super.onRestart();
-		// 
+		
 		if (AnyChatCoreSDK
 				.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) == AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 			videoIndex = anychat.mVideoHelper.bindVideo(mSurfaceRemote
@@ -143,14 +140,12 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		BussinessCenter.mContext = this;
 	}
 
 	@Override
 	protected void onStop() {
-		// TODO Auto-generated method stub
 		super.onStop();
 	}
 
@@ -189,7 +184,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				mHandler.sendEmptyMessage(MSG_TIMEUPDATE);
 			}
 		};
@@ -203,7 +197,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				mHandler.sendEmptyMessage(MSG_CHECKAV);
 			}
 		};
@@ -212,7 +205,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_ENDCALL,
 					dwTargetUserId, this);
@@ -250,7 +242,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 			anychat.mVideoHelper.SetVideoUser(videoIndex, dwTargetUserId);
 			Log.i("ANYCHAT", "VIDEOSHOW---" + "JAVA");
 		}
-
+		
 		final View layoutLocal = (View) findViewById(R.id.frame_local_area);
 		// 默认设置前置摄像头
 		layoutLocal.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -258,7 +250,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 					@Override
 					public void onGlobalLayout() {
-						// TODO Auto-generated method stub
 						if (!bVideoViewLoaded) {
 							bVideoViewLoaded = true;
 						}
@@ -293,14 +284,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	}
 
-	/***
-	 * 璋冩暣鏈�?湴瑙嗛鍖哄煙�?�藉害涓虹晫闈㈠搴�?ぇ灏忕殑1/4銆傜珫灞忔椂锛屾湰鍦伴瑙堢殑surfaceview鐨勫楂樻瘮渚嬩负鍒嗚鲸鐜囬珮�?�芥瘮渚�?;妯睆鏃讹紝
-	 * 鏈湴棰勮鐨剆urfaceview鐨勫楂樻瘮渚嬩负鍒嗚鲸鐜囧楂樻瘮渚�
-	 * 
-	 * @param width
-	 *            瀹�
-	 * 
-	 */
+	
 	public void adjustLocalVideo(boolean bLandScape) {
 		float width;
 		float height = 0;
@@ -346,14 +330,13 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	}
 
-	// 
 	private void CheckVideoStatus() {
 		if (!bOtherVideoOpened) {
-			//
+			
 			if (anychat.GetCameraState(dwTargetUserId) == 2
 					&& anychat.GetUserVideoWidth(dwTargetUserId) != 0) {
 				SurfaceHolder holder = mSurfaceRemote.getHolder();
-				// 
+				
 				if (AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) != AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 					holder.setFormat(PixelFormat.RGB_565);
 					holder.setFixedSize(anychat.GetUserVideoWidth(-1), anychat.GetUserVideoHeight(-1));
@@ -366,18 +349,19 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 				bOtherVideoOpened = true;
 			}
 		}
-		//
+
 		if (!bSelfVideoOpened) {
 			if (anychat.GetCameraState(-1) == 2 && anychat.GetUserVideoWidth(-1) != 0) {
 				SurfaceHolder holder = mSurfaceSelf.getHolder();
-				//
+				
 				if (AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_VIDEOSHOW_DRIVERCTRL) != AnyChatDefine.VIDEOSHOW_DRIVER_JAVA) {
 					holder.setFormat(PixelFormat.RGB_565);
 					holder.setFixedSize(anychat.GetUserVideoWidth(-1), anychat.GetUserVideoHeight(-1));
 				}
+				
 				Surface s = holder.getSurface();
-				anychat.SetVideoPos(-1, s, 0, 0, 0, 0);//
-				bSelfVideoOpened = true;//
+				anychat.SetVideoPos(-1, s, 0, 0, 0, 0);
+				bSelfVideoOpened = true;
 			}
 		}
 	}
@@ -387,9 +371,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mProgressRemote.setProgress(anychat.GetUserSpeakVolume(dwTargetUserId));
 	}
 
-	@Override
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
-		// TODO Auto-generated method stub
+		
 		if (dialog != null
 				&& dialog.isShowing()
 				&& DialogFactory.getCurrentDialogId() == DialogFactory.DIALOGID_RESUME) {
@@ -397,29 +380,26 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		}
 	}
 
-	@Override
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
-		// TODO Auto-generated method stub
+
 		if (dwErrorCode == 0) {
 			BussinessCenter.selfUserId = dwUserId;
 			BussinessCenter.selfUserName = anychat.GetUserName(dwUserId);
 		}
 	}
 
-	@Override
 	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
-		// TODO Auto-generated method stub
+
 		if (dwErrorCode == 0) {
-			//
+			
 			anychat.UserCameraControl(-1, 1);
 			anychat.UserSpeakControl(-1, 1);
 			bSelfVideoOpened = false;
 		}
 	}
 
-	@Override
 	public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId) {
-		// TODO Auto-generated method stub
+
 		anychat.UserCameraControl(dwTargetUserId, 1);
 		anychat.UserSpeakControl(dwTargetUserId, 1);
 		bOtherVideoOpened = false;
@@ -427,16 +407,14 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
-		// TODO Auto-generated method stub
+
 		anychat.UserCameraControl(dwTargetUserId, 1);
 		anychat.UserSpeakControl(dwTargetUserId, 1);
 		bOtherVideoOpened = false;
 
 	}
 
-	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-		// TODO Auto-generated method stub
 
 		anychat.UserCameraControl(-1, 0);
 		anychat.UserSpeakControl(-1, 0);
@@ -465,9 +443,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		Log.i("ANYCHAT", "OnAnyChatLinkCloseMessage:" + dwErrorCode);
 	}
 
-	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+
 		if (v == mBtnEndSession) {
 			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_ENDCALL,
 					dwTargetUserId, this);
@@ -479,7 +456,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	@Override
 	public void OnAnyChatVideoCallEvent(int dwEventType, int dwUserId,
 			int dwErrorCode, int dwFlags, int dwParam, String userStr) {
-		// TODO Auto-generated method stub
+
 		switch (dwEventType) {
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
 			
@@ -502,24 +479,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		
 	}
 
-	@Override
-	public void OnAnyChatUserInfoUpdate(int dwUserId, int dwType) {
-		// TODO Auto-generated method stub
-//		if (dwUserId == 0 && dwType == 0) {
-//			BussinessCenter.getBussinessCenter().getOnlineFriendDatas();
-//		}
-	}
-
-	@Override
-	public void OnAnyChatFriendStatus(int dwUserId, int dwStatus) {
-		// TODO Auto-generated method stub
-//		BussinessCenter.getBussinessCenter().onUserOnlineStatusNotify(dwUserId, dwStatus);
-	}
-	
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -527,7 +489,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	public void OnAnyChatObjectEvent(int dwObjectType, int dwObjectId,
 			int dwEventType, int dwParam1, int dwParam2, int dwParam3,
 			int dwParam4, String strParam) {
-		// TODO Auto-generated method stub
 		
 	}
 }

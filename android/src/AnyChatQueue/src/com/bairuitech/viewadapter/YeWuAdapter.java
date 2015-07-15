@@ -7,9 +7,9 @@ import java.util.Map;
 
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatObjectDefine;
+import com.bairuitech.common.ConfigEntity;
+import com.bairuitech.common.ConfigService;
 import com.example.anychatqueue.R;
-import com.example.common.ConfigEntity;
-import com.example.common.ConfigService;
 
 
 

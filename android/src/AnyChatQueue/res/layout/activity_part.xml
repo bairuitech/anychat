@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/background"
-    tools:context="com.example.anychatqueue.PartActivity$PlaceholderFragment" >
+    tools:context="com.bairuitech.main.PartActivity$PlaceholderFragment" >
 
     <TextView
         android:layout_marginTop="10dp"

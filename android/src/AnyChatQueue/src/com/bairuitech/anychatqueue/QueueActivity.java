@@ -13,19 +13,16 @@ import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
 import com.bairuitech.bussinesscenter.BussinessCenter;
-
-import com.example.anychatqueue.MainActivity;
+import com.bairuitech.common.BaseConst;
+import com.bairuitech.common.BaseMethod;
+import com.bairuitech.common.ConfigEntity;
+import com.bairuitech.common.ConfigService;
+import com.bairuitech.common.DialogFactory;
+import com.bairuitech.main.MainActivity;
 import com.example.anychatqueue.R;
-import com.example.common.BaseConst;
-import com.example.common.BaseMethod;
-import com.example.common.ConfigEntity;
-import com.example.common.DialogFactory;
-import com.example.common.ConfigService;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -36,12 +33,11 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.BaseInputConnection;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatVideoCallEvent,AnyChatObjectEvent, OnClickListener{
+ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatVideoCallEvent,AnyChatObjectEvent, OnClickListener{
 	private Button  quickButton;
 	private AnyChatCoreSDK anychat;
 	private Dialog dialog;
@@ -51,7 +47,6 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 	private TextView mTitleName,timeshow;	
 	private int seconds = 0;
 	
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		 requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -89,7 +84,7 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
+				
 				myhHandler.sendEmptyMessage(0x123);
 			}
 		}, 0,1000);
@@ -98,24 +93,19 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 		quickButton = (Button) findViewById(R.id.queue_btn);
 		quickButton.setOnClickListener(new OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				
 				AlertDialog.Builder builder = new AlertDialog.Builder(QueueActivity.this);
 					builder.setMessage("您确定要退出当前排队吗!")
 							.setPositiveButton("sure", new DialogInterface.OnClickListener() {
 								
-								@Override
 								public void onClick(DialogInterface dialog, int which) {
-									// TODO Auto-generated method stub
 									AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,configEntity.CurrentQueueId, AnyChatObjectDefine.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
 									finish();
 								}
 							}).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
 								
-								@Override
 								public void onClick(DialogInterface dialog, int which) {
-									// TODO Auto-generated method stub
 									
 								}
 							}).create().show();
@@ -130,15 +120,16 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 		anychat.SetBaseEvent(this);
 		anychat.SetVideoCallEvent(this);
 		anychat.SetObjectEvent(this);
-//		anychat.SetUserInfoEvent(this);
 		Log.i("ANYCHAT", "initSdk");
 	}
+	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		BussinessCenter.mContext = QueueActivity.this;
 		super.onResume();
 	}
+	
 	@Override
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
 		// TODO Auto-generated method stub
@@ -148,12 +139,14 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 			dialog.dismiss();
 		}
 	}
+	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		BussinessCenter.getBussinessCenter().realseData();
 	}
+	
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		// TODO Auto-generated method stub
@@ -177,20 +170,12 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 							
 						}
 					}).create().show();
-			
-			
 		}
 		return super.dispatchKeyEvent(event);
 	}
-	/*private void destroyCurActivity() {
-		// TODO Auto-generated method stub
-		
-		onDestroy();
-		finish();
-	}*/
+	
 	@Override
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
-		// TODO Auto-generated method stub
 		if(dwErrorCode==0)
 		{
 			BussinessCenter.selfUserId   =  dwUserId;
@@ -199,9 +184,9 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 			BaseMethod.showToast(this.getString(R.string.str_login_failed) + "(ErrorCode:" + dwErrorCode + ")",	this);
 		}
 	}
+	
 	@Override
 	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
-		// TODO Auto-generated method stub
 		if (dwErrorCode == 0) {
 			
 			Intent intent = new Intent();
@@ -215,19 +200,19 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 		if (dialog != null)
 			dialog.dismiss();
 	}
+	
 	@Override
 	public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId) {
-		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
-		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-		// TODO Auto-generated method stub
 		if (dwErrorCode == 0) {
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
@@ -255,10 +240,6 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 			if(mbefore == -1) mbefore = 0;
 			showTextView.setText("在您前面还有："+mbefore+"人等待，请您耐心等候...");
 			break;
-		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_LEAVERESULT:
-				finish();
-			break;
-			
 		default:
 			break;
 		}
@@ -305,13 +286,6 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 				dialog.dismiss();
 			BussinessCenter.getBussinessCenter().onVideoCallStart(
 					dwUserId, dwFlags, dwParam, userStr);
-			break;
-		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
-			Log.e("queueactivity","会话结束回调");
-		/*BussinessCenter.getBussinessCenter().onVideoCallEnd(dwUserId,
-					dwFlags, dwParam, userStr);*/
-			AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,configEntity.CurrentQueueId, AnyChatObjectDefine.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-			finish();
 			break;
 		}
 	}

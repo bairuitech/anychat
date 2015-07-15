@@ -13,13 +13,13 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.example.common.CustomApplication"
+        android:name="com.bairuitech.common.CustomApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/titlestyle" >
         <activity
-            android:name="com.example.anychatqueue.MainActivity"
+            android:name="com.bairuitech.main.MainActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name" >
             <intent-filter>
@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.anychatqueue.FuncMenu"
+            android:name="com.bairuitech.main.FuncMenu"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/title_activity_func_menu" >
         </activity>
@@ -56,12 +56,12 @@
             android:theme="@style/titlestyle" >
         </activity>
         <activity
-            android:name="com.example.anychatqueue.VideoServer"
+            android:name="com.bairuitech.main.VideoServer"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/title_activity_video_server" >
         </activity>
         <activity
-            android:name="com.example.anychatqueue.TestActivity"
+            android:name="com.bairuitech.main.TestActivity"
             android:label="@string/title_activity_test" >
         </activity>
     </application>

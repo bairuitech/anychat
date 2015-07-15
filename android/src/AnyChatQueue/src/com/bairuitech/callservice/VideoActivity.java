@@ -3,6 +3,7 @@ package com.bairuitech.callservice;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -41,17 +42,14 @@ import com.bairuitech.anychat.AnyChatObjectEvent;
 import com.bairuitech.anychat.AnyChatUserInfoEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
 import com.bairuitech.bussinesscenter.BussinessCenter;
-import com.example.anychatqueue.MainActivity;
+import com.bairuitech.common.BaseConst;
+import com.bairuitech.common.BaseMethod;
+import com.bairuitech.common.ConfigEntity;
+import com.bairuitech.common.ConfigService;
+import com.bairuitech.common.DialogFactory;
+import com.bairuitech.main.MainActivity;
 import com.example.anychatqueue.R;
-import com.example.common.BaseConst;
-import com.example.common.BaseMethod;
-import com.example.common.DialogFactory;
-import com.example.common.ConfigEntity;
-import com.example.common.ConfigService;
-
-
-
-public class VideoActivity extends Activity implements AnyChatBaseEvent,
+ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		OnClickListener, OnTouchListener,AnyChatObjectEvent, AnyChatVideoCallEvent, AnyChatUserInfoEvent {
 	private SurfaceView mSurfaceSelf;
 	private SurfaceView mSurfaceRemote;
@@ -61,8 +59,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	private TextView mTxtTime;
 	private Button mBtnEndSession;
 	private Dialog dialog;
-	private ImageButton mImgBtnReturn;	// 标题返回
-	private TextView mTitleName;		// 标题名字
 
 	private AnyChatCoreSDK anychat;
 	private Handler mHandler;
@@ -78,21 +74,15 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	public static final int MSG_TIMEUPDATE = 2;
 	public static final int PROGRESSBAR_HEIGHT = 5;
 	
-	
-	
 	int dwTargetUserId;
 	int videoIndex = 0;
 	int videocallSeconds = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		//去掉标题栏；
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-//		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  
-		
-		
 		initSdk();
 		
 		//得到对方的Id;
@@ -131,7 +121,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		// TODO Auto-generated method stub
 		super.onPause();
 	}
-
 	
 	@Override
 	protected void onRestart() {
@@ -164,13 +153,10 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
-	
-
 	}
 
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		
 		anychat.UserCameraControl(-1, 0);
 		anychat.UserSpeakControl(-1, 0);
@@ -195,7 +181,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
 
 	}
- 
 	
 	private void initTimerShowTime() {
 		if (mTimerShowVideoTime == null)
@@ -225,7 +210,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mTimerCheckAv.schedule(mTimerTask, 1000, 100);
 	}
 
-	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -233,7 +217,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 					dwTargetUserId, this);
 			dialog.show();
 		}
-
+		
 		return super.onKeyDown(keyCode, event);
 	}
 
@@ -247,24 +231,6 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		mTxtTime = (TextView) findViewById(R.id.txt_time);
 		mBtnEndSession = (Button) findViewById(R.id.btn_endsession);
 		mBtnEndSession.setOnClickListener(this);
-		
-	
-		
-		/*mTitleName = (TextView) this.findViewById(R.id.titleName);
-		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
-		
-		mImgBtnReturn.setOnClickListener(this);
-		
-		
-		String name1 = anychat.GetUserName(dwTargetUserId);
-		mTitleName.setText("正在与 "+name1+" 通话中");	
-		System.out.println("对方的用户名字是:"+name1);
-		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
-		mImgBtnReturn.setOnClickListener(this);*/
-		
-		
-		
-		
 		
 		mSurfaceRemote.setTag(dwTargetUserId);
 		configEntity = ConfigService.LoadConfig(this);

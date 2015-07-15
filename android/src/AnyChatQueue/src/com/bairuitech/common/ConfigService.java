@@ -1,4 +1,4 @@
-package com.example.common;
+package com.bairuitech.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;

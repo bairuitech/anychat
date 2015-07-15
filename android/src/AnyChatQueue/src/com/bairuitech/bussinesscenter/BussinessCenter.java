@@ -13,14 +13,14 @@ import android.util.Log;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychatqueue.VideoActivity;
+import com.bairuitech.common.BaseConst;
+import com.bairuitech.common.BaseMethod;
+import com.bairuitech.common.ScreenInfo;
+import com.bairuitech.main.FuncMenu;
 
 
 
-import com.example.anychatqueue.FuncMenu;
 import com.example.anychatqueue.R;
-import com.example.common.BaseConst;
-import com.example.common.BaseMethod;
-import com.example.common.ScreenInfo;
 
 
 
