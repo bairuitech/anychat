@@ -33,7 +33,7 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 	private YeWuAdapter adapter;
 	private AnyChatCoreSDK anychat;
 	private ConfigEntity configEntity = new ConfigEntity();
-	private int[] queueids;
+	private int[] queueIds;
 	public List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
 	private ImageButton mImgBtnReturn;
 	private TextView 	mTitleName;	
@@ -52,10 +52,10 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 	private void initView() {
 		//拿取传过来的数据；
         Intent intent = getIntent();
-        queueids = intent.getIntArrayExtra("ids");
+        queueIds = intent.getIntArrayExtra("ids");
         configEntity  = ConfigService.LoadConfig(YeWuActivity.this);
-        for (int i = 0; i < queueids.length; i++) {
-        	System.out.println("队列Id值==>"+queueids[i]);
+        for (int i = 0; i < queueIds.length; i++) {
+        	System.out.println("队列Id值==>"+queueIds[i]);
         	Map<String, Object> map = new HashMap<String, Object>();
         	//获取业务字符名称；
         	String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,queueids[i], AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
@@ -88,11 +88,11 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
     	}
     	anychat.SetBaseEvent(this);
     	anychat.SetObjectEvent(this);
-    	 for (int i = 0; i < queueids.length; i++) {
+    	 for (int i = 0; i < queueIds.length; i++) {
          	//获取业务字符名称；
-         	String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,queueids[i], AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
+         	String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,queueIds[i], AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
          	//获取业务排队人数；
-         	int number = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueids[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
+         	int number = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueIds[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
          	//
          	list.get(i).put("name", name);
          	list.get(i).put("number",number);
@@ -185,9 +185,9 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 			
 		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_STATUSCHANGE:	
 			//更新列表数据
-			for (int i = 0; i < queueids.length;i++ ) {
-				if(dwObjectId == queueids[i]){
-					int number1 = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueids[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
+			for (int i = 0; i < queueIds.length;i++ ) {
+				if(dwObjectId == queueIds[i]){
+					int number1 = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueIds[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
 					list.get(i).put("number", number1);
 					adapter.notifyDataSetChanged();
 					break;
