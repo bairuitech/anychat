@@ -251,7 +251,7 @@ namespace QueueClient
 
         private void btnStopService_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("你确定中止当前视频吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.OK)
+            if (MessageBox.Show("你确定结束当前的视频服务吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.OK)
             {
                 AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_FINISH, mTargetUserId, 0, 0, 0, ""); 	// 挂断
                 //btn_return.Enabled = true;
