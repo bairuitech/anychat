@@ -5,21 +5,21 @@ using System.Text;
 namespace QueueHelp
 {
     /// <summary>
-    /// 营业厅信息类
+    /// 用户身份类型
     /// </summary>
-    public class AreaInfo
+    public enum UserIdentityType
     {
         /// <summary>
-        /// 营业厅ID
+        /// 客户
         /// </summary>
-        public int AreaID { get; set; }
+        Client = 0,
         /// <summary>
-        /// 营业厅名称
+        /// 坐席
         /// </summary>
-        public string AreaName { get; set; }
+        Agent = 1,
         /// <summary>
-        /// 营业厅描述
+        /// 管理者
         /// </summary>
-        public string AreaDescription { get; set; }
+        Manager = 2
     }
 }

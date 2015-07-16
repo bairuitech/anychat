@@ -1444,7 +1444,6 @@ namespace ANYCHATAPI
         /// <param name="dwInfoName">属性名</param>
         /// <param name="value">属性值</param>
         /// </summary>
-        //[DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_ObjectSetIntValue", CallingConvention = CallingConvention.Cdecl)]
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_ObjectSetValue", CallingConvention = CallingConvention.Cdecl)]
         public static extern int BRAC_ObjectSetValue(int dwObjectType, int dwObjectId, int dwInfoName, ref int value, int optlen);
 
