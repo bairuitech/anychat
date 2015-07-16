@@ -84,6 +84,21 @@
                     break;
                 }
                     
+                case GV_ERR_VIDEOCALL_TIMEOUT:// 会话请求超时
+                {
+                    if (self.requestAlertView != nil) [self.requestAlertView dismissWithClickedButtonIndex:self.requestAlertView.cancelButtonIndex animated:YES];
+                    [MBProgressHUD showError:@"请求超时"];
+                    [self.navigationController popViewControllerAnimated:YES];
+                    break;
+                }
+                    
+                case GV_ERR_VIDEOCALL_DISCONNECT:// 网络断线
+                {
+                    [MBProgressHUD showError:@"网络断线"];
+                    
+                    break;
+                }
+                    
             }
             break;
         }

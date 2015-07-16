@@ -123,6 +123,7 @@
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode {
     if (dwErrorCode == 0) {
+        self.businessHallDicArr = nil;
         self.selfUserId = dwUserId;
         // 初始化本地对象信息
         if ([self.role.text isEqualToString:@"普通用户"]) {
@@ -159,6 +160,9 @@
 // 网络断开消息
 - (void) OnAnyChatLinkClose:(int) dwErrorCode {
     NSLog(@"网络断开");
+    // 注销系统
+    [AnyChatPlatform Logout];
+    [MBProgressHUD hideHUD];
     [MBProgressHUD showError:@"网络断线，请稍后再试"];
     self.businessHallDicArr = nil;
     self.selfUserId = -1;
@@ -315,7 +319,7 @@
     NSLog(@"服务区域状态变化");
 }
 
-// 7.用户进入队列
+// 8.用户进入队列
 -(void) AnyChatUserEnterQueue:(int)dwObjectType :(int)dwObjectId :(int)dwUserId {
     NSLog(@"用户进入队列");
     int controllersCount = (int)self.navigationController.viewControllers.count;
@@ -324,7 +328,7 @@
     }
 }
 
-// 8.用户进入队列结果
+// 9.用户进入队列结果
 -(void) AnyChatEnterQueueResult:(int)dwObjectType :(int)dwObjectId :(int)dwErrorCode {
     if(dwErrorCode == 0) {
         // 进入队列成功
@@ -339,7 +343,7 @@
     }
 }
 
-// 9.用户离开队列
+// 10.用户离开队列
 -(void) AnyChatUserLeaveQueue:(int)dwObjectType :(int)dwObjectId :(int)dwUserId {
     NSLog(@"用户离开队列");
     int controllersCount = (int)self.navigationController.viewControllers.count;
@@ -348,14 +352,14 @@
     }
 }
 
-// 10.用户离开队列结果
+// 11.用户离开队列结果
 -(void) AnyChatLeaveQueueResult :(int)dwObjectType :(int)dwObjectId :(int)dwErrorCode {
     if (dwErrorCode == 0) {
         NSLog(@"用户离开队列成功");
     }
 }
 
-// 11.队列状态变化
+// 12.队列状态变化
 -(void) AnyChatQueueStatusChanged:(int)dwObjectType :(int)dwObjectId {
     NSLog(@"队列状态变化");
     
@@ -378,12 +382,12 @@
     }
 }
 
-// 12.坐席状态变化
+// 13.坐席状态变化
 -(void) AnyChatAgentStatusChanged:(int)dwObjectType :(int)dwObjectId {
     NSLog(@"坐席状态变化");
 }
 
-// 13.坐席服务通知(有人排队)
+// 14.坐席服务通知(有人排队)
 -(void) AnyChatAgentServiceNotify:(int)dwAgentId :(int)clientId {
     NSLog(@"坐席服务通知");
     if ([self.role.text isEqualToString:@"坐席"] && self.selfUserId == dwAgentId) {
@@ -396,7 +400,7 @@
     }
 }
 
-// 14.坐席等待用户(没人排队)
+// 15.坐席等待用户(没人排队)
 -(void) AnyChatAgentWaitingUser:(int)dwObjectType {
     NSLog(@"坐席等待用户");
     [MBProgressHUD showError:@"暂时还没有顾客排队，请稍后再试"];
@@ -499,6 +503,7 @@
     if (navNum==4) {
         QueueViewController *queueVC = [self.navigationController.viewControllers objectAtIndex:3];
         int beforeNum = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_BEFOREUSERNUM];
+        if (beforeNum < 0) beforeNum = 0;
         queueVC.beforeLabel.text = [NSString stringWithFormat:@"在您前面还有%d人等待",beforeNum];
     }
 }
