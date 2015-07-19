@@ -36,13 +36,13 @@ body {
     text-align: center;
 }
 strong {
-	color: red;
+	color: #ee5e0f;
 }
 
 #queueMsg2 {
 	display: none;
 	background: url("../img/14.png") no-repeat;
-    padding-left: 15px;
+    padding-left: 40px;
     width: 360px;
 }
 #takeUp {

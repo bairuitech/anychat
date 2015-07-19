@@ -143,7 +143,7 @@ function OnAnyChatEnterRoom(dwRoomId, errorcode) {
 				'<div id="remoteAudioVolume" style="width:480px;height:5px;top:370px;left: 21px;"></div>'+
 				'<div id="localVideoPos" class="videoshow1"></div>'+
 				'<div id="localAudioVolume" style="width:480px;height:5px;top:370px;left: 517px;"></div>'+
-				'<div id="div_username0" uid="" class="ShowName" style="left: 21px;">'+name1+'(客服)</div>'+
+				'<div id="div_username0" uid="" class="ShowName" style="left: 21px;">'+name1+'(坐席)</div>'+
 				'<div id="div_username1" uid="" class="ShowName" style="left:517px">'+myName+'(自己)</div>'+
 				'<b style="position: absolute;bottom: -40;right: 30;font-size: 18px;"><a id="hangUp" class="Buttons"></a></b>'+
 			'</div>';
@@ -280,7 +280,8 @@ function OnAnyChatObjectEvent(dwObjectType, dwObjectId, dwEventType, dwParam1, d
 	switch(dwEventType) {
 		case ANYCHAT_OBJECT_EVENT_UPDATE:		OnAnyChatObjectUpdate(dwObjectType, dwObjectId);			break;
 		case ANYCHAT_AREA_EVENT_ENTERRESULT:	OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwParam1);	break;
-		case ANYCHAT_AREA_EVENT_LEAVERESULT:	OnAnyChatLeaveAreaResult(dwObjectType, dwObjectId, dwParam1);	break;
+		case ANYCHAT_AREA_EVENT_LEAVERESULT:    OnAnyChatLeaveAreaResult(dwObjectType, dwObjectId, dwParam1); break;
+		case ANYCHAT_AREA_EVENT_STATUSCHANGE:   OnAnyChatAreaStatusChange(dwObjectType, dwObjectId, dwParam1); break;
 		case ANYCHAT_QUEUE_EVENT_STATUSCHANGE:	OnAnyChatQueueStatusChanged(dwObjectType, dwObjectId);			break;
 		case ANYCHAT_QUEUE_EVENT_ENTERRESULT:	OnAnyChatEnterQueueResult(dwObjectType, dwObjectId, dwParam1);	break;
 		case ANYCHAT_QUEUE_EVENT_LEAVERESULT:	OnAnyChatLeaveQueueResult(dwObjectType, dwObjectId, dwParam1);	break;
@@ -305,9 +306,16 @@ function OnAnyChatObjectUpdate(dwObjectType, dwObjectId) {
 	        $("#enterRoom").show(); //显示大厅
 	        $("#enterRoom h2:eq(1)").text("营业厅列表");
 			$("#poptip li").each(function(index){ 
-				if(dwObjectId==$(this).attr('dwObjectId')){$(this).remote();}
+				if(dwObjectId== $(this).attr('dwObjectId')){$(this).remote();}
 			});
-				$("#poptip").prepend('<li dwObjectId="'+dwObjectId+'">' + '<p>'+areaName+'</p>' + '<p class="description">' +description + '</p>' + '<p>' + '<img src="./img/area.png">' + '</p>' + '<p>编号：'+dwObjectId+'</p>' + '<p>' + '<a class="btn">进入</a>' + '</p>' + '</li>');
+            var createObj=$('<li dwObjectId="' + dwObjectId + '">' + '<p>' + areaName + '</p>' + '<p class="description">' + description + '</p>' + '<p>' + '<img src="./img/area.png">' + '</p>' + '<p>编号：' + dwObjectId + '</p>' + '<p>' + '<a class="btn">进入</a>' + '</p>' + '</li>');
+            createObj.css("background-color", colorArray[colorIdx]);
+            $("#poptip").append(createObj);
+            colorIdx++;
+            if (colorIdx == 4) {
+                colorIdx = 0;
+            }
+
 				
 		}
 		$("#LOADING_GREY_DIV").hide();//隐藏登录蒙层
@@ -338,8 +346,14 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 				var queueInfo=BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueListId, ANYCHAT_OBJECT_INFO_DESCRIPTION);
 				$("#LOADING_GREY_DIV").hide();//隐藏蒙层
 	            $('#poptip li[dwobjectid]').hide(); //隐藏服务厅
-				$("#enterRoom h2:eq(1)").text(queueListName);
-	            $("#poptip").append('<li queueid="'+queueListId+'">' + '<p>'+queueName+'</p>' + '<p class="description">' +queueInfo + '</p>' + '<p>' + '<img src="./img/queue.png">' + '</p>' + '<p>当前排队人数：<strong>'+queueLength+'</strong></p>' + '<p>' + '<a class="btn">立即办理</a>' + '</p>' + '</li>');
+	            $("#enterRoom h2:eq(1)").text(queueListName);
+	            var liObject = $('<li queueid="' + queueListId + '">' + '<p>' + queueName + '</p>' + '<p class="description">' + queueInfo + '</p>' + '<p>' + '<img src="./img/queue.png">' + '</p>' + '<p>当前排队人数：<strong>' + queueLength + '</strong></p>' + '<p>' + '<a class="btn">立即办理</a>' + '</p>' + '</li>');
+	            liObject.css("background-color", colorArray[colorIdx]);
+	            $("#poptip").append(liObject);
+	            colorIdx++;
+	            if (colorIdx == 4) {
+	                colorIdx = 0;
+	            }	            
 			}
 			$("#roomOut").off().click(function() {
 				$("#LOADING_GREY_DIV").show();//显示等待蒙层
@@ -363,8 +377,15 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
             			$("#queueMsg2 #reject").click();
             		}
             	}
-            });
-		}
+            });        }
+        //坐席
+        if (userType == 2) {
+            refreshAgentServiceInfo();
+
+            $("#roomOut").off().click(function () {
+                leaveAreaClickEvent();
+            });
+        }
 	}
 }
 
@@ -373,10 +394,16 @@ function OnAnyChatLeaveAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 	AddLog('function OnAnyChatLeaveAreaResult(dwObjectType: ' + dwObjectType + ',dwObjectId: ' + dwObjectId+',dwErrorCode: '+dwErrorCode, LOG_TYPE_API);
 }
 
+//营业厅状态变化
+function OnAnyChatAreaStatusChange(dwObjectTupe, dwObjectId, dwErrorCode) {
+    AddLog('function OnAnyChatAreaStatusChange(dwObjectType: ' + dwObjectType + ',dwObjectId: ' + dwObjectId + ',dwErrorCode: ' + dwErrorCode, LOG_TYPE_API);
+}
+
 // 队列状态变化
 function OnAnyChatQueueStatusChanged(dwObjectType, dwObjectId) {
 	AddLog('function OnAnyChatQueueStatusChanged(dwObjectType: ' + dwObjectType + ',dwObjectId: ' + dwObjectId, LOG_TYPE_API);
-    refreshUserWaitingInfo(dwObjectId);
+	refreshUserWaitingInfo(dwObjectId);
+	refreshQueueInfoDisplay(dwObjectId);
 }
 
 // 本地用户进入队列结果
