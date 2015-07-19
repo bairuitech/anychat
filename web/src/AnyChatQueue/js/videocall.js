@@ -15,7 +15,6 @@ function ForSession(message,statue) {
 
 //取消主动呼叫
 function CancelCall() {
-	console.warn('取消主动呼叫');
 	$('#LOADING_GREY_DIV').hide();
 	/**取消主动呼叫*/
 	BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,GV_ERR_SESSION_QUIT,0,0,"");
@@ -36,21 +35,22 @@ function CancelCall() {
 
 //呼叫用户
 function VideoCallRequest(ID) {
-	console.warn('呼叫用户');
     /**向指定的用户发送会话邀请*/
 	BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REQUEST,mTargetUserId,0,0,0,"");  
 }
 
 //同意会话
 function AcceptRequestBtnClick() {
-	console.warn('同意会话');
+	if(userType==1){
+		$("#LOADING_GREY_DIV span").hide();
+		$("#LOADING_GREY_DIV").show();
+	}
 	/**呼叫请求回复触发*/
 	BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,0,0,0,"");
 }
 
 //拒绝会话
 function RejectRequestBtnClick() {
-	console.warn('拒绝会话');
 	/**目标用户拒绝会话触发*/
 	BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY,mTargetUserId,GV_ERR_SESSION_REFUSE,0,0,"");  
 	/**离开队列*/
@@ -61,20 +61,18 @@ function RejectRequestBtnClick() {
 //收到视频呼叫请求
 function onVideoCallControlRequest(dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr)
 {
-	console.warn('收到视频呼叫请求');
+	$("#callLayer h4").text("收到服务请求");
 	/**获取客服姓名*/
 	 var UserName = BRAC_GetUserInfo(dwUserId,USERINFO_NAME); 
-	 
-	 $("#queueMsg1").hide();
-	 $("#queueMsg2").show();
+	 $("#callLayer #queueMsg1").hide();
+	 $("#callLayer #queueMsg2").show();
 	 mTargetUserId=dwUserId;
-	 $("#queueMsg2 p:first-child").html("客服 <b style=\"color:red;\">"+UserName+"</b> 请求与您视频通话，是否接受？");
+	 $("#callLayer #queueMsg2 p").html("客服 <b style=\"color:red;\">"+UserName+"</b> 请求与您视频通话，是否接受？");
 }
 
 //视频呼叫请求回复
 function onVideoCallControlReply(dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr)
 {
-	console.warn('视频呼叫请求回复');
 	switch(dwErrorCode)
 	{
 		case GV_ERR_SUCCESS://成功的情况
@@ -84,7 +82,8 @@ function onVideoCallControlReply(dwUserId, dwErrorCode, dwFlags, dwParam, szUser
 			/**离开队列*/
 			BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE,0 ,0,0,0,"");
 			$('#callLayer').hide();
-			$('#enterRoom').show();
+			$("#enterRoom h2").text(queueListName);
+			$('#poptip').show();
 			clearInterval(waitTimeSet);
 			ForSession("用户主动放弃会话", true);
 			startServiceTag = false;
@@ -111,6 +110,7 @@ function onVideoCallControlReply(dwUserId, dwErrorCode, dwFlags, dwParam, szUser
 			break; 
 		case GV_ERR_SESSION_DISCONNECT:
 			ForSession("网络断线",true);
+			$('#LOADING_GREY_DIV').hide();
 			break; 
 		default:
 			break;
@@ -120,7 +120,6 @@ function onVideoCallControlReply(dwUserId, dwErrorCode, dwFlags, dwParam, szUser
 //通话开始
 function onVideoCallControlStart(dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr)
 {
-	console.warn('通话开始');
 	if(userType==2){//客服
 		$("#Initiative_Call_Div").hide();//隐藏主动呼叫对话框
 		$('#LOADING_GREY_DIV').hide();
@@ -132,7 +131,7 @@ function onVideoCallControlStart(dwUserId, dwErrorCode, dwFlags, dwParam, szUser
 
 //视频通话结束
 function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr)
-{console.warn('视频通话结束');
+{
 	BRAC_LeaveRoom(mSelfUserId);
 	
 	//关闭对方视频
@@ -141,9 +140,8 @@ function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUse
 		/**离开队列*/
 		BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE,0 ,0,0,0,"");
 		$("#videoCall").hide();//隐藏视频窗口
-		$("#enterRoom").show();//显示队列列表
+		$("#poptip").show(); //显示队列列表
 		clearInterval(waitTimeSet);
-		setMarTop($("#selectList").height());
 	}else if(userType==2){
 		/**客服结束服务*/
 		BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AGENT, mSelfUserId, ANYCHAT_AGENT_CTRL_FINISHSERVICE, 0,0,0,0,"");	
@@ -161,7 +159,6 @@ function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUse
 //视频呼叫请求发送成功
 function onSendVideoCallRequestSucess(mTargetUserId)
 {	
-	console.warn('视频呼叫请求发送成功');
 	this.mTargetUserId=mTargetUserId;
 	if(userType==2){
 		/**用户姓名*/

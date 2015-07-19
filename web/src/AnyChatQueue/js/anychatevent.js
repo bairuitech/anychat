@@ -129,7 +129,7 @@ function OnAnyChatLoginSystem(dwUserId, errorcode) {
 // 客户端进入房间，dwRoomId表示所进入房间的ID号，errorcode表示是否进入房间：0成功进入，否则为出错代码
 function OnAnyChatEnterRoom(dwRoomId, errorcode) {
 	if (errorcode == 0) {
-		AddLog("客户端进入房间成功,dwRoomId="+dwRoomId, LOG_TYPE_NORMAL);
+		AddLog("function OnAnyChatEnterRoom(dwRoomId: "+dwRoomId+',errorcode: '+errorcode, LOG_TYPE_NORMAL);
 		if (userType == 2) {
 			
 		} else if (userType ==1) {
@@ -137,17 +137,28 @@ function OnAnyChatEnterRoom(dwRoomId, errorcode) {
 			var name1 = BRAC_GetUserInfo(mTargetUserId,USERINFO_NAME); 
 			/**个人姓名*/
 			var myName = BRAC_GetUserInfo(mSelfUserId,USERINFO_NAME);
-			$("#videoCallContent").html('<div style="width: 530px;float:left;"><b style="color:orange;">客服名称：</b>'+name1+'</div><div id="remoteVideoPos" style="float: left;"></div><div style="padding-left:540px;"><b style="color:orange;">客户姓名：</b>'+myName+'</div><div id="localVideoPos" style="width: 380px;height: 285px;float: right;margin-left: 10px;"></div><button id="hangUp" class="buttonCls hangUp">中 止 视 频 通 话</button><div id="localAudioVolume" style="position: absolute;bottom: 130px;left: 555px;"></div><div id="remoteAudioVolume" style="bottom: 13px;"></div>');//填充视频会话层
+			
+			var videoHtml='<div id="VideoShowDiv" style="display:block;margin-left:-80px;">'+
+				'<div id="remoteVideoPos" class="videoshow0"></div>'+
+				'<div id="remoteAudioVolume" style="width:480px;height:5px;top:370px;left: 21px;"></div>'+
+				'<div id="localVideoPos" class="videoshow1"></div>'+
+				'<div id="localAudioVolume" style="width:480px;height:5px;top:370px;left: 517px;"></div>'+
+				'<div id="div_username0" uid="" class="ShowName" style="left: 21px;">'+name1+'(客服)</div>'+
+				'<div id="div_username1" uid="" class="ShowName" style="left:517px">'+myName+'(自己)</div>'+
+				'<b style="position: absolute;bottom: -40;right: 30;font-size: 18px;"><a id="hangUp" class="Buttons"></a></b>'+
+			'</div>';
+			
+			$("#videoCallContent").html(videoHtml);//填充视频会话层
+			$("#LOADING_GREY_DIV").hide();
 			$("#videoCall").show();
-			setMarTop($('#videoCall').outerHeight());
-			$("#callLayer").hide();//隐藏等待信息弹出层
+			$("#callLayer").hide();
 		}
 		//打开本地视频
 		startVideo(mSelfUserId, GetID("localVideoPos"), "ANYCHAT_VIDEO_LOCAL",1);
 		setVolumeTimer();//设置音量感应
 		
 	}else{
-		AddLog("客户端进入房间失败,dwRoomId="+dwRoomId, LOG_TYPE_ERROR);
+		AddLog("function OnAnyChatEnterRoom(dwRoomId: "+dwRoomId+',errorcode: '+errorcode, LOG_TYPE_ERROR);
 	}
 }
 
@@ -159,16 +170,16 @@ function OnAnyChatRoomOnlineUser(dwUserCount, dwRoomId) {
 
 // 用户进入（离开）房间，dwUserId表示用户ID号，bEnterRoom表示该用户是进入（1）或离开（0）房间
 function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
+	AddLog("function OnAnyChatUserAtRoom(dwUserId="+dwUserId, LOG_TYPE_NORMAL);
+
 	//请求对方视频
 		if (bEnterRoom == 1) {
-			AddLog("用户进入房间,dwUserId="+dwUserId, LOG_TYPE_NORMAL);
 			//请求对方视频
 			startVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",1);
 			if(userType == 1){
 				
 			}
 		} else {
-			AddLog("用户离开房间,dwUserId="+dwUserId, LOG_TYPE_NORMAL);
 			if (userType == 2) {
 				if (dwUserId == mTargetUserId) { // 当前被请求的用户离开房间
 					
@@ -194,7 +205,7 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 // 网络连接已关闭，该消息只有在客户端连接服务器成功之后，网络异常中断之时触发，reason表示连接断开的原因
 function OnAnyChatLinkClose(reason, errorcode) {
 	ForSession("网络异常中断!请检查网络，reason【 " + reason + " 】,errorcode【 " + errorcode + " 】,请联系相关工作人员!",true);
-	AddLog("网络异常中断!请检查网络，reason【 " + reason + " 】,errorcode【 " + errorcode + " 】,请联系相关工作人员!", LOG_TYPE_ERROR);
+	AddLog("function OnAnyChatLinkClose(reason: " + reason + ",errorcode: " + errorcode , LOG_TYPE_ERROR);
 	GetID('LOADING_GREY_DIV').style.display='none';
 }
 
@@ -264,7 +275,8 @@ function OnAnyChatFriendStatus(dwUserId, dwStatus) {
 
 //业务对象事件通知
 function OnAnyChatObjectEvent(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam) {
-	AddLog("OnAnyChatObjectEvent(dwObjectType=" + dwObjectType + ", dwObjectId=" + dwObjectId +  ", dwEventType=" + dwEventType + ")", LOG_TYPE_EVENT);
+	AddLog("function OnAnyChatObjectEvent(dwObjectType: " + dwObjectType + ", dwObjectId: " + dwObjectId +  ", dwEventType: " + dwEventType + ")", LOG_TYPE_EVENT);
+	refreshAgentServiceInfo();
 	switch(dwEventType) {
 		case ANYCHAT_OBJECT_EVENT_UPDATE:		OnAnyChatObjectUpdate(dwObjectType, dwObjectId);			break;
 		case ANYCHAT_AREA_EVENT_ENTERRESULT:	OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwParam1);	break;
@@ -282,95 +294,137 @@ function OnAnyChatObjectEvent(dwObjectType, dwObjectId, dwEventType, dwParam1, d
 
 //业务对象数据更新事件
 function OnAnyChatObjectUpdate(dwObjectType, dwObjectId) {
-	var str;
+	var str=null;
 	if(dwObjectType == ANYCHAT_OBJECT_TYPE_AREA) {
-		
 		str='业务对象数据更新事件。服务区域';
 		var areaName = BRAC_ObjectGetStringValue(dwObjectType, dwObjectId, ANYCHAT_OBJECT_INFO_NAME);
-		console.info("Area object udpate, name=" + areaName+",dwObjectId="+dwObjectId);
-		$("#LOADING_GREY_DIV").hide();//隐藏登录蒙层
+		var description = BRAC_ObjectGetStringValue(dwObjectType, dwObjectId, ANYCHAT_OBJECT_INFO_DESCRIPTION);
+		
 		if(queueListName==-1){
 			$("#loginDiv").hide(); //隐藏登录界面
 	        $("#enterRoom").show(); //显示大厅
-	        $("#enterRoom h2").text("营业厅列表");
-			$("#hallList li").each(function(index){ 
+	        $("#enterRoom h2:eq(1)").text("营业厅列表");
+			$("#poptip li").each(function(index){ 
 				if(dwObjectId==$(this).attr('dwObjectId')){$(this).remote();}
 			});
-				$("#hallList").prepend('<li class="poptip" style="background-color: #6295E1" dwObjectId="'+dwObjectId+'">'+areaName+'<br><p>编号:'+dwObjectId+'</p></li>');
+				$("#poptip").prepend('<li dwObjectId="'+dwObjectId+'">' + '<p>'+areaName+'</p>' + '<p class="description">' +description + '</p>' + '<p>' + '<img src="./img/area.png">' + '</p>' + '<p>编号：'+dwObjectId+'</p>' + '<p>' + '<a class="btn">进入</a>' + '</p>' + '</li>');
+				
 		}
+		$("#LOADING_GREY_DIV").hide();//隐藏登录蒙层
 	} else if(dwObjectType == ANYCHAT_OBJECT_TYPE_QUEUE) {
 		str='业务对象数据更新事件。队列对象';
 	} else if(dwObjectType == ANYCHAT_OBJECT_TYPE_AGENT) {
 		str='业务对象数据更新事件。客服对象';
 	}
-	AddLog(str+'，其中：dwObjectType为：' + dwObjectType + ',dwObjectId为：' + dwObjectId, LOG_TYPE_EVENT);
+	AddLog('function OnAnyChatObjectUpdate(dwObjectType: ' + dwObjectType + ',dwObjectId: ' + dwObjectId, LOG_TYPE_EVENT);
 }
 
 // 进入服务区域通知事件
 function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
-	AddLog('进入服务区域通知事件，其中：dwObjectType为：' + dwObjectType + ',dwObjectId为：' + dwObjectId +',dwErrorCode:'+dwErrorCode, LOG_TYPE_EVENT);
+	AddLog('function OnAnyChatEnterAreaResult(dwObjectType:' + dwObjectType + ',dwObjectId: ' + dwObjectId +',dwErrorCode: '+dwErrorCode, LOG_TYPE_EVENT);
 	if(dwErrorCode == 0) {
 		// 进入服务区域成功
 		if(userType==1){//客户
 			/**获取队列*/
 			var queueList =BRAC_ObjectGetIdList(ANYCHAT_OBJECT_TYPE_QUEUE);
 			for ( var i in queueList) {
-				var queueid=parseInt(queueList[i]);
+				var queueListId=parseInt(queueList[i]);
 				/**获取队列名称*/
-				var queueName=BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_OBJECT_INFO_NAME);
+				var queueName=BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueListId, ANYCHAT_OBJECT_INFO_NAME);
 				/**获取队列排队人数*/
-				var queueLength=BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_QUEUE,queueid,ANYCHAT_QUEUE_INFO_LENGTH);
+				var queueLength=BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_QUEUE,queueListId,ANYCHAT_QUEUE_INFO_LENGTH);
 				queueLength=queueLength<0?0:queueLength;
 				/**获取队列信息*/
-				var queueInfo=BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_OBJECT_INFO_DESCRIPTION);
-				$("#LOADING_GREY_DIV img").hide();//隐藏登录等待gif
+				var queueInfo=BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueListId, ANYCHAT_OBJECT_INFO_DESCRIPTION);
 				$("#LOADING_GREY_DIV").hide();//隐藏蒙层
-				$("#enterRoom h2").text(queueListName);
-				$('#hallList').hide(); //隐藏营业厅
-	            $('#roomOut').hide(); //隐藏营业厅退出按钮
-	            $('#loginOut').show(); //显示队列返回按钮
-	            $('#selectList').show(); //显示队列
-				$('#selectList').append('<li><h3 class="title">'+queueName+'</h3><p class="content">'+queueInfo+'。</p><p class="content">(当前排队人数:<b>'+queueLength+'</b>)<a queueid="'+queueid+'" href="javascript:;">立即办理</a></p></li>');
+	            $('#poptip li[dwobjectid]').hide(); //隐藏服务厅
+				$("#enterRoom h2:eq(1)").text(queueListName);
+	            $("#poptip").append('<li queueid="'+queueListId+'">' + '<p>'+queueName+'</p>' + '<p class="description">' +queueInfo + '</p>' + '<p>' + '<img src="./img/queue.png">' + '</p>' + '<p>当前排队人数：<strong>'+queueLength+'</strong></p>' + '<p>' + '<a class="btn">立即办理</a>' + '</p>' + '</li>');
 			}
+			$("#roomOut").off().click(function() {
+				$("#LOADING_GREY_DIV").show();//显示等待蒙层
+				var leaveFlag;
+            	if($("#callLayer").css("display")!="block"){
+	                /**离开营业厅*/
+            		leaveFlag=BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+	                $("#LOADING_GREY_DIV span").text("正在离开队列列表，请稍候......");//显示等待蒙层
+	                if(!leaveFlag){
+	                	$('#poptip li[queueid]').hide(); //隐藏队列
+	                	$('#poptip li[dwobjectid]').show(); //显示营业厅
+	                	$("#LOADING_GREY_DIV").hide();//隐藏等待蒙层
+	                }
+
+	            	$("#enterRoom h2:eq(1)").text("营业厅列表");
+	                $(this).off().click(systemOut);
+            	}else{
+            		if($("#queueMsg1").css("display")=="block"){
+            			$("#queueMsg1 .confirmMsg").click();
+            		}else if($("#queueMsg2").css("display")=="block"){
+            			$("#queueMsg2 #reject").click();
+            		}
+            	}
+            });
 		}
 	}
 }
 
 // 离开服务区域通知事件
 function OnAnyChatLeaveAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
+	AddLog('function OnAnyChatLeaveAreaResult(dwObjectType: ' + dwObjectType + ',dwObjectId: ' + dwObjectId+',dwErrorCode: '+dwErrorCode, LOG_TYPE_API);
 }
 
 // 队列状态变化
 function OnAnyChatQueueStatusChanged(dwObjectType, dwObjectId) {
-	AddLog('触发了队列状态变化回调函数：OnAnyChatQueueStatusChanged，其中：dwObjectType为：' + dwObjectType + ',dwObjectId为：' + dwObjectId, LOG_TYPE_API);
+	AddLog('function OnAnyChatQueueStatusChanged(dwObjectType: ' + dwObjectType + ',dwObjectId: ' + dwObjectId, LOG_TYPE_API);
     refreshUserWaitingInfo(dwObjectId);
 }
 
 // 本地用户进入队列结果
 function OnAnyChatEnterQueueResult(dwObjectType, dwObjectId, dwErrorCode) {
+	AddLog('function OnAnyChatEnterQueueResult(dwObjectType: ' + dwObjectType + ',dwObjectId: ' + dwObjectId+',dwErrorCode: '+dwErrorCode, LOG_TYPE_API);
+	$("#LOADING_GREY_DIV").hide();//隐藏等待蒙层
+	 $("#poptip").hide(); //隐藏队列
+     $("#queueMsg1").show(); //重置显示排队信息
+     $("#queueMsg2").hide(); //隐藏呼叫信息
+     $("#callLayer").show(); //显示弹出窗口
+     $("#queueMsg1 strong:eq(2)").text(0); //清零排队时间
+     clearInterval(waitTimeSet);
+     waitTimeSet = setInterval(function () {
+         var time = formatSeconds(BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_INFO_WAITTIMESECOND));
+         $("#queueMsg1 strong:eq(2)").text(time);
+     }, 1000);
 }
 
 // 本地用户离开队列结果
 function OnAnyChatLeaveQueueResult(dwObjectType, dwObjectId, dwErrorCode) {
+	AddLog('function OnAnyChatLeaveQueueResult(dwObjectType: ' + dwObjectType + ',dwObjectId: ' + dwObjectId+',dwErrorCode: '+dwErrorCode, LOG_TYPE_API);
+	if($("#callLayer").css("display")!="block"){
+		$("#LOADING_GREY_DIV").hide();//隐藏等待蒙层
+		$("#poptip").show(); 
+	    $("#poptip li[queueid]").show(); //显示队列列表
+	}
+	
 }
 
 // 坐席状态变化
 function OnAnyChatAgentStatusChanged(dwObjectType, dwObjectId, dwParam1) {
-	AddLog('触发了坐席状态变化回调函数：OnAnyChatAgentStatusChanged，其中：dwObjectType为：' + dwObjectType + ',dwObjectId为：' + dwObjectId+',dwParam1为：'+dwParam1, LOG_TYPE_API);
+	AddLog('function OnAnyChatAgentStatusChanged(dwObjectType: ' + dwObjectType + ',dwObjectId: ' + dwObjectId+',dwParam1: '+dwParam1, LOG_TYPE_API);
     if (dwObjectType == ANYCHAT_OBJECT_TYPE_AGENT && currentAgentID == dwObjectId) {
         if (dwParam1 == ANYCHAT_AGENT_STATUS_WAITTING) {
             refreshAgentServiceInfo();
 
             refreshServicedUserInfo(-1);
             startServiceTag = false;
+            $("#LOADING_GREY_DIV span").show();
         }
     }
 }
 
 // 坐席服务开始
 function OnAnyChatServiceStart(dwAgentId, clientId){
-	AddLog('坐席服务开始', LOG_TYPE_NORMAL);
+	AddLog('function OnAnyChatServiceStart(dwAgentId: '+dwAgentId+',clientId: '+clientId, LOG_TYPE_NORMAL);
 	if (userType == 2 && mSelfUserId == dwAgentId) {
+		$("#LOADING_GREY_DIV span").hide();
 	    refreshServicedUserInfo(clientId);
 		mTargetUserId=clientId;//客户id
 		VideoCallRequest(clientId);//呼叫用户
@@ -379,8 +433,11 @@ function OnAnyChatServiceStart(dwAgentId, clientId){
 
 //队列里没有客户，坐席端处理方式
 function OnAnyChatAgentWaitingUser(){
-	AddLog('队列里没有客户', LOG_TYPE_EVENT);
-	$('#LOADING_GREY_DIV').hide();
-	startServiceTag=false;
-	ForSession('当前队列中已没有客户！',true);
+	AddLog('function OnAnyChatAgentWaitingUser()', LOG_TYPE_EVENT);
+	if($("#remoteVideoPos").html()==""){
+		$('#LOADING_GREY_DIV').hide();
+		startServiceTag=false;
+		$("#LOADING_GREY_DIV span").show();
+		ForSession('当前队列中已没有客户！',true);
+	}
 }
