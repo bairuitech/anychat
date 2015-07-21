@@ -134,7 +134,7 @@ public class DialogFactory {
 		mEditPort.setText(configEntity.port + "");
 		mEditIP = (EditText) view.findViewById(R.id.edit_serverip);
 		mEditIP.setText(configEntity.ip);
-		ImageView imageView = (ImageView) view.findViewById(R.id.image_cancel);
+//		ImageView imageView = (ImageView) view.findViewById(R.id.image_cancel);
 		Button buttonR = (Button) view.findViewById(R.id.btn_resume);
 		buttonR.setOnClickListener(new OnClickListener() {
 
@@ -173,7 +173,7 @@ public class DialogFactory {
 				dialog.dismiss();
 			}
 		});
-		imageView.setOnClickListener(new OnClickListener() {
+		/*imageView.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -181,7 +181,7 @@ public class DialogFactory {
 				dialog.dismiss();
 
 			}
-		});
+		});*/
 
 		dialog.setContentView(view, new LayoutParams(LayoutParams.WRAP_CONTENT,	LayoutParams.WRAP_CONTENT));
 	}
@@ -317,9 +317,10 @@ public class DialogFactory {
 	 */
 	public void initCallReceivedDialg(final Dialog dialog, final Object object) {
 		final int userId = (Integer) object;
+		
 		View view = mLayoutInlater.inflate(R.layout.dialog_requesting, null);
-		ImageView buttonAccept = (ImageView) view.findViewById(R.id.btn_accept);
-		ImageView buttonRefuse = (ImageView) view.findViewById(R.id.btn_refuse);
+		TextView buttonAccept = (TextView) view.findViewById(R.id.btn_accept);
+		TextView buttonRefuse = (TextView) view.findViewById(R.id.btn_refuse);
 		
 		// buttonAccept.setText(mContext.getString(R.string.str_resume));
 		buttonAccept.setOnClickListener(new OnClickListener() {
@@ -380,10 +381,6 @@ public class DialogFactory {
 				//不能删除，客户退出队列的时候有用
 				AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,configEntity.CurrentQueueId, AnyChatObjectDefine.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
 				
-				
-				
-				//跳转界面
-				
 				dialog.dismiss();
 
 			}
@@ -412,8 +409,8 @@ public class DialogFactory {
 		Log.e("userID", userId+"");
 		View view = mLayoutInlater
 				.inflate(R.layout.dialog_resumeorcancel, null);
-		Button buttonPuase = (Button) view.findViewById(R.id.btn_resume);
-		Button buttonCancel = (Button) view.findViewById(R.id.btn_cancel);
+		TextView buttonPuase = (TextView) view.findViewById(R.id.btn_resume);
+		TextView buttonCancel = (TextView) view.findViewById(R.id.btn_cancel);
 		buttonPuase.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -445,11 +442,11 @@ public class DialogFactory {
 	}
 
 	private void initDialogTitle(View view, final String strTitle) {
-		ImageView imageView = (ImageView) view.findViewById(R.id.image_cancel);
+//		ImageView imageView = (ImageView) view.findViewById(R.id.image_cancel);
 		mTextViewTitle = (TextView) view.findViewById(R.id.txt_dialog_prompt);
 		mTextViewTitle.setTextColor(Color.BLUE);
-		mTextViewTitle.setTextSize(20);
-		imageView.setOnClickListener(new OnClickListener() {
+		//mTextViewTitle.setTextSize(20);
+		/*imageView.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -461,17 +458,17 @@ public class DialogFactory {
 				}
 				mDialog.dismiss();
 			}
-		});
+		});*/
 		mTextViewTitle.setText(strTitle);
 	}
 
 	private void initDialogTitle(View view, final String strTitle,
 			final int userId) {
-		ImageView imageView = (ImageView) view.findViewById(R.id.image_cancel);
+	//	ImageView imageView = (ImageView) view.findViewById(R.id.image_cancel);
 		mTextViewTitle = (TextView) view.findViewById(R.id.txt_dialog_prompt);
 		mTextViewTitle.setTextColor(Color.BLUE);
 		mTextViewTitle.setTextSize(20);
-		imageView.setOnClickListener(new OnClickListener() {
+		/*imageView.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -491,7 +488,7 @@ public class DialogFactory {
 				}
 				mDialog.dismiss();
 			}
-		});
+		});*/
 		mTextViewTitle.setText(strTitle);
 	}
 

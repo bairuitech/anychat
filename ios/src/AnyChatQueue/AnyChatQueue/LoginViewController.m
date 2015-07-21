@@ -35,6 +35,7 @@
 @property(nonatomic, assign)int selfUserId;                         //自己的用户id
 
 - (IBAction)loginAction:(UIButton *)sender;
+
 @end
 
 @implementation LoginViewController
@@ -106,6 +107,7 @@
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
 }
+
 
 #pragma mark - AnyChat Delegate
 // 连接服务器消息
@@ -419,16 +421,18 @@
 {
 
     CGRect frame = textField.frame;
+    NSLog(@"==%@",NSStringFromCGRect(frame));
     int offset = frame.origin.y + 32 - (self.view.frame.size.height - 216.0);//键盘高度216
-    
     NSTimeInterval animationDuration = 0.30f;
-
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView beginAnimations:@"ResizeForKeyBoard" context:nil];
     [UIView setAnimationDuration:animationDuration];
-    //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
     if(offset > 0)
-        self.view.frame = CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
-    
+    {
+        CGRect rect = CGRectMake(0.0f, -offset,width,height);
+        self.view.frame = rect;
+    }
     [UIView commitAnimations];
 }
 

@@ -110,4 +110,17 @@ public class BaseMethod {
 		strShow = hourStr + ":" + minStr + ":" + seondStr;
 		return strShow;
 	}
+	public static String getTimeShowStringTwo(int Seconds){
+		
+		String strtime = new String();
+		int hour = Seconds / (60*60);
+		int min = (Seconds/60) % 60;
+		int s = Seconds % 60;
+		String hourStr = (hour >= 10) ? "" + hour : "0" + hour;
+		String minStr = (min >= 10) ? "" + min : "0" + min;
+		String seondStr = (s >= 10) ? "" + s : "0" + s;
+		
+		strtime = hourStr + "时" + minStr + "分" + seondStr+"秒";
+		return strtime;
+	}
 }

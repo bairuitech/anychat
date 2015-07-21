@@ -246,7 +246,7 @@ namespace QueueClient
             AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, AnyChatCoreSDK.ANYCHAT_INVALID_OBJECT_ID, AnyChatCoreSDK.ANYCHAT_OBJECT_CTRL_SYNCDATA,
                                             mSelfUserId, 0, 0, 0, string.Empty);
 
-            ShowWaitingMessage(Properties.Resources._15, "正在进入营业厅，请稍候......");
+            ShowWaitingMessage(Properties.Resources._15, "正在加载营业厅，请稍候......");
         }
 
         private void btnStopService_Click(object sender, EventArgs e)
@@ -519,7 +519,7 @@ namespace QueueClient
         {
             //界面切换
             HideAllPanel();
-            lbl_tipMessage.Text = "服务窗口";
+            lbl_tipMessage.Text = selectedQueue.QueueName + " - 服务窗口";
 
             switch (m_userIdentity)
             {
@@ -993,6 +993,7 @@ namespace QueueClient
                         AddQueueToForm(queue);
                     }
 
+
                     panel_queue.Show();
 
                     break;
@@ -1005,6 +1006,8 @@ namespace QueueClient
                     refreshAgentServiceInfo();
                     break;
             }
+
+            panel_waitingMessage.Hide();
         }
 
         /// <summary>
@@ -1069,7 +1072,7 @@ namespace QueueClient
                 HideAllPanel();
                 if (!panel_waitingMessage.Visible) panel_waitingMessage.Show();
 
-                lbl_tipMessage.Text = "服务等待";
+                lbl_tipMessage.Text = selectedQueue.QueueName +  " - 排队等待中";
 
             }
 
@@ -1427,6 +1430,8 @@ namespace QueueClient
         {
             try
             {
+                ShowWaitingMessage(Properties.Resources._15, "正在进入营业厅，请稍候......");
+
                 isEnterArea = true;
 
                 PictureBox area = sender as PictureBox;

@@ -3,7 +3,6 @@ package com.bairuitech.callservice;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -29,8 +28,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -91,6 +88,12 @@ import com.example.anychatqueue.R;
 		
 		initView();
 		anychat.EnterRoom(BussinessCenter.sessionItem.roomId, "");
+		//实时音视频
+		updateAV();
+
+	}
+
+	private void updateAV() {
 		mHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
@@ -113,7 +116,6 @@ import com.example.anychatqueue.R;
 		
 		initTimerCheckAv();
 		initTimerShowTime();
-
 	}
 
 	@Override
@@ -468,35 +470,38 @@ import com.example.anychatqueue.R;
 		Log.i("ANYCHAT", "OnAnyChatLinkCloseMessage:" + dwErrorCode);
 	}
 
-	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		if (v == mBtnEndSession /*|| v == mImgBtnReturn*/) {
-			
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("是否确定要退出通话")
-			.setPositiveButton("sure", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					configEntity = ConfigService.LoadConfig(VideoActivity.this);
-					//对方的userId
-					BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, dwTargetUserId, 0,
-							0, BussinessCenter.selfUserId, "");
-					
-				}
-			}).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					
-				}
-			}).create().show();
+
+		if (v == mBtnEndSession) {
+			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_ENDCALL,
+					dwTargetUserId, this);
+			dialog.show();
 		}
 		
-		
+	}
+
+	private void alertDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("您确定是否结束当前的视频服务吗？")
+		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				configEntity = ConfigService.LoadConfig(VideoActivity.this);
+				//对方的userId
+				BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, dwTargetUserId, 0,
+						0, BussinessCenter.selfUserId, "");
+				
+			}
+		}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				
+			}
+		}).create().show();
 	}
 
 	@Override

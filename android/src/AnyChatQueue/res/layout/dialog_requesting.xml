@@ -7,7 +7,7 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/dialog_title" />
+        layout="@layout/dialog_title"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,33 +20,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginTop="25dip"
             android:layout_marginBottom="25dip"
             android:layout_marginLeft="25dip"
             android:textColor="@android:color/black"
-            android:text="座席正在向您发出呼叫邀请" />
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="15dip"
-            android:orientation="horizontal" >
+            android:layout_height="45dp"
+            android:background="#f2f2f2"
+            android:orientation="horizontal" 
+            android:weightSum="2"
+            >
             
-            <ImageView
+            <TextView
                 android:id="@+id/btn_refuse"
-                android:layout_width="130dip"
-                 android:layout_marginRight="5dip"
-                android:layout_height="80dip"
-                android:src="@drawable/btn_refuse" />
-
-            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="拒绝"
+                android:textColor="#e64346"
+                android:textSize="16sp"
+                android:clickable="true"
+                android:background="@drawable/dialogstyle" />
+			
+            <View 
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+            <TextView
                 android:id="@+id/btn_accept"
-                android:layout_width="130dip"
-                android:layout_height="80dip"
-                    android:layout_marginLeft="5dip"
-                android:src="@drawable/btn_agree" />
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                 android:textSize="16sp"
+                 android:gravity="center"
+                android:text="接受"
+                android:clickable="true"
+                android:background="@drawable/dialogstyle"
+                 />
 
         </LinearLayout>
     </LinearLayout>

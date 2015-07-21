@@ -303,9 +303,10 @@ a.btn:hover {
 .list li p:last-child a.btn {
 	position: static;
 	border: 1px solid gray;
-	border-bottom: 2px solid gray;
+	/*border-bottom: 2px solid gray; */
 	border-radius: 3px;
 	color: green;
+	padding: 10px 35px;
 }
 
 .list li p:last-child a.btn:hover {

@@ -122,7 +122,7 @@ function OnAnyChatLoginSystem(dwUserId, errorcode) {
 		mSelfUserId = dwUserId;
 		dwPriority = parseInt($("#dwPrioritySelect option:selected").val());
 
-		$("#LOADING_GREY_DIV span").text("正在进入营业厅，请稍候......");
+		$("#LOADING_GREY_DIV span").text("正在加载营业厅，请稍候......");
 
 		//身份信息设置
 		InitClientObjectInfo(mSelfUserId,dwAgentFlags,dwPriority);
@@ -337,7 +337,8 @@ function OnAnyChatObjectUpdate(dwObjectType, dwObjectId) {
 // 进入服务区域通知事件
 function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 	AddLog('OnAnyChatEnterAreaResult(' + dwObjectType + ',' + dwObjectId +','+dwErrorCode + ')', LOG_TYPE_EVENT);
-	if(dwErrorCode == 0) {
+	if (dwErrorCode == 0) {
+	    colorIdx = 0;
 		// 进入服务区域成功
 		if(userType==1){//客户
 			/**获取队列*/
@@ -354,11 +355,19 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 				$("#LOADING_GREY_DIV").hide();//隐藏蒙层
 	            $('#poptip li[dwobjectid]').hide(); //隐藏服务厅
 	            $("#enterRoom h2:eq(1)").text(queueListName);
-	            var liObject = $('<li queueid="' + queueListId + '">' + '<p>' + queueName + '</p>' + '<p class="description">' + queueInfo + '</p>' + '<p>' + '<img src="./img/queue.png">' + '</p>' + '<p>当前排队人数：<strong>' + queueLength + " 人" + '</strong></p>' + '<p>' + '<a class="btn">立即办理</a>' + '</p>' + '</li>');
-	            liObject.css("background-color", colorArray[colorIdx]);
+	            var liObject = $('<li class="queue-item" queueid="' + queueListId + '">' +
+                                    '<a class="queue-item-link"><img class="queue-item-pic" src="./img/queue.png" /></a>' +
+                                    '<span class="queue-item-layout">' +
+                                        '<span class="queue-item-layout-title">' + queueName + '</span>' +
+                                        '<span class="queue-item-layout-desc">' + queueInfo + '</span>' +
+                                        '<span class="queue-item-layout-desc">' + '当前排队人数：<strong>' + queueLength + " 人" + '</strong></span>' +
+                                        '<span class="queue-item-layout-btn">' + '<a class="btn">立即办理</a>' + '</span>' + 
+                                    '</span>' +
+                                 '</li>');
+	            liObject.css("background-color", colorQueueArray[colorIdx]);
 	            $("#poptip").append(liObject);
 	            colorIdx++;
-	            if (colorIdx == 4) {
+	            if (colorIdx == 3) {
 	                colorIdx = 0;
 	            }	            
 			}
@@ -405,7 +414,7 @@ function OnAnyChatLeaveAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 }
 
 //营业厅状态变化
-function OnAnyChatAreaStatusChange(dwObjectTupe, dwObjectId, dwErrorCode) {
+function OnAnyChatAreaStatusChange(dwObjectType, dwObjectId, dwErrorCode) {
     AddLog('OnAnyChatAreaStatusChange(' + dwObjectType + ',' + dwObjectId + ',' + dwErrorCode + ')', LOG_TYPE_EVENT);
 }
 
@@ -466,7 +475,10 @@ function OnAnyChatAgentStatusChanged(dwObjectType, dwObjectId, dwParam1) {
             $("#LOADING_GREY_DIV span").show();
 
             isShowReturnBtn(true);
+        }else if (dwParam1 == ANYCHAT_AGENT_STATUS_WORKING){
+            startServiceTag = true;
         }
+        
     }
 }
 

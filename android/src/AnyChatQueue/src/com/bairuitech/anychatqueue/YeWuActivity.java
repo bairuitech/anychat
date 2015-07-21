@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -22,8 +24,11 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
+import com.bairuitech.common.BaseMethod;
 import com.bairuitech.common.ConfigEntity;
 import com.bairuitech.common.ConfigService;
+import com.bairuitech.main.FuncMenu;
+import com.bairuitech.main.MainActivity;
 import com.bairuitech.viewadapter.YeWuAdapter;
 import com.example.anychatqueue.R;
 
@@ -73,7 +78,7 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		mImgBtnReturn.setOnClickListener(this);
 	
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
-		mTitleName.setText("业务办事大厅");
+		mTitleName.setText("队列列表");
        //适配界面
 		listView = (ListView) findViewById(R.id.yewu_listview);
         adapter = new YeWuAdapter(YeWuActivity.this,list,pd);
@@ -116,14 +121,28 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		if (keyCode == KeyEvent.KEYCODE_BACK){
 			
 			//退出营业厅（进营业厅，出营业厅，加入队列，出队列都是这个方法）
-			int id = configEntity.CurrentObjectId;
-			AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA, id,AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0,0, "");				
+			alertDialog();	
 		
 		}		
 
 		return super.onKeyDown(keyCode, event);
 	}
-
+	private void alertDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(YeWuActivity.this);
+		builder.setMessage("您确定要退出营业厅？")
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					
+					public void onClick(DialogInterface dialog, int which) {
+						//离开营业厅
+						AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA, configEntity.CurrentObjectId,AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0,0,0,0, "");
+					}
+				}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					
+					public void onClick(DialogInterface dialog, int which) {
+						
+					}
+				}).create().show();
+	}
 	@Override
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
 		// TODO Auto-generated method stub
@@ -149,17 +168,16 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		// TODO Auto-generated method stub
 	
 	}
-	private void destroyCurActivity() {
-		
-		onPause();
-		onDestroy();
-	}
+	
 
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		// TODO Auto-generated method stub
-		// 销毁当前界面
-		destroyCurActivity();
+		BaseMethod.showToast("网络断开连接",YeWuActivity.this);
+		anychat.Logout();
+		Intent intent = new Intent(YeWuActivity.this,MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 		
 	}
 	@Override
@@ -172,15 +190,18 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_ENTERRESULT:	
 			
 			int mbefore = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwObjectId, AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_BEFOREUSERNUM);
+			String name =  AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwObjectId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
 			Intent in=new Intent();
 			in.putExtra("order", mbefore);
+			in.putExtra("name", name);
 			in.setClass(YeWuActivity.this, QueueActivity.class);
 			startActivity(in);
 			pd.dismiss();
 			break;
 		//离开服务区域回调
-		case AnyChatObjectDefine.ANYCHAT_AREA_EVENT_LEAVERESULT:	
-			destroyCurActivity();
+		case AnyChatObjectDefine.ANYCHAT_AREA_EVENT_LEAVERESULT:
+			System.out.println("退出营业厅触发"+dwObjectId);
+			finish();
 			break;
 			
 		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_STATUSCHANGE:	
@@ -206,8 +227,7 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 			switch (arg0.getId()) {
 			case R.id.returnImgBtn://按下返回键
 				//leave area event;
-				AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA, configEntity.CurrentObjectId,AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0,0, "");
-				finish();
+				alertDialog();
 				break;
 			default:
 				break;

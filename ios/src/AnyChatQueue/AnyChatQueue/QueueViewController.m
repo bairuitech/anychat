@@ -56,8 +56,7 @@
     //排队等待时间
     [self queueWaitingTime];
     
-    // 返回按钮
-    [self setupBackButton];
+    self.navigationItem.hidesBackButton = YES;
     
 }
 
@@ -190,18 +189,6 @@
 }
 
 #pragma mark - Custom Method
-// 返回按钮
-- (void)setupBackButton {
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 17, 30)];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"nav_back_hover"] forState:UIControlStateHighlighted];
-    [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    backButton.titleLabel.font = [UIFont systemFontOfSize:13.0f];
-    [backButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    [backButton setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
-    [backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-}
 
 // 排队等待时间
 - (void)queueWaitingTime {

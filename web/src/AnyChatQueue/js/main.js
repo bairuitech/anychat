@@ -26,6 +26,7 @@ var LOG_TYPE_ERROR = 3;
 var colorIdx = 0;
 //颜色数组
 var colorArray = ["#63C058", "#F49537", "#A2C926", "#FEC900"];
+var colorQueueArray = ["#48cfae", "#a0d468", "#ffcf56"];
 //当前被选择的队列名称
 var currentSelectedQueueName = "";
 
@@ -184,6 +185,7 @@ $(function () {
 
                             $("#Initiative_Call_Div").hide(); //隐藏主动呼叫层
                             isShowReturnBtn(true);
+                            startServiceTag = false;
                         }
                     }
                 });
@@ -239,14 +241,15 @@ $(function () {
     $("#poptip").delegate('.btn', 'click', function () {
         var areaId = $(this).parents("li").attr('dwobjectid');
         var queueId = $(this).parents("li").attr('queueid');
-        $("#LOADING_GREY_DIV span").text("正在进入营业厅，请稍候......");
         if (!isEmpty(areaId)) {
+            $("#LOADING_GREY_DIV span").text("正在进入营业厅，请稍候......");
+
             queueListName = $(this).parents("li").find("p:first-child").text() + " - 队列列表";
 
             $("#LOADING_GREY_DIV img").show(); //显示登录等待蒙层
             $("#LOADING_GREY_DIV").show(); //显示蒙层
             if (userType == 1) {//客户
-                $("#LOADING_GREY_DIV").hide(); //隐藏蒙层
+                //$("#LOADING_GREY_DIV").hide(); //隐藏蒙层
                 $('#poptip li[queueid]').remove(); //移除队列
             } else if (userType == 2) {//客服
                 $('#enterRoom .contentArea').hide(); //直接隐藏进入队列步骤
@@ -316,7 +319,7 @@ $(function () {
         switch ($(this).text()) {
             case "取消排队":
                 $("#enterRoom h2").text(queueListName);
-                $("#LOADING_GREY_DIV span").text("取消排队中，请稍候......"); //等待蒙层文本填充
+                $("#LOADING_GREY_DIV span").text("取消排队处理中，请稍候......"); //等待蒙层文本填充
                 $("#LOADING_GREY_DIV").show(); //显示等待蒙层
                 /**离开队列*/
                 var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");

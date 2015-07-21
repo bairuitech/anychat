@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
+import com.bairuitech.anychatqueue.QueueActivity;
 import com.bairuitech.anychatqueue.VideoActivity;
 import com.bairuitech.common.BaseConst;
 import com.bairuitech.common.BaseMethod;
@@ -168,13 +169,20 @@ public class BussinessCenter{
 			strMessage = mContext.getString(R.string.str_returncode_bussiness);
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE:
+			
 			strMessage = mContext.getString(R.string.str_returncode_requestrefuse);
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_OFFLINE:
 			strMessage = mContext.getString(R.string.str_returncode_offline);
+			stopSessionMusic();
+			mContext.finish();
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT:
+			System.out.println("座席取消呼叫");
 			strMessage = mContext.getString(R.string.str_returncode_requestcancel);
+			BaseMethod.showToast(strMessage, mContext);
+			stopSessionMusic();
+			mContext.finish();
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_TIMEOUT:
 			strMessage = mContext.getString(R.string.str_returncode_timeout);
@@ -187,7 +195,7 @@ public class BussinessCenter{
 		default:
 			break;
 		}
-		if (strMessage != null) {
+		if (strMessage != null && dwErrorCode != AnyChatDefine.BRAC_ERRORCODE_SESSION_TIMEOUT) {
 			BaseMethod.showToast(strMessage, mContext);
 			// 如果程序在后台，通知通话结束
 			if (bBack) {
@@ -222,7 +230,7 @@ public class BussinessCenter{
 		sessionItem = null;
 	
 		Intent intent = new Intent();
-		intent.setClass(mContext, FuncMenu.class);
+		intent.setClass(mContext, QueueActivity.class);
 		mContext.startActivity(intent);
 		mContext.finish();
 	

@@ -10,6 +10,7 @@ import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
 
+import com.bairuitech.anychatqueue.QueueActivity;
 import com.bairuitech.anychatqueue.YeWuActivity;
 import com.bairuitech.callservice.VideoServer;
 import com.bairuitech.common.ConfigEntity;
@@ -19,7 +20,9 @@ import com.bairuitech.common.CustomApplication;
 import com.example.anychatqueue.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -74,22 +77,23 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 		//初始化sdk
 		if (anychat == null) {
 				anychat = AnyChatCoreSDK.getInstance(this);
-				anychat.SetBaseEvent(this);//基本登陆事件接口
-				anychat.SetObjectEvent(this);//排队事件接口；
 	}
+		anychat.SetBaseEvent(this);//基本登陆事件接口
+		anychat.SetObjectEvent(this);//排队事件接口；
 	}
 
 	private void InitLayout() {
 		
 		mApplication = (CustomApplication) getApplication();
 		waitingpd = new ProgressDialog(FuncMenu.this);
-		this.setTitle("AnyChat功能菜单");
+		this.setTitle("营业厅列表");
 		mMenuGridView = (GridView) this.findViewById(R.id.funcmenuGridView);
 		
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
 		mTitleName.setText(R.string.str_funcTitle);
 		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
 		mImgBtnReturn.setOnClickListener(this);
+		showIndeterminate1();
 	}
 	// 根据配置文件配置视频参数
 	private void ApplyVideoConfig() {
@@ -188,14 +192,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 		anychat.SetObjectEvent(this);
 	}
 	
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK){
-				anychat.Logout();
-		}		
 
-		return super.onKeyDown(keyCode, event);
-	}
 
 	@Override
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
@@ -234,14 +231,18 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 		Intent mIntent = new Intent("NetworkDiscon");
 		// 发送广播
 		sendBroadcast(mIntent);
-	
 	}
+
+	
+						
+				
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.returnImgBtn://按下返回键
+			
 			anychat.Logout();
 			finish();
 			break;
@@ -271,6 +272,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 			break;	
 		//数据同步
 		case AnyChatObjectDefine.ANYCHAT_OBJECT_EVENT_SYNCDATAFINISH:	
+			waitingpd.dismiss();
 			DataFinshed(dwObjectType);			
 			break;
 		default: 
@@ -283,7 +285,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 	private void AnyChatEnterAreaResult(int dwObjectType, int dwObjectId,
 			int dwParam1) {
 		//dwParam1 进入营业厅返回结果，0表示进入营业厅成功
-		if(dwParam1 == 0){
+		
 			//客户角色
 			if(mApplication.getUserType() == 0){
 			int[] queueIds = AnyChatCoreSDK.ObjectGetIdList(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE);
@@ -302,16 +304,24 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 			startActivity(in);
 			waitingpd.dismiss();
 		}
-		}
+		
 		
 	}
-	public void showIndeterminate(){
-		waitingpd.setMessage("进入大厅...");
+	public void showIndeterminate1(){
+		waitingpd.setMessage("加载营业厅...");
 		waitingpd.setCancelable(true);
 		waitingpd.setProgress(ProgressDialog.STYLE_HORIZONTAL);
 		waitingpd.setIndeterminate(true);
 		waitingpd.show();
 	}
+	public void showIndeterminate2(){
+		waitingpd.setMessage("进入营业厅...");
+		waitingpd.setCancelable(true);
+		waitingpd.setProgress(ProgressDialog.STYLE_HORIZONTAL);
+		waitingpd.setIndeterminate(true);
+		waitingpd.show();
+	}
+	
 	private void DataFinshed(int dwObjectType) {
 		// TODO Auto-generated method stub
 		//获取了营业厅的ID
@@ -344,7 +354,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 							int arg2, long arg3) {
 						// TODO Auto-generated method stub
 						//服务器同步语句
-						showIndeterminate();
+						showIndeterminate2();
 						configEntity.CurrentObjectId = mobject.get(arg2);
 						ConfigService.SaveConfig(FuncMenu.this, configEntity);
 						
