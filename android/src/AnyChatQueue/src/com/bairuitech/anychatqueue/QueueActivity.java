@@ -109,8 +109,6 @@ import android.widget.TextView;
 		});
 	}
 	
-	
-	
 	private void alertDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(QueueActivity.this);
 			builder.setMessage("您确定要退出当前排队吗?")
