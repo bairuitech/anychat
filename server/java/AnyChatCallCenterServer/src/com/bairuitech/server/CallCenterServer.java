@@ -19,9 +19,6 @@ public class CallCenterServer implements AnyChatServerEvent{
 	public static final int QUEUE_ABILITY_TYPE_PERSONAL		=	1;		///< 个人业务
 	public static final int QUEUE_ABILITY_TYPE_COMPANY		=	2;		///< 对公业务
 	
-	// 在线用户列表
-	public static ArrayList<Integer> onlineusers = new ArrayList<Integer>();
-	
 	/**
 	 * @param args
 	 * @throws InterruptedException 
@@ -41,8 +38,10 @@ public class CallCenterServer implements AnyChatServerEvent{
 		Reader reader = new InputStreamReader(System.in);
 		char ch = 0;
 		do{
-			if(ch != '\r')
-				System.out.print(getCurrentTime() + "AnyChatCallCenter server(Java) still running, press 'q' to exit...\r\n");
+			if(ch != '\r') {
+				int[] onlineusers = AnyChatServerSDK.GetOnlineUsers(-1);		// 获取系统所有在线用户列表
+				System.out.print(getCurrentTime() + "AnyChatCallCenter server(Java) still running, press 'q' to exit...(Online users: " + onlineusers.length + ")\r\n");
+			}
 			Thread.sleep(100);
 		}while((ch=(char)reader.read()) != 'q');
 		anychat.Release();
@@ -164,7 +163,6 @@ public class CallCenterServer implements AnyChatServerEvent{
 				System.out.print(getCurrentTime() + "Success connected with anychatcoreserver...\r\n");
 			else
 				System.out.print(getCurrentTime() + "ERROR: Disconnected from the anychatcoreserver, errorcode:" + wParam + "\r\n");
-			onlineusers.clear();
 		}
 		else if(dwNotifyMessage == AnyChatServerSDK.BRAS_MESSAGE_RECORDSERVERCONN)
 		{
@@ -205,16 +203,22 @@ public class CallCenterServer implements AnyChatServerEvent{
 		iGroupId = 2;
 		AnyChatServerSDK.UserInfoControl(dwUserId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDGROUP, iGroupId, 0, "在线游客");	// 密码为空的用户
 		
-		// 将当前所有在线用户添加为自己的好友
-		for(Integer otheruserid : onlineusers)
-			AnyChatServerSDK.UserInfoControl(dwUserId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDFRIEND, otheruserid, 0, "");
+		int[] onlineusers = AnyChatServerSDK.GetOnlineUsers(-1);		// 获取系统在线用户列表
 		
+		// 将当前所有在线用户添加为自己的好友
+		for(Integer otheruserid : onlineusers) {
+			if(otheruserid != dwUserId)
+				AnyChatServerSDK.UserInfoControl(dwUserId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDFRIEND, otheruserid, 0, "");	
+		}
+			
 		// 设置好友与分组的关系（即好友属于哪一个分组）
 		iGroupId = 1;
 		for(Integer otheruserid : onlineusers)
 		{
-			iGroupId = (otheruserid > 0) ? 1 : 2;		// 游客密码为空，userid由核心服务器分配，为负数
-			AnyChatServerSDK.UserInfoControl(dwUserId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_SETGROUPRELATION, iGroupId, otheruserid, "");
+			if(otheruserid != dwUserId) {
+				iGroupId = (otheruserid > 0) ? 1 : 2;		// 游客密码为空，userid由核心服务器分配，为负数
+				AnyChatServerSDK.UserInfoControl(dwUserId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_SETGROUPRELATION, iGroupId, otheruserid, "");
+			}
 		}
 		
 		// 设置当前用户信息（用户资料，客户端可以通过API：BRAC_GetUserInfo来获取这些信息）
@@ -230,6 +234,8 @@ public class CallCenterServer implements AnyChatServerEvent{
 		// 将本地用户添加为其它用户的好友列表中
 		for(Integer otheruserid : onlineusers)
 		{
+			if(otheruserid == dwUserId)
+				continue;
 			// 添加好友
 			AnyChatServerSDK.UserInfoControl(otheruserid, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_ADDFRIEND, dwUserId, 0, "");
 			// 关联好友分组
@@ -241,24 +247,11 @@ public class CallCenterServer implements AnyChatServerEvent{
 		
 		// 下发同步指令，将前面设置的资料同步给当前客户端
 		AnyChatServerSDK.UserInfoControl(dwUserId, AnyChatServerSDK.BRAS_USERINFO_CTRLCODE_SYNCDATA,  0, 0, "");
-		
-		// 将本地用户加入在线用户列表
-		onlineusers.add(dwUserId);
 	}
 	
 	@Override
 	public void OnAnyChatUserLogoutActionExCallBack(int dwUserId, int dwErrorCode) {
 		System.out.print(getCurrentTime() + "OnUserLogoutActionExCallBack: userid:" + dwUserId + " errorcode:" + dwErrorCode + "\r\n");	
-		// 从在线用户列表中删除
-	    Iterator<Integer> it = onlineusers.iterator();
-	    while(it.hasNext())
-	    {
-	        if(it.next() == dwUserId)
-	        {
-	        	it.remove();
-	        	break;
-	        }
-	    }
 	    // 核心服务器会通知其它用户（如果是好友），提示好友下线，不需要业务服务器干预
 	    
 	}

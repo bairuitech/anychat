@@ -21,6 +21,8 @@ static char THIS_FILE[] = __FILE__;
 
 #define TIMER_REFRESH_ONLINES	1		///< 刷新在线用户数定时器
 
+#define BUSINESS_ABILITY_CASH		0x00000001	///< 现金业务
+#define BUSINESS_ABILITY_COMPANY	0x00000002	///< 对公业务
 
 
 // 服务器应用程序消息回调函数定义
@@ -29,7 +31,6 @@ void CALLBACK OnServerAppMessageExCallBack(DWORD dwNotifyMessage, DWORD wParam, 
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
 	if(dwNotifyMessage == BRAS_MESSAGE_CORESERVERCONN)
 	{
-		lpServerDlg->m_dwOnlineUsers = 0;
 		if(wParam == 0)
 			lpServerDlg->AppendLogString("Success connected with AnyChatCoreServer...");
 		else
@@ -105,7 +106,6 @@ void CALLBACK OnUserLoginActionCallBack(DWORD dwUserId, LPCTSTR szUserName, DWOR
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
 	if(lpServerDlg)
 	{
-		lpServerDlg->m_dwOnlineUsers++;
 		if(lpServerDlg->m_bShowUserLog)
 		{
 			CString strMsg;
@@ -120,7 +120,6 @@ void CALLBACK OnUserLogoutActionExCallBack(DWORD dwUserId, DWORD dwErrorCode, LP
 	CAnyChatBusinessServerDlg* lpServerDlg = (CAnyChatBusinessServerDlg*)lpUserValue;
 	if(lpServerDlg)
 	{
-		lpServerDlg->m_dwOnlineUsers--;
 		if(lpServerDlg->m_bShowUserLog)
 		{
 			CString strMsg;
@@ -315,8 +314,9 @@ BOOL CAnyChatBusinessServerDlg::OnInitDialog()
 	BRAS_SetCallBack(BRAS_CBTYPE_SERVERRECORDEX, OnServerRecordEx_CallBack, this);
 	
 	BRAS_InitSDK(0);
+	// 初始化业务队列（参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=1771）
+	InitAnyChatQueue();
 
-	m_dwOnlineUsers = 0;
 	SetTimer(TIMER_REFRESH_ONLINES, 1000, NULL);
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -361,6 +361,72 @@ void CAnyChatBusinessServerDlg::OnDestroy()
 
 	CDialog::OnDestroy();
 }
+
+/**
+ *	初始化业务队列
+ *	参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=1771
+ */ 
+void CAnyChatBusinessServerDlg::InitAnyChatQueue(void)
+{
+	// 服务器端创建一个营业厅对象，并设置属性
+	DWORD dwAreaId = 10001;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_CTRL_CREATE);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_INFO_NAME, "科韵路营业厅", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "位于广州市科韵路，服务超级棒！", 0);
+	// 创建队列对象
+	DWORD dwQueueId = 101;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_NAME, "现金业务队列", 0);
+	DWORD dwQueueAbility = BUSINESS_ABILITY_CASH;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_ATTRIBUTE, (CHAR*)&dwQueueAbility, sizeof(DWORD));
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "开户、取现、转帐", 0);
+	DWORD dwPriority = 0;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_PRIORITY, (CHAR*)&dwPriority, sizeof(DWORD));
+
+	dwQueueId = 102;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_NAME, "现金业务队列(VIP)", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "开户、取现、转帐", 0);
+	dwQueueAbility = BUSINESS_ABILITY_CASH;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_ATTRIBUTE, (CHAR*)&dwQueueAbility, sizeof(DWORD));
+	dwPriority = 10;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_PRIORITY, (CHAR*)&dwPriority, sizeof(DWORD));
+
+	dwQueueId = 103;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_NAME, "对公业务队列", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "支票、回单、基本户", 0);
+	dwQueueAbility = BUSINESS_ABILITY_COMPANY;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_ATTRIBUTE, (CHAR*)&dwQueueAbility, sizeof(DWORD));
+	dwPriority = 0;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_PRIORITY, (CHAR*)&dwPriority, sizeof(DWORD));
+
+
+	// 服务器端创建第二个营业厅对象，并设置属性
+	dwAreaId = 10002;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_CTRL_CREATE);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_INFO_NAME, "天河路营业厅", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "位于广州市天河路，广州最大的营业厅", 0);
+	// 创建队列对象
+	dwQueueId = 201;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_NAME, "理财业务队列", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "开户、风险评估", 0);
+	dwQueueAbility = BUSINESS_ABILITY_CASH;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_ATTRIBUTE, (CHAR*)&dwQueueAbility, sizeof(DWORD));
+	dwPriority = 0;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_PRIORITY, (CHAR*)&dwPriority, sizeof(DWORD));
+
+	dwQueueId = 202;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_NAME, "基金业务队列", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "股票、基金、荐股", 0);
+	dwQueueAbility = BUSINESS_ABILITY_COMPANY;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_ATTRIBUTE, (CHAR*)&dwQueueAbility, sizeof(DWORD));
+	dwPriority = 0;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_PRIORITY, (CHAR*)&dwPriority, sizeof(DWORD));
+}
+
 
 void CAnyChatBusinessServerDlg::OnButtonSendbuf() 
 {
@@ -490,8 +556,11 @@ void CAnyChatBusinessServerDlg::OnTimer(UINT nIDEvent)
 {
 	if(nIDEvent == TIMER_REFRESH_ONLINES)
 	{
+		DWORD dwOnlineUserCount = 0;
+		BRAS_GetOnlineUsers(-1, NULL, dwOnlineUserCount);
+
 		CString strNotify;
-		strNotify.Format("在线用户数：%d", m_dwOnlineUsers);
+		strNotify.Format("在线用户数：%d", dwOnlineUserCount);
 		SetDlgItemText(IDC_STATIC_ACTIVEINFO, strNotify);
 	}
 	CDialog::OnTimer(nIDEvent);
@@ -524,3 +593,4 @@ void CAnyChatBusinessServerDlg::OnButtonHangUp()
 	}
 	BRAS_VideoCallControl(BRAS_VIDEOCALL_EVENT_FINISH, m_iTargetId, 0);
 }
+

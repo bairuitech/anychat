@@ -133,6 +133,13 @@ public class AnyChatServerSDK
 	// 业务对象参数控制
 	public static native int ObjectControl(int dwObjectType, int dwObjectId, int dwCtrlCode, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrValue);
 
+	// 获取在线用户ID列表（dwRoomId=-1时，表示获取系统所有房间的ID列表）
+	public static native int[] GetOnlineUsers(int dwRoomId);
+	// 向核心服务器动态查询相关信息（整型）
+	public static native int QueryIntInfoFromServer(int dwInfoName, String lpInParam, int dwFlags);
+	// 向核心服务器动态查询相关信息（字符串）
+	public static native String QueryStringInfoFromServer(int dwInfoName, String lpInParam, int dwFlags);
+	
 	
 	// 服务器应用程序消息回调函数定义
 	private void OnAnyChatServerAppMessageExCallBack(int dwNotifyMessage, int wParam, int lParam)

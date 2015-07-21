@@ -20,9 +20,6 @@ public class SampleServer implements AnyChatServerEvent{
 	public static final int QUEUE_ABILITY_TYPE_PERSONAL		=	1;		///< 个人业务
 	public static final int QUEUE_ABILITY_TYPE_COMPANY		=	2;		///< 对公业务
 	
-	// 在线用户列表
-	public static ArrayList<Integer> onlineusers = new ArrayList<Integer>();
-	
 	/**
 	 * @param args
 	 * @throws InterruptedException 
@@ -43,8 +40,10 @@ public class SampleServer implements AnyChatServerEvent{
 		do{
 			if(ch == 'd')
 				bShowActionLog = !bShowActionLog;
-			else if(ch != '\r')
-				System.out.print(getCurrentTime() + "Business server(Java) still running, press 'q' to exit...(Online users: " + onlineusers.size() + ")\r\n");
+			else if(ch != '\r') {
+				int[] onlineusers = AnyChatServerSDK.GetOnlineUsers(-1);		// 获取系统所有在线用户列表
+				System.out.print(getCurrentTime() + "Business server(Java) still running, press 'q' to exit...(Online users: " + onlineusers.length + ")\r\n");
+			}
 			Thread.sleep(100);
 		}while((ch=(char)reader.read()) != 'q');
 		anychat.Release();
@@ -165,7 +164,6 @@ public class SampleServer implements AnyChatServerEvent{
 				System.out.print(getCurrentTime() + "Success connected with anychatcoreserver...\r\n");
 			else
 				System.out.print(getCurrentTime() + "ERROR: Disconnected from the anychatcoreserver, errorcode:" + wParam + "\r\n");
-			onlineusers.clear();
 		}
 		else if(dwNotifyMessage == AnyChatServerSDK.BRAS_MESSAGE_RECORDSERVERCONN)
 		{
@@ -194,23 +192,10 @@ public class SampleServer implements AnyChatServerEvent{
 	public void OnAnyChatUserLoginActionCallBack(int dwUserId, String szUserName, int dwLevel, String szIpAddr) {
 		if(bShowActionLog)
 			System.out.print(getCurrentTime() + "OnUserLoginActionCallBack: userid:" + dwUserId + " username: " + szUserName + " ip: " + szIpAddr + "\r\n");
-
-		// 将本地用户加入在线用户列表
-		onlineusers.add(dwUserId);
 	}
 	
 	@Override
 	public void OnAnyChatUserLogoutActionExCallBack(int dwUserId, int dwErrorCode) {
-		// 从在线用户列表中删除
-	    Iterator<Integer> it = onlineusers.iterator();
-	    while(it.hasNext())
-	    {
-	        if(it.next() == dwUserId)
-	        {
-	        	it.remove();
-	        	break;
-	        }
-	    }
 	    if(bShowActionLog)
 			System.out.print(getCurrentTime() + "OnUserLogoutActionExCallBack: userid:" + dwUserId + " errorcode:" + dwErrorCode + "\r\n");
 	}
