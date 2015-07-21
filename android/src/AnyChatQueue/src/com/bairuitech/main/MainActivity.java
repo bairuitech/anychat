@@ -312,7 +312,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 			InitClientObjectInfo(dwUserId);	
 			
 			Intent intent = new Intent(MainActivity.this,FuncMenu.class);
-			intent.putExtra("activity_id",USER_ACTIVITY_ID);
+			//intent.putExtra("activity_id",USER_ACTIVITY_ID);
 			startActivity(intent);	
 			
 			setBtnVisible(SHOWLOGINSTATEFLAG);

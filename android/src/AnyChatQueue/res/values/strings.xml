@@ -25,8 +25,8 @@
     <string name="str_cancel">取消</string>
     <string name="str_exit">退出</string>
     <string name="end_session">开始录制</string>
-    <string name="str_serverlink_close">与服务器断开连接，错误代码是</string>
-    <string name="str_endsession">您确定要结束当前服务吗</string>
+    <string name="str_serverlink_close">与服务器断开连接,请检查您的网络</string>
+    <string name="str_endsession">您确定要结束当前服务吗？</string>
     <string name="sessioning_reqite">请求与您通话！</string>
     <string name="str_resume">确认</string>
     <string name="str_welecoeTitle">Welcome to AnyChat</string>

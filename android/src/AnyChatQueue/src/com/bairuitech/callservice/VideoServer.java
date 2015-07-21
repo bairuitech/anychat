@@ -308,7 +308,7 @@ public class VideoServer extends Activity implements
 
 	private void alertDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("您确定退出当前服务区域吗?")
+		builder.setMessage("您确定退出当前营业厅吗？")
 		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {

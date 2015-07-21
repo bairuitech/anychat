@@ -93,7 +93,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 		mTitleName.setText(R.string.str_funcTitle);
 		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
 		mImgBtnReturn.setOnClickListener(this);
-		showIndeterminate();
+		showIndeterminate1();
 	}
 	// 根据配置文件配置视频参数
 	private void ApplyVideoConfig() {
@@ -231,7 +231,6 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 		Intent mIntent = new Intent("NetworkDiscon");
 		// 发送广播
 		sendBroadcast(mIntent);
-	
 	}
 
 	
@@ -308,13 +307,21 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 		
 		
 	}
-	public void showIndeterminate(){
-		waitingpd.setMessage("进入大厅...");
+	public void showIndeterminate1(){
+		waitingpd.setMessage("加载营业厅...");
 		waitingpd.setCancelable(true);
 		waitingpd.setProgress(ProgressDialog.STYLE_HORIZONTAL);
 		waitingpd.setIndeterminate(true);
 		waitingpd.show();
 	}
+	public void showIndeterminate2(){
+		waitingpd.setMessage("进入营业厅...");
+		waitingpd.setCancelable(true);
+		waitingpd.setProgress(ProgressDialog.STYLE_HORIZONTAL);
+		waitingpd.setIndeterminate(true);
+		waitingpd.show();
+	}
+	
 	private void DataFinshed(int dwObjectType) {
 		// TODO Auto-generated method stub
 		//获取了营业厅的ID
@@ -347,7 +354,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 							int arg2, long arg3) {
 						// TODO Auto-generated method stub
 						//服务器同步语句
-						showIndeterminate();
+						showIndeterminate2();
 						configEntity.CurrentObjectId = mobject.get(arg2);
 						ConfigService.SaveConfig(FuncMenu.this, configEntity);
 						

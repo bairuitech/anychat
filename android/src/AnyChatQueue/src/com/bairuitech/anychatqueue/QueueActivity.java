@@ -40,6 +40,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
  public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatVideoCallEvent,AnyChatObjectEvent, OnClickListener{
 	private Button  quickButton;
@@ -213,21 +214,14 @@ import android.widget.TextView;
 	
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-		if (dwErrorCode == 0) {
-			if (dialog != null && dialog.isShowing())
-				dialog.dismiss();
-			dialog = DialogFactory.getDialog(DialogFactory.DIALOG_NETCLOSE,
-					DialogFactory.DIALOG_NETCLOSE, this);
-			dialog.show();
-		} else {
-			BaseMethod.showToast(this.getString(R.string.str_serverlink_close),
-					this);
+		//网络断开时跳到主页面
+		Toast.makeText(QueueActivity.this, this.getString(R.string.str_serverlink_close), Toast.LENGTH_LONG).show();
 			Intent intent = new Intent();
 			intent.putExtra("INTENT", BaseConst.AGAIGN_LOGIN);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			intent.setClass(this,MainActivity.class);
 			this.startActivity(intent);	
-		}
+		
 	}
 	@Override
 	public void OnAnyChatObjectEvent(int dwObjectType, int dwObjectId,

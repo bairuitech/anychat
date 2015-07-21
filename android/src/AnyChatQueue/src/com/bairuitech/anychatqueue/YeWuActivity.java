@@ -24,9 +24,11 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
+import com.bairuitech.common.BaseMethod;
 import com.bairuitech.common.ConfigEntity;
 import com.bairuitech.common.ConfigService;
 import com.bairuitech.main.FuncMenu;
+import com.bairuitech.main.MainActivity;
 import com.bairuitech.viewadapter.YeWuAdapter;
 import com.example.anychatqueue.R;
 
@@ -127,13 +129,12 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 	}
 	private void alertDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(YeWuActivity.this);
-		builder.setMessage("您确定要退出队列列表吗")
+		builder.setMessage("您确定要退出营业厅？")
 				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 					
 					public void onClick(DialogInterface dialog, int which) {
 						//离开营业厅
 						AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA, configEntity.CurrentObjectId,AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0,0,0,0, "");
-						System.out.println("营业厅的id是:"+configEntity.CurrentObjectId);
 					}
 				}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
 					
@@ -167,17 +168,16 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		// TODO Auto-generated method stub
 	
 	}
-	private void destroyCurActivity() {
-		
-		onPause();
-		onDestroy();
-	}
+	
 
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		// TODO Auto-generated method stub
-		// 销毁当前界面
-		destroyCurActivity();
+		BaseMethod.showToast("网络断开连接",YeWuActivity.this);
+		anychat.Logout();
+		Intent intent = new Intent(YeWuActivity.this,MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 		
 	}
 	@Override

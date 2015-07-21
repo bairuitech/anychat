@@ -435,7 +435,7 @@ import com.example.anychatqueue.R;
 		} else {
 			BaseMethod.showToast(this.getString(R.string.str_serverlink_close),
 					this);
-		
+			//
 			Intent intent = new Intent();
 			intent.putExtra("INTENT", BaseConst.AGAIGN_LOGIN);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
