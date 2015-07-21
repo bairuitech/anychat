@@ -116,7 +116,7 @@ ol li {
 	position: fixed;
 	right: 20px;
 	z-index: 99999;
-	width: 370px;
+	width: 420px;
 }
 
 #LOG_DIV_TITLE {
@@ -154,7 +154,7 @@ ol li {
 	padding: 10px;
 	position: absolute;
 	text-align: right;
-	width: 350px;
+	width: 400px;
 	z-index: 99999;
 }
 
