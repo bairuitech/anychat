@@ -46,7 +46,7 @@
                                 <imageView userInteractionEnabled="NO" alpha="0.79999999999999982" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading_icon_someone" translatesAutoresizingMaskIntoConstraints="NO" id="XT1-nE-sKZ">
                                     <rect key="frame" x="0.0" y="7" width="27" height="27"/>
                                 </imageView>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="坐席" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1aI-NL-xop">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="普通用户" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1aI-NL-xop">
                                     <rect key="frame" x="37" y="12" width="163" height="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -80,7 +80,7 @@
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading_icon_IP" translatesAutoresizingMaskIntoConstraints="NO" id="j5M-vd-hXz">
                                     <rect key="frame" x="0.0" y="7" width="27" height="27"/>
                                 </imageView>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="www.anychat.cn" placeholder="www.anychat.cn" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xpL-5C-c6s">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="demo.anychat.cn" placeholder="demo.anychat.cn" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xpL-5C-c6s">
                                     <rect key="frame" x="37" y="11" width="163" height="19"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
