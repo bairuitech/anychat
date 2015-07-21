@@ -46,7 +46,7 @@
                                 <imageView userInteractionEnabled="NO" alpha="0.79999999999999982" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading_icon_someone" translatesAutoresizingMaskIntoConstraints="NO" id="XT1-nE-sKZ">
                                     <rect key="frame" x="0.0" y="7" width="27" height="27"/>
                                 </imageView>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="坐席" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1aI-NL-xop">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="普通用户" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1aI-NL-xop">
                                     <rect key="frame" x="37" y="12" width="163" height="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -80,7 +80,7 @@
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading_icon_IP" translatesAutoresizingMaskIntoConstraints="NO" id="j5M-vd-hXz">
                                     <rect key="frame" x="0.0" y="7" width="27" height="27"/>
                                 </imageView>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="www.anychat.cn" placeholder="www.anychat.cn" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xpL-5C-c6s">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="demo.anychat.cn" placeholder="demo.anychat.cn" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xpL-5C-c6s">
                                     <rect key="frame" x="37" y="11" width="163" height="19"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -203,8 +203,15 @@
                         <constraint firstAttribute="centerX" secondItem="dwN-rU-dHb" secondAttribute="centerX" id="gXR-bp-aec"/>
                         <constraint firstAttribute="centerX" secondItem="I28-Va-dYh" secondAttribute="centerX" constant="-1" id="h1p-Bw-k8j"/>
                         <constraint firstAttribute="centerX" secondItem="rZa-qq-aFC" secondAttribute="centerX" id="ktZ-qU-gf0"/>
-                        <constraint firstAttribute="bottom" secondItem="fyD-3R-CJJ" secondAttribute="bottom" id="zQ1-oY-EPE"/>
+                        <constraint firstAttribute="bottom" secondItem="fyD-3R-CJJ" secondAttribute="bottom" id="zQ1-oY-EPE">
+                            <variation key="heightClass=compact-widthClass=compact" constant="30"/>
+                        </constraint>
                     </constraints>
+                    <variation key="heightClass=compact-widthClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="OJD-Yf-vwR"/>
+                        </mask>
+                    </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NKM-8E-ya3" userLabel="foot">
                     <rect key="frame" x="0.0" y="585" width="600" height="15"/>
@@ -232,17 +239,54 @@
                 <constraint firstItem="lBX-Oa-5c8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="42P-pu-j6Z"/>
                 <constraint firstItem="h89-3B-BeO" firstAttribute="top" secondItem="TJQ-nR-BBd" secondAttribute="bottom" constant="25" id="48S-Gn-IcX"/>
                 <constraint firstAttribute="trailing" secondItem="lBX-Oa-5c8" secondAttribute="trailing" id="CXE-WK-j6V"/>
+                <constraint firstAttribute="centerY" secondItem="TJQ-nR-BBd" secondAttribute="centerY" constant="125" id="FG4-Jr-Yze">
+                    <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstItem="TJQ-nR-BBd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="49" id="O7y-XP-k7y"/>
+                <constraint firstItem="h89-3B-BeO" firstAttribute="leading" secondItem="TJQ-nR-BBd" secondAttribute="trailing" constant="-240" id="PqI-Ad-fyZ">
+                    <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
+                </constraint>
+                <constraint firstAttribute="bottom" secondItem="h89-3B-BeO" secondAttribute="bottom" constant="-6" id="QaD-ts-83D">
+                    <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="bottom" secondItem="NKM-8E-ya3" secondAttribute="bottom" id="SVf-Uc-fgN"/>
                 <constraint firstAttribute="trailing" secondItem="NKM-8E-ya3" secondAttribute="trailing" id="TTd-k8-pkG"/>
                 <constraint firstAttribute="bottom" secondItem="lBX-Oa-5c8" secondAttribute="bottom" id="Ufj-vC-MSm"/>
+                <constraint firstItem="TJQ-nR-BBd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="105" id="gE3-Y4-Wiq">
+                    <variation key="heightClass=compact-widthClass=compact" constant="20"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="h89-3B-BeO" secondAttribute="trailing" id="hO9-y8-2ky"/>
                 <constraint firstAttribute="bottom" secondItem="wOa-Ud-cdI" secondAttribute="bottom" constant="40" id="kVj-cv-v8E"/>
                 <constraint firstItem="NKM-8E-ya3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mNH-8O-3zh"/>
                 <constraint firstItem="lBX-Oa-5c8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qyc-8X-6E0"/>
+                <constraint firstItem="h89-3B-BeO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="126" id="r7C-GB-5wO">
+                    <variation key="heightClass=compact-widthClass=compact" constant="20"/>
+                </constraint>
                 <constraint firstItem="h89-3B-BeO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="swF-Vd-0zL"/>
                 <constraint firstAttribute="centerX" secondItem="TJQ-nR-BBd" secondAttribute="centerX" id="xnU-y9-GZ1"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="PqI-Ad-fyZ"/>
+                    <exclude reference="QaD-ts-83D"/>
+                    <exclude reference="r7C-GB-5wO"/>
+                    <exclude reference="FG4-Jr-Yze"/>
+                    <exclude reference="gE3-Y4-Wiq"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=compact-widthClass=compact">
+                <mask key="constraints">
+                    <exclude reference="48S-Gn-IcX"/>
+                    <include reference="PqI-Ad-fyZ"/>
+                    <include reference="QaD-ts-83D"/>
+                    <include reference="r7C-GB-5wO"/>
+                    <exclude reference="swF-Vd-0zL"/>
+                    <include reference="FG4-Jr-Yze"/>
+                    <exclude reference="O7y-XP-k7y"/>
+                    <include reference="gE3-Y4-Wiq"/>
+                    <exclude reference="xnU-y9-GZ1"/>
+                </mask>
+            </variation>
         </view>
     </objects>
     <resources>

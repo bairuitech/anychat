@@ -58,6 +58,7 @@
             this.panel_agentVedioCall = new System.Windows.Forms.Panel();
             this.btnStopService = new System.Windows.Forms.Button();
             this.btnStartService = new System.Windows.Forms.Button();
+            this.lbl_agent_atAreaUserCount = new System.Windows.Forms.Label();
             this.lbl_agent_servicedUserCount = new System.Windows.Forms.Label();
             this.lbl_agent_currentTotalUserCount = new System.Windows.Forms.Label();
             this.lbl_agent_queueNumber = new System.Windows.Forms.Label();
@@ -332,6 +333,7 @@
             // 
             this.panel_agentVedioCall.Controls.Add(this.btnStopService);
             this.panel_agentVedioCall.Controls.Add(this.btnStartService);
+            this.panel_agentVedioCall.Controls.Add(this.lbl_agent_atAreaUserCount);
             this.panel_agentVedioCall.Controls.Add(this.lbl_agent_servicedUserCount);
             this.panel_agentVedioCall.Controls.Add(this.lbl_agent_currentTotalUserCount);
             this.panel_agentVedioCall.Controls.Add(this.lbl_agent_queueNumber);
@@ -341,7 +343,7 @@
             this.panel_agentVedioCall.Controls.Add(this.label1);
             this.panel_agentVedioCall.Controls.Add(this.lbl_agent_remoteUser);
             this.panel_agentVedioCall.Controls.Add(this.picBox_agent_remoteVideo);
-            this.panel_agentVedioCall.Location = new System.Drawing.Point(435, 628);
+            this.panel_agentVedioCall.Location = new System.Drawing.Point(584, 565);
             this.panel_agentVedioCall.Name = "panel_agentVedioCall";
             this.panel_agentVedioCall.Size = new System.Drawing.Size(1017, 450);
             this.panel_agentVedioCall.TabIndex = 11;
@@ -366,11 +368,21 @@
             this.btnStartService.UseVisualStyleBackColor = true;
             this.btnStartService.Click += new System.EventHandler(this.btnStartService_Click);
             // 
+            // lbl_agent_atAreaUserCount
+            // 
+            this.lbl_agent_atAreaUserCount.AutoSize = true;
+            this.lbl_agent_atAreaUserCount.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_agent_atAreaUserCount.Location = new System.Drawing.Point(77, 174);
+            this.lbl_agent_atAreaUserCount.Name = "lbl_agent_atAreaUserCount";
+            this.lbl_agent_atAreaUserCount.Size = new System.Drawing.Size(267, 28);
+            this.lbl_agent_atAreaUserCount.TabIndex = 9;
+            this.lbl_agent_atAreaUserCount.Text = "未进入队列用户数为： 0 人";
+            // 
             // lbl_agent_servicedUserCount
             // 
             this.lbl_agent_servicedUserCount.AutoSize = true;
             this.lbl_agent_servicedUserCount.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_agent_servicedUserCount.Location = new System.Drawing.Point(77, 201);
+            this.lbl_agent_servicedUserCount.Location = new System.Drawing.Point(77, 211);
             this.lbl_agent_servicedUserCount.Name = "lbl_agent_servicedUserCount";
             this.lbl_agent_servicedUserCount.Size = new System.Drawing.Size(204, 28);
             this.lbl_agent_servicedUserCount.TabIndex = 9;
@@ -380,7 +392,7 @@
             // 
             this.lbl_agent_currentTotalUserCount.AutoSize = true;
             this.lbl_agent_currentTotalUserCount.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_agent_currentTotalUserCount.Location = new System.Drawing.Point(77, 158);
+            this.lbl_agent_currentTotalUserCount.Location = new System.Drawing.Point(77, 137);
             this.lbl_agent_currentTotalUserCount.Name = "lbl_agent_currentTotalUserCount";
             this.lbl_agent_currentTotalUserCount.Size = new System.Drawing.Size(288, 28);
             this.lbl_agent_currentTotalUserCount.TabIndex = 9;
@@ -390,7 +402,7 @@
             // 
             this.lbl_agent_queueNumber.AutoSize = true;
             this.lbl_agent_queueNumber.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_agent_queueNumber.Location = new System.Drawing.Point(77, 112);
+            this.lbl_agent_queueNumber.Location = new System.Drawing.Point(77, 94);
             this.lbl_agent_queueNumber.Name = "lbl_agent_queueNumber";
             this.lbl_agent_queueNumber.Size = new System.Drawing.Size(282, 28);
             this.lbl_agent_queueNumber.TabIndex = 9;
@@ -427,7 +439,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(76, 58);
+            this.label1.Location = new System.Drawing.Point(76, 40);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(305, 42);
             this.label1.TabIndex = 8;
@@ -545,5 +557,6 @@
         private System.Windows.Forms.Button btnStopService;
         private System.Windows.Forms.Button btnStartService;
         private System.Windows.Forms.Label lbl_waitingTime;
+        private System.Windows.Forms.Label lbl_agent_atAreaUserCount;
     }
 }

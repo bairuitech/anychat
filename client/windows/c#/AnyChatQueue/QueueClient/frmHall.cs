@@ -246,7 +246,7 @@ namespace QueueClient
             AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, AnyChatCoreSDK.ANYCHAT_INVALID_OBJECT_ID, AnyChatCoreSDK.ANYCHAT_OBJECT_CTRL_SYNCDATA,
                                             mSelfUserId, 0, 0, 0, string.Empty);
 
-            ShowWaitingMessage(Properties.Resources._15, "正在进入营业厅，请稍候......");
+            ShowWaitingMessage(Properties.Resources._15, "正在加载营业厅，请稍候......");
         }
 
         private void btnStopService_Click(object sender, EventArgs e)
@@ -335,11 +335,16 @@ namespace QueueClient
             {
                 //队列数量
                 int queueCount = 0;
-                AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, Int32.Parse(selectedArea.AreaID), AnyChatCoreSDK.ANYCHAT_AREA_INFO_QUEUECOUNT, ref queueCount);
+                AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, selectedArea.AreaID, AnyChatCoreSDK.ANYCHAT_AREA_INFO_QUEUECOUNT, ref queueCount);
 
                 //队列总用户数
                 int queuesUserCount = 0;
-                AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, Int32.Parse(selectedArea.AreaID), AnyChatCoreSDK.ANYCHAT_AREA_INFO_QUEUEUSERCOUNT, ref queuesUserCount);
+                AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, selectedArea.AreaID, AnyChatCoreSDK.ANYCHAT_AREA_INFO_QUEUEUSERCOUNT, ref queuesUserCount);
+
+                //在营业厅未进入队列人数
+                int atAreaUserCount = 0;
+                AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, selectedArea.AreaID, AnyChatCoreSDK.ANYCHAT_AREA_INFO_GUESTCOUNT, ref atAreaUserCount);
+
 
                 //累计服务的用户数
                 int servicedUserCount = 0;
@@ -348,6 +353,7 @@ namespace QueueClient
                 lbl_agent_queueNumber.Text = "当前服务的队列数量为： " + queueCount + " 个";
                 lbl_agent_currentTotalUserCount.Text = "当前排队的用户总数为： " + queuesUserCount + " 人";
                 lbl_agent_servicedUserCount.Text = "已服务人数为： " + servicedUserCount + " 人";
+                lbl_agent_atAreaUserCount.Text = "未进入队列用户数为：" + atAreaUserCount + " 人";
             }
         }
 
@@ -375,7 +381,7 @@ namespace QueueClient
             {
                 case BusinessFuncType.SelectAreaFunc:
                     //退出营业厅
-                    int iAreaID = Int32.Parse(selectedArea.AreaID);
+                    int iAreaID = selectedArea.AreaID;
                     AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, iAreaID, AnyChatCoreSDK.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, string.Empty);
                     ShowWaitingMessage(Properties.Resources._15, "正在退出营业厅，请稍候......");
                     break;
@@ -513,7 +519,7 @@ namespace QueueClient
         {
             //界面切换
             HideAllPanel();
-            lbl_tipMessage.Text = "服务窗口";
+            lbl_tipMessage.Text = selectedQueue.QueueName + " - 服务窗口";
 
             switch (m_userIdentity)
             {
@@ -864,6 +870,9 @@ namespace QueueClient
                 case AnyChatCoreSDK.ANYCHAT_AREA_EVENT_LEAVERESULT:
                     AnyChatLeaveAreaResult_Handler(dwObjectType, dwObjectId, dwParam1);
                     break;
+                case AnyChatCoreSDK.ANYCHAT_AREA_EVENT_STATUSCHANGE:
+                    AnyChatAreaStatusChange_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+                    break;
                 case AnyChatCoreSDK.ANYCHAT_QUEUE_EVENT_ENTERRESULT:
                     AnyChatEnterQueueResult_Handler(dwObjectType, dwObjectId, dwParam1);
                     break;
@@ -915,7 +924,7 @@ namespace QueueClient
 
                         //增加服务区域显示
                         AreaInfo area = new AreaInfo();
-                        area.AreaID = dwObjectId.ToString();
+                        area.AreaID = dwObjectId;
                         StringBuilder sbAreaName = new StringBuilder(100);
                         AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbAreaName);
                         area.AreaName = sbAreaName.ToString();
@@ -984,6 +993,7 @@ namespace QueueClient
                         AddQueueToForm(queue);
                     }
 
+
                     panel_queue.Show();
 
                     break;
@@ -996,6 +1006,8 @@ namespace QueueClient
                     refreshAgentServiceInfo();
                     break;
             }
+
+            panel_waitingMessage.Hide();
         }
 
         /// <summary>
@@ -1011,6 +1023,27 @@ namespace QueueClient
 
             if (panel_waitingMessage.Visible) panel_waitingMessage.Hide();
             if (!panel_area.Visible) panel_area.Show();
+        }
+
+        /// <summary>
+        /// 营业厅状态变化事件
+        /// </summary>
+        /// <param name="dwObjectType"></param>
+        /// <param name="dwObjectId"></param>
+        /// <param name="dwEventType"></param>
+        /// <param name="dwParam1"></param>
+        /// <param name="dwParam2"></param>
+        /// <param name="dwParam3"></param>
+        /// <param name="dwParam4"></param>
+        /// <param name="strParam"></param>
+        private void AnyChatAreaStatusChange_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        {
+            switch(m_userIdentity)
+            {
+                case UserIdentityType.Agent:
+                    refreshAgentServiceInfo();
+                    break;
+            }
         }
 
         /// <summary>
@@ -1039,7 +1072,7 @@ namespace QueueClient
                 HideAllPanel();
                 if (!panel_waitingMessage.Visible) panel_waitingMessage.Show();
 
-                lbl_tipMessage.Text = "服务等待";
+                lbl_tipMessage.Text = selectedQueue.QueueName +  " - 排队等待中";
 
             }
 
@@ -1397,11 +1430,13 @@ namespace QueueClient
         {
             try
             {
+                ShowWaitingMessage(Properties.Resources._15, "正在进入营业厅，请稍候......");
+
                 isEnterArea = true;
 
                 PictureBox area = sender as PictureBox;
                 AreaInfo mode = area.Tag as AreaInfo;
-                int tAreaID = Int32.Parse(mode.AreaID);
+                int tAreaID = mode.AreaID;
 
                 queueList.Clear();
 
@@ -1455,8 +1490,8 @@ namespace QueueClient
             PictureBox queueBox = new PictureBox();
             queueBox.Name = "queue" + mode.QueueID;
             queueBox.Tag = mode;
-            //每个areaBox的宽度为400、高度为150
-            queueBox.Size = new Size(420, 150);
+            //每个areaBox的宽度为440、高度为150
+            queueBox.Size = new Size(440, 150);
             if (intQueueLeft < queueBox.Width * 2 + queueInterval * 2)
                 intQueueLeft += queueInterval;
             else
@@ -1465,7 +1500,7 @@ namespace QueueClient
                 intQueueTop += queueInterval + queueBox.Height;
             }
             queueBox.Location = new Point(intQueueLeft, intQueueTop);
-            intQueueLeft += 420;
+            intQueueLeft += 440;
             //areaBox.BackColor = mode.Id == m_UserId ? Color.DarkSeaGreen : Color.LightSteelBlue;
             queueBox.BackColor = Color.DarkSeaGreen;
             queueBox.Paint += new PaintEventHandler(queue_Paint);
@@ -1536,7 +1571,7 @@ namespace QueueClient
                 int queueXPoint = 10;
 
                 g.DrawString(mode.QueueName+"("+ "编号：" + mode.QueueID +")", new Font("微软雅黑", 16), new SolidBrush(Color.White), new RectangleF(new PointF(queueXPoint + 20, 20), new SizeF(350, 50)));                
-                g.DrawString(mode.QueueDescription + "(当前排队人数：" + mode.inQueueClientCount + "人)", new Font("微软雅黑", 12), new SolidBrush(Color.White), new RectangleF(new PointF(queueXPoint + 50, 85), new SizeF(350, 35)));
+                g.DrawString(mode.QueueDescription + "(当前排队人数：" + mode.inQueueClientCount + "人)", new Font("微软雅黑", 12), new SolidBrush(Color.White), new RectangleF(new PointF(queueXPoint + 50, 85), new SizeF(380, 40)));
             }
             catch (Exception ex)
             {

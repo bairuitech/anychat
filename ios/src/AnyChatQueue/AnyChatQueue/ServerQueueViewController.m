@@ -50,7 +50,7 @@
     self.anyChat = self.loginVC.anyChat;
     self.anyChat.videoCallDelegate = self;
     
-    self.navigationItem.title = @"坐席服务区";
+    self.navigationItem.title = @"队列列表";
     self.tableView.rowHeight = 50;
     
     // 添加退出按钮

@@ -298,6 +298,8 @@ typedef struct tagWAVEFORMATEX{
 + (int) StreamRecordCtrlEx: (int) dwUserId : (BOOL) bStartRecord : (int) dwFlags : (int) dwParam : (NSString*)lpUserStr;
 // 对用户的视频进行抓拍（快照）
 + (int) SnapShot: (int) dwUserId : (int) dwFlags : (int) dwParam;
+// 获取音频播放数据
++ (NSData*) FetchAudioPlayBuffer: (int)dwSize;
 
 // 透明通道传送缓冲区
 + (int) TransBuffer: (int) dwUserid : (NSData*) lpBuf;
@@ -338,6 +340,10 @@ typedef struct tagWAVEFORMATEX{
 
 // 组播功能控制
 + (int) MultiCastControl: (NSString*) lpMultiCastAddr : (int) dwPort : (NSString*) lpNicAddr : (int) dwTTL : (int) dwFlags;
+// 向服务器动态查询相关信息（整型）
++ (int) QueryIntInfoFromServer: (int) dwInfoName : (NSString*) lpInParam : (int) dwFlags;
+// 向服务器动态查询相关信息（字符串）
++ (NSString*) QueryStringInfoFromServer: (int) dwInfoName : (NSString*) lpInParam : (int) dwFlags;
 
 // 设置外部输入视频格式
 + (int) SetInputVideoFormat: (int) pixFmt : (int) dwWidth : (int) dwHeight : (int) dwFps : (int) dwFlags;

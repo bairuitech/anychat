@@ -1,6 +1,5 @@
-#loginDiv{
-	width:1366px;
-	height:668px;
+#loginDiv {
+	padding-top: 10%;
 }
 
 ol li {
@@ -8,113 +7,33 @@ ol li {
 	color: gray;
 }
 
-#page_01 {
-	position:absolute;
-	left:0px;
-	top:0px;
-	width:57px;
-	height:16px;
-	background:url("./../img/page_01.jpg");
-}
-
-#page_02 {
-	position:absolute;
-	left:57px;
-	top:0px;
-	width:1252px;
-	height:16px;
-	background:url("./../img/page_02.jpg");
-}
-
-#page_03 {
-	position:absolute;
-	left:1309px;
-	top:0px;
-	width:57px;
-	height:16px;
-	background:url("./../img/page_03.jpg");
-}
-
-#page_04 {
-	position:absolute;
-	left:0px;
-	top:16px;
-	width:57px;
-	height:635px;
-	background:url("./../img/page_04.jpg");
-}
-
-#page_05 {
-	position:absolute;
-	left:57px;
-	top:16px;
-	width:1252px;
-	height:557px;
-	background:url("./../img/page_05.jpg");
-}
-
-#page_06 {
-	position:absolute;
-	left:1309px;
-	top:16px;
-	width:57px;
-	height:635px;
-	background:url("./../img/page_06.jpg");
-}
-
-#page_07 {
-	position:absolute;
-	left:57px;
-	top:573px;
-	width:1252px;
-	height:78px;
-	background:url("./../img/page_07.jpg");
-}
-
-#page_08 {
-	position:absolute;
-	left:0px;
-	top:651px;
-	width:57px;
-	height:16px;
-	background:url("./../img/page_08.jpg");
-}
-
-#page_09 {
-	position:absolute;
-	left:57px;
-	top:651px;
-	width:1252px;
-	height:16px;
-	background:url("./../img/page_09.jpg");
-}
-
-#page_10 {
-	position:absolute;
-	left:1309px;
-	top:651px;
-	width:57px;
-	height:16px;
-	background:url("./../img/page_10.jpg");
-}
-
 .login-buttom-txt {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #ABCAD3;
 	text-decoration: none;
-	line-height: 25px;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	margin-top: 30px;
 }
 
 #mainer {
-	width: 80%;
-	height: 100%;
+	background: url(../img/login_box1.png) no-repeat;
+	height: 400px;
+	width: 800px;
+	padding-top: 2.5%;
+	position: relative;
+	margin: 0 auto;
+}
+
+#mainer h1 {
+	color: #00cae5;
+	text-align: center;
 }
 
 #mainer .contentR {
-	height: 300px;
-	width: 42%;
-	padding-top: 150px;
+	padding-top: 35px;
 }
 
 #mainer .contentR p {
@@ -122,80 +41,66 @@ ol li {
 	padding-bottom: 7px;
 }
 
-#mainer .contentR table {
-	background: url("./../img/divByLogin.png") no-repeat -5px -5px;
-    height: 270px;
-    width: 450px;
-	padding:0 10px;
-}
-
 #askSelect,#dwPrioritySelect {
-	width: 60px;
+	width: 65px;
 	height: 30px;
+	margin-left: 4px;
+	margin-right: 25px;
+	color: #999;
+	border: 1px solid #d6d6d6;
+	border-radius: 3px;
 }
 
 #login_div {
-    background-color: #fafadd;
-    border: 1px solid black;
-    display: none;
-    margin-left: auto;
-    margin-right: auto;
-    width: 320px;
-}
-
-#cutoff_div {
-    border-bottom: 1px solid black;
-    height: 5px;
-    margin: 0 5px;
+	width: 320px;
+	margin-left: 350px;
+	padding-top: 40px;
 }
 
 .wordage {
-    font-size: 15px;
-    height: 40px;
-    line-height: 40px;
-    text-align: left;
-    width: 280px;
+	font-size: 14px;
+	height: 40px;
+	line-height: 40px;
+	text-align: left;
+	margin-bottom: 3px;
+	color: #666;
 }
 
 .Btn {
-    background-color: #e6e6e6;
-    border: 1px solid black;
-    cursor: pointer;
-    font-size: 12px;
-    height: 25px;
-    line-height: 25px;
-    margin: 10px 20px 20px;
-    text-align: center;
-    width: 80px;
-	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	height: 30;
+	line-height: 30px;
+	text-align: center;
+	width: 80px;
+	border-radius: 3px;
+	margin-top: 5px;
+	color: #fff;
+}
+
+#loginRoom:hover {
+	background-color: #00bed7;
 }
 
 #Btn_div {
-    height: 55px;
-    width: 320px;
+	height: 55px;
+	width: 320px;
 }
-
-#setting_div {
-    display: none;
-    height: 55px;
-    width: 320px;
-}
-
 
 #setting_div_input {
-    border-top: 1px solid black;
-    font-size: 13px;
-    padding-top: 18px;
-    text-align: center;
+	font-size: 14px;
+	text-align: left;
 }
 
-#username{
-	border: 1px solid #cccccc;
-	color: #919191;
+#username {
+	color: #999;
+	border: 1px solid #d6d6d6;
 	height: 35px;
 	line-height: 35px;
 	padding: 5px;
-	width: 200px;
+	width: 238px;
+	border-radius: 3px;
+	margin-left: 5px;
 }
 
 #username:focus {
@@ -205,46 +110,227 @@ ol li {
 
 /*anychat日志*/
 #LOG_DIV_BODY {
-    bottom: 0;
-    display: none;
-    height: 200px;
-    position: fixed;
-    right: 20px;
-    width: 350px;
-    z-index: 40;
+	bottom: -210px;
+	display: none;
+	height: 200px;
+	position: fixed;
+	right: 20px;
+	z-index: 99999;
+	width: 420px;
 }
 
 #LOG_DIV_TITLE {
-    font-size: 12px;
-    height: 15px;
-    line-height: 15px;
-    margin-left: 10px;
-    text-align: right;
+	font-size: 12px;
+	height: 15px;
+	line-height: 15px;
+	margin-right: -10px;
+	margin-top: -5px;
+	position: absolute;
+	right: 10px;
+	text-align: right;
+	z-index: 99999;
 }
 
+#LOG_DIV_TITLE b {
+	border: 1px solid black;
+	width: 15px;
+	height: 15px;
+	display: block;
+	text-align: center;
+	float: right;
+	margin-left: 5px;
+	cursor: pointer;
+	background: white;
+}
+#LOG_DIV_TITLE b:hover {
+	background: red;
+	color: white;
+}
 #LOG_DIV_CONTENT {
-    font-size: 12px;
-    height: 155px;
-    padding: 10px;
-    text-align: right;
-    width: 350px;
+	margin-top: 15px;
+	font-size: 12px;
+	height: 155px;
 	overflow-y: auto;
+	padding: 10px;
+	position: absolute;
+	text-align: right;
+	width: 400px;
+	z-index: 99999;
 }
 
-#LOG_DIV_CONTENT:hover{
+#LOG_DIV_CONTENT:hover {
 	background-color: #fafadd;
-	border:1px solid black;
+	border: 1px solid black;
 }
 
 #loginRoom {
-	background-color: #69C526;
 	text-align: center;
 	display: block;
-	margin-left: 14px;
-	float:left;
+	background-color: #00cae5;
+	padding: 5px 80px;
+	margin-top: 45px;
+	margin-left: 60px;
+	border: 0;
+	color: white;
 }
 
-.Btn:hover {
-	background-color: #A4D876;
-	box-shadow: 0 0 6px 0 rgba(0, 0, 0, .65);
+#mDefaultServerAddr,#mDefaultServerPort {
+	color: #999;
+	border: 1px solid #d6d6d6;
+	height: 30px;
+	line-height: 30px;
+	padding: 5px;
+	width: 115px;
+	border-radius: 3px;
+	margin-left: 5px;
+}
+
+#mDefaultServerPort {
+	width: 50px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
+}
+
+body {
+	background: #e8e8e8;
+}
+
+a.btn {
+	background: white;
+	border: 2px solid gray;
+	padding: 5px 15px;
+	height: 25px;
+	line-height: 25px;
+	font-weight: bold;
+	cursor: pointer;
+	border-radius: 5px;
+	font-size: 14px;
+	letter-spacing: 1px;
+	color: black;
+	font-weight: normal;
+}
+
+a.btn:hover {
+	background: #FEB;
+	color: white;
+}
+
+.enterRoom {
+	display: none;
+	text-align: center;
+	min-width: 1024px;
+	min-height: 665px;
+}
+
+.head {
+	position: relative;
+	line-height: 67px;
+	height: 67px;
+	background: #00cae5;
+	box-shadow: 1px 1px 3px gray;
+}
+.head h2:first-child{display:none;}
+.head h2 {
+	color: white;
+	letter-spacing: 8px;
+}
+
+.head a.btn {
+	position: absolute;
+	right: 10px;
+	top: 14%;
+}
+
+.contentArea {
+	text-align: left;
+}
+
+.content {
+	min-height: 535px;
+	height: 90%;
+	position: relative;
+}
+
+#showLog {
+	position: fixed;
+	bottom: 20px;
+	right: 30px;
+	z-index: 99999;
+}
+
+.list {
+	padding: 8% 110px 0;
+	color: white;
+}
+
+.list li {
+	display: inline-block;
+	width: 250px;
+	height: 350px;
+	list-style: none;
+	margin: 11px;
+	background: #6C5;
+	position: relative;
+	border: 1px solid #ccc;
+	box-shadow: 1px 1px 2px #ccc;
+	text-align: center;
+}
+
+.list li p {
+	margin: 15px 0;
+	font-size: 13px;
+	width: 100%;
+}
+
+.list li p:first-child {
+	font-weight: bold;
+	font-size: 20px;
+	margin-top: 35px;
+}
+
+.list li p:last-child {
+	background: white;
+	position: absolute;
+	bottom: 0;
+	margin: 0px;
+	padding: 20px 0;
+}
+
+.list li p:last-child a.btn {
+	position: static;
+	border: 1px solid gray;
+	/*border-bottom: 2px solid gray; */
+	border-radius: 3px;
+	color: green;
+	padding: 10px 35px;
+}
+
+.list li p:last-child a.btn:hover {
+	background: none;
+	box-shadow: 1px 1px 3px gray;
+	font-weight: bold;
+}
+
+.list p.description {
+	line-height: 20px;
+	margin: 0 auto;
+	text-overflow: ellipsis;
+	width: 80%;
+	height: 40px;
+}
+
+#LOADING_GREY_DIV {
+	display: none;
+	background: rgba(255, 255, 255, 0.6) !important;
+	filter: Alpha(opacity = 40);
+	width: 100%;
+	height: 100%;
+	background-color: #999999;
+	position: absolute;
+	z-index: 44;
+	text-align: center;
 }

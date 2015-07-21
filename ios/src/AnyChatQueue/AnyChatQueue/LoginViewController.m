@@ -5,7 +5,7 @@
 //  Created by tim.tan on 15/6/12.
 //  Copyright (c) 2015年 tim.tan. All rights reserved.
 //
-#define kQueueServer @"www.anychat.cn"
+#define kQueueServer @"demo.anychat.cn"
 #define kQueuePort @"8906"
 #define kQueueUserName @"AnyChatQueue"
 
@@ -35,6 +35,7 @@
 @property(nonatomic, assign)int selfUserId;                         //自己的用户id
 
 - (IBAction)loginAction:(UIButton *)sender;
+
 @end
 
 @implementation LoginViewController
@@ -107,6 +108,7 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
+
 #pragma mark - AnyChat Delegate
 // 连接服务器消息
 - (void) OnAnyChatConnect:(BOOL) bSuccess {
@@ -123,6 +125,7 @@
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode {
     if (dwErrorCode == 0) {
+        self.businessHallDicArr = nil;
         self.selfUserId = dwUserId;
         // 初始化本地对象信息
         if ([self.role.text isEqualToString:@"普通用户"]) {
@@ -159,6 +162,9 @@
 // 网络断开消息
 - (void) OnAnyChatLinkClose:(int) dwErrorCode {
     NSLog(@"网络断开");
+    // 注销系统
+    [AnyChatPlatform Logout];
+    [MBProgressHUD hideHUD];
     [MBProgressHUD showError:@"网络断线，请稍后再试"];
     self.businessHallDicArr = nil;
     self.selfUserId = -1;
@@ -315,7 +321,7 @@
     NSLog(@"服务区域状态变化");
 }
 
-// 7.用户进入队列
+// 8.用户进入队列
 -(void) AnyChatUserEnterQueue:(int)dwObjectType :(int)dwObjectId :(int)dwUserId {
     NSLog(@"用户进入队列");
     int controllersCount = (int)self.navigationController.viewControllers.count;
@@ -324,7 +330,7 @@
     }
 }
 
-// 8.用户进入队列结果
+// 9.用户进入队列结果
 -(void) AnyChatEnterQueueResult:(int)dwObjectType :(int)dwObjectId :(int)dwErrorCode {
     if(dwErrorCode == 0) {
         // 进入队列成功
@@ -339,7 +345,7 @@
     }
 }
 
-// 9.用户离开队列
+// 10.用户离开队列
 -(void) AnyChatUserLeaveQueue:(int)dwObjectType :(int)dwObjectId :(int)dwUserId {
     NSLog(@"用户离开队列");
     int controllersCount = (int)self.navigationController.viewControllers.count;
@@ -348,14 +354,14 @@
     }
 }
 
-// 10.用户离开队列结果
+// 11.用户离开队列结果
 -(void) AnyChatLeaveQueueResult :(int)dwObjectType :(int)dwObjectId :(int)dwErrorCode {
     if (dwErrorCode == 0) {
         NSLog(@"用户离开队列成功");
     }
 }
 
-// 11.队列状态变化
+// 12.队列状态变化
 -(void) AnyChatQueueStatusChanged:(int)dwObjectType :(int)dwObjectId {
     NSLog(@"队列状态变化");
     
@@ -378,12 +384,12 @@
     }
 }
 
-// 12.坐席状态变化
+// 13.坐席状态变化
 -(void) AnyChatAgentStatusChanged:(int)dwObjectType :(int)dwObjectId {
     NSLog(@"坐席状态变化");
 }
 
-// 13.坐席服务通知(有人排队)
+// 14.坐席服务通知(有人排队)
 -(void) AnyChatAgentServiceNotify:(int)dwAgentId :(int)clientId {
     NSLog(@"坐席服务通知");
     if ([self.role.text isEqualToString:@"坐席"] && self.selfUserId == dwAgentId) {
@@ -391,12 +397,12 @@
         // 呼叫用户
         [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REQUEST :clientId :0 :0 :0 :nil];
         ServerQueueViewController *serverQVC = [self.navigationController.viewControllers lastObject];
-        serverQVC.waitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫中，等待顾客确定" message:@"请稍等..." delegate:serverQVC cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+        serverQVC.waitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫请求中，等待客户响应..." message:nil delegate:serverQVC cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
         [serverQVC.waitingAlertView show];
     }
 }
 
-// 14.坐席等待用户(没人排队)
+// 15.坐席等待用户(没人排队)
 -(void) AnyChatAgentWaitingUser:(int)dwObjectType {
     NSLog(@"坐席等待用户");
     [MBProgressHUD showError:@"暂时还没有顾客排队，请稍后再试"];
@@ -415,16 +421,18 @@
 {
 
     CGRect frame = textField.frame;
+    NSLog(@"==%@",NSStringFromCGRect(frame));
     int offset = frame.origin.y + 32 - (self.view.frame.size.height - 216.0);//键盘高度216
-    
     NSTimeInterval animationDuration = 0.30f;
-
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView beginAnimations:@"ResizeForKeyBoard" context:nil];
     [UIView setAnimationDuration:animationDuration];
-    //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
     if(offset > 0)
-        self.view.frame = CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
-    
+    {
+        CGRect rect = CGRectMake(0.0f, -offset,width,height);
+        self.view.frame = rect;
+    }
     [UIView commitAnimations];
 }
 
@@ -447,9 +455,9 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (component ==0) {
         if (row ==0) {
-            return @"坐席";
-        }else if (row == 1) {
             return @"普通用户";
+        }else if (row == 1) {
+            return @"坐席";
         }
     }
     return 0;
@@ -459,9 +467,9 @@
 {
     if (component ==0) {
         if (row ==0) {
-            self.role.text = @"坐席";
+            self.role.text = @"普通用户";
         }else if (row == 1) {
-           self.role.text = @"普通用户";
+            self.role.text = @"坐席";
         }
     }
 }
@@ -498,8 +506,13 @@
     int navNum = (int)self.navigationController.viewControllers.count;
     if (navNum==4) {
         QueueViewController *queueVC = [self.navigationController.viewControllers objectAtIndex:3];
-        int beforeNum = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_BEFOREUSERNUM];
-        queueVC.beforeLabel.text = [NSString stringWithFormat:@"在您前面还有%d人等待",beforeNum];
+        int queueUserNum = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_LENGTH];
+        queueVC.queueUserCountLabel.text = [NSString stringWithFormat:@"当前排队人数共:%d人",queueUserNum];
+        
+        int queuUserSite = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_BEFOREUSERNUM] + 1;
+        //        if (beforeNum < 0) beforeNum = 0;
+        queueVC.queuUserSiteLabel.text = [NSString stringWithFormat:@"你现在排在第%d位",queuUserSite];
+        
     }
 }
 

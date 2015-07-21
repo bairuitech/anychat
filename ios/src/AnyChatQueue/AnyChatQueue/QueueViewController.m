@@ -14,15 +14,18 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-@interface QueueViewController ()<UIAlertViewDelegate,UIActionSheetDelegate,AnyChatVideoCallDelegate>
+#import <AVFoundation/AVFoundation.h>
+
+@interface QueueViewController ()<UIAlertViewDelegate,UIActionSheetDelegate,AnyChatVideoCallDelegate,AVAudioPlayerDelegate>
 @property(strong, nonatomic) AnyChatPlatform *anyChat;                  //anyChat对象
 @property(weak, nonatomic) LoginViewController *loginVC;
 @property(nonatomic, assign)int remoteUserId;                           //客服人员id号
-@property(nonatomic, assign)int beforeNum;                              //排在自己前面的人数
-@property (weak, nonatomic) IBOutlet UILabel *queueLabel;               //您已经进入xx业务 Label
+@property(nonatomic, assign)int queueUserCount;                         //队列人数
+@property(nonatomic, assign)int queueUserSite;                          //队列中用户位置
 @property (weak, nonatomic) IBOutlet UILabel *queueWaitingTimeLabel;    //排队等待时间
 @property(nonatomic, strong)UIAlertView *requestAlertView;
 @property(nonatomic, strong)NSTimer *timer;                             //定时器
+@property(nonatomic, strong) AVAudioPlayer *theAudioPlayer;             // 音乐播放器
 
 - (IBAction)cancelAction:(UIButton *)sender;
 @end
@@ -35,19 +38,25 @@
     self.anyChat = self.loginVC.anyChat;
     self.anyChat.videoCallDelegate = self;
 
-    self.beforeNum = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_INFO_BEFOREUSERNUM];
-    
-    self.beforeLabel.text = [NSString stringWithFormat:@"在您前面还有%d人等待",self.beforeNum];
-    
     NSString *businessName = [AnyChatPlatform ObjectGetStringValue:ANYCHAT_OBJECT_TYPE_QUEUE :(int)self.businessId :ANYCHAT_OBJECT_INFO_NAME];
-    self.title = businessName;
-    self.queueLabel.text = [NSString stringWithFormat:@"您已经成功进入%@",businessName];
+    self.title = [NSString stringWithFormat:@"%@-排队等待中",businessName];
+    
+    self.queueUserSite = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_INFO_BEFOREUSERNUM] + 1;
+    self.queuUserSiteLabel.text = [NSString stringWithFormat:@"你现在排在第%d位",self.queueUserSite];
+    
+    self.queueUserCount = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_INFO_LENGTH];
+    self.queueUserCountLabel.text = [NSString stringWithFormat:@"当前排队人数共:%d人",self.queueUserCount];
+    
+    // 防止锁屏
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    
+    // 声音
+    [self setVoice];
     
     //排队等待时间
     [self queueWaitingTime];
     
-    // 返回按钮
-    [self setupBackButton];
+    self.navigationItem.hidesBackButton = YES;
     
 }
 
@@ -55,6 +64,17 @@
     [super viewWillDisappear:YES];
     [self.timer invalidate];
     self.timer = nil;
+}
+
+#pragma mark - Audio Delegate
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    [self.theAudioPlayer play];
+}
+
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player
+{
+    [self.theAudioPlayer play];
 }
 
 #pragma mark - AnyChat Call Delegate
@@ -65,9 +85,12 @@
         
         case BRAC_VIDEOCALL_EVENT_REQUEST://呼叫请求 1
         {
-            self.requestAlertView = [[UIAlertView alloc] initWithTitle:@"客服人员请求与您通话" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消" ,nil];
+            NSString *serviceName = [AnyChatPlatform ObjectGetStringValue:ANYCHAT_OBJECT_TYPE_AGENT :dwUserId :ANYCHAT_OBJECT_INFO_NAME];
+            self.requestAlertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"客服 %@请求与您视频通话，是否接受?",serviceName] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"接受",@"拒绝" ,nil];
             self.requestAlertView.delegate = self;
             [self.requestAlertView show];
+            
+            [self.theAudioPlayer play];
             
             break;
         }
@@ -81,8 +104,25 @@
                     if (self.requestAlertView != nil) [self.requestAlertView dismissWithClickedButtonIndex:self.requestAlertView.cancelButtonIndex animated:YES];
                     [MBProgressHUD showError:@"坐席取消会话"];
                     [self.navigationController popViewControllerAnimated:YES];
+                    
                     break;
                 }
+                    
+                case GV_ERR_VIDEOCALL_TIMEOUT:// 会话请求超时
+                {
+                    if (self.requestAlertView != nil) [self.requestAlertView dismissWithClickedButtonIndex:self.requestAlertView.cancelButtonIndex animated:YES];
+                    [MBProgressHUD showError:@"请求超时"];
+                    [self.navigationController popViewControllerAnimated:YES];
+                    break;
+                }
+                    
+                case GV_ERR_VIDEOCALL_DISCONNECT:// 网络断线
+                {
+                    [MBProgressHUD showError:@"网络断线"];
+                    break;
+                }
+                
+                
                     
             }
             break;
@@ -122,6 +162,7 @@
         [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY :self.remoteUserId :GV_ERR_VIDEOCALL_REJECT :0 :0 :nil];
         [self.navigationController popViewControllerAnimated:YES];
     }
+    [self.theAudioPlayer stop];
 }
 
 #pragma mark - UIActionSheetDelegate
@@ -148,18 +189,6 @@
 }
 
 #pragma mark - Custom Method
-// 返回按钮
-- (void)setupBackButton {
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 17, 30)];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"nav_back_hover"] forState:UIControlStateHighlighted];
-    [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    backButton.titleLabel.font = [UIFont systemFontOfSize:13.0f];
-    [backButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    [backButton setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
-    [backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-}
 
 // 排队等待时间
 - (void)queueWaitingTime {
@@ -171,12 +200,23 @@
 - (void)setWaitingTimeLabel {
     int waitingTime = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_INFO_WAITTIMESECOND];
     NSString *timeLabelText = [self transform:waitingTime];
-    self.queueWaitingTimeLabel.text = [NSString stringWithFormat:@"已经等待 %@",timeLabelText];
+    self.queueWaitingTimeLabel.text = [NSString stringWithFormat:@"已等待时长 %@",timeLabelText];
 }
 
 // 时间转换
 - (NSString *)transform:(int)second {
     return [NSString stringWithFormat:@"%d时 %d分 %d秒", second/(60*60), (second%(60*60))/60, second%60];
+}
+
+// 声音
+- (void)setVoice {
+    NSString *musicPath = [[NSBundle mainBundle] pathForResource:@"sound_phoneCall" ofType:@"wav"];
+    if (musicPath) {
+        NSURL *musicURL = [NSURL fileURLWithPath:musicPath];
+        self.theAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:musicURL
+                                                                     error:nil];
+        self.theAudioPlayer.delegate = self;
+    }
 }
 
 #pragma mark - Memory

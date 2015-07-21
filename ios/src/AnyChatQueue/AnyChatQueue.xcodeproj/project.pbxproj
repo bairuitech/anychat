@@ -40,6 +40,7 @@
 		FE16D61D1B2C10F70054FBD5 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D61C1B2C10F70054FBD5 /* libstdc++.6.dylib */; };
 		FE16D61F1B2C11010054FBD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D61E1B2C11010054FBD5 /* libstdc++.dylib */; };
 		FE16D6211B2C11110054FBD5 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D6201B2C11110054FBD5 /* libc++.dylib */; };
+		FE175A311B5DF02100F4D2C8 /* sound_phoneCall.wav in Resources */ = {isa = PBXBuildFile; fileRef = FE175A301B5DF02100F4D2C8 /* sound_phoneCall.wav */; };
 		FE6DCF9A1B56140F00F0DFA5 /* libaudio_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF811B56140F00F0DFA5 /* libaudio_processing.a */; };
 		FE6DCF9B1B56140F00F0DFA5 /* libaudio_processing_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF821B56140F00F0DFA5 /* libaudio_processing_neon.a */; };
 		FE6DCF9C1B56140F00F0DFA5 /* libaudio_processing_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6DCF831B56140F00F0DFA5 /* libaudio_processing_sse2.a */; };
@@ -118,6 +119,7 @@
 		FE16D61C1B2C10F70054FBD5 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		FE16D61E1B2C11010054FBD5 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		FE16D6201B2C11110054FBD5 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		FE175A301B5DF02100F4D2C8 /* sound_phoneCall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_phoneCall.wav; sourceTree = "<group>"; };
 		FE40F3C31B4E56B200EEC35A /* AnyChatDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatDefine.h; sourceTree = "<group>"; };
 		FE40F3C41B4E56B200EEC35A /* AnyChatErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatErrorCode.h; sourceTree = "<group>"; };
 		FE40F3C51B4E56B200EEC35A /* AnyChatObjectDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatObjectDefine.h; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		22D560021B2B2B2100FE5DC2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FE175A301B5DF02100F4D2C8 /* sound_phoneCall.wav */,
 				22D560401B2B4FA100FE5DC2 /* Data */,
 				22D5600C1B2B2B2100FE5DC2 /* Main.storyboard */,
 				22D560111B2B2B2100FE5DC2 /* LaunchScreen.xib */,
@@ -489,6 +492,7 @@
 				22D5603D1B2B4B2400FE5DC2 /* BusinessHallCell.xib in Resources */,
 				FE16D5BC1B2BC2450054FBD5 /* business.json in Resources */,
 				FE16D5C41B2BD6570054FBD5 /* QueueViewController.xib in Resources */,
+				FE175A311B5DF02100F4D2C8 /* sound_phoneCall.wav in Resources */,
 				22D5603F1B2B4F9600FE5DC2 /* businessHalls.json in Resources */,
 				226B215A1B3B17A200712478 /* ServerQueueViewController.xib in Resources */,
 				22D560131B2B2B2100FE5DC2 /* LaunchScreen.xib in Resources */,
