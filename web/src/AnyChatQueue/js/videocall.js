@@ -31,6 +31,7 @@ function CancelCall() {
 		BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AGENT, mSelfUserId, ANYCHAT_AGENT_CTRL_FINISHSERVICE, 0,0,0,0,"");	
 		$("#Initiative_Call_Div").hide();
 	}
+    startServiceTag = false;
 }
 
 //呼叫用户
@@ -163,7 +164,7 @@ function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUse
 	$("#localVideoPos").text("");
 	ForSession("会话结束...", true); // 提示层
 
-	//startServiceTag = false;
+	startServiceTag = false;
 }
 
 //视频呼叫请求发送成功
