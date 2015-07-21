@@ -411,21 +411,11 @@ function OnAnyChatAreaStatusChange(dwObjectTupe, dwObjectId, dwErrorCode) {
 
 // 队列状态变化
 function OnAnyChatQueueStatusChanged(dwObjectType, dwObjectId) {
-<<<<<<< .mine
     AddLog('OnAnyChatQueueStatusChanged(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
     if (userType == 2) {
         refreshAgentServiceInfo();
     }
 
-=======
-	 $("#poptip li").each(function () {
-		var queueLength=BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_QUEUE,dwObjectId,ANYCHAT_QUEUE_INFO_LENGTH);
-		queueLength=queueLength<0?0:queueLength;
-		if($(this).attr("queueid")==dwObjectId)
-		$('strong',this).text(queueLength);
-	 });
-	AddLog('function OnAnyChatQueueStatusChanged(dwObjectType: ' + dwObjectType + ',dwObjectId: ' + dwObjectId, LOG_TYPE_API);
->>>>>>> .r46
 	refreshUserWaitingInfo(dwObjectId);
 	refreshQueueInfoDisplay(dwObjectId);
 }
