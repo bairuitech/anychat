@@ -7,8 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QueueViewController">
             <connections>
-                <outlet property="beforeLabel" destination="4gk-0l-hRw" id="dSs-EN-7GD"/>
-                <outlet property="queueLabel" destination="wdd-ZG-CFU" id="1B6-SW-Yl7"/>
+                <outlet property="queuUserSiteLabel" destination="4gk-0l-hRw" id="iUC-w5-pXi"/>
+                <outlet property="queueUserCountLabel" destination="wdd-ZG-CFU" id="sML-wg-Dln"/>
                 <outlet property="queueWaitingTimeLabel" destination="zGs-0t-Ry0" id="93Z-NQ-mgV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,32 +21,26 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="6Qj-IS-MPm">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您已进入业务队列" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdd-ZG-CFU">
-                    <rect key="frame" x="236" y="127" width="128" height="18"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前排队人数共:1人" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdd-ZG-CFU">
+                    <rect key="frame" x="229" y="110" width="143" height="18"/>
                     <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="16"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="在您前面还有14人等待..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4gk-0l-hRw">
-                    <rect key="frame" x="207" y="183" width="187" height="19"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你现在排在第1位" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4gk-0l-hRw">
+                    <rect key="frame" x="236" y="143" width="129" height="19"/>
                     <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已经等待 0时 0分 0秒" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGs-0t-Ry0">
-                    <rect key="frame" x="219" y="210" width="162" height="19"/>
-                    <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="17"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请您耐心等候..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XQm-1V-5Tc">
-                    <rect key="frame" x="242" y="250" width="117" height="19"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已等待时长 0时 0分 0秒" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGs-0t-Ry0">
+                    <rect key="frame" x="211" y="177" width="179" height="19"/>
                     <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="foP-P1-M39">
-                    <rect key="frame" x="207" y="324" width="187" height="60"/>
+                    <rect key="frame" x="207" y="276" width="187" height="60"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="187" id="YnZ-cI-PAI"/>
                         <constraint firstAttribute="height" constant="60" id="n5x-in-xhh"/>
@@ -66,16 +60,14 @@
                 <constraint firstItem="6Qj-IS-MPm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7V9-Aw-RTL"/>
                 <constraint firstItem="6Qj-IS-MPm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7gu-ks-yMW"/>
                 <constraint firstAttribute="centerX" secondItem="wdd-ZG-CFU" secondAttribute="centerX" id="9CZ-KQ-lDT"/>
-                <constraint firstItem="zGs-0t-Ry0" firstAttribute="top" secondItem="4gk-0l-hRw" secondAttribute="bottom" constant="8" id="AO2-dh-xre"/>
+                <constraint firstItem="zGs-0t-Ry0" firstAttribute="top" secondItem="4gk-0l-hRw" secondAttribute="bottom" constant="15" id="AO2-dh-xre"/>
                 <constraint firstAttribute="trailing" secondItem="6Qj-IS-MPm" secondAttribute="trailing" id="IEZ-Ii-KL2"/>
-                <constraint firstItem="foP-P1-M39" firstAttribute="top" secondItem="XQm-1V-5Tc" secondAttribute="bottom" constant="55" id="QLc-aI-K9j"/>
                 <constraint firstAttribute="centerX" secondItem="zGs-0t-Ry0" secondAttribute="centerX" id="Qsv-si-cS6"/>
+                <constraint firstItem="foP-P1-M39" firstAttribute="top" secondItem="zGs-0t-Ry0" secondAttribute="bottom" constant="80" id="WF8-JZ-PQH"/>
                 <constraint firstAttribute="centerX" secondItem="4gk-0l-hRw" secondAttribute="centerX" id="Xa0-It-GET"/>
                 <constraint firstAttribute="centerX" secondItem="foP-P1-M39" secondAttribute="centerX" id="Zsi-r9-Wb7"/>
-                <constraint firstItem="XQm-1V-5Tc" firstAttribute="top" secondItem="zGs-0t-Ry0" secondAttribute="bottom" constant="21" id="f0S-q0-8uF"/>
-                <constraint firstItem="wdd-ZG-CFU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="127" id="ou8-Hm-NwU"/>
-                <constraint firstItem="4gk-0l-hRw" firstAttribute="top" secondItem="wdd-ZG-CFU" secondAttribute="bottom" constant="38" id="tMK-K7-1I9"/>
-                <constraint firstAttribute="centerX" secondItem="XQm-1V-5Tc" secondAttribute="centerX" id="wDr-3k-Chx"/>
+                <constraint firstItem="wdd-ZG-CFU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="110" id="ou8-Hm-NwU"/>
+                <constraint firstItem="4gk-0l-hRw" firstAttribute="top" secondItem="wdd-ZG-CFU" secondAttribute="bottom" constant="15" id="tMK-K7-1I9"/>
                 <constraint firstAttribute="bottom" secondItem="6Qj-IS-MPm" secondAttribute="bottom" id="zC6-Y9-f5E"/>
             </constraints>
         </view>

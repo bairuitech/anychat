@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.navigationItem.title = @"业务";
+    self.navigationItem.title = @"队列列表";
     
     // 添加退出按钮
     [self setupBackButton];

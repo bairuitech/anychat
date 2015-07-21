@@ -37,7 +37,7 @@ static NSString * const reuseIdentifier = @"BusinessHall";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"营业厅";
+    self.navigationItem.title = @"营业厅列表";
     self.navigationController.navigationBarHidden = NO;
     
     // 1.注册一个Collect的cell

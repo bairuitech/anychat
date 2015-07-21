@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QueueViewController : UIViewController
-@property(nonatomic, assign)int businessId;     //队列id
-@property (weak, nonatomic) IBOutlet UILabel *beforeLabel;
+@property(nonatomic, assign)int businessId;                             // 队列id
+@property (weak, nonatomic) IBOutlet UILabel *queuUserSiteLabel;        // 队列用户位置
+@property (weak, nonatomic) IBOutlet UILabel *queueUserCountLabel;      // 队列人数
 @end

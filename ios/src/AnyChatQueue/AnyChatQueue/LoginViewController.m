@@ -5,7 +5,7 @@
 //  Created by tim.tan on 15/6/12.
 //  Copyright (c) 2015年 tim.tan. All rights reserved.
 //
-#define kQueueServer @"www.anychat.cn"
+#define kQueueServer @"demo.anychat.cn"
 #define kQueuePort @"8906"
 #define kQueueUserName @"AnyChatQueue"
 
@@ -395,7 +395,7 @@
         // 呼叫用户
         [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REQUEST :clientId :0 :0 :0 :nil];
         ServerQueueViewController *serverQVC = [self.navigationController.viewControllers lastObject];
-        serverQVC.waitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫中，等待顾客确定" message:@"请稍等..." delegate:serverQVC cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+        serverQVC.waitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫请求中，等待客户响应..." message:nil delegate:serverQVC cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
         [serverQVC.waitingAlertView show];
     }
 }
@@ -451,9 +451,9 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (component ==0) {
         if (row ==0) {
-            return @"坐席";
-        }else if (row == 1) {
             return @"普通用户";
+        }else if (row == 1) {
+            return @"坐席";
         }
     }
     return 0;
@@ -463,9 +463,9 @@
 {
     if (component ==0) {
         if (row ==0) {
-            self.role.text = @"坐席";
+            self.role.text = @"普通用户";
         }else if (row == 1) {
-           self.role.text = @"普通用户";
+            self.role.text = @"坐席";
         }
     }
 }
@@ -502,9 +502,13 @@
     int navNum = (int)self.navigationController.viewControllers.count;
     if (navNum==4) {
         QueueViewController *queueVC = [self.navigationController.viewControllers objectAtIndex:3];
-        int beforeNum = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_BEFOREUSERNUM];
-        if (beforeNum < 0) beforeNum = 0;
-        queueVC.beforeLabel.text = [NSString stringWithFormat:@"在您前面还有%d人等待",beforeNum];
+        int queueUserNum = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_LENGTH];
+        queueVC.queueUserCountLabel.text = [NSString stringWithFormat:@"当前排队人数共:%d人",queueUserNum];
+        
+        int queuUserSite = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_BEFOREUSERNUM] + 1;
+        //        if (beforeNum < 0) beforeNum = 0;
+        queueVC.queuUserSiteLabel.text = [NSString stringWithFormat:@"你现在排在第%d位",queuUserSite];
+        
     }
 }
 
