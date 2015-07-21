@@ -58,6 +58,7 @@
             this.panel_agentVedioCall = new System.Windows.Forms.Panel();
             this.btnStopService = new System.Windows.Forms.Button();
             this.btnStartService = new System.Windows.Forms.Button();
+            this.lbl_agent_atAreaUserCount = new System.Windows.Forms.Label();
             this.lbl_agent_servicedUserCount = new System.Windows.Forms.Label();
             this.lbl_agent_currentTotalUserCount = new System.Windows.Forms.Label();
             this.lbl_agent_queueNumber = new System.Windows.Forms.Label();
@@ -67,7 +68,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lbl_agent_remoteUser = new System.Windows.Forms.Label();
             this.picBox_agent_remoteVideo = new System.Windows.Forms.PictureBox();
-            this.lbl_agent_atAreaUserCount = new System.Windows.Forms.Label();
             this.panel_top.SuspendLayout();
             this.panel_call.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_call)).BeginInit();
@@ -368,6 +368,16 @@
             this.btnStartService.UseVisualStyleBackColor = true;
             this.btnStartService.Click += new System.EventHandler(this.btnStartService_Click);
             // 
+            // lbl_agent_atAreaUserCount
+            // 
+            this.lbl_agent_atAreaUserCount.AutoSize = true;
+            this.lbl_agent_atAreaUserCount.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_agent_atAreaUserCount.Location = new System.Drawing.Point(77, 174);
+            this.lbl_agent_atAreaUserCount.Name = "lbl_agent_atAreaUserCount";
+            this.lbl_agent_atAreaUserCount.Size = new System.Drawing.Size(267, 28);
+            this.lbl_agent_atAreaUserCount.TabIndex = 9;
+            this.lbl_agent_atAreaUserCount.Text = "未进入队列用户数为： 0 人";
+            // 
             // lbl_agent_servicedUserCount
             // 
             this.lbl_agent_servicedUserCount.AutoSize = true;
@@ -457,16 +467,6 @@
             this.picBox_agent_remoteVideo.Size = new System.Drawing.Size(471, 344);
             this.picBox_agent_remoteVideo.TabIndex = 1;
             this.picBox_agent_remoteVideo.TabStop = false;
-            // 
-            // lbl_agent_atAreaUserCount
-            // 
-            this.lbl_agent_atAreaUserCount.AutoSize = true;
-            this.lbl_agent_atAreaUserCount.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_agent_atAreaUserCount.Location = new System.Drawing.Point(77, 174);
-            this.lbl_agent_atAreaUserCount.Name = "lbl_agent_atAreaUserCount";
-            this.lbl_agent_atAreaUserCount.Size = new System.Drawing.Size(267, 28);
-            this.lbl_agent_atAreaUserCount.TabIndex = 9;
-            this.lbl_agent_atAreaUserCount.Text = "未进入队列用户数为： 0 人";
             // 
             // frmHall
             // 
