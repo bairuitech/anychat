@@ -10,6 +10,8 @@
     <color name="blue">#cc33b5e5</color>
     <color name="txt_general_bg">#333333</color>
     <color name="dancen">#CCCC33</color>
+    <color name="light_grey">#f2f2f2</color>
+    <color name="darker_grey">#666666</color>
     <drawable name="main_head">#6699CC</drawable>
 </resources>
     

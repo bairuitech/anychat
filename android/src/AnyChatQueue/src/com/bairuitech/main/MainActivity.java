@@ -151,17 +151,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 					if(USER_ACTIVITY_ID == 0){
 						dwUserFlags = 0;
 					}else dwUserFlags = 2;
-					//屏蔽radiobutton;
-					rg.setClickable(false);
-					
-					
-					
-					System.out.println("dwuserflags ==> "+dwUserFlags);
+					//连接服务器
 					anyChatSDK.Connect(mStrIP, mSPort);
-					
-					
-					
-
 				}
 				break;
 			default:

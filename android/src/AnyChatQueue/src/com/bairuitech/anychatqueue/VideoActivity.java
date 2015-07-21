@@ -3,7 +3,6 @@ package com.bairuitech.anychatqueue;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -26,7 +25,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
-
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -44,8 +42,6 @@ import com.bairuitech.common.ConfigService;
 import com.bairuitech.common.DialogFactory;
 import com.bairuitech.main.MainActivity;
 import com.example.anychatqueue.R;
-
-
 
  public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		OnClickListener, OnTouchListener,AnyChatObjectEvent, AnyChatVideoCallEvent {
@@ -85,11 +81,19 @@ import com.example.anychatqueue.R;
 		super.onCreate(savedInstanceState);
 		
 		initSdk();
+		
 		dwTargetUserId = BussinessCenter.sessionItem
 				.getPeerUserItem(BussinessCenter.selfUserId);
-		initView();
-
 		anychat.EnterRoom(BussinessCenter.sessionItem.roomId, "");
+		
+		initView();
+		//实时音视频
+		updateAV();
+
+	}
+
+	private void updateAV() {
+		
 		mHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
@@ -111,7 +115,6 @@ import com.example.anychatqueue.R;
 		};
 		initTimerCheckAv();
 		initTimerShowTime();
-
 	}
 
 	@Override

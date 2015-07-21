@@ -5,7 +5,7 @@
     android:background="@drawable/hall_top_background" >
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dip"
         android:gravity="center"
@@ -15,13 +15,5 @@
         android:text="@string/str_dialog_title_protip"
         android:textColor="@android:color/white" />
 
-    <ImageView
-        android:id="@+id/image_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="5dip"
-        android:src="@drawable/delete" />
 
 </RelativeLayout>

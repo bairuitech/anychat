@@ -45,10 +45,9 @@
             android:id="@+id/btn_cancel"
             android:layout_width="100dip"
             android:layout_height="60dip"
-            android:layout_gravity="right"
             android:adjustViewBounds="true"
             android:layout_marginBottom="5dip"
-            android:layout_marginRight="5dip"
+            android:layout_gravity="center_horizontal"
             android:src="@drawable/btn_pause" />
     </LinearLayout>
     </LinearLayout>

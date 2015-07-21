@@ -48,7 +48,7 @@
             android:padding="10dip"
             android:textColor="@color/dancen"
             android:textSize="18sp"
-            android:text="结束会话" />
+            android:text="结束服务" />
 
         <!-- <ImageView
             android:id="@+id/img_switch"

@@ -17,7 +17,8 @@
             android:id="@+id/id_listview_server"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:choiceMode="none" >
+            android:choiceMode="none" 
+             android:cacheColorHint="#00000000">
         </ListView>
     </LinearLayout>
 
@@ -26,7 +27,7 @@
         android:layout_width="fill_parent"
         android:layout_height="55dp"    
         android:textSize="20sp"
-        android:background="@drawable/btn_selector"
+        android:background="@drawable/dialogstyle"
         android:layout_gravity="bottom"
         android:text="开始服务" />
 	<!-- #D3D3D3亮灰色 -->

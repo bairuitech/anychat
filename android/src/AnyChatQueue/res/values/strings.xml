@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">AnyChat智能排队</string>
+    <string name="app_name">智能排队</string>
     <string name="HelloTitle">AnyChatQueue</string>
     <string name="endCall1">End call</string>
     <string name="title_activity_func_menu">FuncMenu</string>
@@ -21,16 +21,16 @@
     <string name="str_dialog_title_protip">提示</string>
     <string name="str_calling">呼叫成功，正在等待用户响应</string>
     <string name="str_call">呼叫</string>
-    <string name="str_pause">挂断</string>
+    <string name="str_pause">确定</string>
     <string name="str_cancel">取消</string>
     <string name="str_exit">退出</string>
     <string name="end_session">开始录制</string>
     <string name="str_serverlink_close">与服务器断开连接，错误代码是</string>
-    <string name="str_endsession">是否想要结束当前通话</string>
+    <string name="str_endsession">您确定要结束当前服务吗</string>
     <string name="sessioning_reqite">请求与您通话！</string>
     <string name="str_resume">确认</string>
     <string name="str_welecoeTitle">Welcome to AnyChat</string>
-    <string name="str_funcTitle">业务大厅</string>
+    <string name="str_funcTitle">营业厅列表</string>
     <string name="str_rolesListTitle">用户列表</string>
     <string name="str_returncode_bussiness">呼叫对象正忙，请稍后再试</string>
     <string name="str_returncode_offline">呼叫用户不在线</string>

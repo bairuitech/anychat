@@ -96,7 +96,7 @@ public class VideoServer extends Activity implements
 		listView.setAdapter(adapter);
 		
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
-		mTitleName.setText("营业大厅");
+		mTitleName.setText("队列列表");
 		mTitleName.setTextColor(getResources().getColor(R.color.white));
 		
 		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
@@ -171,17 +171,7 @@ public class VideoServer extends Activity implements
 		if (event.getAction() == KeyEvent.ACTION_DOWN
 				&& event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
 			
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("是否确定要退出通话")
-			.setPositiveButton("sure", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					configEntity = ConfigService.LoadConfig(VideoServer.this);
-					AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA,configEntity.CurrentObjectId, AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-				}
-			}).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-				}
-			}).create().show();
+			alertDialog();
 		}
 		
 		return super.dispatchKeyEvent(event);
@@ -205,7 +195,7 @@ public class VideoServer extends Activity implements
 			BaseMethod.showToast(this.getString(R.string.str_login_failed) + "(ErrorCode:" + dwErrorCode + ")",	this);
 		}
 	}
-	//当用户请求进入房间的时候会触发
+	//当用户进入房间的时候会触发
 	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
 		// TODO Auto-generated method stub
 		if (dwErrorCode == 0) {
@@ -269,6 +259,7 @@ public class VideoServer extends Activity implements
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY:
 			BussinessCenter.getBussinessCenter().onVideoCallReply(
 					dwUserId, dwErrorCode, dwFlags, dwParam, userStr);
+			
 			if (dwErrorCode == AnyChatDefine.BRAC_ERRORCODE_SUCCESS) {
 				dialog = DialogFactory.getDialog(
 						DialogFactory.DIALOGID_CALLING, dwUserId,
@@ -303,30 +294,34 @@ public class VideoServer extends Activity implements
 		// TODO Auto-generated method stub
 		switch (arg0.getId()) {
 		case R.id.id_btn_startserver:
-			//开始服务用自己的Id;
+			//开始服务
 			AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, BussinessCenter.selfUserId, AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_SERVICEREQUEST, 0, 0, 0, 0, "");
 			break;
 		case R.id.returnImgBtn:
 			
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("是否确定要退出通话")
-			.setPositiveButton("sure", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					
-					configEntity = ConfigService.LoadConfig(VideoServer.this);
-					AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA,configEntity.CurrentObjectId, AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");	
-				}
-			}).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-						
-				@Override
-				public void onClick(DialogInterface dialog, int which) {	
-				}
-			}).create().show();		
+			alertDialog();		
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void alertDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("您确定退出当前服务区域吗?")
+		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//退出营业厅
+				configEntity = ConfigService.LoadConfig(VideoServer.this);
+				AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA,configEntity.CurrentObjectId, AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");	
+			}
+		}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					
+			@Override
+			public void onClick(DialogInterface dialog, int which) {	
+			}
+		}).create().show();
 	}
 
 
@@ -359,8 +354,6 @@ public class VideoServer extends Activity implements
 					list.get(i).put("number", number1);
 					adapter.notifyDataSetChanged();
 				}
-				
-				
 			}
 			
 			break;
