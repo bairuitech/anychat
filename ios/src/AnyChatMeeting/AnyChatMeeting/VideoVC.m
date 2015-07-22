@@ -105,21 +105,21 @@
         {
             case 1 :
             {
-                videoVC.theLabel3001.text = @"3001targerID";
+                videoVC.theLabel3001.text = @"远程视频";
                 videoVC.iRemoteVideoView1.image = bgImg;
                 break;
             }
                 
             case 2 :
             {
-                videoVC.theLabel3002.text = @"3002targerID";
+                videoVC.theLabel3002.text = @"远程视频";
                 videoVC.iRemoteVideoView2.image = bgImg;
                 break;
             }
                 
             case 3 :
             {
-                videoVC.theLabel3003.text = @"3003targerID";
+                videoVC.theLabel3003.text = @"远程视频";
                 videoVC.iRemoteVideoView3.image = bgImg;
                 break;
             }
@@ -276,7 +276,6 @@
 - (void) myEnterRoomChat
 {
     NSMutableArray *onlineUserMArray = [[AnyChatVC sharedAnyChatVC] getOnlineUserArray];
-    NSLog(@"======%@",onlineUserMArray);
     
     //获取循环的最大次数
     int forCount = 0;
