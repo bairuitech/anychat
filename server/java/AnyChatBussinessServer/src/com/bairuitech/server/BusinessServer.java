@@ -38,9 +38,6 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 	// 队列业务类型
 	public static final int QUEUE_ABILITY_TYPE_PERSONAL		=	1;		///< 个人业务
 	public static final int QUEUE_ABILITY_TYPE_COMPANY		=	2;		///< 对公业务
-
-	// 在线用户列表
-	public static ArrayList<Integer> onlineusers = new ArrayList<Integer>();
 	
 	
 	public BusinessServer() {
@@ -367,7 +364,6 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 				jServerStatus.setForeground(Color.red);
 				jServerStatus.setText(str);
 			}
-			onlineusers.clear();
 		}
 		else if(dwNotifyMessage == AnyChatServerSDK.BRAS_MESSAGE_RECORDSERVERCONN)
 		{
@@ -415,16 +411,6 @@ public class BusinessServer extends JFrame implements AnyChatServerEvent {
 		generateLog(str);
 		updateUserData(dwUserId);
 		
-		// 从在线用户列表中删除
-	    Iterator<Integer> it = onlineusers.iterator();
-	    while(it.hasNext())
-	    {
-	        if(it.next() == dwUserId)
-	        {
-	        	it.remove();
-	        	break;
-	        }
-	    }
 	    // 核心服务器会通知其它用户（如果是好友），提示好友下线，不需要业务服务器干预
 
 	}

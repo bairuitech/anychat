@@ -19,13 +19,11 @@ public:
 
 public:
 	CString		m_strLogInfo;			///< 保存日志信息
-	DWORD		m_dwOnlineUsers;		///< 在线用户数
-
-	std::list<DWORD>	m_onlineUserList;	///<  在线用户列表
-
 
 	// 显示日志信息
  	void AppendLogString(CString logstr);
+	// 初始化业务队列
+	void InitAnyChatQueue(void);
 
 // Dialog Data
 	//{{AFX_DATA(CAnyChatCallCenterServerDlg)

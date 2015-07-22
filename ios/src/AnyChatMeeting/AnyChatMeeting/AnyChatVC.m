@@ -149,7 +149,6 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     }
 
     self.onlineUserMArray = [self getOnlineUserArray];
-    
 }
 
 // 房间在线用户消息
@@ -158,11 +157,6 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     self.onlineUserMArray = [self getOnlineUserArray];
     
     videoVC = [[VideoVC alloc] init];
-    
-    //  local Video
-    [videoVC StartLocalVideoChat];
-    //  iRemote Video
-    [videoVC myEnterRoomChat];
     
     [self.navigationController pushViewController:videoVC animated:YES];
 }

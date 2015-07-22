@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="AnyChatCallCenterServer"
 	ProjectGUID="{EB292AAA-4042-4CCC-BA78-255A6F13E0E1}"
+	RootNamespace="AnyChatCallCenterServer"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="0"
 	>
@@ -21,7 +22,7 @@
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
-			UseOfMFC="2"
+			UseOfMFC="1"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
 			>
@@ -52,7 +53,7 @@
 				InlineFunctionExpansion="1"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS"
 				StringPooling="true"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"

@@ -1,6 +1,7 @@
 #if !defined(BR_ANYCHAT_SERVER_SDK_H__INCLUDED_)
 #define BR_ANYCHAT_SERVER_SDK_H__INCLUDED_
 
+#include "AnyChatObjectDefine.h"
 
 /**
  *	AnyChat Server SDK Include File
@@ -76,6 +77,7 @@
 #define BRAS_CBTYPE_SERVERRECORDEX			17	// 服务器录像（扩展）回调
 #define BRAS_CBTYPE_VIDEOCALL				18	// 视频通话消息通知回调
 #define BRAS_CBTYPE_USERINFOCTRL			19	// 用户信息控制回调
+#define BRAS_CBTYPE_OBJECTEVENT				20	///< 业务对象事件回调
 
 
 // 录像功能标志定义（API：BRAS_StreamRecordCtrl 传入参数）
@@ -129,6 +131,9 @@ typedef void (CALLBACK * BRAS_OnServerRecordEx_CallBack)(DWORD dwUserId, LPCTSTR
 typedef DWORD (CALLBACK * BRAS_OnVideoCallEvent_CallBack)(DWORD dwEventType, DWORD dwSrcUserId, DWORD dwTarUserId, DWORD dwErrorCode, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
 // 用户信息控制回调函数定义
 typedef DWORD (CALLBACK * BRAS_OnUserInfoControl_CallBack)(DWORD dwSendUserId, DWORD dwUserId, DWORD dwCtrlCode, DWORD wParam, DWORD lParam, LPCTSTR lpStrValue, LPVOID lpUserValue); 
+// 业务对象事件回调函数定义
+typedef void (CALLBACK * BRAS_ObjectEventNotify_CallBack)(DWORD dwObjectType, DWORD dwObjectId, DWORD dwEventType, DWORD dwParam1, DWORD dwParam2, DWORD dwParam3, DWORD dwParam4, LPCTSTR lpStrParam, LPVOID lpUserValue);
+
 
 /**
  *	API 方法定义
@@ -212,6 +217,21 @@ BRAS_API DWORD BRAS_UserInfoControl(DWORD dwUserId, DWORD dwCtrlCode, DWORD wPar
 // SDK内核参数设置
 BRAS_API DWORD BRAS_SetSDKOption(DWORD optname, CHAR* optval, DWORD optlen);
 
+// 获取对象ID列表
+BRAS_API DWORD BRAS_ObjectGetIdList(DWORD dwObjectType, LPDWORD lpIdArray, DWORD& dwIdNum);
+// 获取对象属性值
+BRAS_API DWORD BRAS_ObjectGetValue(DWORD dwObjectType, DWORD dwObjectId, DWORD dwInfoName, TCHAR* lpInfoValue, DWORD dwLen);
+// 设置对象属性值
+BRAS_API DWORD BRAS_ObjectSetValue(DWORD dwObjectType, DWORD dwObjectId, DWORD dwInfoName, TCHAR* lpInfoValue, DWORD dwLen);
+// 对象参数控制
+BRAS_API DWORD BRAS_ObjectControl(DWORD dwObjectType, DWORD dwObjectId, DWORD dwCtrlCode, DWORD dwParam1=0, DWORD dwParam2=0, DWORD dwParam3=0, DWORD dwParam4=0, LPCTSTR lpStrValue=NULL);
+
+// 获取房间在线用户列表（dwRoomId=-1时，表示获取系统所有房间的ID列表）
+BRAS_API DWORD BRAS_GetOnlineUsers(DWORD dwRoomId, DWORD* lpIdArray, DWORD& dwCount);
+// 获取房间ID列表（系统所有活动的房间）
+BRAS_API DWORD BRAS_GetRoomIdList(DWORD* lpIdArray, DWORD& dwCount);
+// 向核心服务器动态查询相关信息
+BRAS_API DWORD BRAS_QueryInfoFromServer(DWORD dwInfoName, TCHAR* lpInParam, DWORD dwInSize, TCHAR* lpResult, DWORD& dwOutSize, DWORD dwFlags=0);
 
 
 #endif //BR_ANYCHAT_SERVER_SDK_H__INCLUDED_

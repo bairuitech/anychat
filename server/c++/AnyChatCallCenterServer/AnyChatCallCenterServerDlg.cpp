@@ -21,6 +21,9 @@ static char THIS_FILE[] = __FILE__;
 
 #define TIMER_REFRESH_ONLINES	1		///< 刷新在线用户数定时器
 
+#define BUSINESS_ABILITY_CASH		0x00000001	///< 现金业务
+#define BUSINESS_ABILITY_COMPANY	0x00000002	///< 对公业务
+
 
 
 // 服务器应用程序消息回调函数定义
@@ -29,13 +32,10 @@ void CALLBACK OnServerAppMessageExCallBack(DWORD dwNotifyMessage, DWORD wParam, 
 	CAnyChatCallCenterServerDlg* lpServerDlg = (CAnyChatCallCenterServerDlg*)lpUserValue;
 	if(dwNotifyMessage == BRAS_MESSAGE_CORESERVERCONN)
 	{
-		lpServerDlg->m_dwOnlineUsers = 0;
 		if(wParam == 0)
 			lpServerDlg->AppendLogString("Success connected with AnyChatCoreServer...");
 		else
 			lpServerDlg->AppendLogString("Disconnected from the AnyChatCoreServer");
-		// 清空在线用户列表
-		lpServerDlg->m_onlineUserList.clear();
 	}
 	else if(dwNotifyMessage == BRAS_MESSAGE_RECORDSERVERCONN)
 	{
@@ -107,6 +107,18 @@ void CALLBACK OnUserLoginActionCallBack(DWORD dwUserId, LPCTSTR szUserName, DWOR
 	CAnyChatCallCenterServerDlg* lpServerDlg = (CAnyChatCallCenterServerDlg*)lpUserValue;
 	if(!lpServerDlg)
 		return;
+
+	// 获取在线用户列表
+	DWORD dwOnlineUserCount = 0;
+	DWORD* lpOnlineUserIdArray = NULL;
+	BRAS_GetOnlineUsers(-1, NULL, dwOnlineUserCount);			// 第一次查询只是获取在线用户数，为后面分配ID空间做准备
+	if(dwOnlineUserCount)
+	{
+		lpOnlineUserIdArray = (DWORD*)malloc(dwOnlineUserCount * sizeof(DWORD));
+		if(!lpOnlineUserIdArray)
+			return;
+		BRAS_GetOnlineUsers(-1, lpOnlineUserIdArray, dwOnlineUserCount);		// 第二次查询获取实际的ID列表
+	}
 	
 	// 添加用户分组
 	int iGroupId = 1;
@@ -115,23 +127,33 @@ void CALLBACK OnUserLoginActionCallBack(DWORD dwUserId, LPCTSTR szUserName, DWOR
 	BRAS_UserInfoControl(dwUserId, BRAS_USERINFO_CTRLCODE_ADDGROUP, iGroupId, 0, "在线游客");	// 密码为空的用户
 
 	// 将当前所有在线用户添加为自己的好友
-	std::list<DWORD>::iterator it = lpServerDlg->m_onlineUserList.begin();
-	while(it != lpServerDlg->m_onlineUserList.end())
+	if(lpOnlineUserIdArray)
 	{
-		DWORD otheruserid = *it;
-		BRAS_UserInfoControl(dwUserId, BRAS_USERINFO_CTRLCODE_ADDFRIEND, otheruserid, 0, "");
-		it++;
+		DWORD dwOffset = 0;
+		while(dwOffset < dwOnlineUserCount)
+		{
+			DWORD dwOtherUserId = lpOnlineUserIdArray[dwOffset];
+			if(dwOtherUserId != dwUserId)
+				BRAS_UserInfoControl(dwUserId, BRAS_USERINFO_CTRLCODE_ADDFRIEND, dwOtherUserId, 0, "");
+			dwOffset++;
+		}
 	}
 
 	// 设置好友与分组的关系（即好友属于哪一个分组）
 	iGroupId = 1;
-	it = lpServerDlg->m_onlineUserList.begin();
-	while(it != lpServerDlg->m_onlineUserList.end())
+	if(lpOnlineUserIdArray)
 	{
-		DWORD otheruserid = *it;
-		iGroupId = (otheruserid > 0) ? 1 : 2;		// 游客密码为空，userid由核心服务器分配，为负数
-		BRAS_UserInfoControl(dwUserId, BRAS_USERINFO_CTRLCODE_SETGROUPRELATION, iGroupId, otheruserid, "");
-		it++;
+		DWORD dwOffset = 0;
+		while(dwOffset < dwOnlineUserCount)
+		{
+			DWORD dwOtherUserId = lpOnlineUserIdArray[dwOffset];
+			if(dwOtherUserId != dwUserId)
+			{
+				iGroupId = (dwOtherUserId > 0) ? 1 : 2;		// 游客密码为空，userid由核心服务器分配，为负数
+				BRAS_UserInfoControl(dwUserId, BRAS_USERINFO_CTRLCODE_SETGROUPRELATION, iGroupId, dwOtherUserId, "");
+			}
+			dwOffset++;
+		}
 	}
 
 	// 设置当前用户信息（用户资料，客户端可以通过API：BRAC_GetUserInfo来获取这些信息）
@@ -147,33 +169,38 @@ void CALLBACK OnUserLoginActionCallBack(DWORD dwUserId, LPCTSTR szUserName, DWOR
 	BRAS_SetUserInfo(dwUserId, iInfoId, szImageId, 0);		// 随机分配一个图像ID
 
 	// 将本地用户添加为其它用户的好友列表中
-	it = lpServerDlg->m_onlineUserList.begin();
-	while(it != lpServerDlg->m_onlineUserList.end())
+	if(lpOnlineUserIdArray)
 	{
-		DWORD otheruserid = *it;
-		// 添加好友
-		BRAS_UserInfoControl(otheruserid, BRAS_USERINFO_CTRLCODE_ADDFRIEND, dwUserId, 0, "");
-		// 关联好友分组
-		iGroupId = (dwUserId > 0) ? 1 : 2;
-		BRAS_UserInfoControl(otheruserid, BRAS_USERINFO_CTRLCODE_SETGROUPRELATION, iGroupId, dwUserId, "");
-		// 下发同步指令，将新设置的好友同步给客户端
-		BRAS_UserInfoControl(otheruserid, BRAS_USERINFO_CTRLCODE_SYNCDATA,  0, 0, "");
-		it++;
+		DWORD dwOffset = 0;
+		while(dwOffset < dwOnlineUserCount)
+		{
+			DWORD dwOtherUserId = lpOnlineUserIdArray[dwOffset];
+			if(dwOtherUserId != dwUserId)
+			{
+				// 添加好友
+				BRAS_UserInfoControl(dwOtherUserId, BRAS_USERINFO_CTRLCODE_ADDFRIEND, dwUserId, 0, "");
+				// 关联好友分组
+				iGroupId = (dwUserId > 0) ? 1 : 2;
+				BRAS_UserInfoControl(dwOtherUserId, BRAS_USERINFO_CTRLCODE_SETGROUPRELATION, iGroupId, dwUserId, "");
+				// 下发同步指令，将新设置的好友同步给客户端
+				BRAS_UserInfoControl(dwOtherUserId, BRAS_USERINFO_CTRLCODE_SYNCDATA,  0, 0, "");
+			}
+			dwOffset++;
+		}
 	}
 
 	// 下发同步指令，将前面设置的资料同步给当前客户端
 	BRAS_UserInfoControl(dwUserId, BRAS_USERINFO_CTRLCODE_SYNCDATA,  0, 0, "");
 
-	// 将本地用户加入在线用户列表
-	lpServerDlg->m_onlineUserList.push_back(dwUserId);
-
-	lpServerDlg->m_dwOnlineUsers++;
 	if(lpServerDlg->m_bShowUserLog)
 	{
 		CString strMsg;
 		strMsg.Format(_T("OnUserLoginAction(dwUserId:%d - Name:%s)"),(int)dwUserId,szUserName);
 		lpServerDlg->AppendLogString(strMsg);
 	}
+
+	if(lpOnlineUserIdArray)
+		free(lpOnlineUserIdArray);
 }
 // 用户注销回调函数定义
 void CALLBACK OnUserLogoutActionExCallBack(DWORD dwUserId, DWORD dwErrorCode, LPVOID lpUserValue)
@@ -182,20 +209,8 @@ void CALLBACK OnUserLogoutActionExCallBack(DWORD dwUserId, DWORD dwErrorCode, LP
 	if(!lpServerDlg)
 		return;
 
-	// 从在线用户列表中删除
-	std::list<DWORD>::iterator it = lpServerDlg->m_onlineUserList.begin();
-	while(it != lpServerDlg->m_onlineUserList.end())
-	{
-		if(*it == dwUserId)
-		{
-			lpServerDlg->m_onlineUserList.erase(it);
-			break;
-		}
-		it++;
-	}
 	// 核心服务器会通知其它用户（如果是好友），提示好友下线，不需要业务服务器干预
 
-	lpServerDlg->m_dwOnlineUsers--;
 	if(lpServerDlg->m_bShowUserLog)
 	{
 		CString strMsg;
@@ -389,8 +404,9 @@ BOOL CAnyChatCallCenterServerDlg::OnInitDialog()
 	BRAS_SetCallBack(BRAS_CBTYPE_SERVERRECORDEX, OnServerRecordEx_CallBack, this);
 	
 	BRAS_InitSDK(0);
+	// 初始化业务队列（参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=1771）
+	InitAnyChatQueue();
 
-	m_dwOnlineUsers = 0;
 	SetTimer(TIMER_REFRESH_ONLINES, 1000, NULL);
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -434,6 +450,71 @@ void CAnyChatCallCenterServerDlg::OnDestroy()
 	BRAS_Release();
 
 	CDialog::OnDestroy();
+}
+
+/**
+ *	初始化业务队列
+ *	参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=1771
+ */ 
+void CAnyChatCallCenterServerDlg::InitAnyChatQueue(void)
+{
+	// 服务器端创建一个营业厅对象，并设置属性
+	DWORD dwAreaId = 10001;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_CTRL_CREATE);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_INFO_NAME, "科韵路营业厅", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "位于广州市科韵路，服务超级棒！", 0);
+	// 创建队列对象
+	DWORD dwQueueId = 101;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_NAME, "现金业务队列", 0);
+	DWORD dwQueueAbility = BUSINESS_ABILITY_CASH;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_ATTRIBUTE, (CHAR*)&dwQueueAbility, sizeof(DWORD));
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "开户、取现、转帐", 0);
+	DWORD dwPriority = 0;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_PRIORITY, (CHAR*)&dwPriority, sizeof(DWORD));
+
+	dwQueueId = 102;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_NAME, "现金业务队列(VIP)", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "开户、取现、转帐", 0);
+	dwQueueAbility = BUSINESS_ABILITY_CASH;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_ATTRIBUTE, (CHAR*)&dwQueueAbility, sizeof(DWORD));
+	dwPriority = 10;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_PRIORITY, (CHAR*)&dwPriority, sizeof(DWORD));
+
+	dwQueueId = 103;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_NAME, "对公业务队列", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "支票、回单、基本户", 0);
+	dwQueueAbility = BUSINESS_ABILITY_COMPANY;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_ATTRIBUTE, (CHAR*)&dwQueueAbility, sizeof(DWORD));
+	dwPriority = 0;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_PRIORITY, (CHAR*)&dwPriority, sizeof(DWORD));
+
+
+	// 服务器端创建第二个营业厅对象，并设置属性
+	dwAreaId = 10002;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_CTRL_CREATE);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_INFO_NAME, "天河路营业厅", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_AREA, dwAreaId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "位于广州市天河路，广州最大的营业厅", 0);
+	// 创建队列对象
+	dwQueueId = 201;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_NAME, "理财业务队列", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "开户、风险评估", 0);
+	dwQueueAbility = BUSINESS_ABILITY_CASH;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_ATTRIBUTE, (CHAR*)&dwQueueAbility, sizeof(DWORD));
+	dwPriority = 0;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_PRIORITY, (CHAR*)&dwPriority, sizeof(DWORD));
+
+	dwQueueId = 202;
+	BRAS_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_CTRL_CREATE, dwAreaId);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_NAME, "基金业务队列", 0);
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_DESCRIPTION, "股票、基金、荐股", 0);
+	dwQueueAbility = BUSINESS_ABILITY_COMPANY;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_ATTRIBUTE, (CHAR*)&dwQueueAbility, sizeof(DWORD));
+	dwPriority = 0;
+	BRAS_ObjectSetValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwQueueId, ANYCHAT_OBJECT_INFO_PRIORITY, (CHAR*)&dwPriority, sizeof(DWORD));
 }
 
 void CAnyChatCallCenterServerDlg::OnButtonSendbuf() 
@@ -564,8 +645,11 @@ void CAnyChatCallCenterServerDlg::OnTimer(UINT nIDEvent)
 {
 	if(nIDEvent == TIMER_REFRESH_ONLINES)
 	{
+		DWORD dwOnlineUserCount = 0;
+		BRAS_GetOnlineUsers(-1, NULL, dwOnlineUserCount);
+
 		CString strNotify;
-		strNotify.Format("在线用户数：%d", m_dwOnlineUsers);
+		strNotify.Format("在线用户数：%d", dwOnlineUserCount);
 		SetDlgItemText(IDC_STATIC_ACTIVEINFO, strNotify);
 	}
 	CDialog::OnTimer(nIDEvent);
