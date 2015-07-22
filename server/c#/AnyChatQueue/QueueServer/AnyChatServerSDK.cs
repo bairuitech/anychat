@@ -73,9 +73,6 @@ namespace ANYCHATAPI
 		// 初始化标志（API：BRAS_InitSDK 传入参数）
 		public const int BRAS_INITFLAGS_MULTITHREADS	= 1;	//多线程模式
 
-        // 透明通道扩展缓冲区传输标志（内核使用）
-        public const int BRAS_TRANSBUFFER_FLAGS_RECORDSERVER = 0x010;	//传递给录像服务器
-
         // 回调函数类型定义（API：BRAS_SetCallBack 传入参数）
         public const int BRAS_CBTYPE_APPMESSAGE			= 1;	// 服务器应用程序消息回调
         public const int BRAS_CBTYPE_APPMESSAGEEX		= 2;	// 服务器应用程序消息（扩展）回调
@@ -713,6 +710,38 @@ namespace ANYCHATAPI
         [DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_SetSDKOption", CallingConvention = CallingConvention.Cdecl)]
         public static extern int BRAS_SetSDKOption(int optname, ref int optval, int optlen);
 
+        /// <summary>
+        /// 获取房间在线用户列表
+        /// <param name="dwRoomId">房间ID（dwRoomId=-1时，表示获取已登录系统的用户ID列表）</param>
+        /// <param name="lpIdArray">用户ID数组</param>
+        /// <param name="objNumber">用户数量</param>
+        /// <returns></returns>
+        /// </summary>
+        [DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_GetOnlineUsers", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BRAS_GetOnlineUsers(int dwRoomId, int[] lpIdArray, ref int dwCount);
+
+        /// <summary>
+        /// 获取房间ID列表（系统所有活动的房间）
+        /// <param name="lpIdArray">房间ID数组</param>
+        /// <param name="objNumber">房间数量</param>
+        /// <returns></returns>
+        /// </summary>
+        [DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_GetRoomIdList", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BRAS_GetRoomIdList(int[] lpIdArray, ref int dwCount);
+
+        /// <summary>
+        /// 向核心服务器动态查询相关信息
+        /// </summary>
+        /// <param name="dwInfoName"></param>
+        /// <param name="lpInParam"></param>
+        /// <param name="dwInSize"></param>
+        /// <param name="lpResult"></param>
+        /// <param name="dwOutSize"></param>
+        /// <param name="dwFlags"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatServerSDKDll, EntryPoint = "BRAS_QueryInfoFromServer", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int BRAS_QueryInfoFromServer(int dwInfoName, StringBuilder lpInParam, int dwInSize, StringBuilder lpResult, ref int dwOutSize, int dwFlags);
+        
         #region 业务对象API方法定义
 
         /// <summary>
