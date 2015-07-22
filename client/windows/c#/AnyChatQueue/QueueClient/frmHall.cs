@@ -519,12 +519,14 @@ namespace QueueClient
         {
             //界面切换
             HideAllPanel();
-            lbl_tipMessage.Text = selectedQueue.QueueName + " - 服务窗口";
 
             switch (m_userIdentity)
             {
                 case UserIdentityType.Agent:
                     showAgentServiceFace();
+                    break;
+                case UserIdentityType.Client:
+                    lbl_tipMessage.Text = selectedQueue.QueueName + " - 服务窗口";
                     break;
             }
             AnyChatCoreSDK.EnterRoom(roomId, "", 0);
