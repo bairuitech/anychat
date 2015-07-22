@@ -73,9 +73,6 @@ namespace ANYCHATAPI
 		// 初始化标志（API：BRAS_InitSDK 传入参数）
 		public const int BRAS_INITFLAGS_MULTITHREADS	= 1;	//多线程模式
 
-        // 透明通道扩展缓冲区传输标志（内核使用）
-        public const int BRAS_TRANSBUFFER_FLAGS_RECORDSERVER = 0x010;	//传递给录像服务器
-
         // 回调函数类型定义（API：BRAS_SetCallBack 传入参数）
         public const int BRAS_CBTYPE_APPMESSAGE			= 1;	// 服务器应用程序消息回调
         public const int BRAS_CBTYPE_APPMESSAGEEX		= 2;	// 服务器应用程序消息（扩展）回调
