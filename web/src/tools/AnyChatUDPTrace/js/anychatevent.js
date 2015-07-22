@@ -61,8 +61,8 @@ function onAnyChatVideoSizeChange(wParam, lParam) {
 }
 
 // 收到文字消息receiveCount
-function OnAnyChatTextMessage(dwFromUserId, dwToUserId, bSecret, lpMsgBuf,
-		dwLen) {
+function OnAnyChatTextMessage(dwFromUserId, dwToUserId, bSecret, lpMsgBuf, dwLen) {
+
 }
 
 // 收到透明通道传输数据
@@ -71,14 +71,12 @@ function OnAnyChatTransBuffer(dwUserId, lpBuf, dwLen) {
 }
 
 // 收到透明通道（扩展）传输数据
-function OnAnyChatTransBufferEx(dwUserId, lpBuf, dwLen, wParam, lParam,
-		dwTaskId) {
+function OnAnyChatTransBufferEx(dwUserId, lpBuf, dwLen, wParam, lParam, dwTaskId) {
 	// alert("收到:"+dwUserId+"用户发送过来的扩展透明通道数据数据："+lpBuf);
 }
 
 // 文件传输完成通知
-function OnAnyChatTransFile(dwUserId, lpFileName, lpTempFilePath, dwFileLength,
-		wParam, lParam, dwTaskId) {
+function OnAnyChatTransFile(dwUserId, lpFileName, lpTempFilePath, dwFileLength, wParam, lParam, dwTaskId) {
 }
 
 // 系统音量改变通知
@@ -97,8 +95,7 @@ function OnAnyChatRecordSnapShot(dwUserId, lpFileName, dwParam, bRecordType) {
 }
 
 // 收到录像或拍照完成事件（扩展）
-function OnAnyChatRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags,
-		dwParam, lpUserStr) {
+function OnAnyChatRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr) {
 	// alert("OnAnyChatRecordSnapShotEx（扩展）");
 	// alert("录像成功，文件路径是："+lpFileName+"，时长："+dwElapse);
 
@@ -217,8 +214,7 @@ function OnAnyChatPrivateExit(dwUserId, errorcode) {
 }
 
 // 视频通话消息通知回调函数
-function OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags,
-		dwParam, szUserStr) {
+function OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr) {
 
 }
 
