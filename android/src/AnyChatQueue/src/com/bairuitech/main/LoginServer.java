@@ -41,7 +41,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatObjectEvent {
+public class LoginServer extends Activity implements AnyChatBaseEvent,AnyChatObjectEvent {
 	private String mStrIP = "www.anychat.cn";
 	private String mStrName = "name";
 	private int mSPort = 8906;
@@ -92,7 +92,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 	// 初始化SDK
 	private void InitSDK() {
 		if (anyChatSDK == null) {
-			anyChatSDK = AnyChatCoreSDK.getInstance(MainActivity.this);
+			anyChatSDK = AnyChatCoreSDK.getInstance(LoginServer.this);
 		}
 			anyChatSDK.SetBaseEvent(this);//基本事件
 			anyChatSDK.SetObjectEvent(this);//营业厅排队事件
@@ -117,10 +117,12 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		mWaitingLayout = (LinearLayout) this.findViewById(R.id.waitingLayout);
 
 		mBottomConnMsg.setText("No content to the server");
+		
 		// 初始化bottom_tips信息
 		mBottomBuildMsg.setText(" V" + anyChatSDK.GetSDKMainVersion() + "."
 				+ anyChatSDK.GetSDKSubVersion() + "  Build time: "
 				+ anyChatSDK.GetSDKBuildTime());
+		
 		mBottomBuildMsg.setGravity(Gravity.CENTER_HORIZONTAL);
 		mBtnStart.setOnClickListener(OnClickListener);
 		rg = (RadioGroup) findViewById(R.id.id_rg_btn);
@@ -305,7 +307,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 			//初始化业务对象属性身份
 			InitClientObjectInfo(dwUserId);	
 			
-			Intent intent = new Intent(MainActivity.this,FuncMenu.class);
+			Intent intent = new Intent(LoginServer.this,FuncMenu.class);
 			startActivity(intent);	
 			
 			setBtnVisible(SHOWLOGINSTATEFLAG);
@@ -378,7 +380,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 				setBtnVisible(SHOWLOGINSTATEFLAG);
 				mBottomConnMsg.setText("No content to the server");
 				if (mToast == null) {
-					mToast = Toast.makeText(MainActivity.this, "网络已断开!",
+					mToast = Toast.makeText(LoginServer.this, "网络已断开!",
 							Toast.LENGTH_SHORT);
 					mToast.show();
 				}

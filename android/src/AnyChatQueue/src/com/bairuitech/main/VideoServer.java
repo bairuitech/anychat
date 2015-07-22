@@ -38,7 +38,7 @@ import com.bairuitech.common.ConfigEntity;
 import com.bairuitech.common.ConfigService;
 import com.bairuitech.common.CustomApplication;
 import com.bairuitech.common.DialogFactory;
-import com.bairuitech.main.MainActivity;
+import com.bairuitech.main.LoginServer;
 import com.example.anychatqueue.R;
 
 
@@ -225,7 +225,7 @@ public class VideoServer extends Activity implements
 			Intent intent = new Intent();
 			intent.putExtra("INTENT", BaseConst.AGAIGN_LOGIN);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.setClass(this, MainActivity.class);
+			intent.setClass(this, LoginServer.class);
 			this.startActivity(intent);
 			this.finish();
 		}

@@ -64,7 +64,6 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 	}
 
 	private void InitSDK() {
-		// TODO Auto-generated method stub
 		//初始化sdk
 		if (anychat == null) {
 				anychat = AnyChatCoreSDK.getInstance(this);
@@ -226,7 +225,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent,OnClickListen
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.returnImgBtn://按下返回键
-			
+			anychat.Logout();
 			destroyCurActivity();
 			break;
 

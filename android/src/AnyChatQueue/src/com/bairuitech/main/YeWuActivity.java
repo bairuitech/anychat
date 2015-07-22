@@ -28,28 +28,31 @@ import com.bairuitech.anychatqueue.QueueActivity;
 import com.bairuitech.anychatqueue.YeWuAdapter;
 import com.bairuitech.common.BaseMethod;
 import com.bairuitech.common.CustomApplication;
-import com.bairuitech.main.MainActivity;
+import com.bairuitech.main.LoginServer;
 import com.example.anychatqueue.R;
 
 
 public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatObjectEvent, OnClickListener{
-	private ListView listView;
-	private YeWuAdapter adapter;
-	private AnyChatCoreSDK anychat;
-	public List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+	private ListView listView;				
+	private YeWuAdapter adapter;			//适配器
+	private AnyChatCoreSDK anychat;			//sdk对象	
+	public List<Map<String, Object>> queueList = new ArrayList<Map<String,Object>>();//适配器-集合参数
+	
 	private ImageButton mImgBtnReturn;
 	private TextView 	mTitleName;	
-	public ProgressDialog pd;
-	public CustomApplication mApplication;
-	private int[] queueIds;
+	public ProgressDialog pd;				//进度提示
+	public CustomApplication mApplication;	//全局变量类
+	private int[] queueIds;					//获取队列数组	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //自定义标题栏
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_yewu);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar); 
-
+        //初始化sdk
         InitSDK();
+        //初始化布局组件
         initView();
     }
 
@@ -57,8 +60,7 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		
 		//获取营业厅的队列列表Id数组
 		queueIds = AnyChatCoreSDK.ObjectGetIdList(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE);
-		//适配器数据获取
-		  //获取适配器的数据
+		//获取适配器的数据
         for (int i = 0; i < queueIds.length; i++) {
         	
         	Map<String, Object> map = new HashMap<String, Object>();
@@ -70,7 +72,7 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
         	map.put("number",number);
         	map.put("id", queueIds[i]);
         	//集合数据；
-        	list.add(map);
+        	queueList.add(map);
         }
       
         //进度提示
@@ -84,7 +86,7 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		mApplication = (CustomApplication) getApplication();
 		//适配界面
 		listView = (ListView) findViewById(R.id.yewu_listview);
-        adapter = new YeWuAdapter(YeWuActivity.this,list,pd,mApplication);
+        adapter = new YeWuAdapter(YeWuActivity.this,queueList,pd,mApplication);
         listView.setAdapter(adapter);
 	}
 
@@ -110,8 +112,8 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
          	//获取业务排队人数；
          	int number = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueIds[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
          	//
-         	list.get(i).put("name", name);
-         	list.get(i).put("number",number);
+         	queueList.get(i).put("name", name);
+         	queueList.get(i).put("number",number);
          }
     	 adapter.notifyDataSetChanged();
 	}
@@ -186,7 +188,7 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		// TODO Auto-generated method stub
 		BaseMethod.showToast("网络断开连接",YeWuActivity.this);
 		anychat.Logout();
-		Intent intent = new Intent(YeWuActivity.this,MainActivity.class);
+		Intent intent = new Intent(YeWuActivity.this,LoginServer.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		
@@ -219,9 +221,10 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_STATUSCHANGE:	
 			//更新列表数据	
 			for (int i = 0; i < queueIds.length;i++ ) {
+				//遍历查找
 				if(dwObjectId == queueIds[i]){
 					int number1 = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueIds[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
-					list.get(i).put("number", number1);
+					queueList.get(i).put("number", number1);
 					adapter.notifyDataSetChanged();
 					break;
 				}

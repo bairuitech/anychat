@@ -19,7 +19,7 @@ import com.bairuitech.common.ConfigEntity;
 import com.bairuitech.common.ConfigService;
 import com.bairuitech.common.CustomApplication;
 import com.bairuitech.common.DialogFactory;
-import com.bairuitech.main.MainActivity;
+import com.bairuitech.main.LoginServer;
 import com.example.anychatqueue.R;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,13 +46,13 @@ import android.widget.Toast;
 	private Button  quickButton;
 	private AnyChatCoreSDK anychat;
 	private Dialog dialog;
-	private TextView showTextView;
+	private TextView showTextView;				
 	private ImageButton mImgBtnReturn;
-	private TextView mTitleName,timeshow;
-	public CustomApplication mApplication;
+	private TextView mTitleName,timeshow;		
+	public CustomApplication mApplication;		//全局变量类
 	private int seconds = 0;
 	private LayoutInflater mLayoutInlater;
-	private final int TIME_UPDATE = 0x123;
+	private final int TIME_UPDATE = 291;		//Handler发送消息,队列人数的实时更新
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//自定义标题栏
@@ -69,12 +69,11 @@ import android.widget.Toast;
 	private void initView() {
 		//全局变量类的对象初始化
 		mApplication = (CustomApplication) getApplication();
-		
-		String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, mApplication.getCurrentQueueId(), AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
-		
+		//标题栏的设置
 		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
 		mImgBtnReturn.setVisibility(View.GONE);
 		
+		String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, mApplication.getCurrentQueueId(), AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
 		mTitleName.setText(name+"-排队等待中");
 		//队列的长度
@@ -207,7 +206,7 @@ import android.widget.Toast;
 		Toast.makeText(QueueActivity.this, this.getString(R.string.str_serverlink_close), Toast.LENGTH_LONG).show();
 			Intent intent = new Intent();
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.setClass(this,MainActivity.class);
+			intent.setClass(this,LoginServer.class);
 			this.startActivity(intent);	
 		
 	}

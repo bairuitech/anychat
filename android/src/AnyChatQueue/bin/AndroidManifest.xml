@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:theme="@style/titlestyle" >
         <activity
-            android:name="com.bairuitech.main.MainActivity"
+            android:name="com.bairuitech.main.LoginServer"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
              android:screenOrientation="portrait" >
