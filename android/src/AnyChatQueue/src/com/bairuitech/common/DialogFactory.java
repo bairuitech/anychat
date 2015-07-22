@@ -18,8 +18,7 @@ import android.widget.TextView;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatObjectDefine;
-import com.bairuitech.bussinesscenter.BussinessCenter;
-import com.bairuitech.bussinesscenter.UserItem;
+import com.bairuitech.anychatqueue.BussinessCenter;
 import com.bairuitech.main.MainActivity;
 import com.example.anychatqueue.R;
 
@@ -232,9 +231,7 @@ public class DialogFactory {
 			}
 		});
 		String strTitle = "";
-		UserItem userItem = BussinessCenter.getBussinessCenter().getUserItemByUserId(userId);
-		if (userItem != null)
-			strTitle = "准备向" + userItem.getUserName() + "发起视频会话";
+		
 		initDialogTitle(view, strTitle);
 		dialog.setContentView(view);
 	}
@@ -259,9 +256,6 @@ public class DialogFactory {
 				case DIALOG_AGAINLOGIN:
 					mContext.stopService(new Intent(BaseConst.ACTION_BACK_SERVICE));
 				
-//					configEntity = ConfigService.LoadConfig(mContext);			
-//					AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,configEntity.CurrentQueueId, AnyChatObjectDefine.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");		
-//					System.out.println("退出队列语句执行，队列id号为："+configEntity.CurrentQueueId);
 					intent = new Intent();
 					intent.putExtra("INTENT", BaseConst.APP_EXIT);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -271,16 +265,13 @@ public class DialogFactory {
 				case DIALOG_SERCLOSE:
 					mContext.stopService(new Intent(BaseConst.ACTION_BACK_SERVICE));
 				
-//					configEntity = ConfigService.LoadConfig(mContext);
-//					AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,configEntity.CurrentQueueId, AnyChatObjectDefine.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");		
-//					System.out.println("退出队列语句执行，队列id号为："+configEntity.CurrentQueueId);
 					intent = new Intent();
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					
 					intent.setClass(mContext, MainActivity.class);
 					mContext.startActivity(intent);
 					break;
 				case DIALOG_NETCLOSE:
+					
 					Intent intentSetting = new Intent();
 					intentSetting.setAction(android.provider.Settings.ACTION_WIRELESS_SETTINGS);//jump to wireless settings;
 					mContext.startActivity(intentSetting);
@@ -343,16 +334,11 @@ public class DialogFactory {
 						AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE, 0, 0,
 						"");
 				dialog.dismiss();
-				BussinessCenter.sessionItem = null;
 				BussinessCenter.getBussinessCenter().stopSessionMusic();
 				mContext.finish();
 			}
 		});
-		UserItem userItem = BussinessCenter.getBussinessCenter().getUserItemByUserId(userId);
-		String strTitle = "";
-		if (userItem != null)
-			strTitle = userItem.getUserName() + mContext.getString(R.string.sessioning_reqite);
-		initDialogTitle(view, strTitle, userId);
+		
 		dialog.setContentView(view);
 	}
 

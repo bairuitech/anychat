@@ -10,7 +10,6 @@ import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
-import com.bairuitech.bussinesscenter.BussinessCenter;
 import com.bairuitech.common.CustomApplication;
 import com.bairuitech.common.ScreenInfo;
 import com.bairuitech.common.ValueUtils;
@@ -53,7 +52,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 	private final int SHOWWAITINGSTATEFLAG = 2; 	// 显示的按钮是等待状态的标识
 	private final int LOCALVIDEOAUTOROTATION = 1; 	// 本地视频自动旋转控制
 	private final int ACTIVITY_ID_MAINUI = 1; 	    // MainActivity的id标致，onActivityResult返回
-	private int USER_ACTIVITY_ID; 					//0代表是进入客户界面，1代表是接入座席界面
+	private int USER_TYPE_ID; 					//0代表是进入客户界面，1代表是接入座席界面
 	
 	private EditText mEditIP;						// ip
 	private EditText mEditPort;						// 端口
@@ -130,7 +129,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				// TODO Auto-generated method stub
-				USER_ACTIVITY_ID = checkedId == R.id.customer ? 0 : 1;
+				USER_TYPE_ID = checkedId == R.id.customer ? 0 : 2;
 			}
 		});
 	}
@@ -148,9 +147,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 					mSPort = Integer.parseInt(mEditPort.getText().toString()
 							.trim());
 
-					if(USER_ACTIVITY_ID == 0){
-						dwUserFlags = 0;
-					}else dwUserFlags = 2;
 					//连接服务器
 					anyChatSDK.Connect(mStrIP, mSPort);
 				}
@@ -299,20 +295,17 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		if (dwErrorCode == 0) {
 			saveLoginData();
 			hideKeyboard();
-			//保存自己的用户id和用户名字
-			BussinessCenter.selfUserId = dwUserId;
-			BussinessCenter.selfUserName=mEditName.getText()
-					.toString();
-			//保存用户id和用户角色信息
-			mCustomApplication.setUserID(dwUserId);
-			mCustomApplication.setUserType(dwUserFlags);
 			
+			//保存用户id和用户角色信息
+			mCustomApplication.setSelfUserName(mEditName.getText()
+					.toString());
+			mCustomApplication.setUserID(dwUserId);
+			mCustomApplication.setUserType(USER_TYPE_ID);
 			mBottomConnMsg.setText("Connect to the server success.");
 			//初始化业务对象属性身份
 			InitClientObjectInfo(dwUserId);	
 			
 			Intent intent = new Intent(MainActivity.this,FuncMenu.class);
-			//intent.putExtra("activity_id",USER_ACTIVITY_ID);
 			startActivity(intent);	
 			
 			setBtnVisible(SHOWLOGINSTATEFLAG);
@@ -326,8 +319,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 
 	//初始化服务对象事件；触发回调OnAnyChatObjectEvent函数
 	private void InitClientObjectInfo(int dwUserId) {
-		//业务对象身份初始化；0代表普通客户，2是代表座席，3是代表经理；(dwUserflags)
-		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_OBJECT_INITFLAGS, dwUserFlags);
+		//业务对象身份初始化；0代表普通客户，2是代表座席 (USER_TYPE_ID)
+		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_OBJECT_INITFLAGS, USER_TYPE_ID);
 		//业务对象优先级设定；
 		int dwPriority = 10;
 		AnyChatCoreSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER,dwUserId,AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_PRIORITY, dwPriority);

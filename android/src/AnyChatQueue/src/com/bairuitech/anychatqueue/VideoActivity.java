@@ -1,5 +1,6 @@
 package com.bairuitech.anychatqueue;
 
+import java.security.PublicKey;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,13 +35,14 @@ import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
-import com.bairuitech.bussinesscenter.BussinessCenter;
 import com.bairuitech.common.BaseConst;
 import com.bairuitech.common.BaseMethod;
 import com.bairuitech.common.ConfigEntity;
 import com.bairuitech.common.ConfigService;
+import com.bairuitech.common.CustomApplication;
 import com.bairuitech.common.DialogFactory;
 import com.bairuitech.main.MainActivity;
+import com.bairuitech.main.YeWuActivity;
 import com.example.anychatqueue.R;
 
  public class VideoActivity extends Activity implements AnyChatBaseEvent,
@@ -50,6 +52,8 @@ import com.example.anychatqueue.R;
 	private ProgressBar mProgressSelf;
 	private ProgressBar mProgressRemote;
 	
+	public static final int USERTYPE_CUSTOM = 0;
+	public static final int USERTYPE_AGENT = 2;
 	
 	private TextView mTxtTime;
 	private Button mBtnEndSession;
@@ -68,24 +72,19 @@ import com.example.anychatqueue.R;
 	public static final int MSG_CHECKAV = 1;
 	public static final int MSG_TIMEUPDATE = 2;
 	public static final int PROGRESSBAR_HEIGHT = 5;
-
+	public CustomApplication mApplication;
 	int dwTargetUserId;
 	int videoIndex = 0;
 	int videocallSeconds = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
 		//去掉标题栏；
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		
+		//初始化sdk
 		initSdk();
-		
-		dwTargetUserId = BussinessCenter.sessionItem
-				.getPeerUserItem(BussinessCenter.selfUserId);
-		anychat.EnterRoom(BussinessCenter.sessionItem.roomId, "");
-		
+		//初始化布局
 		initView();
 		//实时音视频
 		updateAV();
@@ -173,13 +172,10 @@ import com.example.anychatqueue.R;
 			anychat = new AnyChatCoreSDK();
 		anychat.SetBaseEvent(this);
 		anychat.SetVideoCallEvent(this);
-		anychat.mSensorHelper.InitSensor(this);
-		// 
+		anychat.mSensorHelper.InitSensor(this); 
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
-
 	}
  
-	
 	private void initTimerShowTime() {
 		if (mTimerShowVideoTime == null)
 			mTimerShowVideoTime = new Timer();
@@ -219,6 +215,11 @@ import com.example.anychatqueue.R;
 
 	private void initView() {
 		this.setContentView(R.layout.video_activity);
+		
+		mApplication = (CustomApplication) getApplication();
+		dwTargetUserId = mApplication.getTargetUserId();
+		anychat.EnterRoom(mApplication.getRoomId(), "");
+		
 		mSurfaceSelf = (SurfaceView) findViewById(R.id.surface_local);
 		mSurfaceRemote = (SurfaceView) findViewById(R.id.surface_remote);
 		mProgressSelf = (ProgressBar) findViewById(R.id.progress_local);
@@ -385,10 +386,6 @@ import com.example.anychatqueue.R;
 
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
 
-		if (dwErrorCode == 0) {
-			BussinessCenter.selfUserId = dwUserId;
-			BussinessCenter.selfUserName = anychat.GetUserName(dwUserId);
-		}
 	}
 
 	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
@@ -462,19 +459,25 @@ import com.example.anychatqueue.R;
 
 		switch (dwEventType) {
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
-			
+			if(mApplication.getUserType() == USERTYPE_CUSTOM){
 			BaseMethod.showToast("视频通话已结束...", VideoActivity.this);	
 			Log.e("videoactivity", "进入视频界面回调");
-			
 			Intent intent = new Intent();
 			intent.putExtra("INTENT", BaseConst.APP_EXIT);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			intent.setClass(this, YeWuActivity.class);
 			this.startActivity(intent);
 			this.finish();
-			
-			break;
+			}else if(mApplication.getUserType() == USERTYPE_AGENT){
+				
+				anychat.UserCameraControl(-1, 0);
+				anychat.UserSpeakControl(-1, 0);
 
+				anychat.UserSpeakControl(dwTargetUserId, 0);
+				anychat.UserCameraControl(dwTargetUserId, 0);
+				finish();
+			}
+			break;
 		default:
 			break;
 		}

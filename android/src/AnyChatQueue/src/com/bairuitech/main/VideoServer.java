@@ -1,4 +1,4 @@
-package com.bairuitech.callservice;
+package com.bairuitech.main;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,8 +29,9 @@ import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
-import com.bairuitech.bussinesscenter.BussinessCenter;
-import com.bairuitech.bussinesscenter.SessionItem;
+import com.bairuitech.anychatqueue.BussinessCenter;
+import com.bairuitech.anychatqueue.QueueActivity;
+import com.bairuitech.anychatqueue.VideoActivity;
 import com.bairuitech.common.BaseConst;
 import com.bairuitech.common.BaseMethod;
 import com.bairuitech.common.ConfigEntity;
@@ -72,10 +73,10 @@ public class VideoServer extends Activity implements
 	private void initView() {
 		//全局变量
 		mApplication = (CustomApplication)getApplication();
-		//营业厅业务队列数组id
-		Intent intent =getIntent();
-		queueIds = intent.getIntArrayExtra("ids");
 		
+		//获取营业厅的队列列表Id数组
+		queueIds = AnyChatCoreSDK.ObjectGetIdList(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE);
+		//获取适配器的数据
 		for (int i = 0; i < queueIds.length; i++) {
 			
 	        	Map<String, Object> map = new HashMap<String, Object>();
@@ -197,17 +198,6 @@ public class VideoServer extends Activity implements
 	}
 	//当用户进入房间的时候会触发
 	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
-		// TODO Auto-generated method stub
-		if (dwErrorCode == 0) {
-			Intent intent = new Intent();
-			intent.setClass(this, VideoActivity.class);
-			this.startActivity(intent);
-		} else {
-			BaseMethod.showToast(this.getString(R.string.str_enterroom_failed),
-					this);
-		}
-		if (dialog != null)
-			dialog.dismiss();
 	}
 
 	@Override
@@ -273,18 +263,11 @@ public class VideoServer extends Activity implements
 			}
 			break;
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_START:
+			Log.e("queueactivity","会话开始回调");
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
-			BussinessCenter.sessionItem = new SessionItem(dwFlags, BussinessCenter.selfUserId, dwUserId);
-			BussinessCenter.sessionItem.setRoomId(dwParam);
-			//界面是在这里跳转的
-			Intent intent = new Intent();
-			intent.setClass(VideoServer.this, VideoActivity.class);
-			this.startActivity(intent);
-			break;
-		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
-			BussinessCenter.getBussinessCenter().onVideoCallEnd(dwUserId,
-					dwFlags, dwParam, userStr);
+			BussinessCenter.getBussinessCenter().onVideoCallStart(
+					dwUserId, dwFlags, dwParam, userStr,mApplication);
 			break;
 		}
 	}
@@ -295,7 +278,7 @@ public class VideoServer extends Activity implements
 		switch (arg0.getId()) {
 		case R.id.id_btn_startserver:
 			//开始服务
-			AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, BussinessCenter.selfUserId, AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_SERVICEREQUEST, 0, 0, 0, 0, "");
+			AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, mApplication.getUserID(), AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_SERVICEREQUEST, 0, 0, 0, 0, "");
 			break;
 		case R.id.returnImgBtn:
 			
@@ -313,8 +296,7 @@ public class VideoServer extends Activity implements
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				//退出营业厅
-				configEntity = ConfigService.LoadConfig(VideoServer.this);
-				AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA,configEntity.CurrentObjectId, AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");	
+				AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA,mApplication.getCurrentAreaId(), AnyChatObjectDefine.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");	
 			}
 		}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
 					
@@ -333,7 +315,7 @@ public class VideoServer extends Activity implements
 		
 		case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_SERVICENOTIFY:
 			//当客户角色是座席（服务器发的一个广播所有的座席都会触发到故需加限制条件)
-			if(mApplication.getUserType() == 2 && dwParam1 == BussinessCenter.selfUserId)
+			if(mApplication.getUserType() == 2 && dwParam1 == mApplication.getUserID())
 			{
 				anychat.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST, dwParam2, 0, 0, 0, "");
 			}

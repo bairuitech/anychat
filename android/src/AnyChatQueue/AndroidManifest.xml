@@ -38,12 +38,12 @@
             android:label="@string/title_activity_func_menu"
              android:screenOrientation="portrait" >
         </activity>
-        <activity
+     <!--    <activity
             android:name="com.bairuitech.anychatqueue.YeWuActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:launchMode="singleTask"
              android:screenOrientation="portrait" >
-        </activity>
+        </activity> -->
         <activity
             android:name="com.bairuitech.anychatqueue.QueueActivity"
             android:configChanges="orientation|keyboardHidden|navigation" 
@@ -53,17 +53,15 @@
             android:name="com.bairuitech.anychatqueue.VideoActivity"
             android:configChanges="orientation|keyboardHidden|navigation" >
         </activity>
-        <activity
-            android:name="com.bairuitech.callservice.VideoServer"
-            android:theme="@style/titlestyle" >
-        </activity>
-        <activity
-            android:name="com.bairuitech.callservice.VideoActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:theme="@style/titlestyle" >
-        </activity>
+     
         <activity
             android:name="com.bairuitech.main.VideoServer"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:label="@string/title_activity_video_server"
+             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.bairuitech.main.YeWuActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/title_activity_video_server"
              android:screenOrientation="portrait" >
