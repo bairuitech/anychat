@@ -228,6 +228,8 @@ BRAS_API DWORD BRAS_ObjectControl(DWORD dwObjectType, DWORD dwObjectId, DWORD dw
 
 // 获取房间在线用户列表（dwRoomId=-1时，表示获取系统所有房间的ID列表）
 BRAS_API DWORD BRAS_GetOnlineUsers(DWORD dwRoomId, DWORD* lpIdArray, DWORD& dwCount);
+// 获取房间ID列表（系统所有活动的房间）
+BRAS_API DWORD BRAS_GetRoomIdList(DWORD* lpIdArray, DWORD& dwCount);
 // 向核心服务器动态查询相关信息
 BRAS_API DWORD BRAS_QueryInfoFromServer(DWORD dwInfoName, TCHAR* lpInParam, DWORD dwInSize, TCHAR* lpResult, DWORD& dwOutSize, DWORD dwFlags=0);
 

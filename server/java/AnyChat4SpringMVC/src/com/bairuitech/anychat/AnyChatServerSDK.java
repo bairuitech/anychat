@@ -135,6 +135,8 @@ public class AnyChatServerSDK
 
 	// 获取在线用户ID列表（dwRoomId=-1时，表示获取系统所有房间的ID列表）
 	public static native int[] GetOnlineUsers(int dwRoomId);
+	// 获取房间ID列表（系统所有活动的房间）
+	public static native int[] GetRoomIdList();
 	// 向核心服务器动态查询相关信息（整型）
 	public static native int QueryIntInfoFromServer(int dwInfoName, String lpInParam, int dwFlags);
 	// 向核心服务器动态查询相关信息（字符串）
