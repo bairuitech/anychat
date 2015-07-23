@@ -1,7 +1,4 @@
-package com.bairuitech.anychatqueue;
-
-
-
+package com.bairuitech.main;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,14 +9,10 @@ import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
-import com.bairuitech.anychatqueue.BussinessCenter;
-import com.bairuitech.common.BaseConst;
 import com.bairuitech.common.BaseMethod;
-import com.bairuitech.common.ConfigEntity;
-import com.bairuitech.common.ConfigService;
 import com.bairuitech.common.CustomApplication;
 import com.bairuitech.common.DialogFactory;
-import com.bairuitech.main.LoginServer;
+import com.bairuitech.main.LoginAty;
 import com.example.anychatqueue.R;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,7 +20,6 @@ import android.os.Message;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,7 +34,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
- public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatVideoCallEvent,AnyChatObjectEvent, OnClickListener{
+ public class QueueAty extends Activity implements AnyChatBaseEvent,AnyChatVideoCallEvent,AnyChatObjectEvent{
 	private Button  quickButton;
 	private AnyChatCoreSDK anychat;
 	private Dialog dialog;
@@ -50,8 +42,6 @@ import android.widget.Toast;
 	private ImageButton mImgBtnReturn;
 	private TextView mTitleName,timeshow;		
 	public CustomApplication mApplication;		//全局变量类
-	private int seconds = 0;
-	private LayoutInflater mLayoutInlater;
 	private final int TIME_UPDATE = 291;		//Handler发送消息,队列人数的实时更新
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,14 +72,13 @@ import android.widget.Toast;
 		int morder = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, mApplication.getCurrentQueueId(), AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_BEFOREUSERNUM);
 		showTextView = (TextView) findViewById(R.id.queue_show);
 		showTextView.setText("当前排队人数共:"+length+"人,您现在排在第 "+(morder+1)+" 位");
-		
+		//实时更新显示时间
 		timeshow = (TextView) findViewById(R.id.queue_time);
-		mLayoutInlater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		final Handler myhHandler = new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
 				if(msg.what == TIME_UPDATE){					
-			seconds = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, mApplication.getCurrentQueueId(), AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_WAITTIMESECOND);
+			int seconds = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, mApplication.getCurrentQueueId(), AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_WAITTIMESECOND);
 			timeshow.setText("您已等待了 "+BaseMethod.getTimeShowStringTwo(seconds));
 				}
 			}
@@ -116,7 +105,7 @@ import android.widget.Toast;
 	}
 	
 	private void alertDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(QueueActivity.this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(QueueAty.this);
 			builder.setMessage("您确定要退出当前排队吗?")
 					.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 						
@@ -148,7 +137,7 @@ import android.widget.Toast;
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		BussinessCenter.mContext = QueueActivity.this;
+		BussinessCenter.mContext = QueueAty.this;
 		super.onResume();
 	}
 	
@@ -166,7 +155,7 @@ import android.widget.Toast;
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		BussinessCenter.getBussinessCenter().realseData();
+		BussinessCenter.getBussinessCenter().realse();
 	}
 	
 	@Override
@@ -203,10 +192,10 @@ import android.widget.Toast;
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		//网络断开时跳到主页面
-		Toast.makeText(QueueActivity.this, this.getString(R.string.str_serverlink_close), Toast.LENGTH_LONG).show();
+		Toast.makeText(QueueAty.this, this.getString(R.string.str_serverlink_close), Toast.LENGTH_LONG).show();
 			Intent intent = new Intent();
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.setClass(this,LoginServer.class);
+			intent.setClass(this,LoginAty.class);
 			this.startActivity(intent);	
 		
 	}
@@ -225,10 +214,13 @@ import android.widget.Toast;
 		}
 	}
 	private void dataChange(int dwObjectId) {
-		int length = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwObjectId, AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
-		int mbefore = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwObjectId, AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_BEFOREUSERNUM);
-		if(mbefore == -1) mbefore = 0;
-		showTextView.setText("当前排队人数共:"+length+"人,您现在排在第 "+(mbefore+1)+" 位");
+		
+		if(dwObjectId == mApplication.getCurrentQueueId()){
+			
+			int length = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwObjectId, AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
+			int mbefore = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,dwObjectId, AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_BEFOREUSERNUM);
+			showTextView.setText("当前排队人数共:"+length+"人,您现在排在第 "+(mbefore+1)+" 位");
+		}
 	}
 	
 	@Override
@@ -243,11 +235,11 @@ import android.widget.Toast;
 					dwUserId, dwFlags, dwParam, userStr);
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
-			 dialog =new Dialog(QueueActivity.this, R.style.CommonDialog);
-			 dialog.setCanceledOnTouchOutside(false);
-			 dialog.setCancelable(false);		 
-			 request_dialog(dwUserId);		
-			 dialog.show();
+			
+			mApplication.setTargetUserName(anychat.GetUserName(dwUserId));
+			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_REQUEST,
+					dwUserId, this,mApplication);
+			dialog.show();
 			 break;
 			
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY:
@@ -258,7 +250,7 @@ import android.widget.Toast;
 			if (dwErrorCode == AnyChatDefine.BRAC_ERRORCODE_SUCCESS) {
 				dialog = DialogFactory.getDialog(
 						DialogFactory.DIALOGID_CALLING, dwUserId,
-						QueueActivity.this);
+						QueueAty.this,mApplication);
 				dialog.show();
 
 			} else {
@@ -277,47 +269,5 @@ import android.widget.Toast;
 			break;
 		}
 	}
-	private void request_dialog(int dwUserId) {
-		final int userId = dwUserId;
-		View view = mLayoutInlater.inflate(R.layout.dialog_requesting, null);
-		TextView buttonAccept = (TextView) view.findViewById(R.id.btn_accept);
-		TextView buttonRefuse = (TextView) view.findViewById(R.id.btn_refuse);
-		TextView showView = (TextView) view.findViewById(R.id.txt_dialog_prompt);
-		showView.setText("座席"+anychat.GetUserName(userId)+"请求与您视频通话");
-		showView.setTextColor(getResources().getColor(R.color.blue));
-		buttonAccept.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generate)d method stub
-				BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
-						AnyChatDefine.BRAC_ERRORCODE_SUCCESS, 0, 0, "");
-				dialog.dismiss();
-			}
-		});
-		
-		buttonRefuse.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				BussinessCenter.VideoCallControl(
-						AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
-						AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE, 0, 0,
-						"");
-				dialog.dismiss();
-				BussinessCenter.getBussinessCenter().stopSessionMusic();
-				finish();
-			}
-		});
-
-		dialog.setContentView(view);
-	}
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-
 
 }

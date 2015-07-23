@@ -29,27 +29,21 @@ import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
-import com.bairuitech.anychatqueue.BussinessCenter;
-import com.bairuitech.anychatqueue.QueueActivity;
-import com.bairuitech.anychatqueue.VideoActivity;
 import com.bairuitech.common.BaseConst;
 import com.bairuitech.common.BaseMethod;
-import com.bairuitech.common.ConfigEntity;
-import com.bairuitech.common.ConfigService;
 import com.bairuitech.common.CustomApplication;
 import com.bairuitech.common.DialogFactory;
-import com.bairuitech.main.LoginServer;
+import com.bairuitech.main.LoginAty;
 import com.example.anychatqueue.R;
 
 
-public class VideoServer extends Activity implements 
+public class AgentServerAty extends Activity implements 
 		OnClickListener, AnyChatBaseEvent, AnyChatVideoCallEvent,AnyChatObjectEvent
 		 {
 	List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
 	private AnyChatCoreSDK anychat;
 	private Dialog dialog;
 	private Button start;
-	private ConfigEntity configEntity;
 	private ImageButton mImgBtnReturn;	// 标题返回
 	private TextView mTitleName;		// 标题名字
 	private int[] queueIds;
@@ -92,7 +86,7 @@ public class VideoServer extends Activity implements
 	        	list.add(map);
 	        }
 		 
-		adapter = new SimpleAdapter(VideoServer.this, list, R.layout.videoserver_listviewitem, new String[]{"name","number"}, new int[]{R.id.id_tv_queue,R.id.id_tv_number});
+		adapter = new SimpleAdapter(AgentServerAty.this, list, R.layout.videoserver_listviewitem, new String[]{"name","number"}, new int[]{R.id.id_tv_queue,R.id.id_tv_number});
 		listView = (ListView) findViewById(R.id.id_listview_server);
 		listView.setAdapter(adapter);
 		
@@ -132,7 +126,7 @@ public class VideoServer extends Activity implements
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		BussinessCenter.mContext = VideoServer.this;
+		BussinessCenter.mContext = AgentServerAty.this;
 		initSdk();
 		super.onResume();
 	}
@@ -141,7 +135,7 @@ public class VideoServer extends Activity implements
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		BussinessCenter.getBussinessCenter().realseData();
+		BussinessCenter.getBussinessCenter().realse();
 	}
 
 	@Override
@@ -217,7 +211,7 @@ public class VideoServer extends Activity implements
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
 			dialog = DialogFactory.getDialog(DialogFactory.DIALOG_NETCLOSE,
-					DialogFactory.DIALOG_NETCLOSE, this);
+					DialogFactory.DIALOG_NETCLOSE, this,mApplication);
 			dialog.show();
 		} else {
 			BaseMethod.showToast(this.getString(R.string.str_serverlink_close),
@@ -225,7 +219,7 @@ public class VideoServer extends Activity implements
 			Intent intent = new Intent();
 			intent.putExtra("INTENT", BaseConst.AGAIGN_LOGIN);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.setClass(this, LoginServer.class);
+			intent.setClass(this, LoginAty.class);
 			this.startActivity(intent);
 			this.finish();
 		}
@@ -243,7 +237,7 @@ public class VideoServer extends Activity implements
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
 			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_REQUEST,
-					dwUserId, this);
+					dwUserId, this,mApplication);
 			dialog.show();
 			break;
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY:
@@ -253,7 +247,7 @@ public class VideoServer extends Activity implements
 			if (dwErrorCode == AnyChatDefine.BRAC_ERRORCODE_SUCCESS) {
 				dialog = DialogFactory.getDialog(
 						DialogFactory.DIALOGID_CALLING, dwUserId,
-						VideoServer.this);
+						AgentServerAty.this,mApplication);
 				dialog.show();
 
 			} else {
@@ -322,7 +316,7 @@ public class VideoServer extends Activity implements
 			break;	
 			
 		case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_WAITINGUSER:				
-			BaseMethod.showToast("暂时无人排队中...", VideoServer.this);		
+			BaseMethod.showToast("暂时无人排队中...", AgentServerAty.this);		
 			break;
 			
 		case AnyChatObjectDefine.ANYCHAT_AREA_EVENT_LEAVERESULT:  

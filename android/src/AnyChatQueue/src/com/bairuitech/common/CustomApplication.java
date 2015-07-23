@@ -8,6 +8,7 @@ public class CustomApplication extends Application{
 	private int CurrentAreaId;
 	private int CurrentQueueId;
 	private String selfUserName;
+	private String targetUserName;
 	private int RoomId;
 	private  int TargetUserId;
 	@Override
@@ -72,5 +73,13 @@ public class CustomApplication extends Application{
 
 	public void setTargetUserId(int targetUserId) {
 		TargetUserId = targetUserId;
+	}
+
+	public String getTargetUserName() {
+		return targetUserName;
+	}
+
+	public void setTargetUserName(String targetUserName) {
+		this.targetUserName = targetUserName;
 	}
 }

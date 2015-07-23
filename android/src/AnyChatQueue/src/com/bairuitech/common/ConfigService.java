@@ -18,10 +18,7 @@ public class ConfigService {
       
         configEntity.ip = share.getString("ip", "demo.anychat.cn");
         configEntity.port = share.getInt("port", 8906);
-        
-        //获得存在sharepreference里面的queue数据；
-        configEntity.CurrentQueueId = share.getInt("currentqueueid", 12345);
-        configEntity.CurrentObjectId = share.getInt("currentobjectid", 54321);
+  ;
         
         configEntity.configMode = share.getInt("configMode", ConfigEntity.VIDEO_MODE_CUSTOMCONFIG);
         configEntity.resolution_width = share.getInt("resolution_width", 320);
@@ -54,9 +51,6 @@ public class ConfigService {
         
         editor.putString("ip", configEntity.ip);
         editor.putInt("port", configEntity.port);
-        //保存当前的queueid 和 objectid
-        editor.putInt("currentqueueid", configEntity.CurrentQueueId);
-        editor.putInt("currentobjectid", configEntity.CurrentObjectId);
         
         editor.putInt("configMode", configEntity.configMode);
         editor.putInt("resolution_width", configEntity.resolution_width);

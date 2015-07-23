@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatObjectDefine;
-import com.bairuitech.anychatqueue.BussinessCenter;
-import com.bairuitech.main.LoginServer;
+import com.bairuitech.main.BussinessCenter;
+import com.bairuitech.main.LoginAty;
 import com.example.anychatqueue.R;
 
 
@@ -33,9 +33,9 @@ public class DialogFactory {
 	private EditText mEditIP;
 	private EditText mEditPort;
 	private ConfigEntity configEntity;
-
+	
+	
 	public static int mCurrentDialogId = 0;
-
 	public static final int DIALOGID_CALLING = 1;
 	public static final int DIALOGID_REQUEST = 2;
 	public static final int DIALOGID_RESUME = 3;
@@ -64,16 +64,16 @@ public class DialogFactory {
 	 * 获取指定类型的对话框实例
 	 * 
 	 * @param dwDialogId
-	 *            对话框类�?
+	 *            对话框类型
 	 * @param object
-	 *            对话框数�?
+	 *            对话框数据参数
 	 * @param context
-	 *            对话框位于的上下�?
-	 * @return 对话框实�?
+	 *            对话框位于的上下文
+	 * @return 对话框实例
 	 */
 	public static Dialog getDialog(int dwDialogId, Object object,
-			Activity context) {
-		mDialogFactory.initDialog(dwDialogId, object, context);
+			Activity context,CustomApplication mApplication) {
+		mDialogFactory.initDialog(dwDialogId, object, context,mApplication);
 		return mDialog;
 	}
 
@@ -81,7 +81,7 @@ public class DialogFactory {
 		return mCurrentDialogId;
 	}
 
-	public void initDialog(int dwDialogId, Object object, Activity context) {
+	public void initDialog(int dwDialogId, Object object, Activity context,CustomApplication mApplication) {
 		if (mContext != context) {
 			mContext = context;
 			mLayoutInlater = (LayoutInflater) mContext
@@ -99,13 +99,13 @@ public class DialogFactory {
 			initCallResume(mDialog, object);
 			break;
 		case DIALOGID_ENDCALL:
-			initEndSessionResumeDialg1(mDialog, object);
+			initEndSessionResumeDialg1(mDialog, object,mApplication);
 			break;
 		case DIALOGID_EXIT:
-			initQuitResumeDialg(mDialog);
+			initQuitResumeDialg(mDialog,mApplication);
 			break;
 		case DIALOGID_REQUEST:
-			initCallReceivedDialg(mDialog, object);
+			initCallReceivedDialg(mDialog, object,mApplication);
 			mDialog.setCancelable(false);
 			break;
 		case DIALOGID_RESUME:
@@ -133,7 +133,6 @@ public class DialogFactory {
 		mEditPort.setText(configEntity.port + "");
 		mEditIP = (EditText) view.findViewById(R.id.edit_serverip);
 		mEditIP.setText(configEntity.ip);
-//		ImageView imageView = (ImageView) view.findViewById(R.id.image_cancel);
 		Button buttonR = (Button) view.findViewById(R.id.btn_resume);
 		buttonR.setOnClickListener(new OnClickListener() {
 
@@ -172,15 +171,6 @@ public class DialogFactory {
 				dialog.dismiss();
 			}
 		});
-		/*imageView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				dialog.dismiss();
-
-			}
-		});*/
 
 		dialog.setContentView(view, new LayoutParams(LayoutParams.WRAP_CONTENT,	LayoutParams.WRAP_CONTENT));
 	}
@@ -259,7 +249,7 @@ public class DialogFactory {
 					intent = new Intent();
 					intent.putExtra("INTENT", BaseConst.APP_EXIT);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					intent.setClass(mContext, LoginServer.class);
+					intent.setClass(mContext, LoginAty.class);
 					mContext.startActivity(intent);
 					break;
 				case DIALOG_SERCLOSE:
@@ -267,7 +257,7 @@ public class DialogFactory {
 				
 					intent = new Intent();
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					intent.setClass(mContext, LoginServer.class);
+					intent.setClass(mContext, LoginAty.class);
 					mContext.startActivity(intent);
 					break;
 				case DIALOG_NETCLOSE:
@@ -301,19 +291,20 @@ public class DialogFactory {
 	}
 
 	/***
-	 * 初始化接收到呼叫请求对话�?
+	 * 初始化接收到呼叫请求对话框
 	 * 
 	 * @param dialog
 	 * @param object
 	 */
-	public void initCallReceivedDialg(final Dialog dialog, final Object object) {
+	public void initCallReceivedDialg(final Dialog dialog, final Object object,CustomApplication mApplication) {
 		final int userId = (Integer) object;
 		
 		View view = mLayoutInlater.inflate(R.layout.dialog_requesting, null);
 		TextView buttonAccept = (TextView) view.findViewById(R.id.btn_accept);
 		TextView buttonRefuse = (TextView) view.findViewById(R.id.btn_refuse);
-		
-		// buttonAccept.setText(mContext.getString(R.string.str_resume));
+		TextView showView = (TextView) view.findViewById(R.id.txt_dialog_prompt);
+		showView.setText("座席"+mApplication.getTargetUserName()+"请求与您视频通话");
+		showView.setTextColor(Color.BLUE);
 		buttonAccept.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -346,7 +337,7 @@ public class DialogFactory {
 	 * 初始化出挂断对话框
 	 * @param dialog
 	 */
-	public void initQuitResumeDialg(final Dialog dialog) {
+	public void initQuitResumeDialg(final Dialog dialog,final CustomApplication mApplication) {
 		View view = mLayoutInlater
 				.inflate(R.layout.dialog_resumeorcancel, null);
 		Button buttonQuit = (Button) view.findViewById(R.id.btn_resume);
@@ -363,9 +354,8 @@ public class DialogFactory {
 				intent.setAction(BaseConst.ACTION_BACK_SERVICE);
 				mContext.stopService(intent);
 				
-				configEntity = ConfigService.LoadConfig(mContext);
-				//不能删除，客户退出队列的时候有用
-				AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,configEntity.CurrentQueueId, AnyChatObjectDefine.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+				//退出队列
+				AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,mApplication.getCurrentQueueId(), AnyChatObjectDefine.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
 				
 				dialog.dismiss();
 
@@ -384,13 +374,13 @@ public class DialogFactory {
 	}
 
 	/***
-	 * 初始化�?�话结束确认对话�?
+	 * 初始化通话结束确认对话框
 	 * 
 	 * @param dialog
 	 * @param object
 	 */
 	public void initEndSessionResumeDialg1(final Dialog dialog,
-			final Object object) {
+			final Object object,final CustomApplication mApplication) {
 		final int userId = (Integer) object;
 		Log.e("userID", userId+"");
 		View view = mLayoutInlater
@@ -404,13 +394,10 @@ public class DialogFactory {
 				// TODO Auto-generate)d method stub
 				
 				//退出队列
-				configEntity = ConfigService.LoadConfig(mContext);
-				Log.e("videoactivty", configEntity.CurrentQueueId+"");
-				AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,configEntity.CurrentQueueId, AnyChatObjectDefine.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+				AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,mApplication.getCurrentQueueId(), AnyChatObjectDefine.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
 				//调用内核方法执行；
 				BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userId, 0,
 						0, BussinessCenter.selfUserId, "");
-//				AnyChatCoreSDK.ObjectControl(dwObjectType, dwObjectId, dwCtrlCode, dwParam1, dwParam2, dwParam3, dwParam4, lpStrValue)
 				
 			}
 		});
@@ -428,53 +415,16 @@ public class DialogFactory {
 	}
 
 	private void initDialogTitle(View view, final String strTitle) {
-//		ImageView imageView = (ImageView) view.findViewById(R.id.image_cancel);
 		mTextViewTitle = (TextView) view.findViewById(R.id.txt_dialog_prompt);
 		mTextViewTitle.setTextColor(Color.BLUE);
-		//mTextViewTitle.setTextSize(20);
-		/*imageView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (mCurrentDialogId == DIALOGID_CALLING) {
-
-				} else if (mCurrentDialogId == DIALOGID_REQUEST) {
-
-				}
-				mDialog.dismiss();
-			}
-		});*/
 		mTextViewTitle.setText(strTitle);
 	}
 
 	private void initDialogTitle(View view, final String strTitle,
 			final int userId) {
-	//	ImageView imageView = (ImageView) view.findViewById(R.id.image_cancel);
 		mTextViewTitle = (TextView) view.findViewById(R.id.txt_dialog_prompt);
 		mTextViewTitle.setTextColor(Color.BLUE);
 		mTextViewTitle.setTextSize(20);
-		/*imageView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (mCurrentDialogId == DIALOGID_CALLING) {
-					BussinessCenter.VideoCallControl(
-							AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
-							AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT, 0,
-							0, "");
-				} else if (mCurrentDialogId == DIALOGID_REQUEST) {
-					BussinessCenter.VideoCallControl(
-							AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY, userId,
-							AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE, 0,
-							0, "");
-					BussinessCenter.sessionItem = null;
-					BussinessCenter.getBussinessCenter().stopSessionMusic();
-				}
-				mDialog.dismiss();
-			}
-		});*/
 		mTextViewTitle.setText(strTitle);
 	}
 

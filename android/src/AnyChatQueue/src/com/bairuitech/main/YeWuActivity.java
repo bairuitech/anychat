@@ -24,11 +24,9 @@ import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
-import com.bairuitech.anychatqueue.QueueActivity;
-import com.bairuitech.anychatqueue.YeWuAdapter;
 import com.bairuitech.common.BaseMethod;
 import com.bairuitech.common.CustomApplication;
-import com.bairuitech.main.LoginServer;
+import com.bairuitech.main.LoginAty;
 import com.example.anychatqueue.R;
 
 
@@ -93,7 +91,6 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
     
     @Override
     protected void onRestart() {
-    	// TODO Auto-generated method stub
     	if(anychat == null){
     	anychat = AnyChatCoreSDK.getInstance(this);
     	}
@@ -119,7 +116,6 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 	}
    
     private void InitSDK() {
-		// TODO Auto-generated method stub
     	//单例模式获取sdk对象
     	if(anychat == null){
     		anychat = AnyChatCoreSDK.getInstance(this);
@@ -132,7 +128,6 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK){
-			
 			//退出营业厅（进营业厅，出营业厅，加入队列，出队列都是这个方法）
 			alertDialog();	
 		
@@ -158,37 +153,31 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 	}
 	@Override
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void OnAnyChatOnlineUserMessage(int dwUserNum, int dwRoomId) {
-		// TODO Auto-generated method stub
 	
 	}
 	@Override
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
-		// TODO Auto-generated method stub
 	
 	}
 	
 
 	@Override
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
-		// TODO Auto-generated method stub
 		BaseMethod.showToast("网络断开连接",YeWuActivity.this);
 		anychat.Logout();
-		Intent intent = new Intent(YeWuActivity.this,LoginServer.class);
+		Intent intent = new Intent(YeWuActivity.this,LoginAty.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		
@@ -204,7 +193,7 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_ENTERRESULT:	
 			
 			Intent in=new Intent();
-			in.setClass(YeWuActivity.this, QueueActivity.class);
+			in.setClass(YeWuActivity.this, QueueAty.class);
 			startActivity(in);
 			pd.dismiss();
 			break;
@@ -220,9 +209,10 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		//用户队列状态变化事件回调
 		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_STATUSCHANGE:	
 			//更新列表数据	
-			for (int i = 0; i < queueIds.length;i++ ) {
+			for (int i = 0; i < queueList.size();i++ ) {
 				//遍历查找
-				if(dwObjectId == queueIds[i]){
+				int num = (Integer) queueList.get(i).get("id");
+				if(dwObjectId == num ){
 					int number1 = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueIds[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
 					queueList.get(i).put("number", number1);
 					adapter.notifyDataSetChanged();
@@ -238,7 +228,6 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 
 	@Override
 	public void onClick(View arg0) {
-			// TODO Auto-generated method stub
 			switch (arg0.getId()) {
 			case R.id.returnImgBtn://按下返回键
 				//leave area event;
@@ -247,7 +236,5 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 			default:
 				break;
 			}
-		
 	}
-	
 }

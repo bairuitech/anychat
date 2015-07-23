@@ -1,6 +1,5 @@
-package com.bairuitech.anychatqueue;
+package com.bairuitech.main;
 
-import java.security.PublicKey;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -41,11 +40,11 @@ import com.bairuitech.common.ConfigEntity;
 import com.bairuitech.common.ConfigService;
 import com.bairuitech.common.CustomApplication;
 import com.bairuitech.common.DialogFactory;
-import com.bairuitech.main.LoginServer;
+import com.bairuitech.main.LoginAty;
 import com.bairuitech.main.YeWuActivity;
 import com.example.anychatqueue.R;
 
- public class VideoActivity extends Activity implements AnyChatBaseEvent,
+ public class VideoAty extends Activity implements AnyChatBaseEvent,
 		OnClickListener, OnTouchListener,AnyChatObjectEvent, AnyChatVideoCallEvent {
 	private SurfaceView mSurfaceSelf;
 	private SurfaceView mSurfaceRemote;
@@ -206,7 +205,7 @@ import com.example.anychatqueue.R;
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_ENDCALL,
-					dwTargetUserId, this);
+					dwTargetUserId, this,mApplication);
 			dialog.show();
 		}
 
@@ -427,7 +426,7 @@ import com.example.anychatqueue.R;
 				dialog.dismiss();
 			BaseMethod.showToast(this.getString(R.string.session_end), this);
 			dialog = DialogFactory.getDialog(DialogFactory.DIALOG_NETCLOSE,
-					DialogFactory.DIALOG_NETCLOSE, this);
+					DialogFactory.DIALOG_NETCLOSE, this,mApplication);
 			dialog.show();
 		} else {
 			BaseMethod.showToast(this.getString(R.string.str_serverlink_close),
@@ -436,7 +435,7 @@ import com.example.anychatqueue.R;
 			Intent intent = new Intent();
 			intent.putExtra("INTENT", BaseConst.AGAIGN_LOGIN);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.setClass(this, LoginServer.class);
+			intent.setClass(this, LoginAty.class);
 			this.startActivity(intent);
 			this.finish();
 		}
@@ -447,7 +446,7 @@ import com.example.anychatqueue.R;
 
 		if (v == mBtnEndSession) {
 			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_ENDCALL,
-					dwTargetUserId, this);
+					dwTargetUserId, this,mApplication);
 			dialog.show();
 		}
 		
@@ -460,7 +459,7 @@ import com.example.anychatqueue.R;
 		switch (dwEventType) {
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
 			if(mApplication.getUserType() == USERTYPE_CUSTOM){
-			BaseMethod.showToast("视频通话已结束...", VideoActivity.this);	
+			BaseMethod.showToast("视频通话已结束...", VideoAty.this);	
 			Log.e("videoactivity", "进入视频界面回调");
 			Intent intent = new Intent();
 			intent.putExtra("INTENT", BaseConst.APP_EXIT);

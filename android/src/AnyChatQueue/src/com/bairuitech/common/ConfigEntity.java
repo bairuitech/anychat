@@ -1,40 +1,37 @@
 package com.bairuitech.common;
 
 public class ConfigEntity {
-	public static final int VIDEO_MODE_SERVERCONFIG = 0;	// 鏈嶅姟鍣ㄨ棰戝弬鏁伴厤缃�
-	public static final int VIDEO_MODE_CUSTOMCONFIG = 1;	// 鑷畾涔夎棰戝弬鏁伴厤缃�
+	public static final int VIDEO_MODE_SERVERCONFIG = 0;	// 服务器视频参数配置
+	public static final int VIDEO_MODE_CUSTOMCONFIG = 1;	// 自定义视频参数配置
 	
-	public static final int VIDEO_QUALITY_NORMAL = 2;		// 鏅�氳棰戣川閲�
-	public static final int VIDEO_QUALITY_GOOD = 3;			// 涓瓑瑙嗛璐ㄩ�?
-	public static final int VIDEO_QUALITY_BEST = 4;			// 杈冨ソ瑙嗛璐ㄩ�?
+	public static final int VIDEO_QUALITY_NORMAL = 2;		// 普通视频质量
+	public static final int VIDEO_QUALITY_GOOD = 3;			// 中等视频质量
+	public static final int VIDEO_QUALITY_BEST = 4;			// 较好视频质量
 	
-	public boolean IsSaveNameAndPw;
-	public String name = "yuanyukun";
+	public boolean IsSaveNameAndPw;							//是否保存用户名和密码
+	public String name = "name";							//登陆用户名，默认为name
 	public String password = "";
 
-	public String ip = "demo.anychat.cn";
-	public int port = 8906;
+	public String ip = "demo.anychat.cn";					//登陆服务器地址，默认佰锐公司服务器地址
+	public int port = 8906;									//端口默认8906
 	
-	//排队对象Id保存；
-	public int CurrentObjectId = 0;
-	public int CurrentQueueId = 0;
 	
-	public int configMode = VIDEO_MODE_SERVERCONFIG;
+	public int configMode = VIDEO_MODE_SERVERCONFIG;		
 	public int resolution_width = 0;
 	public int resolution_height = 0;
 	
-	public int videoBitrate = 150*1000;						// 鏈湴瑙嗛鐮佺�?
-	public int videoFps = 10;								// 鏈湴瑙嗛甯х巼
-	public int videoQuality = VIDEO_QUALITY_GOOD;
+	public int videoBitrate = 150*1000;						// 本地视频码率
+	public int videoFps = 10;								// 本地视频帧率
+	public int videoQuality = VIDEO_QUALITY_GOOD;			//视频质量
 	public int videoPreset = 1;
-	public int videoOverlay = 1;							// 鏈湴瑙嗛鏄惁閲囩敤Overlay妯�?�紡
-	public int videorotatemode = 0;							// 鏈湴瑙嗛鏃嬭浆妯″紡
-	public int fixcolordeviation = 0;						// 淇鏈�?湴瑙嗛閲囬泦鍋忚壊锛�0 鍏抽�?(榛樿锛夛紝 1 寮�鍚�
-	public int videoShowGPURender = 0;						// 瑙嗛鏁版嵁閫氳繃GPU鐩存帴娓叉煋锛�0  鍏抽�?(榛樿�?)锛� 1 寮�鍚�
-	public int videoAutoRotation = 1;						// 鏈湴瑙嗛鑷姩鏃嬭浆鎺у埗锛堝弬鏁颁负int鍨嬶�? 0琛ㄧず鍏抽棴锛� 1 寮�鍚痆榛樿]锛岃棰戞棆杞椂闇�瑕佸弬鑰冩湰鍦拌棰戣澶囨柟鍚戝弬鏁帮級
+	public int videoOverlay = 1;							// 本地视频是否采用Overlay模式
+	public int videorotatemode = 0;							// 本地视频旋转模式
+	public int fixcolordeviation = 0;						// 修正本地视频采集偏色：0 关闭(默认）， 1 开启
+	public int videoShowGPURender = 0;						// 视频数据通过GPU直接渲染：0  关闭(默认)， 1 开启
+	public int videoAutoRotation = 1;						// 本地视频自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
 	
 	public int enableP2P = 1;
-	public int useARMv6Lib = 0;								// 鏄惁寮哄埗浣跨敤ARMv6鎸囦护闆嗭紝榛樿鏄唴鏍歌嚜鍔ㄥ垽鏂�
-	public int enableAEC = 1;								// 鏄惁浣跨敤鍥為煶娑堥櫎鍔熻�?
-	public int useHWCodec = 0;								// 鏄惁浣跨敤骞冲彴鍐呯疆纭欢缂栬В鐮佸櫒
+	public int useARMv6Lib = 0;								// 是否强制使用ARMv6指令集，默认是内核自动判断
+	public int enableAEC = 1;								// 是否使用回音消除功能
+	public int useHWCodec = 0;								// 是否使用平台内置硬件编解码器
 }
