@@ -33,6 +33,7 @@
 @property(nonatomic, strong)NSArray *businessHallObjArr;            //营业厅模型数组
 @property(nonatomic, weak)UIPickerView *pickerView;
 @property(nonatomic, assign)int selfUserId;                         //自己的用户id
+@property(nonatomic, assign)int waitingBusinessId;                  //队列id
 
 - (IBAction)loginAction:(UIButton *)sender;
 
@@ -338,6 +339,7 @@
         [MBProgressHUD hideHUD];
         QueueViewController *queueVC = [[QueueViewController alloc] init];
         queueVC.businessId = dwObjectId;
+        self.waitingBusinessId = dwObjectId;
         [self.navigationController pushViewController:queueVC animated:YES];
     }else {
         [MBProgressHUD hideHUD];
@@ -379,7 +381,9 @@
     }
     if (controllersCount == 4) {
         if ([self.navigationController.viewControllers[3] isKindOfClass:[QueueViewController class]]) {
-            [self updateQueueUserCountLabel:dwObjectId];
+            if (self.waitingBusinessId == dwObjectId) {
+                [self updateQueueUserCountLabel:dwObjectId];
+            }
         }
     }
 }
