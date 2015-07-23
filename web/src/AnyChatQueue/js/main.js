@@ -24,11 +24,18 @@ var LOG_TYPE_EVENT = 2;
 var LOG_TYPE_ERROR = 3;
 
 var colorIdx = 0;
-//颜色数组
+//服务区域(营业厅)显示块颜色数组
 var colorArray = ["#63C058", "#F49537", "#A2C926", "#FEC900"];
+
+//队列显示块颜色数组
 var colorQueueArray = ["#48cfae", "#a0d468", "#ffcf56"];
+
 //当前被选择的队列名称
 var currentSelectedQueueName = "";
+
+//服务区域(营业厅)ID数组
+var areaIdArray = null;
+var areaArrayIdx = 0;
 
 // onload默认运行
 function LogicInit() {
@@ -74,6 +81,10 @@ function LogicInit() {
 //初始化本地对象信息
 function InitClientObjectInfo(mSelfUserId, dwAgentFlags, dwPriority) {
     AddLog("Initialize Client Object Information", LOG_TYPE_NORMAL);
+
+    //初始化服务区域Id数组
+    areaArrayIdx = 0;
+    areaIdArray = new Array();
 
 	//业务对象身份初始化
 	BRAC_SetSDKOption(BRAC_SO_OBJECT_INITFLAGS, dwAgentFlags);
@@ -211,9 +222,9 @@ $(function () {
 
     });
     //日志显示按钮
-    $("#showLog").click(function () {
+    $(".showBox").click(function () {
         $("#LOG_DIV_BODY").show();
-        $("#showLog").hide();
+        $(".showBox").hide();
         $("#LOG_DIV_BODY").animate({
             bottom: 0
         }, "slow");
@@ -224,7 +235,7 @@ $(function () {
         $("#LOG_DIV_BODY").animate({
             bottom: -210, display: "none"
         }, "slow");
-        $("#showLog").show();
+        $(".showBox").show();
     });
 
     $("#leaveQueue").click(function () {
@@ -581,4 +592,34 @@ function isShowReturnBtn(isShow) {
     else {
         $("#roomOut").hide();
     }
+}
+
+//显示服务区域(营业厅)
+function showSerivceArea() {
+    var areaName = "";
+    var description = "";
+
+    $("#loginDiv").hide(); //隐藏登录界面
+    $("#enterRoom").show(); //显示大厅
+    $("#enterRoom h2:eq(1)").text("营业厅列表");
+
+    for (var idx in areaIdArray)
+    {
+        areaName = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_AREA, areaIdArray[idx], ANYCHAT_OBJECT_INFO_NAME);
+        description = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_AREA, areaIdArray[idx], ANYCHAT_OBJECT_INFO_DESCRIPTION);
+
+        if (queueListName == -1) {
+            $("#poptip li").each(function (index) {
+                if (areaIdArray[idx] == $(this).attr('dwObjectId')) { $(this).remote(); }
+            });
+            var createObj = $('<li dwObjectId="' + areaIdArray[idx] + '">' + '<p>' + areaName + '</p>' + '<p class="description">' + description + '</p>' + '<p>' + '<img src="./img/area.png">' + '</p>' + '<p>编号：' + areaIdArray[idx] + '</p>' + '<p>' + '<a class="btn">进入</a>' + '</p>' + '</li>');
+            createObj.css("background-color", colorArray[colorIdx]);
+            $("#poptip").append(createObj);
+            colorIdx++;
+            if (colorIdx == 4) {
+                colorIdx = 0;
+            }
+        }
+    }
+    $("#LOADING_GREY_DIV").hide(); //隐藏登录蒙层
 }

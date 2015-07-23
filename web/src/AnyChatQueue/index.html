@@ -1,5 +1,6 @@
 <html>
 <head>
+<link href="img/queue.ico">
 <title>AnyChat 智能排队</title>
 <meta charset="UTF-8" content="text/html" http-equiv="Content-Type">
 
@@ -16,80 +17,13 @@
 <script src="js/advanceset.js"></script>
 <script src="js/anychatevent.js"></script>
 <script src="js/videocall.js"></script>
-
-<style type="text/css">
-#videoCall{
-	display: none;
-}
-#localVideoPos {
-	box-shadow: 1px 1px 4px #ccc;
-	background: url("img/videobk_agent_local.jpg") no-repeat;
-}
-#remoteVideoPos {
-	box-shadow: 1px 1px 4px #ccc;
-	background: url("img/videobk.jpg") no-repeat;
-}
-#localAudioVolume,#remoteAudioVolume{
-	background: green;
-	position: absolute;
-}
-.buttonCls {
-	height: 50px;
-	margin: 19px;
-	width: 100px;
-}
-
-#Initiative_Call_Div {
-	display:none;
-	width: 300px;
-	height: 170px;
-	position: absolute;
-	background: url('img/dialog/PrivateChat.png');
-	z-index: 99999;
-	text-align: center;
-}
-
-.Div_HeadPart {
-	width: 285px;
-	height: 40px;
-	margin: 10px 10px 0px 5px;
-}
-
-.Div_HeadPart img {
-	cursor: pointer;
-	margin: 10px 0px 0px 250px;
-}
-.Call_Div_Content {
-	text-align: center;
-	width: 285px;
-	height: 70px;
-	margin: 0px 10px 0px 5px;
-	font-family: 微软雅黑;
-	font-size: 13px;
-}
-.Call_Div_Button {
-	width: 285px;
-	height: 30px;
-	margin: 0px 10px 0px 5px;
-}
-#Initiative_Cancel_Button {
-	cursor: pointer;
-	background: url('img/others/CancelBtn.png');
-	width: 80px;
-	height: 30px;
-	line-height: 30px;
-	font-size: 13px;
-	margin-left: auto;
-	margin-right: auto;
-}
-</style>
 </head>
 
 <body>
 	<!--灰色背景透明层 -->
 	<div id="LOADING_GREY_DIV">
-		<h2 style="margin:10px;color: orange;display: inline-block;font-weight: bold;padding: 5px;margin-top:20%;line-height:53px;height: 53px">
-			<img title="请等待..." alt="请等待..." style="height: 35px;margin-top:10px" src="img/loading.gif"><span style="float: right;margin-left: 10px;"></span>
+		<h2>
+			<img title="请等待..." alt="请等待..." src="img/loading.gif"><span></span>
 		</h2>
 	</div>
 	<!-- 登录层 -->
@@ -121,7 +55,7 @@
 					</div>
 				</div>
 			</div>
-			<span class="login-buttom-txt"><p>Copyright © 2014-2015 www.anychat.cn</p></span>
+			<span class="login-buttom-txt"><p>Copyright © 2007-2015 www.anychat.cn</p></span>
 		</div>
 	</div>
 	<!-- 安装插件提示层 -->
@@ -143,7 +77,7 @@
 	<div class="enterRoom" id="enterRoom">
 		<div class="head">
 			<h2></h2><h2></h2>
-			<a class="btn" id="roomOut">返回</a>
+			<a class="btn" id="roomOut"></a>
 		</div>
 		<div class="content">
 			<div class="contentArea">
@@ -153,13 +87,13 @@
 			</div>
 			<!-- 等待呼叫层 -->
 			<center>
-				<div style="padding-top: 10%;">
+				<div class="callBox">
 					<div id="callLayer">
 						<h4>服务等待中</h4>
 						<br />
 						<div id="queueMsg1">
-				            <div style="text-align: left">
-					                        当前排队人数共：<strong></strong> 人，您现在排在第 <strong></strong> 位 <br />
+				            <div class="queueBox">
+		                        当前排队人数共：<strong></strong> 人，您现在排在第 <strong></strong> 位 <br />
 								已等待时长：<strong></strong>
 								<br />
 								<button class="confirmMsg">取消排队</button>
@@ -172,30 +106,33 @@
 						</div>
 					</div>
 				</div>
-				<div style="width: 880px;margin-top: -10%;" id="videoCall">
+				<div id="videoCall">
 					<div style="padding:15px;">
 						<!-- 视频层 -->
 						<div id="videoCallContent">
 							<div style="float: left">
-								<div style="height:300px;width:240px;padding-top: 15px;" id="clientList">
+								<div id="clientList">
 									<h3 style="color:pink;">服务信息</h3>
 									<br>
-									<b style="font-size: 15px;color: white">服务区域内访客的用户数<br>
-									（没有排入队列的用户）</b><strong style="color:orange;margin-top:10px;display: block;">0人</strong><br>
-									<b style="margin-top:10px;font-size: 15px;color: white">服务区域内排队的用户数</b><strong style="color:orange;margin-top:10px;display: block;">0人</strong><br>
-									<b style="margin-top:10px;font-size: 15px;color: white">服务区域内队列的数量</b><strong style="color:orange;margin-top:10px;display: block;">3个</strong>
+									<b>服务区域内访客的用户数<br>
+									（没有排入队列的用户）</b>
+									<strong>0人</strong><br>
+									<b>服务区域内排队的用户数</b>
+									<strong>0人</strong><br>
+									<b>服务区域内队列的数量</b>
+									<strong>3个</strong>
 								</div>
-								<div style="width:240px;padding-top:10px;" id="localVideoDiv">
-									<div id="localVideoPos" style="width:240px;height:180px;">
+								<div id="localVideoDiv">
+									<div id="localVideoPos">
 									</div>
-									<div id="localAudioVolume" style="width:240px;height:5px;">
+									<div id="localAudioVolume">
 									</div>
 								</div>
 							</div>
-							<div id="removeVideoDiv" style="float:right;text-align: center">
-								<div id="removeVideoPos" style="width:568px;height:426px;">
+							<div id="removeVideoDiv">
+								<div id="removeVideoPos">
 								</div>
-								<div id="remoteAudioVolume" style="background:green;width:568px;height:5px;">
+								<div id="remoteAudioVolume">
 								</div>
 								<button class="buttonCls" id="startService">开始服务</button><button class="buttonCls" id="stopVideo">停止视频</button>
 							</div>
@@ -219,11 +156,15 @@
 	<div id="SessionPrompt_Div"></div>
 	<!-- 日志输出层 -->
 	<div id="LOG_DIV_BODY">
-		<div id="LOG_DIV_TITLE">系统日志<b title="最小化">-</b></div>
+		<div id="LOG_DIV_TITLE">系统日志<b title="最小化">—</b></div>
 		<div id="LOG_DIV_CONTENT"></div>
-		<iframe frameborder=0 scrolling=no style="background-color:transparent; position: absolute; z-index: 9999; width: 100%; height: 100%; top: 0;left:0;"></iframe>
+		<iframe frameborder=0 scrolling=no></iframe>
 	</div>
-	<a class="btn" id="showLog">显示日志</a>
+	<div class="showBox">
+		<span id="icon"></span>
+		<span class="btn" id="showLog">显示日志</span>	
+	</div>
+	
 </body>
 <script>
 $(document).keypress(function(event){  

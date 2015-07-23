@@ -284,15 +284,16 @@ function OnAnyChatObjectEvent(dwObjectType, dwObjectId, dwEventType, dwParam1, d
 	//AddLog("OnAnyChatObjectEvent(dwObjectType=" + dwObjectType + ", dwObjectId=" + dwObjectId +  ", dwEventType=" + dwEventType + ")", LOG_TYPE_EVENT);
 	//refreshAgentServiceInfo();
 	switch(dwEventType) {
-		case ANYCHAT_OBJECT_EVENT_UPDATE:		OnAnyChatObjectUpdate(dwObjectType, dwObjectId);			break;
+	    case ANYCHAT_OBJECT_EVENT_UPDATE: OnAnyChatObjectUpdate(dwObjectType, dwObjectId); break;
+	    case ANYCHAT_OBJECT_EVENT_SYNCDATAFINISH: OnAnyChatObjectSyncDataFinish(dwObjectType, dwObjectId); break;
 		case ANYCHAT_AREA_EVENT_ENTERRESULT:	OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwParam1);	break;
 		case ANYCHAT_AREA_EVENT_LEAVERESULT:    OnAnyChatLeaveAreaResult(dwObjectType, dwObjectId, dwParam1); break;
 		case ANYCHAT_AREA_EVENT_STATUSCHANGE:   OnAnyChatAreaStatusChange(dwObjectType, dwObjectId, dwParam1); break;
 		case ANYCHAT_QUEUE_EVENT_STATUSCHANGE:	OnAnyChatQueueStatusChanged(dwObjectType, dwObjectId);			break;
 		case ANYCHAT_QUEUE_EVENT_ENTERRESULT:	OnAnyChatEnterQueueResult(dwObjectType, dwObjectId, dwParam1);	break;
 		case ANYCHAT_QUEUE_EVENT_LEAVERESULT:	OnAnyChatLeaveQueueResult(dwObjectType, dwObjectId, dwParam1);	break;
-		case ANYCHAT_AGENT_EVENT_STATUSCHANGE:	OnAnyChatAgentStatusChanged(dwObjectType, dwObjectId, dwParam1);			break;
-		case ANYCHAT_AGENT_EVENT_SERVICENOTIFY:	OnAnyChatServiceStart(dwParam1,dwParam2);			break;
+		case ANYCHAT_AGENT_EVENT_STATUSCHANGE: OnAnyChatAgentStatusChanged(dwObjectType, dwObjectId, dwParam1); break;
+		case ANYCHAT_AGENT_EVENT_SERVICENOTIFY: OnAnyChatServiceStart(dwParam1, dwParam2, dwParam3); break;
 		case ANYCHAT_AGENT_EVENT_WAITINGUSER:   OnAnyChatAgentWaitingUser(); break;
 		default:
 			break;
@@ -305,33 +306,22 @@ function OnAnyChatObjectUpdate(dwObjectType, dwObjectId) {
     AddLog('OnAnyChatObjectUpdate(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
 
 	if(dwObjectType == ANYCHAT_OBJECT_TYPE_AREA) {
-		str='业务对象数据更新事件。服务区域';
-		var areaName = BRAC_ObjectGetStringValue(dwObjectType, dwObjectId, ANYCHAT_OBJECT_INFO_NAME);
-		var description = BRAC_ObjectGetStringValue(dwObjectType, dwObjectId, ANYCHAT_OBJECT_INFO_DESCRIPTION);
-		
-		if(queueListName==-1){
-			$("#loginDiv").hide(); //隐藏登录界面
-	        $("#enterRoom").show(); //显示大厅
-	        $("#enterRoom h2:eq(1)").text("营业厅列表");
-			$("#poptip li").each(function(index){ 
-				if(dwObjectId== $(this).attr('dwObjectId')){$(this).remote();}
-			});
-            var createObj=$('<li dwObjectId="' + dwObjectId + '">' + '<p>' + areaName + '</p>' + '<p class="description">' + description + '</p>' + '<p>' + '<img src="./img/area.png">' + '</p>' + '<p>编号：' + dwObjectId + '</p>' + '<p>' + '<a class="btn">进入</a>' + '</p>' + '</li>');
-            createObj.css("background-color", colorArray[colorIdx]);
-            $("#poptip").append(createObj);
-            colorIdx++;
-            if (colorIdx == 4) {
-                colorIdx = 0;
-            }
-
-				
-		}
-		$("#LOADING_GREY_DIV").hide();//隐藏登录蒙层
+	    areaIdArray[areaArrayIdx] = dwObjectId;
+	    areaArrayIdx++;
 	} else if(dwObjectType == ANYCHAT_OBJECT_TYPE_QUEUE) {
-		str='业务对象数据更新事件。队列对象';
+		
 	} else if(dwObjectType == ANYCHAT_OBJECT_TYPE_AGENT) {
-		str='业务对象数据更新事件。客服对象';
+		
 	}
+}
+
+//业务对象同步完成事件
+function OnAnyChatObjectSyncDataFinish(dwObjectType, dwObjectId) {
+    AddLog('OnAnyChatObjectSyncDataFinish(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
+
+    if (dwObjectType == ANYCHAT_OBJECT_TYPE_AREA) {
+        showSerivceArea();
+    }
 }
 
 // 进入服务区域通知事件
@@ -343,33 +333,33 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 		if(userType==1){//客户
 			/**获取队列*/
 			var queueList =BRAC_ObjectGetIdList(ANYCHAT_OBJECT_TYPE_QUEUE);
-			for ( var i in queueList) {
-				var queueListId=parseInt(queueList[i]);
-				/**获取队列名称*/
-				var queueName=BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueListId, ANYCHAT_OBJECT_INFO_NAME);
-				/**获取队列排队人数*/
-				var queueLength=BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_QUEUE,queueListId,ANYCHAT_QUEUE_INFO_LENGTH);
-				queueLength=queueLength<0?0:queueLength;
-				/**获取队列信息*/
-				var queueInfo=BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueListId, ANYCHAT_OBJECT_INFO_DESCRIPTION);
-				$("#LOADING_GREY_DIV").hide();//隐藏蒙层
-	            $('#poptip li[dwobjectid]').hide(); //隐藏服务厅
-	            $("#enterRoom h2:eq(1)").text(queueListName);
-	            var liObject = $('<li class="queue-item" queueid="' + queueListId + '">' +
-                                    '<a class="queue-item-link"><img class="queue-item-pic" src="./img/queue.png" /></a>' +
-                                    '<span class="queue-item-layout">' +
-                                        '<span class="queue-item-layout-title">' + queueName + '</span>' +
-                                        '<span class="queue-item-layout-desc">' + queueInfo + '</span>' +
-                                        '<span class="queue-item-layout-desc">' + '当前排队人数：<strong>' + queueLength + " 人" + '</strong></span>' +
-                                        '<span class="queue-item-layout-btn">' + '<a class="btn">立即办理</a>' + '</span>' + 
-                                    '</span>' +
-                                 '</li>');
-	            liObject.css("background-color", colorQueueArray[colorIdx]);
-	            $("#poptip").append(liObject);
-	            colorIdx++;
-	            if (colorIdx == 3) {
-	                colorIdx = 0;
-	            }	            
+			for (var i in queueList) {
+			    var queueListId = parseInt(queueList[i]);
+			    /**获取队列名称*/
+			    var queueName = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueListId, ANYCHAT_OBJECT_INFO_NAME);
+			    /**获取队列排队人数*/
+			    var queueLength = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueListId, ANYCHAT_QUEUE_INFO_LENGTH);
+			    queueLength = queueLength < 0 ? 0 : queueLength;
+			    /**获取队列信息*/
+			    var queueInfo = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueListId, ANYCHAT_OBJECT_INFO_DESCRIPTION);
+			    $("#LOADING_GREY_DIV").hide(); //隐藏蒙层
+			    $('#poptip li[dwobjectid]').hide(); //隐藏服务厅
+			    $("#enterRoom h2:eq(1)").text(queueListName);
+			    var liObject = $('<li class="queue-item" queueid="' + queueListId + '">' +
+                    '<a class="queue-item-link"><img class="queue-item-pic" src="./img/queue.png" /></a>' +
+                    '<span class="queue-item-layout">' +
+                        '<span class="queue-item-layout-title">' + queueName + '</span>' +
+                        '<span class="queue-item-layout-desc">' + queueInfo + '</span>' +
+                        '<span class="queue-item-layout-desc">' + '当前排队人数：<strong>' + queueLength + " 人" + '</strong></span>' +
+                        '<span class="queue-item-layout-btn">' + '<a class="btn">立即办理</a>' + '</span>' +
+                    '</span>' +
+                    '</li>');
+			    liObject.css("background-color", colorQueueArray[colorIdx]);
+			    $("#poptip").append(liObject);
+			    colorIdx++;
+			    if (colorIdx == 3) {
+			        colorIdx = 0;
+			    }
 			}
 			$("#roomOut").off().click(function() {
 				$("#LOADING_GREY_DIV").show();//显示等待蒙层
@@ -397,7 +387,10 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
         }
 
         //坐席
-        if (userType == 2) {
+        if (userType == 2) {
+
+            $("#LOADING_GREY_DIV").hide(); //隐藏等待蒙层
+
             refreshAgentServiceInfo();
 
             $("#roomOut").off().click(function () {
@@ -483,8 +476,8 @@ function OnAnyChatAgentStatusChanged(dwObjectType, dwObjectId, dwParam1) {
 }
 
 // 坐席服务开始
-function OnAnyChatServiceStart(dwAgentId, clientId){
-    AddLog('OnAnyChatServiceStart(' + dwAgentId + ',' + clientId + ')', LOG_TYPE_EVENT);
+function OnAnyChatServiceStart(dwAgentId, clientId, dwQueueId) {
+    AddLog('OnAnyChatServiceStart(' + dwAgentId + ',' + clientId + ',' + dwQueueId +')', LOG_TYPE_EVENT);
 	if (userType == 2 && mSelfUserId == dwAgentId) {
 		$("#LOADING_GREY_DIV span").hide();
 	    refreshServicedUserInfo(clientId);

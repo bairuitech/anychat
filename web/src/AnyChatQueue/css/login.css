@@ -97,7 +97,8 @@ ol li {
 	border: 1px solid #d6d6d6;
 	height: 35px;
 	line-height: 35px;
-	padding: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
 	width: 238px;
 	border-radius: 3px;
 	margin-left: 5px;
@@ -116,51 +117,55 @@ ol li {
 	position: fixed;
 	right: 20px;
 	z-index: 99999;
+	right: 0;
 	width: 420px;
 }
 
 #LOG_DIV_TITLE {
 	font-size: 12px;
-	height: 15px;
+	padding: 10px;
 	line-height: 15px;
-	margin-right: -10px;
-	margin-top: -5px;
 	position: absolute;
-	right: 10px;
-	text-align: right;
+	right: 0px;
 	z-index: 99999;
+	background: #00a4e3;
+	width: 402px;
+	color: #fff;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+
 }
 
 #LOG_DIV_TITLE b {
-	border: 1px solid black;
-	width: 15px;
-	height: 15px;
 	display: block;
 	text-align: center;
 	float: right;
 	margin-left: 5px;
 	cursor: pointer;
-	background: white;
 }
 #LOG_DIV_TITLE b:hover {
-	background: red;
+	background: #ccd0d9;
 	color: white;
 }
 #LOG_DIV_CONTENT {
-	margin-top: 15px;
+	margin-top: 35px;
 	font-size: 12px;
 	height: 155px;
 	overflow-y: auto;
 	padding: 10px;
 	position: absolute;
-	text-align: right;
 	width: 400px;
 	z-index: 99999;
+	border: 1px solid #00cae5;
+	right: 0;
+	text-align: right;
 }
-
+#LOG_DIV_CONTENT font {
+	margin-bottom: 4px;
+	display: inline-block;
+}
 #LOG_DIV_CONTENT:hover {
-	background-color: #fafadd;
-	border: 1px solid black;
+	background-color: #d1f0ed;
 }
 
 #loginRoom {
@@ -179,8 +184,9 @@ ol li {
 	border: 1px solid #d6d6d6;
 	height: 30px;
 	line-height: 30px;
-	padding: 5px;
-	width: 115px;
+	padding-right: 2px;
+	padding-left: 2px;
+	width: 117px;
 	border-radius: 3px;
 	margin-left: 5px;
 }
@@ -254,16 +260,37 @@ a.btn:hover {
 	height: 90%;
 	position: relative;
 }
-
-#showLog {
-	position: fixed;
-	bottom: 20px;
-	right: 30px;
-	z-index: 99999;
+/*日志输出层*/
+#LOG_DIV_BODY iframe {
+	background-color:transparent;
+	position: absolute;
+	z-index: 9999;
+	width: 100%; height: 100%; top: 0;left:0;
 }
-
+.showBox {
+	background: #00a4e3;
+	color: #fff;
+	padding: 2px 15px;
+	position: fixed;
+	bottom: 0px;
+	right: 30px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+#showLog {
+	font-size: 16px;
+}
+#icon {
+	width: 25px;
+	height:32px;
+	display: inline-block;
+	float: left;
+	margin-right: 5px;
+	background: url('./../img/book.png') no-repeat;
+	margin-top: 2px;
+}
 .list {
-	padding: 8% 110px 0;
+	padding: 3% 110px 0;
 	color: white;
 }
 
@@ -309,6 +336,7 @@ a.btn:hover {
 	padding: 10px 35px;
 }
 
+
 .list li p:last-child a.btn:hover {
 	background: none;
 	box-shadow: 1px 1px 3px gray;
@@ -333,4 +361,19 @@ a.btn:hover {
 	position: absolute;
 	z-index: 44;
 	text-align: center;
+}
+#LOADING_GREY_DIV h2 {
+	margin:10px;
+	color: orange;
+	display: inline-block;
+	font-weight: bold;
+	padding: 5px;
+	margin-top:20%;
+	line-height:53px;height: 53px
+}
+#LOADING_GREY_DIV h2 img {
+	height: 35px;margin-top:10px
+}
+#LOADING_GREY_DIV h2 span {
+	float: right;margin-left: 10px;
 }
