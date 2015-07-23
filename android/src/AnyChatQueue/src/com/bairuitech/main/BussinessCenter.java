@@ -166,7 +166,7 @@ public void realse() {
 		mApplication.setRoomId(dwParam);
 		//界面是在这里跳转的
 		Intent intent = new Intent();
-		intent.setClass(mContext, VideoAty.class);
+		intent.setClass(mContext, VideoActivity.class);
 		mContext.startActivity(intent);
 	}
 
@@ -174,7 +174,7 @@ public void realse() {
 			String szUserStr) {
 	
 		Intent intent = new Intent();
-		intent.setClass(mContext, QueueAty.class);
+		intent.setClass(mContext, QueueActivity.class);
 		mContext.startActivity(intent);
 		mContext.finish();
 	

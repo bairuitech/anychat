@@ -33,11 +33,11 @@ import com.bairuitech.common.BaseConst;
 import com.bairuitech.common.BaseMethod;
 import com.bairuitech.common.CustomApplication;
 import com.bairuitech.common.DialogFactory;
-import com.bairuitech.main.LoginAty;
+import com.bairuitech.main.LoginActivity;
 import com.example.anychatqueue.R;
 
 
-public class AgentServerAty extends Activity implements 
+public class AgentServerActivity extends Activity implements 
 		OnClickListener, AnyChatBaseEvent, AnyChatVideoCallEvent,AnyChatObjectEvent
 		 {
 	List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
@@ -86,7 +86,7 @@ public class AgentServerAty extends Activity implements
 	        	list.add(map);
 	        }
 		 
-		adapter = new SimpleAdapter(AgentServerAty.this, list, R.layout.videoserver_listviewitem, new String[]{"name","number"}, new int[]{R.id.id_tv_queue,R.id.id_tv_number});
+		adapter = new SimpleAdapter(AgentServerActivity.this, list, R.layout.videoserver_listviewitem, new String[]{"name","number"}, new int[]{R.id.id_tv_queue,R.id.id_tv_number});
 		listView = (ListView) findViewById(R.id.id_listview_server);
 		listView.setAdapter(adapter);
 		
@@ -126,7 +126,7 @@ public class AgentServerAty extends Activity implements
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		BussinessCenter.mContext = AgentServerAty.this;
+		BussinessCenter.mContext = AgentServerActivity.this;
 		initSdk();
 		super.onResume();
 	}
@@ -219,7 +219,7 @@ public class AgentServerAty extends Activity implements
 			Intent intent = new Intent();
 			intent.putExtra("INTENT", BaseConst.AGAIGN_LOGIN);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.setClass(this, LoginAty.class);
+			intent.setClass(this, LoginActivity.class);
 			this.startActivity(intent);
 			this.finish();
 		}
@@ -247,7 +247,7 @@ public class AgentServerAty extends Activity implements
 			if (dwErrorCode == AnyChatDefine.BRAC_ERRORCODE_SUCCESS) {
 				dialog = DialogFactory.getDialog(
 						DialogFactory.DIALOGID_CALLING, dwUserId,
-						AgentServerAty.this,mApplication);
+						AgentServerActivity.this,mApplication);
 				dialog.show();
 
 			} else {
@@ -316,7 +316,7 @@ public class AgentServerAty extends Activity implements
 			break;	
 			
 		case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_WAITINGUSER:				
-			BaseMethod.showToast("暂时无人排队中...", AgentServerAty.this);		
+			BaseMethod.showToast("暂时无人排队中...", AgentServerActivity.this);		
 			break;
 			
 		case AnyChatObjectDefine.ANYCHAT_AREA_EVENT_LEAVERESULT:  

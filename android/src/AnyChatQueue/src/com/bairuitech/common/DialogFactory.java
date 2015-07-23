@@ -19,7 +19,7 @@ import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.main.BussinessCenter;
-import com.bairuitech.main.LoginAty;
+import com.bairuitech.main.LoginActivity;
 import com.example.anychatqueue.R;
 
 
@@ -249,7 +249,7 @@ public class DialogFactory {
 					intent = new Intent();
 					intent.putExtra("INTENT", BaseConst.APP_EXIT);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					intent.setClass(mContext, LoginAty.class);
+					intent.setClass(mContext, LoginActivity.class);
 					mContext.startActivity(intent);
 					break;
 				case DIALOG_SERCLOSE:
@@ -257,7 +257,7 @@ public class DialogFactory {
 				
 					intent = new Intent();
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					intent.setClass(mContext, LoginAty.class);
+					intent.setClass(mContext, LoginActivity.class);
 					mContext.startActivity(intent);
 					break;
 				case DIALOG_NETCLOSE:

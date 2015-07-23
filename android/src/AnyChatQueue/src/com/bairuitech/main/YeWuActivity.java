@@ -26,7 +26,7 @@ import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
 import com.bairuitech.common.BaseMethod;
 import com.bairuitech.common.CustomApplication;
-import com.bairuitech.main.LoginAty;
+import com.bairuitech.main.LoginActivity;
 import com.example.anychatqueue.R;
 
 
@@ -177,7 +177,7 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 	public void OnAnyChatLinkCloseMessage(int dwErrorCode) {
 		BaseMethod.showToast("网络断开连接",YeWuActivity.this);
 		anychat.Logout();
-		Intent intent = new Intent(YeWuActivity.this,LoginAty.class);
+		Intent intent = new Intent(YeWuActivity.this,LoginActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		
@@ -193,7 +193,7 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_ENTERRESULT:	
 			
 			Intent in=new Intent();
-			in.setClass(YeWuActivity.this, QueueAty.class);
+			in.setClass(YeWuActivity.this, QueueActivity.class);
 			startActivity(in);
 			pd.dismiss();
 			break;
