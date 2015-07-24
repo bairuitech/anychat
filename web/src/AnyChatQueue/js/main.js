@@ -32,6 +32,7 @@ var colorQueueArray = ["#48cfae", "#a0d468", "#ffcf56"];
 
 //当前被选择的队列名称
 var currentSelectedQueueName = "";
+var currentSelectedQueueId = -1;
 
 //服务区域(营业厅)ID数组
 var areaIdArray = null;
