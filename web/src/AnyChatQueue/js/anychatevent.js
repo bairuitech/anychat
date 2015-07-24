@@ -111,10 +111,10 @@ function OnAnyChatConnect(bSuccess, errorcode) {
 function OnAnyChatLoginSystem(dwUserId, errorcode) {
     AddLog("OnAnyChatLoginSystem(userid=" + dwUserId + ", errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
 	if (errorcode == 0) {
-	    if (userType == 2) {//客服
+	    if (mUserType == 2) {//客服
 	        currentAgentID = dwUserId;
 			dwAgentFlags=ANYCHAT_OBJECT_FLAGS_AGENT;//坐席标识
-		}else if(userType==1){
+		}else if(mUserType==1){
 			dwAgentFlags=0;//客户
 
         }
@@ -136,9 +136,9 @@ function OnAnyChatEnterRoom(dwRoomId, errorcode) {
     AddLog("OnAnyChatEnterRoom(dwRoomId=" + dwRoomId + ',errorcode=' + errorcode + ')', LOG_TYPE_NORMAL);
 
 	if (errorcode == 0) {
-		if (userType == 2) {
+		if (mUserType == 2) {
 			
-		} else if (userType ==1) {
+		} else if (mUserType ==1) {
 			/**客服姓名*/
 			var name1 = BRAC_GetUserInfo(mTargetUserId,USERINFO_NAME); 
 			/**个人姓名*/
@@ -182,11 +182,11 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 		if (bEnterRoom == 1) {
 			//请求对方视频
 			startVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",1);
-			if(userType == 1){
+			if(mUserType == 1){
 				
 			}
 		} else {
-			if (userType == 2) {
+			if (mUserType == 2) {
 				if (dwUserId == mTargetUserId) { // 当前被请求的用户离开房间
 					
 					/**客服结束服务*/
@@ -282,7 +282,6 @@ function OnAnyChatFriendStatus(dwUserId, dwStatus) {
 //业务对象事件通知
 function OnAnyChatObjectEvent(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam) {
 	//AddLog("OnAnyChatObjectEvent(dwObjectType=" + dwObjectType + ", dwObjectId=" + dwObjectId +  ", dwEventType=" + dwEventType + ")", LOG_TYPE_EVENT);
-	//refreshAgentServiceInfo();
 	switch(dwEventType) {
 	    case ANYCHAT_OBJECT_EVENT_UPDATE: OnAnyChatObjectUpdate(dwObjectType, dwObjectId); break;
 	    case ANYCHAT_OBJECT_EVENT_SYNCDATAFINISH: OnAnyChatObjectSyncDataFinish(dwObjectType, dwObjectId); break;
@@ -330,7 +329,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 	if (dwErrorCode == 0) {
 	    colorIdx = 0;
 		// 进入服务区域成功
-		if(userType==1){//客户
+		if(mUserType==1){//客户
 			/**获取队列*/
 			var queueList =BRAC_ObjectGetIdList(ANYCHAT_OBJECT_TYPE_QUEUE);
 			for (var i in queueList) {
@@ -366,7 +365,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 				var leaveFlag;
             	if($("#callLayer").css("display")!="block"){
 	                /**离开营业厅*/
-            		leaveFlag=BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+            		leaveFlag=BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, dwCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
 	                $("#LOADING_GREY_DIV span").text("正在离开营业厅，请稍候......");//显示等待蒙层
 	                if(!leaveFlag){
 	                	$('#poptip li[queueid]').hide(); //隐藏队列
@@ -384,19 +383,12 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
             		}
             	}
             });
-        }
-
-        //坐席
-        if (userType == 2) {
-
+        } else if(mUserType == 2) {			//坐席
             $("#LOADING_GREY_DIV").hide(); //隐藏等待蒙层
-
             refreshAgentServiceInfo();
-
             $("#roomOut").off().click(function () {
                 leaveAreaClickEvent();
             });
-
         }
 	}
 }
@@ -409,12 +401,15 @@ function OnAnyChatLeaveAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 //营业厅状态变化
 function OnAnyChatAreaStatusChange(dwObjectType, dwObjectId, dwErrorCode) {
     AddLog('OnAnyChatAreaStatusChange(' + dwObjectType + ',' + dwObjectId + ',' + dwErrorCode + ')', LOG_TYPE_EVENT);
+	if (mUserType == 2) {
+        refreshAgentServiceInfo();
+    }
 }
 
 // 队列状态变化
 function OnAnyChatQueueStatusChanged(dwObjectType, dwObjectId) {
     AddLog('OnAnyChatQueueStatusChanged(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
-    if (userType == 2) {
+    if (mUserType == 2) {
         refreshAgentServiceInfo();
     }
 	if(currentSelectedQueueId == dwObjectId)
@@ -480,7 +475,7 @@ function OnAnyChatAgentStatusChanged(dwObjectType, dwObjectId, dwParam1) {
 // 坐席服务开始
 function OnAnyChatServiceStart(dwAgentId, clientId, dwQueueId) {
     AddLog('OnAnyChatServiceStart(' + dwAgentId + ',' + clientId + ',' + dwQueueId +')', LOG_TYPE_EVENT);
-	if (userType == 2 && mSelfUserId == dwAgentId) {
+	if (mUserType == 2 && mSelfUserId == dwAgentId) {
 		$("#LOADING_GREY_DIV span").hide();
 	    refreshServicedUserInfo(clientId);
 		mTargetUserId=clientId;//客户id
