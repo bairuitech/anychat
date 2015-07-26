@@ -385,7 +385,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
             });
         } else if(mUserType == 2) {			//坐席
             $("#LOADING_GREY_DIV").hide(); //隐藏等待蒙层
-            refreshAgentServiceInfo();
+            refreshAgentServiceInfo(dwCurrentAreaId);
             $("#roomOut").off().click(function () {
                 leaveAreaClickEvent();
             });
@@ -395,14 +395,16 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 
 // 离开服务区域通知事件
 function OnAnyChatLeaveAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
-	AddLog('OnAnyChatLeaveAreaResult(' + dwObjectType + ',' + dwObjectId+','+dwErrorCode + ')', LOG_TYPE_EVENT);
+    AddLog('OnAnyChatLeaveAreaResult(' + dwObjectType + ',' + dwObjectId + ',' + dwErrorCode + ')', LOG_TYPE_EVENT);
+
+    dwCurrentAreaId = -1;
 }
 
 //营业厅状态变化
 function OnAnyChatAreaStatusChange(dwObjectType, dwObjectId, dwErrorCode) {
     AddLog('OnAnyChatAreaStatusChange(' + dwObjectType + ',' + dwObjectId + ',' + dwErrorCode + ')', LOG_TYPE_EVENT);
 	if (mUserType == 2) {
-        refreshAgentServiceInfo();
+	    refreshAgentServiceInfo(dwCurrentAreaId);
     }
 }
 
@@ -410,7 +412,7 @@ function OnAnyChatAreaStatusChange(dwObjectType, dwObjectId, dwErrorCode) {
 function OnAnyChatQueueStatusChanged(dwObjectType, dwObjectId) {
     AddLog('OnAnyChatQueueStatusChanged(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
     if (mUserType == 2) {
-        refreshAgentServiceInfo();
+        refreshAgentServiceInfo(dwCurrentAreaId);
     }
 	if(currentSelectedQueueId == dwObjectId)
 		refreshUserWaitingInfo(dwObjectId);
@@ -420,7 +422,7 @@ function OnAnyChatQueueStatusChanged(dwObjectType, dwObjectId) {
 // 本地用户进入队列结果
 function OnAnyChatEnterQueueResult(dwObjectType, dwObjectId, dwErrorCode) {
     AddLog('OnAnyChatEnterQueueResult(' + dwObjectType + ',' + dwObjectId + ',' + dwErrorCode + ')', LOG_TYPE_EVENT);
-	currentSelectedQueueId = dwObjectId;
+	//currentSelectedQueueId = dwObjectId;
     currentSelectedQueueName = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, dwObjectId, ANYCHAT_OBJECT_INFO_NAME);
     $("#enterRoom h2").text(currentSelectedQueueName + " - 服务窗口");
     isShowReturnBtn(false);
@@ -433,7 +435,7 @@ function OnAnyChatEnterQueueResult(dwObjectType, dwObjectId, dwErrorCode) {
      $("#queueMsg1 strong:eq(2)").text(0); //清零排队时间
      clearInterval(waitTimeSet);
      waitTimeSet = setInterval(function () {
-         var time = formatSeconds(BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_INFO_WAITTIMESECOND));
+         var time = formatSeconds(BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_INFO_WAITTIMESECOND));
          $("#queueMsg1 strong:eq(2)").text(time);
      }, 1000);
 }
@@ -458,7 +460,7 @@ function OnAnyChatAgentStatusChanged(dwObjectType, dwObjectId, dwParam1) {
     AddLog('OnAnyChatAgentStatusChanged(' + dwObjectType + ',' + dwObjectId + ',' + dwParam1 + ')', LOG_TYPE_EVENT);
     if (dwObjectType == ANYCHAT_OBJECT_TYPE_AGENT && currentAgentID == dwObjectId) {
         if (dwParam1 == ANYCHAT_AGENT_STATUS_WAITTING) {
-            refreshAgentServiceInfo();
+            refreshAgentServiceInfo(dwCurrentAreaId);
 
             refreshServicedUserInfo(-1);
             startServiceTag = false;

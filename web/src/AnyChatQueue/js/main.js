@@ -9,7 +9,6 @@ var mUserType; // 用户类型 1为客户,2为坐席
 var servantName=-1;//坐席名称
 var TimeSet;//个人数据更新计时器
 var dwAgentFlags=-1;//身份标识(用户，坐席)
-var queueid;//进入的队列id
 var startServiceTag=false;//开始服务点击按钮事件
 var waitTimeSet; //等待时间计时器
 var currentAgentID = -1;  //当前座席ID
@@ -280,10 +279,10 @@ $(function () {
             $("#LOADING_GREY_DIV span").text("正在进入队列，请稍候......");
             $("#enterRoom h2").text("排队信息");
             $("#LOADING_GREY_DIV").show(); //显示等待蒙层
-            queueid = parseInt(queueId); //获取队列id
+            currentSelectedQueueId = parseInt(queueId); //获取队列id
             /**进入队列*/
-            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERENTER, 0, 0, 0, 0, "");
-            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + queueid + "," + ANYCHAT_QUEUE_CTRL_USERENTER + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_CTRL_USERENTER, 0, 0, 0, 0, "");
+            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + currentSelectedQueueId + "," + ANYCHAT_QUEUE_CTRL_USERENTER + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
             $("#roomOut").off().click(function () {
                 if ($('#queueMsg1').css("display") == "block") {
@@ -334,8 +333,8 @@ $(function () {
                 $("#LOADING_GREY_DIV span").text("取消排队处理中，请稍候......"); //等待蒙层文本填充
                 $("#LOADING_GREY_DIV").show(); //显示等待蒙层
                 /**离开队列*/
-                var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-                AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + queueid + "," + ANYCHAT_QUEUE_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+                var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+                AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + currentSelectedQueueId + "," + ANYCHAT_QUEUE_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
                 isShowReturnBtn(true);
 
@@ -470,10 +469,10 @@ function refreshUserWaitingInfo(queueID) {
 }
 
 //刷新坐席进入服务区域后的显示信息
-function refreshAgentServiceInfo() {
+function refreshAgentServiceInfo(areaId) {
     if (mUserType == 2) {
-        var queueCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, dwCurrentAreaId, ANYCHAT_AREA_INFO_QUEUECOUNT);
-        var queuesUserCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, dwCurrentAreaId, ANYCHAT_AREA_INFO_QUEUEUSERCOUNT);
+        var queueCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, areaId, ANYCHAT_AREA_INFO_QUEUECOUNT);
+        var queuesUserCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, areaId, ANYCHAT_AREA_INFO_QUEUEUSERCOUNT);
         //累计服务时长
         var serviceTotalTime = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AGENT, currentAgentID, ANYCHAT_AGENT_INFO_SERVICETOTALTIME);
         //累计服务的用户数
