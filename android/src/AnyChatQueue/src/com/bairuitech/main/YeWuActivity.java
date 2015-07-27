@@ -120,19 +120,15 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
     	if(anychat == null){
     		anychat = AnyChatCoreSDK.getInstance(this);
     	}
-    	
     	anychat.SetBaseEvent(this);
     	anychat.SetObjectEvent(this);
 	}
     
-	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK){
 			//退出营业厅（进营业厅，出营业厅，加入队列，出队列都是这个方法）
 			alertDialog();	
-		
 		}		
-
 		return super.onKeyDown(keyCode, event);
 	}
 	private void alertDialog() {

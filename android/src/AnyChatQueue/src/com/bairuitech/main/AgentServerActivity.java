@@ -40,6 +40,7 @@ import com.example.anychatqueue.R;
 public class AgentServerActivity extends Activity implements 
 		OnClickListener, AnyChatBaseEvent, AnyChatVideoCallEvent,AnyChatObjectEvent
 		 {
+	
 	List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
 	private AnyChatCoreSDK anychat;
 	private Dialog dialog;
@@ -324,14 +325,15 @@ public class AgentServerActivity extends Activity implements
 			break;
 			
 		case AnyChatObjectDefine.ANYCHAT_QUEUE_EVENT_STATUSCHANGE:
-			for(int i=0;i<queueIds.length;i++){
-				if(dwObjectId == queueIds[i]){
-					int number1 = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueIds[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
+			
+			for(int i=0;i<list.size();i++){
+				int CurrentQueueId = Integer.parseInt(list.get(i).get("id").toString())	;
+				if(dwObjectId == CurrentQueueId){
+					int number1 = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, dwObjectId,AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
 					list.get(i).put("number", number1);
 					adapter.notifyDataSetChanged();
 				}
 			}
-			
 			break;
 		default:
 			break;
