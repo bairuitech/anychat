@@ -4,12 +4,11 @@ var mRefreshPluginTimer = -1; // 检查插件是否安装完成定时器
 var mSelfUserId = -1; // 本地用户ID
 var mTargetUserId = -1; // 目标用户ID（请求了对方的音视频）
 var mRefreshVolumeTimer = -1; // 实时音量大小定时器
-var hallbuinessNum = -1; // 营业厅号
-var userType; // 用户类型 1为客户,2为坐席
+var dwCurrentAreaId = -1; // 营业厅号
+var mUserType; // 用户类型 1为客户,2为坐席
 var servantName=-1;//坐席名称
 var TimeSet;//个人数据更新计时器
 var dwAgentFlags=-1;//身份标识(用户，坐席)
-var queueid;//进入的队列id
 var startServiceTag=false;//开始服务点击按钮事件
 var waitTimeSet; //等待时间计时器
 var currentAgentID = -1;  //当前座席ID
@@ -32,6 +31,7 @@ var colorQueueArray = ["#48cfae", "#a0d468", "#ffcf56"];
 
 //当前被选择的队列名称
 var currentSelectedQueueName = "";
+var currentSelectedQueueId = -1;
 
 //服务区域(营业厅)ID数组
 var areaIdArray = null;
@@ -146,7 +146,7 @@ $(function () {
             return;
         }
 
-        userType = parseInt($("#askSelect option:selected").val()); // 获取目标用户类型
+        mUserType = parseInt($("#askSelect option:selected").val()); // 获取目标用户类型
         $("#poptip li").remove(); //清除营业厅
         $("#LOADING_GREY_DIV img").show(); //显示登录等待蒙层
         $("#LOADING_GREY_DIV").show(); //显示登录蒙层
@@ -154,7 +154,7 @@ $(function () {
         BRAC_Connect(mDefaultServerAddr, mDefaultServerPort);
         /**登入anychat*/
         var loginTag = BRAC_Login($("#username").val(), "", 0);
-        switch (userType) {
+        switch (mUserType) {
             case 1: //用户登入的情况
                 break;
             case 2:
@@ -241,7 +241,7 @@ $(function () {
     $("#leaveQueue").click(function () {
         $("#enterRoom h2").text("营业厅列表");
         /**离开营业厅*/
-        BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+        BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, dwCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
         $(this).hide();
         $('#selectList').hide();
         $('#roomOut').show();
@@ -259,10 +259,10 @@ $(function () {
 
             $("#LOADING_GREY_DIV img").show(); //显示登录等待蒙层
             $("#LOADING_GREY_DIV").show(); //显示蒙层
-            if (userType == 1) {//客户
+            if (mUserType == 1) {//客户
                 //$("#LOADING_GREY_DIV").hide(); //隐藏蒙层
                 $('#poptip li[queueid]').remove(); //移除队列
-            } else if (userType == 2) {//客服
+            } else if (mUserType == 2) {//客服
                 $('#enterRoom .contentArea').hide(); //直接隐藏进入队列步骤
                 $("#enterRoom h2").text("坐席端服务窗口");
                 $("#videoCall").show(); //显示客户视频窗口
@@ -270,19 +270,19 @@ $(function () {
                     $('#returnHall').click();
                 });
             }
-            hallbuinessNum = parseInt(areaId); //营业厅号为id
+            dwCurrentAreaId = parseInt(areaId); //营业厅号为id
             /**进入营业厅*/
-            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_CTRL_USERENTER, 0, 0, 0, 0, "");
-            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + hallbuinessNum + "," + ANYCHAT_AREA_CTRL_USERENTER + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, dwCurrentAreaId, ANYCHAT_AREA_CTRL_USERENTER, 0, 0, 0, 0, "");
+            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + dwCurrentAreaId + "," + ANYCHAT_AREA_CTRL_USERENTER + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
         } else if (!isEmpty(queueId)) {
             $("#LOADING_GREY_DIV span").text("正在进入队列，请稍候......");
             $("#enterRoom h2").text("排队信息");
             $("#LOADING_GREY_DIV").show(); //显示等待蒙层
-            queueid = parseInt(queueId); //获取队列id
+            currentSelectedQueueId = parseInt(queueId); //获取队列id
             /**进入队列*/
-            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERENTER, 0, 0, 0, 0, "");
-            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + queueid + "," + ANYCHAT_QUEUE_CTRL_USERENTER + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_CTRL_USERENTER, 0, 0, 0, 0, "");
+            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + currentSelectedQueueId + "," + ANYCHAT_QUEUE_CTRL_USERENTER + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
             $("#roomOut").off().click(function () {
                 if ($('#queueMsg1').css("display") == "block") {
@@ -304,7 +304,7 @@ $(function () {
         AddLog("BRAC_VideoCallControl(" + BRAC_VIDEOCALL_EVENT_FINISH + "," + mTargetUserId + ",0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
 
-        if (userType == 1) {
+        if (mUserType == 1) {
             $("#enterRoom h2").text(queueListName);
             /**离开队列*/
             //BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
@@ -333,15 +333,15 @@ $(function () {
                 $("#LOADING_GREY_DIV span").text("取消排队处理中，请稍候......"); //等待蒙层文本填充
                 $("#LOADING_GREY_DIV").show(); //显示等待蒙层
                 /**离开队列*/
-                var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-                AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + queueid + "," + ANYCHAT_QUEUE_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+                var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+                AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + currentSelectedQueueId + "," + ANYCHAT_QUEUE_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
                 isShowReturnBtn(true);
 
                 $("#roomOut").off().click(function () {
                     //离开营业厅
-                    var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-                    AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + hallbuinessNum + "," + ANYCHAT_AREA_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+                    var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, dwCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+                    AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + dwCurrentAreaId + "," + ANYCHAT_AREA_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
                     $("#enterRoom h2").text("营业厅列表");
                     $('#poptip li[queueid]').hide(); //隐藏队列
@@ -469,14 +469,12 @@ function refreshUserWaitingInfo(queueID) {
 }
 
 //刷新坐席进入服务区域后的显示信息
-function refreshAgentServiceInfo() {
-    if (userType == 2) {
-        var queueCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_INFO_QUEUECOUNT);
-        var queuesUserCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_INFO_QUEUEUSERCOUNT);
-
+function refreshAgentServiceInfo(areaId) {
+    if (mUserType == 2) {
+        var queueCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, areaId, ANYCHAT_AREA_INFO_QUEUECOUNT);
+        var queuesUserCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, areaId, ANYCHAT_AREA_INFO_QUEUEUSERCOUNT);
         //累计服务时长
         var serviceTotalTime = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AGENT, currentAgentID, ANYCHAT_AGENT_INFO_SERVICETOTALTIME);
-
         //累计服务的用户数
         var serviceUserCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AGENT, currentAgentID, ANYCHAT_AGENT_INFO_SERVICETOTALNUM);
 
@@ -565,8 +563,8 @@ function leaveAreaClickEvent() {
             $('#localVideoPos').empty();
             $('#remoteVideoPos').empty();
             /**离开营业厅*/
-            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + hallbuinessNum + "," + ANYCHAT_AREA_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, dwCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + dwCurrentAreaId + "," + ANYCHAT_AREA_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
             $('#videoCall').hide();
             $('#enterRoom .contentArea').show();
