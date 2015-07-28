@@ -129,7 +129,23 @@ public class AgentServerActivity extends Activity implements
 		// TODO Auto-generated method stub
 		BussinessCenter.mContext = AgentServerActivity.this;
 		initSdk();
+		dataUpdate();
 		super.onResume();
+	}
+
+	private void dataUpdate() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < queueIds.length; i++) {
+        	//获取业务字符名称；
+        	String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE,queueIds[i], AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
+        	//获取业务排队人数；
+        	int number = AnyChatCoreSDK.ObjectGetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_QUEUE, queueIds[i],AnyChatObjectDefine.ANYCHAT_QUEUE_INFO_LENGTH);
+        	//添加数据
+        	list.get(i).put("name", name);
+        	list.get(i).put("number",number);
+        	list.get(i).put("id", queueIds[i]);
+        	adapter.notifyDataSetChanged();
+        }
 	}
 
 	@Override

@@ -261,10 +261,12 @@ public class DialogFactory {
 					mContext.startActivity(intent);
 					break;
 				case DIALOG_NETCLOSE:
+					mContext.stopService(new Intent(BaseConst.ACTION_BACK_SERVICE));
 					
-					Intent intentSetting = new Intent();
-					intentSetting.setAction(android.provider.Settings.ACTION_WIRELESS_SETTINGS);//jump to wireless settings;
-					mContext.startActivity(intentSetting);
+					intent = new Intent();
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					intent.setClass(mContext, LoginActivity.class);
+					mContext.startActivity(intent);
 					break;
 				default:
 					break;

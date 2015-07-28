@@ -469,6 +469,7 @@ import com.example.anychatqueue.R;
 			this.finish();
 			}else if(mApplication.getUserType() == USERTYPE_AGENT){
 				
+				BaseMethod.showToast("视频通话已结束...", VideoActivity.this);
 				anychat.UserCameraControl(-1, 0);
 				anychat.UserSpeakControl(-1, 0);
 

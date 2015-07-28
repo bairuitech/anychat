@@ -1,6 +1,5 @@
 package com.bairuitech.main;
 
-import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,11 +24,8 @@ public class BussinessCenter{
 	private MediaPlayer mMediaPlayer;
 	public static ScreenInfo mScreenInfo;
 	public static Activity mContext;
-	
-	public static ArrayList<Integer> mOnlineFriendIds;
-
 	public static int selfUserId;
-	public static boolean bBack = false;// 程序是否在后�?
+	public static boolean bBack = false;
 	public static String selfUserName;
 	
 	private BussinessCenter() {
@@ -57,7 +53,6 @@ public class BussinessCenter{
 
 			@Override
 			public void onCompletion(MediaPlayer mp) {
-				// TODO Auto-generated method stub
 				mMediaPlayer.start();
 			}
 		});

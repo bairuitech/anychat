@@ -141,7 +141,7 @@
 		        android:checked="false" 
 		        android:textColor="#FFFFFF"
 		        android:layout_marginLeft="10dp"
-		        android:text="座席"/>
+		        android:text="坐席"/>
 		    
 		</RadioGroup>
         <FrameLayout
