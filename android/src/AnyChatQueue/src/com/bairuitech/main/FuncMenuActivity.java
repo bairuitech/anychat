@@ -287,7 +287,7 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
 		}else if(mApplication.getUserType() == 2){
 			
 			Intent in=new Intent();
-			in.setClass(FuncMenuActivity.this,AgentServerActivity.class);
+			in.setClass(FuncMenuActivity.this,AgentServiceActivity.class);
 			startActivity(in);
 			waitingpd.dismiss();
 		}

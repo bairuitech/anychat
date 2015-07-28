@@ -37,7 +37,7 @@ import com.bairuitech.main.LoginActivity;
 import com.example.anychatqueue.R;
 
 
-public class AgentServerActivity extends Activity implements 
+public class AgentServiceActivity extends Activity implements 
 		OnClickListener, AnyChatBaseEvent, AnyChatVideoCallEvent,AnyChatObjectEvent
 		 {
 	
@@ -87,7 +87,7 @@ public class AgentServerActivity extends Activity implements
 	        	list.add(map);
 	        }
 		 
-		adapter = new SimpleAdapter(AgentServerActivity.this, list, R.layout.videoserver_listviewitem, new String[]{"name","number"}, new int[]{R.id.id_tv_queue,R.id.id_tv_number});
+		adapter = new SimpleAdapter(AgentServiceActivity.this, list, R.layout.videoserver_listviewitem, new String[]{"name","number"}, new int[]{R.id.id_tv_queue,R.id.id_tv_number});
 		listView = (ListView) findViewById(R.id.id_listview_server);
 		listView.setAdapter(adapter);
 		
@@ -127,7 +127,7 @@ public class AgentServerActivity extends Activity implements
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		BussinessCenter.mContext = AgentServerActivity.this;
+		BussinessCenter.mContext = AgentServiceActivity.this;
 		initSdk();
 		dataUpdate();
 		super.onResume();
@@ -264,7 +264,7 @@ public class AgentServerActivity extends Activity implements
 			if (dwErrorCode == AnyChatDefine.BRAC_ERRORCODE_SUCCESS) {
 				dialog = DialogFactory.getDialog(
 						DialogFactory.DIALOGID_CALLING, dwUserId,
-						AgentServerActivity.this,mApplication);
+						AgentServiceActivity.this,mApplication);
 				dialog.show();
 
 			} else {
@@ -333,7 +333,7 @@ public class AgentServerActivity extends Activity implements
 			break;	
 			
 		case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_WAITINGUSER:				
-			BaseMethod.showToast("暂时无人排队中...", AgentServerActivity.this);		
+			BaseMethod.showToast("暂时无人排队中...", AgentServiceActivity.this);		
 			break;
 			
 		case AnyChatObjectDefine.ANYCHAT_AREA_EVENT_LEAVERESULT:  

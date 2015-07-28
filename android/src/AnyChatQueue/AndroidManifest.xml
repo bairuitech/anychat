@@ -50,7 +50,7 @@
         </activity>
      
         <activity
-            android:name="com.bairuitech.main.AgentServerActivity"
+            android:name="com.bairuitech.main.AgentServiceActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/title_activity_video_server"
              android:screenOrientation="portrait" >
@@ -62,5 +62,4 @@
              android:screenOrientation="portrait" >
         </activity>
     </application>
-
 </manifest>
