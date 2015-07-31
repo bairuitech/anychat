@@ -22,7 +22,7 @@
 		</property>
 	</bean>
 	
-	<bean id="loginController" class="com.login.controler.LoginConller">
+	<bean id="loginController" class="com.login.controller.LoginController">
 		<!-- 引用方法名解析器
 		<property name="methodNameResolver">
 			<ref bean="paraMethodResolver"/>
