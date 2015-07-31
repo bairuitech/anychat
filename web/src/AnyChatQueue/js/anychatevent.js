@@ -151,7 +151,7 @@ function OnAnyChatEnterRoom(dwRoomId, errorcode) {
 				'<div id="localAudioVolume" style="width:480px;height:5px;top:370px;left: 517px;"></div>'+
 				'<div id="div_username0" uid="" class="ShowName" style="left: 21px;">'+name1+'(坐席)</div>'+
 				'<div id="div_username1" uid="" class="ShowName" style="left:517px">'+myName+'(自己)</div>'+
-				'<b style="position: absolute;bottom: -40;right: 30;font-size: 18px;"><a id="hangUp" class="Buttons"></a></b>'+
+				'<b style="position: absolute;bottom: -40px;right: 30px;font-size: 18px;"><a id="hangUp" class="Buttons"></a></b>'+
 			'</div>';
 			
 			$("#videoCallContent").html(videoHtml);//填充视频会话层

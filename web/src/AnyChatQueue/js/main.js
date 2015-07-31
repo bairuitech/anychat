@@ -381,55 +381,42 @@ function setObjMiddle(obj){
 
 // 控制视频打开关闭
 function startVideo(uid, videoID, videoType, state) {
-	/**视频操作*/
+	//视频操作
     var errorcode = BRAC_UserCameraControl(uid, state);
     AddLog("BRAC_UserCameraControl(" + uid + "," + state + ")=" + errorcode, LOG_TYPE_API);
 
-	/**语音操作*/
+	//语音操作
     errorcode = BRAC_UserSpeakControl(uid, state);
     AddLog("BRAC_UserSpeakControl(" + uid + "," + state + ")=" + errorcode, LOG_TYPE_API);
 
-	/**设置视频显示位置*/
+	//设置视频显示位置
     BRAC_SetVideoPos(uid, videoID, videoType);
-}
-
-// 打开指定用户的音视频
-function RequestOtherUserVideo(userid) {
-
-	// 判断是否需要关闭之前已请求的用户音视频数据
-	if (mTargetUserId != -1) {
-		/**操作本地用户视频（或请求远程用户视频）*/
-		BRAC_UserCameraControl(mTargetUserId, 0);
-		/**操作本地用户语音（或请求远程用户语音）*/
-		BRAC_UserSpeakControl(mTargetUserId, 0);
-		GetID(mTargetUserId + "_UserDiv").style.backgroundColor = "";
-	}
-	// 设置远程视频显示位置
-/*	startVideo(userid, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE", 1);
-*/	
-	
-	GetID(userid + "_UserDiv").style.backgroundColor = "rgba(255, 255, 255, .5)"; // 设置被点击<a>元素的背景颜色
-	mTargetUserId = userid; // 设置被点用户ID为全局变量
 }
 
 //录制时间设置
 function formatSeconds(value) {
-	var s = parseInt(value);// 秒
-	var min = 0;// 分
-	if(s > 60) {
-      min = parseInt(s/60);
-      s = parseInt(s%60);
-		if(min > 60) {
-			min = parseInt(min%60);
-		}
-	}
+    var hour = 0;  //小时
+	var minute = 0; //分钟
+	var second = 0;   //秒钟
+    var result = "";  //返回值
 
-	var result = ""+parseInt(s)+"秒";
-	if(min > 0) {
-		result = ""+parseInt(min)+"分"+result;
-	}
-	tt=parseInt(min)+"分"+parseInt(s)+"秒";
-    return tt;
+    second = parseInt(value);
+	if(second > 60) {
+      minute = parseInt(second / 60);
+      second = parseInt(second % 60);
+	  if(minute > 60) {
+        hour = parseInt(minute / 60);
+		minute = parseInt(minute % 60);
+        result = parseInt(hour)+ "小时" +parseInt(minute)+ "分" + parseInt(second)+"秒";
+	  }
+      else{
+        result = parseInt(minute)+ "分" + parseInt(second)+"秒";
+      }
+	}else{
+    	result = parseInt(second)+"秒";
+    }
+
+	return result;
 }
 
 
@@ -608,9 +595,9 @@ function showSerivceArea() {
 
         if (queueListName == -1) {
             $("#poptip li").each(function (index) {
-                if (areaIdArray[idx] == $(this).attr('dwObjectId')) { $(this).remote(); }
+                if (areaIdArray[idx] == $(this).attr('dwObjectId')) { $(this).remove(); }
             });
-            var createObj = $('<li dwObjectId="' + areaIdArray[idx] + '">' + '<p>' + areaName + '</p>' + '<p class="description">' + description + '</p>' + '<p>' + '<img src="./img/area.png">' + '</p>' + '<p>编号：' + areaIdArray[idx] + '</p>' + '<p>' + '<a class="btn">进入</a>' + '</p>' + '</li>');
+            var createObj = $('<li dwObjectId="' + areaIdArray[idx] + '">' + '<p>' + areaName + '</p>' + '<p class="description">' + description + '</p>' + '<p>' + '<img src="./img/area.png">' + '</p>' + '<p>编号：' + areaIdArray[idx] + '</p>' + '<p class="last">' + '<a class="btn">进入</a>' + '</p>' + '</li>');
             createObj.css("background-color", colorArray[colorIdx]);
             $("#poptip").append(createObj);
             colorIdx++;

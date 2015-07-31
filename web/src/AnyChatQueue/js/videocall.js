@@ -85,9 +85,6 @@ function onVideoCallControlReply(dwUserId, dwErrorCode, dwFlags, dwParam, szUser
 		    onSendVideoCallRequestSucess(dwUserId);
 			break;
 		case GV_ERR_SESSION_QUIT:
-			/**离开队列*/
-		    //BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-
 			$('#callLayer').hide();
 			$("#enterRoom h2").text(queueListName);
 			$('#poptip').show();
@@ -148,8 +145,6 @@ function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUse
 	//关闭对方视频
 	startVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",0);
 	if(mUserType==1){
-		//离开队列
-		//BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE,0 ,0,0,0,"");
 		$("#videoCall").hide();//隐藏视频窗口
 		$("#poptip").show(); //显示队列列表
 		clearInterval(waitTimeSet);
