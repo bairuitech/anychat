@@ -1,4 +1,4 @@
-package com.login.controler;
+package com.login.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.bean.User;
 
 
-public class LoginConller extends MultiActionController {
+public class LoginController extends MultiActionController {
 	public ModelAndView onSub(HttpServletRequest request,HttpServletResponse response)
 	{
 		String uname = request.getParameter("uname");

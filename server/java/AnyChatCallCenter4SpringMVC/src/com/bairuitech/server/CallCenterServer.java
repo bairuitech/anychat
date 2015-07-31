@@ -38,13 +38,10 @@ public class CallCenterServer implements AnyChatServerEvent{
 		InitBusinessQueue();
 		
 		System.out.print(getCurrentTime() + "Welcome use AnyChat! (" + anychat.GetSDKVersion() + ")\r\n");
-		Reader reader = new InputStreamReader(System.in);
-		char ch = 0;
-		do{
-			if(ch != '\r')
-				System.out.print(getCurrentTime() + "Business server(Java) still running, press 'q' to exit...\r\n");
-			Thread.sleep(100);
-		}while((ch=(char)reader.read()) != 'q');
+
+	}
+	
+	public void releaseSdk() {
 		anychat.Release();
 		System.out.print(getCurrentTime() + "Business server(Java) already exited...\r\n");
 	}
