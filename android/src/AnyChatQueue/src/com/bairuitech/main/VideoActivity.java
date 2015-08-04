@@ -32,6 +32,7 @@ import android.widget.TextView;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
+import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.anychat.AnyChatObjectEvent;
 import com.bairuitech.anychat.AnyChatVideoCallEvent;
 import com.bairuitech.common.BaseConst;
@@ -171,6 +172,7 @@ import com.example.anychatqueue.R;
 			anychat = new AnyChatCoreSDK();
 		anychat.SetBaseEvent(this);
 		anychat.SetVideoCallEvent(this);
+		anychat.SetObjectEvent(this);
 		anychat.mSensorHelper.InitSensor(this); 
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);
 	}
@@ -223,9 +225,11 @@ import com.example.anychatqueue.R;
 		mSurfaceRemote = (SurfaceView) findViewById(R.id.surface_remote);
 		mProgressSelf = (ProgressBar) findViewById(R.id.progress_local);
 		mProgressRemote = (ProgressBar) findViewById(R.id.progress_remote);
+	
 		mTxtTime = (TextView) findViewById(R.id.txt_time);
 		mBtnEndSession = (Button) findViewById(R.id.btn_endsession);
 		mBtnEndSession.setOnClickListener(this);
+		
 		mSurfaceRemote.setTag(dwTargetUserId);
 		configEntity = ConfigService.LoadConfig(this);
 		if (configEntity.videoOverlay != 0) {
@@ -455,46 +459,44 @@ import com.example.anychatqueue.R;
 	@Override
 	public void OnAnyChatVideoCallEvent(int dwEventType, int dwUserId,
 			int dwErrorCode, int dwFlags, int dwParam, String userStr) {
-
+		System.out.println("触发类型"+dwEventType);
 		switch (dwEventType) {
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
 			if(mApplication.getUserType() == USERTYPE_CUSTOM){
-			BaseMethod.showToast("视频通话已结束...", VideoActivity.this);	
-			Log.e("videoactivity", "进入视频界面回调");
-			Intent intent = new Intent();
-			intent.putExtra("INTENT", BaseConst.APP_EXIT);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.setClass(this, YeWuActivity.class);
-			this.startActivity(intent);
-			this.finish();
+				BaseMethod.showToast("视频通话已结束...", VideoActivity.this);	
+				Log.e("videoactivity", "进入视频界面回调");
+				Intent intent = new Intent();
+				intent.putExtra("INTENT", BaseConst.APP_EXIT);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intent.setClass(this, YeWuActivity.class);
+				this.startActivity(intent);
+				this.finish();
 			}else if(mApplication.getUserType() == USERTYPE_AGENT){
 				
 				BaseMethod.showToast("视频通话已结束...", VideoActivity.this);
-				anychat.UserCameraControl(-1, 0);
-				anychat.UserSpeakControl(-1, 0);
-
-				anychat.UserSpeakControl(dwTargetUserId, 0);
-				anychat.UserCameraControl(dwTargetUserId, 0);
-				finish();
+				AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, mApplication.getUserID(), AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_FINISHSERVICE, 0, 0, 0, 0, "");
 			}
 			break;
-		default:
-			break;
 		}
-
-		
 	}
-
-
-	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		return false;
-	}
-
 	@Override
 	public void OnAnyChatObjectEvent(int dwObjectType, int dwObjectId,
 			int dwEventType, int dwParam1, int dwParam2, int dwParam3,
 			int dwParam4, String strParam) {
+		switch (dwEventType) {
 		
+		case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_STATUSCHANGE:
+			onDestroy();
+			finish();
+			break;
+
+		}
+			
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

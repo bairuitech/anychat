@@ -3,15 +3,15 @@ package com.bairuitech.common;
 import android.app.Application;
 
 public class CustomApplication extends Application{
-	private int mUserID;
-	private int userType;
-	private int CurrentAreaId;
-	private int CurrentQueueId;
-	private String selfUserName;
-	private String targetUserName;
-	private int RoomId;
-	private  int TargetUserId;
-	@Override
+	private int mUserID;				//本地用户Id
+	private int userType;				//用户类型：普通客户、座席两种
+	private int CurrentAreaId;			//当前营业厅的Id
+	private int CurrentQueueId;			//当前队列Id
+	private String selfUserName;		//本地用户名字
+	private String targetUserName;		//对方用户名字
+	private int RoomId;					//进入房间号
+	private  int TargetUserId;			//对方用户Id
+	
 	public void onCreate() {
 		super.onCreate();
 	}
@@ -82,4 +82,6 @@ public class CustomApplication extends Application{
 	public void setTargetUserName(String targetUserName) {
 		this.targetUserName = targetUserName;
 	}
+
+	
 }

@@ -1,4 +1,4 @@
-package com.bairuitech.main;
+ package com.bairuitech.main;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,7 +143,6 @@ public class AgentServiceActivity extends Activity implements
         	//添加数据
         	list.get(i).put("name", name);
         	list.get(i).put("number",number);
-        	list.get(i).put("id", queueIds[i]);
         	adapter.notifyDataSetChanged();
         }
 	}
@@ -337,6 +336,7 @@ public class AgentServiceActivity extends Activity implements
 			break;
 			
 		case AnyChatObjectDefine.ANYCHAT_AREA_EVENT_LEAVERESULT:  
+			
 			finish();
 			break;
 			

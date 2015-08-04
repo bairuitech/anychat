@@ -112,18 +112,19 @@ public void realse() {
 		switch (dwErrorCode) {
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_BUSY:
 			strMessage = mContext.getString(R.string.str_returncode_bussiness);
+			BaseMethod.showToast(strMessage, mContext);
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE:
-			
 			strMessage = mContext.getString(R.string.str_returncode_requestrefuse);
+			BaseMethod.showToast(strMessage, mContext);
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_OFFLINE:
 			strMessage = mContext.getString(R.string.str_returncode_offline);
+			BaseMethod.showToast(strMessage, mContext);
 			stopSessionMusic();
 			mContext.finish();
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT:
-			System.out.println("座席取消呼叫");
 			strMessage = mContext.getString(R.string.str_returncode_requestcancel);
 			BaseMethod.showToast(strMessage, mContext);
 			stopSessionMusic();
@@ -131,17 +132,21 @@ public void realse() {
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_TIMEOUT:
 			strMessage = mContext.getString(R.string.str_returncode_timeout);
+			BaseMethod.showToast(strMessage, mContext);
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_DISCONNECT:
 			strMessage = mContext.getString(R.string.str_returncode_disconnect);
+			BaseMethod.showToast(strMessage, mContext);
+			stopSessionMusic();
+			Intent intent2 = new Intent(mContext, LoginActivity.class);
+			intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			mContext.startActivity(intent2);
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SUCCESS:
 			break;
 		default:
 			break;
 		}
-		if (strMessage != null && dwErrorCode != AnyChatDefine.BRAC_ERRORCODE_SESSION_TIMEOUT) {
-			BaseMethod.showToast(strMessage, mContext);
 			// 如果程序在后台，通知通话结束
 			if (bBack) {
 				Bundle bundle = new Bundle();
@@ -150,7 +155,7 @@ public void realse() {
 						BaseConst.ACTION_BACK_CANCELSESSION, null);
 			}
 			stopSessionMusic();
-		}
+		
 	}
 
 	public void onVideoCallStart(int dwUserId, int dwFlags, int dwParam,
