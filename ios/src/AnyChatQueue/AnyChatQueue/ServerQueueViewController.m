@@ -153,6 +153,8 @@
             
         case BRAC_VIDEOCALL_EVENT_FINISH://视频结束 4
         {
+            // 结束服务
+            [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AGENT :self.selfUserId :ANYCHAT_AGENT_CTRL_FINISHSERVICE :0 :0 :0 :0 :nil];
             // 关闭设备
             [AnyChatPlatform UserSpeakControl: -1 : NO];
             [AnyChatPlatform UserCameraControl: -1 : NO];
@@ -162,7 +164,6 @@
             [AnyChatPlatform LeaveRoom:-1];
             [MBProgressHUD showSuccess:@"视频通话结束"];
             [self.navigationController popViewControllerAnimated:YES];
-            
             break;
         }
             
@@ -198,8 +199,6 @@
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        // 结束服务
-        [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AGENT :self.selfUserId :ANYCHAT_AGENT_CTRL_FINISHSERVICE :0 :0 :0 :0 :nil];
         // 退出营业厅
         [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AREA :self.businessHallId :ANYCHAT_AREA_CTRL_USERLEAVE :0 :0 :0 :0 :nil];
         [self.navigationController popViewControllerAnimated:YES];

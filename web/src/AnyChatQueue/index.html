@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 <link href="img/queue.ico">
@@ -18,7 +19,31 @@
 <script src="js/anychatevent.js"></script>
 <script src="js/videocall.js"></script>
 </head>
-
+<!--[if IE]><style type="text/css">
+#loginDiv { padding-top: 5%；
+}
+#mDefaultServerPort {
+	margin-left: 0;
+	width: 45px;
+}
+.showBox {
+	width:128px;
+	padding:0;
+	line-height:35px;
+}
+#askSelect { margin-right:3px;}
+.wordage { margin-top: 8px;}
+.last {
+	padding-top:20px;
+	padding-bottom:20px;
+	background:#fff;
+	position:absolute;
+	bottom:-15px;}
+.last a.btn { padding:10px 35px; }
+.queue-item-layout-btn a.btn {
+	width:80px;
+}
+</style><![endif]-->
 <body>
 	<!--灰色背景透明层 -->
 	<div id="LOADING_GREY_DIV">
@@ -158,7 +183,7 @@
 	<div id="LOG_DIV_BODY">
 		<div id="LOG_DIV_TITLE">系统日志<b title="最小化">—</b></div>
 		<div id="LOG_DIV_CONTENT"></div>
-		<iframe frameborder=0 scrolling=no></iframe>
+		<iframe frameborder=0 scrolling=no allowtransparency=true></iframe>
 	</div>
 	<div class="showBox">
 		<span id="icon"></span>
