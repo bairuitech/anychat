@@ -71,7 +71,7 @@ namespace QueueClient
                 }
                 else
                 {
-                    cbox_serverIP.Text = "www.anychat.cn";
+                    cbox_serverIP.Text = "demo.anychat.cn";
                     cbox_port.Text = "8906";
                     cbox_userIdentity.SelectedIndex = 0;
                     cbox_identityPriority.SelectedIndex = 5;
