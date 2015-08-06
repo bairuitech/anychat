@@ -42,8 +42,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatObjectEvent {
-	private String mStrIP = "www.anychat.cn";
-	private String mStrName = "name";
+	private String mStrIP = "demo.anychat.cn";
+	private String mStrName = "Tom";
 	private int mSPort = 8906;
 	
 	private final int SHOWLOGINSTATEFLAG = 1; 		// 显示的按钮是登陆状态的标识

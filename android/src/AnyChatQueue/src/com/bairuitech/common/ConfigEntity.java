@@ -9,7 +9,7 @@ public class ConfigEntity {
 	public static final int VIDEO_QUALITY_BEST = 4;			// 较好视频质量
 	
 	public boolean IsSaveNameAndPw;							//是否保存用户名和密码
-	public String name = "name";							//登陆用户名，默认为name
+	public String name = "Tom";							//登陆用户名，默认为name
 	public String password = "";
 
 	public String ip = "demo.anychat.cn";					//登陆服务器地址，默认佰锐公司服务器地址

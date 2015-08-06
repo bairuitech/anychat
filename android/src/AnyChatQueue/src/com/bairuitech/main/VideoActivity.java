@@ -435,7 +435,7 @@ import com.example.anychatqueue.R;
 		} else {
 			BaseMethod.showToast(this.getString(R.string.str_serverlink_close),
 					this);
-			//
+			
 			Intent intent = new Intent();
 			intent.putExtra("INTENT", BaseConst.AGAIGN_LOGIN);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -459,12 +459,10 @@ import com.example.anychatqueue.R;
 	@Override
 	public void OnAnyChatVideoCallEvent(int dwEventType, int dwUserId,
 			int dwErrorCode, int dwFlags, int dwParam, String userStr) {
-		System.out.println("触发类型"+dwEventType);
 		switch (dwEventType) {
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
 			if(mApplication.getUserType() == USERTYPE_CUSTOM){
 				BaseMethod.showToast("视频通话已结束...", VideoActivity.this);	
-				Log.e("videoactivity", "进入视频界面回调");
 				Intent intent = new Intent();
 				intent.putExtra("INTENT", BaseConst.APP_EXIT);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
