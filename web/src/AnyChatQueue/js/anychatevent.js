@@ -3,7 +3,7 @@
 /*******************************************************************************
  * 事件回调部分 *
  ******************************************************************************/
-var type,videoBitrate,audioBitrate;
+
 // 异步消息通知，包括连接服务器、登录系统、进入房间等消息
 function OnAnyChatNotifyMessage(dwNotifyMsg, wParam, lParam) {
 	switch (dwNotifyMsg) {
@@ -112,20 +112,20 @@ function OnAnyChatLoginSystem(dwUserId, errorcode) {
     AddLog("OnAnyChatLoginSystem(userid=" + dwUserId + ", errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
 	if (errorcode == 0) {
 	    if (mUserType == 2) {//客服
-	        currentAgentID = dwUserId;
-			dwAgentFlags=ANYCHAT_OBJECT_FLAGS_AGENT;//坐席标识
+	        mCurrentAgentID = dwUserId;
+			mObjectInitFlag=ANYCHAT_OBJECT_FLAGS_AGENT;//坐席标识
 		}else if(mUserType==1){
-			dwAgentFlags=0;//客户
+			mObjectInitFlag=0;//客户
 
         }
 
 		mSelfUserId = dwUserId;
-		dwPriority = parseInt($("#dwPrioritySelect option:selected").val());
+		mPriority = parseInt($("#dwPrioritySelect option:selected").val());
 
 		$("#LOADING_GREY_DIV span").text("正在加载营业厅，请稍候......");
 
 		//身份信息设置
-		InitClientObjectInfo(mSelfUserId,dwAgentFlags,dwPriority);
+		InitClientObjectInfo(mSelfUserId,mObjectInitFlag,mPriority);
 	} else {
 		ForSession("Client logon failure!", true);
 	}
@@ -343,7 +343,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 			    var queueInfo = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueListId, ANYCHAT_OBJECT_INFO_DESCRIPTION);
 			    $("#LOADING_GREY_DIV").hide(); //隐藏蒙层
 			    $('#poptip li[dwobjectid]').hide(); //隐藏服务厅
-			    $("#enterRoom h2:eq(1)").text(queueListName);
+			    $("#enterRoom h2:eq(1)").text(mQueueListName);
 			    var liObject = $('<li class="queue-item" queueid="' + queueListId + '">' +
                     '<a class="queue-item-link"><img class="queue-item-pic" src="./img/queue.png" /></a>' +
                     '<span class="queue-item-layout">' +
@@ -365,7 +365,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 				var leaveFlag;
             	if($("#callLayer").css("display")!="block"){
 	                /**离开营业厅*/
-            		leaveFlag=BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, dwCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+            		leaveFlag=BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, mCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
 	                $("#LOADING_GREY_DIV span").text("正在离开营业厅，请稍候......");//显示等待蒙层
 	                if(!leaveFlag){
 	                	$('#poptip li[queueid]').hide(); //隐藏队列
@@ -385,7 +385,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
             });
         } else if(mUserType == 2) {			//坐席
             $("#LOADING_GREY_DIV").hide(); //隐藏等待蒙层
-            refreshAgentServiceInfo(dwCurrentAreaId);
+            refreshAgentServiceInfo(mCurrentAreaId);
             $("#roomOut").off().click(function () {
                 leaveAreaClickEvent();
             });
@@ -397,14 +397,14 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 function OnAnyChatLeaveAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
     AddLog('OnAnyChatLeaveAreaResult(' + dwObjectType + ',' + dwObjectId + ',' + dwErrorCode + ')', LOG_TYPE_EVENT);
 
-    dwCurrentAreaId = -1;
+    mCurrentAreaId = -1;
 }
 
 //营业厅状态变化
 function OnAnyChatAreaStatusChange(dwObjectType, dwObjectId, dwErrorCode) {
     AddLog('OnAnyChatAreaStatusChange(' + dwObjectType + ',' + dwObjectId + ',' + dwErrorCode + ')', LOG_TYPE_EVENT);
 	if (mUserType == 2) {
-	    refreshAgentServiceInfo(dwCurrentAreaId);
+	    refreshAgentServiceInfo(mCurrentAreaId);
     }
 }
 
@@ -412,7 +412,7 @@ function OnAnyChatAreaStatusChange(dwObjectType, dwObjectId, dwErrorCode) {
 function OnAnyChatQueueStatusChanged(dwObjectType, dwObjectId) {
     AddLog('OnAnyChatQueueStatusChanged(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
     if (mUserType == 2) {
-        refreshAgentServiceInfo(dwCurrentAreaId);
+        refreshAgentServiceInfo(mCurrentAreaId);
     }
 	if(currentSelectedQueueId == dwObjectId)
 		refreshUserWaitingInfo(dwObjectId);
@@ -433,8 +433,8 @@ function OnAnyChatEnterQueueResult(dwObjectType, dwObjectId, dwErrorCode) {
      $("#queueMsg2").hide(); //隐藏呼叫信息
      $("#callLayer").show(); //显示弹出窗口
      $("#queueMsg1 strong:eq(2)").text(0); //清零排队时间
-     clearInterval(waitTimeSet);
-     waitTimeSet = setInterval(function () {
+     clearInterval(mQueueWaitingTimer);
+     mQueueWaitingTimer = setInterval(function () {
          var time = formatSeconds(BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_INFO_WAITTIMESECOND));
          $("#queueMsg1 strong:eq(2)").text(time);
      }, 1000);
@@ -458,17 +458,17 @@ function OnAnyChatLeaveQueueResult(dwObjectType, dwObjectId, dwErrorCode) {
 // 坐席状态变化
 function OnAnyChatAgentStatusChanged(dwObjectType, dwObjectId, dwParam1) {
     AddLog('OnAnyChatAgentStatusChanged(' + dwObjectType + ',' + dwObjectId + ',' + dwParam1 + ')', LOG_TYPE_EVENT);
-    if (dwObjectType == ANYCHAT_OBJECT_TYPE_AGENT && currentAgentID == dwObjectId) {
+    if (dwObjectType == ANYCHAT_OBJECT_TYPE_AGENT && mCurrentAgentID == dwObjectId) {
         if (dwParam1 == ANYCHAT_AGENT_STATUS_WAITTING) {
-            refreshAgentServiceInfo(dwCurrentAreaId);
+            refreshAgentServiceInfo(mCurrentAreaId);
 
             refreshServicedUserInfo(-1);
-            startServiceTag = false;
+            mStartServiceFlag = false;
             $("#LOADING_GREY_DIV span").show();
 
             isShowReturnBtn(true);
         }else if (dwParam1 == ANYCHAT_AGENT_STATUS_WORKING){
-            startServiceTag = true;
+            mStartServiceFlag = true;
         }
         
     }
@@ -490,7 +490,7 @@ function OnAnyChatAgentWaitingUser(){
     AddLog('OnAnyChatAgentWaitingUser()', LOG_TYPE_EVENT);
 	if($("#remoteVideoPos").html()==""){
 		$('#LOADING_GREY_DIV').hide();
-		startServiceTag=false;
+		mStartServiceFlag=false;
 		$("#LOADING_GREY_DIV span").show();
 		ForSession('当前队列中已没有客户！',true);
 	}

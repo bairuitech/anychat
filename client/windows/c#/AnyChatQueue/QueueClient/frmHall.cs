@@ -348,8 +348,8 @@ namespace QueueClient
 
                 //累计服务的用户数
                 int servicedUserCount = 0;
-                AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_INFO_SERVICETOTALNUM, ref servicedUserCount);
-
+                int retCode = AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_INFO_SERVICETOTALNUM, ref servicedUserCount);                
+                    
                 lbl_agent_queueNumber.Text = "当前服务的队列数量为： " + queueCount + " 个";
                 lbl_agent_currentTotalUserCount.Text = "当前排队的用户总数为： " + queuesUserCount + " 人";
                 lbl_agent_servicedUserCount.Text = "已服务人数为： " + servicedUserCount + " 人";
@@ -452,13 +452,12 @@ namespace QueueClient
         //取消呼叫
         private void CanCall()
         {
-
             //发送视频呼叫回复指令，dwErrcode=100101
             AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_REPLY, ConversationMode.TuserId, AC_ERROR_VIDEOCALL_CANCEL, 0, 0, "");
             ConversationMode = null;
             InitFaceAfterEndCall(Properties.Resources._20, "已经取消呼叫");
 
-
+            AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_CTRL_FINISHSERVICE, 0, 0, 0, 0, "");	
             refreshServicedUserInfo(-1);
 
             showAgentServiceFace();
@@ -708,6 +707,9 @@ namespace QueueClient
             switch (m_userIdentity)
             {
                 case UserIdentityType.Agent:
+
+                    AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_CTRL_FINISHSERVICE, 0, 0, 0, 0, "");	
+
                     refreshAgentServiceInfo();
                     refreshServicedUserInfo(-1);
                     
@@ -827,7 +829,15 @@ namespace QueueClient
         {
 
             //发送视频呼叫回复指令，dwErrcode=100104
-            AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_FINISH, getOtherInSession(), AC_ERROR_VIDEOCALL_REJECT, 0, 0, "");
+            AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_FINISH, getOtherInSession(), 0, 0, 0, "");
+
+        }
+
+        /// <summary>
+        /// 显示服务区域
+        /// </summary>
+        private void showServiceArea()
+        {
 
         }
 
@@ -866,6 +876,9 @@ namespace QueueClient
                 case AnyChatCoreSDK.ANYCHAT_OBJECT_EVENT_UPDATE:
                     AnyChatObjectEventUpdate_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
                     break;
+                case AnyChatCoreSDK.ANYCHAT_OBJECT_EVENT_SYNCDATAFINISH:
+                    AnyChatObjectSyncDataFinish_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+                    break;
                 case AnyChatCoreSDK.ANYCHAT_AREA_EVENT_ENTERRESULT:
                     AnyChatEnterAreaResult_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
                     break;
@@ -894,7 +907,7 @@ namespace QueueClient
                     AnyChatAgentStatusChange_Handler(dwObjectType, dwObjectId, dwParam1);
                     break;
                 case AnyChatCoreSDK.ANYCHAT_AGENT_EVENT_SERVICENOTIFY:
-                    AnyChatAgentServiceNotify_Handler(dwParam1, dwParam2);
+                    AnyChatAgentServiceNotify_Handler(dwParam1, dwParam2, dwParam3);
                     break;
                 case AnyChatCoreSDK.ANYCHAT_AGENT_EVENT_WAITINGUSER:
                     AnyChatAgentWaitingUser_Handler();
@@ -945,6 +958,11 @@ namespace QueueClient
                 Log.SetLog("AnyChatObjectEventUpdate_Handler 异常：" + exp.Message);
 
             }
+        }
+
+        private void AnyChatObjectSyncDataFinish_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        {
+
         }
 
         /// <summary>
@@ -1110,7 +1128,7 @@ namespace QueueClient
         /// <param name="dwErrorCode"></param>
         private void AnyChatUserEnterQueue_Handler(int dwObjectType, int dwObjectId, int dwErrorCode)
         {
-            //refreshAgentServiceInfo();
+
         }
 
         /// <summary>
@@ -1121,7 +1139,7 @@ namespace QueueClient
         /// <param name="dwErrorCode"></param>
         private void AnyChatUserLeaveQueue_Handler(int dwObjectType, int dwObjectId, int dwErrorCode)
         {
-            //refreshAgentServiceInfo();
+
         }
 
         /// <summary>
@@ -1177,10 +1195,11 @@ namespace QueueClient
         /// <summary>
         /// 坐席服务通知事件
         /// </summary>
-        /// <param name="dwObjectType"></param>
-        /// <param name="dwObjectId"></param>
+        /// <param name="dwAgentId">坐席Id</param>
+        /// <param name="clientId">服务的客户Id</param>
+        /// <param name="dwQueueId">客户所在队列Id</param>
         /// <param name="dwErrorCode"></param>
-        private void AnyChatAgentServiceNotify_Handler(int dwAgentId, int clientId)
+        private void AnyChatAgentServiceNotify_Handler(int dwAgentId, int clientId, int dwQueueId)
         {
             if (m_userIdentity ==  UserIdentityType.Agent && m_UserId == dwAgentId)
             {
