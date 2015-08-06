@@ -709,6 +709,17 @@ namespace ANYCHATAPI
         public delegate void VideoData_CallBack(int userId, IntPtr buf, int len, BITMAPINFOHEADER bitMap, int userValue);
 
         /// <summary>
+        /// 视频回调函数(扩展)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="buf"></param>
+        /// <param name="len"></param>
+        /// <param name="bitMap"></param>
+        /// <param name="timeStamp"></param>
+        /// <param name="userValue"></param>
+        public delegate void VideoDataEx_CallBack(int userId, IntPtr buf, int len, BITMAPINFOHEADER bitMap, int timeStamp, int userValue);
+
+        /// <summary>
         /// 声音回调
         /// </summary>
         /// <param name="userId"></param>
@@ -717,6 +728,17 @@ namespace ANYCHATAPI
         /// <param name="format"></param>
         /// <param name="userValue"></param>
         public delegate void AudioData_CallBack(int userId,IntPtr buf,int len,WaveFormat format,int userValue);
+
+        /// <summary>
+        /// 声音回调(扩展)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="buf"></param>
+        /// <param name="len"></param>
+        /// <param name="format"></param>
+        /// <param name="timeStamp"></param>
+        /// <param name="userValue"></param>
+        public delegate void AudioDataEx_CallBack(int userId, IntPtr buf, int len, WaveFormat format, int timeStamp, int userValue);
 
         /// <summary>
         /// 消息接收回调
@@ -763,10 +785,9 @@ namespace ANYCHATAPI
         /// <param name="lpOutSize"></param>
 		/// <param name="lpUserValue"></param>
         public delegate void DataEncDec_CallBack(int dwUserId, int dwFlags, IntPtr lpInBuf, int dwInSize, IntPtr lpOutBuf, ref int lpOutSize, int lpUserValue);
-
-			
+	
         /// <summary>
-        /// 视频事件注册
+        /// 设置视频数据回调函数
         /// </summary>
         /// <param name="format"></param>
         /// <param name="function"></param>
@@ -774,6 +795,16 @@ namespace ANYCHATAPI
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetVideoDataCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetVideoDataCallBack(PixelFormat format, VideoData_CallBack function,int userValue);
+
+        /// <summary>
+        /// 设置视频数据扩展回调函数（增加时间戳）
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="function"></param>
+        /// <param name="userValue"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetVideoDataExCallBack", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetVideoDataExCallBack(PixelFormat format, VideoDataEx_CallBack function, int userValue);
 
         /// <summary>
         /// SDK Filter 注册回调
@@ -786,7 +817,7 @@ namespace ANYCHATAPI
 
       
         /// <summary>
-        /// 声音事件注册
+        /// 设置音频数据回调函数
         /// </summary>
         /// <param name="function"></param>
         /// <param name="userValue"></param>
@@ -794,6 +825,14 @@ namespace ANYCHATAPI
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetAudioDataCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetAudioDataCallBack(AudioData_CallBack function, int userValue);
 
+        /// <summary>
+        /// 设置音频数据回调扩展函数（增加时间戳）
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="userValue"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetAudioDataExCallBack", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetAudioDataExCallBack(AudioDataEx_CallBack function, int userValue);
 
         /// <summary>
         /// 注册文字消息回调
@@ -1444,7 +1483,6 @@ namespace ANYCHATAPI
         /// <param name="dwInfoName">属性名</param>
         /// <param name="value">属性值</param>
         /// </summary>
-        //[DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_ObjectSetIntValue", CallingConvention = CallingConvention.Cdecl)]
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_ObjectSetValue", CallingConvention = CallingConvention.Cdecl)]
         public static extern int BRAC_ObjectSetValue(int dwObjectType, int dwObjectId, int dwInfoName, ref int value, int optlen);
 

@@ -39,10 +39,13 @@ namespace ANYCHATAPI
 
             ///注册回调
             ///视频
-            AnyChatCoreSDK.SetVideoDataCallBack(AnyChatCoreSDK.PixelFormat.BRAC_PIX_FMT_RGB24,
-                video_Callback, hWnd.ToInt32());
+            AnyChatCoreSDK.SetVideoDataCallBack(AnyChatCoreSDK.PixelFormat.BRAC_PIX_FMT_RGB24, video_Callback, hWnd.ToInt32());
+            ///视频扩展
+            AnyChatCoreSDK.SetVideoDataExCallBack(AnyChatCoreSDK.PixelFormat.BRAC_PIX_FMT_RGB24, videoEx_Callback, hWnd.ToInt32());
             //声音
             AnyChatCoreSDK.SetAudioDataCallBack(audio_Callback, hWnd.ToInt32());
+            //声音扩展
+            AnyChatCoreSDK.SetAudioDataExCallBack(audioEx_Callback, hWnd.ToInt32());
             //文字
             AnyChatCoreSDK.SetTextMessageCallBack(text_Callback, hWnd.ToInt32());
             //透明通道
@@ -79,23 +82,21 @@ namespace ANYCHATAPI
         static AnyChatCoreSDK.TransBufferCallBack transBuff_Callback =
             new AnyChatCoreSDK.TransBufferCallBack(TransBuffer_CallBack);
 
-        static AnyChatCoreSDK.VideoData_CallBack video_Callback = new
-            AnyChatCoreSDK.VideoData_CallBack(VideoData_CallBack);
+        static AnyChatCoreSDK.VideoData_CallBack video_Callback = new AnyChatCoreSDK.VideoData_CallBack(VideoData_CallBack);
 
-        static AnyChatCoreSDK.AudioData_CallBack audio_Callback = new
-            AnyChatCoreSDK.AudioData_CallBack(AudioData_CallBack);
+        static AnyChatCoreSDK.VideoDataEx_CallBack videoEx_Callback = new AnyChatCoreSDK.VideoDataEx_CallBack(VideoDataEx_CallBack);
 
-        static AnyChatCoreSDK.TextMessage_CallBack text_Callback = new
-            AnyChatCoreSDK.TextMessage_CallBack(TextMessage_CallBack);
+        static AnyChatCoreSDK.AudioData_CallBack audio_Callback = new AnyChatCoreSDK.AudioData_CallBack(AudioData_CallBack);
 
-        static AnyChatCoreSDK.RecordCallBack RecordCallBack_Callback = new
-         AnyChatCoreSDK.RecordCallBack(SetRecordCallBack_CallBack);
+        static AnyChatCoreSDK.AudioDataEx_CallBack audioEx_Callback = new AnyChatCoreSDK.AudioDataEx_CallBack(AudioDataEx_CallBack);
 
-        static AnyChatCoreSDK.TransFileCallBack transFile_callback = new
-            AnyChatCoreSDK.TransFileCallBack(TransFile_CallBack);
+        static AnyChatCoreSDK.TextMessage_CallBack text_Callback = new AnyChatCoreSDK.TextMessage_CallBack(TextMessage_CallBack);
 
-        static AnyChatCoreSDK.VolumeChangeCallBack VolumeChange_callBack = new
-         AnyChatCoreSDK.VolumeChangeCallBack(SetVolumeChange_CallBack);
+        static AnyChatCoreSDK.RecordCallBack RecordCallBack_Callback = new AnyChatCoreSDK.RecordCallBack(SetRecordCallBack_CallBack);
+
+        static AnyChatCoreSDK.TransFileCallBack transFile_callback = new AnyChatCoreSDK.TransFileCallBack(TransFile_CallBack);
+
+        static AnyChatCoreSDK.VolumeChangeCallBack VolumeChange_callBack = new AnyChatCoreSDK.VolumeChangeCallBack(SetVolumeChange_CallBack);
 
         static AnyChatCoreSDK.VideoCallEvent_CallBack VideoCallEvent_callBack = new AnyChatCoreSDK.VideoCallEvent_CallBack(VideoCallEvent_CallBack);
 
@@ -128,7 +129,7 @@ namespace ANYCHATAPI
 
         }
 
-        public static TransFileReceivedHandler TransFile_OnReceive = null;
+        public static TransFileReceivedHandler TransFile_Received = null;
         /// <summary>
         /// 文件回调
         /// </summary>
@@ -144,8 +145,8 @@ namespace ANYCHATAPI
             string filePath, int fileLength, int wParam, int lParam,
             int taskId, int userValue)
         {
-            if (TransFile_OnReceive != null)
-                TransFile_OnReceive(userId, fileName,filePath, fileLength,wParam, lParam,taskId, userValue);
+            if (TransFile_Received != null)
+                TransFile_Received(userId, fileName,filePath, fileLength,wParam, lParam,taskId, userValue);
         }
 
         public static TransBufferReceivedHandler TransBuffer_OnReceive = null;
@@ -185,13 +186,14 @@ namespace ANYCHATAPI
         /// <param name="message"></param>
         /// <param name="len"></param>
         /// <param name="userValue"></param>
-        private static void TextMessage_CallBack(int fromuserId, int touserId, bool isserect,
-            string message, int len, int userValue)
+        private static void TextMessage_CallBack(int fromuserId, int touserId, bool isserect, string message, int len, int userValue)
         {
             if (Text_OnReceive != null)
                 Text_OnReceive(fromuserId, touserId, message, isserect);
         }
 
+        public delegate void AudioDataCallback(int userId, IntPtr buf, int len, AnyChatCoreSDK.WaveFormat format, int userValue);
+        public static AudioDataCallback Audio_OnCallBack = null;
         /// <summary>
         /// 音频回调
         /// </summary>
@@ -200,15 +202,32 @@ namespace ANYCHATAPI
         /// <param name="len"></param>
         /// <param name="format"></param>
         /// <param name="userValue"></param>
-        private static void AudioData_CallBack(int userId, IntPtr buf, int len,
-            AnyChatCoreSDK.WaveFormat format, int userValue)
+        private static void AudioData_CallBack(int userId, IntPtr buf, int len, AnyChatCoreSDK.WaveFormat format, int userValue)
         {
+            if (Audio_OnCallBack != null)
+                Audio_OnCallBack(userId, buf, len, format, userValue);
 
         }
 
+        public delegate void AudioDataExCallback(int userId, IntPtr buf, int len, AnyChatCoreSDK.WaveFormat format, int timestamp, int userValue);
+        public static AudioDataExCallback AudioEx_OnCallBack = null;
+        /// <summary>
+        /// 音频回调(扩展)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="buf"></param>
+        /// <param name="len"></param>
+        /// <param name="format"></param>
+        /// <param name="userValue"></param>
+        private static void AudioDataEx_CallBack(int userId, IntPtr buf, int len, AnyChatCoreSDK.WaveFormat format, int timestamp, int userValue)
+        {
+            if (AudioEx_OnCallBack != null)
+                AudioEx_OnCallBack(userId, buf, len, format, timestamp, userValue);
 
-        public delegate void VidioDataCallback(int userId, IntPtr buf, int len, AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int userValue);
-        public static VidioDataCallback Vidio_OnCallBack = null;
+        }
+        
+        public delegate void VideoDataCallback(int userId, IntPtr buf, int len, AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int userValue);
+        public static VideoDataCallback Video_OnCallBack = null;
         /// <summary>
         /// 视频回调
         /// </summary>
@@ -217,24 +236,38 @@ namespace ANYCHATAPI
         /// <param name="len"></param>
         /// <param name="bitMap"></param>
         /// <param name="userValue"></param>
-        private static void VideoData_CallBack(int userId, IntPtr buf, int len,
-            AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int userValue)
+        private static void VideoData_CallBack(int userId, IntPtr buf, int len, AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int userValue)
         {
-            if (Vidio_OnCallBack != null)
-                Vidio_OnCallBack(userId, buf, len, bitMap, userValue);
+            if (Video_OnCallBack != null)
+                Video_OnCallBack(userId, buf, len, bitMap, userValue);
         }
+
+        public delegate void VideoDataExCallback(int userId, IntPtr buf, int len, AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int timeStamp, int userValue);
+        public static VideoDataExCallback VideoEx_OnCallBack = null;
+        /// <summary>
+        /// 视频回调(扩展)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="buf"></param>
+        /// <param name="len"></param>
+        /// <param name="bitMap"></param>
+        /// <param name="userValue"></param>
+        private static void VideoDataEx_CallBack(int userId, IntPtr buf, int len, AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int timeStamp, int userValue)
+        {
+            if (VideoEx_OnCallBack != null)
+                VideoEx_OnCallBack(userId, buf, len, bitMap, timeStamp, userValue);
+        }
+        
         public delegate void VideoCallEventCallBack(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr);
         public static VideoCallEventCallBack VideoCallEvent_Handler;
         private static void VideoCallEvent_CallBack(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue)
         {
             if(VideoCallEvent_Handler!=null)
             {
-
                 VideoCallEvent_Handler( dwEventType,  dwUserId,  dwErrorCode,  dwFlags,  dwParam,  lpUserStr);
             }
         }
-
-
+        
         /// <summary>
         /// 业务对象事件通知回调
         /// </summary>

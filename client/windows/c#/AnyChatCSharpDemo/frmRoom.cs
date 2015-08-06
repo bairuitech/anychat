@@ -122,7 +122,7 @@ namespace AnyChatCSharpDemo
             string path = Application.StartupPath;
             SystemSetting.Text_OnReceive = new TextReceivedHandler(Received_Text);//文本回调涵数
             SystemSetting.TransBuffer_OnReceive = new TransBufferReceivedHandler(Received_TransBuffer);//透明通道传输回调
-            SystemSetting.TransFile_OnReceive = new TransFileReceivedHandler(Received_TransFile);//文件传输回调
+            SystemSetting.TransFile_Received = new TransFileReceivedHandler(Received_TransFile);//文件传输回调
             AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CORESDK_PATH, path, path.Length);
             
 

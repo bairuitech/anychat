@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoChatClient", "VideoChatClient\VideoChatClient.csproj", "{2E764709-2C15-44D1-9509-731D693B10B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoChatServer", "VideoChatServer\VideoChatServer.csproj", "{D1EA6BE9-D43C-49C1-A1B5-2936B1DF7A6D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoChatHelp", "VideoChatHelp\VideoChatHelp.csproj", "{C539FA1B-0D03-4653-BF1A-115B681B22BA}"
 EndProject
 Global
@@ -27,16 +25,6 @@ Global
 		{2E764709-2C15-44D1-9509-731D693B10B7}.Release|Mixed Platforms.Build.0 = Release|x86
 		{2E764709-2C15-44D1-9509-731D693B10B7}.Release|x86.ActiveCfg = Release|x86
 		{2E764709-2C15-44D1-9509-731D693B10B7}.Release|x86.Build.0 = Release|x86
-		{D1EA6BE9-D43C-49C1-A1B5-2936B1DF7A6D}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{D1EA6BE9-D43C-49C1-A1B5-2936B1DF7A6D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{D1EA6BE9-D43C-49C1-A1B5-2936B1DF7A6D}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{D1EA6BE9-D43C-49C1-A1B5-2936B1DF7A6D}.Debug|x86.ActiveCfg = Debug|x86
-		{D1EA6BE9-D43C-49C1-A1B5-2936B1DF7A6D}.Debug|x86.Build.0 = Debug|x86
-		{D1EA6BE9-D43C-49C1-A1B5-2936B1DF7A6D}.Release|Any CPU.ActiveCfg = Release|x86
-		{D1EA6BE9-D43C-49C1-A1B5-2936B1DF7A6D}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{D1EA6BE9-D43C-49C1-A1B5-2936B1DF7A6D}.Release|Mixed Platforms.Build.0 = Release|x86
-		{D1EA6BE9-D43C-49C1-A1B5-2936B1DF7A6D}.Release|x86.ActiveCfg = Release|x86
-		{D1EA6BE9-D43C-49C1-A1B5-2936B1DF7A6D}.Release|x86.Build.0 = Release|x86
 		{C539FA1B-0D03-4653-BF1A-115B681B22BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C539FA1B-0D03-4653-BF1A-115B681B22BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C539FA1B-0D03-4653-BF1A-115B681B22BA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

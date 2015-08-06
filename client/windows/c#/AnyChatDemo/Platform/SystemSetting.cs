@@ -1,22 +1,29 @@
-Ôªøusing System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+
 namespace ANYCHATAPI
 {
 
-    public delegate void TextReceivedHandler(int fromUID,int toUID,string Text,bool isserect);
-    public delegate void TransFileReceivedHandler(int userId, string fileName, string filePath, int fileLength, int wParam, int lParam, int taskId, int userValue);
+    public delegate void TextReceivedHandler(int fromUID, int toUID, string Text, bool isserect);
+    public delegate void TransBufferReceivedHandler(int userId, IntPtr buf, int len, int userValue);
+    public delegate void TransFileReceivedHandler(int userId, string fileName,string filePath, int fileLength, int wParam, int lParam,int taskId, int userValue);
+    public delegate void SetRecordReceivedHandler(int userId, string filePath, int param, bool recordType, int userValue);
+    public delegate void SetVolumeChange_CallBack(AnyChatCoreSDK.AudioDevice device, int currentVolume, int userValue);
+
+
     public class SystemSetting
     {
         /// <summary>
-        /// ÂàùÂßãÂåñAnyChat sdk
-        /// Ê≥®ÂÜå callback
+        /// ≥ı ºªØAnyChat sdk
+        /// ◊¢≤· callback
         /// </summary>
-        public static void Init(IntPtr hWnd)
+        public static bool Init(IntPtr hWnd)
         {
+            bool isok = false;
             AnyChatCoreSDK.ActiveCallLog(true);
-            ulong dwFuncMode = AnyChatCoreSDK.BRAC_FUNC_VIDEO_AUTODISP
+            ulong dwFuncMode = AnyChatCoreSDK.BRAC_FUNC_VIDEO_AUTODISP//BRAC_FUNC_VIDEO_CBDATA
                 | AnyChatCoreSDK.BRAC_FUNC_AUDIO_AUTOPLAY
                 | AnyChatCoreSDK.BRAC_FUNC_CHKDEPENDMODULE
                 | AnyChatCoreSDK.BRAC_FUNC_AUDIO_VOLUMECALC
@@ -27,30 +34,44 @@ namespace ANYCHATAPI
                 | AnyChatCoreSDK.BRAC_FUNC_AUDIO_CBDATA
                 | AnyChatCoreSDK.BRAC_FUNC_CONFIG_LOCALINI;
 
-            ///ÂàùÂßãÂåñ
-            ANYCHATAPI.AnyChatCoreSDK.InitSDK(hWnd, dwFuncMode);
+            ///≥ı ºªØ
+            if (AnyChatCoreSDK.InitSDK(hWnd, dwFuncMode) == 0) isok = true;
 
-            ///Ê≥®ÂÜåÂõûË∞É
-            ///ËßÜÈ¢ë
-            ANYCHATAPI.AnyChatCoreSDK.SetVideoDataCallBack(AnyChatCoreSDK.PixelFormat.BRAC_PIX_FMT_RGB24,
-                video_Callback,hWnd.ToInt32());
-            //Â£∞Èü≥
-            ANYCHATAPI.AnyChatCoreSDK.SetAudioDataCallBack(audio_Callback, hWnd.ToInt32());
-            //ÊñáÂ≠ó
-            ANYCHATAPI.AnyChatCoreSDK.SetTextMessageCallBack(text_Callback, hWnd.ToInt32());
-            //ÈÄèÊòéÈÄöÈÅì
-            ANYCHATAPI.AnyChatCoreSDK.SetTransBufferCallBack(transBuff_Callback,hWnd.ToInt32());
-            //p2pÊñá‰ª∂‰º†Ëæì
-            ANYCHATAPI.AnyChatCoreSDK.SetTransFileCallBack(transFile_callback,hWnd.ToInt32());
-            ///‰∏éÊúçÂä°Âô®Á´ØÊï∞ÊçÆÂõûË∞É
-            ANYCHATAPI.AnyChatCoreSDK.SetSDKFilterDataCallBack(filterData_callback, hWnd.ToInt32());
-            ///Êèê‰æõÊúçÂä°Âô®Á´ØÈ™åËØÅ
+            ///◊¢≤·ªÿµ˜
+            /// ”∆µ
+            AnyChatCoreSDK.SetVideoDataCallBack(AnyChatCoreSDK.PixelFormat.BRAC_PIX_FMT_RGB24, video_Callback, hWnd.ToInt32());
+            /// ”∆µ¿©’π
+            AnyChatCoreSDK.SetVideoDataExCallBack(AnyChatCoreSDK.PixelFormat.BRAC_PIX_FMT_RGB24, videoEx_Callback, hWnd.ToInt32());
+            //…˘“Ù
+            AnyChatCoreSDK.SetAudioDataCallBack(audio_Callback, hWnd.ToInt32());
+            //…˘“Ù¿©’π
+            AnyChatCoreSDK.SetAudioDataExCallBack(audioEx_Callback, hWnd.ToInt32());
+            //Œƒ◊÷
+            AnyChatCoreSDK.SetTextMessageCallBack(text_Callback, hWnd.ToInt32());
+            //Õ∏√˜Õ®µ¿
+            AnyChatCoreSDK.SetTransBufferCallBack(transBuff_Callback, hWnd.ToInt32());
+            //p2pŒƒº˛¥´ ‰
+            AnyChatCoreSDK.SetTransFileCallBack(transFile_callback, hWnd.ToInt32());
+            ///”Î∑˛ŒÒ∆˜∂À ˝æ›ªÿµ˜
+            //AnyChatCoreSDK.SetSDKFilterDataCallBack(filterData_callback, hWnd.ToInt32());
+            ///Ã·π©∑˛ŒÒ∆˜∂À—È÷§
             AnyChatCoreSDK.SetServerAuthPass(new StringBuilder(""));
+            //±£¥Ê ”∆µ
+            AnyChatCoreSDK.SetRecordCallBack(RecordCallBack_Callback, hWnd.ToInt32());
+            //…Ë÷√“Ù¡ø±‰ªØªÿµ˜∫Ø ˝
+            AnyChatCoreSDK.SetVolumeChangeCallBack(VolumeChange_callBack, hWnd.ToInt32());
+            //…Ë÷√ ”∆µ∫ÙΩ– ¬º˛ªÿµ˜∫Ø ˝
+            AnyChatCoreSDK.SetVideoCallEventCallBack(VideoCallEvent_callBack, hWnd.ToInt32());
 
+            //…Ë÷√“µŒÒ∂‘œÛ ¬º˛Õ®÷™ªÿµ˜∫Ø ˝
+            //AnyChatCoreSDK.BRAC_SetObjectEventNotifyCallBack(ObjectEvent_callBack, hWnd.ToInt32());
+            AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_OBJECTEVENT, Marshal.GetFunctionPointerForDelegate(ObjectEvent_callBack), hWnd);
+
+            return isok;
         }
 
 
-        //ÈÄÄÂá∫ÈáäÊîæËµÑÊ∫ê
+        //ÕÀ≥ˆ Õ∑≈◊ ‘¥
         public static void Release(int myroomID)
         {
             AnyChatCoreSDK.LeaveRoom(myroomID);
@@ -58,40 +79,59 @@ namespace ANYCHATAPI
             AnyChatCoreSDK.Release();
         }
 
-        static AnyChatCoreSDK.SDKFilterDataCallBack filterData_callback =
-            new AnyChatCoreSDK.SDKFilterDataCallBack(SDKFilter_DataCallBack);
-
         static AnyChatCoreSDK.TransBufferCallBack transBuff_Callback =
             new AnyChatCoreSDK.TransBufferCallBack(TransBuffer_CallBack);
 
-        static AnyChatCoreSDK.VideoData_CallBack video_Callback = new 
-            AnyChatCoreSDK.VideoData_CallBack(VideoData_CallBack);
+        static AnyChatCoreSDK.VideoData_CallBack video_Callback = new AnyChatCoreSDK.VideoData_CallBack(VideoData_CallBack);
 
-        static AnyChatCoreSDK.AudioData_CallBack audio_Callback = new 
-            AnyChatCoreSDK.AudioData_CallBack(AudioData_CallBack);
+        static AnyChatCoreSDK.VideoDataEx_CallBack videoEx_Callback = new AnyChatCoreSDK.VideoDataEx_CallBack(VideoDataEx_CallBack);
 
-        static AnyChatCoreSDK.TextMessage_CallBack text_Callback = new
-            AnyChatCoreSDK.TextMessage_CallBack(TextMessage_CallBack);
+        static AnyChatCoreSDK.AudioData_CallBack audio_Callback = new AnyChatCoreSDK.AudioData_CallBack(AudioData_CallBack);
 
-        static AnyChatCoreSDK.TransFileCallBack transFile_callback = new
-            AnyChatCoreSDK.TransFileCallBack(TransFile_CallBack);
+        static AnyChatCoreSDK.AudioDataEx_CallBack audioEx_Callback = new AnyChatCoreSDK.AudioDataEx_CallBack(AudioDataEx_CallBack);
+
+        static AnyChatCoreSDK.TextMessage_CallBack text_Callback = new AnyChatCoreSDK.TextMessage_CallBack(TextMessage_CallBack);
+
+        static AnyChatCoreSDK.RecordCallBack RecordCallBack_Callback = new AnyChatCoreSDK.RecordCallBack(SetRecordCallBack_CallBack);
+
+        static AnyChatCoreSDK.TransFileCallBack transFile_callback = new AnyChatCoreSDK.TransFileCallBack(TransFile_CallBack);
+
+        static AnyChatCoreSDK.VolumeChangeCallBack VolumeChange_callBack = new AnyChatCoreSDK.VolumeChangeCallBack(SetVolumeChange_CallBack);
+
+        static AnyChatCoreSDK.VideoCallEvent_CallBack VideoCallEvent_callBack = new AnyChatCoreSDK.VideoCallEvent_CallBack(VideoCallEvent_CallBack);
+
+        static AnyChatCoreSDK.OnObjectEventNotifyCallBack ObjectEvent_callBack = new AnyChatCoreSDK.OnObjectEventNotifyCallBack(ObjectEvent_CallBack);
+       
+        public static SetRecordReceivedHandler SetRecordReceivedCallBack = null;
+        /// <summary>
+        /// “Ù ”∆µ¬º÷∆ªÿµ˜∫Ø ˝
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="filePath"></param>
+        /// <param name="param"></param>
+        /// <param name="recordType"></param>
+        /// <param name="userValue"></param>
+        private static void SetRecordCallBack_CallBack(int userId, string filePath, int param, bool recordType, int userValue)
+        {
+            if (SetRecordReceivedCallBack != null)
+                SetRecordReceivedCallBack(userId, filePath, param, recordType, userValue);
+        }
 
         /// <summary>
-        /// ÊúçÂä°Âô®Á´ØÊ∂àÊÅØÂõûË∞É
+        /// ∑˛ŒÒ∆˜∂Àœ˚œ¢ªÿµ˜
         /// </summary>
         /// <param name="buf"></param>
         /// <param name="len"></param>
         /// <param name="userValue"></param>
-        private static void SDKFilter_DataCallBack(IntPtr buf, int len, int userValue)
+        private static void SDKFilter_DataCallBack(byte[] buf, int len, int userValue)
         {
 
 
         }
 
-
         public static TransFileReceivedHandler TransFile_Received = null;
         /// <summary>
-        /// Êñá‰ª∂ÂõûË∞É
+        /// Œƒº˛ªÿµ˜
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="fileName"></param>
@@ -106,13 +146,12 @@ namespace ANYCHATAPI
             int taskId, int userValue)
         {
             if (TransFile_Received != null)
-            {
-                TransFile_Received(userId, fileName, filePath, fileLength, wParam, lParam, taskId, userValue);
-            }
+                TransFile_Received(userId, fileName,filePath, fileLength,wParam, lParam,taskId, userValue);
         }
 
+        public static TransBufferReceivedHandler TransBuffer_OnReceive = null;
         /// <summary>
-        /// ÈÄèÊòéÈÄöÈÅìÂõûË∞É
+        /// Õ∏√˜Õ®µ¿ªÿµ˜
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="buf"></param>
@@ -120,12 +159,26 @@ namespace ANYCHATAPI
         /// <param name="userValue"></param>
         private static void TransBuffer_CallBack(int userId, IntPtr buf, int len, int userValue)
         {
- 
+            if (TransBuffer_OnReceive != null)
+                TransBuffer_OnReceive(userId, buf, len, userValue);
+        }
+
+        public static SetVolumeChange_CallBack SetVolumeChange_OnReceive = null;
+        /// <summary>
+        /// …Ë÷√“Ù¡ø±‰ªØªÿµ˜∫Ø ˝∂®“Â
+        /// </summary>
+        /// <param name="device">“Ù∆µ…Ë±∏</param>
+        /// <param name="currentVolume">µ±«∞“Ù¡ø</param>
+        /// <param name="userValue">∏Ω¥¯–≈œ¢</param>
+        private static void SetVolumeChange_CallBack(AnyChatCoreSDK.AudioDevice device, int currentVolume, int userValue)
+        {
+            if (SetVolumeChange_OnReceive != null)
+                SetVolumeChange_OnReceive(device, currentVolume, userValue);
         }
 
         public static TextReceivedHandler Text_OnReceive = null;
         /// <summary>
-        /// Ê∂àÊÅØÂõûË∞É
+        /// œ˚œ¢ªÿµ˜
         /// </summary>
         /// <param name="fromuserId"></param>
         /// <param name="touserId"></param>
@@ -133,39 +186,108 @@ namespace ANYCHATAPI
         /// <param name="message"></param>
         /// <param name="len"></param>
         /// <param name="userValue"></param>
-        private static void TextMessage_CallBack(int fromuserId, int touserId, bool isserect,
-            string message, int len, int userValue)
+        private static void TextMessage_CallBack(int fromuserId, int touserId, bool isserect, string message, int len, int userValue)
         {
             if (Text_OnReceive != null)
                 Text_OnReceive(fromuserId, touserId, message, isserect);
         }
 
+        public delegate void AudioDataCallback(int userId, IntPtr buf, int len, AnyChatCoreSDK.WaveFormat format, int userValue);
+        public static AudioDataCallback Audio_OnCallBack = null;
         /// <summary>
-        /// Èü≥È¢ëÂõûË∞É
+        /// “Ù∆µªÿµ˜
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="buf"></param>
         /// <param name="len"></param>
         /// <param name="format"></param>
         /// <param name="userValue"></param>
-        private static void AudioData_CallBack(int userId, IntPtr buf, int len,
-            AnyChatCoreSDK.WaveFormat format, int userValue)
+        private static void AudioData_CallBack(int userId, IntPtr buf, int len, AnyChatCoreSDK.WaveFormat format, int userValue)
         {
+            if (Audio_OnCallBack != null)
+                Audio_OnCallBack(userId, buf, len, format, userValue);
 
         }
 
+        public delegate void AudioDataExCallback(int userId, IntPtr buf, int len, AnyChatCoreSDK.WaveFormat format, int timestamp, int userValue);
+        public static AudioDataExCallback AudioEx_OnCallBack = null;
         /// <summary>
-        /// ËßÜÈ¢ëÂõûË∞É
+        /// “Ù∆µªÿµ˜(¿©’π)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="buf"></param>
+        /// <param name="len"></param>
+        /// <param name="format"></param>
+        /// <param name="userValue"></param>
+        private static void AudioDataEx_CallBack(int userId, IntPtr buf, int len, AnyChatCoreSDK.WaveFormat format, int timestamp, int userValue)
+        {
+            if (AudioEx_OnCallBack != null)
+                AudioEx_OnCallBack(userId, buf, len, format, timestamp, userValue);
+
+        }
+        
+        public delegate void VideoDataCallback(int userId, IntPtr buf, int len, AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int userValue);
+        public static VideoDataCallback Video_OnCallBack = null;
+        /// <summary>
+        ///  ”∆µªÿµ˜
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="buf"></param>
         /// <param name="len"></param>
         /// <param name="bitMap"></param>
         /// <param name="userValue"></param>
-        private static void VideoData_CallBack(int userId, IntPtr buf, int len,
-            AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int userValue)
-        { 
+        private static void VideoData_CallBack(int userId, IntPtr buf, int len, AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int userValue)
+        {
+            if (Video_OnCallBack != null)
+                Video_OnCallBack(userId, buf, len, bitMap, userValue);
+        }
 
+        public delegate void VideoDataExCallback(int userId, IntPtr buf, int len, AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int timeStamp, int userValue);
+        public static VideoDataExCallback VideoEx_OnCallBack = null;
+        /// <summary>
+        ///  ”∆µªÿµ˜(¿©’π)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="buf"></param>
+        /// <param name="len"></param>
+        /// <param name="bitMap"></param>
+        /// <param name="userValue"></param>
+        private static void VideoDataEx_CallBack(int userId, IntPtr buf, int len, AnyChatCoreSDK.BITMAPINFOHEADER bitMap, int timeStamp, int userValue)
+        {
+            if (VideoEx_OnCallBack != null)
+                VideoEx_OnCallBack(userId, buf, len, bitMap, timeStamp, userValue);
+        }
+        
+        public delegate void VideoCallEventCallBack(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr);
+        public static VideoCallEventCallBack VideoCallEvent_Handler;
+        private static void VideoCallEvent_CallBack(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr, int lpUserValue)
+        {
+            if(VideoCallEvent_Handler!=null)
+            {
+                VideoCallEvent_Handler( dwEventType,  dwUserId,  dwErrorCode,  dwFlags,  dwParam,  lpUserStr);
+            }
+        }
+        
+        /// <summary>
+        /// “µŒÒ∂‘œÛ ¬º˛Õ®÷™ªÿµ˜
+        /// </summary>
+        /// <param name="dwObjectType"></param>
+        /// <param name="dwObjectId"></param>
+        /// <param name="dwEventType"></param>
+        /// <param name="dwParam1"></param>
+        /// <param name="dwParam2"></param>
+        /// <param name="dwParam3"></param>
+        /// <param name="dwParam4"></param>
+        /// <param name="strParam"></param>
+        /// <param name="lpUserValue"></param>
+        public delegate void AnyChatObjectEventCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam);
+        public static AnyChatObjectEventCallBack AnyChatObjectEvent_Handler;
+        private static void ObjectEvent_CallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        {
+            if (AnyChatObjectEvent_Handler != null)
+            {
+                AnyChatObjectEvent_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+            }
         }
     }
 }
