@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyChatBusiness", "AnyChatBusiness\AnyChatBusiness.csproj", "{89B31CA2-7CEC-41B6-B247-369AC141EEA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessServer", "BusinessServer\BusinessServer.csproj", "{89B31CA2-7CEC-41B6-B247-369AC141EEA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

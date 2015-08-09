@@ -364,15 +364,12 @@ namespace QueueClient
 
             StringBuilder sbUserName = new StringBuilder(100);
 
-            AnyChatCoreSDK.GetUserName(userID, sbUserName, 100);
+            AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, userID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbUserName);
+
             if (userID == -1)
-            {
                 lbl_agent_remoteUser.Text = string.Empty;
-            }
             else
-            {
                 lbl_agent_remoteUser.Text = "当前服务用户ID：" + userID + "，用户名为：" + sbUserName.ToString();
-            }
         }
 
         private void btn_return_Click(object sender, EventArgs e)
@@ -578,8 +575,8 @@ namespace QueueClient
             
             if (tUserItem != null)
             {
-                lbl_client_remoteUserName.Text = tUserItem.Name;
-                lbl_client_localUserName.Text = m_UserName;
+                lbl_client_remoteUserName.Text = tUserItem.Name + "(坐席)";
+                lbl_client_localUserName.Text = m_UserName + "(自己)";
                 OpenCameraAndSpeak(m_UserId, true);//打开自己的音视频
                 //panel_users.Hide();
                 //panel_call.Hide();
@@ -1243,7 +1240,7 @@ namespace QueueClient
         {
             UserInfo mode = new UserInfo();
             StringBuilder sbUserName = new StringBuilder(100);
-            AnyChatCoreSDK.GetUserName(id, sbUserName, 100);
+            AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, id, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbUserName);
             mode.Id = id;
             mode.Name = sbUserName.ToString();
             return mode;
