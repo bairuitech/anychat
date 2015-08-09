@@ -215,7 +215,7 @@ $(function () {
                 break;
         }
         // 退出大厅按钮
-        $("#roomOut").off().click(systemOut);
+        $("#returnBtn").off().click(systemOut);
 
     });
     //日志显示按钮
@@ -235,19 +235,19 @@ $(function () {
         $(".showBox").show();
     });
 
-    $("#leaveQueue").click(function () {
-        $("#enterRoom h2").text("营业厅列表");
-        /**离开营业厅*/
-        BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, mCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-        $(this).hide();
-        $('#selectList').hide();
-        $('#roomOut').show();
-        $('#hallList').show();
-    });
+//    $("#leaveQueue").click(function () {
+//        $("#enterRoom h2").text("营业厅列表");
+//        /**离开营业厅*/
+//        BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, mCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+//        $(this).hide();
+//        $('#selectList').hide();
+//        $('#returnBtn').show();
+//        $('#hallList').show();
+//    });
 
     //绑定营业厅点击事件
     $("#poptip").delegate('.btn', 'click', function () {
-        var areaId = $(this).parents("li").attr('dwobjectid');
+        var areaId = $(this).parents("li").attr('areaId');
         var queueId = $(this).parents("li").attr('queueid');
         if (!isEmpty(areaId)) {
             $("#LOADING_GREY_DIV span").text("正在进入营业厅，请稍候......");
@@ -263,7 +263,7 @@ $(function () {
                 $('#enterRoom .contentArea').hide(); //直接隐藏进入队列步骤
                 $("#enterRoom h2").text("坐席端服务窗口");
                 $("#videoCall").show(); //显示客户视频窗口
-                $("#roomOut").off().click(function () {
+                $("#returnBtn").off().click(function () {
                     $('#returnHall').click();
                 });
             }
@@ -281,14 +281,17 @@ $(function () {
             var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_CTRL_USERENTER, 0, 0, 0, 0, "");
             AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + currentSelectedQueueId + "," + ANYCHAT_QUEUE_CTRL_USERENTER + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
-            $("#roomOut").off().click(function () {
-                if ($('#queueMsg1').css("display") == "block") {
-                    $('#queueMsg1 .confirmMsg').click();
-                } else if ($('#queueMsg2').css("display") == "block") {
-                    $('#reject').click();
-                } else if ($("#videoCall").css("display") == "block") {
-                    $('#hangUp').click();
-                }
+            $("#returnBtn").off().click(function () {
+//                if ($('#queueMsg1').css("display") == "block") {
+//                    $('#queueMsg1 .confirmMsg').click();
+//                } else if ($('#queueMsg2').css("display") == "block") {
+//                    $('#reject').click();
+//                } else if ($("#videoCall").css("display") == "block") {
+//                    $('#hangUp').click();
+                //                }
+
+//                $('#returnHall').click();
+
             });
         }
 
@@ -310,10 +313,10 @@ $(function () {
         $("#videoCall").hide(); //隐藏视频窗口
         $("#poptip").show();
         isShowReturnBtn(true);
-        $("#roomOut").off().click(function () {
+        $("#returnBtn").off().click(function () {
             $("#enterRoom h2").text("营业厅列表");
             $('#poptip li[queueid]').hide(); //隐藏队列
-            $("#poptip li[dwobjectid]").show();
+            $("#poptip li[areaId]").show();
             $(this).off().click(systemOut);
         });
     });
@@ -335,14 +338,14 @@ $(function () {
 
                 isShowReturnBtn(true);
 
-                $("#roomOut").off().click(function () {
+                $("#returnBtn").off().click(function () {
                     //离开营业厅
                     var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, mCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
                     AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + mCurrentAreaId + "," + ANYCHAT_AREA_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
                     $("#enterRoom h2").text("营业厅列表");
                     $('#poptip li[queueid]').hide(); //隐藏队列
-                    $("#poptip li[dwobjectid]").show();
+                    $("#poptip li[areaId]").show();
                     $(this).off().click(systemOut);
                 });
                 break;
@@ -351,17 +354,16 @@ $(function () {
                 AcceptRequestBtnClick();
                 break;
             case "拒绝":
+                RejectRequestBtnClick();
+                //离开队列
+                BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+
                 $("#enterRoom h2").text(mQueueListName);
                 $("#poptip").show();
-                isShowReturnBtn(true);
+                $("#poptip li[areaId]").hide();
                 $("#poptip li[queueid]").show(); //显示队列列表
-                RejectRequestBtnClick();
-                $("#roomOut").off().click(function () {
-                    $("#enterRoom h2").text("营业厅列表");
-                    $('#poptip li[queueid]').hide(); //隐藏队列
-                    $("#poptip li[dwobjectid]").show();
-                    $(this).off().click(systemOut);
-                });
+
+                isShowReturnBtn(true);
                 break;
             default:
                 break;
@@ -377,7 +379,7 @@ function setObjMiddle(obj){
 }
 
 // 控制视频打开关闭
-function startVideo(uid, videoID, videoType, state) {
+function controlVideo(uid, videoID, videoType, state) {
 	//视频操作
     var errorcode = BRAC_UserCameraControl(uid, state);
     AddLog("BRAC_UserCameraControl(" + uid + "," + state + ")=" + errorcode, LOG_TYPE_API);
@@ -477,13 +479,10 @@ function refreshServicedUserInfo(userID) {
     var serviceUserID = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AGENT, mCurrentAgentID, ANYCHAT_AGENT_INFO_SERVICEUSERID);
 
     //用户登录名
-    var userName = BRAC_GetUserInfo(userID, USERINFO_NAME); 
+    var servicedUserName = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_CLIENTUSER, userID, ANYCHAT_OBJECT_INFO_NAME);
 
-    if (userID == -1) {
-        $('#currentServicedUserInfo strong:eq(0)').text("");
-    } else {
-        $('#currentServicedUserInfo strong:eq(0)').text(userName);
-    }
+    $('#currentServicedUserInfo strong:eq(0)').text(servicedUserName);
+
 }
 
 
@@ -554,7 +553,7 @@ function leaveAreaClickEvent() {
             $('#videoCall').hide();
             $('#enterRoom .contentArea').show();
         }
-        $("#roomOut").off().click(systemOut);
+        $("#returnBtn").off().click(systemOut);
     }
 
 }
@@ -570,10 +569,21 @@ function refreshQueueInfoDisplay(queueID)
 
 //是否显示返回按钮
 function isShowReturnBtn(isShow) {
-    if (isShow)
-        $("#roomOut").show();
+    if (isShow) {
+        if (currentSelectedQueueId == -1) {
+            $("#returnBtn").off().click(function () {
+                $("#enterRoom h2").text("营业厅列表");
+                //离开营业厅
+                BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, mCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+                $('#poptip li[queueid]').hide(); //隐藏队列
+                $("#poptip li[areaId]").show();
+                $(this).off().click(systemOut);
+            });
+        }
+        $("#returnBtn").show();
+    }
     else {
-        $("#roomOut").hide();
+        $("#returnBtn").hide();
     }
 }
 
@@ -593,9 +603,9 @@ function showSerivceArea() {
 
         if (mQueueListName == "") {
             $("#poptip li").each(function (index) {
-                if (areaIdArray[idx] == $(this).attr('dwObjectId')) { $(this).remove(); }
+                if (areaIdArray[idx] == $(this).attr('areaId')) { $(this).remove(); }
             });
-            var createObj = $('<li dwObjectId="' + areaIdArray[idx] + '">' + '<p>' + areaName + '</p>' + '<p class="description">' + description + '</p>' + '<p>' + '<img src="./img/area.png">' + '</p>' + '<p>编号：' + areaIdArray[idx] + '</p>' + '<p class="last">' + '<a class="btn">进入</a>' + '</p>' + '</li>');
+            var createObj = $('<li areaId="' + areaIdArray[idx] + '">' + '<p>' + areaName + '</p>' + '<p class="description">' + description + '</p>' + '<p>' + '<img src="./img/area.png">' + '</p>' + '<p>编号：' + areaIdArray[idx] + '</p>' + '<p class="last">' + '<a class="btn">进入</a>' + '</p>' + '</li>');
             createObj.css("background-color", colorArray[colorIdx]);
             $("#poptip").append(createObj);
             colorIdx++;

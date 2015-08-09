@@ -139,18 +139,18 @@ function OnAnyChatEnterRoom(dwRoomId, errorcode) {
 		if (mUserType == 2) {
 			
 		} else if (mUserType ==1) {
-			/**客服姓名*/
-			var name1 = BRAC_GetUserInfo(mTargetUserId,USERINFO_NAME); 
-			/**个人姓名*/
-			var myName = BRAC_GetUserInfo(mSelfUserId,USERINFO_NAME);
+			//客服姓名
+		    var agentUserName = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_CLIENTUSER, mTargetUserId, ANYCHAT_OBJECT_INFO_NAME);
+			//个人姓名		   
+		    var myUserName = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_CLIENTUSER, mSelfUserId, ANYCHAT_OBJECT_INFO_NAME);
 			
 			var videoHtml='<div id="VideoShowDiv" style="display:block;margin-left:-80px;">'+
 				'<div id="remoteVideoPos" class="videoshow0"></div>'+
 				'<div id="remoteAudioVolume" style="width:480px;height:5px;top:370px;left: 21px;"></div>'+
 				'<div id="localVideoPos" class="videoshow1"></div>'+
 				'<div id="localAudioVolume" style="width:480px;height:5px;top:370px;left: 517px;"></div>'+
-				'<div id="div_username0" uid="" class="ShowName" style="left: 21px;">'+name1+'(坐席)</div>'+
-				'<div id="div_username1" uid="" class="ShowName" style="left:517px">'+myName+'(自己)</div>'+
+				'<div id="div_username0" uid="" class="ShowName" style="left: 21px;">' + agentUserName + '(坐席)</div>' +
+				'<div id="div_username1" uid="" class="ShowName" style="left:517px">' + myUserName + '(自己)</div>' +
 				'<b style="position: absolute;bottom: -40px;right: 30px;font-size: 18px;"><a id="hangUp" class="Buttons"></a></b>'+
 			'</div>';
 			
@@ -160,7 +160,7 @@ function OnAnyChatEnterRoom(dwRoomId, errorcode) {
 			$("#callLayer").hide();
 		}
 		//打开本地视频
-		startVideo(mSelfUserId, GetID("localVideoPos"), "ANYCHAT_VIDEO_LOCAL",1);
+		controlVideo(mSelfUserId, GetID("localVideoPos"), "ANYCHAT_VIDEO_LOCAL",1);
 		setVolumeTimer();//设置音量感应
 		
 	}else{
@@ -171,7 +171,7 @@ function OnAnyChatEnterRoom(dwRoomId, errorcode) {
 // 收到当前房间的在线用户信息，进入房间后触发一次，dwUserCount表示在线用户数（包含自己），dwRoomId表示房间ID
 function OnAnyChatRoomOnlineUser(dwUserCount, dwRoomId) {
 	//请求对方视频
-	startVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",1);
+	controlVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",1);
 }
 
 // 用户进入（离开）房间，dwUserId表示用户ID号，bEnterRoom表示该用户是进入（1）或离开（0）房间
@@ -181,7 +181,7 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 	//请求对方视频
 		if (bEnterRoom == 1) {
 			//请求对方视频
-			startVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",1);
+			controlVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",1);
 			if(mUserType == 1){
 				
 			}
@@ -342,7 +342,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 			    /**获取队列信息*/
 			    var queueInfo = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueListId, ANYCHAT_OBJECT_INFO_DESCRIPTION);
 			    $("#LOADING_GREY_DIV").hide(); //隐藏蒙层
-			    $('#poptip li[dwobjectid]').hide(); //隐藏服务厅
+			    $('#poptip li[areaId]').hide(); //隐藏服务厅
 			    $("#enterRoom h2:eq(1)").text(mQueueListName);
 			    var liObject = $('<li class="queue-item" queueid="' + queueListId + '">' +
                     '<a class="queue-item-link"><img class="queue-item-pic" src="./img/queue.png" /></a>' +
@@ -360,7 +360,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 			        colorIdx = 0;
 			    }
 			}
-			$("#roomOut").off().click(function() {
+			$("#returnBtn").off().click(function() {
 				$("#LOADING_GREY_DIV").show();//显示等待蒙层
 				var leaveFlag;
             	if($("#callLayer").css("display")!="block"){
@@ -369,7 +369,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 	                $("#LOADING_GREY_DIV span").text("正在离开营业厅，请稍候......");//显示等待蒙层
 	                if(!leaveFlag){
 	                	$('#poptip li[queueid]').hide(); //隐藏队列
-	                	$('#poptip li[dwobjectid]').show(); //显示营业厅
+	                	$('#poptip li[areaId]').show(); //显示营业厅
 	                	$("#LOADING_GREY_DIV").hide();//隐藏等待蒙层
 	                }
 
@@ -386,7 +386,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
         } else if(mUserType == 2) {			//坐席
             $("#LOADING_GREY_DIV").hide(); //隐藏等待蒙层
             refreshAgentServiceInfo(mCurrentAreaId);
-            $("#roomOut").off().click(function () {
+            $("#returnBtn").off().click(function () {
                 leaveAreaClickEvent();
             });
         }

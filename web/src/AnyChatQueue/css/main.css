@@ -8,7 +8,7 @@ body {
 	background-image: url("../img/bg.png");
 	background-size: 100%;
 }
-#roomOut {
+#returnBtn {
     background: url('../img/back0.png') no-repeat;
     border:0;
     width:45px;

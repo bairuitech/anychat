@@ -16,12 +16,15 @@ function ForSession(message,statue) {
 //取消主动呼叫
 function CancelCall() {
 	$('#LOADING_GREY_DIV').hide();
-	/**取消主动呼叫*/
+	//取消主动呼叫
 	var errorcode = BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY, mTargetUserId, GV_ERR_SESSION_QUIT, 0, 0, "");
 	AddLog("BRAC_VideoCallControl(" + BRAC_VIDEOCALL_EVENT_REPLY + "," + mTargetUserId + "," + GV_ERR_SESSION_QUIT + ",0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
 	ForSession("取消呼叫...",true);
-	if(mUserType==1){
+	if (mUserType == 1) {
+	    //离开队列
+	    BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+
 		$('#callLayer').hide();//隐藏排队信息窗口
 		$("#queueMsg2").hide();
 		$("#queueMsg1").show();
@@ -60,21 +63,19 @@ function RejectRequestBtnClick() {
     var errorcode = BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REPLY, mTargetUserId, GV_ERR_SESSION_REFUSE, 0, 0, "");
     AddLog("BRAC_VideoCallControl(" + BRAC_VIDEOCALL_EVENT_REPLY + "," + mTargetUserId + "," + GV_ERR_SESSION_REFUSE + ",0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
-	//离开队列
-	//BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE,0 ,0,0,0,"");
-	$("#enterRoom").show();//显示队列列表
     ForSession("拒绝对方请求...",true);
 }
+
 //收到视频呼叫请求
 function onVideoCallControlRequest(dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr)
 {
 	$("#callLayer h4").text("收到服务请求");
-	/**获取客服姓名*/
-	 var UserName = BRAC_GetUserInfo(dwUserId,USERINFO_NAME); 
-	 $("#callLayer #queueMsg1").hide();
-	 $("#callLayer #queueMsg2").show();
-	 mTargetUserId=dwUserId;
-	 $("#callLayer #queueMsg2 p").html("客服 <b style=\"color:red;\">"+UserName+"</b> 请求与您视频通话，是否接受？");
+	//获取客服姓名
+	var agentUserName = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_CLIENTUSER, dwUserId, ANYCHAT_OBJECT_INFO_NAME);
+	$("#callLayer #queueMsg1").hide();
+	$("#callLayer #queueMsg2").show();
+	mTargetUserId=dwUserId;
+	$("#callLayer #queueMsg2 p").html("客服 <b style=\"color:red;\">" + agentUserName + "</b> 请求与您视频通话，是否接受？");
 }
 
 //视频呼叫请求回复
@@ -143,7 +144,7 @@ function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUse
 	BRAC_LeaveRoom(mSelfUserId);
 	
 	//关闭对方视频
-	startVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",0);
+	controlVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",0);
 	if(mUserType==1){
 		$("#videoCall").hide();//隐藏视频窗口
 		$("#poptip").show(); //显示队列列表
@@ -159,6 +160,7 @@ function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUse
 	$("#localVideoPos").text("");
 	ForSession("会话结束...", true); // 提示层
 
+	isShowReturnBtn(true);
 	mStartServiceFlag = false;
 }
 
@@ -167,9 +169,9 @@ function onSendVideoCallRequestSucess(mTargetUserId)
 {	
 	this.mTargetUserId=mTargetUserId;
 	if(mUserType==2){
-		/**用户姓名*/
-		var UserName = BRAC_GetUserInfo(mTargetUserId,USERINFO_NAME); 
-	    GetID("Initiative_Call_Div_Content").innerHTML = "正在呼叫 <b style=\"red;\">" + UserName + "</b> 用户，等待对方响应<br /><img src='./img/others/LoadImg.gif'  style='width: 145px;height:30px;' />";
+		//用户姓名
+	    var servicedUserName = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_CLIENTUSER, mTargetUserId, ANYCHAT_OBJECT_INFO_NAME);
+	    GetID("Initiative_Call_Div_Content").innerHTML = "正在呼叫 <b style=\"red;\">" + servicedUserName + "</b> 用户，等待对方响应<br /><img src='./img/others/LoadImg.gif'  style='width: 145px;height:30px;' />";
 	    $("#Initiative_Call_Div").show();
 	    $('#LOADING_GREY_DIV').show();
 	}
