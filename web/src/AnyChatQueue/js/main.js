@@ -1,18 +1,21 @@
-var mDefaultServerAddr = "demo.anychat.cn";     // 默认服务器地址
-var mDefaultServerPort = 8906;                  // 默认服务器端口号
-var mRefreshPluginTimer = -1;                   // 检查插件是否安装完成定时器
-var mSelfUserId = -1;                           // 本地用户ID
-var mTargetUserId = -1;                         // 目标用户ID（请求了对方的音视频）
-var mRefreshVolumeTimer = -1;                   // 实时音量大小定时器
-var mCurrentAreaId = -1;                        // 营业厅号
-var mUserType;                                  // 用户类型 1为客户,2为坐席
-var mObjectInitFlag=-1;                         // 对象初始化标识(用户，坐席)
-var mStartServiceFlag=false;                    // 开始服务标志，True表示已开始服务
-var mQueueWaitingTimer = -1;                    // 排队等待定时器
-var mCurrentAgentID = -1;                       // 当前座席ID
-var mQueueListName="";                          // 队列名称
-var mPriority = -1;                             // 用户优先级
-var mInputUserNameTip="请输入用户名!";          // 用户名文本提示信息
+var mDefaultServerAddr = "demo.anychat.cn"; // 默认服务器地址
+var mDefaultServerPort = 8906; // 默认服务器端口号
+var mRefreshPluginTimer = -1; // 检查插件是否安装完成定时器
+var mSelfUserId = -1; // 本地用户ID
+var mTargetUserId = -1; // 目标用户ID（请求了对方的音视频）
+var mRefreshVolumeTimer = -1; // 实时音量大小定时器
+var hallbuinessNum = -1; // 营业厅号
+var userType; // 用户类型 1为客户,2为坐席
+var servantName=-1;//坐席名称
+var TimeSet;//个人数据更新计时器
+var dwAgentFlags=-1;//身份标识(用户，坐席)
+var queueid;//进入的队列id
+var startServiceTag=false;//开始服务点击按钮事件
+var waitTimeSet; //等待时间计时器
+var currentAgentID = -1;  //当前座席ID
+var queueListName=-1; //队列名称
+var dwPriority;//用户优先级
+var tipByUserName="请输入用户名!";//用户名文本提示信息
 
 // 日志记录类型，在日志信息栏内显示不同的颜色
 var LOG_TYPE_NORMAL = 0;
@@ -29,7 +32,6 @@ var colorQueueArray = ["#48cfae", "#a0d468", "#ffcf56"];
 
 //当前被选择的队列名称
 var currentSelectedQueueName = "";
-var currentSelectedQueueId = -1;
 
 //服务区域(营业厅)ID数组
 var areaIdArray = null;
@@ -37,47 +39,59 @@ var areaArrayIdx = 0;
 
 // onload默认运行
 function LogicInit() {
-    setTimeout(
-			function () {
-			    // 判断是否支持插件和插件长度（插件检测）
-			    if (navigator.plugins && navigator.plugins.length) {
-			        window.navigator.plugins.refresh(false);
-			    }
-			    // 检查是否安装了插件
-			    var NEED_ANYCHAT_APILEVEL = "0"; // 定义业务层需要的AnyChat
-			    // API Level
-			    var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); // 初始化插件（返回成功(0)或插件版本号太低的编号）
-			    AddLog("BRAC_InitSDK(" + NEED_ANYCHAT_APILEVEL + ")=" + errorcode, LOG_TYPE_API);
-			    if (errorcode == GV_ERR_SUCCESS) {// 安装成功的情况下
-			        // BRAC_SetSDKOption(BRAC_SO_CORESDK_SCREENCAMERACTRL,1);//显示桌面
-			        if (mRefreshPluginTimer != -1)// 检查插件是否安装完成定时器
-			            clearInterval(mRefreshPluginTimer); // 清除插件安装检测定时器(下面else有定义)
-			        GetID("loginDiv").style.display = "block";
-			        GetID("prompt_div").style.display = "none"; // 隐藏插件安装提示界面
-			        AddLog("AnyChat Plugin Version:" + BRAC_GetVersion(0), LOG_TYPE_NORMAL);
-			        AddLog("AnyChat SDK Version:" + BRAC_GetVersion(1), LOG_TYPE_NORMAL);
-			        AddLog("Build Time:" + BRAC_GetSDKOptionString(BRAC_SO_CORESDK_BUILDTIME), LOG_TYPE_NORMAL);
-			    } else { // 没有安装插件，或是插件版本太旧，显示插件下载界面
+	setTimeout(
+			function() {
+                var ua = window.navigator.userAgent.toLowerCase();
+                var info = {
+                    eg: /edge/.test(ua)
+                };
+                if(info.eg) {
+                    $("#loginDiv").hide();
+                    $("#prompt_div").hide();
+                    $('.showBox').hide();
+                    $('body').append('<iframe src="./html/needie.html?reason=3" style="width: 100%; height: 800px;" scrolling = "no"  frameborder="0"></iframe>');
+                } else {
+                    // 判断是否支持插件和插件长度（插件检测）
+                    if (navigator.plugins && navigator.plugins.length) {
+                        window.navigator.plugins.refresh(false);
+                    }
+                    // 检查是否安装了插件
+                    var NEED_ANYCHAT_APILEVEL = "0"; // 定义业务层需要的AnyChat
+                    // API Level
+                    var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); // 初始化插件（返回成功(0)或插件版本号太低的编号）
+                    AddLog("BRAC_InitSDK(" + NEED_ANYCHAT_APILEVEL + ")=" + errorcode, LOG_TYPE_API);
+                    if (errorcode == GV_ERR_SUCCESS) {// 安装成功的情况下
+                        // BRAC_SetSDKOption(BRAC_SO_CORESDK_SCREENCAMERACTRL,1);//显示桌面
+                        if (mRefreshPluginTimer != -1)// 检查插件是否安装完成定时器
+                            clearInterval(mRefreshPluginTimer); // 清除插件安装检测定时器(下面else有定义)
+                        GetID("loginDiv").style.display = "block";
+                        GetID("prompt_div").style.display = "none"; // 隐藏插件安装提示界面
+                        AddLog("AnyChat Plugin Version:" + BRAC_GetVersion(0), LOG_TYPE_NORMAL);
+                        AddLog("AnyChat SDK Version:" + BRAC_GetVersion(1), LOG_TYPE_NORMAL);
+                        AddLog("Build Time:" + BRAC_GetSDKOptionString(BRAC_SO_CORESDK_BUILDTIME), LOG_TYPE_NORMAL);
+                    } else { // 没有安装插件，或是插件版本太旧，显示插件下载界面
 
-			        GetID("loginDiv").style.display = "none";
-			        GetID("prompt_div").style.display = "block"; // 显示插件安装提示界面
-			        if (errorcode == GV_ERR_PLUGINNOINSTALL)// 第2个参数指 插件没有安装(编码)
-			            GetID("prompt_div_line1").innerHTML = "首次进入需要安装插件，请点击下载按钮进行安装！";
-			        else if (errorcode == GV_ERR_PLUGINOLDVERSION)// 第2个参数指
-			        // 插件版本太低(编码)
-			            GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";
+                        GetID("loginDiv").style.display = "none";
+                        GetID("prompt_div").style.display = "block";// 显示插件安装提示界面
+                        if (errorcode == GV_ERR_PLUGINNOINSTALL)// 第2个参数指 插件没有安装(编码)
+                            GetID("prompt_div_line1").innerHTML = "首次进入需要安装插件，请点击下载按钮进行安装！";
+                        else if (errorcode == GV_ERR_PLUGINOLDVERSION)// 第2个参数指
+                            // 插件版本太低(编码)
+                            GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";
 
-			        if (mRefreshPluginTimer == -1) {// 检查插件是否安装完成定时器
-			            mRefreshPluginTimer = setInterval(function () {
-			                LogicInit();
-			            }, 1000);
-			        }
-			    }
+                        if (mRefreshPluginTimer == -1) {// 检查插件是否安装完成定时器
+                            mRefreshPluginTimer = setInterval(function() {
+                                LogicInit();
+                            }, 500);
+                        }
+                    }
+                }
+				
 			}, 500);
 }
 
 //初始化本地对象信息
-function InitClientObjectInfo(mSelfUserId, mObjectInitFlag, mPriority) {
+function InitClientObjectInfo(mSelfUserId, dwAgentFlags, dwPriority) {
     AddLog("Initialize Client Object Information", LOG_TYPE_NORMAL);
 
     //初始化服务区域Id数组
@@ -85,9 +99,9 @@ function InitClientObjectInfo(mSelfUserId, mObjectInitFlag, mPriority) {
     areaIdArray = new Array();
 
 	//业务对象身份初始化
-	BRAC_SetSDKOption(BRAC_SO_OBJECT_INITFLAGS, mObjectInitFlag);
+	BRAC_SetSDKOption(BRAC_SO_OBJECT_INITFLAGS, dwAgentFlags);
 	//客户端用户对象优先级
-	BRAC_ObjectSetValue(ANYCHAT_OBJECT_TYPE_CLIENTUSER, mSelfUserId, ANYCHAT_OBJECT_INFO_PRIORITY, mPriority);
+	BRAC_ObjectSetValue(ANYCHAT_OBJECT_TYPE_CLIENTUSER, mSelfUserId, ANYCHAT_OBJECT_INFO_PRIORITY, dwPriority);
 	var dwAttribute = -1;
 	BRAC_ObjectSetValue(ANYCHAT_OBJECT_TYPE_CLIENTUSER, mSelfUserId, ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwAttribute);
 	//向服务器发送数据同步请求指令
@@ -102,11 +116,11 @@ $(function () {
     //用户名输入提示
     $("#username").blur(function () {
         if (!$(this).val().length) {
-            $(this).val(mInputUserNameTip);
+            $(this).val(tipByUserName);
         }
     });
     $("#username").focus(function () {
-        if ($(this).val() == mInputUserNameTip)
+        if ($(this).val() == tipByUserName)
             $(this).val("");
     });
     // 所有按钮点击后不显示虚线
@@ -130,7 +144,7 @@ $(function () {
         mDefaultServerAddr = $('#mDefaultServerAddr').val();
         mDefaultServerPort = $('#mDefaultServerPort').val();
 
-        if ($("#username").val() == mInputUserNameTip) {
+        if ($("#username").val() == tipByUserName) {
             $("#username").focus();
             AddLog("The user name can not be empty!", LOG_TYPE_ERROR);
             return;
@@ -144,7 +158,7 @@ $(function () {
             return;
         }
 
-        mUserType = parseInt($("#askSelect option:selected").val()); // 获取目标用户类型
+        userType = parseInt($("#askSelect option:selected").val()); // 获取目标用户类型
         $("#poptip li").remove(); //清除营业厅
         $("#LOADING_GREY_DIV img").show(); //显示登录等待蒙层
         $("#LOADING_GREY_DIV").show(); //显示登录蒙层
@@ -152,10 +166,11 @@ $(function () {
         BRAC_Connect(mDefaultServerAddr, mDefaultServerPort);
         /**登入anychat*/
         var loginTag = BRAC_Login($("#username").val(), "", 0);
-        switch (mUserType) {
+        switch (userType) {
             case 1: //用户登入的情况
                 break;
-            case 2:                
+            case 2:
+                servantName = $("#username").val(); //客服登入账户名
                 //坐席呼叫视频界面
                 var videoHtml = '<div style="height:505px;">' +
                                     '<div style="width:240px;float: left">' +
@@ -193,14 +208,14 @@ $(function () {
 
                             $("#Initiative_Call_Div").hide(); //隐藏主动呼叫层
                             isShowReturnBtn(true);
-                            mStartServiceFlag = false;
+                            startServiceTag = false;
                         }
                     }
                 });
                 //开始服务按钮事件(坐席)
                 $('#startService').off().on('click', function () {
-                    if (!mStartServiceFlag) {
-                        mStartServiceFlag = true;
+                    if (!startServiceTag) {
+                        startServiceTag = true;
                         /**客服开始服务*/
                         var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AGENT, mSelfUserId, ANYCHAT_AGENT_CTRL_SERVICEREQUEST, 0, 0, 0, 0, "");
                         AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AGENT + "," + mSelfUserId + "," + ANYCHAT_AGENT_CTRL_SERVICEREQUEST + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
@@ -215,7 +230,7 @@ $(function () {
                 break;
         }
         // 退出大厅按钮
-        $("#returnBtn").off().click(systemOut);
+        $("#roomOut").off().click(systemOut);
 
     });
     //日志显示按钮
@@ -235,63 +250,60 @@ $(function () {
         $(".showBox").show();
     });
 
-//    $("#leaveQueue").click(function () {
-//        $("#enterRoom h2").text("营业厅列表");
-//        /**离开营业厅*/
-//        BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, mCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-//        $(this).hide();
-//        $('#selectList').hide();
-//        $('#returnBtn').show();
-//        $('#hallList').show();
-//    });
+    $("#leaveQueue").click(function () {
+        $("#enterRoom h2").text("营业厅列表");
+        /**离开营业厅*/
+        BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+        $(this).hide();
+        $('#selectList').hide();
+        $('#roomOut').show();
+        $('#hallList').show();
+    });
 
     //绑定营业厅点击事件
     $("#poptip").delegate('.btn', 'click', function () {
-        var areaId = $(this).parents("li").attr('areaId');
+        var areaId = $(this).parents("li").attr('dwobjectid');
         var queueId = $(this).parents("li").attr('queueid');
         if (!isEmpty(areaId)) {
             $("#LOADING_GREY_DIV span").text("正在进入营业厅，请稍候......");
 
-            mQueueListName = $(this).parents("li").find("p:first-child").text() + " - 队列列表";
+            queueListName = $(this).parents("li").find("p:first-child").text() + " - 队列列表";
 
             $("#LOADING_GREY_DIV img").show(); //显示登录等待蒙层
             $("#LOADING_GREY_DIV").show(); //显示蒙层
-            if (mUserType == 1) {//客户
+            if (userType == 1) {//客户
                 //$("#LOADING_GREY_DIV").hide(); //隐藏蒙层
                 $('#poptip li[queueid]').remove(); //移除队列
-            } else if (mUserType == 2) {//客服
+            } else if (userType == 2) {//客服
                 $('#enterRoom .contentArea').hide(); //直接隐藏进入队列步骤
                 $("#enterRoom h2").text("坐席端服务窗口");
                 $("#videoCall").show(); //显示客户视频窗口
-                $("#returnBtn").off().click(function () {
+                $("#roomOut").off().click(function () {
                     $('#returnHall').click();
                 });
             }
-            mCurrentAreaId = parseInt(areaId); //营业厅号为id
+            hallbuinessNum = parseInt(areaId); //营业厅号为id
             /**进入营业厅*/
-            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, mCurrentAreaId, ANYCHAT_AREA_CTRL_USERENTER, 0, 0, 0, 0, "");
-            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + mCurrentAreaId + "," + ANYCHAT_AREA_CTRL_USERENTER + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_CTRL_USERENTER, 0, 0, 0, 0, "");
+            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + hallbuinessNum + "," + ANYCHAT_AREA_CTRL_USERENTER + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
         } else if (!isEmpty(queueId)) {
             $("#LOADING_GREY_DIV span").text("正在进入队列，请稍候......");
             $("#enterRoom h2").text("排队信息");
             $("#LOADING_GREY_DIV").show(); //显示等待蒙层
-            currentSelectedQueueId = parseInt(queueId); //获取队列id
+            queueid = parseInt(queueId); //获取队列id
             /**进入队列*/
-            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_CTRL_USERENTER, 0, 0, 0, 0, "");
-            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + currentSelectedQueueId + "," + ANYCHAT_QUEUE_CTRL_USERENTER + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERENTER, 0, 0, 0, 0, "");
+            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + queueid + "," + ANYCHAT_QUEUE_CTRL_USERENTER + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
-            $("#returnBtn").off().click(function () {
-//                if ($('#queueMsg1').css("display") == "block") {
-//                    $('#queueMsg1 .confirmMsg').click();
-//                } else if ($('#queueMsg2').css("display") == "block") {
-//                    $('#reject').click();
-//                } else if ($("#videoCall").css("display") == "block") {
-//                    $('#hangUp').click();
-                //                }
-
-//                $('#returnHall').click();
-
+            $("#roomOut").off().click(function () {
+                if ($('#queueMsg1').css("display") == "block") {
+                    $('#queueMsg1 .confirmMsg').click();
+                } else if ($('#queueMsg2').css("display") == "block") {
+                    $('#reject').click();
+                } else if ($("#videoCall").css("display") == "block") {
+                    $('#hangUp').click();
+                }
             });
         }
 
@@ -304,8 +316,8 @@ $(function () {
         AddLog("BRAC_VideoCallControl(" + BRAC_VIDEOCALL_EVENT_FINISH + "," + mTargetUserId + ",0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
 
-        if (mUserType == 1) {
-            $("#enterRoom h2").text(mQueueListName);
+        if (userType == 1) {
+            $("#enterRoom h2").text(queueListName);
             /**离开队列*/
             //BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
         }
@@ -313,39 +325,39 @@ $(function () {
         $("#videoCall").hide(); //隐藏视频窗口
         $("#poptip").show();
         isShowReturnBtn(true);
-        $("#returnBtn").off().click(function () {
+        $("#roomOut").off().click(function () {
             $("#enterRoom h2").text("营业厅列表");
             $('#poptip li[queueid]').hide(); //隐藏队列
-            $("#poptip li[areaId]").show();
+            $("#poptip li[dwobjectid]").show();
             $(this).off().click(systemOut);
         });
     });
     // 排队信息确认框
-    $("#callLayer button.confirmMsg").click(function () {
+    $("#callLayer a.confirmMsg").click(function () {
         $("#callLayer h4").text("排队等待中");
-        clearInterval(mQueueWaitingTimer); //清除排队时间计时器
+        clearInterval(waitTimeSet); //清除排队时间计时器
         $('#callLayer').hide(); //隐藏排队信息窗口
         $("#queueMsg2").hide(); //隐藏客服呼叫信息
         //判断信息执行对应操作
         switch ($(this).text()) {
             case "取消排队":
-                $("#enterRoom h2").text(mQueueListName);
+                $("#enterRoom h2").text(queueListName);
                 $("#LOADING_GREY_DIV span").text("取消排队处理中，请稍候......"); //等待蒙层文本填充
                 $("#LOADING_GREY_DIV").show(); //显示等待蒙层
                 /**离开队列*/
-                var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-                AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + currentSelectedQueueId + "," + ANYCHAT_QUEUE_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+                var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+                AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + queueid + "," + ANYCHAT_QUEUE_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
                 isShowReturnBtn(true);
 
-                $("#returnBtn").off().click(function () {
+                $("#roomOut").off().click(function () {
                     //离开营业厅
-                    var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, mCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-                    AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + mCurrentAreaId + "," + ANYCHAT_AREA_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+                    var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+                    AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + hallbuinessNum + "," + ANYCHAT_AREA_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
                     $("#enterRoom h2").text("营业厅列表");
                     $('#poptip li[queueid]').hide(); //隐藏队列
-                    $("#poptip li[areaId]").show();
+                    $("#poptip li[dwobjectid]").show();
                     $(this).off().click(systemOut);
                 });
                 break;
@@ -354,16 +366,17 @@ $(function () {
                 AcceptRequestBtnClick();
                 break;
             case "拒绝":
-                RejectRequestBtnClick();
-                //离开队列
-                BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, currentSelectedQueueId, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-
-                $("#enterRoom h2").text(mQueueListName);
+                $("#enterRoom h2").text(queueListName);
                 $("#poptip").show();
-                $("#poptip li[areaId]").hide();
-                $("#poptip li[queueid]").show(); //显示队列列表
-
                 isShowReturnBtn(true);
+                $("#poptip li[queueid]").show(); //显示队列列表
+                RejectRequestBtnClick();
+                $("#roomOut").off().click(function () {
+                    $("#enterRoom h2").text("营业厅列表");
+                    $('#poptip li[queueid]').hide(); //隐藏队列
+                    $("#poptip li[dwobjectid]").show();
+                    $(this).off().click(systemOut);
+                });
                 break;
             default:
                 break;
@@ -379,43 +392,56 @@ function setObjMiddle(obj){
 }
 
 // 控制视频打开关闭
-function controlVideo(uid, videoID, videoType, state) {
-	//视频操作
+function startVideo(uid, videoID, videoType, state) {
+	/**视频操作*/
     var errorcode = BRAC_UserCameraControl(uid, state);
     AddLog("BRAC_UserCameraControl(" + uid + "," + state + ")=" + errorcode, LOG_TYPE_API);
 
-	//语音操作
+	/**语音操作*/
     errorcode = BRAC_UserSpeakControl(uid, state);
     AddLog("BRAC_UserSpeakControl(" + uid + "," + state + ")=" + errorcode, LOG_TYPE_API);
 
-	//设置视频显示位置
+	/**设置视频显示位置*/
     BRAC_SetVideoPos(uid, videoID, videoType);
+}
+
+// 打开指定用户的音视频
+function RequestOtherUserVideo(userid) {
+
+	// 判断是否需要关闭之前已请求的用户音视频数据
+	if (mTargetUserId != -1) {
+		/**操作本地用户视频（或请求远程用户视频）*/
+		BRAC_UserCameraControl(mTargetUserId, 0);
+		/**操作本地用户语音（或请求远程用户语音）*/
+		BRAC_UserSpeakControl(mTargetUserId, 0);
+		GetID(mTargetUserId + "_UserDiv").style.backgroundColor = "";
+	}
+	// 设置远程视频显示位置
+/*	startVideo(userid, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE", 1);
+*/	
+	
+	GetID(userid + "_UserDiv").style.backgroundColor = "rgba(255, 255, 255, .5)"; // 设置被点击<a>元素的背景颜色
+	mTargetUserId = userid; // 设置被点用户ID为全局变量
 }
 
 //录制时间设置
 function formatSeconds(value) {
-    var hour = 0;  //小时
-	var minute = 0; //分钟
-	var second = 0;   //秒钟
-    var result = "";  //返回值
+	var s = parseInt(value);// 秒
+	var min = 0;// 分
+	if(s > 60) {
+      min = parseInt(s/60);
+      s = parseInt(s%60);
+		if(min > 60) {
+			min = parseInt(min%60);
+		}
+	}
 
-    second = parseInt(value);
-	if(second > 60) {
-      minute = parseInt(second / 60);
-      second = parseInt(second % 60);
-	  if(minute > 60) {
-        hour = parseInt(minute / 60);
-		minute = parseInt(minute % 60);
-        result = parseInt(hour)+ "小时" +parseInt(minute)+ "分" + parseInt(second)+"秒";
-	  }
-      else{
-        result = parseInt(minute)+ "分" + parseInt(second)+"秒";
-      }
-	}else{
-    	result = parseInt(second)+"秒";
-    }
-
-	return result;
+	var result = ""+parseInt(s)+"秒";
+	if(min > 0) {
+		result = ""+parseInt(min)+"分"+result;
+	}
+	tt=parseInt(min)+"分"+parseInt(s)+"秒";
+    return tt;
 }
 
 
@@ -455,14 +481,16 @@ function refreshUserWaitingInfo(queueID) {
 }
 
 //刷新坐席进入服务区域后的显示信息
-function refreshAgentServiceInfo(areaId) {
-    if (mUserType == 2) {
-        var queueCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, areaId, ANYCHAT_AREA_INFO_QUEUECOUNT);
-        var queuesUserCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, areaId, ANYCHAT_AREA_INFO_QUEUEUSERCOUNT);
+function refreshAgentServiceInfo() {
+    if (userType == 2) {
+        var queueCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_INFO_QUEUECOUNT);
+        var queuesUserCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_INFO_QUEUEUSERCOUNT);
+
         //累计服务时长
-        var serviceTotalTime = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AGENT, mCurrentAgentID, ANYCHAT_AGENT_INFO_SERVICETOTALTIME);
+        var serviceTotalTime = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AGENT, currentAgentID, ANYCHAT_AGENT_INFO_SERVICETOTALTIME);
+
         //累计服务的用户数
-        var serviceUserCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AGENT, mCurrentAgentID, ANYCHAT_AGENT_INFO_SERVICETOTALNUM);
+        var serviceUserCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AGENT, currentAgentID, ANYCHAT_AGENT_INFO_SERVICETOTALNUM);
 
         $('#clientList strong:eq(0)').text(queueCount + "个");
         $('#clientList strong:eq(1)').text(queuesUserCount + "人");
@@ -476,13 +504,16 @@ function refreshAgentServiceInfo(areaId) {
 function refreshServicedUserInfo(userID) {
 
     //当前服务的用户ID
-    var serviceUserID = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AGENT, mCurrentAgentID, ANYCHAT_AGENT_INFO_SERVICEUSERID);
+    var serviceUserID = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AGENT, currentAgentID, ANYCHAT_AGENT_INFO_SERVICEUSERID);
 
     //用户登录名
-    var servicedUserName = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_CLIENTUSER, userID, ANYCHAT_OBJECT_INFO_NAME);
+    var userName = BRAC_GetUserInfo(userID, USERINFO_NAME); 
 
-    $('#currentServicedUserInfo strong:eq(0)').text(servicedUserName);
-
+    if (userID == -1) {
+        $('#currentServicedUserInfo strong:eq(0)').text("");
+    } else {
+        $('#currentServicedUserInfo strong:eq(0)').text(userName);
+    }
 }
 
 
@@ -524,18 +555,17 @@ function systemOut() {
     var errorcode=BRAC_Logout(); //退出系统
     //if (!errorcode) AddLog('退出系统', LOG_TYPE_NORMAL);
     AddLog("BRAC_Logout()=" + errorcode, LOG_TYPE_API);
-    mObjectInitFlag = -1;
+    dwAgentFlags = -1;
     mSelfUserId = -1;
-    mQueueListName = "";
+    queueListName = -1;
     colorIdx = 0;
-    areaArrayIdx = 0;
 }
 
 //返回营业厅的逻辑处理
 function leaveAreaClickEvent() {
     if (confirm("您确定要结束服务返回营业厅吗？")) {
         $("#enterRoom h2").text("营业厅列表");
-        mStartServiceFlag = false;
+        startServiceTag = false;
         var finishCallFlag = false;
         if ($("#remoteVideoPos").html() != "") {
             finishCallFlag = BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_FINISH, mTargetUserId, 0, 0, 0, ""); 	// 挂断
@@ -547,13 +577,13 @@ function leaveAreaClickEvent() {
             $('#localVideoPos').empty();
             $('#remoteVideoPos').empty();
             /**离开营业厅*/
-            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, mCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + mCurrentAreaId + "," + ANYCHAT_AREA_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+            var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
+            AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AREA + "," + hallbuinessNum + "," + ANYCHAT_AREA_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
             $('#videoCall').hide();
             $('#enterRoom .contentArea').show();
         }
-        $("#returnBtn").off().click(systemOut);
+        $("#roomOut").off().click(systemOut);
     }
 
 }
@@ -569,21 +599,10 @@ function refreshQueueInfoDisplay(queueID)
 
 //是否显示返回按钮
 function isShowReturnBtn(isShow) {
-    if (isShow) {
-        if (currentSelectedQueueId == -1) {
-            $("#returnBtn").off().click(function () {
-                $("#enterRoom h2").text("营业厅列表");
-                //离开营业厅
-                BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AREA, mCurrentAreaId, ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, "");
-                $('#poptip li[queueid]').hide(); //隐藏队列
-                $("#poptip li[areaId]").show();
-                $(this).off().click(systemOut);
-            });
-        }
-        $("#returnBtn").show();
-    }
+    if (isShow)
+        $("#roomOut").show();
     else {
-        $("#returnBtn").hide();
+        $("#roomOut").hide();
     }
 }
 
@@ -601,11 +620,11 @@ function showSerivceArea() {
         areaName = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_AREA, areaIdArray[idx], ANYCHAT_OBJECT_INFO_NAME);
         description = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_AREA, areaIdArray[idx], ANYCHAT_OBJECT_INFO_DESCRIPTION);
 
-        if (mQueueListName == "") {
+        if (queueListName == -1) {
             $("#poptip li").each(function (index) {
-                if (areaIdArray[idx] == $(this).attr('areaId')) { $(this).remove(); }
+                if (areaIdArray[idx] == $(this).attr('dwObjectId')) { $(this).remove(); }
             });
-            var createObj = $('<li areaId="' + areaIdArray[idx] + '">' + '<p>' + areaName + '</p>' + '<p class="description">' + description + '</p>' + '<p>' + '<img src="./img/area.png">' + '</p>' + '<p>编号：' + areaIdArray[idx] + '</p>' + '<p class="last">' + '<a class="btn">进入</a>' + '</p>' + '</li>');
+            var createObj = $('<li dwObjectId="' + areaIdArray[idx] + '">' + '<p>' + areaName + '</p>' + '<p class="description">' + description + '</p>' + '<p>' + '<img src="./img/area.png">' + '</p>' + '<p>编号：' + areaIdArray[idx] + '</p>' + '<p class="last">' + '<a class="btn">进入</a>' + '</p>' + '</li>');
             createObj.css("background-color", colorArray[colorIdx]);
             $("#poptip").append(createObj);
             colorIdx++;

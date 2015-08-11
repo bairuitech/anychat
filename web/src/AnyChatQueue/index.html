@@ -3,15 +3,15 @@
 <head>
 <link href="img/queue.ico">
 <title>AnyChat 智能排队</title>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"  />
+<meta charset="UTF-8" content="text/html" http-equiv="Content-Type">
 
-    <link rel="icon" href="img/queue.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="img/queue.ico" type="image/x-icon" />
+<link rel="icon" href="img/queue.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="img/queue.ico" type="image/x-icon" />
 
 <link rel="stylesheet" type="text/css" href="css/prompt.css" />
 <link rel="stylesheet" type="text/css" href="css/login.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
-<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/jquery-2.1.1.js"></script>
 <script src="js/anychatsdk.js"></script>
 <script src="js/anychatobject.js" charset="GB2312"></script>
 <script src="js/main.js"></script>
@@ -95,14 +95,14 @@
 			<div id="prompt_div_btn_load" onclick="window.open('http://anychat.oss.aliyuncs.com/AnyChatWebSetup.exe')">下载安装</div>
 		</div>
 		<div id="prompt_div_BR">
-			<a href="http://www.anychat.cn/">AnyChat</a>&nbsp|&nbsp <a href="http://www.bairuitech.com/">佰锐科技</a>
-		</div>
+			<a href="http://www.anychat.cn/">AnyChat</a>&nbsp;|;&nbsp; <a href="http://www.bairuitech.com/">佰锐科技</a>
+;		</div>
 	</div>
 	<!-- 营业厅/队列选择层 -->
 	<div class="enterRoom" id="enterRoom">
 		<div class="head">
 			<h2></h2><h2></h2>
-			<a class="btn" id="returnBtn"></a>
+			<a class="btn" id="roomOut"></a>
 		</div>
 		<div class="content">
 			<div class="contentArea">
@@ -121,13 +121,13 @@
 		                        当前排队人数共：<strong></strong> 人，您现在排在第 <strong></strong> 位 <br />
 								已等待时长：<strong></strong>
 								<br />
-								<button class="confirmMsg">取消排队</button>
+								<a class="confirmMsg">取消排队</a>
 							</div>
 						</div>
 						<div id="queueMsg2">
 							<p>坐席请求与您视频通话，是否接受？</p>
-							<button class="confirmMsg" id="takeUp">接受</button>
-							<button class="confirmMsg" id="reject">拒绝</button>
+							<a class="confirmMsg" id="takeUp">接受</a>
+							<a class="confirmMsg" id="reject">拒绝</a>
 						</div>
 					</div>
 				</div>
@@ -201,3 +201,4 @@ $(document).keypress(function(event){
 });
 </script>
 </html>
+
