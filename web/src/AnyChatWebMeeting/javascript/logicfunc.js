@@ -23,7 +23,25 @@ var NOTIFY_TYPE_SYSTEM = 1;
 
 var list_videouser;
 var list_videosite;
+function CheckIfEdge() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+        edge: /edge/.test(ua)
+    };
+    if(info.edge) {
+        var iframeField = document.createElement('iframe');
+        iframeField.src = './html/needie.html';
+        iframeField.scrolling = "no";
+        iframeField.frameborder = "0";
+        iframeField.width = "100%";
+        iframeField.height = "800px";
+        document.body.style.backgroundColor = "#fff";
+        document.body.appendChild(iframeField);
 
+    } else {
+        LogicInit(); // ≥ı ºªØsdk
+    }
+}
 
 function LogicInit() {
     setTimeout(function () {
