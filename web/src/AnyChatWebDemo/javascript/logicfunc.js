@@ -21,7 +21,6 @@ var LOG_TYPE_ERROR = 3;
 var NOTIFY_TYPE_NORMAL = 0;
 var NOTIFY_TYPE_SYSTEM = 1;
 
-
 function LogicInit() {
     setTimeout(function () {
 		if (navigator.plugins && navigator.plugins.length) {
@@ -56,6 +55,22 @@ function LogicInit() {
 		}
     }, 500);
 }
+
+$(function() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+    edge: /edge/.test(ua)
+    };
+    if(info.edge) {
+        $("#loginDiv").hide();
+        $("#prompt_div").hide();
+        $('.showBox').hide();
+        $('body').css('backgroundColor', '#fff');
+        $('body').append('<iframe src="./html/needie.html?reason=3" style="width: 100%; height: 800px;" scrolling = "no"  frameborder="0"></iframe>');
+    } else {
+        LogicInit(); // 初始化sdk
+    }
+});
 
 //设置AnyChat参数，需要在收到登录成功回调之后调用
 function ConfigAnyChatParameter(){
@@ -449,8 +464,7 @@ function MicrophoneOnclick(userid) {
     }
 }
 //恢复显示视频div大小
-function reVideoDivSize()
-{
+function reVideoDivSize() {
 	var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
 	var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
 	if(divWidth<divHeight){
