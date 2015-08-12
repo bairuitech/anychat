@@ -20,7 +20,25 @@ var LOG_TYPE_ERROR = 3;
 // 通知类型，在文字消息栏内显示不同的颜色
 var NOTIFY_TYPE_NORMAL = 0;
 var NOTIFY_TYPE_SYSTEM = 1;
+function CheckIfEdge() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+        edge: /edge/.test(ua)
+    };
+    if(info.edge) {
+        var iframeField = document.createElement('iframe');
+        iframeField.src = './html/needie.html';
+        iframeField.scrolling = "no";
+        iframeField.frameborder = "0";
+        iframeField.width = "100%";
+        iframeField.height = "800px";
+        document.body.style.backgroundColor = "#fff";
+        document.body.appendChild(iframeField);
 
+    } else {
+        LogicInit(); // 初始化sdk
+    }
+}
 function LogicInit() {
     setTimeout(function () {
 		if (navigator.plugins && navigator.plugins.length) {
@@ -55,22 +73,6 @@ function LogicInit() {
 		}
     }, 500);
 }
-
-$(function() {
-    var ua = window.navigator.userAgent.toLowerCase();
-    var info = {
-    edge: /edge/.test(ua)
-    };
-    if(info.edge) {
-        $("#loginDiv").hide();
-        $("#prompt_div").hide();
-        $('.showBox').hide();
-        $('body').css('backgroundColor', '#fff');
-        $('body').append('<iframe src="./html/needie.html?reason=3" style="width: 100%; height: 800px;" scrolling = "no"  frameborder="0"></iframe>');
-    } else {
-        LogicInit(); // 初始化sdk
-    }
-});
 
 //设置AnyChat参数，需要在收到登录成功回调之后调用
 function ConfigAnyChatParameter(){
