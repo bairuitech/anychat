@@ -20,7 +20,25 @@ var LOG_TYPE_ERROR = 3;
 // 通知类型，在文字消息栏内显示不同的颜色
 var NOTIFY_TYPE_NORMAL = 0;
 var NOTIFY_TYPE_SYSTEM = 1;
+function CheckIfEdge() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+        edge: /edge/.test(ua)
+    };
+    if(info.edge) {
+        var iframeField = document.createElement('iframe');
+        iframeField.src = './html/needie.html';
+        iframeField.scrolling = "no";
+        iframeField.frameborder = "0";
+        iframeField.width = "100%";
+        iframeField.height = "800px";
+        document.body.style.backgroundColor = "#fff";
+        document.body.appendChild(iframeField);
 
+    } else {
+        LogicInit(); // 初始化sdk
+    }
+}
 
 function LogicInit() {
     setTimeout(function () {
