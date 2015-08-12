@@ -51,11 +51,27 @@ function LogicInit() {
                 GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";
 				
 			if(mRefreshPluginTimer == -1) {
-				mRefreshPluginTimer = setInterval(function(){ LogicInit(); }, 1000);
+				mRefreshPluginTimer = setInterval(function(){ 
+                    LogicInit(); }, 1000);
 			}
 		}
     }, 500);
 }
+$(function () {
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+        edge: /edge/.test(ua)
+    };
+    if(info.edge) {
+        $("#loginDiv").hide();
+        $("#prompt_div").hide();
+        $('.showBox').hide();
+        $('body').append('<iframe src="./html/needie.html?reason=3" style="width: 100%; height: 800px;" scrolling = "no"  frameborder="0"></iframe>');
+        $('body').css('backgroundColor', '#fff');
+    } else {
+        LogicInit(); // 初始化sdk
+    }
+});
 
 //设置AnyChat参数，需要在收到登录成功回调之后调用
 function ConfigAnyChatParameter(){
