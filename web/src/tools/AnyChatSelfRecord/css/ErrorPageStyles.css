@@ -1,0 +1,62 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+@-ms-viewport {
+    width: device-width;
+}
+
+@font-face {
+    font-family: "Browser MDL2 Assets";
+    src: url('ms-appx-web:///assets/Fonts/BrowserMDL.ttf#Browser MDL2 Assets') format('truetype');
+}
+
+#Wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 72px;
+    min-width: 320px;
+    max-width: 1100px;
+}
+
+h1 {
+    line-height: 26px;
+    font-family: "Microsoft YaHei UI", "Segoe UI SemiLight", "Segoe UI";
+    font-weight: normal;
+    color: #666;
+    margin: 0;
+    padding: 15px 28px 0 0;
+    font-size: 28px;
+}
+#needie_header p { color: orange; font-size: 28px; display: inline-block;}
+
+td p {
+    line-height: 18px;
+    font-size: 18px;
+    font-family: "Microsoft YaHei UI";
+    color: #666;
+    margin: 5px 0;
+}
+.sec { margin-left: 90px; }
+td, table {
+    vertical-align: top;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.pushbutton {
+    display: block;
+    font-size: 24px;
+    font-family: "Microsoft YaHei UI";
+    color: #666;
+    min-width: 120px;
+    height: 28px;
+    margin: 20px 0 2px;
+    max-width: 100%;
+    touch-action: manipulation;
+}
+#needie_open_in_ie { color: blue; }
+#imageicon {
+    margin: 10px 30px;
+}

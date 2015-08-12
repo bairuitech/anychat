@@ -33,6 +33,26 @@ var effectDymcImageSwitch=false,btfIndex=1,btfCloseTag=0;//动态文字效果功
 var constTransparentImg="recordTip.png";
 var localHref;//动态图片源路径
 
+function CheckIfEdge() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+        edge: /edge/.test(ua)
+    };
+    if(info.edge) {
+        var iframeField = document.createElement('iframe');
+        iframeField.src = './html/needie.html';
+        iframeField.scrolling = "no";
+        iframeField.frameborder = "0";
+        iframeField.width = "100%";
+        iframeField.height = "800px";
+        GetID('div_body').style.display = "none";
+        document.body.style.backgroundColor = "#fff";
+        document.body.appendChild(iframeField);
+
+    } else {
+        LogicInit(); // 初始化sdk
+    }
+}
 function LogicInit() {
     setTimeout(function () {
 		if (navigator.plugins && navigator.plugins.length) {
