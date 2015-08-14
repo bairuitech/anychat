@@ -33,7 +33,7 @@ var effectDymcImageSwitch=false,btfIndex=1,btfCloseTag=0;//动态文字效果功
 var constTransparentImg="recordTip.png";
 var localHref;//动态图片源路径
 
-function CheckIfEdge() {
+function LogicInit() {
     var ua = window.navigator.userAgent.toLowerCase();
     var info = {
         edge: /edge/.test(ua)
@@ -50,37 +50,34 @@ function CheckIfEdge() {
         document.body.appendChild(iframeField);
 
     } else {
-        LogicInit(); // 初始化sdk
+        setTimeout(function () {
+    		if (navigator.plugins && navigator.plugins.length) {
+    			window.navigator.plugins.refresh(false);
+    		}
+            // 检查是否安装了插件
+            var NEED_ANYCHAT_APILEVEL = "0"; 						// 定义业务层需要的AnyChat
+    																// API Level
+            var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	// 初始化插件
+            if (errorcode == GV_ERR_SUCCESS) {           
+    			if(mRefreshPluginTimer != -1)
+    				clearInterval(mRefreshPluginTimer); 			// 清除插件安装检测定时器
+    			GetID("prompt_div").style.display = "none"; 		// 隐藏插件安装提示界面
+    			ShowLoginDiv(true);
+    			// 初始化界面元素
+    			InitInterfaceUI();
+            } else { 						// 没有安装插件，或是插件版本太旧，显示插件下载界面
+                GetID("prompt_div").style.display = "block";
+               // SetDivTop("prompt_div", 300);
+                if (errorcode == GV_ERR_PLUGINNOINSTALL)
+                    GetID("prompt_div_line1").innerHTML = "首次进入需要安装插件，请点击下载按钮进行安装！";
+                else if (errorcode == GV_ERR_PLUGINOLDVERSION)
+                    GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";			
+    			if(mRefreshPluginTimer == -1) {
+    				mRefreshPluginTimer = setInterval(function(){ LogicInit(); }, 1000);
+    			}
+    		}
+        }, 500);
     }
-}
-function LogicInit() {
-    setTimeout(function () {
-		if (navigator.plugins && navigator.plugins.length) {
-			window.navigator.plugins.refresh(false);
-		}
-        // 检查是否安装了插件
-        var NEED_ANYCHAT_APILEVEL = "0"; 						// 定义业务层需要的AnyChat
-																// API Level
-        var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	// 初始化插件
-        if (errorcode == GV_ERR_SUCCESS) {           
-			if(mRefreshPluginTimer != -1)
-				clearInterval(mRefreshPluginTimer); 			// 清除插件安装检测定时器
-			GetID("prompt_div").style.display = "none"; 		// 隐藏插件安装提示界面
-			ShowLoginDiv(true);
-			// 初始化界面元素
-			InitInterfaceUI();
-        } else { 						// 没有安装插件，或是插件版本太旧，显示插件下载界面
-            GetID("prompt_div").style.display = "block";
-           // SetDivTop("prompt_div", 300);
-            if (errorcode == GV_ERR_PLUGINNOINSTALL)
-                GetID("prompt_div_line1").innerHTML = "首次进入需要安装插件，请点击下载按钮进行安装！";
-            else if (errorcode == GV_ERR_PLUGINOLDVERSION)
-                GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";			
-			if(mRefreshPluginTimer == -1) {
-				mRefreshPluginTimer = setInterval(function(){ LogicInit(); }, 1000);
-			}
-		}
-    }, 500);
 }
 
 //设置AnyChat参数，需要在收到登录成功回调之后调用
