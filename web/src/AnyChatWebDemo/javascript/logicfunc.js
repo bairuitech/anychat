@@ -22,20 +22,13 @@ var NOTIFY_TYPE_NORMAL = 0;
 var NOTIFY_TYPE_SYSTEM = 1;
 
 function LogicInit() {
+    //获取浏览器信息，并匹配Edge浏览器
     var ua = window.navigator.userAgent.toLowerCase();
     var info = {
         edge: /edge/.test(ua)
     };
     if(info.edge) {
-        var iframeField = document.createElement('iframe');
-        iframeField.src = './html/needie.html';
-        iframeField.scrolling = "no";
-        iframeField.frameborder = "0";
-        iframeField.width = "100%";
-        iframeField.height = "800px";
-        document.body.style.backgroundColor = "#fff";
-        document.body.appendChild(iframeField);
-
+       AddEdgePage();
     } else {
         setTimeout(function () {
     		if (navigator.plugins && navigator.plugins.length) {
@@ -70,6 +63,18 @@ function LogicInit() {
     		}
         }, 500);
     }
+}
+
+//加载Edge浏览器下的判断页面样式
+function AddEdgePage() {
+    var iframeField = document.createElement('iframe');
+    iframeField.src = './html/needie.html';
+    iframeField.scrolling = "no";
+    iframeField.frameborder = "0";
+    iframeField.width = "100%";
+    iframeField.height = "800px";
+    document.body.style.backgroundColor = "#fff";
+    document.body.appendChild(iframeField);
 }
 
 //设置AnyChat参数，需要在收到登录成功回调之后调用
