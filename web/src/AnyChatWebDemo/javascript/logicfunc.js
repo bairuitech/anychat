@@ -1,4 +1,4 @@
-/ AnyChat for Web SDK
+// AnyChat for Web SDK
 
 /********************************************
  *				业务逻辑控制				*
@@ -22,7 +22,11 @@ var NOTIFY_TYPE_NORMAL = 0;
 var NOTIFY_TYPE_SYSTEM = 1;
 
 function LogicInit() {
-    CheckIfEdge();
+    //获取浏览器信息，并匹配Edge浏览器
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+        edge: /edge/.test(ua)
+    };
     if(info.edge) {
        AddEdgePage();
     } else {
@@ -59,14 +63,6 @@ function LogicInit() {
     		}
         }, 500);
     }
-}
-
-//获取浏览器信息，并匹配Edge浏览器
-function CheckIfEdge() {
-    var ua = window.navigator.userAgent.toLowerCase();
-    var info = {
-        edge: /edge/.test(ua)
-    };
 }
 
 //加载Edge浏览器下的判断页面样式

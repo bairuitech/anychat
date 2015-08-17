@@ -34,7 +34,11 @@ var constTransparentImg="recordTip.png";
 var localHref;//动态图片源路径
 
 function LogicInit() {
-    CheckIfEdge();
+     //获取浏览器信息，并匹配Edge浏览器
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+        edge: /edge/.test(ua)
+    };
     if(info.edge) {
        AddEdgePage();
     } else {
@@ -68,13 +72,6 @@ function LogicInit() {
     }
 }
 
-//获取浏览器信息，并匹配Edge浏览器
-function CheckIfEdge() {
-    var ua = window.navigator.userAgent.toLowerCase();
-    var info = {
-        edge: /edge/.test(ua)
-    };
-}
 
 //加载Edge浏览器下的判断页面样式
 function AddEdgePage() {

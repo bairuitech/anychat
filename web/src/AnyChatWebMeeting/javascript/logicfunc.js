@@ -25,7 +25,11 @@ var list_videouser;
 var list_videosite;
 
 function LogicInit() {
-    CheckIfEdge();
+     //获取浏览器信息，并匹配Edge浏览器
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+        edge: /edge/.test(ua)
+    };
     if(info.edge) {
        AddEdgePage();
 
@@ -71,13 +75,6 @@ function ConfigAnyChatParameter(){
 	
 }
 
-//获取浏览器信息，并匹配Edge浏览器
-function CheckIfEdge() {
-    var ua = window.navigator.userAgent.toLowerCase();
-    var info = {
-        edge: /edge/.test(ua)
-    };
-}
 
 //加载Edge浏览器下的判断页面样式
 function AddEdgePage() {
