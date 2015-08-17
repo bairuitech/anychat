@@ -77,6 +77,7 @@ var BRAC_SO_LOCALVIDEO_CAPDRIVER = 			95;	// 本地视频采集驱动设置（参数为int型，
 var BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA = 		96;	// 修正视频采集颜色偏色（参数为int型，0表示关闭[默认]，1 开启）
 var BRAC_SO_LOCALVIDEO_TVFORMAT	=			104;// 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
 var BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP	=	105;// 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
+var BRAC_SO_LOCALVIDEO_DEVICENAME =			106;// 本地视频采集设备名称，用于设置打开指定摄像头设备（参数为字符串类型）
 
 var BRAC_SO_NETWORK_P2PPOLITIC = 			40;	// 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 var BRAC_SO_NETWORK_P2PCONNECT = 			41;	// 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -105,6 +106,29 @@ var BRAC_SO_CORESDK_DEVICEMODE	=			130;// 设备模式控制（局域网设备之间可以互相通
 var BRAC_SO_CORESDK_SCREENCAMERACTRL =		131;// 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
 var BRAC_SO_CORESDK_UPLOADLOGINFO =			134;// 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
 var BRAC_SO_CORESDK_WRITELOG	=			135;// 写入调试信息到本地日志文件中
+var BRAC_SO_CORESDK_NEWLOGFILE	=			136;// 产生新的日志文件
+
+var BRAC_SO_UDPTRACE_MODE		=			160;// UDP数据包跟踪模式
+var BRAC_SO_UDPTRACE_PACKSIZE	=			161;// UDP数据包跟踪的大小，单位：BYTE
+var BRAC_SO_UDPTRACE_BITRATE	=			162;// UDP数据包跟踪的包速率，单位：bps
+var BRAC_SO_UDPTRACE_START		=			163;// UDP数据包跟踪控制（参数为int型，1 启动， 0 停止）
+var BRAC_SO_UDPTRACE_LOCALRECVNUM	=		164;// UDP数据包跟踪本地接收包数量
+var BRAC_SO_UDPTRACE_SERVERRECVNUM	=		165;// UDP数据包跟踪服务器接收包数量
+var BRAC_SO_UDPTRACE_SOURCESENDNUM	=		166;// UDP数据包跟踪源发包数量
+var BRAC_SO_UDPTRACE_SENDUSERID	=			167;// UDP数据包跟踪源用户ID
+
+// 用户多媒体流参数定义（API：BRAC_GetUserStreamInfo 传入参数）
+var BRAC_STREAMINFO_VIDEOWIDTH	=			180;// 视频流宽度
+var BRAC_STREAMINFO_VIDEOHEIGHT	=			181;// 视频流高度
+var BRAC_STREAMINFO_VIDEOFPS	=			182;// 视频流帧率
+var BRAC_STREAMINFO_VIDEOBITRATE=			183;// 视频流码率，单位：bps
+var BRAC_STREAMINFO_VIDEOCODECID=			184;// 视频流编码器ID
+var BRAC_STREAMINFO_VIDEOPACKLOSSRATE=		185;// 视频流丢包率
+var BRAC_STREAMINFO_ADUIOCHANNELS	=		190;// 音频流通道数
+var BRAC_STREAMINFO_AUDIOSAMPLERATE	=		191;// 音频流采样率
+var BRAC_STREAMINFO_AUDIOBITRATE	=		192;// 音频流码率，单位：bps
+var BRAC_STREAMINFO_AUDIOCODECID	=		193;// 音频流编码器ID
+var BRAC_STREAMINFO_AUDIOPACKLOSSRATE=		194;// 音频流丢包率
 
 var BRAC_SO_OBJECT_INITFLAGS	=			200;// 业务对象身份初始化
 
@@ -253,6 +277,7 @@ var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.4";
 var anychat;									// AnyChat插件DMO对象，外部初始化
 var bSupportStreamRecordCtrlEx = false;			// 是否支持录像扩展API接口
 var bSupportObjectBusiness = false;				// 是否支持业务对象API接口
+var bSupportMultiStream = false;				// 是否支持多路流（多摄像头）API接口
 
 // 初始化SDK，返回出错代码
 function BRAC_InitSDK(apilevel) {
@@ -291,6 +316,8 @@ function BRAC_InitSDK(apilevel) {
 		bSupportStreamRecordCtrlEx = (anychatpluginver >= "1.0.1.0");
 		// 判断插件是否支持业务对象API接口
 		bSupportObjectBusiness = (anychatpluginver >= "1.0.2.3");
+		// 判断插件是否支持多路流API接口
+		bSupportMultiStream = (anychatpluginver >= "1.0.3.1");
 		// 判断当前的API Level是否满足业务层的需要
 		if(apilevel > anychatobj.GetVersion(2))
 			bRightVersion = false;
@@ -375,19 +402,21 @@ function BRAC_AttachIE11Event(obj, _strEventId, _functionCallback) {
 	document.body.appendChild(handler);
 }
 
-// 设置视频显示位置
-function BRAC_SetVideoPos(userid, parentobj, id) {
+// 创建视频显示插件
+function BRAC_NativeCreateVideoPlugin(userid, parentobj, id, streamindex) {
 	var videoobj = BRAC_GetDmoObject(id);
 	if(videoobj != null) {
 		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
 		videoobj.SetUserId(userid);
+		if(bSupportMultiStream)
+			videoobj.SetStreamIndex(streamindex);
 	} else {
 		// 创建视频显示插件
-	    videoobj = document.createElement("object")
-	    if (window.ActiveXObject || "ActiveXObject" in window)
-	        videoobj.classid = "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7";
-	    else
-	        videoobj.type = "application/anychat-video";
+		videoobj = document.createElement("object")
+		if (window.ActiveXObject || "ActiveXObject" in window)
+			videoobj.classid = "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7";
+		else
+			videoobj.type = "application/anychat-video";
 		videoobj.id = id;
 		parentobj.appendChild(videoobj);
 		videoobj.width = "100%";
@@ -395,7 +424,19 @@ function BRAC_SetVideoPos(userid, parentobj, id) {
 		// 关联到AnyChat SDK
 		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
 		videoobj.SetUserId(userid);
+		if(bSupportMultiStream)
+			videoobj.SetStreamIndex(streamindex);
 	}	
+}
+
+// 设置视频显示位置
+function BRAC_SetVideoPos(userid, parentobj, id) {
+	return BRAC_NativeCreateVideoPlugin(userid, parentobj, id, 0);
+}
+
+// 设置视频显示位置（扩展，支持多路流）
+function BRAC_SetVideoPosEx(userid, parentobj, id, streamindex) {
+	return BRAC_NativeCreateVideoPlugin(userid, parentobj, id, streamindex);
 }
 
 // 获取版本号
@@ -502,9 +543,30 @@ function BRAC_GetCurrentDevice(dwDeviceType) {
 function BRAC_UserCameraControl(dwUserId, bOpen) {
 	return anychat.UserCameraControl(dwUserId, bOpen);
 }
+
+// 操作本地用户视频扩展（或请求远程用户视频）
+function BRAC_UserCameraControlEx(dwUserId, bOpen, dwStreamIndex, dwFlags, szStrParam) {
+	if(bSupportMultiStream)
+		return anychat.UserCameraControlEx(dwUserId, bOpen, dwStreamIndex, dwFlags, szStrParam);
+	else if(dwStreamIndex == 0)
+		return anychat.UserCameraControl(dwUserId, bOpen);
+	else
+		return -1;
+}
+
 // 操作本地用户语音（或请求远程用户语音）
 function BRAC_UserSpeakControl(dwUserId, bOpen) {
 	return anychat.UserSpeakControl(dwUserId, bOpen);
+}
+
+// 操作本地用户语音扩展（或请求远程用户语音）
+function BRAC_UserSpeakControlEx(dwUserId, bOpen, dwStreamIndex, dwFlags, szStrParam) {
+	if(bSupportMultiStream)
+		return anychat.UserSpeakControlEx(dwUserId, bOpen, dwStreamIndex, dwFlags, szStrParam);
+	else if(dwStreamIndex == 0)
+		return anychat.UserSpeakControl(dwUserId, bOpen);
+	else
+		return -1;
 }
 
 // 获取指定音频设备的当前音量
@@ -738,6 +800,30 @@ function BRAC_ObjectControl(dwObjectType, dwObjectId, dwCtrlCode, dwParam1, dwPa
 	if(!bSupportObjectBusiness)
 		return -1;
 	return anychat.ObjectControl(dwObjectType, dwObjectId, dwCtrlCode, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+}
+
+// 设置指定用户音视频流相关参数（主要针对本地用户）
+function BRAC_SetUserStreamInfo(dwUserId, dwStreamIndex, infoname, value) {
+	if(!bSupportMultiStream)
+		return -1;
+	if(isNaN(value))
+		return anychat.SetUserStreamInfoString(dwUserId, dwStreamIndex, infoname, value);
+	else
+		return anychat.SetUserStreamInfoInt(dwUserId, dwStreamIndex, infoname, value);
+}
+
+// 获取指定用户音视频流相关参数（整形参数值）
+function BRAC_GetUserStreamInfoInt(dwUserId, dwStreamIndex, infoname) {
+	if(!bSupportMultiStream)
+		return 0;
+	return anychat.GetUserStreamInfoInt(dwUserId, dwStreamIndex, infoname);
+}
+
+// 获取指定用户音视频流相关参数（字符串参数值）
+function BRAC_GetUserStreamInfoString(dwUserId, dwStreamIndex, infoname) {
+	if(!bSupportMultiStream)
+		return "";
+	return anychat.GetUserStreamInfoString(dwUserId, dwStreamIndex, infoname);
 }
 
 
