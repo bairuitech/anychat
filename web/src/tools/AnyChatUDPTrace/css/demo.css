@@ -12,6 +12,7 @@ body {
 	outline: 0;
 	border: 0;
 	vertical-align: baseline;
+	overflow: hidden;
 }
 
 #username,#ServerAddr,#ServerPort,#uploadKbps,#roomID {

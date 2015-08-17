@@ -41,16 +41,6 @@ var areaArrayIdx = 0;
 function LogicInit() {
 	setTimeout(
 			function() {
-                var ua = window.navigator.userAgent.toLowerCase();
-                var info = {
-                    eg: /edge/.test(ua)
-                };
-                if(info.eg) {
-                    $("#loginDiv").hide();
-                    $("#prompt_div").hide();
-                    $('.showBox').hide();
-                    $('body').append('<iframe src="./html/needie.html?reason=3" style="width: 100%; height: 800px;" scrolling = "no"  frameborder="0"></iframe>');
-                } else {
                     // 判断是否支持插件和插件长度（插件检测）
                     if (navigator.plugins && navigator.plugins.length) {
                         window.navigator.plugins.refresh(false);
@@ -85,7 +75,6 @@ function LogicInit() {
                             }, 500);
                         }
                     }
-                }
 				
 			}, 500);
 }
@@ -109,8 +98,19 @@ function InitClientObjectInfo(mSelfUserId, dwAgentFlags, dwPriority) {
 }
 
 $(function () {
-
-    LogicInit(); // 初始化sdk
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+        edge: /edge/.test(ua)
+    };
+    if(info.edge) {
+        $("#loginDiv").hide();
+        $("#prompt_div").hide();
+        $('.showBox').hide();
+        $('body').append('<iframe src="./html/needie.html?reason=3" style="width: 100%; height: 800px;" scrolling = "no"  frameborder="0"></iframe>');
+    } else {
+        LogicInit(); // 初始化sdk
+    }
+    
     setObjMiddle($("#Initiative_Call_Div")); //设置主动呼叫等待框居中
     setObjMiddle($("#SessionPrompt_Div")); //设置被呼叫询问框居中
     //用户名输入提示

@@ -1,87 +1,107 @@
 // AnyChat for Web SDK
 
 /********************************************
- *				ÒµÎñÂß¼­¿ØÖÆ				*
+ *              ä¸šåŠ¡é€»è¾‘æ§åˆ¶              *
  *******************************************/
  
-var mDefaultServerAddr = "demo.anychat.cn";		// Ä¬ÈÏ·şÎñÆ÷µØÖ·
-var mDefaultServerPort = 8906;					// Ä¬ÈÏ·şÎñÆ÷¶Ë¿ÚºÅ
-var mSelfUserId = -1; 							// ±¾µØÓÃ»§ID
-var mTargetUserId = -1;							// Ä¿±êÓÃ»§ID£¨ÇëÇóÁË¶Ô·½µÄÒôÊÓÆµ£©
-var mRefreshVolumeTimer = -1; 					// ÊµÊ±ÒôÁ¿´óĞ¡¶¨Ê±Æ÷
-var mRefreshPluginTimer = -1;					// ¼ì²é²å¼şÊÇ·ñ°²×°Íê³É¶¨Ê±Æ÷
+var mDefaultServerAddr = "demo.anychat.cn";     // é»˜è®¤æœåŠ¡å™¨åœ°å€
+var mDefaultServerPort = 8906;                  // é»˜è®¤æœåŠ¡å™¨ç«¯å£å·
+var mSelfUserId = -1;                           // æœ¬åœ°ç”¨æˆ·ID
+var mTargetUserId = -1;                         // ç›®æ ‡ç”¨æˆ·IDï¼ˆè¯·æ±‚äº†å¯¹æ–¹çš„éŸ³è§†é¢‘ï¼‰
+var mRefreshVolumeTimer = -1;                   // å®æ—¶éŸ³é‡å¤§å°å®šæ—¶å™¨
+var mRefreshPluginTimer = -1;                   // æ£€æŸ¥æ’ä»¶æ˜¯å¦å®‰è£…å®Œæˆå®šæ—¶å™¨
 
-// ÈÕÖ¾¼ÇÂ¼ÀàĞÍ£¬ÔÚÈÕÖ¾ĞÅÏ¢À¸ÄÚÏÔÊ¾²»Í¬µÄÑÕÉ«
+// æ—¥å¿—è®°å½•ç±»å‹ï¼Œåœ¨æ—¥å¿—ä¿¡æ¯æ å†…æ˜¾ç¤ºä¸åŒçš„é¢œè‰²
 var LOG_TYPE_NORMAL = 0;
 var LOG_TYPE_API = 1;
 var LOG_TYPE_EVENT = 2;
 var LOG_TYPE_ERROR = 3;
 
-// Í¨ÖªÀàĞÍ£¬ÔÚÎÄ×ÖÏûÏ¢À¸ÄÚÏÔÊ¾²»Í¬µÄÑÕÉ«
+// é€šçŸ¥ç±»å‹ï¼Œåœ¨æ–‡å­—æ¶ˆæ¯æ å†…æ˜¾ç¤ºä¸åŒçš„é¢œè‰²
 var NOTIFY_TYPE_NORMAL = 0;
 var NOTIFY_TYPE_SYSTEM = 1;
 
-
 function LogicInit() {
-    setTimeout(function () {
-		if (navigator.plugins && navigator.plugins.length) {
-			window.navigator.plugins.refresh(false);
-		}
-        //¼ì²éÊÇ·ñ°²×°ÁË²å¼ş	
-        var NEED_ANYCHAT_APILEVEL = "0"; 						// ¶¨ÒåÒµÎñ²ãĞèÒªµÄAnyChat API Level
-        var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	// ³õÊ¼»¯²å¼ş
-        AddLog("BRAC_InitSDK(" + NEED_ANYCHAT_APILEVEL + ")=" + errorcode, LOG_TYPE_API);
-        if (errorcode == GV_ERR_SUCCESS) {
-			if(mRefreshPluginTimer != -1)
-				clearInterval(mRefreshPluginTimer); 			// Çå³ı²å¼ş°²×°¼ì²â¶¨Ê±Æ÷
-            ShowLoginDiv(true);
-            AddLog("AnyChat Plugin Version:" + BRAC_GetVersion(0), LOG_TYPE_NORMAL);
-            AddLog("AnyChat SDK Version:" + BRAC_GetVersion(1), LOG_TYPE_NORMAL);
-            AddLog("Build Time:" + BRAC_GetSDKOptionString(BRAC_SO_CORESDK_BUILDTIME), LOG_TYPE_NORMAL);
-			
-			GetID("prompt_div").style.display = "none"; 		// Òş²Ø²å¼ş°²×°ÌáÊ¾½çÃæ
-			// ³õÊ¼»¯½çÃæÔªËØ
-			InitInterfaceUI();
-        } else { 						// Ã»ÓĞ°²×°²å¼ş£¬»òÊÇ²å¼ş°æ±¾Ì«¾É£¬ÏÔÊ¾²å¼şÏÂÔØ½çÃæ
-            GetID("prompt_div").style.display = "block";
-            SetDivTop("prompt_div", 300);
-            if (errorcode == GV_ERR_PLUGINNOINSTALL)
-                GetID("prompt_div_line1").innerHTML = "Ê×´Î½øÈëĞèÒª°²×°²å¼ş£¬Çëµã»÷ÏÂÔØ°´Å¥½øĞĞ°²×°£¡";
-            else if (errorcode == GV_ERR_PLUGINOLDVERSION)
-                GetID("prompt_div_line1").innerHTML = "¼ì²âµ½µ±Ç°²å¼şµÄ°æ±¾¹ıµÍ£¬ÇëÏÂÔØ°²×°×îĞÂ°æ±¾£¡";
-				
-			if(mRefreshPluginTimer == -1) {
-				mRefreshPluginTimer = setInterval(function(){ LogicInit(); }, 1000);
-			}
-		}
-    }, 500);
+     //è·å–æµè§ˆå™¨ä¿¡æ¯ï¼Œå¹¶åŒ¹é…Edgeæµè§ˆå™¨
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+        edge: /edge/.test(ua)
+    };
+    if(info.edge) {
+       AddEdgePage();
+    } else {
+        setTimeout(function () {
+            if (navigator.plugins && navigator.plugins.length) {
+                window.navigator.plugins.refresh(false);
+            }
+            //æ£€æŸ¥æ˜¯å¦å®‰è£…äº†æ’ä»¶ 
+            var NEED_ANYCHAT_APILEVEL = "0";                        // å®šä¹‰ä¸šåŠ¡å±‚éœ€è¦çš„AnyChat API Level
+            var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL);    // åˆå§‹åŒ–æ’ä»¶
+            AddLog("BRAC_InitSDK(" + NEED_ANYCHAT_APILEVEL + ")=" + errorcode, LOG_TYPE_API);
+            if (errorcode == GV_ERR_SUCCESS) {
+                if(mRefreshPluginTimer != -1)
+                    clearInterval(mRefreshPluginTimer);             // æ¸…é™¤æ’ä»¶å®‰è£…æ£€æµ‹å®šæ—¶å™¨
+                ShowLoginDiv(true);
+                AddLog("AnyChat Plugin Version:" + BRAC_GetVersion(0), LOG_TYPE_NORMAL);
+                AddLog("AnyChat SDK Version:" + BRAC_GetVersion(1), LOG_TYPE_NORMAL);
+                AddLog("Build Time:" + BRAC_GetSDKOptionString(BRAC_SO_CORESDK_BUILDTIME), LOG_TYPE_NORMAL);
+                
+                GetID("prompt_div").style.display = "none";         // éšè—æ’ä»¶å®‰è£…æç¤ºç•Œé¢
+                // åˆå§‹åŒ–ç•Œé¢å…ƒç´ 
+                InitInterfaceUI();
+            } else {                        // æ²¡æœ‰å®‰è£…æ’ä»¶ï¼Œæˆ–æ˜¯æ’ä»¶ç‰ˆæœ¬å¤ªæ—§ï¼Œæ˜¾ç¤ºæ’ä»¶ä¸‹è½½ç•Œé¢
+                GetID("prompt_div").style.display = "block";
+                SetDivTop("prompt_div", 300);
+                if (errorcode == GV_ERR_PLUGINNOINSTALL)
+                    GetID("prompt_div_line1").innerHTML = "é¦–æ¬¡è¿›å…¥éœ€è¦å®‰è£…æ’ä»¶ï¼Œè¯·ç‚¹å‡»ä¸‹è½½æŒ‰é’®è¿›è¡Œå®‰è£…ï¼";
+                else if (errorcode == GV_ERR_PLUGINOLDVERSION)
+                    GetID("prompt_div_line1").innerHTML = "æ£€æµ‹åˆ°å½“å‰æ’ä»¶çš„ç‰ˆæœ¬è¿‡ä½ï¼Œè¯·ä¸‹è½½å®‰è£…æœ€æ–°ç‰ˆæœ¬ï¼";
+                    
+                if(mRefreshPluginTimer == -1) {
+                    mRefreshPluginTimer = setInterval(function(){ LogicInit(); }, 1000);
+                }
+            }
+        }, 500);
+    }
 }
 
-//ÉèÖÃAnyChat²ÎÊı£¬ĞèÒªÔÚÊÕµ½µÇÂ¼³É¹¦»Øµ÷Ö®ºóµ÷ÓÃ
+//åŠ è½½Edgeæµè§ˆå™¨ä¸‹çš„åˆ¤æ–­é¡µé¢æ ·å¼
+function AddEdgePage() {
+    var iframeField = document.createElement('iframe');
+    iframeField.src = './html/needie.html';
+    iframeField.scrolling = "no";
+    iframeField.frameborder = "0";
+    iframeField.width = "100%";
+    iframeField.height = "800px";
+    document.body.style.backgroundColor = "#fff";
+    document.body.appendChild(iframeField);
+}
+
+//è®¾ç½®AnyChatå‚æ•°ï¼Œéœ€è¦åœ¨æ”¶åˆ°ç™»å½•æˆåŠŸå›è°ƒä¹‹åè°ƒç”¨
 function ConfigAnyChatParameter(){
-	
+    
 }
 
-// ³õÊ¼»¯½çÃæÔªËØ
+// åˆå§‹åŒ–ç•Œé¢å…ƒç´ 
 function InitInterfaceUI() {
-    //ÉèÖÃ°´Å¥
+    //è®¾ç½®æŒ‰é’®
     GetID("setting").onclick = function () {
         if (GetID("setting_div").style.display == "block")
             GetID("setting_div").style.display = "none";
         else
             GetID("setting_div").style.display = "block";
     }
-    //µÇÂ¼°´Å¥
+    //ç™»å½•æŒ‰é’®
     GetID("loginbtn").onclick = function () {
-		if(GetID("password").value == "ÃÜÂë¿ÉÎª¿Õ")
-			GetID("password").value = "";
+        if(GetID("password").value == "å¯†ç å¯ä¸ºç©º")
+            GetID("password").value = "";
         if (GetID("username").value != "") {
             DisplayLoadingDiv(true);
-            var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //Á¬½Ó·şÎñÆ÷
+            var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //è¿æ¥æœåŠ¡å™¨
             AddLog("BRAC_Connect(" + GetID("ServerAddr").value + "," + GetID("ServerPort").value + ")=" + errorcode, LOG_TYPE_API);
             errorcode = BRAC_Login(GetID("username").value, GetID("password").value, 0);
             AddLog("BRAC_Login(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);
-            // Òş²ØÉèÖÃ½çÃæ
+            // éšè—è®¾ç½®ç•Œé¢
             GetID("setting_div").style.display = "none";
         }
         else {
@@ -90,28 +110,28 @@ function InitInterfaceUI() {
             GetID("username").focus();
         }
     }
-    //ÍË³öÏµÍ³
+    //é€€å‡ºç³»ç»Ÿ
     GetID("ExitSystemBtn").onclick = function () {
         var errorcode = BRAC_Logout();
         AddLog("BRAC_Logout()=" + errorcode, LOG_TYPE_API);
         ShowHallDiv(false);
         ShowLoginDiv(true);
     }
-    //ÍË³ö·¿¼ä
+    //é€€å‡ºæˆ¿é—´
     GetID("leaveroom").onclick = function () {
         var errorcode = BRAC_LeaveRoom(-1);
         AddLog("BRAC_LeaveRoom(" + -1 + ")=" + errorcode, LOG_TYPE_API);
-		if(mRefreshVolumeTimer != -1)
-			clearInterval(mRefreshVolumeTimer); // Çå³ıÊµÊ±ÒôÁ¿ÏÔÊ¾¼ÆÊ±Æ÷
-        ShowRoomDiv(false); 					// Òş²Ø·¿¼ä½çÃæ
-        ShowHallDiv(true); 						// ÏÔÊ¾´óÌü½çÃæ
+        if(mRefreshVolumeTimer != -1)
+            clearInterval(mRefreshVolumeTimer); // æ¸…é™¤å®æ—¶éŸ³é‡æ˜¾ç¤ºè®¡æ—¶å™¨
+        ShowRoomDiv(false);                     // éšè—æˆ¿é—´ç•Œé¢
+        ShowHallDiv(true);                      // æ˜¾ç¤ºå¤§å…ç•Œé¢
         mTargetUserId = -1;
     }
-    //½øÈë×Ô¶¨Òå·¿¼ä
+    //è¿›å…¥è‡ªå®šä¹‰æˆ¿é—´
     GetID("EnterRoomBtn").onclick = function () {
         if (GetID("customroomid").value != "") {
-            var re = /^[1-9]+[0-9]*]*$/;   //ÅĞ¶ÏÊÇ·ñ´¿Êı×Ö
-            if (re.test(GetID("customroomid").value)) {//´¿Êı×Ö
+            var re = /^[1-9]+[0-9]*]*$/;   //åˆ¤æ–­æ˜¯å¦çº¯æ•°å­—
+            if (re.test(GetID("customroomid").value)) {//çº¯æ•°å­—
                 EnterRoomRequest(parseInt(GetID("customroomid").value));
             } else {
                 AddLog("Room ID must be number!", LOG_TYPE_ERROR);
@@ -120,228 +140,228 @@ function InitInterfaceUI() {
             }
         }
     }
-    //·¢ËÍĞÅÏ¢°´Å¥
+    //å‘é€ä¿¡æ¯æŒ‰é’®
     GetID("SendMsg").onclick = function () {
         SendMessage();
     }
-    //»Ø³µ¼ü·¢ËÍĞÅÏ¢
+    //å›è½¦é”®å‘é€ä¿¡æ¯
     GetID("MessageInput").onkeydown = function (e) {
-        e = e ? e : window.event; //¼üÅÌÊÂ¼ş
-        if (e.keyCode == 13 && GetID("MessageInput").value != "") {//»Ø³µ¼ü±»µã»÷ÇÒ·¢ËÍĞÅÏ¢¿ò²»Îª¿Õ
+        e = e ? e : window.event; //é”®ç›˜äº‹ä»¶
+        if (e.keyCode == 13 && GetID("MessageInput").value != "") {//å›è½¦é”®è¢«ç‚¹å‡»ä¸”å‘é€ä¿¡æ¯æ¡†ä¸ä¸ºç©º
             SendMessage();
         }
     }
-    //ÏÂÔØ²å¼ş°´Å¥Êó±ê»®Èë»®³öÊ±¼ä
+    //ä¸‹è½½æ’ä»¶æŒ‰é’®é¼ æ ‡åˆ’å…¥åˆ’å‡ºæ—¶é—´
     GetID("prompt_div_btn_load").onmouseover = function () {
         GetID("prompt_div_btn_load").style.backgroundColor = "#ffc200";
     }
     GetID("prompt_div_btn_load").onmouseout = function () {
         GetID("prompt_div_btn_load").style.backgroundColor = "#ff8100";
     }
-    //ÏÂÔØ²å¼ş½çÃæ¹Ø±Õ°´Å¥
+    //ä¸‹è½½æ’ä»¶ç•Œé¢å…³é—­æŒ‰é’®
     GetID("prompt_div_headline2").onclick = function () {
         document.URL = location.href;
     }
-    // Êó±êÒÆµ½ÈÕÖ¾²ãÉÏÃæ
+    // é¼ æ ‡ç§»åˆ°æ—¥å¿—å±‚ä¸Šé¢
     GetID("LOG_DIV_BODY").onmousemove = function () {
         GetID("LOG_DIV_BODY").style.zIndex = 100;
         GetID("LOG_DIV_CONTENT").style.backgroundColor = "#FAFADD";
         GetID("LOG_DIV_CONTENT").style.border = "1px solid black";
     }
-    // Êó±ê´ÓÈÕÖ¾²ãÉÏÃæÒÆ¿ª
+    // é¼ æ ‡ä»æ—¥å¿—å±‚ä¸Šé¢ç§»å¼€
     GetID("LOG_DIV_BODY").onmouseout = function () {
         GetID("LOG_DIV_BODY").style.zIndex = -1;
         GetID("LOG_DIV_CONTENT").style.backgroundColor = "#C4CEDD";
         GetID("LOG_DIV_CONTENT").style.border = "";
     }
-    //¸ß¼¶ÉèÖÃ½çÃæ¹Ø±Õ°´Å¥
+    //é«˜çº§è®¾ç½®ç•Œé¢å…³é—­æŒ‰é’®
     GetID("advanceset_div_close").onclick = function () {
         GetID("advanceset_div").style.display = "none";
     }
-    //¸ß¼¶ÉèÖÃ
+    //é«˜çº§è®¾ç½®
     GetID("advancedsetting").onclick = function () {
         if (GetID("advanceset_div").style.display == "block")
             GetID("advanceset_div").style.display = "none";
         else {
-            GetID("advanceset_div").style.display = "block"; // ÏÔÊ¾¸ß¼¶ÉèÖÃ½çÃæ
-            // ³õÊ¼»¯¸ß¼¶ÉèÖÃ½çÃæ
+            GetID("advanceset_div").style.display = "block"; // æ˜¾ç¤ºé«˜çº§è®¾ç½®ç•Œé¢
+            // åˆå§‹åŒ–é«˜çº§è®¾ç½®ç•Œé¢
             InitAdvanced();
         }
     }
 }
 
 function PasswordFocus(obj,color){
-	// ÅĞ¶ÏÎÄ±¾¿òÖĞµÄÄÚÈİÊÇ·ñÊÇÄ¬ÈÏÄÚÈİ
-	if(obj.value=="ÃÜÂë¿ÉÎª¿Õ")
-		obj.value="";
-	obj.type="password";
-	// ÉèÖÃÎÄ±¾¿ò»ñÈ¡½¹µãÊ±ºò±³¾°ÑÕÉ«±ä»»
-	obj.style.backgroundColor=color;
+    // åˆ¤æ–­æ–‡æœ¬æ¡†ä¸­çš„å†…å®¹æ˜¯å¦æ˜¯é»˜è®¤å†…å®¹
+    if(obj.value=="å¯†ç å¯ä¸ºç©º")
+        obj.value="";
+    obj.type="password";
+    // è®¾ç½®æ–‡æœ¬æ¡†è·å–ç„¦ç‚¹æ—¶å€™èƒŒæ™¯é¢œè‰²å˜æ¢
+    obj.style.backgroundColor=color;
 }
-// µ±Êó±êÀë¿ªÊ±ºò¸Ä±äÎÄ±¾¿ò±³¾°ÑÕÉ«
+// å½“é¼ æ ‡ç¦»å¼€æ—¶å€™æ”¹å˜æ–‡æœ¬æ¡†èƒŒæ™¯é¢œè‰²
 function myblur(obj,color){
-	obj.style.background=color;
+    obj.style.background=color;
 }
 
-//¼ÆËã¸ß¶È²¢ÉèÖÃ½çÃæÎ»ÖÃ
+//è®¡ç®—é«˜åº¦å¹¶è®¾ç½®ç•Œé¢ä½ç½®
 function SetDivTop(id, TheHeight) {
-    var BodyHeight = document.documentElement.clientHeight; //»ñµÃä¯ÀÀÆ÷¿É¼ûÇøÓò¸ß¶È
-	if (TheHeight < BodyHeight) {//div¸ß¶ÈĞ¡ÓÚ¿É¼ûÇøÓò¸ß¶È
-	    GetID("margintop").style.height = (BodyHeight - TheHeight) / 4 + "px";
-	    GetID(id).style.marginTop = "0px";
+    var BodyHeight = document.documentElement.clientHeight; //è·å¾—æµè§ˆå™¨å¯è§åŒºåŸŸé«˜åº¦
+    if (TheHeight < BodyHeight) {//divé«˜åº¦å°äºå¯è§åŒºåŸŸé«˜åº¦
+        GetID("margintop").style.height = (BodyHeight - TheHeight) / 4 + "px";
+        GetID(id).style.marginTop = "0px";
     }
 }
 
-//ÏµÍ³ĞÅÏ¢¿ò¹ö¶¯ÌõÏÔÒş
+//ç³»ç»Ÿä¿¡æ¯æ¡†æ»šåŠ¨æ¡æ˜¾éš
 function DisplayScroll(id) {
-    var offset = GetID(id); //ĞèÒª¼ì²âµÄdiv
-	if (offset.offsetHeight < offset.scrollHeight) {//div¿É¼û¸ß¶ÈĞ¡ÓÚdiv¹ö¶¯Ìõ¸ß¶È
-		GetID(id).style.overflowY = "scroll";//ÏÔÊ¾¹ö¶¯Ìõ
-		GetID(id).scrollTop = GetID(id).scrollHeight;//¹ö¶¯Ìõ×Ô¶¯¹ö¶¯µ½µ×²¿
-	}
-	else
-		GetID(id).style.overflowY = "hidden";//Òş²Ø¹ö¶¯Ìõ
+    var offset = GetID(id); //éœ€è¦æ£€æµ‹çš„div
+    if (offset.offsetHeight < offset.scrollHeight) {//divå¯è§é«˜åº¦å°äºdivæ»šåŠ¨æ¡é«˜åº¦
+        GetID(id).style.overflowY = "scroll";//æ˜¾ç¤ºæ»šåŠ¨æ¡
+        GetID(id).scrollTop = GetID(id).scrollHeight;//æ»šåŠ¨æ¡è‡ªåŠ¨æ»šåŠ¨åˆ°åº•éƒ¨
+    }
+    else
+        GetID(id).style.overflowY = "hidden";//éšè—æ»šåŠ¨æ¡
 }
-//·¢ËÍĞÅÏ¢
+//å‘é€ä¿¡æ¯
 function SendMessage() {
-    if (GetID("MessageInput").value != "") {//·¢ËÍĞÅÏ¢¿ò²»Îª¿Õ
+    if (GetID("MessageInput").value != "") {//å‘é€ä¿¡æ¯æ¡†ä¸ä¸ºç©º
         var Msg = GetID("MessageInput").value;
-        BRAC_SendTextMessage(0, 0, Msg); //µ÷ÓÃ·¢ËÍĞÅÏ¢º¯Êı
-		DisplayTextMessage(mSelfUserId, Msg);
-		GetID("MessageInput").value = "";
-		GetID("MessageInput").focus();
-	}
+        BRAC_SendTextMessage(0, 0, Msg); //è°ƒç”¨å‘é€ä¿¡æ¯å‡½æ•°
+        DisplayTextMessage(mSelfUserId, Msg);
+        GetID("MessageInput").value = "";
+        GetID("MessageInput").focus();
+    }
 }
 
-// ÏÔÊ¾ÎÄ×ÖÏûÏ¢
+// æ˜¾ç¤ºæ–‡å­—æ¶ˆæ¯
 function DisplayTextMessage(fromuserid, message) {
-	var namestr = BRAC_GetUserName(fromuserid) + "&nbsp" + GetTheTime();
-	if(fromuserid==mSelfUserId)
-		namestr = namestr.fontcolor("#008000");
-	else
-		namestr = namestr.fontcolor("#000080");
-	message = message.fontcolor("#333333");
+    var namestr = BRAC_GetUserName(fromuserid) + "&nbsp" + GetTheTime();
+    if(fromuserid==mSelfUserId)
+        namestr = namestr.fontcolor("#008000");
+    else
+        namestr = namestr.fontcolor("#000080");
+    message = message.fontcolor("#333333");
 
-	var msgdiv = document.createElement("div");
-	msgdiv.setAttribute("class", "TheMsgStyle");
-	msgdiv.innerHTML = namestr + "£º&nbsp&nbsp" + message;
-	GetID("ReceiveMsgDiv").appendChild(msgdiv);
-	DisplayScroll("ReceiveMsgDiv");
+    var msgdiv = document.createElement("div");
+    msgdiv.setAttribute("class", "TheMsgStyle");
+    msgdiv.innerHTML = namestr + "ï¼š&nbsp&nbsp" + message;
+    GetID("ReceiveMsgDiv").appendChild(msgdiv);
+    DisplayScroll("ReceiveMsgDiv");
 }
 
-// ÔÚÎÄ×ÖÏûÏ¢ÇøÓòÏÔÊ¾Í¨ÖªĞÅÏ¢
+// åœ¨æ–‡å­—æ¶ˆæ¯åŒºåŸŸæ˜¾ç¤ºé€šçŸ¥ä¿¡æ¯
 function ShowNotifyMessage(message, type) {
     if (type == NOTIFY_TYPE_SYSTEM) {
         message = message.fontcolor("#FF0000");
     } else {
         message = message.fontcolor("#333333");
     }
-	var msgdiv = document.createElement("div");
+    var msgdiv = document.createElement("div");
     msgdiv.setAttribute("class", "TheMsgStyle");
-	msgdiv.innerHTML = message + "&nbsp(" + GetTheTime().fontcolor("#999999") + ")";
+    msgdiv.innerHTML = message + "&nbsp(" + GetTheTime().fontcolor("#999999") + ")";
     GetID("ReceiveMsgDiv").appendChild(msgdiv);
     DisplayScroll("ReceiveMsgDiv");
 }
 
-// ÏÔÊ¾µÇÂ¼½çÃæ
+// æ˜¾ç¤ºç™»å½•ç•Œé¢
 function ShowLoginDiv(bShow) {
-	if(bShow) {
-		GetID("login_div").style.display = "block"; 	//ÏÔÊ¾µÇÂ¼½çÃæ
-		GetID("username").focus();
-		SetDivTop("login_div", 195); 					//µÇÂ¼½çÃæ´¹Ö±¾ÓÖĞ
-		GetID("LOG_DIV_BODY").style.display = "block"; 	//ÏÔÊ¾ÏµÍ³ĞÅÏ¢¿ò
-		GetID("ServerAddr").value = mDefaultServerAddr;
-		GetID("ServerPort").value = mDefaultServerPort;
-	} else {
-	
-	}
-}
-
-// ÏÔÊ¾´óÌü½çÃæ
-function ShowHallDiv(bShow) {
-    if (bShow) {
-        GetID("room_div_userlist").innerHTML = ""; //Çå¿Õ·¿¼ä½çÃæºÃÓÑÁĞ±í
-		GetID("login_div").style.display = "none"; 		//Òş²ØµÇÂ¼½çÃæ
-		GetID("hall_div").style.display = "block"; 		//ÏÔÊ¾´óÌü½çÃæ
-		GetID("customroomid").value = "";
-		SetDivTop("hall_div", 400); 					//´óÌü½çÃæ´¹Ö±¾ÓÖĞ
-		GetID("customroomid").focus();
-		GetID("a_error_user").style.color = "#FAFADD";
-		
-		GetID("hall_div_td_name").innerHTML = BRAC_GetUserName(mSelfUserId);
-		GetID("hall_div_td_id").innerHTML = mSelfUserId;
-		GetID("hall_div_td_level").innerHTML = BRAC_GetUserLevel(mSelfUserId);
-		GetID("hall_div_td_ip").innerHTML = BRAC_QueryUserStateString(mSelfUserId, BRAC_USERSTATE_LOCALIP);
-	} else {
-		GetID("hall_div").style.display = "none";
-	}
-}
-
-// ÏÔÊ¾·¿¼ä½çÃæ
-function ShowRoomDiv(bShow) {
-    if (bShow) {
-        GetID("hall_div").style.display = "none"; //Òş²Ø´óÌü½çÃæ
-        GetID("room_div").style.display = "block"; 	//ÏÔÊ¾·¿¼ä½çÃæ
-        SetDivTop("room_div", 610); 				//·¿¼ä½çÃæ´¹Ö±¾ÓÖĞ
-        GetID("MessageInput").focus();
+    if(bShow) {
+        GetID("login_div").style.display = "block";     //æ˜¾ç¤ºç™»å½•ç•Œé¢
+        GetID("username").focus();
+        SetDivTop("login_div", 195);                    //ç™»å½•ç•Œé¢å‚ç›´å±…ä¸­
+        GetID("LOG_DIV_BODY").style.display = "block";  //æ˜¾ç¤ºç³»ç»Ÿä¿¡æ¯æ¡†
+        GetID("ServerAddr").value = mDefaultServerAddr;
+        GetID("ServerPort").value = mDefaultServerPort;
     } else {
-        GetID("advanceset_div").style.display = "none"; //Òş²Ø¸ß¼¶ÉèÖÃ½çÃæ
-        GetID("ReceiveMsgDiv").innerHTML = ""; 		//Çå¿Õ·¿¼ä½çÃæĞÅÏ¢½ÓÊÕ¿ò
-        GetID("room_div").style.display = "none"; 	//Òş²Ø·¿¼ä½çÃæ
+    
     }
 }
 
-// ÇëÇó½øÈëÖ¸¶¨µÄ·¿¼ä
+// æ˜¾ç¤ºå¤§å…ç•Œé¢
+function ShowHallDiv(bShow) {
+    if (bShow) {
+        GetID("room_div_userlist").innerHTML = ""; //æ¸…ç©ºæˆ¿é—´ç•Œé¢å¥½å‹åˆ—è¡¨
+        GetID("login_div").style.display = "none";      //éšè—ç™»å½•ç•Œé¢
+        GetID("hall_div").style.display = "block";      //æ˜¾ç¤ºå¤§å…ç•Œé¢
+        GetID("customroomid").value = "";
+        SetDivTop("hall_div", 400);                     //å¤§å…ç•Œé¢å‚ç›´å±…ä¸­
+        GetID("customroomid").focus();
+        GetID("a_error_user").style.color = "#FAFADD";
+        
+        GetID("hall_div_td_name").innerHTML = BRAC_GetUserName(mSelfUserId);
+        GetID("hall_div_td_id").innerHTML = mSelfUserId;
+        GetID("hall_div_td_level").innerHTML = BRAC_GetUserLevel(mSelfUserId);
+        GetID("hall_div_td_ip").innerHTML = BRAC_QueryUserStateString(mSelfUserId, BRAC_USERSTATE_LOCALIP);
+    } else {
+        GetID("hall_div").style.display = "none";
+    }
+}
+
+// æ˜¾ç¤ºæˆ¿é—´ç•Œé¢
+function ShowRoomDiv(bShow) {
+    if (bShow) {
+        GetID("hall_div").style.display = "none"; //éšè—å¤§å…ç•Œé¢
+        GetID("room_div").style.display = "block";  //æ˜¾ç¤ºæˆ¿é—´ç•Œé¢
+        SetDivTop("room_div", 610);                 //æˆ¿é—´ç•Œé¢å‚ç›´å±…ä¸­
+        GetID("MessageInput").focus();
+    } else {
+        GetID("advanceset_div").style.display = "none"; //éšè—é«˜çº§è®¾ç½®ç•Œé¢
+        GetID("ReceiveMsgDiv").innerHTML = "";      //æ¸…ç©ºæˆ¿é—´ç•Œé¢ä¿¡æ¯æ¥æ”¶æ¡†
+        GetID("room_div").style.display = "none";   //éšè—æˆ¿é—´ç•Œé¢
+    }
+}
+
+// è¯·æ±‚è¿›å…¥æŒ‡å®šçš„æˆ¿é—´
 function EnterRoomRequest(roomid) {
-	var errorcode = BRAC_EnterRoom(roomid, "", 0); //½øÈë·¿¼ä
-	AddLog("BRAC_EnterRoom(" + roomid + ")=" + errorcode, LOG_TYPE_API);
-	if(errorcode == 0)
-		DisplayLoadingDiv(true);
+    var errorcode = BRAC_EnterRoom(roomid, "", 0); //è¿›å…¥æˆ¿é—´
+    AddLog("BRAC_EnterRoom(" + roomid + ")=" + errorcode, LOG_TYPE_API);
+    if(errorcode == 0)
+        DisplayLoadingDiv(true);
 }
 
 function GetID(id) {
-	if (document.getElementById) {
-		return document.getElementById(id);
-	} else if (window[id]) {
-		return window[id];
-	}
-	return null;
+    if (document.getElementById) {
+        return document.getElementById(id);
+    } else if (window[id]) {
+        return window[id];
+    }
+    return null;
 }
-// ´ò¿ªÖ¸¶¨ÓÃ»§µÄÒôÊÓÆµ
+// æ‰“å¼€æŒ‡å®šç”¨æˆ·çš„éŸ³è§†é¢‘
 function RequestOtherUserVideo(userid) {
     var userlist = GetID("room_div_userlist");
-    // »ñµÃÓÃ»§ÁĞ±íÖĞËùÓĞ<a>±êÇ©
+    // è·å¾—ç”¨æˆ·åˆ—è¡¨ä¸­æ‰€æœ‰<a>æ ‡ç­¾
     var userdivobj = userlist.getElementsByTagName("div");
     for (var i = 0; i < userdivobj.length; i++) {
         userdivobj[i].style.backgroundColor = "White"; 
     }
-    // »ñÈ¡ÓÃ»§ÁĞ±íÖĞËùÓĞ<img>±êÇ©
+    // è·å–ç”¨æˆ·åˆ—è¡¨ä¸­æ‰€æœ‰<img>æ ‡ç­¾
     var userimgobj = userlist.getElementsByTagName("img");
     for (var j = 0; j < userimgobj.length; j++) {
-        if (userimgobj[j].getAttribute("class") == "MicrophoneTag") { // ¸ÃÍ¼Æ¬Îª »°Í² Í¼Æ¬
+        if (userimgobj[j].getAttribute("class") == "MicrophoneTag") { // è¯¥å›¾ç‰‡ä¸º è¯ç­’ å›¾ç‰‡
             userimgobj[j].src = "./images/advanceset/microphone_false.png";
-            userimgobj[j].onclick = ""; // É¾³ı»°Í²°´Å¥µã»÷ÊÂ¼ş
+            userimgobj[j].onclick = ""; // åˆ é™¤è¯ç­’æŒ‰é’®ç‚¹å‡»äº‹ä»¶
             userimgobj[j].style.cursor = "";
         }
     }
-    // ÅĞ¶ÏÊÇ·ñĞèÒª¹Ø±ÕÖ®Ç°ÒÑÇëÇóµÄÓÃ»§ÒôÊÓÆµÊı¾İ
+    // åˆ¤æ–­æ˜¯å¦éœ€è¦å…³é—­ä¹‹å‰å·²è¯·æ±‚çš„ç”¨æˆ·éŸ³è§†é¢‘æ•°æ®
     if (mTargetUserId != -1) {
-		reVideoDivSize();
+        reVideoDivSize();
         BRAC_UserCameraControl(mTargetUserId, 0);
         BRAC_UserSpeakControl(mTargetUserId, 0);
     }
-    GetID(userid + "_MicrophoneTag").src = "./images/advanceset/microphone_true.png"; // µãÁÁ»°Í²Í¼Æ¬
-    GetID(userid + "_UserDiv").style.backgroundColor = "#E6E6E6"; //ÉèÖÃ±»µã»÷<a>ÔªËØµÄ×ÖÌåÑÕÉ«
+    GetID(userid + "_MicrophoneTag").src = "./images/advanceset/microphone_true.png"; // ç‚¹äº®è¯ç­’å›¾ç‰‡
+    GetID(userid + "_UserDiv").style.backgroundColor = "#E6E6E6"; //è®¾ç½®è¢«ç‚¹å‡»<a>å…ƒç´ çš„å­—ä½“é¢œè‰²
 
-    mTargetUserId = userid; 					//ÉèÖÃ±»µãÓÃ»§IDÎªÈ«¾Ö±äÁ¿
-    BRAC_UserCameraControl(userid, 1); 		// ÇëÇó¶Ô·½ÊÓÆµ
-    BRAC_UserSpeakControl(userid, 1); 		// ÇëÇó¶Ô·½ÓïÒô
-    // ÉèÖÃÔ¶³ÌÊÓÆµÏÔÊ¾Î»ÖÃ
+    mTargetUserId = userid;                     //è®¾ç½®è¢«ç‚¹ç”¨æˆ·IDä¸ºå…¨å±€å˜é‡
+    BRAC_UserCameraControl(userid, 1);      // è¯·æ±‚å¯¹æ–¹è§†é¢‘
+    BRAC_UserSpeakControl(userid, 1);       // è¯·æ±‚å¯¹æ–¹è¯­éŸ³
+    // è®¾ç½®è¿œç¨‹è§†é¢‘æ˜¾ç¤ºä½ç½®
     BRAC_SetVideoPos(userid, GetID("AnyChatRemoteVideoDiv"), "ANYCHAT_VIDEO_REMOTE");
-    MicrophoneOnclick(userid); // Îªµ±Ç°ÊÓÆµ»á»°ÓÃ»§»°Í²°´Å¥Ìí¼Óµã»÷ÊÂ¼ş
+    MicrophoneOnclick(userid); // ä¸ºå½“å‰è§†é¢‘ä¼šè¯ç”¨æˆ·è¯ç­’æŒ‰é’®æ·»åŠ ç‚¹å‡»äº‹ä»¶
 }
 
-// ¶ÔÁĞ±íÖĞµÄÓÃ»§½øĞĞÌí¼Ó¡¢É¾³ı²Ù×÷
+// å¯¹åˆ—è¡¨ä¸­çš„ç”¨æˆ·è¿›è¡Œæ·»åŠ ã€åˆ é™¤æ“ä½œ
 function RoomUserListControl(userid, bInsert) {
     var userlist = GetID("room_div_userlist");
     if (bInsert) {
@@ -349,20 +369,20 @@ function RoomUserListControl(userid, bInsert) {
         itemdiv.setAttribute("class", "UserListStyle");
         itemdiv.id = userid + "_UserDiv";
 
-        // ÅĞ¶ÏÓÃ»§ÉãÏñÍ·×´Ì¬
+        // åˆ¤æ–­ç”¨æˆ·æ‘„åƒå¤´çŠ¶æ€
         if (BRAC_GetCameraState(userid) == 0)
-            AddImage(itemdiv, userid + "_CameraTag", "CameraTag", "", userid); // Ìí¼ÓÉãÏñÍ·Í¼Æ¬<img>±êÇ©
+            AddImage(itemdiv, userid + "_CameraTag", "CameraTag", "", userid); // æ·»åŠ æ‘„åƒå¤´å›¾ç‰‡<img>æ ‡ç­¾
         if (BRAC_GetCameraState(userid) == 1)
-            AddImage(itemdiv, userid + "_CameraTag", "CameraTag", "./images/advanceset/camera_false.png", userid); // Ìí¼ÓÉãÏñÍ·Í¼Æ¬<img>±êÇ©
+            AddImage(itemdiv, userid + "_CameraTag", "CameraTag", "./images/advanceset/camera_false.png", userid); // æ·»åŠ æ‘„åƒå¤´å›¾ç‰‡<img>æ ‡ç­¾
         if (BRAC_GetCameraState(userid) == 2)
-            AddImage(itemdiv, userid + "_CameraTag", "CameraTag", "./images/advanceset/camera_true.png", userid); // Ìí¼ÓÉãÏñÍ·Í¼Æ¬<img>±êÇ©
-        // ÅĞ¶Ïµ±Ç°IDÊÇ·ñÎª×Ô¼º
+            AddImage(itemdiv, userid + "_CameraTag", "CameraTag", "./images/advanceset/camera_true.png", userid); // æ·»åŠ æ‘„åƒå¤´å›¾ç‰‡<img>æ ‡ç­¾
+        // åˆ¤æ–­å½“å‰IDæ˜¯å¦ä¸ºè‡ªå·±
         if (userid == mSelfUserId) {
-            AddImage(itemdiv, mSelfUserId + "_MicrophoneTag", "mSelfMicrophoneTag", "./images/advanceset/microphone_true.png", userid); // Ìí¼Ó»°Í²Í¼Æ¬<img>±êÇ©
-            itemdiv.innerHTML += "&nbsp" + BRAC_GetUserName(mSelfUserId) + "(×Ô¼º)";
+            AddImage(itemdiv, mSelfUserId + "_MicrophoneTag", "mSelfMicrophoneTag", "./images/advanceset/microphone_true.png", userid); // æ·»åŠ è¯ç­’å›¾ç‰‡<img>æ ‡ç­¾
+            itemdiv.innerHTML += "&nbsp" + BRAC_GetUserName(mSelfUserId) + "(è‡ªå·±)";
         } else {
-            AddImage(itemdiv, userid + "_MicrophoneTag", "MicrophoneTag", "./images/advanceset/microphone_false.png", userid); // Ìí¼Ó»°Í²Í¼Æ¬<img>±êÇ©
-            // Ìí¼ÓÓÃ»§ĞÕÃû<a>±êÇ©
+            AddImage(itemdiv, userid + "_MicrophoneTag", "MicrophoneTag", "./images/advanceset/microphone_false.png", userid); // æ·»åŠ è¯ç­’å›¾ç‰‡<img>æ ‡ç­¾
+            // æ·»åŠ ç”¨æˆ·å§“å<a>æ ‡ç­¾
             var a = document.createElement("a");
             a.id = userid + "_UserTag";
             a.title = BRAC_GetUserName(userid);
@@ -378,36 +398,36 @@ function RoomUserListControl(userid, bInsert) {
     }
     DisplayScroll("room_div_userlist");
 }
-//div°´Å¥Êó±ê»®Èë»®³öĞ§¹û
+//divæŒ‰é’®é¼ æ ‡åˆ’å…¥åˆ’å‡ºæ•ˆæœ
 function Mouseover(id) {
-	GetID(id).style.backgroundColor = "#FFFFCC";
+    GetID(id).style.backgroundColor = "#FFFFCC";
 }
-//div°´Å¥Êó±ê»®Èë»®³öĞ§¹û
+//divæŒ‰é’®é¼ æ ‡åˆ’å…¥åˆ’å‡ºæ•ˆæœ
 function Mouseout(id) {
-	GetID(id).style.backgroundColor = "#E6E6E6";
+    GetID(id).style.backgroundColor = "#E6E6E6";
 }
-//»ñÈ¡µ±Ç°Ê±¼ä  (00:00:00)
+//è·å–å½“å‰æ—¶é—´  (00:00:00)
 function GetTheTime() {
-	var TheTime = new Date();
-	return TheTime.toLocaleTimeString();
+    var TheTime = new Date();
+    return TheTime.toLocaleTimeString();
 }
 
-// Ìí¼ÓÈÕÖ¾²¢ÏÔÊ¾£¬¸ù¾İ²»Í¬µÄÀàĞÍÏÔÊ¾²»Í¬µÄÑÕÉ«
+// æ·»åŠ æ—¥å¿—å¹¶æ˜¾ç¤ºï¼Œæ ¹æ®ä¸åŒçš„ç±»å‹æ˜¾ç¤ºä¸åŒçš„é¢œè‰²
 function AddLog(message, type) {
-    if (type == LOG_TYPE_API) {			// APIµ÷ÓÃÈÕÖ¾£¬ÂÌÉ«
+    if (type == LOG_TYPE_API) {         // APIè°ƒç”¨æ—¥å¿—ï¼Œç»¿è‰²
         message = message.fontcolor("Green");
-	} else if(type == LOG_TYPE_EVENT) {	// »Øµ÷ÊÂ¼şÈÕÖ¾£¬»ÆÉ«
+    } else if(type == LOG_TYPE_EVENT) { // å›è°ƒäº‹ä»¶æ—¥å¿—ï¼Œé»„è‰²
         message = message.fontcolor("#CC6600");
-	} else if(type == LOG_TYPE_ERROR) {	// ³ö´íÈÕÖ¾£¬ºìÉ«
+    } else if(type == LOG_TYPE_ERROR) { // å‡ºé”™æ—¥å¿—ï¼Œçº¢è‰²
         message = message.fontcolor("#FF0000");
-	} else {							// ÆÕÍ¨ÈÕÖ¾£¬»ÒÉ«
+    } else {                            // æ™®é€šæ—¥å¿—ï¼Œç°è‰²
         message = message.fontcolor("#333333");
-	}
+    }
     GetID("LOG_DIV_CONTENT").innerHTML += message + "&nbsp" + GetTheTime().fontcolor("#333333") + "<br />";
-	DisplayScroll("LOG_DIV_CONTENT");
+    DisplayScroll("LOG_DIV_CONTENT");
 }
 
-// ÏÔÊ¾µÈ´ı½ø¶ÈÌõ£¬ÌáÊ¾ÓÃ»§²Ù×÷ÕıÔÚ½øĞĞÖĞ
+// æ˜¾ç¤ºç­‰å¾…è¿›åº¦æ¡ï¼Œæç¤ºç”¨æˆ·æ“ä½œæ­£åœ¨è¿›è¡Œä¸­
 function DisplayLoadingDiv(bShow) {
     if (bShow) {
         GetID("LOADING_DIV").style.display = "block";
@@ -423,7 +443,7 @@ function DisplayLoadingDiv(bShow) {
     }
 }
 
-//ºÃÓÑ ÉãÏñÍ·  »°Í²  Í¼±ê
+//å¥½å‹ æ‘„åƒå¤´  è¯ç­’  å›¾æ ‡
 function AddImage(parent_id, img_id, img_class, fir_img, userid) {
     var imgs = document.createElement("img");
     imgs.id = img_id;
@@ -433,67 +453,67 @@ function AddImage(parent_id, img_id, img_class, fir_img, userid) {
     imgs.style.height = "15px";
     parent_id.appendChild(imgs);
 }
-// Îª±»µã»÷ÓÃ»§»°Í²°´Å¥Ìí¼Óµã»÷ÊÂ¼ş
+// ä¸ºè¢«ç‚¹å‡»ç”¨æˆ·è¯ç­’æŒ‰é’®æ·»åŠ ç‚¹å‡»äº‹ä»¶
 function MicrophoneOnclick(userid) {
-    GetID(userid + "_MicrophoneTag").style.cursor = "pointer"; // Êó±êĞÎ×´
-    GetID(userid + "_MicrophoneTag").onclick = function () { // »°Í²µã»÷ÊÂ¼ş
+    GetID(userid + "_MicrophoneTag").style.cursor = "pointer"; // é¼ æ ‡å½¢çŠ¶
+    GetID(userid + "_MicrophoneTag").onclick = function () { // è¯ç­’ç‚¹å‡»äº‹ä»¶
         var ImgPath = GetID(userid + "_MicrophoneTag").src.split('/');
         if (ImgPath[ImgPath.length - 1] == "microphone_true.png") {
             GetID(userid + "_MicrophoneTag").src = "./images/advanceset/microphone_false.png";
-            BRAC_UserSpeakControl(userid, 0); // ¹Ø±ÕÓïÒô
+            BRAC_UserSpeakControl(userid, 0); // å…³é—­è¯­éŸ³
         }
         else {
             GetID(userid + "_MicrophoneTag").src = "./images/advanceset/microphone_true.png";
-            BRAC_UserSpeakControl(userid, 1); // ¿ªÆôÓïÒô
+            BRAC_UserSpeakControl(userid, 1); // å¼€å¯è¯­éŸ³
         }
     }
 }
-//»Ö¸´ÏÔÊ¾ÊÓÆµdiv´óĞ¡
+//æ¢å¤æ˜¾ç¤ºè§†é¢‘divå¤§å°
 function reVideoDivSize()
 {
-	var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
-	var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
-	if(divWidth<divHeight){
-		GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
-		GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
-	}
+    var divWidth=GetID("AnyChatRemoteVideoDiv").offsetWidth;
+    var divHeight=GetID("AnyChatRemoteVideoDiv").offsetHeight;
+    if(divWidth<divHeight){
+        GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
+        GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
+    }
 }
 
-// ÉèÖÃ×é²¥²ßÂÔ
+// è®¾ç½®ç»„æ’­ç­–ç•¥
 function OnChangeMultiCastPolitic(dwPolitic) {
-	var errorcode = BRAC_SetSDKOption(BRAC_SO_NETWORK_MULTICASTPOLITIC, dwPolitic);
-	AddLog("BRAC_SetSDKOption(MULTICASTPOLITIC, " + dwPolitic + ")=" + errorcode, LOG_TYPE_API);
-	
-	if(dwPolitic==BRAC_MCPOLITIC_ONLYSERVERMC || dwPolitic==BRAC_MCPOLITIC_SERVERANDSERVERMC) {
-		// ·şÎñÆ÷¶Ë×é²¥½¨Òé¹Ø±Õ±¾µØP2P£¨×¢£º²»ÊÇ±ØĞë£©
-		BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 0);
-		
-		var szMultiCastAddr = GetID("MultiCastAddr").value;
-		var dwMultiCastPort = parseInt(GetID("MultiCastPort").value);
-		var dwTTL = 50;		// ĞèÒª¸ù¾İÊµ¼ÊÇé¿öÉèÖÃTTLÖµ
-		var dwFlags = BRAC_MCFLAGS_SENDDATA;
-		// ½«×é²¥µØÖ·Í¨Öªµ½·şÎñÆ÷
-		var errorcode = BRAC_MultiCastControl(szMultiCastAddr, dwMultiCastPort, "", dwTTL, dwFlags);
-		AddLog("BRAC_MultiCastControl(" + szMultiCastAddr + ", " + dwMultiCastPort + " ,SENDDATA)=" + errorcode, LOG_TYPE_API);
-	}
+    var errorcode = BRAC_SetSDKOption(BRAC_SO_NETWORK_MULTICASTPOLITIC, dwPolitic);
+    AddLog("BRAC_SetSDKOption(MULTICASTPOLITIC, " + dwPolitic + ")=" + errorcode, LOG_TYPE_API);
+    
+    if(dwPolitic==BRAC_MCPOLITIC_ONLYSERVERMC || dwPolitic==BRAC_MCPOLITIC_SERVERANDSERVERMC) {
+        // æœåŠ¡å™¨ç«¯ç»„æ’­å»ºè®®å…³é—­æœ¬åœ°P2Pï¼ˆæ³¨ï¼šä¸æ˜¯å¿…é¡»ï¼‰
+        BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 0);
+        
+        var szMultiCastAddr = GetID("MultiCastAddr").value;
+        var dwMultiCastPort = parseInt(GetID("MultiCastPort").value);
+        var dwTTL = 50;     // éœ€è¦æ ¹æ®å®é™…æƒ…å†µè®¾ç½®TTLå€¼
+        var dwFlags = BRAC_MCFLAGS_SENDDATA;
+        // å°†ç»„æ’­åœ°å€é€šçŸ¥åˆ°æœåŠ¡å™¨
+        var errorcode = BRAC_MultiCastControl(szMultiCastAddr, dwMultiCastPort, "", dwTTL, dwFlags);
+        AddLog("BRAC_MultiCastControl(" + szMultiCastAddr + ", " + dwMultiCastPort + " ,SENDDATA)=" + errorcode, LOG_TYPE_API);
+    }
 }
 
-// ¼ÓÈë×é²¥
+// åŠ å…¥ç»„æ’­
 function OnJoinMultiCastBtnClicked() {
-	var szMultiCastAddr = GetID("MultiCastAddr").value;
-	var dwMultiCastPort = parseInt(GetID("MultiCastPort").value);
-	var dwTTL = 50;		// ĞèÒª¸ù¾İÊµ¼ÊÇé¿öÉèÖÃTTLÖµ
-	var dwFlags = BRAC_MCFLAGS_JOINGROUP + BRAC_MCFLAGS_SENDDATA + BRAC_MCFLAGS_RECVDATA;
-	var errorcode = BRAC_MultiCastControl(szMultiCastAddr, dwMultiCastPort, "", dwTTL, dwFlags);
-	AddLog("BRAC_MultiCastControl(" + szMultiCastAddr + ", " + dwMultiCastPort + " ,JOINGROUP)=" + errorcode, LOG_TYPE_API);
+    var szMultiCastAddr = GetID("MultiCastAddr").value;
+    var dwMultiCastPort = parseInt(GetID("MultiCastPort").value);
+    var dwTTL = 50;     // éœ€è¦æ ¹æ®å®é™…æƒ…å†µè®¾ç½®TTLå€¼
+    var dwFlags = BRAC_MCFLAGS_JOINGROUP + BRAC_MCFLAGS_SENDDATA + BRAC_MCFLAGS_RECVDATA;
+    var errorcode = BRAC_MultiCastControl(szMultiCastAddr, dwMultiCastPort, "", dwTTL, dwFlags);
+    AddLog("BRAC_MultiCastControl(" + szMultiCastAddr + ", " + dwMultiCastPort + " ,JOINGROUP)=" + errorcode, LOG_TYPE_API);
 }
 
-// Àë¿ª×é²¥
+// ç¦»å¼€ç»„æ’­
 function OnLeaveMultiCastBtnClicked() {
-	var szMultiCastAddr = GetID("MultiCastAddr").value;
-	var dwMultiCastPort = parseInt(GetID("MultiCastPort").value);
-	var dwFlags = BRAC_MCFLAGS_LEAVEGROUP + BRAC_MCFLAGS_SENDDATA + BRAC_MCFLAGS_RECVDATA;
-	var errorcode = BRAC_MultiCastControl(szMultiCastAddr, dwMultiCastPort, "", 0, dwFlags);
-	AddLog("BRAC_MultiCastControl(" + szMultiCastAddr + ", " + dwMultiCastPort + " ,LEAVEGROUP)=" + errorcode, LOG_TYPE_API);
+    var szMultiCastAddr = GetID("MultiCastAddr").value;
+    var dwMultiCastPort = parseInt(GetID("MultiCastPort").value);
+    var dwFlags = BRAC_MCFLAGS_LEAVEGROUP + BRAC_MCFLAGS_SENDDATA + BRAC_MCFLAGS_RECVDATA;
+    var errorcode = BRAC_MultiCastControl(szMultiCastAddr, dwMultiCastPort, "", 0, dwFlags);
+    AddLog("BRAC_MultiCastControl(" + szMultiCastAddr + ", " + dwMultiCastPort + " ,LEAVEGROUP)=" + errorcode, LOG_TYPE_API);
 }
 
