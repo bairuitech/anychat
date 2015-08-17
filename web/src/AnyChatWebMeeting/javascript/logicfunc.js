@@ -25,19 +25,9 @@ var list_videouser;
 var list_videosite;
 
 function LogicInit() {
-    var ua = window.navigator.userAgent.toLowerCase();
-    var info = {
-        edge: /edge/.test(ua)
-    };
+    CheckIfEdge();
     if(info.edge) {
-        var iframeField = document.createElement('iframe');
-        iframeField.src = './html/needie.html';
-        iframeField.scrolling = "no";
-        iframeField.frameborder = "0";
-        iframeField.width = "100%";
-        iframeField.height = "800px";
-        document.body.style.backgroundColor = "#fff";
-        document.body.appendChild(iframeField);
+       AddEdgePage();
 
     } else {
         setTimeout(function () {
@@ -79,6 +69,26 @@ function LogicInit() {
 //设置AnyChat参数，需要在收到登录成功回调之后调用
 function ConfigAnyChatParameter(){
 	
+}
+
+//获取浏览器信息，并匹配Edge浏览器
+function CheckIfEdge() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    var info = {
+        edge: /edge/.test(ua)
+    };
+}
+
+//加载Edge浏览器下的判断页面样式
+function AddEdgePage() {
+    var iframeField = document.createElement('iframe');
+    iframeField.src = './html/needie.html';
+    iframeField.scrolling = "no";
+    iframeField.frameborder = "0";
+    iframeField.width = "100%";
+    iframeField.height = "800px";
+    document.body.style.backgroundColor = "#fff";
+    document.body.appendChild(iframeField);
 }
 
 // 初始化界面元素
