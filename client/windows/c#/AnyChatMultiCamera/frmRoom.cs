@@ -646,7 +646,7 @@ namespace AnyChatMultiCamera
                 int videoCodecID = 0;
                 int retCode = -1;
                 retCode = AnyChatCoreSDK.GetUserStreamInfo(remoteUserID, streamIndex, AnyChatCoreSDK.BRAC_STREAMINFO_VIDEOCODECID, ref videoCodecID, sizeof(int));
-                //retCode = 0;
+                retCode = 0;
                 if (retCode == 0)
                 {
                     //AnyChatCoreSDK.SetVideoPos(remoteUserID, m_ShowWnd.Handle, 0, 0, m_ShowWnd.Width, m_ShowWnd.Height);
