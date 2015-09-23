@@ -111,10 +111,10 @@ function OnAnyChatConnect(bSuccess, errorcode) {
 function OnAnyChatLoginSystem(dwUserId, errorcode) {
     AddLog("OnAnyChatLoginSystem(userid=" + dwUserId + ", errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
 	if (errorcode == 0) {
-	    if (userType == 2) {//客服
+	    if (userType == USER_TYPE_AGNET) {//客服
 	        currentAgentID = dwUserId;
 			dwAgentFlags=ANYCHAT_OBJECT_FLAGS_AGENT;//坐席标识
-		}else if(userType==1){
+        } else if (userType == USER_TYPE_CLIENT) {
 			dwAgentFlags=0;//客户
 
         }
@@ -136,9 +136,9 @@ function OnAnyChatEnterRoom(dwRoomId, errorcode) {
     AddLog("OnAnyChatEnterRoom(dwRoomId=" + dwRoomId + ',errorcode=' + errorcode + ')', LOG_TYPE_NORMAL);
 
 	if (errorcode == 0) {
-		if (userType == 2) {
-			
-		} else if (userType ==1) {
+	    if (userType == USER_TYPE_AGNET) {
+
+	    } else if (userType == USER_TYPE_CLIENT) {
 			/**客服姓名*/
 			var name1 = BRAC_GetUserInfo(mTargetUserId,USERINFO_NAME); 
 			/**个人姓名*/
@@ -182,11 +182,11 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 		if (bEnterRoom == 1) {
 			//请求对方视频
 			startVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",1);
-			if(userType == 1){
+			if (userType == USER_TYPE_CLIENT) {
 				
 			}
 		} else {
-			if (userType == 2) {
+            if (userType == USER_TYPE_AGNET) {
 				if (dwUserId == mTargetUserId) { // 当前被请求的用户离开房间
 					
 					/**客服结束服务*/
@@ -202,8 +202,8 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 					BRAC_UserSpeakControl(dwUserId, 0); 
 				}
 			}
-			if(mTargetUserId==dwUserId)
-				BRAC_LeaveRoom(roomNum);
+			if(mTargetUserId == dwUserId)
+			    BRAC_LeaveRoom(mRoomId);
 		}
 	
 }
@@ -330,7 +330,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 	if (dwErrorCode == 0) {
 	    colorIdx = 0;
 		// 进入服务区域成功
-		if(userType==1){//客户
+	    if (userType == USER_TYPE_CLIENT) {//客户
 			//获取队列
 			var queueList =BRAC_ObjectGetIdList(ANYCHAT_OBJECT_TYPE_QUEUE);
 			for (var i in queueList) {
@@ -388,7 +388,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 
         //坐席
 
-        if (userType == 2) {
+        if (userType == USER_TYPE_AGNET) {
 
             $("#LOADING_GREY_DIV").hide(); //隐藏等待蒙层
 
@@ -415,7 +415,7 @@ function OnAnyChatAreaStatusChange(dwObjectType, dwObjectId, dwErrorCode) {
 // 队列状态变化
 function OnAnyChatQueueStatusChanged(dwObjectType, dwObjectId) {
     AddLog('OnAnyChatQueueStatusChanged(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
-    if (userType == 2) {
+    if (userType == USER_TYPE_AGNET) {
         refreshAgentServiceInfo();
     }
 
@@ -479,7 +479,7 @@ function OnAnyChatAgentStatusChanged(dwObjectType, dwObjectId, dwParam1) {
 // 坐席服务开始
 function OnAnyChatServiceStart(dwAgentId, clientId, dwQueueId) {
     AddLog('OnAnyChatServiceStart(' + dwAgentId + ',' + clientId + ',' + dwQueueId +')', LOG_TYPE_EVENT);
-	if (userType == 2 && mSelfUserId == dwAgentId) {
+    if (userType == USER_TYPE_AGNET && mSelfUserId == dwAgentId) {
 		$("#LOADING_GREY_DIV span").hide();
 	    refreshServicedUserInfo(clientId);
 		mTargetUserId=clientId;//客户id

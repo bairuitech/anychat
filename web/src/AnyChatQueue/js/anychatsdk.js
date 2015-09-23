@@ -406,7 +406,7 @@ function BRAC_AttachIE11Event(obj, _strEventId, _functionCallback) {
 function BRAC_NativeCreateVideoPlugin(userid, parentobj, id, streamindex) {
 	var videoobj = BRAC_GetDmoObject(id);
 	if(videoobj != null) {
-		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
+		//videoobj.SetIPCGuid(BRAC_GetIPCGuid());
 		videoobj.SetUserId(userid);
 		if(bSupportMultiStream)
 			videoobj.SetStreamIndex(streamindex);

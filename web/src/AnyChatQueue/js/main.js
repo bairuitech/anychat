@@ -23,6 +23,9 @@ var LOG_TYPE_API = 1;
 var LOG_TYPE_EVENT = 2;
 var LOG_TYPE_ERROR = 3;
 
+var USER_TYPE_CLIENT = 1;
+var USER_TYPE_AGNET = 2;
+
 var colorIdx = 0;
 //服务区域(营业厅)显示块颜色数组
 var colorArray = ["#63C058", "#F49537", "#A2C926", "#FEC900"];
@@ -37,44 +40,47 @@ var currentSelectedQueueName = "";
 var areaIdArray = null;
 var areaArrayIdx = 0;
 
+//房间号
+var mRoomId = -1;
+
 // onload默认运行
 function LogicInit() {
 	setTimeout(
 			function() {
-                    // 判断是否支持插件和插件长度（插件检测）
-                    if (navigator.plugins && navigator.plugins.length) {
-                        window.navigator.plugins.refresh(false);
-                    }
-                    // 检查是否安装了插件
-                    var NEED_ANYCHAT_APILEVEL = "0"; // 定义业务层需要的AnyChat
-                    // API Level
-                    var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); // 初始化插件（返回成功(0)或插件版本号太低的编号）
-                    AddLog("BRAC_InitSDK(" + NEED_ANYCHAT_APILEVEL + ")=" + errorcode, LOG_TYPE_API);
-                    if (errorcode == GV_ERR_SUCCESS) {// 安装成功的情况下
-                        // BRAC_SetSDKOption(BRAC_SO_CORESDK_SCREENCAMERACTRL,1);//显示桌面
-                        if (mRefreshPluginTimer != -1)// 检查插件是否安装完成定时器
-                            clearInterval(mRefreshPluginTimer); // 清除插件安装检测定时器(下面else有定义)
-                        GetID("loginDiv").style.display = "block";
-                        GetID("prompt_div").style.display = "none"; // 隐藏插件安装提示界面
-                        AddLog("AnyChat Plugin Version:" + BRAC_GetVersion(0), LOG_TYPE_NORMAL);
-                        AddLog("AnyChat SDK Version:" + BRAC_GetVersion(1), LOG_TYPE_NORMAL);
-                        AddLog("Build Time:" + BRAC_GetSDKOptionString(BRAC_SO_CORESDK_BUILDTIME), LOG_TYPE_NORMAL);
-                    } else { // 没有安装插件，或是插件版本太旧，显示插件下载界面
+                // 判断是否支持插件和插件长度（插件检测）
+                if (navigator.plugins && navigator.plugins.length) {
+                    window.navigator.plugins.refresh(false);
+                }
+                // 检查是否安装了插件
+                var NEED_ANYCHAT_APILEVEL = "0"; // 定义业务层需要的AnyChat
+                // API Level
+                var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); // 初始化插件（返回成功(0)或插件版本号太低的编号）
+                AddLog("BRAC_InitSDK(" + NEED_ANYCHAT_APILEVEL + ")=" + errorcode, LOG_TYPE_API);
+                if (errorcode == GV_ERR_SUCCESS) {// 安装成功的情况下
+                    // BRAC_SetSDKOption(BRAC_SO_CORESDK_SCREENCAMERACTRL,1);//显示桌面
+                    if (mRefreshPluginTimer != -1)// 检查插件是否安装完成定时器
+                        clearInterval(mRefreshPluginTimer); // 清除插件安装检测定时器(下面else有定义)
+                    GetID("loginDiv").style.display = "block";
+                    GetID("prompt_div").style.display = "none"; // 隐藏插件安装提示界面
+                    AddLog("AnyChat Plugin Version:" + BRAC_GetVersion(0), LOG_TYPE_NORMAL);
+                    AddLog("AnyChat SDK Version:" + BRAC_GetVersion(1), LOG_TYPE_NORMAL);
+                    AddLog("Build Time:" + BRAC_GetSDKOptionString(BRAC_SO_CORESDK_BUILDTIME), LOG_TYPE_NORMAL);
+                } else { // 没有安装插件，或是插件版本太旧，显示插件下载界面
 
-                        GetID("loginDiv").style.display = "none";
-                        GetID("prompt_div").style.display = "block";// 显示插件安装提示界面
-                        if (errorcode == GV_ERR_PLUGINNOINSTALL)// 第2个参数指 插件没有安装(编码)
-                            GetID("prompt_div_line1").innerHTML = "首次进入需要安装插件，请点击下载按钮进行安装！";
-                        else if (errorcode == GV_ERR_PLUGINOLDVERSION)// 第2个参数指
-                            // 插件版本太低(编码)
-                            GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";
+                    GetID("loginDiv").style.display = "none";
+                    GetID("prompt_div").style.display = "block";// 显示插件安装提示界面
+                    if (errorcode == GV_ERR_PLUGINNOINSTALL)// 第2个参数指 插件没有安装(编码)
+                        GetID("prompt_div_line1").innerHTML = "首次进入需要安装插件，请点击下载按钮进行安装！";
+                    else if (errorcode == GV_ERR_PLUGINOLDVERSION)// 第2个参数指
+                        // 插件版本太低(编码)
+                        GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";
 
-                        if (mRefreshPluginTimer == -1) {// 检查插件是否安装完成定时器
-                            mRefreshPluginTimer = setInterval(function() {
-                                LogicInit();
-                            }, 500);
-                        }
+                    if (mRefreshPluginTimer == -1) {// 检查插件是否安装完成定时器
+                        mRefreshPluginTimer = setInterval(function() {
+                            LogicInit();
+                        }, 500);
                     }
+                }
 				
 			}, 500);
 }
@@ -167,9 +173,9 @@ $(function () {
         /**登入anychat*/
         var loginTag = BRAC_Login($("#username").val(), "", 0);
         switch (userType) {
-            case 1: //用户登入的情况
+            case USER_TYPE_CLIENT: //用户登入的情况
                 break;
-            case 2:
+            case USER_TYPE_AGNET:
                 servantName = $("#username").val(); //客服登入账户名
                 //坐席呼叫视频界面
                 var videoHtml = '<div style="height:505px;">' +
@@ -271,10 +277,10 @@ $(function () {
 
             $("#LOADING_GREY_DIV img").show(); //显示登录等待蒙层
             $("#LOADING_GREY_DIV").show(); //显示蒙层
-            if (userType == 1) {//客户
+            if (userType == USER_TYPE_CLIENT) {//客户
                 //$("#LOADING_GREY_DIV").hide(); //隐藏蒙层
                 $('#poptip li[queueid]').remove(); //移除队列
-            } else if (userType == 2) {//客服
+            } else if (userType == USER_TYPE_AGNET) {//客服
                 $('#enterRoom .contentArea').hide(); //直接隐藏进入队列步骤
                 $("#enterRoom h2").text("坐席端服务窗口");
                 $("#videoCall").show(); //显示客户视频窗口
@@ -316,7 +322,7 @@ $(function () {
         AddLog("BRAC_VideoCallControl(" + BRAC_VIDEOCALL_EVENT_FINISH + "," + mTargetUserId + ",0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
 
 
-        if (userType == 1) {
+        if (userType == USER_TYPE_CLIENT) {
             $("#enterRoom h2").text(queueListName);
             /**离开队列*/
             //BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
@@ -482,7 +488,7 @@ function refreshUserWaitingInfo(queueID) {
 
 //刷新坐席进入服务区域后的显示信息
 function refreshAgentServiceInfo() {
-    if (userType == 2) {
+    if (userType == USER_TYPE_AGNET) {
         var queueCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_INFO_QUEUECOUNT);
         var queuesUserCount = BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_AREA, hallbuinessNum, ANYCHAT_AREA_INFO_QUEUEUSERCOUNT);
 
