@@ -10,7 +10,7 @@ function ForSession(message,statue) {
     $("#Initiative_Call_Div").hide();		// 隐藏正在呼叫层
     $("#SessionPrompt_Div").show();
     $("#SessionPrompt_Div").html("<iframe frameborder=0 scrolling=no style='background-color:transparent; z-index: 9999;width: 100%;height: 100%;top:0;left: 0;position: absolute; '></iframe><b>"+message+"</b>");
-    if(statue)$('#SessionPrompt_Div').animate({opacity: "hide"}, 1500); 
+    if(statue)$('#SessionPrompt_Div').animate({opacity: "hide"}, 2000); 
 }
 
 //取消主动呼叫
@@ -153,6 +153,7 @@ function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUse
 		$("#videoCall").hide();//隐藏视频窗口
 		$("#poptip").show(); //显示队列列表
 		clearInterval(waitTimeSet);
+		mCurrentStatus = CLIENT_STATUS_QUEUE;
     } else if (userType == USER_TYPE_AGNET) {
 		//客服结束服务
 		BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AGENT, mSelfUserId, ANYCHAT_AGENT_CTRL_FINISHSERVICE, 0,0,0,0,"");	
@@ -165,6 +166,8 @@ function onVideoCallControlFinish(dwUserId, dwErrorCode, dwFlags, dwParam, szUse
 	ForSession("会话结束...", true); // 提示层
 
 	startServiceTag = false;
+
+	isShowReturnBtn(true);
 }
 
 //视频呼叫请求发送成功
