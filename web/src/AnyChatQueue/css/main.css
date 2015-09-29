@@ -94,7 +94,7 @@ strong {
 }
 
 .videoshow0 {
-	background: url("../img/reUser.jpg");
+	//background: url("../img/reUser.jpg");
     height: 355px;
     left: 21px;
     position: absolute;
@@ -103,7 +103,7 @@ strong {
 }
 
 .videoshow1 {
-	background: url("../img/reUser.jpg") !important;
+	//background: url("../img/reUser.jpg") !important;
     height: 355px;
     position: absolute;
     right: 23px;

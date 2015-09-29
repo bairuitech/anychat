@@ -101,33 +101,74 @@ function OnAnyChatRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags,dwPar
 function OnAnyChatConnect(bSuccess, errorcode) {
     AddLog("OnAnyChatConnect(errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
 	if (errorcode == 0) {
+	    /**登入anychat*/
+	    var loginTag = BRAC_Login($("#username").val(), "", 0);
 
 	} else {
-
+	    ForSession("连接服务器失败(errorCode=" + errorcode + ")！", true);
+	    $("#LOADING_GREY_DIV").hide();
 	}
 }
 
 // 客户端登录系统，dwUserId表示自己的用户ID号，errorcode表示登录结果：0 成功，否则为出错代码，参考出错代码定义
 function OnAnyChatLoginSystem(dwUserId, errorcode) {
     AddLog("OnAnyChatLoginSystem(userid=" + dwUserId + ", errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
-	if (errorcode == 0) {
-	    if (userType == 2) {//客服
-	        currentAgentID = dwUserId;
-			dwAgentFlags=ANYCHAT_OBJECT_FLAGS_AGENT;//坐席标识
-		}else if(userType==1){
-			dwAgentFlags=0;//客户
+    if (errorcode == 0) {
+        $("#LOADING_GREY_DIV span").text("正在加载营业厅，请稍候......");
 
-        }
+        switch (userType) {
+            case USER_TYPE_CLIENT:
+                dwAgentFlags = 0; //客户标识
+                mCurrentStatus = CLIENT_STATUS_AREA;
+                break;
+            case USER_TYPE_AGNET:
+                currentAgentID = dwUserId;
+                dwAgentFlags = ANYCHAT_OBJECT_FLAGS_AGENT; //坐席标识
+                mCurrentStatus = AGENT_STATUS_AREA;
+                servantName = $("#username").val(); //客服登入账户名
+                //坐席呼叫视频界面
+                var videoHtml = '<div style="height:505px;">' +
+                                            '<div style="width:240px;float: left">' +
+                                                '<div id="clientList" style="text-align: center;position: relative;height:300px;width:240px;padding-top: 15px;overflow-y:auto;">' +
+                                                    '<h3 style="color:black;">服务信息</h3><br>' +
+                                                    '<!-- <b style="font-size: 15px;color: black">服务区域内访客的用户数<br>（没有排入队列的用户）</b><strong style="color:orange;margin-top:10px;display: block;"></strong> -->' +
+                                                    '<b style="margin-top:10px;font-size: 15px;color: black">当前服务的队列数量为：</b><strong style="color:orange;margin-top:5px;display: block;"></strong><br/>' +
+                                                    '<b style="margin-top:10px;font-size: 15px;color: black">当前排队的用户总数为：</b><strong style="color:orange;margin-top:5px;display: block;"></strong><br/>' +
+                                                    '<b style="margin-top:10px;font-size: 15px;color: black">已服务人数为：</b><strong style="color:orange;margin-top:5px;display: block;"></strong>' +
+                                                    '<!-- <b style="margin-top:10px;font-size: 15px;color: black">累计服务时长为：</b><strong style="color:orange;margin-top:5px;display: block;"></strong> -->' +
+                                                '</div>' +
+                                                '<div id="localVideoDiv" style="width:240px;padding-top:10px;">' +
+                                                    '<div style="width:240px;height:180px;" id="localVideoPos"></div>' +
+                                                    '<div style="width:240px;height:5px;" id="localAudioVolume"></div>' +
+                                                '</div>' +
+                                            '</div>' +
+                                            '<div style="float:right;text-align: center" id="remoteVideoDiv">' +
+                                                '<div id="currentServicedUserInfo">' +
+                                                    '<b style="color: black">当前服务用户：</b><strong></strong>' +
+                                                '</div>' +
+                                                '<div style="width:568px;height:426px;" id="remoteVideoPos"></div>' +
+                                                '<div style="width:568px;height:5px;" id="remoteAudioVolume"></div>' +
+                                                '<button id="startService" class="buttonCls">开始服务</button><button id="stopService" class="buttonCls">停止服务</button><!-- <button id="returnHall" class="buttonCls">返回服务厅</button> -->' +
+                                            '</div>' +
+                                        '</div>';
+                $("#videoCallContent").html(videoHtml); //填充视频会话层
+
+                //停止服务按钮事件(坐席)
+                $('#stopService').off().on('click', function () {
+                    if ($("#remoteVideoPos").html() != "") {                        if (confirm("您确定结束当前服务吗？")) {                            var errorcode = BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_FINISH, mTargetUserId, 0, 0, 0, ""); 	// 挂断                            AddLog("BRAC_VideoCallControl(" + BRAC_VIDEOCALL_EVENT_FINISH + "," + mTargetUserId + ",0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+                            $("#Initiative_Call_Div").hide(); //隐藏主动呼叫层                            isShowReturnBtn(true);                            startServiceTag = false;                        }                    }                });
+                //开始服务按钮事件(坐席)                $('#startService').off().on('click', function () {                    if (!startServiceTag) {                        startServiceTag = true;                        /**客服开始服务*/                        var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AGENT, mSelfUserId, ANYCHAT_AGENT_CTRL_SERVICEREQUEST, 0, 0, 0, 0, "");                        AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AGENT + "," + mSelfUserId + "," + ANYCHAT_AGENT_CTRL_SERVICEREQUEST + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);                    }                });
+                //返回服务厅(坐席)                $('#returnHall').off().on('click', function () {                    leaveAreaClickEvent();                });
+            default:                break;        }
 
 		mSelfUserId = dwUserId;
 		dwPriority = parseInt($("#dwPrioritySelect option:selected").val());
 
-		$("#LOADING_GREY_DIV span").text("正在加载营业厅，请稍候......");
-
 		//身份信息设置
-		InitClientObjectInfo(mSelfUserId,dwAgentFlags,dwPriority);
+		InitClientObjectInfo(mSelfUserId, dwAgentFlags, dwPriority);
+
 	} else {
-		ForSession("Client logon failure!", true);
+        ForSession("登录失败！(errorcode=" + errorcode + ")", true);
 	}
 }
 
@@ -136,9 +177,9 @@ function OnAnyChatEnterRoom(dwRoomId, errorcode) {
     AddLog("OnAnyChatEnterRoom(dwRoomId=" + dwRoomId + ',errorcode=' + errorcode + ')', LOG_TYPE_NORMAL);
 
 	if (errorcode == 0) {
-		if (userType == 2) {
-			
-		} else if (userType ==1) {
+	    if (userType == USER_TYPE_AGNET) {
+
+	    } else if (userType == USER_TYPE_CLIENT) {
 			/**客服姓名*/
 			var name1 = BRAC_GetUserInfo(mTargetUserId,USERINFO_NAME); 
 			/**个人姓名*/
@@ -158,6 +199,8 @@ function OnAnyChatEnterRoom(dwRoomId, errorcode) {
 			$("#LOADING_GREY_DIV").hide();
 			$("#videoCall").show();
 			$("#callLayer").hide();
+
+			mCurrentStatus = CLIENT_STATUS_CHATTING;
 		}
 		//打开本地视频
 		startVideo(mSelfUserId, GetID("localVideoPos"), "ANYCHAT_VIDEO_LOCAL",1);
@@ -182,11 +225,11 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 		if (bEnterRoom == 1) {
 			//请求对方视频
 			startVideo(mTargetUserId, GetID("remoteVideoPos"), "ANYCHAT_VIDEO_REMOTE",1);
-			if(userType == 1){
+			if (userType == USER_TYPE_CLIENT) {
 				
 			}
 		} else {
-			if (userType == 2) {
+            if (userType == USER_TYPE_AGNET) {
 				if (dwUserId == mTargetUserId) { // 当前被请求的用户离开房间
 					
 					/**客服结束服务*/
@@ -202,17 +245,18 @@ function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 					BRAC_UserSpeakControl(dwUserId, 0); 
 				}
 			}
-			if(mTargetUserId==dwUserId)
-				BRAC_LeaveRoom(roomNum);
+			if(mTargetUserId == dwUserId)
+			    BRAC_LeaveRoom(mRoomId);
 		}
 	
 }
 
 // 网络连接已关闭，该消息只有在客户端连接服务器成功之后，网络异常中断之时触发，reason表示连接断开的原因
 function OnAnyChatLinkClose(reason, errorcode) {
-	ForSession("网络异常中断!请检查网络，reason【 " + reason + " 】,errorcode【 " + errorcode + " 】,请联系相关工作人员!",true);
-	AddLog("function OnAnyChatLinkClose(reason: " + reason + ",errorcode: " + errorcode , LOG_TYPE_ERROR);
-	GetID('LOADING_GREY_DIV').style.display='none';
+	ForSession("与服务器的网络连接异常中断！errorcode=("+ errorcode + ")",true);
+	AddLog("OnAnyChatLinkClose(reason: " + reason + ",errorcode: " + errorcode , LOG_TYPE_ERROR);
+
+	linkClose();
 }
 
 // 用户的音频设备状态变化消息，dwUserId表示用户ID号，State表示该用户是否已打开音频采集设备（0：关闭，1：打开）
@@ -320,6 +364,7 @@ function OnAnyChatObjectSyncDataFinish(dwObjectType, dwObjectId) {
     AddLog('OnAnyChatObjectSyncDataFinish(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
 
     if (dwObjectType == ANYCHAT_OBJECT_TYPE_AREA) {
+        mCurrentStatus = CLIENT_STATUS_AREA;
         showSerivceArea();
     }
 }
@@ -330,7 +375,9 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 	if (dwErrorCode == 0) {
 	    colorIdx = 0;
 		// 进入服务区域成功
-		if(userType==1){//客户
+	    if (userType == USER_TYPE_CLIENT) {//客户
+	        mCurrentStatus = CLIENT_STATUS_QUEUE;
+
 			//获取队列
 			var queueList =BRAC_ObjectGetIdList(ANYCHAT_OBJECT_TYPE_QUEUE);
 			for (var i in queueList) {
@@ -343,7 +390,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 			    /**获取队列信息*/
 			    var queueInfo = BRAC_ObjectGetStringValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueListId, ANYCHAT_OBJECT_INFO_DESCRIPTION);
 			    $("#LOADING_GREY_DIV").hide(); //隐藏蒙层
-			    $('#poptip li[dwobjectid]').hide(); //隐藏服务厅
+			    $('#poptip li[areaId]').hide(); //隐藏服务厅
 			    $("#enterRoom h2:eq(1)").text(queueListName);
 			    var liObject = $('<li class="queue-item" queueid="' + queueListId + '">' +
                     '<a class="queue-item-link"><img class="queue-item-pic" src="./img/queue.png" /></a>' +
@@ -370,7 +417,7 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 	                $("#LOADING_GREY_DIV span").text("正在离开营业厅，请稍候......");//显示等待蒙层
 	                if(!leaveFlag){
 	                	$('#poptip li[queueid]').hide(); //隐藏队列
-	                	$('#poptip li[dwobjectid]').show(); //显示营业厅
+	                	$('#poptip li[areaId]').show(); //显示营业厅
 	                	$("#LOADING_GREY_DIV").hide();//隐藏等待蒙层
 	                }
 
@@ -382,20 +429,22 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
             		}else if($("#queueMsg2").css("display")=="block"){
             			$("#queueMsg2 #reject").click();
             		}
-            	}
+                }
+                mCurrentStatus = CLIENT_STATUS_AREA;
             });
         }
 
         //坐席
 
-        if (userType == 2) {
+        if (userType == USER_TYPE_AGNET) {
 
             $("#LOADING_GREY_DIV").hide(); //隐藏等待蒙层
-
+            mCurrentStatus = AGENT_STATUS_SERVICE;
             refreshAgentServiceInfo();
 
             $("#roomOut").off().click(function () {
                 leaveAreaClickEvent();
+                mCurrentStatus = CLIENT_STATUS_AREA;
             });
 
         }
@@ -404,7 +453,8 @@ function OnAnyChatEnterAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
 
 // 离开服务区域通知事件
 function OnAnyChatLeaveAreaResult(dwObjectType, dwObjectId, dwErrorCode) {
-	AddLog('OnAnyChatLeaveAreaResult(' + dwObjectType + ',' + dwObjectId+','+dwErrorCode + ')', LOG_TYPE_EVENT);
+    AddLog('OnAnyChatLeaveAreaResult(' + dwObjectType + ',' + dwObjectId + ',' + dwErrorCode + ')', LOG_TYPE_EVENT);
+    mCurrentStatus = CLIENT_STATUS_AREA;
 }
 
 //营业厅状态变化
@@ -415,7 +465,7 @@ function OnAnyChatAreaStatusChange(dwObjectType, dwObjectId, dwErrorCode) {
 // 队列状态变化
 function OnAnyChatQueueStatusChanged(dwObjectType, dwObjectId) {
     AddLog('OnAnyChatQueueStatusChanged(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
-    if (userType == 2) {
+    if (userType == USER_TYPE_AGNET) {
         refreshAgentServiceInfo();
     }
 
@@ -441,6 +491,9 @@ function OnAnyChatEnterQueueResult(dwObjectType, dwObjectId, dwErrorCode) {
          var time = formatSeconds(BRAC_ObjectGetIntValue(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_INFO_WAITTIMESECOND));
          $("#queueMsg1 strong:eq(2)").text(time);
      }, 1000);
+
+     mCurrentStatus = CLIENT_STATUS_QUEUEING;
+
 }
 
 // 本地用户离开队列结果
@@ -454,7 +507,7 @@ function OnAnyChatLeaveQueueResult(dwObjectType, dwObjectId, dwErrorCode) {
 		$("#poptip").show(); 
 	    $("#poptip li[queueid]").show(); //显示队列列表
 	}
-	
+	mCurrentStatus = CLIENT_STATUS_QUEUE;
 }
 
 // 坐席状态变化
@@ -479,7 +532,7 @@ function OnAnyChatAgentStatusChanged(dwObjectType, dwObjectId, dwParam1) {
 // 坐席服务开始
 function OnAnyChatServiceStart(dwAgentId, clientId, dwQueueId) {
     AddLog('OnAnyChatServiceStart(' + dwAgentId + ',' + clientId + ',' + dwQueueId +')', LOG_TYPE_EVENT);
-	if (userType == 2 && mSelfUserId == dwAgentId) {
+    if (userType == USER_TYPE_AGNET && mSelfUserId == dwAgentId) {
 		$("#LOADING_GREY_DIV span").hide();
 	    refreshServicedUserInfo(clientId);
 		mTargetUserId=clientId;//客户id
