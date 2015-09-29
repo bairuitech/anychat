@@ -278,9 +278,39 @@ var anychat;									// AnyChat插件DMO对象，外部初始化
 var bSupportStreamRecordCtrlEx = false;			// 是否支持录像扩展API接口
 var bSupportObjectBusiness = false;				// 是否支持业务对象API接口
 var bSupportMultiStream = false;				// 是否支持多路流（多摄像头）API接口
+var bSupportScriptObject = false;				// 是否支持JavaScript对象
 
 // 初始化SDK，返回出错代码
 function BRAC_InitSDK(apilevel) {
+	var ua = navigator.userAgent.toLowerCase();
+	var info = {
+		ie: /msie/.test(ua) && !/opera/.test(ua),
+		op: /opera/.test(ua),
+		sa: /version.*safari/.test(ua),
+		ch: /chrome/.test(ua),
+		ff: /gecko/.test(ua) && !/webkit/.test(ua)
+	};
+	if(info.sa || info.ch) {
+		if(!anychat) {
+			anychat = AnyChatSDK();
+			anychat.InitSDK(0);
+		
+			if(typeof(OnAnyChatNotifyMessage) == "function")
+				anychat.on("OnNotifyMessage", OnAnyChatNotifyMessage);
+			if(typeof(OnAnyChatVideoCallEvent) == "function")
+				anychat.on("OnVideoCallEvent", OnAnyChatVideoCallEvent);
+			if(typeof(OnAnyChatTransBuffer) == "function")
+				anychat.on("OnTransBuffer", OnAnyChatTransBuffer);
+			if(typeof(OnAnyChatTextMessage) == "function")
+				anychat.on("OnTextMessage", OnAnyChatTextMessage);
+			if(typeof(OnAnyChatObjectEvent) == "function")
+				anychat.on("OnObjectEvent", OnAnyChatObjectEvent);
+		}
+		bSupportScriptObject = true;
+		bSupportObjectBusiness = true;
+		return GV_ERR_SUCCESS;
+	}
+	
 	var anychatsdkdiv = "AnyChatSDKPluginDiv";
 	try {
 		// 创建AnyChat SDK插件
@@ -431,7 +461,10 @@ function BRAC_NativeCreateVideoPlugin(userid, parentobj, id, streamindex) {
 
 // 设置视频显示位置
 function BRAC_SetVideoPos(userid, parentobj, id) {
-	return BRAC_NativeCreateVideoPlugin(userid, parentobj, id, 0);
+	if(bSupportScriptObject)
+		return anychat.SetVideoPos(userid, parentobj, id);
+	else
+		return BRAC_NativeCreateVideoPlugin(userid, parentobj, id, 0);
 }
 
 // 设置视频显示位置（扩展，支持多路流）
@@ -476,6 +509,9 @@ function BRAC_Logout() {
 
 // 获取当前房间在线用户列表（返回一个userid的数组）
 function BRAC_GetOnlineUser() {
+	if(bSupportScriptObject) {
+		return anychat.GetRoomOnlineUsers();
+	}
 	var idarray = new Array();
 	var size = anychat.PrepareFetchRoomUsers();
 	if(size)
@@ -651,7 +687,7 @@ function BRAC_PrivateChatExit(dwUserId) {
 
 // SDK内核参数设置
 function BRAC_SetSDKOption(optname, value) {
-	if(isNaN(value))
+	if(typeof value == "string")
 		return anychat.SetSDKOptionString(optname, value);
 	else
 		return anychat.SetSDKOptionInt(optname, value);
@@ -687,6 +723,9 @@ function BRAC_VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwPa
 
 // 获取用户好友ID列表（返回一个userid的数组）
 function BRAC_GetUserFriends() {
+	if(bSupportScriptObject) {
+		return anychat.GetUserFriends();
+	}
 	var idarray = new Array();
 	var size = anychat.PrepareFetchUserFriends();
 	if(size) {
@@ -708,6 +747,9 @@ function BRAC_GetFriendStatus(dwFriendUserId) {
 
 // 获取用户分组ID列表（返回一个GroupId的数组）
 function BRAC_GetUserGroups() {
+	if(bSupportScriptObject) {
+		return anychat.GetUserGroups();
+	}
 	var idarray = new Array();
 	var size = anychat.PrepareFetchUserGroups();
 	if(size) {
@@ -724,6 +766,9 @@ function BRAC_GetUserGroups() {
 
 // 获取分组下面的好友列表（返回一个userid的数组）
 function BRAC_GetGroupFriends(dwGroupId) {
+	if(bSupportScriptObject) {
+		return anychat.GetGroupFriends(dwGroupId);
+	}
 	var idarray = new Array();
 	var size = anychat.PrepareFetchGroupFriends(dwGroupId);
 	if(size) {
@@ -755,6 +800,9 @@ function BRAC_UserInfoControl(dwUserId, dwCtrlCode, wParam, lParam, lpStrValue) 
 
 // 获取业务对象ID列表（返回一个ObjectId的数组）
 function BRAC_ObjectGetIdList(dwObjectType) {
+	if(bSupportScriptObject) {
+		return anychat.ObjectGetIdList(dwObjectType);
+	}
 	var idarray = new Array();
 	if(!bSupportObjectBusiness)
 		return idarray;
@@ -806,7 +854,7 @@ function BRAC_ObjectControl(dwObjectType, dwObjectId, dwCtrlCode, dwParam1, dwPa
 function BRAC_SetUserStreamInfo(dwUserId, dwStreamIndex, infoname, value) {
 	if(!bSupportMultiStream)
 		return -1;
-	if(isNaN(value))
+	if(typeof value == "string")
 		return anychat.SetUserStreamInfoString(dwUserId, dwStreamIndex, infoname, value);
 	else
 		return anychat.SetUserStreamInfoInt(dwUserId, dwStreamIndex, infoname, value);
