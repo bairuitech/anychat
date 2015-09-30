@@ -73,6 +73,10 @@ namespace AnyChatMultiCamera
         /// </summary>
         private int m_ColUserVideo = 4;
 
+        /// <summary>
+        /// 当前选定的远程用户ID
+        /// </summary>
+        private int currentRemoteUserID = 0;
         #endregion
 
         #region 构造函数
@@ -536,7 +540,6 @@ namespace AnyChatMultiCamera
 
         #endregion
 
-
         private void openLocalVideo(string[] videoDeviceName)
         {
             int streamIndex = 0;
@@ -620,7 +623,12 @@ namespace AnyChatMultiCamera
 
         }
 
-        private void openRemoteVideo(int remoteUserID)
+        /// <summary>
+        /// 控制远程用户音视频
+        /// </summary>
+        /// <param name="remoteUserID">远程用户ID</param>
+        /// <param name="controlFlag">控制开关，true表示打开、false表示关闭</param>
+        private void controlRemoteVideo(int remoteUserID, bool controlFlag)
         {
             int streamIndex = 0;
 
@@ -650,16 +658,19 @@ namespace AnyChatMultiCamera
                 if (retCode == 0)
                 {
                     //AnyChatCoreSDK.SetVideoPos(remoteUserID, m_ShowWnd.Handle, 0, 0, m_ShowWnd.Width, m_ShowWnd.Height);
-                    retCode = AnyChatCoreSDK.SetVideoPosEx(remoteUserID, m_ShowWnd.Handle, 0, 0, m_ShowWnd.Width, m_ShowWnd.Height, streamIndex, 0);
-                    addLog("SetVideoPosEx(" + remoteUserID + "," + m_ShowWnd.Handle + ", 0, 0," + m_ShowWnd.Width + ", " + m_ShowWnd.Height + ", " + streamIndex + ", 0)", LogType.LOG_TYPE_API);
+                    if (controlFlag)
+                    {
+                        retCode = AnyChatCoreSDK.SetVideoPosEx(remoteUserID, m_ShowWnd.Handle, 0, 0, m_ShowWnd.Width, m_ShowWnd.Height, streamIndex, 0);
+                        addLog("SetVideoPosEx(" + remoteUserID + "," + m_ShowWnd.Handle + ", 0, 0," + m_ShowWnd.Width + ", " + m_ShowWnd.Height + ", " + streamIndex + ", 0)", LogType.LOG_TYPE_API);
+                    }
                     //AnyChatCoreSDK.UserCameraControl(remoteUserID, true);
-                    retCode = AnyChatCoreSDK.UserCameraControlEx(remoteUserID, true, streamIndex, 0, string.Empty);
-                    addLog("UserCameraControlEx(" + remoteUserID + ", true, " + streamIndex + ", 0, " + string.Empty + ")", LogType.LOG_TYPE_API);
+                    retCode = AnyChatCoreSDK.UserCameraControlEx(remoteUserID, controlFlag, streamIndex, 0, string.Empty);
+                    addLog("UserCameraControlEx(" + remoteUserID + ", " + controlFlag + ", " + streamIndex + ", 0, " + string.Empty + ")", LogType.LOG_TYPE_API);
                     //AnyChatCoreSDK.UserSpeakControl(remoteUserID, true);
-                    retCode = AnyChatCoreSDK.UserSpeakControlEx(remoteUserID, true, streamIndex, 0, string.Empty);
-                    addLog("UserSpeakControlEx(" + remoteUserID + ", true, " + streamIndex + ", 0, " + string.Empty + ")", LogType.LOG_TYPE_API);
+                    retCode = AnyChatCoreSDK.UserSpeakControlEx(remoteUserID, controlFlag, streamIndex, 0, string.Empty);
+                    addLog("UserSpeakControlEx(" + remoteUserID + ", " + controlFlag + ", " + streamIndex + ", 0, " + string.Empty + ")", LogType.LOG_TYPE_API);
                 }
-            }
+            } 
         }
 
         private void dgv_onlineuser_Click(object sender, EventArgs e)
@@ -671,9 +682,10 @@ namespace AnyChatMultiCamera
                 DataGridViewRow dgvr = dgv_onlineuser.SelectedRows[0];
 
                 int remoteUserID = Int32.Parse(dgvr.Cells["gvc_userID"].Value.ToString());
-                if (remoteUserID == m_myUserID) return;
+                if (remoteUserID == m_myUserID || remoteUserID == currentRemoteUserID) return;
 
-                openRemoteVideo(remoteUserID);
+                currentRemoteUserID = remoteUserID;
+                controlRemoteVideo(remoteUserID, true);
             }
             catch (Exception ex) { }
 
@@ -837,6 +849,22 @@ namespace AnyChatMultiCamera
         }
 
         #endregion
+
+        private void dgv_onlineuser_RowLeave(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (dgv_onlineuser.SelectedRows.Count > 0)
+            {
+                DataGridViewRow dgvr = dgv_onlineuser.SelectedRows[0];
+                int leaveUserID = Int32.Parse(dgvr.Cells["gvc_userID"].Value.ToString());
+
+                if (leaveUserID == m_myUserID) return;
+                if (leaveUserID == currentRemoteUserID)
+                {
+                    controlRemoteVideo(leaveUserID, false);
+                }
+            }
+        }
 
         #region 本地视频窗口双击事件
 
