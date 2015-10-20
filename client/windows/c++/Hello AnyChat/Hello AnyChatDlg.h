@@ -8,9 +8,9 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "AnyChatSDK/include/BRAnyChatCoreSDK.h"
-#include "AnyChatSDK/include/GVMessageDefine.h"
-#pragma comment(lib,"AnyChatSDK/lib/BRAnyChatCore.lib")
+#include <BRAnyChatCoreSDK.h>
+#include <GVMessageDefine.h>
+#pragma comment(lib,"BRAnyChatCore.lib")
 
 #include <vector>
 #include "SkinBtn.h"

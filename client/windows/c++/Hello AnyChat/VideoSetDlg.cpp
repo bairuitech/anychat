@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "Hello AnyChat.h"
 #include "VideoSetDlg.h"
-#include "AnyChatSDK/include/BRAnyChatCoreSDK.h"
+#include <BRAnyChatCoreSDK.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

@@ -51,6 +51,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="../AnyChatSDK/include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				RuntimeLibrary="0"
@@ -77,9 +78,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile=".\Release/AnyChatVideoMixer.exe"
+				OutputFile="../bin/Release/AnyChatVideoMixer.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="../AnyChatSDK/lib"
 				ProgramDatabaseFile=".\Release/AnyChatVideoMixer.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -144,6 +146,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="../AnyChatSDK/include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -171,9 +174,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile=".\Debug/AnyChatVideoMixer.exe"
+				OutputFile="../bin/Debug/AnyChatVideoMixer.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="../AnyChatSDK/lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/AnyChatVideoMixer.pdb"
 				SubSystem="2"

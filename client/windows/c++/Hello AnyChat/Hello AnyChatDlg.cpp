@@ -538,7 +538,7 @@ void CHelloAnyChatDlg::updateUserList()
 	m_userList.DeleteAllItems();
 
 	int nIndex = 0;
-	for(int i=0; i< m_vecAllUser.size(); i++)
+	for(int i=0; i< (int)m_vecAllUser.size(); i++)
 	{
 		CHAR strUserID[USERNAMELENGTH_MAX] = {0};
 		sprintf(strUserID, "%d", m_vecAllUser[i].uerID);
@@ -559,7 +559,7 @@ void CHelloAnyChatDlg::updateUserList()
 void CHelloAnyChatDlg::OnClickListUserList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	CString str = "";
-	for (int index = 0; index < m_vecAllUser.size(); ++index)
+	for (int index = 0; index < (int)m_vecAllUser.size(); ++index)
 	{
 		if (m_userList.GetItemState(index, LVIS_SELECTED) == LVIS_SELECTED)
 		{
