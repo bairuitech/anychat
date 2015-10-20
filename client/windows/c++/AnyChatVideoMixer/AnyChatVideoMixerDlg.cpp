@@ -5,10 +5,10 @@
 #include "AnyChatVideoMixer.h"
 #include "AnyChatVideoMixerDlg.h"
 #include "ConfigDlg.h"
-#include "AnyChatSDK/BRAnyChatCoreSDK.h"
+#include "BRAnyChatCoreSDK.h"
 
 
-#pragma comment(lib, "AnyChatSDK/BRAnyChatCore.lib")
+#pragma comment(lib, "BRAnyChatCore.lib")
 
 
 #define MIX_SUPPORT_CHANNELS		1

@@ -8,9 +8,9 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "AnyChatSDK/BRAnyChatSDKProc.h"
+#include <BRAnyChatSDKProc.h>
 
-#pragma comment(lib, "AnyChatSDK/BRAnyChatCore.lib")
+#pragma comment(lib, "BRAnyChatCore.lib")
 
 
 class CAnyChatInputVideoDlg : public CDialog,

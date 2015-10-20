@@ -27,6 +27,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "BRAnyChatMeeting"=".\BRAnyChatMeeting\BRAnyChatMeeting.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "BRAnyChatSDKDemo"=".\BRAnyChatSDKDemo\BRAnyChatSDKDemo.dsp" - Package Owner=<4>
 
 Package=<5>

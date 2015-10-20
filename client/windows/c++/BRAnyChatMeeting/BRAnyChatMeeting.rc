@@ -1,0 +1,353 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\BRAnyChatMeeting.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\BRAnyChatMeeting.ico"
+IDI_ICON_CAMERA_CLOSE   ICON    DISCARDABLE     "res\\camera_close.ico"
+IDI_ICON_CAMERA_OPEN    ICON    DISCARDABLE     "res\\camera_open.ico"
+IDI_ICON_MIC            ICON    DISCARDABLE     "res\\mic.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_MEETING DIALOGEX 0, 0, 566, 415
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "AnyChat Meeting Room"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT_TEXTINPUT,196,386,288,14,ES_AUTOHSCROLL
+    GROUPBOX        "用户列表",IDC_STATIC_USERLIST,13,51,132,216
+    GROUPBOX        "本地视频",IDC_STATIC_LOCALVIDEO,14,277,129,110
+    GROUPBOX        "远程视频",IDC_STATIC_REMOTEVIDEO,155,9,396,232
+    GROUPBOX        "信息交流",IDC_STATIC,156,249,398,157
+    EDITTEXT        IDC_EDIT_TEXTOUTPUT,167,261,378,118,ES_MULTILINE | 
+                    ES_AUTOHSCROLL
+    LTEXT           "发言：",IDC_STATIC,169,387,25,8
+    PUSHBUTTON      "发送",IDC_BUTTON_SENDTEXT,494,385,50,14
+    CONTROL         "List1",IDC_LIST_USER,"SysListView32",LVS_REPORT | 
+                    LVS_NOCOLUMNHEADER | LVS_NOSORTHEADER | WS_BORDER | 
+                    WS_TABSTOP,20,63,118,200
+    COMBOBOX        IDC_COMBO_DISPNUM,73,395,68,75,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "高级设置",IDC_BUTTON_ADVSET,15,396,50,14
+END
+
+IDD_DIALOG_LOGIN DIALOG DISCARDABLE  0, 0, 212, 153
+STYLE DS_SYSMODAL | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "AnyChat登录"
+FONT 9, "新宋体"
+BEGIN
+    PUSHBUTTON      "登录",IDC_BUTTON_LOGIN,157,107,50,14
+    LTEXT           "帐号：",IDC_STATIC,27,52,25,8
+    LTEXT           "密码：",IDC_STATIC,27,76,25,8
+    EDITTEXT        IDC_EDIT_USERNAME,65,50,98,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PASSWORD,66,74,98,14,ES_AUTOHSCROLL
+    CONTROL         "游客登录",IDC_CHECK_GUESTLOGIN,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,119,93,48,10
+    PUSHBUTTON      "设置",IDC_BUTTON_SETTINGS,6,107,50,14
+    LTEXT           "服务器:",IDC_STATIC,6,136,29,8
+    LTEXT           "端口:",IDC_STATIC,145,136,21,8
+    EDITTEXT        IDC_EDIT_PORT,171,132,33,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "提示信息",IDC_STATIC_NOTIFY,8,94,104,8
+    EDITTEXT        IDC_SERVER_IPADDR,41,133,95,14,ES_AUTOHSCROLL
+END
+
+IDD_DIALOG_HALL DIALOG DISCARDABLE  0, 0, 403, 241
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "AnyChat大厅"
+FONT 9, "新宋体"
+BEGIN
+    GROUPBOX        "个人信息",IDC_STATIC,5,6,125,224
+    CONTROL         "List2",IDC_LIST_ROOM,"SysListView32",WS_BORDER | 
+                    WS_TABSTOP,140,11,240,181
+    LTEXT           "(温馨提示：双击房间名进入房间)",IDC_STATIC_NOTIFY,143,
+                    200,121,8
+    PUSHBUTTON      "退出系统",IDC_BUTTON_EXIT,320,212,50,14
+    LTEXT           "昵称：",IDC_STATIC,15,25,25,8
+    LTEXT           "nickname",IDC_STATIC_NICKNAME,47,25,77,8
+    LTEXT           "ID：",IDC_STATIC,17,41,17,8
+    LTEXT           "id",IDC_STATIC_USERID,47,41,9,8
+    LTEXT           "级别：",IDC_STATIC,15,59,25,8
+    LTEXT           "level",IDC_STATIC_USERLEVEL,46,59,21,8
+    LTEXT           "IP：",IDC_STATIC,17,77,17,8
+    LTEXT           "IP",IDC_STATIC_INTERNETIP,45,77,9,8
+    LTEXT           "自定义房间：",IDC_STATIC,146,218,49,8
+    EDITTEXT        IDC_EDIT_ROOMID,196,215,40,14,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "进入",IDC_BUTTON_ENTERROOM,237,215,28,14
+END
+
+IDD_DIALOG_VIDEOPANEL DIALOG DISCARDABLE  0, 0, 187, 94
+STYLE WS_CHILD
+FONT 9, "新宋体"
+BEGIN
+    CONTROL         "Progress1",IDC_PROGRESS_AUDIOVOLUME,"msctls_progress32",
+                    PBS_SMOOTH,9,81,80,6
+    PUSHBUTTON      "V",IDC_BUTTON_VIDEOCTRL,13,60,20,14
+    PUSHBUTTON      "A",IDC_BUTTON_AUDIOCTRL,41,59,18,14
+    PUSHBUTTON      "S",IDC_BUTTON_SNAPSHOT,66,59,18,14
+    PUSHBUTTON      "R",IDC_BUTTON_RECORD,91,59,18,14
+END
+
+IDD_DIALOG_SETTINGS DIALOG DISCARDABLE  0, 0, 424, 220
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "高级设置"
+FONT 9, "新宋体"
+BEGIN
+    LTEXT           "视频设备：",IDC_STATIC,17,26,41,8
+    COMBOBOX        IDC_COMBO_VIDEOCAPTURE,65,24,124,103,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "录音设备：",IDC_STATIC,17,48,41,8
+    COMBOBOX        IDC_COMBO_AUDIOCAPTURE,65,46,123,103,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "设备选择",IDC_STATIC,9,7,185,81
+    GROUPBOX        "音量控制",IDC_STATIC,10,93,143,69
+    LTEXT           "放音音量：",IDC_STATIC,17,108,41,8
+    LTEXT           "录音音量：",IDC_STATIC,18,132,41,8
+    CONTROL         "麦克风加强",IDC_CHECK_MICBOOST,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,96,149,56,10
+    GROUPBOX        "音频参数",IDC_STATIC,166,100,120,77
+    COMBOBOX        IDC_COMBO_AUDIOWORKMODE,177,115,96,78,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "静音检测",IDC_CHECK_AUDIOVAD,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,174,141,48,10
+    CONTROL         "回音消除",IDC_CHECK_AUDIOAEC,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,232,141,48,10
+    CONTROL         "噪音抑制",IDC_CHECK_AUDIONS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,174,157,48,10
+    CONTROL         "自动增益",IDC_CHECK_AUDIOAGC,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,232,157,48,10
+    GROUPBOX        "视频参数",IDC_STATIC,200,8,221,86
+    COMBOBOX        IDC_COMBO_VIDEOQUALITY,358,19,57,175,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "画面调节",IDC_BUTTON_VIDEOPROPERTY,302,74,50,14
+    LTEXT           "",IDC_SLIDER_WAVEOUTVOLUME,67,108,81,8,SS_NOTIFY
+    LTEXT           "",IDC_SLIDER_WAVEINVOLUME,67,130,81,8,SS_NOTIFY
+    CONTROL         "反交织",IDC_CHECK_DEINTERLACE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,284,21,40,10
+    CONTROL         "启动流代理",IDC_CHECK_STREAMPROXY,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,134,205,56,10
+    EDITTEXT        IDC_EDIT_PROXYUSERID,199,201,31,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "切换用户",IDC_BUTTON_CHANGEPROXYUSER,238,201,50,14
+    LTEXT           "分辨率：",IDC_STATIC,321,42,33,8
+    COMBOBOX        IDC_COMBO_VIDEOSIZE,358,39,58,193,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "当前分辩率：",IDC_STATIC_CURVIDEOSIZE,315,58,96,8
+    PUSHBUTTON      "应用更改",IDC_BUTTON_VIDEOAPPLY,366,74,50,14
+    LTEXT           "帧率:",IDC_STATIC,205,55,21,8
+    COMBOBOX        IDC_COMBO_VIDEOFPS,230,53,58,182,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "服务器默认配置",IDC_CHECK_SERVERVIDEOSETTINGS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,209,21,72,10
+    LTEXT           "码率:",IDC_STATIC,205,37,21,8
+    COMBOBOX        IDC_COMBO_VIDEOBITRATE,230,35,58,197,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "kbps",IDC_STATIC,290,37,17,8
+    LTEXT           "预设:",IDC_STATIC,205,75,21,8
+    COMBOBOX        IDC_COMBO_VIDEOPRESET,230,73,57,161,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "video:",IDC_STATIC_VIDEOBITRATE,167,185,85,8
+    LTEXT           "质量:",IDC_STATIC,334,23,21,8
+    LTEXT           "放音设备：",IDC_STATIC,17,67,41,8
+    COMBOBOX        IDC_COMBO_AUDIOPLAYBACK,65,65,123,103,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "IP组播功能",IDC_STATIC,292,97,126,94
+    LTEXT           "IP:",IDC_STATIC,298,111,13,8
+    CONTROL         "IPAddress1",IDC_MULTICAST_IPADDR,"SysIPAddress32",
+                    WS_TABSTOP,315,109,97,15
+    LTEXT           "端口：",IDC_STATIC,297,131,25,8
+    EDITTEXT        IDC_EDIT_MULTICASTPORT,325,127,40,14,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_MULTICASTCTRL,300,174,54,193,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "发送数据",IDC_CHECK_SENDDATA,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,298,160,48,10
+    CONTROL         "接收数据",IDC_CHECK_RECVDATA,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,360,160,48,10
+    PUSHBUTTON      "应用",IDC_BUTTON_MULTICASTAPPLY,364,173,50,14
+    COMBOBOX        IDC_COMBO_MULTICASTPOLITIC,344,194,72,193,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "IP组播策略：",IDC_STATIC,291,197,49,8
+    LTEXT           "NIC:",IDC_STATIC,298,145,17,8
+    COMBOBOX        IDC_COMBO_MULTICASTNIC,318,143,92,193,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "P2P优先",IDC_CHECK_ENABLEP2P,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,19,186,44,10
+    GROUPBOX        "其它设置",IDC_STATIC,10,169,143,43
+END
+
+IDD_DIALOG_FULLSCREEN DIALOG DISCARDABLE  0, 0, 187, 96
+STYLE WS_POPUP
+FONT 10, "System"
+BEGIN
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "BRAnyChatMeeting Microsoft 基础类应用程序\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "BRAnyChatMeeting\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2010\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "BRAnyChatMeeting.EXE\0"
+            VALUE "ProductName", "BRAnyChatMeeting 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// IMAGE
+//
+
+IDR_IMAGE_LOGINTOP      IMAGE   DISCARDABLE     "res\\login-top.jpg"
+IDR_IMAGE_VIDEOFRAME_RIGHT IMAGE   DISCARDABLE     "res\\videopanel\\vfRight.jpg"
+IDR_IMAGE_VIDEOFRAME_TOPLEFT IMAGE   DISCARDABLE     "res\\videopanel\\vfTopLeft.jpg"
+IDR_IMAGE_VIDEOFRAME_TOPMIDDLE IMAGE   DISCARDABLE     "res\\videopanel\\vfTopMiddle.jpg"
+IDR_IMAGE_VIDEOFRAME_TOPRIGHT IMAGE   DISCARDABLE     "res\\videopanel\\vfTopRight.jpg"
+IDR_IMAGE_VIDEOFRAME_BOTTOMLEFT IMAGE   DISCARDABLE     "res\\videopanel\\vfBottomLeft.jpg"
+IDR_IMAGE_VIDEOFRAME_BOTTOMMIDDLE IMAGE   DISCARDABLE     "res\\videopanel\\vfBottomMiddle.jpg"
+IDR_IMAGE_VIDEOFRAME_BOTTOMRIGHT IMAGE   DISCARDABLE     "res\\videopanel\\vfBottomRight.jpg"
+IDR_IMAGE_VIDEOFRAME_LEFT IMAGE   DISCARDABLE     "res\\videopanel\\vfLeft.jpg"
+IDR_IMAGE_VIDEOBK       IMAGE   DISCARDABLE     "res\\videobk.jpg"
+IDR_IMAGE_CHATLOGO      IMAGE   DISCARDABLE     "res\\chatlogo.jpg"
+IDR_IMAGE_NETSTATUS_BAD IMAGE   DISCARDABLE     "res\\netstatus\\netstatus_bad.jpg"
+IDR_IMAGE_NETSTATUS_GOOD IMAGE   DISCARDABLE     "res\\netstatus\\netstatus_good.jpg"
+IDR_IMAGE_NETSTATUS_NORMAL IMAGE   DISCARDABLE     "res\\netstatus\\netstatus_normal.jpg"
+IDR_IMAGE_NETSTATUS_VERYBAD IMAGE   DISCARDABLE     "res\\netstatus\\netstatus_verybad.jpg"
+IDR_IMAGE_NETSTATUS_VERYGOOD IMAGE   DISCARDABLE     "res\\netstatus\\netstatus_verygood.jpg"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP_SNAPSHOT     BITMAP  DISCARDABLE     "res\\snapshot.bmp"
+IDB_BITMAP_CLOSEAUDIO   BITMAP  DISCARDABLE     "res\\CloseAudio.bmp"
+IDB_BITMAP_CLOSEVIDEO   BITMAP  DISCARDABLE     "res\\CloseVideo.bmp"
+IDB_BITMAP_OPENAUDIO    BITMAP  DISCARDABLE     "res\\OpenAudio.bmp"
+IDB_BITMAP_OPENVIDEO    BITMAP  DISCARDABLE     "res\\OpenVideo.bmp"
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\BRAnyChatMeeting.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

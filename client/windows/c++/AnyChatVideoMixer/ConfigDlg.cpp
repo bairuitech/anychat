@@ -98,7 +98,7 @@ BOOL CConfigDlg::OnInitDialog()
 
 	for (int i=0; i<m_VideoSizeCombo.GetCount(); i++)
 	{
-		if(m_VideoSizeCombo.GetItemData(i) == MAKELONG(g_localSettings.dwWidth, g_localSettings.dwHeight))
+		if(m_VideoSizeCombo.GetItemData(i) == (DWORD)MAKELONG(g_localSettings.dwWidth, g_localSettings.dwHeight))
 		{
 			m_VideoSizeCombo.SetCurSel(i);
 			break;
