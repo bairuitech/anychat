@@ -107,7 +107,11 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 				@Override
 				public void onPreviewFrame(byte[] data, Camera camera) {
 					if(data.length !=0 && bNeedCapture) {
-						AnyChatCoreSDK.InputVideoData(data, data.length, 0);
+						try {
+							AnyChatCoreSDK.InputVideoData(data, data.length, 0);
+						} catch(Exception e){
+				
+						}
 					}
 					mCamera.addCallbackBuffer(data);
 				}
