@@ -131,6 +131,7 @@ var BRAC_STREAMINFO_AUDIOCODECID	=		193;// 音频流编码器ID
 var BRAC_STREAMINFO_AUDIOPACKLOSSRATE=		194;// 音频流丢包率
 
 var BRAC_SO_OBJECT_INITFLAGS	=			200;// 业务对象身份初始化
+var BRAC_SO_CLOUD_APPGUID		=			300;// 云平台应用GUID（参数为：字符串类型，连接服务器之前设置）
 
 var BRAC_SO_ENABLEWEBSERVICE =			11002;	// 启动本地Web服务
 var BRAC_SO_LOCALPATH2URL =				11003;	// 将本地路径转换为URL地址
@@ -274,11 +275,12 @@ var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.4";
 /********************************************
  *				方法定义部分				*
  *******************************************/
-var anychat;									// AnyChat插件DMO对象，外部初始化
+var anychat = null;								// AnyChat插件DMO对象，外部初始化
 var bSupportStreamRecordCtrlEx = false;			// 是否支持录像扩展API接口
 var bSupportObjectBusiness = false;				// 是否支持业务对象API接口
 var bSupportMultiStream = false;				// 是否支持多路流（多摄像头）API接口
 var bSupportScriptObject = false;				// 是否支持JavaScript对象
+var bSupportCluster = false;					// 是否支持集群系统
 
 // 初始化SDK，返回出错代码
 function BRAC_InitSDK(apilevel) {
@@ -291,23 +293,25 @@ function BRAC_InitSDK(apilevel) {
 		ff: /gecko/.test(ua) && !/webkit/.test(ua)
 	};
 	if(info.sa || info.ch) {
-		if(!anychat) {
-			anychat = AnyChatSDK();
-			anychat.InitSDK(0);
-		
-			if(typeof(OnAnyChatNotifyMessage) == "function")
-				anychat.on("OnNotifyMessage", OnAnyChatNotifyMessage);
-			if(typeof(OnAnyChatVideoCallEvent) == "function")
-				anychat.on("OnVideoCallEvent", OnAnyChatVideoCallEvent);
-			if(typeof(OnAnyChatTransBuffer) == "function")
-				anychat.on("OnTransBuffer", OnAnyChatTransBuffer);
-			if(typeof(OnAnyChatTextMessage) == "function")
-				anychat.on("OnTextMessage", OnAnyChatTextMessage);
-			if(typeof(OnAnyChatObjectEvent) == "function")
-				anychat.on("OnObjectEvent", OnAnyChatObjectEvent);
-		}
+		anychat = null;
+		anychat = AnyChatSDK();
+		anychat.InitSDK(0);
+	
+		if(typeof(OnAnyChatNotifyMessage) == "function")
+			anychat.on("OnNotifyMessage", OnAnyChatNotifyMessage);
+		if(typeof(OnAnyChatVideoCallEvent) == "function")
+			anychat.on("OnVideoCallEvent", OnAnyChatVideoCallEvent);
+		if(typeof(OnAnyChatTransBuffer) == "function")
+			anychat.on("OnTransBuffer", OnAnyChatTransBuffer);
+		if(typeof(OnAnyChatTextMessage) == "function")
+			anychat.on("OnTextMessage", OnAnyChatTextMessage);
+		if(typeof(OnAnyChatObjectEvent) == "function")
+			anychat.on("OnObjectEvent", OnAnyChatObjectEvent);
+
+		bSupportStreamRecordCtrlEx = true;
 		bSupportScriptObject = true;
 		bSupportObjectBusiness = true;
+		bSupportCluster = true;
 		return GV_ERR_SUCCESS;
 	}
 	
@@ -348,6 +352,8 @@ function BRAC_InitSDK(apilevel) {
 		bSupportObjectBusiness = (anychatpluginver >= "1.0.2.3");
 		// 判断插件是否支持多路流API接口
 		bSupportMultiStream = (anychatpluginver >= "1.0.3.1");
+		// 判断插件是否支持集群系统
+		bSupportCluster = (anychatpluginver >= "1.0.4.0");
 		// 判断当前的API Level是否满足业务层的需要
 		if(apilevel > anychatobj.GetVersion(2))
 			bRightVersion = false;
@@ -489,6 +495,12 @@ function BRAC_Connect(lpServerAddr, dwPort) {
 // 登录系统
 function BRAC_Login(lpUserName, lpPassword, dwParam) {
 	return anychat.Login(lpUserName, lpPassword, dwParam);
+}
+// 登录系统（扩展）
+function BRAC_LoginEx(lpNickName, dwUserId, lpStrUserId, lpAppId, lpSigStr, lpStrParam) {
+	if(!bSupportCluster)
+		return GV_ERR_PLUGINOLDVERSION;
+	return anychat.LoginEx(lpNickName, parseInt(dwUserId), lpStrUserId, lpAppId, lpSigStr, lpStrParam);
 }
 // 进入房间
 function BRAC_EnterRoom(dwRoomid, lpRoomPass, dwParam) {

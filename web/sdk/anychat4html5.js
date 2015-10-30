@@ -44,7 +44,7 @@ var AnyChatSDK = function() {
     /*******************基础部分*********************/
     function anychat() {		
 		this.localStatus = {socketConnect:false, sdkauthpass:"",
-							loginuser:"", loginpass:"", loginparam:0, 
+							logincmd:"", loginexcmd:"", sendlogincmd:false,
 							roomid:-1, roomname:"", roompass:"", roomparam:0,
 							selfuserid:-1};
 							
@@ -99,7 +99,8 @@ var AnyChatSDK = function() {
 		this.anychat.friendInfoData = {};
 		this.anychat.groupInfoData = {};
 		this.anychat.objectInfoData = {};
-		this.anychat.localStatus.loginuser = "";
+		this.anychat.localStatus.logincmd = "";
+		this.anychat.localStatus.loginexcmd = "";
 		this.anychat.localStatus.selfuserid = -1;
 	}
 	
@@ -117,8 +118,10 @@ var AnyChatSDK = function() {
 		this.on('_notifyMessage', function(data) {
 			var ls = that.localStatus;
 			if(data.event == WM_GV_CONNECT) {
-				if(data.lParam == 0 && ls.loginuser.length) {
-					that.socket.sendCommand("login", {"username":ls.loginuser, "password":ls.loginpass, "param":ls.loginparam, "sdkauthpass":ls.sdkauthpass});
+				if(data.lParam == 0 && ls.logincmd.length) {
+					that.socket.sendCommand("login", ls.logincmd);
+				} else if(data.lParam == 0 && ls.loginexcmd.length) {
+					that.socket.sendCommand("loginex", ls.loginexcmd);
 				}
 			} else if(data.event == WM_GV_LOGINSYSTEM) {
 				if(data.lParam == 0) {
@@ -226,12 +229,11 @@ var AnyChatSDK = function() {
 		
 	}
 
-
     //本地连接信道，信道为websocket
     anychat.prototype.Connect = function(server, port) {
         var socket, that = this;
-		var webSocketPort = (parseInt(port) + 2);;
-		var wsurl = "ws://" + server + ":" + webSocketPort;
+		var wsport = parseInt(port) + 2;
+		var wsurl = "ws://" + server + ":" + wsport;
 		if (typeof MozWebSocket != "undefined") {
 			socket = this.socket = new MozWebSocket(wsurl, "anychat-protocol");
 		} else {
@@ -246,7 +248,7 @@ var AnyChatSDK = function() {
 		}
 		
         socket.onopen = function() {
-			socket.sendCommand("connect", {"os":0, "host":server, "port":webSocketPort});
+			socket.sendCommand("connect", {"host":server, "port":wsport});
 			that.emit("socket_opened", socket);
 			that.localStatus.socketConnect = true;
         };
@@ -543,12 +545,19 @@ var AnyChatSDK = function() {
 	
 	anychat.prototype.Login = function(lpUserName, lpPassword, dwParam){
 		var that = this;
+		that.localStatus.logincmd = {"username":lpUserName, "password":lpPassword, "param":parseInt(dwParam), "sdkauthpass":ls.sdkauthpass};
 		if(that.localStatus.socketConnect) {
-			that.socket.sendCommand("login", {"username":lpUserName, "password":lpPassword, "param":parseInt(dwParam), "sdkauthpass":ls.sdkauthpass});
+			that.socket.sendCommand("login", that.localStatus.logincmd);
 		}
-		that.localStatus.loginuser = lpUserName;
-		that.localStatus.loginpass = lpPassword;
-		that.localStatus.loginparam = dwParam;
+		return 0;
+	};
+	
+	anychat.prototype.LoginEx = function(lpNickName, dwUserId, lpStrUserId, lpAppId, lpSigStr, lpStrParam){
+		var that = this;
+		that.localStatus.loginexcmd = {"nickname":lpNickName, "userid":parseInt(dwUserId), "struserid":lpStrUserId, "appid":lpAppId, "sigstr":lpSigStr, "strparam":lpStrParam};
+		if(that.localStatus.socketConnect) {
+			that.socket.sendCommand("loginex", that.localStatus.loginexcmd);
+		}
 		return 0;
 	};
 	
