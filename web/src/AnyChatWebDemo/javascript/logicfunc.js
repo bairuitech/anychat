@@ -93,16 +93,20 @@ function InitInterfaceUI() {
     }
     //登录按钮
     GetID("loginbtn").onclick = function () {
-		if(GetID("password").value == "密码可为空")
-			GetID("password").value = "";
+        if (GetID("password").value == "密码可为空")
+            GetID("password").value = "";
         if (GetID("username").value != "") {
             DisplayLoadingDiv(true);
+            setLoginInfo();
+            if (GetID("AppGuid") && GetID("AppGuid").value.length)				// 设置应用ID
+                BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, GetID("AppGuid").value.toString());
             var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //连接服务器
             AddLog("BRAC_Connect(" + GetID("ServerAddr").value + "," + GetID("ServerPort").value + ")=" + errorcode, LOG_TYPE_API);
             errorcode = BRAC_Login(GetID("username").value, GetID("password").value, 0);
             AddLog("BRAC_Login(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);
             // 隐藏设置界面
             GetID("setting_div").style.display = "none";
+
         }
         else {
             GetID("a_error_user").style.color = "red";
@@ -188,6 +192,10 @@ function InitInterfaceUI() {
             InitAdvanced();
         }
     }
+
+    //BRAC_SetSDKOption(BRAC_SO_CORESDK_USEHWCODEC, 1);
+
+    getLoginInfo();
 }
 
 function PasswordFocus(obj,color){
@@ -476,4 +484,45 @@ function reVideoDivSize() {
 		GetID("AnyChatRemoteVideoDiv").style.width=(4.0/3*divHeight)+"px";
 		GetID("AnyChatRemoteVideoDiv").style.height=divHeight+"px";
 	}
+}
+
+//设置登录信息，包括用户名、服务器IP、服务器端口、应用ID
+function setLoginInfo() {
+    setCookie('username',GetID("username").value,30);
+    setCookie('ServerAddr',GetID("ServerAddr").value,30);
+    setCookie('ServerPort',GetID("ServerPort").value,30);   
+    setCookie('AppGuid',GetID("AppGuid").value,30);
+}
+
+//获取登录信息
+function getLoginInfo() {
+    GetID("username").value = getCookie("username");
+    var serverIP = getCookie("ServerAddr");
+    if (serverIP != "")
+        GetID("ServerAddr").value = serverIP;
+    var serverPort = getCookie("ServerPort");
+    if (serverPort != "")
+        GetID("ServerPort").value = serverPort;
+    GetID("AppGuid").value = getCookie("AppGuid");
+}
+
+//获取cookie项的cookie值
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return document.cookie.substring(c_start, c_end);
+        }
+    }
+    return "";
+}
+
+//设置cookie
+function setCookie(c_name, value, expiredays){
+　　var exdate=new Date();
+　　exdate.setDate(exdate.getDate() + expiredays);
+　　document.cookie=c_name+ "=" + value + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
 }

@@ -139,6 +139,9 @@ $(function () {
         if ($(this).val() == tipByUserName)
             $(this).val("");
     });
+
+    getLoginInfo();
+
     // 所有按钮点击后不显示虚线
     $("body").delegate('button,a', 'focus', function () {
         $(this).blur();
@@ -173,6 +176,10 @@ $(function () {
             AddLog("The server port can not be empty!", LOG_TYPE_ERROR);
             return;
         }
+
+        setLoginInfo();
+        if ($("#AppGuid") && $("#AppGuid").val().length)				// 设置应用ID
+            BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, $("#AppGuid").val().toString());
 
         userType = parseInt($("#askSelect option:selected").val()); // 获取目标用户类型
         $("#poptip li").remove(); //清除营业厅
@@ -672,4 +679,49 @@ function linkClose() {
 
     systemOut();
 
+}
+
+//设置登录信息，包括用户名、服务器IP、服务器端口、应用ID
+function setLoginInfo() {
+    setCookie('username', $("#username").val(), 30);
+    setCookie('ServerAddr', $("#ServerAddr").val(), 30);
+    setCookie('ServerPort', $("#ServerPort").val(), 30);
+    setCookie('AppGuid', $("#AppGuid").val(), 30);
+    setCookie('askSelect', $("#askSelect").get(0).selectedIndex, 30);
+    setCookie('PrioritySelect', $("#dwPrioritySelect").get(0).selectedIndex, 30);
+}
+
+//获取登录信息
+function getLoginInfo() {
+    $("#username").val(getCookie("username"))
+    var serverIP = getCookie("ServerAddr");
+    if (serverIP != "")
+        $("#ServerAddr").val(serverIP);
+    var serverPort = getCookie("ServerPort");
+    if (serverPort != "")
+        $("#ServerPort").val(serverPort);
+    $("#AppGuid").val(getCookie("AppGuid"));
+    $("#askSelect").get(0).selectedIndex = getCookie("askSelect");
+    $("#dwPrioritySelect").get(0).selectedIndex = getCookie("PrioritySelect");
+}
+
+//获取cookie项的cookie值
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return document.cookie.substring(c_start, c_end);
+        }
+    }
+    return "";
+}
+
+//设置cookie
+function setCookie(c_name, value, expiredays) {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + value + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
 }

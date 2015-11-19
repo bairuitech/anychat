@@ -100,10 +100,11 @@ function OnAnyChatLoginSystem(dwUserId, errorcode) {
 function OnAnyChatEnterRoom(dwRoomId, errorcode) {
     DisplayLoadingDiv(false);
     if (errorcode == 0) {
-      	// 打开本地音频、视频
-	       BRAC_UserCameraControl(-1, 1);
-	       BRAC_UserSpeakControl(-1, 1);
-           showVideoSessionScreen(); // 设置视频显示位置
+        // 打开本地音频、视频
+
+	    BRAC_UserCameraControl(-1, 1);
+	    BRAC_UserSpeakControl(-1, 1);
+        showVideoSessionScreen(); // 设置视频显示位置
     } else {
 
     }

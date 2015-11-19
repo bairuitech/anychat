@@ -24,24 +24,25 @@ var NOTIFY_TYPE_SYSTEM = 1;
 
 function LogicInit() {
     setTimeout(function () {
-		if (navigator.plugins && navigator.plugins.length) {
-			window.navigator.plugins.refresh(false);
-		}
+        if (navigator.plugins && navigator.plugins.length) {
+            window.navigator.plugins.refresh(false);
+        }
         //检查是否安装了插件	
         var NEED_ANYCHAT_APILEVEL = "0"; 						// 定义业务层需要的AnyChat API Level
         var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	// 初始化插件
         AddLog("BRAC_InitSDK(" + NEED_ANYCHAT_APILEVEL + ")=" + errorcode, LOG_TYPE_API);
         if (errorcode == GV_ERR_SUCCESS) {
-			if(mRefreshPluginTimer != -1)
-				clearInterval(mRefreshPluginTimer); 			// 清除插件安装检测定时器
+            if (mRefreshPluginTimer != -1)
+                clearInterval(mRefreshPluginTimer); 			// 清除插件安装检测定时器
             ShowLoginDiv(true);
             AddLog("AnyChat Plugin Version:" + BRAC_GetVersion(0), LOG_TYPE_NORMAL);
             AddLog("AnyChat SDK Version:" + BRAC_GetVersion(1), LOG_TYPE_NORMAL);
             AddLog("Build Time:" + BRAC_GetSDKOptionString(BRAC_SO_CORESDK_BUILDTIME), LOG_TYPE_NORMAL);
-			
-			GetID("prompt_div").style.display = "none"; 		// 隐藏插件安装提示界面
-			// 初始化界面元素
-			InitInterfaceUI();
+
+            GetID("prompt_div").style.display = "none"; 		// 隐藏插件安装提示界面
+            // 初始化界面元素
+            InitInterfaceUI();
+            BRAC_SetSDKOption(BRAC_SO_CORESDK_SCREENCAMERACTRL, 1);
         } else { 						// 没有安装插件，或是插件版本太旧，显示插件下载界面
             GetID("prompt_div").style.display = "block";
             SetDivTop("prompt_div", 300);
@@ -49,12 +50,13 @@ function LogicInit() {
                 GetID("prompt_div_line1").innerHTML = "首次进入需要安装插件，请点击下载按钮进行安装！";
             else if (errorcode == GV_ERR_PLUGINOLDVERSION)
                 GetID("prompt_div_line1").innerHTML = "检测到当前插件的版本过低，请下载安装最新版本！";
-				
-			if(mRefreshPluginTimer == -1) {
-				mRefreshPluginTimer = setInterval(function(){ 
-                    LogicInit(); }, 1000);
-			}
-		}
+
+            if (mRefreshPluginTimer == -1) {
+                mRefreshPluginTimer = setInterval(function () {
+                    LogicInit();
+                }, 1000);
+            }
+        }
     }, 500);
 }
 $(function () {
@@ -93,6 +95,9 @@ function InitInterfaceUI() {
 			GetID("password").value = "";
         if (GetID("username").value != "") {
             DisplayLoadingDiv(true);
+            setLoginInfo();
+            if (GetID("AppGuid") && GetID("AppGuid").value.length)				// 设置应用ID
+                BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, GetID("AppGuid").value.toString());
             var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //连接服务器
             AddLog("BRAC_Connect(" + GetID("ServerAddr").value + "," + GetID("ServerPort").value + ")=" + errorcode, LOG_TYPE_API);
             errorcode = BRAC_Login(GetID("username").value, GetID("password").value, 0);
@@ -145,7 +150,10 @@ function InitInterfaceUI() {
             // 初始化高级设置界面
 			InitAdvanced();
         }
-    }
+}
+
+    getLoginInfo();
+
 }
 
 function PasswordFocus(obj,color){
@@ -382,6 +390,47 @@ function createVideoContainer() {
     }
     video_paramers_config.innerHTML = "设置";
     Getdmo("VideoShowDiv").appendChild(video_paramers_config);
+}
+
+//设置登录信息，包括用户名、服务器IP、服务器端口、应用ID
+function setLoginInfo() {
+    setCookie('username', GetID("username").value, 30);
+    setCookie('ServerAddr', GetID("ServerAddr").value, 30);
+    setCookie('ServerPort', GetID("ServerPort").value, 30);
+    setCookie('AppGuid', GetID("AppGuid").value, 30);
+}
+
+//获取登录信息
+function getLoginInfo() {
+    GetID("username").value = getCookie("username");
+    var serverIP = getCookie("ServerAddr");
+    if (serverIP != "")
+        GetID("ServerAddr").value = serverIP;
+    var serverPort = getCookie("ServerPort");
+    if (serverPort != "")
+        GetID("ServerPort").value = serverPort;
+    GetID("AppGuid").value = getCookie("AppGuid");
+}
+
+//获取cookie项的cookie值
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return document.cookie.substring(c_start, c_end);
+        }
+    }
+    return "";
+}
+
+//设置cookie
+function setCookie(c_name, value, expiredays) {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + value + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
 }
 
 

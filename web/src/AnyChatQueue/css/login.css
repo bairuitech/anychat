@@ -15,7 +15,7 @@ ol li {
 	position: absolute;
 	width: 100%;
 	text-align: center;
-	margin-top: 30px;
+	margin-top: 50px;
 
 }
 
@@ -55,7 +55,7 @@ ol li {
 #login_div {
 	width: 320px;
 	margin-left: 350px;
-	padding-top: 40px;
+	padding-top: 25px;
 }
 
 .wordage {
@@ -86,6 +86,7 @@ ol li {
 #Btn_div {
 	height: 55px;
 	width: 320px;
+    padding-top: 36px;		
 }
 
 #setting_div_input {
@@ -180,7 +181,7 @@ ol li {
 	color: white;
 }
 
-#mDefaultServerAddr,#mDefaultServerPort {
+#mDefaultServerAddr,#mDefaultServerPort,#AppGuid {
 	color: #999;
 	border: 1px solid #d6d6d6;
 	height: 30px;
@@ -194,6 +195,10 @@ ol li {
 
 #mDefaultServerPort {
 	width: 50px;
+}
+
+#AppGuid{
+    width:248px;
 }
 
 * {
