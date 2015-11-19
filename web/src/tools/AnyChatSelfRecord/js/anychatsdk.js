@@ -131,6 +131,7 @@ var BRAC_STREAMINFO_AUDIOCODECID	=		193;// 音频流编码器ID
 var BRAC_STREAMINFO_AUDIOPACKLOSSRATE=		194;// 音频流丢包率
 
 var BRAC_SO_OBJECT_INITFLAGS	=			200;// 业务对象身份初始化
+var BRAC_SO_CLOUD_APPGUID		=			300;// 云平台应用GUID（参数为：字符串类型，连接服务器之前设置）
 
 var BRAC_SO_ENABLEWEBSERVICE =			11002;	// 启动本地Web服务
 var BRAC_SO_LOCALPATH2URL =				11003;	// 将本地路径转换为URL地址
