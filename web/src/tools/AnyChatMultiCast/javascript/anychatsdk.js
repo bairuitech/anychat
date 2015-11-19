@@ -652,7 +652,7 @@ function BRAC_PrivateChatExit(dwUserId) {
 
 // SDK内核参数设置
 function BRAC_SetSDKOption(optname, value) {
-	if(isNaN(value))
+	if(typeof value == "string")
 		return anychat.SetSDKOptionString(optname, value);
 	else
 		return anychat.SetSDKOptionInt(optname, value);
@@ -790,7 +790,7 @@ function BRAC_ObjectGetStringValue(dwObjectType, dwObjectId, dwInfoName) {
 function BRAC_ObjectSetValue(dwObjectType, dwObjectId, dwInfoName, value) {
 	if(!bSupportObjectBusiness)
 		return -1;
-	if(isNaN(value))
+	if(typeof value == "string")
 		return anychat.SetObjectStringValue(dwObjectType, dwObjectId, dwInfoName, value);
 	else
 		return anychat.SetObjectIntValue(dwObjectType, dwObjectId, dwInfoName, value);
@@ -807,7 +807,7 @@ function BRAC_ObjectControl(dwObjectType, dwObjectId, dwCtrlCode, dwParam1, dwPa
 function BRAC_SetUserStreamInfo(dwUserId, dwStreamIndex, infoname, value) {
 	if(!bSupportMultiStream)
 		return -1;
-	if(isNaN(value))
+	if(typeof value == "string")
 		return anychat.SetUserStreamInfoString(dwUserId, dwStreamIndex, infoname, value);
 	else
 		return anychat.SetUserStreamInfoInt(dwUserId, dwStreamIndex, infoname, value);
