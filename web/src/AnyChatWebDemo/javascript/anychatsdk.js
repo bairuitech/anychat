@@ -275,13 +275,46 @@ var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.4";
 /********************************************
  *				方法定义部分				*
  *******************************************/
-var anychat;									// AnyChat插件DMO对象，外部初始化
+var anychat = null;								// AnyChat插件DMO对象，外部初始化
 var bSupportStreamRecordCtrlEx = false;			// 是否支持录像扩展API接口
 var bSupportObjectBusiness = false;				// 是否支持业务对象API接口
 var bSupportMultiStream = false;				// 是否支持多路流（多摄像头）API接口
+var bSupportScriptObject = false;				// 是否支持JavaScript对象
+var bSupportCluster = false;					// 是否支持集群系统
 
 // 初始化SDK，返回出错代码
 function BRAC_InitSDK(apilevel) {
+	var ua = navigator.userAgent.toLowerCase();
+	var info = {
+		ie: /msie/.test(ua) && !/opera/.test(ua),
+		op: /opera/.test(ua),
+		sa: /version.*safari/.test(ua),
+		ch: /chrome/.test(ua),
+		ff: /gecko/.test(ua) && !/webkit/.test(ua)
+	};
+	if(info.sa || info.ch) {
+		anychat = null;
+		anychat = AnyChatSDK();
+		anychat.InitSDK(0);
+	
+		if(typeof(OnAnyChatNotifyMessage) == "function")
+			anychat.on("OnNotifyMessage", OnAnyChatNotifyMessage);
+		if(typeof(OnAnyChatVideoCallEvent) == "function")
+			anychat.on("OnVideoCallEvent", OnAnyChatVideoCallEvent);
+		if(typeof(OnAnyChatTransBuffer) == "function")
+			anychat.on("OnTransBuffer", OnAnyChatTransBuffer);
+		if(typeof(OnAnyChatTextMessage) == "function")
+			anychat.on("OnTextMessage", OnAnyChatTextMessage);
+		if(typeof(OnAnyChatObjectEvent) == "function")
+			anychat.on("OnObjectEvent", OnAnyChatObjectEvent);
+
+		bSupportStreamRecordCtrlEx = true;
+		bSupportScriptObject = true;
+		bSupportObjectBusiness = true;
+		bSupportCluster = true;
+		return GV_ERR_SUCCESS;
+	}
+	
 	var anychatsdkdiv = "AnyChatSDKPluginDiv";
 	try {
 		// 创建AnyChat SDK插件
@@ -319,6 +352,8 @@ function BRAC_InitSDK(apilevel) {
 		bSupportObjectBusiness = (anychatpluginver >= "1.0.2.3");
 		// 判断插件是否支持多路流API接口
 		bSupportMultiStream = (anychatpluginver >= "1.0.3.1");
+		// 判断插件是否支持集群系统
+		bSupportCluster = (anychatpluginver >= "1.0.4.0");
 		// 判断当前的API Level是否满足业务层的需要
 		if(apilevel > anychatobj.GetVersion(2))
 			bRightVersion = false;
@@ -432,7 +467,10 @@ function BRAC_NativeCreateVideoPlugin(userid, parentobj, id, streamindex) {
 
 // 设置视频显示位置
 function BRAC_SetVideoPos(userid, parentobj, id) {
-	return BRAC_NativeCreateVideoPlugin(userid, parentobj, id, 0);
+	if(bSupportScriptObject)
+		return anychat.SetVideoPos(userid, parentobj, id);
+	else
+		return BRAC_NativeCreateVideoPlugin(userid, parentobj, id, 0);
 }
 
 // 设置视频显示位置（扩展，支持多路流）
@@ -458,6 +496,12 @@ function BRAC_Connect(lpServerAddr, dwPort) {
 function BRAC_Login(lpUserName, lpPassword, dwParam) {
 	return anychat.Login(lpUserName, lpPassword, dwParam);
 }
+// 登录系统（扩展）
+function BRAC_LoginEx(lpNickName, dwUserId, lpStrUserId, lpAppId, lpSigStr, lpStrParam) {
+	if(!bSupportCluster)
+		return GV_ERR_PLUGINOLDVERSION;
+	return anychat.LoginEx(lpNickName, parseInt(dwUserId), lpStrUserId, lpAppId, lpSigStr, lpStrParam);
+}
 // 进入房间
 function BRAC_EnterRoom(dwRoomid, lpRoomPass, dwParam) {
 	return anychat.EnterRoom(dwRoomid, lpRoomPass, dwParam);
@@ -477,6 +521,9 @@ function BRAC_Logout() {
 
 // 获取当前房间在线用户列表（返回一个userid的数组）
 function BRAC_GetOnlineUser() {
+	if(bSupportScriptObject) {
+		return anychat.GetRoomOnlineUsers();
+	}
 	var idarray = new Array();
 	var size = anychat.PrepareFetchRoomUsers();
 	if(size)
@@ -688,6 +735,9 @@ function BRAC_VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwPa
 
 // 获取用户好友ID列表（返回一个userid的数组）
 function BRAC_GetUserFriends() {
+	if(bSupportScriptObject) {
+		return anychat.GetUserFriends();
+	}
 	var idarray = new Array();
 	var size = anychat.PrepareFetchUserFriends();
 	if(size) {
@@ -709,6 +759,9 @@ function BRAC_GetFriendStatus(dwFriendUserId) {
 
 // 获取用户分组ID列表（返回一个GroupId的数组）
 function BRAC_GetUserGroups() {
+	if(bSupportScriptObject) {
+		return anychat.GetUserGroups();
+	}
 	var idarray = new Array();
 	var size = anychat.PrepareFetchUserGroups();
 	if(size) {
@@ -725,6 +778,9 @@ function BRAC_GetUserGroups() {
 
 // 获取分组下面的好友列表（返回一个userid的数组）
 function BRAC_GetGroupFriends(dwGroupId) {
+	if(bSupportScriptObject) {
+		return anychat.GetGroupFriends(dwGroupId);
+	}
 	var idarray = new Array();
 	var size = anychat.PrepareFetchGroupFriends(dwGroupId);
 	if(size) {
@@ -756,6 +812,9 @@ function BRAC_UserInfoControl(dwUserId, dwCtrlCode, wParam, lParam, lpStrValue) 
 
 // 获取业务对象ID列表（返回一个ObjectId的数组）
 function BRAC_ObjectGetIdList(dwObjectType) {
+	if(bSupportScriptObject) {
+		return anychat.ObjectGetIdList(dwObjectType);
+	}
 	var idarray = new Array();
 	if(!bSupportObjectBusiness)
 		return idarray;
