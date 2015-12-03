@@ -383,6 +383,7 @@ var AnyChatSDK = function() {
 				pc.addStream(that.localMediaStream);
 				pc.createOffer(function(desc) {
 					pc.setLocalDescription(desc);
+					//console.warn(desc.sdp);
 					
 					that.socket.send(JSON.stringify({
 						"eventName": "__offer",
@@ -456,6 +457,8 @@ var AnyChatSDK = function() {
 		sdc.sdp = sdp;
 		sdc.type = 'answer';
 		pc.setRemoteDescription(sdc);
+		// 回复确认指令
+		that.socket.sendCommand("__offer_ack", {"userid": userid});
     };
 
     //创建单个PeerConnection
@@ -464,16 +467,16 @@ var AnyChatSDK = function() {
 		var pcOptional={optional:[{DtlsSrtpKeyAgreement: false}]};
         var pc = new PeerConnection(iceServer, pcOptional);
         pc.onicecandidate = function(evt) {
-//            if (evt.candidate)
-//                that.socket.send(JSON.stringify({
-//                    "eventName": "__ice_candidate",
-//                    "data": {
-//                        "label": evt.candidate.sdpMLineIndex,
-//                        "candidate": evt.candidate.candidate,
-//                        "userid": dwUserId
-//                    }
-//                }));
-//            that.emit("pc_get_ice_candidate", evt.candidate, dwUserId, pc);
+            if (evt.candidate)
+                that.socket.send(JSON.stringify({
+                    "eventName": "__ice_candidate",
+                    "data": {
+                        "label": evt.candidate.sdpMLineIndex,
+                        "candidate": evt.candidate.candidate,
+                        "userid": dwUserId
+                    }
+                }));
+            that.emit("pc_get_ice_candidate", evt.candidate, dwUserId, pc);
         };
 
         pc.onopen = function() {
