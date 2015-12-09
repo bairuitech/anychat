@@ -220,7 +220,7 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 	}
 
 	@Override
-	public void OnAnyChatRecordEvent(int dwUserId, String lpFileName,
+	public void OnAnyChatRecordEvent(int dwUserId, int dwErrorCode, String lpFileName,
 			int dwElapse, int dwFlags, int dwParam, String lpUserStr) {
 		Log.d("AnyChatx", "录像文件文件路径：" + lpFileName);
 		mPreviewPicPathStr = lpFileName;
@@ -241,7 +241,7 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 	}
 
 	@Override
-	public void OnAnyChatSnapShotEvent(int dwUserId, String lpFileName,
+	public void OnAnyChatSnapShotEvent(int dwUserId, int dwErrorCode, String lpFileName,
 			int dwFlags, int dwParam, String lpUserStr) {
 		mPreviewPicPathStr = lpFileName;
 		File file = new File(lpFileName);

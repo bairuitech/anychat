@@ -347,7 +347,7 @@ public class CSingleVideo extends Activity implements AnyChatBaseEvent,
 	}
 
 	@Override
-	public void OnAnyChatRecordEvent(int dwUserId, String lpFileName,
+	public void OnAnyChatRecordEvent(int dwUserId, int dwErrorCode, String lpFileName,
 			int dwElapse, int dwFlags, int dwParam, String lpUserStr) {
 		Log.d("AnyChatx", "录像文件文件路径：" + lpFileName);
 		mCustomApplication.setVideoRecordingPath(lpFileName);
@@ -359,7 +359,7 @@ public class CSingleVideo extends Activity implements AnyChatBaseEvent,
 	}
 
 	@Override
-	public void OnAnyChatSnapShotEvent(int dwUserId, String lpFileName,
+	public void OnAnyChatSnapShotEvent(int dwUserId, int dwErrorCode, String lpFileName,
 			int dwFlags, int dwParam, String lpUserStr) {
 		Log.d("AnyChatx", "拍照图片路径：" + lpFileName);
 

@@ -554,14 +554,14 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 	}
 
 	@Override
-	public void OnAnyChatRecordEvent(int dwUserId, String lpFileName,
+	public void OnAnyChatRecordEvent(int dwUserId, int dwErrorCode, String lpFileName,
 			int dwElapse, int dwFlags, int dwParam, String lpUserStr) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void OnAnyChatSnapShotEvent(int dwUserId, String lpFileName,
+	public void OnAnyChatSnapShotEvent(int dwUserId, int dwErrorCode, String lpFileName,
 			int dwFlags, int dwParam, String lpUserStr) {
 		// TODO Auto-generated method stub
 

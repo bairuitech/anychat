@@ -136,6 +136,8 @@ public class AnyChatCoreSDK
     public native int Connect(String serverip, int port);
     // 登录系统
     public native int Login(String username, String password);
+    // 登录系统（扩展）
+    public native int LoginEx(String nickname, int userid, String struserid, String appid, String sigstr, String strparam);
     // 进入房间（房间ID）
     public native int EnterRoom(int roomid, String password);
     // 进入房间（房间名称）
@@ -148,8 +150,10 @@ public class AnyChatCoreSDK
     // 释放资源
     public native int Release();
     
-    // 获取在线用户列表
+    // 获取在线用户列表（推荐使用GetRoomOnlineUsers）
     public native int[] GetOnlineUser();
+    // 获取指定房间在线用户列表
+    public native int[] GetRoomOnlineUsers(int roomid);
     // 设置视频显示位置
     public native int SetVideoPos(int userid, Surface s, int lef, int top, int right, int bottom);
     // 用户摄像头控制
@@ -294,6 +298,8 @@ public class AnyChatCoreSDK
 	
 	// IP组播功能控制
 	public native int MultiCastControl(String lpMultiCastAddr, int dwPort, String lpNicAddr, int dwTTL, int dwFlags);
+	// 向服务器动态查询相关信息
+	public native String QueryInfoFromServer(int dwInfoName, String strInParam);
 	
 	// 获取业务对象列表
 	public static native int[] ObjectGetIdList(int dwObjectType);
@@ -493,6 +499,7 @@ public class AnyChatCoreSDK
              else if(type == HANDLE_TYPE_RECORD)
              {
             	 int dwUserId = tBundle.getInt("USERID");
+            	 int dwErrorCode = tBundle.getInt("ERRORCODE");
             	 String filename = tBundle.getString("FILENAME");
             	 int dwElapse = tBundle.getInt("ELAPSE");
             	 int dwFlags = tBundle.getInt("FLAGS");
@@ -501,9 +508,9 @@ public class AnyChatCoreSDK
 
             	 if(anychat.recordEvent != null) {
                  	 if((dwFlags & AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT) == 0)
-                 		 anychat.recordEvent.OnAnyChatRecordEvent(dwUserId, filename, dwElapse, dwFlags, dwParam, userstr);
+                 		 anychat.recordEvent.OnAnyChatRecordEvent(dwUserId, dwErrorCode, filename, dwElapse, dwFlags, dwParam, userstr);
                  	 else
-                 		 anychat.recordEvent.OnAnyChatSnapShotEvent(dwUserId, filename, dwFlags, dwParam, userstr);
+                 		 anychat.recordEvent.OnAnyChatSnapShotEvent(dwUserId, dwErrorCode, filename, dwFlags, dwParam, userstr);
             	 }
              }
              else if(type == HANDLE_TYPE_OBJECTEVENT)
@@ -642,7 +649,7 @@ public class AnyChatCoreSDK
 	}
 	
 	// 录像、快照任务完成回调函数
-	private void OnRecordSnapShotExCallBack(int dwUserId, String lpFileName, int dwElapse, int dwFlags, int dwParam, String lpUserStr)
+	private void OnRecordSnapShotExCallBack(int dwUserId, int dwErrorCode, String lpFileName, int dwElapse, int dwFlags, int dwParam, String lpUserStr)
 	{
 		if(mHandler == null)
 			return;
@@ -650,6 +657,7 @@ public class AnyChatCoreSDK
         Bundle tBundle=new Bundle();
         tBundle.putInt("HANDLETYPE", HANDLE_TYPE_RECORD);
         tBundle.putInt("USERID", dwUserId);
+        tBundle.putInt("ERRORCODE", dwErrorCode);
         tBundle.putString("FILENAME", lpFileName);
         tBundle.putInt("ELAPSE", dwElapse);
         tBundle.putInt("FLAGS", dwFlags);
