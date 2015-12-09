@@ -138,9 +138,9 @@ typedef struct tagWAVEFORMATEX{
  */
 @protocol AnyChatRecordSnapShotDelegate <NSObject>
 // 录像完成事件
-- (void) OnAnyChatRecordCallBack:(int) dwUserid : (NSString*) lpFileName : (int) dwElapse : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr;
+- (void) OnAnyChatRecordCallBack:(int) dwUserid : (int) dwErrorCode : (NSString*) lpFileName : (int) dwElapse : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr;
 // 拍照完成事件
-- (void) OnAnyChatSnapShotCallBack:(int) dwUserid : (NSString*) lpFileName : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr;
+- (void) OnAnyChatSnapShotCallBack:(int) dwUserid : (int) dwErrorCode : (NSString*) lpFileName : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr;
 @end
 
 
@@ -224,6 +224,8 @@ typedef struct tagWAVEFORMATEX{
 + (int) Connect: (NSString*) lpServerAddr : (int) dwPort;
 // 登录系统
 + (int) Login: (NSString*) lpUserName : (NSString*) lpPassword;
+// 登录系统（扩展）
++ (int) LoginEx: (NSString*) lpNickName : (int) dwUserId : (NSString*) lpStrUserId : (NSString*) lpAppId : (NSString*) lpSigStr : (NSString*) lpStrParam;
 // 进入房间
 + (int) EnterRoom: (int) dwRoomid : (NSString*) lpRoomPass;
 // 进入房间
@@ -238,6 +240,8 @@ typedef struct tagWAVEFORMATEX{
 
 // 获取当前房间在线用户列表
 + (NSMutableArray*) GetOnlineUser;
+// 获取指定房间在线用户列表
++ (NSMutableArray*) GetRoomOnlineUsers: (int) dwRoomId;
 // 查询用户摄像头的状态
 + (int) GetCameraState: (int) dwUserid;
 // 查询用户发言状态
@@ -356,7 +360,8 @@ typedef struct tagWAVEFORMATEX{
 
 // 视频呼叫事件控制（请求、回复、挂断等）
 + (int) VideoCallControl: (int) dwEventType : (int) dwUserId : (int) dwErrorCode : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr;
-
+// 向服务器动态查询相关信息
++ (NSString*) QueryInfoFromServer: (int) dwInfoName : (NSString*) lpInParam;
 
 // 获取用户好友ID列表
 + (NSMutableArray*) GetUserFriends;

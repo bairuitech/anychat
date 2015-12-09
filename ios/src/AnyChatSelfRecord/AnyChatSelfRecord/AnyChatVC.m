@@ -200,7 +200,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 
 #pragma mark - AnyChatRecordSnapShotDelegate
 // 录像完成事件
-- (void) OnAnyChatRecordCallBack:(int) dwUserid : (NSString*) lpFileName : (int) dwElapse : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr
+- (void) OnAnyChatRecordCallBack:(int) dwUserid : (int) dwErrorCode : (NSString*) lpFileName : (int) dwElapse : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr
 {
     self.theVideoPath = lpFileName;
     
@@ -209,7 +209,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 }
 
 // 抓拍完成事件
-- (void) OnAnyChatSnapShotCallBack:(int) dwUserid : (NSString*) lpFileName : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr
+- (void) OnAnyChatSnapShotCallBack:(int) dwUserid : (int) dwErrorCode : (NSString*) lpFileName : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr
 {
     ProviewPhotoVC *proviewPhotoVC = [ProviewPhotoVC new];
     [proviewPhotoVC showSnapShotPhoto:lpFileName transform:@""];
