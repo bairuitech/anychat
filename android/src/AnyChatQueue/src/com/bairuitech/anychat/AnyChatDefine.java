@@ -147,6 +147,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_UDPTRACE_SENDUSERID		=	167; ///< UDP数据包跟踪源用户ID
 
 	public static final int BRAC_SO_OBJECT_INITFLAGS		=	200; ///< 业务对象身份初始化
+	public static final int BRAC_SO_CLOUD_APPGUID			=	300; ///< 云平台应用GUID（参数为：字符串类型，连接服务器之前设置）
 	
 	// 传输任务信息参数定义
 	public static final int BRAC_TRANSTASK_PROGRESS			=	1;	///< 传输任务进度查询（参数为：int型（0 ~ 100））
