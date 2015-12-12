@@ -53,7 +53,7 @@ var AnyChatSDK = function() {
 		this.localStatus = {socketConnect:false, sdkauthpass:"", appGuid:"",
 							logincmd:{}, loginexcmd:{},
 							roomid:-1, roomname:"", roompass:"", roomparam:0,
-							selfuserid:-1};
+							selfuserid:-1, logout:false};
 							
 		// 连接服务器成功之前的参数设置数据
 		this.sdkoptionData = {};
@@ -255,6 +255,7 @@ var AnyChatSDK = function() {
 			socket.sendCommand("connect", {"host":server, "port":wsport, "appGuid":that.localStatus.appGuid});
 			that.emit("socket_opened", socket);
 			that.localStatus.socketConnect = true;
+			that.localStatus.logout = false;
         };
 
         socket.onmessage = function(message) {
@@ -280,7 +281,10 @@ var AnyChatSDK = function() {
 			that.closeLocalStream();
 			that.closeRemoteStream(-1);
 
-			that.emit("OnNotifyMessage", WM_GV_LINKCLOSE, 0, 0);
+			if(!that.localStatus.logout) {
+				that.localStatus.logout = true;
+				that.emit("OnNotifyMessage", WM_GV_LINKCLOSE, 0, 0);
+			}
 			that.socket = null;
 			that.localStatus.socketConnect = false;
 			clearAllStatus();
@@ -600,6 +604,7 @@ var AnyChatSDK = function() {
 		that.socket.close();
 		that.socket = null;
 		that.localStatus.socketConnect = false;
+		that.localStatus.logout = true;
 		clearAllStatus();
 		return 0;
 	};

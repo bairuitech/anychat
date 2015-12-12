@@ -292,7 +292,7 @@ function BRAC_InitSDK(apilevel) {
 		ch: /chrome/.test(ua),
 		ff: /gecko/.test(ua) && !/webkit/.test(ua)
 	};
-	if(info.sa || info.ch) {
+	if(info.sa || info.ch || info.ff || info.op) {
 		anychat = null;
 		anychat = AnyChatSDK();
 		anychat.InitSDK(0);
