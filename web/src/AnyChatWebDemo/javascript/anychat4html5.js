@@ -53,7 +53,7 @@ var AnyChatSDK = function() {
 		this.localStatus = {socketConnect:false, sdkauthpass:"", appGuid:"",
 							logincmd:{}, loginexcmd:{},
 							roomid:-1, roomname:"", roompass:"", roomparam:0,
-							selfuserid:-1, logout:false};
+							selfuserid:-1, logout:false, bkImageUrl:""};
 							
 		// 连接服务器成功之前的参数设置数据
 		this.sdkoptionData = {};
@@ -583,14 +583,14 @@ var AnyChatSDK = function() {
 		return 0;
 	};
 	
-	anychat.prototype.GetRoomOnlineUsers = function() {
+	anychat.prototype.GetRoomOnlineUsers = function(dwRoomId) {
 		return this.roomusers;
 	};
 	
-	anychat.prototype.LeaveRoom = function(dwRoomid) {
+	anychat.prototype.LeaveRoom = function(dwRoomId) {
 		var that = this;
 		if(that.localStatus.socketConnect) {
-			that.socket.sendCommand("leaveroom", {"roomid":parseInt(dwRoomid)});
+			that.socket.sendCommand("leaveroom", {"roomid":parseInt(dwRoomId)});
 		}
 		clearRoomStatus();
 		return 0;
@@ -617,12 +617,12 @@ var AnyChatSDK = function() {
 		var bLocalVideo = (iUserId == -1 || that.localStatus.selfuserid == iUserId);
 		var bkimgid = id + "_videobk";
 		var bkobj = document.getElementById(bkimgid);
-		if(!bkobj) {
+		if(!bkobj && that.localStatus.bkImageUrl.length) {
 			bkobj = document.createElement("img");
 			bkobj.id = bkimgid;
 			bkobj.style.width = "100%";
 			bkobj.style.height= "100%";
-			bkobj.src = "./images/anychatbk.jpg";
+			bkobj.src = that.localStatus.bkImageUrl;
 			parentobj.appendChild(bkobj);		
 		}
 		if(iUserId == 0)		// 占位符
@@ -696,13 +696,18 @@ var AnyChatSDK = function() {
 	// SDK内核参数设置
 	anychat.prototype.SetSDKOptionString = function(optname, value) {
 		var that = this;
-		if(parseInt(optname) == BRAC_SO_CLOUD_APPGUID)
+		var iOptName = parseInt(optname);
+		if(iOptName == BRAC_SO_CLOUD_APPGUID)
 			that.localStatus.appGuid = value;
+		else if(iOptName == BRAC_SO_VIDEOBKIMAGE){
+			that.localStatus.bkImageUrl = value;
+			return 0;
+		}
 		if(!that.localStatus.socketConnect) {
-			var data = {"command":"setsdkoptionstring", "param":{"optname":parseInt(optname), "value":value}};
-			that.sdkoptionData[optname] = data;
+			var data = {"command":"setsdkoptionstring", "param":{"optname":iOptName, "value":value}};
+			that.sdkoptionData[iOptName] = data;
 		} else {
-			that.socket.sendCommand("setsdkoptionstring", {"optname":parseInt(optname), "value":value});
+			that.socket.sendCommand("setsdkoptionstring", {"optname":iOptName, "value":value});
 		}
 		return 0;
 	};

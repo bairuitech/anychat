@@ -47,6 +47,8 @@ function LogicInit() {
                 AddLog("Build Time:" + BRAC_GetSDKOptionString(BRAC_SO_CORESDK_BUILDTIME), LOG_TYPE_NORMAL);
     			
     			GetID("prompt_div").style.display = "none"; 		// 隐藏插件安装提示界面
+				
+				BRAC_SetSDKOption(BRAC_SO_VIDEOBKIMAGE, "./images/anychatbk.jpg");
     			// 初始化界面元素
     			InitInterfaceUI();
             } else { 						// 没有安装插件，或是插件版本太旧，显示插件下载界面
