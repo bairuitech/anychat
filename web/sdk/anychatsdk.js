@@ -133,15 +133,16 @@ var BRAC_STREAMINFO_AUDIOPACKLOSSRATE=		194;// 音频流丢包率
 var BRAC_SO_OBJECT_INITFLAGS	=			200;// 业务对象身份初始化
 var BRAC_SO_CLOUD_APPGUID		=			300;// 云平台应用GUID（参数为：字符串类型，连接服务器之前设置）
 
-var BRAC_SO_ENABLEWEBSERVICE =			11002;	// 启动本地Web服务
-var BRAC_SO_LOCALPATH2URL =				11003;	// 将本地路径转换为URL地址
-var BRAC_SO_GETTASKPATHNAME	=			11004;	// 根据传输任务ID获取文件路径
+var BRAC_SO_ENABLEWEBSERVICE 	=			11002;	// 启动本地Web服务
+var BRAC_SO_LOCALPATH2URL		=			11003;	// 将本地路径转换为URL地址
+var BRAC_SO_GETTASKPATHNAME		=			11004;	// 根据传输任务ID获取文件路径
+var BRAC_SO_VIDEOBKIMAGE		=			11006;	// 设置视频背景图片
 
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
-var BRAC_TRANSTASK_PROGRESS = 				1;	// 传输任务进度查询（参数为：DOUBLE型，返回值0.0 ~ 100.0， 或参数为：DWORD型，返回值0 ~ 100）
-var BRAC_TRANSTASK_BITRATE = 				2;	// 传输任务当前传输码率（参数为：int型，单位：bps）
-var BRAC_TRANSTASK_STATUS = 				3;	// 传输任务当前状态（参数为：int型）
-var BRAC_TRANSTASK_SAVEASPATH = 			4;	// 文件传输任务另存为路径设置，含文件名（参数为字符串TCHAR类型）
+var BRAC_TRANSTASK_PROGRESS		= 			1;	// 传输任务进度查询（参数为：DOUBLE型，返回值0.0 ~ 100.0， 或参数为：DWORD型，返回值0 ~ 100）
+var BRAC_TRANSTASK_BITRATE		= 			2;	// 传输任务当前传输码率（参数为：int型，单位：bps）
+var BRAC_TRANSTASK_STATUS		= 			3;	// 传输任务当前状态（参数为：int型）
+var BRAC_TRANSTASK_SAVEASPATH	= 			4;	// 文件传输任务另存为路径设置，含文件名（参数为字符串TCHAR类型）
 
 // 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
 var BRAC_RECORD_FLAGS_VIDEO		=	0x00000001;	// 录制视频
@@ -283,16 +284,16 @@ var bSupportScriptObject = false;				// 是否支持JavaScript对象
 var bSupportCluster = false;					// 是否支持集群系统
 
 // 初始化SDK，返回出错代码
-function BRAC_InitSDK(apilevel) {
+function BRAC_InitSDK(apilevel) {	
 	var ua = navigator.userAgent.toLowerCase();
 	var info = {
 		ie: /msie/.test(ua) && !/opera/.test(ua),
-		op: /opera/.test(ua),
+		op: !/msie/.test(ua) && /opera/.test(ua),
 		sa: /version.*safari/.test(ua),
 		ch: /chrome/.test(ua),
-		ff: /gecko/.test(ua) && !/webkit/.test(ua)
+		ff: /gecko/.test(ua) && /webkit/.test(ua)
 	};
-	if(info.sa || info.ch) {
+	if(info.op || info.sa ||info.ch || info.ff) {
 		anychat = null;
 		anychat = AnyChatSDK();
 		anychat.InitSDK(0);
@@ -522,7 +523,7 @@ function BRAC_Logout() {
 // 获取当前房间在线用户列表（返回一个userid的数组）
 function BRAC_GetOnlineUser() {
 	if(bSupportScriptObject) {
-		return anychat.GetRoomOnlineUsers();
+		return anychat.GetRoomOnlineUsers(-1);
 	}
 	var idarray = new Array();
 	var size = anychat.PrepareFetchRoomUsers();
@@ -539,6 +540,28 @@ function BRAC_GetOnlineUser() {
 	}
 	return idarray;
 }
+
+// 获取指定房间在线用户列表（返回一个userid的数组）
+function BRAC_GetRoomOnlineUsers(dwRoomId) {
+	if(bSupportScriptObject) {
+		return anychat.GetRoomOnlineUsers(dwRoomId);
+	}
+	var idarray = new Array();
+	var size = anychat.PrepareFetchRoomUsers();
+	if(size)
+	{
+		var idx = 0;
+		while(1)
+		{
+			var userid = anychat.FetchNextRoomUsers();
+			if(userid == -1)
+				break;
+			idarray[idx++] = userid;
+		}
+	}
+	return idarray;
+}
+
 // 查询用户摄像头的状态
 function BRAC_GetCameraState(dwUserId) {
 	return anychat.QueryUserStateInt(dwUserId, BRAC_USERSTATE_CAMERA);
@@ -849,7 +872,7 @@ function BRAC_ObjectGetStringValue(dwObjectType, dwObjectId, dwInfoName) {
 function BRAC_ObjectSetValue(dwObjectType, dwObjectId, dwInfoName, value) {
 	if(!bSupportObjectBusiness)
 		return -1;
-	if(isNaN(value))
+	if(typeof value == "string")
 		return anychat.SetObjectStringValue(dwObjectType, dwObjectId, dwInfoName, value);
 	else
 		return anychat.SetObjectIntValue(dwObjectType, dwObjectId, dwInfoName, value);

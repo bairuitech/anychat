@@ -72,6 +72,7 @@ function LogicInit() {
                         clearInterval(mRefreshPluginTimer); // 清除插件安装检测定时器(下面else有定义)
                     GetID("loginDiv").style.display = "block";
                     GetID("prompt_div").style.display = "none"; // 隐藏插件安装提示界面
+					BRAC_SetSDKOption(BRAC_SO_VIDEOBKIMAGE, "./img/videobk.jpg");
                     AddLog("AnyChat Plugin Version:" + BRAC_GetVersion(0), LOG_TYPE_NORMAL);
                     AddLog("AnyChat SDK Version:" + BRAC_GetVersion(1), LOG_TYPE_NORMAL);
                     AddLog("Build Time:" + BRAC_GetSDKOptionString(BRAC_SO_CORESDK_BUILDTIME), LOG_TYPE_NORMAL);
