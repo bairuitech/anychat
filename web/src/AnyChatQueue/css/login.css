@@ -181,7 +181,7 @@ ol li {
 	color: white;
 }
 
-#mDefaultServerAddr,#mDefaultServerPort,#AppGuid {
+#ServerAddr,#ServerPort,#AppGuid {
 	color: #999;
 	border: 1px solid #d6d6d6;
 	height: 30px;
@@ -193,7 +193,7 @@ ol li {
 	margin-left: 5px;
 }
 
-#mDefaultServerPort {
+#ServerPort {
 	width: 50px;
 }
 

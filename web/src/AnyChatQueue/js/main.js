@@ -153,16 +153,16 @@ $(function () {
         $(".content", this).slideDown();
     });
 
-    $('#mDefaultServerAddr').val(mDefaultServerAddr);
-    $('#mDefaultServerPort').val(mDefaultServerPort);
+    //$('#ServerAddr').val(mDefaultServerAddr);
+    //$('#ServerPort').val(mDefaultServerPort);
 
     // 登录按钮(进入大厅)
     $("#loginRoom").click(function () {
         $("#LOADING_GREY_DIV span").show();
         $("#LOADING_GREY_DIV span").text("登录中，请稍候......");
 
-        mDefaultServerAddr = $('#mDefaultServerAddr').val();
-        mDefaultServerPort = $('#mDefaultServerPort').val();
+        mDefaultServerAddr = $('#ServerAddr').val();
+        mDefaultServerPort = $('#ServerPort').val();
 
         if ($("#username").val() == tipByUserName) {
             $("#username").focus();
@@ -188,6 +188,10 @@ $(function () {
         $("#LOADING_GREY_DIV").show(); //显示登录蒙层
         /**连接服务器*/
         BRAC_Connect(mDefaultServerAddr, mDefaultServerPort);
+
+        /**登入anychat*/
+        var loginTag = BRAC_Login($("#username").val(), "", 0);
+
         // 退出大厅按钮
         $("#roomOut").off().click(systemOut);
 
@@ -697,10 +701,10 @@ function getLoginInfo() {
     $("#username").val(getCookie("username"))
     var serverIP = getCookie("ServerAddr");
     if (serverIP != "")
-        $("#ServerAddr").val(serverIP);
+        $("#ServerAddr").val((serverIP != "") ? serverIP : mDefaultServerAddr);
     var serverPort = getCookie("ServerPort");
     if (serverPort != "")
-        $("#ServerPort").val(serverPort);
+        $("#ServerPort").val((serverPort != "") ? serverPort : mDefaultServerPort);
     $("#AppGuid").val(getCookie("AppGuid"));
     $("#askSelect").get(0).selectedIndex = getCookie("askSelect");
     $("#dwPrioritySelect").get(0).selectedIndex = getCookie("PrioritySelect");

@@ -101,8 +101,7 @@ function OnAnyChatRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags,dwPar
 function OnAnyChatConnect(bSuccess, errorcode) {
     AddLog("OnAnyChatConnect(errorcode=" + errorcode + ")", LOG_TYPE_EVENT);
 	if (errorcode == 0) {
-	    /**登入anychat*/
-	    var loginTag = BRAC_Login($("#username").val(), "", 0);
+	    
 
 	} else {
 	    ForSession("连接服务器失败(errorCode=" + errorcode + ")！", true);
@@ -121,12 +120,14 @@ function OnAnyChatLoginSystem(dwUserId, errorcode) {
                 dwAgentFlags = 0; //客户标识
                 mCurrentStatus = CLIENT_STATUS_AREA;
                 break;
-            case USER_TYPE_AGNET:
+
+            case USER_TYPE_AGNET:
                 currentAgentID = dwUserId;
                 dwAgentFlags = ANYCHAT_OBJECT_FLAGS_AGENT; //坐席标识
                 mCurrentStatus = AGENT_STATUS_AREA;
                 servantName = $("#username").val(); //客服登入账户名
-                //坐席呼叫视频界面
+
+                //坐席呼叫视频界面
                 var videoHtml = '<div style="height:505px;">' +
                                             '<div style="width:240px;float: left">' +
                                                 '<div id="clientList" style="text-align: center;position: relative;height:300px;width:240px;padding-top: 15px;overflow-y:auto;">' +
@@ -153,13 +154,38 @@ function OnAnyChatLoginSystem(dwUserId, errorcode) {
                                         '</div>';
                 $("#videoCallContent").html(videoHtml); //填充视频会话层
 
-                //停止服务按钮事件(坐席)
+
+                //停止服务按钮事件(坐席)
                 $('#stopService').off().on('click', function () {
-                    if ($("#remoteVideoPos").html() != "") {                        if (confirm("您确定结束当前服务吗？")) {                            var errorcode = BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_FINISH, mTargetUserId, 0, 0, 0, ""); 	// 挂断                            AddLog("BRAC_VideoCallControl(" + BRAC_VIDEOCALL_EVENT_FINISH + "," + mTargetUserId + ",0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
-                            $("#Initiative_Call_Div").hide(); //隐藏主动呼叫层                            isShowReturnBtn(true);                            startServiceTag = false;                        }                    }                });
-                //开始服务按钮事件(坐席)                $('#startService').off().on('click', function () {                    if (!startServiceTag) {                        startServiceTag = true;                        /**客服开始服务*/                        var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AGENT, mSelfUserId, ANYCHAT_AGENT_CTRL_SERVICEREQUEST, 0, 0, 0, 0, "");                        AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AGENT + "," + mSelfUserId + "," + ANYCHAT_AGENT_CTRL_SERVICEREQUEST + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);                    }                });
-                //返回服务厅(坐席)                $('#returnHall').off().on('click', function () {                    leaveAreaClickEvent();                });
-            default:                break;        }
+                    if ($("#remoteVideoPos").html() != "") {
+                        if (confirm("您确定结束当前服务吗？")) {
+                            var errorcode = BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_FINISH, mTargetUserId, 0, 0, 0, ""); 	// 挂断
+                            AddLog("BRAC_VideoCallControl(" + BRAC_VIDEOCALL_EVENT_FINISH + "," + mTargetUserId + ",0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+                            $("#Initiative_Call_Div").hide(); //隐藏主动呼叫层
+                            isShowReturnBtn(true);
+                            startServiceTag = false;
+                        }
+                    }
+                });
+
+                //开始服务按钮事件(坐席)
+                $('#startService').off().on('click', function () {
+                    if (!startServiceTag) {
+                        startServiceTag = true;
+                        /**客服开始服务*/
+                        var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AGENT, mSelfUserId, ANYCHAT_AGENT_CTRL_SERVICEREQUEST, 0, 0, 0, 0, "");
+                        AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_AGENT + "," + mSelfUserId + "," + ANYCHAT_AGENT_CTRL_SERVICEREQUEST + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
+                    }
+                });
+
+                //返回服务厅(坐席)
+                $('#returnHall').off().on('click', function () {
+                    leaveAreaClickEvent();
+                });
+
+            default:
+                break;
+        }
 
 		mSelfUserId = dwUserId;
 		dwPriority = parseInt($("#dwPrioritySelect option:selected").val());

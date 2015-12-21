@@ -198,8 +198,11 @@ function ShowLoginDiv(bShow) {
 		GetID("username").focus();
 		SetDivTop("login_div", 195); 					//登录界面垂直居中
 		GetID("LOG_DIV_BODY").style.display = "block"; 	//显示系统信息框
-		GetID("ServerAddr").value = mDefaultServerAddr;
-		GetID("ServerPort").value = mDefaultServerPort;
+		var serverIP = getCookie("ServerAddr");
+		var serverPort = getCookie("ServerPort");
+		GetID("ServerAddr").value = (typeof serverIP != "undefined" && serverIP != null) ? serverIP : mDefaultServerAddr;
+		GetID("ServerPort").value = (typeof serverPort != "undefined" && serverPort != null) ? serverPort : mDefaultServerPort;
+
 	} else {
 	
 	}
