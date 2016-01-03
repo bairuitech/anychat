@@ -1,0 +1,19 @@
+#iframe1{ width:500px; height:210px; position:absolute;}
+#advanceset_div{ margin:-220px 0px 0px 600px; display:none; width:500px; height:210px; position:absolute; background-color:#E6E6E6; border:1px solid black; z-index:9999;}
+#advanceset_iframe{margin:-220px 0px 0px 530px; display: none;}
+#advanceset_div_close{ cursor:pointer; text-align:right; padding:5px 5px 0px 0px; font-size:12px;}
+#Btn_Div_Device{ font-size:14px; cursor:pointer; background-color:White; float:left; height:25px; width:70px; text-align:center; margin:5px 0px 0px 0px;}
+.Btn_Div{ font-size:14px; cursor:pointer; background-color:#9CAAC1; float:left; height:25px; width:70px; text-align:center; margin:5px 0px 0px 0px;}
+#advanceset_div_mainpark{ margin:0px 20px 20px 20px; width:464px; height:170px;}
+#advanceset_div_Div_Btn{ width:360px; height:30px;}
+#advanceset_div_mainpark_parameter{background-color:White; width:464px; height:135px; font-size:14px;}
+#Device_Interface{ line-height:35px; margin-left:60px; width:340px; height:115px;}
+#Video_Parameter_Interface{ display:none; margin-left:60px; width:340px; height:115px;}
+#advanceset_div_Tab{ width:340px; height:115px; font-size:12px;}
+#advanceset_div_Tab a{ color:#999999;}
+.td_input{ text-align:right;}
+#regulate{ cursor:pointer; text-align:center; line-height:20px; width:70px; height:20px; border:1px solid black;}
+#apply_changes{ cursor:pointer; text-align:center; line-height:20px; width:70px; height:20px; border:1px solid black;}
+#Sound_Parameter_Interface{ display:none; margin-left:60px; width:340px; height:115px;}
+.audio_tabcontrol{ width:170px; height:30px; line-height:30px; float:left; text-align:center;}
+#Other_Parameter_Interface{ display:none; margin-left:60px; width:340px; text-align:center; height:115px; line-height:115px;}
