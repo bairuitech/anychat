@@ -137,7 +137,7 @@ public class AnyChatCoreSDK
     // 登录系统
     public native int Login(String username, String password);
     // 登录系统（扩展）
-    public native int LoginEx(String nickname, int userid, String struserid, String appid, String sigstr, String strparam);
+    public native int LoginEx(String nickname, int userid, String struserid, String appid, int timestamp, String sigstr, String strparam);
     // 进入房间（房间ID）
     public native int EnterRoom(int roomid, String password);
     // 进入房间（房间名称）

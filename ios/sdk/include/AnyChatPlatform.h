@@ -225,7 +225,7 @@ typedef struct tagWAVEFORMATEX{
 // 登录系统
 + (int) Login: (NSString*) lpUserName : (NSString*) lpPassword;
 // 登录系统（扩展）
-+ (int) LoginEx: (NSString*) lpNickName : (int) dwUserId : (NSString*) lpStrUserId : (NSString*) lpAppId : (NSString*) lpSigStr : (NSString*) lpStrParam;
++ (int) LoginEx: (NSString*) lpNickName : (int) dwUserId : (NSString*) lpStrUserId : (NSString*) lpAppId : (int) dwTimeStamp : (NSString*) lpSigStr : (NSString*) lpStrParam;
 // 进入房间
 + (int) EnterRoom: (int) dwRoomid : (NSString*) lpRoomPass;
 // 进入房间
