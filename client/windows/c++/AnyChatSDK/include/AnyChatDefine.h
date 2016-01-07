@@ -167,6 +167,11 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_UPLOADLOGINFO		134	///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
 #define BRAC_SO_CORESDK_WRITELOG			135	///< 写入调试信息到客户端日志文件中
 #define BRAC_SO_CORESDK_NEWLOGFILE			136	///< 产生新的日志文件
+#define BRAC_SO_CORESDK_SUPPORTSIP			137	///< 判断当前是否支持SIP通信
+#define BRAC_SO_CORESDK_SUPPORTHTML5		138	///< 判断当前是否支持HTML5
+#define BRAC_SO_CORESDK_SUPPORTVIDEOCODEC	210	///< 设置支持的视频编码器
+#define BRAC_SO_CORESDK_SUPPORTAUDIOCODEC	211	///< 设置支持的音频编码器
+#define BRAC_SO_CORESDK_DISABLEMEDIACONSUL	212	///< 禁止媒体协商
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -193,6 +198,9 @@ enum BRAC_VideoShowDriver{
 
 #define BRAC_SO_OBJECT_INITFLAGS			200	///< 业务对象身份初始化
 
+#define BRAC_SO_CLOUD_APPGUID				300	///< 云平台应用GUID（参数为：字符串类型，连接服务器之前设置）
+#define BRAC_SO_CLOUD_ACCTYPE				301	///< 云平台应用集成账号类型
+#define BRAC_SO_CLOUD_APPID3RD				302	///< 云平台应用集成时第三方平台的应用GUID
 
 
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
@@ -212,8 +220,9 @@ enum BRAC_VideoShowDriver{
 #define BRAC_RECORD_FLAGS_STEREO		0x00000200	///< 录制音频时，将其它人的声音混合为立体声后录制
 #define BRAC_RECORD_FLAGS_SNAPSHOT		0x00000400	///< 拍照
 #define BRAC_RECORD_FLAGS_LOCALCB		0x00000800	///< 触发本地回调
-#define BRAC_RECORD_FLAGS_STREAM		0x00001000	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+#define BRAC_RECORD_FLAGS_STREAM		0x00001000	///< 对视频流进行录制（效率高）
 #define BRAC_RECORD_FLAGS_USERFILENAME	0x00002000	///< 用户自定义文件名
+
 
 // 客户端、服务器端录制标志定义保持统一
 #if !defined(ANYCHAT_RECORD_FLAGS_VIDEO)
@@ -228,6 +237,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_RECORD_FLAGS_LOCALCB		BRAC_RECORD_FLAGS_LOCALCB
 #define ANYCHAT_RECORD_FLAGS_STREAM			BRAC_RECORD_FLAGS_STREAM
 #define ANYCHAT_RECORD_FLAGS_USERFILENAME	BRAC_RECORD_FLAGS_USERFILENAME
+#define ANYCHAT_RECORD_FLAGS_ERRORCODE		0x00004000	///< 支持出错代码
 #endif
 
 
@@ -326,6 +336,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_CBTYPE_OBJECTEVENT				18	///< 业务对象事件通知
 #define BRAC_CBTYPE_VIDEODATAEX2			19	///< 视频数据扩展回调（支持多路流）
 #define BRAC_CBTYPE_AUDIODATAEX2			20	///< 音频数据扩展回调（支持多路流）
+#define BRAC_CBTYPE_STREAMRECORDEX2			21	///< 录像快照任务完成通知扩展回调（支持出错代码）
 
 
 // 视频裁剪模式定义

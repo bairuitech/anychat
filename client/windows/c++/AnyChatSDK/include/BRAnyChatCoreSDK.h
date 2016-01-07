@@ -46,6 +46,8 @@ typedef void (CALLBACK * BRAC_SDKFilterData_CallBack)(LPBYTE lpBuf, DWORD dwLen,
 typedef void (CALLBACK * BRAC_RecordSnapShot_CallBack)(DWORD dwUserid, LPCTSTR lpFileName, DWORD dwParam, BOOL bRecordType, LPVOID lpUserValue);
 // 录像、快照任务完成扩展回调函数定义
 typedef void (CALLBACK * BRAC_RecordSnapShotEx_CallBack)(DWORD dwUserId, LPCTSTR lpFileName, DWORD dwElapse, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
+// 录像、快照任务完成扩展回调函数定义
+typedef void (CALLBACK * BRAC_RecordSnapShotEx2_CallBack)(DWORD dwUserId, DWORD dwErrorCode, LPCTSTR lpFileName, DWORD dwElapse, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
 // 异步消息通知回调函数定义
 typedef void (CALLBACK* BRAC_NotifyMessage_CallBack)(DWORD dwNotifyMsg, DWORD wParam, DWORD lParam, LPVOID lpUserValue);
 // 视频屏幕事件回调函数定义
@@ -110,6 +112,8 @@ BRAC_API DWORD BRAC_SetCallBack(DWORD dwCBType, LPVOID lpFunction, LPVOID lpUser
 BRAC_API DWORD BRAC_Connect(LPCTSTR lpServerAddr, DWORD dwPort);
 // 登录系统
 BRAC_API DWORD BRAC_Login(LPCTSTR lpUserName, LPCTSTR lpPassword, DWORD dwPassEncType);
+// 登录系统（扩展）
+BRAC_API DWORD BRAC_LoginEx(LPCTSTR lpNickName, DWORD dwUserId, LPCTSTR lpStrUserId=NULL, LPCTSTR lpAppId=NULL, DWORD dwTimeStamp=0, LPCTSTR lpSigStr=NULL, LPCTSTR lpStrParam=NULL);
 // 进入房间
 BRAC_API DWORD BRAC_EnterRoom(DWORD dwRoomid, LPCTSTR lpRoomPass, DWORD dwPassEncType);
 // 进入房间
@@ -122,8 +126,10 @@ BRAC_API DWORD BRAC_Logout(VOID);
 // 释放所有资源
 BRAC_API DWORD BRAC_Release(VOID);
 
-// 获取当前房间在线用户列表
+// 获取当前房间在线用户列表（推荐使用：BRAC_GetRoomOnlineUsers）
 BRAC_API DWORD BRAC_GetOnlineUser(LPDWORD lpUserIDArray, DWORD& dwUserNum);
+// 获取指定房间在线用户列表
+BRAC_API DWORD BRAC_GetRoomOnlineUsers(DWORD dwRoomId, LPDWORD lpUserIDArray, DWORD& dwUserNum);
 // 查询用户摄像头的状态
 BRAC_API DWORD BRAC_GetCameraState(DWORD dwUserid, DWORD& dwState);
 // 查询用户发言状态
