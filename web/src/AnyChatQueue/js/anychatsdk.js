@@ -498,14 +498,14 @@ function BRAC_Login(lpUserName, lpPassword, dwParam) {
 	return anychat.Login(lpUserName, lpPassword, dwParam);
 }
 // 登录系统（扩展）
-function BRAC_LoginEx(lpNickName, dwUserId, lpStrUserId, lpAppId, lpSigStr, lpStrParam) {
+function BRAC_LoginEx(lpNickName, dwUserId, lpStrUserId, lpAppId, dwTimeStamp, lpSigStr, lpStrParam) {
 	if(!bSupportCluster)
 		return GV_ERR_PLUGINOLDVERSION;
-	return anychat.LoginEx(lpNickName, parseInt(dwUserId), lpStrUserId, lpAppId, lpSigStr, lpStrParam);
+	return anychat.LoginEx(lpNickName, parseInt(dwUserId), lpStrUserId, lpAppId, parseInt(dwTimeStamp), lpSigStr, lpStrParam);
 }
 // 进入房间
 function BRAC_EnterRoom(dwRoomid, lpRoomPass, dwParam) {
-	return anychat.EnterRoom(dwRoomid, lpRoomPass, dwParam);
+	return anychat.EnterRoom(parseInt(dwRoomid), lpRoomPass, dwParam);
 }
 // 进入房间
 function BRAC_EnterRoomEx(lpRoomName, lpRoomPass) {
@@ -513,7 +513,7 @@ function BRAC_EnterRoomEx(lpRoomName, lpRoomPass) {
 }
 // 离开房间
 function BRAC_LeaveRoom(dwRoomid) {
-	return anychat.LeaveRoom(dwRoomid);
+	return anychat.LeaveRoom(parseInt(dwRoomid));
 }
 // 注销系统
 function BRAC_Logout() {
