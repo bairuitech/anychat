@@ -432,7 +432,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
         {
             switch (dwErrorCode)
             {
-                case GV_ERR_VIDEOCALL_CANCEL:
+                case AC_ERROR_VIDEOCALL_CANCEL:
                 {
                     [self dimissAlertView:[UserListVC sharedUserListVC].theReplyAlertView];
                     [self showInfoAlertView:@"用户取消会话" :@"CANCEL"];
@@ -441,7 +441,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     break;
                 }
                     
-                case GV_ERR_VIDEOCALL_REJECT:
+                case AC_ERROR_VIDEOCALL_REJECT:
                 {
                     if ([UserListVC sharedUserListVC].theWaitingAlertView != nil)
                     {
@@ -453,7 +453,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     break;
                 }
                     
-                case GV_ERR_VIDEOCALL_OFFLINE:
+                case AC_ERROR_VIDEOCALL_OFFLINE:
                 {
                     if ([UserListVC sharedUserListVC].theWaitingAlertView != nil)
                     {
@@ -464,7 +464,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     break;
                 }
                     
-                case GV_ERR_VIDEOCALL_BUSY:
+                case AC_ERROR_VIDEOCALL_BUSY:
                 {
                     if ([UserListVC sharedUserListVC].theWaitingAlertView != nil)
                     {
@@ -475,7 +475,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     break;
                 }
                     
-                case GV_ERR_VIDEOCALL_TIMEOUT:
+                case AC_ERROR_VIDEOCALL_TIMEOUT:
                 {
                     if ([UserListVC sharedUserListVC].theWaitingAlertView != nil)
                     {
@@ -486,7 +486,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     break;
                 }
                     
-                case GV_ERR_VIDEOCALL_DISCONNECT:
+                case AC_ERROR_VIDEOCALL_DISCONNECT:
                 {
                     if ([UserListVC sharedUserListVC].theWaitingAlertView != nil)
                     {
@@ -497,7 +497,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     break;
                 }
                     
-                case GV_ERR_VIDEOCALL_NOTINCALL:
+                case AC_ERROR_VIDEOCALL_NOTINCALL:
                 {
                     if ([UserListVC sharedUserListVC].theWaitingAlertView != nil)
                     {
@@ -507,9 +507,9 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     
                     break;
                 }
-                    
+                default:
+                    break;
             }
-            
             break;
         }
 

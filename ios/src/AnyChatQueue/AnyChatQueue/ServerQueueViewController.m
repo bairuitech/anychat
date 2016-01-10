@@ -74,14 +74,14 @@
         {
             switch (dwErrorCode)
             {
-                case GV_ERR_VIDEOCALL_CANCEL: // 源用户主动放弃会话
+                case AC_ERROR_VIDEOCALL_CANCEL: // 源用户主动放弃会话
                 {
                     if (self.waitingAlertView != nil) [self.waitingAlertView dismissWithClickedButtonIndex:self.waitingAlertView.cancelButtonIndex animated:YES];
                     break;
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_REJECT: // 目标用户拒绝会话
+                case AC_ERROR_VIDEOCALL_REJECT: // 目标用户拒绝会话
                 {
                     if (self.waitingAlertView != nil) [self.waitingAlertView dismissWithClickedButtonIndex:self.waitingAlertView.cancelButtonIndex animated:YES];
                     [MBProgressHUD showError:@"顾客拒绝视频通话"];
@@ -90,7 +90,7 @@
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_OFFLINE:// 目标用户不在线
+                case AC_ERROR_VIDEOCALL_OFFLINE:// 目标用户不在线
                 {
                     if (self.waitingAlertView != nil) [self.waitingAlertView dismissWithClickedButtonIndex:self.waitingAlertView.cancelButtonIndex animated:YES];
                     [MBProgressHUD showError:@"顾客不在线"];
@@ -99,7 +99,7 @@
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_BUSY:// 目标用户忙
+                case AC_ERROR_VIDEOCALL_BUSY:// 目标用户忙
                 {
                     if (self.waitingAlertView != nil) [self.waitingAlertView dismissWithClickedButtonIndex:self.waitingAlertView.cancelButtonIndex animated:YES];
                     [MBProgressHUD showError:@"顾客忙"];
@@ -108,7 +108,7 @@
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_TIMEOUT:// 会话请求超时
+                case AC_ERROR_VIDEOCALL_TIMEOUT:// 会话请求超时
                 {
                     if (self.waitingAlertView != nil) [self.waitingAlertView dismissWithClickedButtonIndex:self.waitingAlertView.cancelButtonIndex animated:YES];
                     [MBProgressHUD showError:@"请求超时"];
@@ -117,7 +117,7 @@
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_DISCONNECT:// 网络断线
+                case AC_ERROR_VIDEOCALL_DISCONNECT:// 网络断线
                 {
                     if (self.waitingAlertView != nil) [self.waitingAlertView dismissWithClickedButtonIndex:self.waitingAlertView.cancelButtonIndex animated:YES];
                     [MBProgressHUD showError:@"网络断线"];
@@ -126,7 +126,7 @@
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_NOTINCALL:// 用户不在呼叫状态
+                case AC_ERROR_VIDEOCALL_NOTINCALL:// 用户不在呼叫状态
                 {
                     if (self.waitingAlertView != nil) [self.waitingAlertView dismissWithClickedButtonIndex:self.waitingAlertView.cancelButtonIndex animated:YES];
                     [MBProgressHUD showError:@"顾客不在呼叫状态"];
@@ -211,7 +211,7 @@
         if (buttonIndex == 0 ) {// 自己主动取消呼叫
             [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY
                                              :self.remoteUserId
-                                             :GV_ERR_VIDEOCALL_CANCEL
+                                             :AC_ERROR_VIDEOCALL_CANCEL
                                              :0
                                              :0
                                              :nil];

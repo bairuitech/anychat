@@ -200,7 +200,7 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
             {
                 [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY
                                                  :[AnyChatVC sharedAnyChatVC].theTargetUserID
-                                                 :GV_ERR_VIDEOCALL_REJECT
+                                                 :AC_ERROR_VIDEOCALL_REJECT
                                                  :0
                                                  :0
                                                  :nil];
@@ -229,7 +229,7 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
         {
             [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY
                                              :[AnyChatVC sharedAnyChatVC].theTargetUserID
-                                             :GV_ERR_VIDEOCALL_CANCEL
+                                             :AC_ERROR_VIDEOCALL_CANCEL
                                              :0
                                              :0
                                              :nil];
