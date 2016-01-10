@@ -265,6 +265,11 @@ var BRAC_USERINFO_CTRLCODE_ROTATION	=		8;	// 让指定的用户视频在显示时旋转，wPara
 var BRAC_USERINFO_CTRLCODE_DEBUGLOG	=		9;	// 输出本地用户的调试日志，wParam为调试日志类型
 var BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;	// 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
 
+// 服务器信息查询常量定义（API：BRAC_QueryInfoFromServer 传入参数）
+var ANYCHAT_SERVERQUERY_USERIDBYNAME	=	1;	// 根据用户昵称查询用户ID
+var ANYCHAT_SERVERQUERY_USERIDBYSTRID	=	2;	// 根据字符串ID查询用户ID
+var ANYCHAT_SERVERQUERY_STRIDBYUSERID	=	3;	// 根据用户ID查询字符串ID
+
 // 视频显示插件设置参数
 var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// 在视频上迭加文字、图片等内容
 var ANYCHATWEB_VIDEO_SO_DISABLEFULLSCREEN = 9;	// 禁止双击视频全屏显示
