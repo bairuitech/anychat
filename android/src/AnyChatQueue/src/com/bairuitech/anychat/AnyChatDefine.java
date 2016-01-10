@@ -217,6 +217,11 @@ public class AnyChatDefine {
 	public static final int BRAC_USERINFO_CTRLCODE_DEBUGLOG =   9;	///< 输出本地用户的调试日志，wParam为调试日志类型
 	public static final int BRAC_USERINFO_CTRLCODE_LVORIENTFIX=	10;	///< 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
 	
+	// 服务器信息查询常量定义（API：BRAC_QueryInfoFromServer 传入参数）
+	public static final int ANYCHAT_SERVERQUERY_USERIDBYNAME =	1;	///< 根据用户昵称查询用户ID
+	public static final int ANYCHAT_SERVERQUERY_USERIDBYSTRID=	2;	///< 根据字符串ID查询用户ID
+	public static final int ANYCHAT_SERVERQUERY_STRIDBYUSERID=	3;	///< 根据用户ID查询字符串ID
+	
 	// 常见出错代码定义
     public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< 没有错误
     public static final int BRAC_ERRORCODE_SESSION_QUIT		= 100101;///< 源用户主动放弃会话
