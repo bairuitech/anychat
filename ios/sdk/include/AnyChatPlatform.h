@@ -344,10 +344,6 @@ typedef struct tagWAVEFORMATEX{
 
 // 组播功能控制
 + (int) MultiCastControl: (NSString*) lpMultiCastAddr : (int) dwPort : (NSString*) lpNicAddr : (int) dwTTL : (int) dwFlags;
-// 向服务器动态查询相关信息（整型）
-+ (int) QueryIntInfoFromServer: (int) dwInfoName : (NSString*) lpInParam : (int) dwFlags;
-// 向服务器动态查询相关信息（字符串）
-+ (NSString*) QueryStringInfoFromServer: (int) dwInfoName : (NSString*) lpInParam : (int) dwFlags;
 
 // 设置外部输入视频格式
 + (int) SetInputVideoFormat: (int) pixFmt : (int) dwWidth : (int) dwHeight : (int) dwFps : (int) dwFlags;
@@ -361,7 +357,7 @@ typedef struct tagWAVEFORMATEX{
 // 视频呼叫事件控制（请求、回复、挂断等）
 + (int) VideoCallControl: (int) dwEventType : (int) dwUserId : (int) dwErrorCode : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr;
 // 向服务器动态查询相关信息
-+ (NSString*) QueryInfoFromServer: (int) dwInfoName : (NSString*) lpInParam;
++ (NSString*) QueryInfoFromServer: (int) dwInfoName : (NSString*) lpInParam : (int) dwFlags;
 
 // 获取用户好友ID列表
 + (NSMutableArray*) GetUserFriends;
