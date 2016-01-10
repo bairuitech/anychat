@@ -206,7 +206,7 @@
                     // 呼叫中心-拒绝呼叫
                     [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY
                                                      :dwUserId
-                                                     :GV_ERR_VIDEOCALL_REJECT
+                                                     :AC_ERROR_VIDEOCALL_REJECT
                                                      :0
                                                      :0
                                                      :nil];
@@ -221,7 +221,7 @@
         {
             switch (dwErrorCode)
             {
-                case GV_ERR_VIDEOCALL_CANCEL://源用户主动放弃会话
+                case AC_ERROR_VIDEOCALL_CANCEL://源用户主动放弃会话
                 {
 
                     
@@ -230,7 +230,7 @@
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_REJECT://用户拒绝会话
+                case AC_ERROR_VIDEOCALL_REJECT://用户拒绝会话
                 {
                     
                     self.requestWindow.isVisible = NO;  //隐藏呼叫请求窗口
@@ -255,7 +255,7 @@
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_OFFLINE://对方不在线
+                case AC_ERROR_VIDEOCALL_OFFLINE://对方不在线
                 {
 
                     [self appendLogMessage:[NSString stringWithFormat:@"• User Don't Online %d",dwUserId]];
@@ -263,7 +263,7 @@
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_BUSY://用户在忙
+                case AC_ERROR_VIDEOCALL_BUSY://用户在忙
                 {
                     NSAlert *alert = [[NSAlert alloc] init];
                     alert.messageText = @"信息提醒";
@@ -280,7 +280,7 @@
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_TIMEOUT://会话请求超时
+                case AC_ERROR_VIDEOCALL_TIMEOUT://会话请求超时
                 {
                     self.requestWindow.isVisible = NO;  //隐藏呼叫请求窗口
                     self.requestWindow = nil;
@@ -298,7 +298,7 @@
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_DISCONNECT://网络断线
+                case AC_ERROR_VIDEOCALL_DISCONNECT://网络断线
                 {
 
                     //
@@ -307,7 +307,7 @@
                 }
                     
                     
-                case GV_ERR_VIDEOCALL_NOTINCALL://用户不在呼叫状态
+                case AC_ERROR_VIDEOCALL_NOTINCALL://用户不在呼叫状态
                 {
 
                     [self appendLogMessage:[NSString stringWithFormat:@"• User Not In A Call State %d",dwUserId]];
@@ -559,7 +559,7 @@
 //请求呼叫后，取消按钮事件
 - (void)cancelRequest:(NSButton *)button {
     // 主动取消呼叫
-    [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY :self.remoteUserId :GV_ERR_VIDEOCALL_CANCEL :0 :0 :nil];
+    [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY :self.remoteUserId :AC_ERROR_VIDEOCALL_CANCEL :0 :0 :nil];
     self.requestWindow.isVisible = NO;
     self.requestWindow = nil;
     [self.view.window becomeKeyWindow];
