@@ -1,0 +1,6 @@
+; libanychatsign.def : Declares the module parameters for the DLL.
+
+LIBRARY      "libanychatsign"
+DESCRIPTION  'libanychatsign Windows Dynamic Link Library'
+
+EXPORTS
