@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>AnyChatSign Web示例程序</title>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>		
+	</head>
+	<body>
+		<label>用户id：</label>
+		<input id="userid" placeholder="请输入用户Id" name="userid" value="1001" autofocus>
+		<br>
+		<label>应用id：</label>	
+		<input id="appid" placeholder="请输入应用Id" name="appid" value="90A9545C-30F7-4F5A-8B56-9CB111706A24" style="width:300px;margin-top: 5px;"autofocus>			
+    	<br>
+    	<input type="button" name="doSign" value="获取签名" style="margin:10px;" onclick="doSign()">  
+    	<br>	
+		<span id="txt" style="color: green"></span><br>    		
+    	<script type="text/javascript">
+			function doSign() {
+		        $.ajax( {
+		            url : "http://127.0.0.1:8980",
+		            dataType : "json", //传参的数据类型
+		            type : "post", //传参方式，get 或post
+		            data : {
+		                userid : $("#userid").val(), 
+						appid : $("#appid").val()
+		            },
+		            error : function(data) { //若Ajax处理失败后返回的信息
+		            	document.getElementById("txt").innerHTML = "Ajax处理失败，返回值：" + data.errorcode;
+
+		            },
+		            success : function(data) { //若Ajax处理成功后返回的信息
+		            	resultMsg = "";
+		            	if (data.errorcode != 0){
+		            		resultMsg = "返回有错，返回值：" + data.errorcode;
+		            	}else {
+		            		resultMsg = " 返回正确，返回值：" + data.errorcode + "<br>" + 
+										" 签名时间戳为：" + data.timestamp + "<br>" + 
+		            					" 签名为：" + data.sigStr ;
+
+		            	}
+		                document.getElementById("txt").innerHTML = resultMsg;
+		            }
+		        });    		
+    		}
+    	</script>    
+	</body>
+</html>
