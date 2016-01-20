@@ -376,12 +376,69 @@ namespace VideoChatClient
            
                 if (isopen)
                 {
+                    #region 打开屏幕共享功能的逻辑代码
+                    /*
+                    //本人
+                    if (userId == m_UserId)
+                    {
+                        int deviceNum = 0;
+                        AnyChatCoreSDK.EnumVideoCapture(null, ref deviceNum);
+                        IntPtr[] deviceList = new IntPtr[deviceNum];                        
+
+                        AnyChatCoreSDK.EnumVideoCapture(deviceList, ref deviceNum);
+                        for (int idx = 0; idx < deviceNum; idx++)
+                        {
+                            IntPtr intPtr = deviceList[idx];
+                            int len = 100;
+                            byte[] byteArray = new byte[len];
+                            Marshal.Copy(intPtr, byteArray, 0, len);
+                            string m_DeviceName = Encoding.Default.GetString(byteArray);
+                            m_DeviceName = m_DeviceName.Substring(0, m_DeviceName.IndexOf('\0'));
+
+                            if (m_DeviceName.IndexOf("Native Screen Camera") > 0)
+                            {
+                                AnyChatCoreSDK.SelectVideoCapture(m_DeviceName);
+
+                                //设置视频参数
+                                int screenWidth = 1920;
+                                int screenHeight = 1080;
+                                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_WIDTHCTRL, ref screenWidth, sizeof(int));
+                                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_HEIGHTCTRL, ref screenHeight, sizeof(int));
+
+                                int bitrateCtrl = 0;
+                                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_BITRATECTRL, ref bitrateCtrl, sizeof(int));
+
+                                int fpsCtrl = 15;
+                                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_FPSCTRL, ref fpsCtrl, sizeof(int));
+
+                                int gopCtrol = 60;
+                                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_GOPCTRL, ref gopCtrol, sizeof(int));
+
+                                int presetCtrl = 3;
+                                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_PRESETCTRL, ref presetCtrl, sizeof(int));
+
+                                int qualityCtrl = 3;
+                                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_QUALITYCTRL, ref qualityCtrl, sizeof(int));
+
+                                int m_AppLocal = 1;
+                                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_APPLYPARAM, ref m_AppLocal, sizeof(int));
+
+                                break;
+                            }
+                        }
+                    }
+                    */
+                    #endregion
 
                     //打开呼叫者音视频
                     AnyChatCoreSDK.UserCameraControl(userId, true);
                     AnyChatCoreSDK.UserSpeakControl(userId, true);
+
+
                     if (userId == m_UserId)
+                    {                        
                         AnyChatCoreSDK.SetVideoPos(userId, pic_suserVideo.Handle, 0, 0, pic_suserVideo.Width, pic_suserVideo.Height);
+                    }
                     else
                         AnyChatCoreSDK.SetVideoPos(userId, pic_tuserVideo.Handle, 0, 0, pic_tuserVideo.Width, pic_tuserVideo.Height);
                 }

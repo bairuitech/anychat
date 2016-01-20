@@ -33,5 +33,9 @@ namespace AnyChatMultiCamera
         /// 是否打开远程桌面
         /// </summary>
         public bool isOpenRemoteDesktop { get; set; }
+        /// <summary>
+        /// 应用ID
+        /// </summary>
+        public string AppGuid { get; set; }
     }
 }

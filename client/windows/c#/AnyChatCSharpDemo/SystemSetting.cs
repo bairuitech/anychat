@@ -37,6 +37,9 @@ namespace ANYCHATAPI
             ///初始化
             if (AnyChatCoreSDK.InitSDK(hWnd, dwFuncMode) == 0) isok = true;
 
+            int useHWCodec = 1;
+            AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CORESDK_USEHWCODEC, ref useHWCodec, sizeof(int));
+
             ///注册回调
             ///视频
             AnyChatCoreSDK.SetVideoDataCallBack(AnyChatCoreSDK.PixelFormat.BRAC_PIX_FMT_RGB24, video_Callback, hWnd.ToInt32());

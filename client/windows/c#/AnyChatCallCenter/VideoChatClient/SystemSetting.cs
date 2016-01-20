@@ -37,6 +37,15 @@ namespace ANYCHATAPI
             ///初始化
             if (AnyChatCoreSDK.InitSDK(hWnd, dwFuncMode) == 0) isok = true;
 
+            //增加虚拟摄像头打开功能
+            int enableScreenCamera = 1;
+            AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CORESDK_SCREENCAMERACTRL, ref enableScreenCamera, sizeof(int));
+            //设置视频参数
+            int screenWidth = 800;
+            int screenHeight = 600;
+            AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_WIDTHCTRL, ref screenWidth, sizeof(int));
+            AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_HEIGHTCTRL, ref screenHeight, sizeof(int));
+
             ///注册回调
             ///视频
             AnyChatCoreSDK.SetVideoDataCallBack(AnyChatCoreSDK.PixelFormat.BRAC_PIX_FMT_RGB24, video_Callback, hWnd.ToInt32());

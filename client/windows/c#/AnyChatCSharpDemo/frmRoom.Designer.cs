@@ -66,6 +66,7 @@
             this.lbl_a_speed = new System.Windows.Forms.Label();
             this.lb_fbl = new System.Windows.Forms.Label();
             this.cbb_fbl = new System.Windows.Forms.ComboBox();
+            this.btnSetting = new System.Windows.Forms.Button();
             this.pnl_userlist.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_onlineuser)).BeginInit();
             this.menu_user.SuspendLayout();
@@ -423,9 +424,18 @@
             this.cbb_fbl.Location = new System.Drawing.Point(88, 621);
             this.cbb_fbl.Name = "cbb_fbl";
             this.cbb_fbl.Size = new System.Drawing.Size(82, 20);
-            this.cbb_fbl.SelectedIndex = 0;
             this.cbb_fbl.TabIndex = 24;
             this.cbb_fbl.SelectedIndexChanged += new System.EventHandler(this.cbb_fbl_SelectedIndexChanged);
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.Location = new System.Drawing.Point(458, 624);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(85, 23);
+            this.btnSetting.TabIndex = 25;
+            this.btnSetting.Text = "高级设置";
+            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
             // frmRoom
             // 
@@ -433,6 +443,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.ClientSize = new System.Drawing.Size(984, 682);
+            this.Controls.Add(this.btnSetting);
             this.Controls.Add(this.lb_fbl);
             this.Controls.Add(this.lbl_a_speed);
             this.Controls.Add(this.cbb_fbl);
@@ -506,5 +517,6 @@
         private System.Windows.Forms.Label lbl_a_speed;
         private System.Windows.Forms.Label lb_fbl;
         private System.Windows.Forms.ComboBox cbb_fbl;
+        private System.Windows.Forms.Button btnSetting;
     }
 }

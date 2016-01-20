@@ -139,6 +139,11 @@ namespace AnyChatCSharpDemo
             //StringBuilder m_ServerKey = new StringBuilder();
             //m_ServerKey.Append("d");
             //int retkey = AnyChatCoreSDK.SetServerAuthPass(m_ServerKey);
+
+            if (!string.IsNullOrEmpty(frmLogin.m_AppGuid))
+            {
+                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, frmLogin.m_AppGuid, frmLogin.m_AppGuid.Length);
+            }
             int ret = AnyChatCoreSDK.Connect(frmLogin.m_VideoServerIP, frmLogin.m_VideoTcpPort);
             ret = AnyChatCoreSDK.Login(frmLogin.m_UserName, "", 0);
         }
@@ -389,6 +394,9 @@ namespace AnyChatCSharpDemo
                     int roomid = m.WParam.ToInt32();
                     Print("进入房间成功,房间编号为：" + roomid.ToString());
                     m_RoomID = roomid;
+
+                    getLocalVideoDeivceName();
+
                     int ret = AnyChatCoreSDK.SetVideoPos(-1, pnl_local.Handle, 0, 0, pnl_local.Width, pnl_local.Height);
                     ret = AnyChatCoreSDK.UserCameraControl(-1, true);
                     ret = AnyChatCoreSDK.UserSpeakControl(-1, true);
@@ -1176,15 +1184,20 @@ namespace AnyChatCSharpDemo
                 int bitrate = 0;  //0表示质量模式
                 //设置本地视频编码的码率 
                 AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_BITRATECTRL, ref bitrate, sizeof(int));
-                int keyframe = 25;
+                int keyframe = 60;
                 //设置本地视频编码的关键帧间隔
                 AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_GOPCTRL, ref keyframe, sizeof(int));
-                int framerate = 25;
+                int framerate = 15;
                 //设置本地视频编码的帧率
                 AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_FPSCTRL, ref framerate, sizeof(int));
                 int defaultParam = 3;
                 // 设置本地视频编码的预设参数 
                 AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_PRESETCTRL, ref defaultParam, sizeof(int));
+                int videoWidth = 1920;
+                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_WIDTHCTRL, ref videoWidth, sizeof(int));
+                int vedioHeight = 1080;
+                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_HEIGHTCTRL, ref vedioHeight, sizeof(int));
+
                 int bUseAppParam = 1;
                 //应用本地视频编码参数，使得前述修改即时生效（参数为int型：1 使用新参数，0 使用默认参数）
                 AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_APPLYPARAM, ref bUseAppParam, sizeof(int));
@@ -1331,6 +1344,50 @@ namespace AnyChatCSharpDemo
         #endregion
 
         #endregion
+
+        /// <summary>
+        /// 视频设备列表
+        /// </summary>
+        private List<ComboBoxItem> m_videoDeviceList = new List<ComboBoxItem>();
+        private frmSetting settingForm = null;
+        private void btnSetting_Click(object sender, EventArgs e)
+        {
+            settingForm = new frmSetting(m_videoDeviceList, m_myUserID);
+
+            settingForm.ShowDialog();
+        }
+
+        private string[] getLocalVideoDeivceName()
+        {
+            string[] retVal = null;
+
+            int deviceNum = 0;
+            AnyChatCoreSDK.EnumVideoCapture(null, ref deviceNum);
+            IntPtr[] deviceList = new IntPtr[deviceNum];
+            retVal = new string[deviceNum];
+
+            AnyChatCoreSDK.EnumVideoCapture(deviceList, ref deviceNum);
+            for (int idx = 0; idx < deviceNum; idx++)
+            {
+                IntPtr intPtr = deviceList[idx];
+                int len = 100;
+                byte[] byteArray = new byte[len];
+                Marshal.Copy(intPtr, byteArray, 0, len);
+                string m_DeviceName = Encoding.Default.GetString(byteArray);
+                m_DeviceName = m_DeviceName.Substring(0, m_DeviceName.IndexOf('\0'));
+
+                //addLog("获取的第" + (idx + 1) + "个视频设备为：" + m_DeviceName, LogType.LOG_TYPE_NORMAL);
+                retVal[idx] = m_DeviceName;
+
+                ComboBoxItem item = new ComboBoxItem();
+                item.Text = m_DeviceName;
+                item.Value = idx;
+                m_videoDeviceList.Add(item);
+            }
+
+            return retVal;
+
+        }
 
     }
 }

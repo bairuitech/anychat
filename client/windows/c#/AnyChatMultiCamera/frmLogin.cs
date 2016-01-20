@@ -44,6 +44,10 @@ namespace AnyChatMultiCamera
         /// 房间号
         /// </summary>
         private int m_roomNumber;
+        /// <summary>
+        /// 应用ID
+        /// </summary>
+        private string m_appGuid;
 
         frmRoom2 RoomForm;   //进入房间
 
@@ -107,6 +111,7 @@ namespace AnyChatMultiCamera
                         m_userName = cbox_userName.Text;
                         m_userPassword = txt_password.Text;
                         m_roomNumber = Int32.Parse(cbox_roomNumber.Text);
+                        m_appGuid = cbox_appGuid.Text;
                     }
                     catch (Exception)
                     {
@@ -128,6 +133,7 @@ namespace AnyChatMultiCamera
                     connInfo.UserPassword = m_userPassword;
                     connInfo.RoomID = m_roomNumber;
                     connInfo.isOpenRemoteDesktop = checkBox_RemoteDesktop.Checked;
+                    connInfo.AppGuid = m_appGuid;
 
                     RoomForm = null;
                     //hallForm = new Hall(m_userId, cbox_userIdentity.Text);
@@ -206,17 +212,17 @@ namespace AnyChatMultiCamera
                     CreateXMLDoc();
                     mXmlDoc.Load(mPath);
                 }
-                RecordValue("ip", "ip", cbox_serverIP.Text);
-                RecordValue("port", "port", cbox_port.Text);
-                RecordValue("userName", "userName", cbox_userName.Text);
-                RecordValue("roomNumber", "roomNumber", cbox_roomNumber.Text);
-                //RecordValue("userIdentity", "userIdentity", cbox_userIdentity.SelectedIndex.ToString());
-                //RecordValue("identityPriority", "identityPriority", cbox_identityPriority.SelectedIndex.ToString());
+                RecordValue("ipList", "ip", cbox_serverIP.Text);
+                RecordValue("portList", "port", cbox_port.Text);
+                RecordValue("userNameList", "userName", cbox_userName.Text);
+                //RecordValue("roomNumberList", "roomNumber", cbox_roomNumber.Text);
+                RecordValue("appGuidList", "appGuid", cbox_appGuid.Text);
 
-                PreviousRecordValue("previousreocrd", "ip", cbox_serverIP.Text);
-                PreviousRecordValue("previousreocrd", "port", cbox_port.Text);
-                PreviousRecordValue("previousreocrd", "userName", cbox_userName.Text);
-                PreviousRecordValue("previousreocrd", "roomNumber", cbox_roomNumber.Text);
+                PreviousRecordValue("previousrecord", "ip", cbox_serverIP.Text);
+                PreviousRecordValue("previousrecord", "port", cbox_port.Text);
+                PreviousRecordValue("previousrecord", "userName", cbox_userName.Text);
+                PreviousRecordValue("previousrecord", "roomNumber", cbox_roomNumber.Text);
+                PreviousRecordValue("previousrecord", "appGuid", cbox_appGuid.Text);
                               
             }
             catch (Exception ex)
@@ -236,20 +242,24 @@ namespace AnyChatMultiCamera
                 string rVal = rElem.GetAttribute("value");
                 switch (rAttribute)
                 {
-                    case "ip":
+                    case "ipList":
                         if (rVal == cbox_serverIP.Text)
                             i = 1;
                         break;
-                    case "port":
+                    case "portList":
                         if (rVal == cbox_port.Text)
                             i = 1;
                         break;
-                    case "userName":
+                    case "userNameList":
                         if (rVal == cbox_userName.Text)
                             i = 1;
                         break;
-                    case "roomNumber":
+                    case "roomNumberList":
                         if (rVal == cbox_roomNumber.Text)
+                            i = 1;
+                        break;
+                    case "appGuidList":
+                        if (rVal == cbox_appGuid.Text)
                             i = 1;
                         break;
                 }
@@ -309,12 +319,13 @@ namespace AnyChatMultiCamera
         private void LoadRecordTrace()
         {
 
-            DisplayVal(cbox_serverIP, "ip");
-            DisplayVal(cbox_port, "port");
-            DisplayVal(cbox_userName, "userName");
-            DisplayVal(cbox_roomNumber, "roomNumber");
+            DisplayVal(cbox_serverIP, "ipList");
+            DisplayVal(cbox_port, "portList");
+            DisplayVal(cbox_userName, "userNameList");
+            //DisplayVal(cbox_roomNumber, "roomNumberList");
+            DisplayVal(cbox_appGuid, "appGuidList");
 
-            string[] record = getPreviousRecord("previousreocrd");
+            string[] record = getPreviousRecord("previousrecord");
             if (record != null)
             {
                 cbox_serverIP.Text = record[0];
@@ -350,6 +361,9 @@ namespace AnyChatMultiCamera
                         break;
                     case "roomNumber":
                         record[3] = rVal;
+                        break;
+                    case "appGuid":
+                        record[4] = rVal;
                         break;
                 }
             }
@@ -405,27 +419,31 @@ namespace AnyChatMultiCamera
                 rMainNode.IsEmpty = false;
                 xmldoc.AppendChild(rMainNode);
 
-                XmlElement rIp = xmldoc.CreateElement("", "ip", "");
+                XmlElement rIp = xmldoc.CreateElement("", "ipList", "");
                 rIp.IsEmpty = false;
                 rMainNode.AppendChild(rIp);
 
-                XmlElement rPort = xmldoc.CreateElement("", "port", "");
+                XmlElement rPort = xmldoc.CreateElement("", "portList", "");
                 rPort.IsEmpty = false;
                 rMainNode.AppendChild(rPort);
 
-                XmlElement rUserName = xmldoc.CreateElement("", "userName", "");
+                XmlElement rUserName = xmldoc.CreateElement("", "userNameList", "");
                 rUserName.IsEmpty = false;
                 rMainNode.AppendChild(rUserName);
 
-                XmlElement rRoomNumber = xmldoc.CreateElement("", "roomNumber", "");
-                rRoomNumber.IsEmpty = false;
-                rMainNode.AppendChild(rRoomNumber);
+                //XmlElement rRoomNumber = xmldoc.CreateElement("", "roomNumberList", "");
+                //rRoomNumber.IsEmpty = false;
+                //rMainNode.AppendChild(rRoomNumber);
+
+                XmlElement rAppGuid = xmldoc.CreateElement("", "appGuidList", "");
+                rAppGuid.IsEmpty = false;
+                rMainNode.AppendChild(rAppGuid);
 
                 //XmlElement rIdentityPriority = xmldoc.CreateElement("", "identityPriority", "");
                 //rUserIdentity.IsEmpty = false;
                 //rMainNode.AppendChild(rIdentityPriority);
 
-                XmlElement rPreviousRecord = xmldoc.CreateElement("", "previousreocrd", "");
+                XmlElement rPreviousRecord = xmldoc.CreateElement("", "previousrecord", "");
                 rPreviousRecord.IsEmpty = false;
                 rMainNode.AppendChild(rPreviousRecord);
 

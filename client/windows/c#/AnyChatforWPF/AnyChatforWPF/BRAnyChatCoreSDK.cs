@@ -36,6 +36,7 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_RECORD_FILENAMERULE	        = 143;  // 录制文件名命名规则（参数为：int型）
 		
         public const int BRAC_SO_CORESDK_TMPDIR			        = 14;	// 设置AnyChat Core SDK临时目录（参数为字符串PCHAR类型，必须是完整的绝对路径）
+        public const int BRAC_SO_CORESDK_USEHWCODEC             = 18;	// 设置Intel CPU硬件加速特性        
         public const int BRAC_SO_CORESDK_PATH			        = 20;	// 设置AnyChat Core SDK相关组件路径（参数为字符串PCHAR类型，必须是完整的绝对路径）
 		public const int BRAC_SO_CORESDK_DUMPCOREINFO	        = 21;	// 输出内核信息到日志文件中，便于分析故障原因（参数为：int型：1 输出）
 		public const int BRAC_SO_CORESDK_EXTVIDEOINPUT	        = 26;	// 外部扩展视频输入控制（参数为int型， 0 关闭外部视频输入[默认]， 1 启用外部视频输入）
@@ -81,7 +82,9 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_CORESDK_DATAENCRYPTION	        = 132;  // 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
 		public const int BRAC_SO_CORESDK_UPLOADLOGINFO	        = 134;  // 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
 		public const int BRAC_SO_CORESDK_WRITELOG		        = 135;  // 写入调试信息到客户端日志文件中
-		
+
+        public const int BRAC_SO_CLOUD_APPGUID                  = 300;  // 云平台应用GUID（参数为：字符串类型，连接服务器之前设置）
+
         // 用户状态标志定义，API：BRAC_QueryUserState 传入参数
         public const int BRAC_USERSTATE_CAMERA		            = 1;	// 用户摄像头状态（参数为DWORD型）
         public const int BRAC_USERSTATE_HOLDMIC		            = 2;	// 用户音频设备状态（参数为DWORD型，返回值：0 音频采集关闭， 1 音频采集开启）
@@ -252,7 +255,6 @@ namespace ANYCHATAPI
         public const int BRAC_STREAMINFO_AUDIOBITRATE       = 192;	// 音频流码率，单位：bps
         public const int BRAC_STREAMINFO_AUDIOCODECID       = 193;	// 音频流编码器ID
         public const int BRAC_STREAMINFO_AUDIOPACKLOSSRATE  = 194;	// 音频流丢包率
-
 
         #region AnyChat业务对象常量定义
 
@@ -580,8 +582,6 @@ namespace ANYCHATAPI
         #endregion
 
         #endregion
-
-
 
         // 音频设备枚举定义
         public enum AudioDevice
@@ -1043,6 +1043,20 @@ namespace ANYCHATAPI
         public static extern int Login(string userName, string password, int passEncType);
 
         /// <summary>
+        /// 登录系统(扩展，支持集群服务平台、视频云平台应用签名登录)
+        /// </summary>
+        /// <param name="nikeName">用户显示名称</param>
+        /// <param name="userId">用户Id</param>
+        /// <param name="strUserId">用户编号</param>
+        /// <param name="appId">AnyChat视频云云平台的应用Id</param>
+        /// <param name="timeStamp">应用签名时间戳</param>
+        /// <param name="sigStr">应用签名字符串</param>
+        /// <param name="strParam">保留参数</param>
+        /// <returns>0为成功，否则失败</returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_LoginEx", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int LoginEx(string nikeName, int userId, string strUserId, string appId, int timeStamp, string sigStr, string strParam);
+
+        /// <summary>
         /// 进入房间
         /// </summary>
         /// <param name="roomid">房间号</param>
@@ -1061,7 +1075,25 @@ namespace ANYCHATAPI
         public static extern int LeaveRoom(int roomid);
 
         /// <summary>
-        /// 注销系统
+        /// 根据房间ID查询房间名
+        /// </summary>
+        /// <param name="roomid">房间Id</param>
+        /// <param name="roomName">房间名称</param>
+        /// <param name="len">长度</param>
+        /// <returns>0为成功，否则失败</returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetRoomName", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int[] GetRoomName(int roomid, StringBuilder roomName, int len);
+
+        /// <summary>
+        /// 获取指定房间在线用户列表
+        /// </summary>
+        /// <param name="roomid">房间Id</param>
+        /// <returns>返回一个userid的数组</returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetRoomOnlineUsers", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int[] GetRoomOnlineUsers(int roomid);
+
+        /// <summary>
+        /// 退出系统
         /// </summary>
         /// <returns>0为成功，否则失败</returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_Logout", CallingConvention = CallingConvention.Cdecl)]

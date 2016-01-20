@@ -38,6 +38,11 @@ namespace VideoChatClient
 
         XmlDocument mXmlDoc = new XmlDocument();
 
+        /// <summary>
+        /// 应用ID
+        /// </summary>
+        public string m_appGuid = "";
+
         #endregion
 
         #region 初始化
@@ -92,6 +97,7 @@ namespace VideoChatClient
                         addr = tb_serveradd.Text;
                         port = Convert.ToInt32(tb_port.Text);
                         m_userName = tb_name.Text;
+                        m_appGuid = tb_appGuid.Text;
                     }
                     catch (Exception)
                     {
@@ -104,6 +110,11 @@ namespace VideoChatClient
                       
                     }
                     SystemSetting.Init(this.Handle);
+
+                    if (!string.IsNullOrEmpty(m_appGuid))
+                    {
+                        AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, m_appGuid, m_appGuid.Length);
+                    }
                     AnyChatCoreSDK.Connect(addr, port);
                 }
                 else
@@ -304,12 +315,14 @@ namespace VideoChatClient
                     CreateXMLDoc();
                     mXmlDoc.Load(mPath);
                 }
-                RecordValue("ips", "ip", tb_serveradd.Text);
-                RecordValue("ports", "port", tb_port.Text);
-                RecordValue("names", "name", tb_name.Text);
-                PreviousRecordValue("previousreocrd", "ip", tb_serveradd.Text);
-                PreviousRecordValue("previousreocrd", "port", tb_port.Text);
-                PreviousRecordValue("previousreocrd", "name", tb_name.Text);
+                RecordValue("ipList", "ip", tb_serveradd.Text);
+                RecordValue("portList", "port", tb_port.Text);
+                RecordValue("userNameList", "userName", tb_name.Text);
+                RecordValue("appGuidList", "appGuid", tb_appGuid.Text);
+                PreviousRecordValue("previousrecord", "ip", tb_serveradd.Text);
+                PreviousRecordValue("previousrecord", "port", tb_port.Text);
+                PreviousRecordValue("previousrecord", "userName", tb_name.Text);
+                PreviousRecordValue("previousrecord", "appGuid", tb_appGuid.Text);
                 
               
             }
@@ -329,16 +342,20 @@ namespace VideoChatClient
                 string rVal = rElem.GetAttribute("value");
                 switch (rAttribute)
                 {
-                    case "ips":
+                    case "ipList":
                         if (rVal == tb_serveradd.Text)
                             i = 1;
                         break;
-                    case "ports":
+                    case "portList":
                         if (rVal == tb_port.Text)
                             i = 1;
                         break;
-                    case "names":
+                    case "userNameList":
                         if (rVal == tb_name.Text)
+                            i = 1;
+                        break;
+                    case "appGuidList":
+                        if (rVal == tb_appGuid.Text)
                             i = 1;
                         break;
                 }
@@ -397,23 +414,25 @@ namespace VideoChatClient
 
         private void LoadRecordTrace()
         {
-         
-            DisplayVal(tb_serveradd, "ips");
-            DisplayVal(tb_port, "ports");
-            DisplayVal(tb_name, "names");
-            string[] record = getPreviousRecord("previousreocrd");
+
+            DisplayVal(tb_serveradd, "ipList");
+            DisplayVal(tb_port, "portList");
+            DisplayVal(tb_name, "userNameList");
+            DisplayVal(tb_appGuid, "appGuidList");
+            string[] record = getPreviousRecord("previousrecord");
             if (record != null)
             {
                 tb_serveradd.Text = record[0];
                 tb_port.Text = record[1];
                 tb_name.Text = record[2];
+                tb_appGuid.Text = record[3];
             }
             
 
         }
         private String[] getPreviousRecord(string rAttribute)
         {
-            string[] record = new string[3];
+            string[] record = new string[4];
             XmlNode rMainNode = mXmlDoc.SelectSingleNode("settings");
             XmlNode rNode = rMainNode.SelectSingleNode(rAttribute);
             XmlNodeList rList = rNode.ChildNodes;
@@ -432,8 +451,11 @@ namespace VideoChatClient
                     case "port":
                         record[1] = rVal;
                         break;
-                    case "name":
+                    case "userName":
                         record[2] = rVal;
+                        break;
+                    case "appGuid":
+                        record[3] = rVal;
                         break;
                 }
             }
@@ -472,20 +494,23 @@ namespace VideoChatClient
                 rMainNode.IsEmpty = false;
                 xmldoc.AppendChild(rMainNode);
 
-                XmlElement rIp = xmldoc.CreateElement("", "ips", "");
+                XmlElement rIp = xmldoc.CreateElement("", "ipList", "");
                 rIp.IsEmpty = false;
                 rMainNode.AppendChild(rIp);
 
-                XmlElement rPort = xmldoc.CreateElement("", "ports", "");
+                XmlElement rPort = xmldoc.CreateElement("", "portList", "");
                 rPort.IsEmpty = false;
                 rMainNode.AppendChild(rPort);
 
-                XmlElement rName = xmldoc.CreateElement("", "names", "");
+                XmlElement rName = xmldoc.CreateElement("", "userNameList", "");
                 rName.IsEmpty = false;
                 rMainNode.AppendChild(rName);
 
+                XmlElement rAppGuid = xmldoc.CreateElement("", "appGuidList", "");
+                rAppGuid.IsEmpty = false;
+                rMainNode.AppendChild(rAppGuid);
 
-                XmlElement rPreviousRecord = xmldoc.CreateElement("", "previousreocrd", "");
+                XmlElement rPreviousRecord = xmldoc.CreateElement("", "previousrecord", "");
                 rPreviousRecord.IsEmpty = false;
                 rMainNode.AppendChild(rPreviousRecord);
 

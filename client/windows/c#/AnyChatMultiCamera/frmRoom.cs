@@ -72,7 +72,10 @@ namespace AnyChatMultiCamera
         /// 几列视频窗口(横着几个视频窗口)
         /// </summary>
         private int m_ColUserVideo = 4;
-
+        /// <summary>
+        /// 应用ID
+        /// </summary>
+        private string m_appGuid = string.Empty;
         /// <summary>
         /// 当前选定的远程用户ID
         /// </summary>
@@ -93,7 +96,8 @@ namespace AnyChatMultiCamera
             m_serverIP = connInfo.ServerIP;
             m_port = connInfo.Port;
             m_isOpenRemoteDesktop = connInfo.isOpenRemoteDesktop;
-            
+            m_appGuid = connInfo.AppGuid;
+
             this.m_loginForm = loginForm;
 
             InitializeComponent();
@@ -130,7 +134,10 @@ namespace AnyChatMultiCamera
                 screenCameraCtrl = 1;
                 AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CORESDK_SCREENCAMERACTRL, ref screenCameraCtrl, sizeof(int));
             }
-
+            if (!string.IsNullOrEmpty(m_appGuid))
+            {
+                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, m_appGuid, m_appGuid.Length);
+            }
         }
 
         private void frmRoom_Shown(object sender, EventArgs e)

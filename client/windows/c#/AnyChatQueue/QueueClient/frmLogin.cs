@@ -52,6 +52,10 @@ namespace QueueClient
         /// 身份优先级
         /// </summary>
         public int m_identityPriority = 10;
+        /// <summary>
+        /// 应用ID
+        /// </summary>
+        public string m_appGuid = "";
 
         #endregion
 
@@ -111,6 +115,7 @@ namespace QueueClient
                         addr = cbox_serverIP.Text;
                         port = Convert.ToInt32(cbox_port.Text);
                         m_userName = cbox_userName.Text;
+                        m_appGuid = cbox_appGuid.Text;
                         m_userIdentity = (UserIdentityType)cbox_userIdentity.SelectedIndex;
                         m_identityPriority = Int32.Parse(cbox_identityPriority.Text);
                     }
@@ -125,7 +130,13 @@ namespace QueueClient
                       
                     }
                     SystemSetting.Init(this.Handle);
+                    if (!string.IsNullOrEmpty(m_appGuid))
+                    {
+                        AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, m_appGuid, m_appGuid.Length);
+                    }
                     AnyChatCoreSDK.Connect(addr, port);
+                    RecordLoginTrace();
+
                 }
                 else
                     ShowMessage("用户名不能为空");
@@ -204,7 +215,6 @@ namespace QueueClient
                     {
                         ShowMessage("登录AnyChat系统成功");
                         m_userId = m.WParam.ToInt32();//保存当前ID
-                        RecordLoginTrace();
                         hallForm = null;
                         //hallForm = new Hall(m_userId, cbox_userIdentity.Text);
                         hallForm = new frmHall(m_userId, m_userName, m_userIdentity, m_identityPriority, this);
@@ -298,19 +308,21 @@ namespace QueueClient
                 RecordValue("ip", "ip", cbox_serverIP.Text);
                 RecordValue("port", "port", cbox_port.Text);
                 RecordValue("userName", "userName", cbox_userName.Text);
+                RecordValue("appGuid", "appGuid", cbox_appGuid.Text);
                 //RecordValue("userIdentity", "userIdentity", cbox_userIdentity.SelectedIndex.ToString());
                 //RecordValue("identityPriority", "identityPriority", cbox_identityPriority.SelectedIndex.ToString());
 
-                PreviousRecordValue("previousreocrd", "ip", cbox_serverIP.Text);
-                PreviousRecordValue("previousreocrd", "port", cbox_port.Text);
-                PreviousRecordValue("previousreocrd", "userName", cbox_userName.Text);
-                PreviousRecordValue("previousreocrd", "userIdentity", cbox_userIdentity.Text);
-                PreviousRecordValue("previousreocrd", "identityPriority", cbox_identityPriority.Text);
+                PreviousRecordValue("previousrecord", "ip", cbox_serverIP.Text);
+                PreviousRecordValue("previousrecord", "port", cbox_port.Text);
+                PreviousRecordValue("previousrecord", "userName", cbox_userName.Text);                
+                PreviousRecordValue("previousrecord", "userIdentity", cbox_userIdentity.Text);
+                PreviousRecordValue("previousrecord", "identityPriority", cbox_identityPriority.Text);
+                PreviousRecordValue("previousrecord", "appGuid", cbox_appGuid.Text);
                               
             }
             catch (Exception ex)
             {
-
+                Log.SetLog("QueueClient.Login.RecordLoginTrace       RecordLoginTrace：" + ex.Message.ToString());
             }
         }
         private void RecordValue(string rAttribute, string rN, string rValue)
@@ -343,6 +355,10 @@ namespace QueueClient
                         break;
                     case "identityPriority":
                         if (rVal == cbox_identityPriority.Text)
+                            i = 1;
+                        break;
+                    case "appGuid":
+                        if (rVal == cbox_appGuid.Text)
                             i = 1;
                         break;
                 }
@@ -405,10 +421,11 @@ namespace QueueClient
             DisplayVal(cbox_serverIP, "ip");
             DisplayVal(cbox_port, "port");
             DisplayVal(cbox_userName, "userName");
+            DisplayVal(cbox_appGuid, "appGuid");
             //DisplayVal(cbox_userIdentity, "userIdentity");
             //DisplayVal(cbox_identityPriority, "identityPriority");
 
-            string[] record = getPreviousRecord("previousreocrd");
+            string[] record = getPreviousRecord("previousrecord");
             if (record != null)
             {
                 cbox_serverIP.Text = record[0];
@@ -416,12 +433,13 @@ namespace QueueClient
                 cbox_userName.Text = record[2];
                 cbox_userIdentity.Text = record[3];
                 cbox_identityPriority.Text = record[4];
+                cbox_appGuid.Text = record[5];
             }
           
         }
         private String[] getPreviousRecord(string rAttribute)
         {
-            string[] record = new string[5];
+            string[] record = new string[6];
             XmlNode rMainNode = mXmlDoc.SelectSingleNode("settings");
             XmlNode rNode = rMainNode.SelectSingleNode(rAttribute);
             XmlNodeList rList = rNode.ChildNodes;
@@ -449,6 +467,10 @@ namespace QueueClient
                     case "identityPriority":
                         record[4] = rVal;
                         break;
+                    case "appGuid":
+                        record[5] = rVal;
+                        break;
+
                 }
             }
             if (bExists)
@@ -523,7 +545,11 @@ namespace QueueClient
                 //rUserIdentity.IsEmpty = false;
                 //rMainNode.AppendChild(rIdentityPriority);
 
-                XmlElement rPreviousRecord = xmldoc.CreateElement("", "previousreocrd", "");
+                XmlElement rAppGuid = xmldoc.CreateElement("", "appGuid", "");
+                rAppGuid.IsEmpty = false;
+                rMainNode.AppendChild(rAppGuid);
+
+                XmlElement rPreviousRecord = xmldoc.CreateElement("", "previousrecord", "");
                 rPreviousRecord.IsEmpty = false;
                 rMainNode.AppendChild(rPreviousRecord);
 
