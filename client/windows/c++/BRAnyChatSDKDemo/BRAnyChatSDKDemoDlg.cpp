@@ -527,7 +527,16 @@ void CBRAnyChatSDKDemoDlg::OnButtonEnterRoom()
 
 void CBRAnyChatSDKDemoDlg::OnButtonLeaveRoom() 
 {
-	BRAC_LeaveRoom(1);
+	BRAC_LeaveRoom(m_iRoomId);
+
+	for(INT i=0; i<DEMO_SHOW_USER_NUM; i++)
+	{
+		if(m_iUserID[i] != -1)
+		{
+			//刷新显示区域，用于清除残留画面
+			InvalidateRect(m_UserRect[i]);
+		}
+	}
 	
 	// 保留自己的userid，因为这儿只是leaveroom，并非logout
 	for(INT i=1; i<DEMO_SHOW_USER_NUM; i++)
@@ -705,7 +714,7 @@ LRESULT CBRAnyChatSDKDemoDlg::OnGVClientUserAtRoom(WPARAM wParam, LPARAM lParam)
 		INT site = -1;
 		for(INT i=1; i<DEMO_SHOW_USER_NUM; i++)
 		{
-			if(m_iUserID[i] == -1)
+			if(-1 == m_iUserID[i])
 			{
 				site = i;
 				break;
@@ -728,6 +737,9 @@ LRESULT CBRAnyChatSDKDemoDlg::OnGVClientUserAtRoom(WPARAM wParam, LPARAM lParam)
 			if(m_iUserID[i] == userid)
 			{
 				m_iUserID[i] = -1;
+
+				//刷新显示区域，用于清除残留画面
+				InvalidateRect(m_UserRect[i]);
 				break;
 			}
 		}

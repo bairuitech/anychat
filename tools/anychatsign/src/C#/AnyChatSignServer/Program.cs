@@ -50,7 +50,7 @@ namespace AnyChatSignServer
             }
             catch (Exception e)
             {
-                System.Console.WriteLine("AnyChatSignServer has exception, message: " + e.Message);
+                System.Console.WriteLine("AnyChatSignServer has exception, message: " + e.StackTrace);
             }
             
             System.Console.WriteLine("=============按字母“Q”键退出！=============");
@@ -81,7 +81,7 @@ namespace AnyChatSignServer
                 Response(context.Response, reqResult);
             }
             catch(Exception ex) {
-                System.Console.WriteLine("AnyChatSignServer has exception, message: " + ex.Message);
+                System.Console.WriteLine("AnyChatSignServer has exception, message: " + ex.StackTrace);
                
             }
         }
@@ -257,7 +257,7 @@ namespace AnyChatSignServer
             }
             catch (Exception e)
             {
-                System.Console.WriteLine("AnyChatSignServer has exception, message: " + e.Message);
+                System.Console.WriteLine("AnyChatSignServer has exception, message: " + e.StackTrace);
                 retVal = JsonConvert.SerializeObject(new { errorcode = -99, timestamp = 0, sigStr = "" });
                 return retVal;
             }

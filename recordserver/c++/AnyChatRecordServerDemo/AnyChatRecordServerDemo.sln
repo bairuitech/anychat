@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnyChatRecordServerDemo", "AnyChatRecordServerDemo.vcproj", "{5436DC15-8955-44D3-B8EF-94D1122A5E3C}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnyChatRecordServerDemo", "AnyChatRecordServerDemo.vcxproj", "{5436DC15-8955-44D3-B8EF-94D1122A5E3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
