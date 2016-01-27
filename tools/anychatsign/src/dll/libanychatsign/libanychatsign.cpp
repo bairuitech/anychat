@@ -36,7 +36,7 @@ char *_strupr_s(char *str, int size)
 
 
 // 对应用接入信息使用私钥进行签名
-int AnyChatRsaSign(int dwUserId, const char* lpAppId, const char* lpPrivateKey, char* lpOutSigStr, int dwSigStrSize, int& dwTimeStamp)
+int AnyChatRsaSign(int dwUserId, const char* lpStrUserId, const char* lpAppId, const char* lpPrivateKey, char* lpOutSigStr, int dwSigStrSize, int& dwTimeStamp)
 {
 	int ret = -1;
 	RSA* lpRsa = NULL;
@@ -48,7 +48,10 @@ int AnyChatRsaSign(int dwUserId, const char* lpAppId, const char* lpPrivateKey, 
 		char szMessage[1024] = {0};
 		dwTimeStamp = (int)time(NULL);
 		_strupr_s((char*)lpAppId, strlen(lpAppId)+1);
-		_snprintf(szMessage, sizeof(szMessage), "{\"id\":%d, \"appid\":%s, \"timestamp\":%d}", dwUserId, lpAppId, dwTimeStamp);
+		char szStrUserId[200] = {0};
+		if(lpStrUserId && strlen(lpStrUserId))
+			_snprintf(szStrUserId, sizeof(szStrUserId), "%s", lpStrUserId);
+		_snprintf(szMessage, sizeof(szMessage), "{\"id\":%d, \"strid\":%s, \"appid\":%s, \"timestamp\":%d}", dwUserId, szStrUserId, lpAppId, dwTimeStamp);
 		unsigned char md5value[MD5_DIGEST_LENGTH] = {0};
 		MD5((unsigned char*)szMessage, strlen(szMessage), md5value);
 		//由公钥内存字符串转化为openssl的RSA结构
@@ -79,7 +82,7 @@ int AnyChatRsaSign(int dwUserId, const char* lpAppId, const char* lpPrivateKey, 
 }
 
 // 对应用接入信息签名使用公钥进行验证
-int AnyChatRsaVerify(int dwUserId, const char* lpAppId, const char* lpSigStr, int dwTimeStamp, const char* lpPublicKey)
+int AnyChatRsaVerify(int dwUserId, const char* lpStrUserId, const char* lpAppId, const char* lpSigStr, int dwTimeStamp, const char* lpPublicKey)
 {
 	int ret = -1;
 	RSA* lpRsa = NULL;
@@ -90,7 +93,10 @@ int AnyChatRsaVerify(int dwUserId, const char* lpAppId, const char* lpSigStr, in
 			break;
 		char szMessage[1024] = {0};
 		_strupr_s((char*)lpAppId, strlen(lpAppId)+1);
-		_snprintf(szMessage, sizeof(szMessage), "{\"id\":%d, \"appid\":%s, \"timestamp\":%d}", dwUserId, lpAppId, dwTimeStamp);
+		char szStrUserId[200] = {0};
+		if(lpStrUserId && strlen(lpStrUserId))
+			_snprintf(szStrUserId, sizeof(szStrUserId), "%s", lpStrUserId);
+		_snprintf(szMessage, sizeof(szMessage), "{\"id\":%d, \"strid\":%s, \"appid\":%s, \"timestamp\":%d}", dwUserId, szStrUserId, lpAppId, dwTimeStamp);
 		std::string sigstr_orig = base64_decode(lpSigStr);
 		unsigned char md5value[MD5_DIGEST_LENGTH] = {0};
 		MD5((unsigned char*)szMessage, strlen(szMessage), md5value);

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <string>
-#include "libanychatsign.h"
+#include "include/libanychatsign.h"
 
 // 命令参数描述与示例
 void usage(void)
@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 	{
 		char szSigStr[1024]= {0};
 		timestamp = 0;
-		int errorcode = AnyChatRsaSign(userid, appid.c_str(), szKeyBuf, szSigStr, sizeof(szSigStr), timestamp);
+		int errorcode = AnyChatRsaSign(userid, "", appid.c_str(), szKeyBuf, szSigStr, sizeof(szSigStr), timestamp);
 		printf("RSA sign result, errorcode:%d, \r\n\ttimestamp:%d, \r\n\tsigstr:%s\r\n", errorcode, timestamp, szSigStr);
 
 		if (sigfile.length()){
@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
 			return 0;
 		}
 
-		int errorcode = AnyChatRsaVerify(userid, appid.c_str(), szSignBuf, timestamp, szKeyBuf);
+		int errorcode = AnyChatRsaVerify(userid, "", appid.c_str(), szSignBuf, timestamp, szKeyBuf);
 		printf("RSA verify result, errorcode:%d", errorcode);
 	}
 	return 0;

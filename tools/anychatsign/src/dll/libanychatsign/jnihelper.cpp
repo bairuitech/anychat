@@ -24,8 +24,10 @@ static const char* kAnyChatSignPathName		=	"com/bairuitech/anychat/AnyChatSign";
 
 
 // 对应用接入信息使用私钥进行签名
-JNIEXPORT jint JNICALL jniAnyChatRsaSign(JNIEnv* env, jobject clazz, jint dwUserId, jstring lpAppId, jstring lpPrivateKey, jobject result)
+JNIEXPORT jint JNICALL jniAnyChatRsaSign(JNIEnv* env, jobject clazz, jint dwUserId, jstring lpStrUserId, jstring lpAppId, jstring lpPrivateKey, jobject result)
 {
+	char szStrUserId[200] = {0};
+	CJniUtils::ConvertUnicode2Mbcs(env, lpStrUserId, szStrUserId, sizeof(szStrUserId));
 	char szAppId[100] = {0};
 	CJniUtils::ConvertUnicode2Mbcs(env, lpAppId, szAppId, sizeof(szAppId));
 	char szPrivateKey[1024] = {0};
@@ -33,7 +35,7 @@ JNIEXPORT jint JNICALL jniAnyChatRsaSign(JNIEnv* env, jobject clazz, jint dwUser
 
 	int timestamp = 0;
 	char szOutBuf[1024] = {0};
-	int errorcode = AnyChatRsaSign(dwUserId, szAppId, szPrivateKey, szOutBuf, sizeof(szOutBuf), timestamp);
+	int errorcode = AnyChatRsaSign(dwUserId, szStrUserId, szAppId, szPrivateKey, szOutBuf, sizeof(szOutBuf), timestamp);
 	if(errorcode == 0)
 	{
 		CJniOutParamHelper::SetIntValue(timestamp, result);
@@ -43,8 +45,10 @@ JNIEXPORT jint JNICALL jniAnyChatRsaSign(JNIEnv* env, jobject clazz, jint dwUser
 }
 
 // 对应用接入信息签名使用公钥进行验证
-JNIEXPORT jint JNICALL jniAnyChatRsaVerify(JNIEnv* env, jobject clazz, jint dwUserId, jstring lpAppId, jstring lpSigStr, jint dwTimeStamp, jstring lpPublicKey)
+JNIEXPORT jint JNICALL jniAnyChatRsaVerify(JNIEnv* env, jobject clazz, jint dwUserId, jstring lpStrUserId, jstring lpAppId, jstring lpSigStr, jint dwTimeStamp, jstring lpPublicKey)
 {
+	char szStrUserId[200] = {0};
+	CJniUtils::ConvertUnicode2Mbcs(env, lpStrUserId, szStrUserId, sizeof(szStrUserId));
 	char szAppId[100] = {0};
 	CJniUtils::ConvertUnicode2Mbcs(env, lpAppId, szAppId, sizeof(szAppId));
 	char szSigStr[1024] = {0};
@@ -52,13 +56,13 @@ JNIEXPORT jint JNICALL jniAnyChatRsaVerify(JNIEnv* env, jobject clazz, jint dwUs
 	char szPublicKey[1024] = {0};
 	CJniUtils::ConvertUnicode2Mbcs(env, lpPublicKey, szPublicKey, sizeof(szPublicKey));
 
-	return AnyChatRsaVerify(dwUserId, szAppId, szSigStr, dwTimeStamp, szPublicKey);
+	return AnyChatRsaVerify(dwUserId, szStrUserId, szAppId, szSigStr, dwTimeStamp, szPublicKey);
 }
 
 
 static JNINativeMethod gMethods[] = {
-	{ "RsaSign", "(ILjava/lang/String;Ljava/lang/String;Lcom/bairuitech/anychat/AnyChatOutParam;)I", (void*)jniAnyChatRsaSign },
-	{ "RsaVerify", "(ILjava/lang/String;Ljava/lang/String;ILjava/lang/String;)I", (void*)jniAnyChatRsaVerify },
+	{ "RsaSign", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/bairuitech/anychat/AnyChatOutParam;)I", (void*)jniAnyChatRsaSign },
+	{ "RsaVerify", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)I", (void*)jniAnyChatRsaVerify },
 };
 
 

@@ -14,9 +14,9 @@
 
 
 // 对应用接入信息使用私钥进行签名
-DLL_EXPORT_API int AnyChatRsaSign(int dwUserId, const char* lpAppId, const char* lpPrivateKey, char* lpOutSigStr, int dwSigStrSize, int& dwTimeStamp);
+DLL_EXPORT_API int AnyChatRsaSign(int dwUserId, const char* lpStrUserId, const char* lpAppId, const char* lpPrivateKey, char* lpOutSigStr, int dwSigStrSize, int& dwTimeStamp);
 // 对应用接入信息签名使用公钥进行验证
-DLL_EXPORT_API int AnyChatRsaVerify(int dwUserId, const char* lpAppId, const char* lpSigStr, int dwTimeStamp, const char* lpPublicKey);
+DLL_EXPORT_API int AnyChatRsaVerify(int dwUserId, const char* lpStrUserId, const char* lpAppId, const char* lpSigStr, int dwTimeStamp, const char* lpPublicKey);
 
 
 
