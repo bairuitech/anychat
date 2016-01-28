@@ -28,17 +28,17 @@ else
 endif
 
 INC_RELEASE = $(INC) -Iinclude
-CFLAGS_RELEASE = $(CFLAGS) -O2 -fPIC
+CFLAGS_RELEASE = $(CFLAGS) -O2
 RESINC_RELEASE = $(RESINC)
 RCFLAGS_RELEASE = $(RCFLAGS)
 LIBDIR_RELEASE = $(LIBDIR)
-LIB_RELEASE = $(LIB)-ldl -lssl -lcrypto
-LDFLAGS_RELEASE = $(LDFLAGS) -s
+LIB_RELEASE = $(LIB)-ldl -lanychatsign
+LDFLAGS_RELEASE = $(LDFLAGS) -s -Wl,-rpath .
 OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
-OUT_RELEASE = ./linux/Release/libanychatsign.so
+OUT_RELEASE = ./linux/Release/anychatsign
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)/jnihelper.o $(OBJDIR_RELEASE)/libanychatsign.o
+OBJ_RELEASE = $(OBJDIR_RELEASE)/anychatsign.o
 
 all: release
 
@@ -53,13 +53,10 @@ after_release:
 release: before_release out_release after_release
 
 out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
-	$(LD) -shared $(LIBDIR_RELEASE) $(OBJ_RELEASE)  -o $(OUT_RELEASE) $(LDFLAGS_RELEASE) $(LIB_RELEASE)
+	$(LD) $(LIBDIR_RELEASE) -o $(OUT_RELEASE) $(OBJ_RELEASE)  $(LDFLAGS_RELEASE) $(LIB_RELEASE)
 
-$(OBJDIR_RELEASE)/jnihelper.o: jnihelper.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c jnihelper.cpp -o $(OBJDIR_RELEASE)/jnihelper.o
-
-$(OBJDIR_RELEASE)/libanychatsign.o: libanychatsign.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c libanychatsign.cpp -o $(OBJDIR_RELEASE)/libanychatsign.o
+$(OBJDIR_RELEASE)/anychatsign.o: anychatsign.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c anychatsign.cpp -o $(OBJDIR_RELEASE)/anychatsign.o
 
 clean_release: 
 	rm -f $(OBJ_RELEASE) $(OUT_RELEASE)

@@ -46,7 +46,9 @@ int AnyChatRsaSign(int dwUserId, const char* lpStrUserId, const char* lpAppId, c
 		if(!lpAppId || !strlen(lpAppId) || !lpPrivateKey || !strlen(lpPrivateKey) || !lpOutSigStr || !dwSigStrSize)
 			break;
 		char szMessage[1024] = {0};
-		dwTimeStamp = (int)time(NULL);
+		time_t tNow = time(NULL);
+		struct tm *gmt = gmtime(&tNow);		// 采用格林威治(GMT)时间
+		dwTimeStamp = (int)mktime(gmt);
 		_strupr_s((char*)lpAppId, strlen(lpAppId)+1);
 		char szStrUserId[200] = {0};
 		if(lpStrUserId && strlen(lpStrUserId))
