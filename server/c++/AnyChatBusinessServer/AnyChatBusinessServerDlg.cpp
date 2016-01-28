@@ -5,8 +5,8 @@
 #include "AnyChatBusinessServer.h"
 #include "AnyChatBusinessServerDlg.h"
 
-#include "AnyChatServerSDK.h"
-#pragma comment(lib,"AnyChatServerSDK.lib")
+#include "../AnyChatServerSDK/include/AnyChatServerSDK.h"
+#pragma comment(lib,"../AnyChatServerSDK/lib/AnyChatServerSDK.lib")
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

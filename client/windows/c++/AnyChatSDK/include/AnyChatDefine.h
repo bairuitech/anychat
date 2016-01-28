@@ -172,6 +172,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_SUPPORTVIDEOCODEC	210	///< 设置支持的视频编码器
 #define BRAC_SO_CORESDK_SUPPORTAUDIOCODEC	211	///< 设置支持的音频编码器
 #define BRAC_SO_CORESDK_DISABLEMEDIACONSUL	212	///< 禁止媒体协商
+#define BRAC_SO_CORESDK_QUERYTIMEOUTTIME	213	///< 信息查询超时时间（参数为：int型，单位：ms，默认值1000）
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -347,6 +348,10 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_VIDEOCLIPMODE_DYNAMIC		4	///< 动态模式，由上层应用根据分辩率来调整显示表面，保持画面不变形
 
 
+// 服务器信息查询常量定义（API：BRAC_QueryInfoFromServer 传入参数）
+#define ANYCHAT_SERVERQUERY_USERIDBYNAME	1	///< 根据用户昵称查询用户ID
+#define ANYCHAT_SERVERQUERY_USERIDBYSTRID	2	///< 根据字符串ID查询用户ID
+#define ANYCHAT_SERVERQUERY_STRIDBYUSERID	3	///< 根据用户ID查询字符串ID
 
 
 
