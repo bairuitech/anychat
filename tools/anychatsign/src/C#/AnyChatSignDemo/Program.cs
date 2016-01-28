@@ -34,7 +34,7 @@ namespace AnyChatSignDemo
                     "XhEWHAjk7e0ruSxRbwIDAQAB\r" +
                     "\n-----END PUBLIC KEY-----\n";
 
-            int userid = -1;
+            int userid = 1001;
 
             //应用Id
             String appid = "CED78A73-134B-4403-9992-83B79702C4A0";
@@ -47,10 +47,14 @@ namespace AnyChatSignDemo
             int signStrSize = 1024;
             StringBuilder outSignStr = new StringBuilder(signStrSize);
 
+            string strUserId = "abc123";
+            StringBuilder sbUserId = new StringBuilder();
+            sbUserId.Append(strUserId);
+
             try
             {                
                 int timeStamp = 0;
-                int errorcode = AnyChatSign.AnyChatRsaSign(userid, sbAppId, sbPrivateKey, outSignStr, signStrSize, ref timeStamp);
+                int errorcode = AnyChatSign.AnyChatRsaSign(userid, sbUserId, sbAppId, sbPrivateKey, outSignStr, signStrSize, ref timeStamp);
                 if (errorcode == 0)
                 {
                     string signStr = outSignStr.ToString();
@@ -60,7 +64,7 @@ namespace AnyChatSignDemo
                     StringBuilder sbPublicKey = new StringBuilder();
                     sbPublicKey.Append(publickey);
 
-                    errorcode = AnyChatSign.AnyChatRsaVerify(userid, sbAppId, outSignStr, timeStamp, sbPublicKey);
+                    errorcode = AnyChatSign.AnyChatRsaVerify(userid, sbUserId, sbAppId, outSignStr, timeStamp, sbPublicKey);
                     System.Console.WriteLine("2. rsa verify result, errorcode: " + errorcode);
 
                 }

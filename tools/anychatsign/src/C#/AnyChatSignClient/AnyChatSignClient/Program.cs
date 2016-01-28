@@ -15,31 +15,38 @@ namespace AnyChatSignClient
         {
             Console.WriteLine("请选择Http协议1.Http、2.Https(默认：Http)：");
             string httpProtocol = "http://";
-            if (Console.ReadKey().Key == ConsoleKey.D2)
+            string K2 = Console.ReadLine();
+            if (K2 == "2")
                 httpProtocol = "https://";
 
             Console.WriteLine("请输入签名服务器IP(默认：127.0.0.1)：");
-            string serverIP = "127.0.0.1";
-            if (Console.ReadKey().Key != ConsoleKey.Enter)
-                serverIP = Console.ReadLine();
+            string serverIP = Console.ReadLine();
+            if (string.IsNullOrEmpty(serverIP))
+                serverIP = "127.0.0.1";
 
             Console.WriteLine("请输入签名服务器端口（默认：8980）：");
-            string serverPort = ((int)8980).ToString();
-            if (Console.ReadKey().Key != ConsoleKey.Enter)
-                serverPort = Console.ReadLine();
+            string serverPort = Console.ReadLine();
+            if (string.IsNullOrEmpty(serverPort))
+            {
+                serverPort = ((int)8980).ToString();                           
+            }
 
             //签名服务器Url
-            string signServerUrl = httpProtocol + serverIP + ":" + serverPort;
+            string signServerUrl = httpProtocol + serverIP + ":" + serverPort + "/";
 
             Console.WriteLine("请输入用户Id(userId)：(默认：10001）：");
-            string userId = "1001";
-            if (Console.ReadKey().Key != ConsoleKey.Enter)
-                userId = Console.ReadLine();
+            string userId = Console.ReadLine();
+            if (string.IsNullOrEmpty(userId))
+            {
+                userId = "1001";                
+            }
 
             Console.WriteLine("请输入应用Id(appId)(默认：0B22DFBA-F559-40FC-B584-FAB11380BE7D)：");
-            string appId = "0B22DFBA-F559-40FC-B584-FAB11380BE7D";
-            if (Console.ReadKey().Key != ConsoleKey.Enter)
-                appId = Console.ReadLine();
+            string appId = Console.ReadLine();
+            if (string.IsNullOrEmpty(appId))
+            {
+                appId = "0B22DFBA-F559-40FC-B584-FAB11380BE7D";                
+            }
 
             //传入请求参数
             string reqParam = "userId=" + userId + "&appId=" + appId;

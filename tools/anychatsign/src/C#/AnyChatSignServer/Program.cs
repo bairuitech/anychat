@@ -222,9 +222,9 @@ namespace AnyChatSignServer
         {
             string retVal = "";
 
-            int userid = -1;
-            int.TryParse(userId, out userid);
-
+            int iUserId = -1;
+            int.TryParse(userId, out iUserId);
+            
             //应用Id
             String appid = appId;
             StringBuilder sbPrivateKey = new StringBuilder();
@@ -241,7 +241,20 @@ namespace AnyChatSignServer
                 int timeStamp = 0;
                 string signStr = string.Empty;
 
-                int errorcode = AnyChatSign.AnyChatRsaSign(userid, sbAppId, sbPrivateKey, outSignStr, signStrSize, ref timeStamp);
+                int errorcode = -1;
+
+                StringBuilder sbUserId = new StringBuilder();
+
+                if (iUserId == 0)
+                {
+                    sbUserId.Append(userId);
+                    errorcode = AnyChatSign.AnyChatRsaSign(0, sbUserId, sbAppId, sbPrivateKey, outSignStr, signStrSize, ref timeStamp);
+                }
+                else
+                {
+                    sbUserId.Append(string.Empty);
+                    errorcode = AnyChatSign.AnyChatRsaSign(iUserId, sbUserId, sbAppId, sbPrivateKey, outSignStr, signStrSize, ref timeStamp);
+                }
                 if (errorcode == 0)
                 {
                     signStr = outSignStr.ToString();
