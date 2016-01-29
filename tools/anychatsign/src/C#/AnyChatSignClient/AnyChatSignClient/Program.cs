@@ -34,11 +34,19 @@ namespace AnyChatSignClient
             //签名服务器Url
             string signServerUrl = httpProtocol + serverIP + ":" + serverPort + "/";
 
-            Console.WriteLine("请输入用户Id(userId)：(默认：10001）：");
+            Console.WriteLine("请输入整数型用户Id(userId)：(默认：10001）：");
             string userId = Console.ReadLine();
             if (string.IsNullOrEmpty(userId))
             {
                 userId = "1001";                
+            }
+
+
+            Console.WriteLine("请输入字符串用户Id(userId)：(默认：\"\"）：");
+            string strUserId = Console.ReadLine();
+            if (string.IsNullOrEmpty(userId))
+            {
+                userId = "";
             }
 
             Console.WriteLine("请输入应用Id(appId)(默认：0B22DFBA-F559-40FC-B584-FAB11380BE7D)：");
@@ -49,7 +57,7 @@ namespace AnyChatSignClient
             }
 
             //传入请求参数
-            string reqParam = "userId=" + userId + "&appId=" + appId;
+            string reqParam = "userId=" + userId + "&strUserId=" + strUserId + "&appId=" + appId;
             string responseResult = HttpPost(signServerUrl, reqParam);
 
             if (!String.IsNullOrEmpty(responseResult))

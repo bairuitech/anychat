@@ -50,7 +50,7 @@ namespace AnyChatSignServer
             }
             catch (Exception e)
             {
-                System.Console.WriteLine("AnyChatSignServer has exception, message: " + e.StackTrace);
+                System.Console.WriteLine("AnyChatSignServer has exception, message: " + e.Message + Environment.NewLine + e.StackTrace);
             }
             
             System.Console.WriteLine("=============按字母“Q”键退出！=============");
@@ -81,7 +81,7 @@ namespace AnyChatSignServer
                 Response(context.Response, reqResult);
             }
             catch(Exception ex) {
-                System.Console.WriteLine("AnyChatSignServer has exception, message: " + ex.StackTrace);
+                System.Console.WriteLine("AnyChatSignServer has exception, message: " + ex.Message + Environment.NewLine + ex.StackTrace);
                
             }
         }
@@ -107,7 +107,7 @@ namespace AnyChatSignServer
                 //POST请求后的响应格式为：{"errorcode":0, "timestamp":1452934106, "sigStr":"xxx"}
                 if (!request.HasEntityBody)
                 {
-                    reqResult = JsonConvert.SerializeObject(new { errorcode = 218, timestamp = 0, sigStr = "" });
+                    reqResult =   JsonConvert.SerializeObject(new { errorcode = 218, timestamp = 0, sigStr = "" });
                     return reqResult;
                 }
                 //POST请求处理
@@ -117,7 +117,7 @@ namespace AnyChatSignServer
                 string reqParam = Encoding.Default.GetString(currentChunk).Replace("", "");
 
                 //在实际生产环境中可以考虑将AppId放在服务端，在ini文件中参数项来配置
-                if (reqParam.ToUpper().IndexOf("USERID") < 0 || reqParam.ToUpper().IndexOf("APPID") < 0)
+                if (reqParam.ToUpper().IndexOf("USERID") < 0 || reqParam.ToUpper().IndexOf("APPID") < 0 || reqParam.ToUpper().IndexOf("STRUSERID") < 0)
                 {
                     //传入的参数值有错误
                     reqResult = JsonConvert.SerializeObject(new { errorcode = 219, timestamp = 0, sigStr = "" });
@@ -127,7 +127,8 @@ namespace AnyChatSignServer
 
                 //处理请求参数
                 string[] reqParamArray = null;
-                string userId = "0";
+                int iUserId = -1;
+                string strUserId = string.Empty;
                 string appId = string.Empty;
 
                 if (reqParam.IndexOf('&') > 0){
@@ -142,11 +143,20 @@ namespace AnyChatSignServer
                 for (int i = 0; i < reqParamArray.Length; i++)
                 {
                     string param = reqParamArray[i].ToString().ToUpper();
-                    if (param.IndexOf("USERID") >= 0)
+                    string paramName = param.Substring(0, param.ToString().IndexOf("="));
+                    if (paramName.Equals("USERID"))
                     {
-                        userId = reqParamArray[i].ToString().Substring(param.ToString().IndexOf("=") + 1);
+                        string sUserId = reqParamArray[i].ToString().Substring(param.ToString().IndexOf("=") + 1).ToString();
+                        if (iUserId == -1)
+                        {
+                            Int32.TryParse(sUserId, out iUserId);
+                        }
                     }
-                    if (param.IndexOf("APPID") >= 0)
+                    if (paramName.Equals("STRUSERID"))
+                    {
+                        strUserId = reqParamArray[i].ToString().Substring(param.ToString().IndexOf("=") + 1);
+                    }
+                    if (paramName.Equals("APPID"))
                     {
                         appId = reqParamArray[i].ToString().Substring(param.ToString().IndexOf("=") + 1);
                     }
@@ -156,7 +166,7 @@ namespace AnyChatSignServer
                 if (FileHelper.IsExistFile(privateKeyFilePath))
                 {
                     string privateKey = FileHelper.FileToString(privateKeyFilePath);
-                    reqResult = getRsaSign(userId, appId, privateKey);
+                    reqResult = getRsaSign(iUserId, strUserId, appId, privateKey);
                 }
                 else
                 {
@@ -214,17 +224,15 @@ namespace AnyChatSignServer
         /// <summary>
         /// 获取Ras签名
         /// </summary>
-        /// <param name="userId">用户Id</param>
+        /// <param name="userId">用户Id(整形)</param>
+        /// <param name="strUserId">用户Id(字符串)</param>
         /// <param name="appId">应用Id</param>
         /// <param name="privateKey">私钥</param>
         /// <returns></returns>
-        static string getRsaSign(string userId, string appId, string privateKey)
+        static string getRsaSign(int userId, string strUserId, string appId, string privateKey)
         {
             string retVal = "";
-
-            int iUserId = -1;
-            int.TryParse(userId, out iUserId);
-            
+                        
             //应用Id
             String appid = appId;
             StringBuilder sbPrivateKey = new StringBuilder();
@@ -236,25 +244,16 @@ namespace AnyChatSignServer
             int signStrSize = 1024;
             StringBuilder outSignStr = new StringBuilder(signStrSize);
 
+            StringBuilder sbUserId = new StringBuilder();
+            sbUserId.Append(strUserId);
+
             try
             {
                 int timeStamp = 0;
                 string signStr = string.Empty;
 
                 int errorcode = -1;
-
-                StringBuilder sbUserId = new StringBuilder();
-
-                if (iUserId == 0)
-                {
-                    sbUserId.Append(userId);
-                    errorcode = AnyChatSign.AnyChatRsaSign(0, sbUserId, sbAppId, sbPrivateKey, outSignStr, signStrSize, ref timeStamp);
-                }
-                else
-                {
-                    sbUserId.Append(string.Empty);
-                    errorcode = AnyChatSign.AnyChatRsaSign(iUserId, sbUserId, sbAppId, sbPrivateKey, outSignStr, signStrSize, ref timeStamp);
-                }
+                errorcode = AnyChatSign.AnyChatRsaSign(userId, sbUserId, sbAppId, sbPrivateKey, outSignStr, signStrSize, ref timeStamp);
                 if (errorcode == 0)
                 {
                     signStr = outSignStr.ToString();
@@ -263,14 +262,14 @@ namespace AnyChatSignServer
                 }
                 else
                 {
+
                 }
 
                 retVal = JsonConvert.SerializeObject(new { errorcode = errorcode, timestamp = timeStamp, sigStr = signStr });
-
             }
             catch (Exception e)
             {
-                System.Console.WriteLine("AnyChatSignServer has exception, message: " + e.StackTrace);
+                System.Console.WriteLine("AnyChatSignServer has exception, message: " + e.Message + Environment.NewLine + e.StackTrace );
                 retVal = JsonConvert.SerializeObject(new { errorcode = -99, timestamp = 0, sigStr = "" });
                 return retVal;
             }

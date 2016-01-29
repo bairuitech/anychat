@@ -9,6 +9,9 @@
 		<label>用户id：</label>
 		<input id="userid" placeholder="请输入用户Id" name="userid" value="1001" autofocus>
 		<br>
+		<label>用户id(字符串)：</label>
+		<input id="strUserid" placeholder="请输入用户Id" name="strUserid" value="" autofocus>
+		<br>
 		<label>应用id：</label>	
 		<input id="appid" placeholder="请输入应用Id" name="appid" value="90A9545C-30F7-4F5A-8B56-9CB111706A24" style="width:300px;margin-top: 5px;"autofocus>			
     	<br>
@@ -18,11 +21,12 @@
     	<script type="text/javascript">
 			function doSign() {
 		        $.ajax( {
-		            url : "http://127.0.0.1:8980",
+		            url : "http://192.168.0.2:8980",
 		            dataType : "json", //传参的数据类型
 		            type : "post", //传参方式，get 或post
 		            data : {
 		                userid : $("#userid").val(), 
+						struserid : $("#strUserid").val(),
 						appid : $("#appid").val()
 		            },
 		            error : function(data) { //若Ajax处理失败后返回的信息
