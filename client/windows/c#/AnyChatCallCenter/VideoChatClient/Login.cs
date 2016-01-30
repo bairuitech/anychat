@@ -11,6 +11,9 @@ using System.Runtime.InteropServices;
 using System.Xml;
 using System.Threading;
 using System.IO;
+using System.Net;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace VideoChatClient
 {
@@ -43,6 +46,11 @@ namespace VideoChatClient
         /// </summary>
         public string m_appGuid = "";
 
+        /// <summary>
+        /// 签名Url
+        /// </summary>
+        public string signUrl = string.Empty;
+
         #endregion
 
         #region 初始化
@@ -60,8 +68,16 @@ namespace VideoChatClient
                 }
                 else
                 {
-                    tb_serveradd.Text = "demo.anychat.cn";
-                    tb_port.Text = "8906";
+                    if (rbtn_normal.Checked)
+                    {
+                        tb_serveradd.Text = "demo.anychat.cn";
+                        tb_port.Text = "8906";
+                    }
+                    if (rbtn_sign.Checked)
+                    {
+                        tb_serveradd.Text = "cluster.anychat.cn";
+                        tb_port.Text = "8102";
+                    }
                 }
 
                 //初始化log日志文件
@@ -86,6 +102,11 @@ namespace VideoChatClient
         //单击登录
         private void btn_login_Click(object sender, EventArgs e)
         {
+            //应用签名
+            string signStr = string.Empty;
+            //签名时间戳
+            int signTimestamp = 0;
+
             try
             {
                 if (tb_name.Text != "")
@@ -110,12 +131,59 @@ namespace VideoChatClient
                       
                     }
                     SystemSetting.Init(this.Handle);
-
-                    if (!string.IsNullOrEmpty(m_appGuid))
+                    //普通登录
+                    if (rbtn_normal.Checked)
                     {
-                        AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, m_appGuid, m_appGuid.Length);
+                        if (!string.IsNullOrEmpty(m_appGuid))
+                        {
+                            AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, m_appGuid, m_appGuid.Length);
+                        }
                     }
+                    //签名登录
+                    if (rbtn_sign.Checked)
+                    {
+                        //向签名服务器发送签名POST请求，获取签名
+                        //在实际应用系统中是需要在登录时输入用户名、密码之后，用户身份验证通过后向签名服务器获取应用签名
+                        
+                        
+                        if (!string.IsNullOrEmpty(m_appGuid))
+                        {
+                            //签名服务器Url，根据实际签名服务器部署情况进行修改
+                            string signServerUrl = signUrl;
+                            //传入请求参数
+                            string reqParam = "userId=" + m_userId + "&strUserId=" + m_userName + "&appId=" + m_appGuid;
+                            string responseResult = HttpPost(signServerUrl, reqParam);
+                            if (!String.IsNullOrEmpty(responseResult))
+                            {
+                                JsonObject jsonObj = ToClass<JsonObject>(responseResult);
+
+                                if (jsonObj.errorcode == 0)
+                                {
+                                    signStr = jsonObj.sigStr;
+                                    signTimestamp = jsonObj.timestamp;
+                                }
+                            }
+                            else
+                            {
+                                Log.SetLog("签名返回空字符串");
+                            }
+                        }
+                    }
+
                     AnyChatCoreSDK.Connect(addr, port);
+
+                    if (rbtn_sign.Checked)
+                    {
+                        
+                        int ret = -1;
+
+                        ret = AnyChatCoreSDK.LoginEx(m_userName, m_userId, m_userName, m_appGuid, signTimestamp, signStr, string.Empty);//登录系统
+                        
+                    }
+                    if (rbtn_normal.Checked)
+                    {
+                        int ret = AnyChatCoreSDK.Login(m_userName, "123", 0);//登录系统
+                    }
                 }
                 else
                     ShowMessage("用户名不能为空");
@@ -170,7 +238,7 @@ namespace VideoChatClient
                     {
                         //透明通道回调
                         SystemSetting.TransBuffer_OnReceive = new TransBufferReceivedHandler(TransBuffer_CallBack);
-                        int ret = AnyChatCoreSDK.Login(m_userName, "123", 0);//登录系统
+                        
                         ShowMessage("连接AnyChat服务器成功,正在登录系统...");
                     }
                     else
@@ -255,7 +323,8 @@ namespace VideoChatClient
                     int wparam = m.WParam.ToInt32();
                     int lparam = m.LParam.ToInt32();
                     ShowMessage("网络断开，ErrorCode：" + wparam.ToString());
-                    hallForm.Hide();
+                    if (hallForm != null)
+                        hallForm.Hide();
                     this.Show();
                     Log.SetLog("WM_GV_LINKCLOSE            响应网络断开,errorcode:=" + lparam );
             }
@@ -323,8 +392,11 @@ namespace VideoChatClient
                 PreviousRecordValue("previousrecord", "port", tb_port.Text);
                 PreviousRecordValue("previousrecord", "userName", tb_name.Text);
                 PreviousRecordValue("previousrecord", "appGuid", tb_appGuid.Text);
-                
-              
+
+                if (String.IsNullOrEmpty(signUrl))
+                {
+                    PreviousRecordValue("previousrecord", "signUrl", signUrl);
+                }                              
             }
             catch (Exception ex)
             {
@@ -426,13 +498,14 @@ namespace VideoChatClient
                 tb_port.Text = record[1];
                 tb_name.Text = record[2];
                 tb_appGuid.Text = record[3];
+                signUrl = record[4];
             }
             
 
         }
         private String[] getPreviousRecord(string rAttribute)
         {
-            string[] record = new string[4];
+            string[] record = new string[5];
             XmlNode rMainNode = mXmlDoc.SelectSingleNode("settings");
             XmlNode rNode = rMainNode.SelectSingleNode(rAttribute);
             XmlNodeList rList = rNode.ChildNodes;
@@ -456,6 +529,9 @@ namespace VideoChatClient
                         break;
                     case "appGuid":
                         record[3] = rVal;
+                        break;
+                    case "signUrl":
+                        record[4] = rVal;
                         break;
                 }
             }
@@ -517,5 +593,85 @@ namespace VideoChatClient
                 xmldoc.Save(mPath);
             }
         }
+
+        /// <summary>
+        /// 将Json字符串转化成对象
+        /// </summary>
+        /// <typeparam name="T">转换的对象类型</typeparam>
+        /// <param name="output">json字符串</param>
+        /// <returns></returns>
+        public static T ToClass<T>(string output)
+        {
+            object result;
+            DataContractJsonSerializer outDs = new DataContractJsonSerializer(typeof(T));
+            using (MemoryStream outMs = new MemoryStream(Encoding.UTF8.GetBytes(output)))
+            {
+                result = outDs.ReadObject(outMs);
+            }
+            return (T)result;
+        }
+
+        /// <summary>  
+        /// POST请求与获取结果  
+        /// </summary>  
+        public static string HttpPost(string Url, string postDataStr)
+        {
+            string retVal = string.Empty;
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                StreamWriter writer = new StreamWriter(request.GetRequestStream(), Encoding.ASCII);
+                writer.Write(postDataStr);
+                writer.Flush();
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string encoding = response.ContentEncoding;
+                if (encoding == null || encoding.Length < 1)
+                {
+                    encoding = "UTF-8"; //默认编码  
+                }
+                StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding(encoding));
+                retVal = reader.ReadToEnd();
+            }
+            catch (Exception ex)
+            {                
+                Log.SetLog("HttpPost has exception, message: " + ex.Message);
+            }
+            return retVal;
+        }
+
+        private void rbtn_sign_Click(object sender, EventArgs e)
+        {
+            if (tb_serveradd.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
+            {
+                tb_serveradd.Text = "cluster.anychat.cn";
+            }
+        }
+
+        private void rbtn_normal_Click(object sender, EventArgs e)
+        {
+            if (tb_serveradd.Text.ToLower().Equals("cluster.anychat.cn") && rbtn_normal.Checked)
+            {
+                tb_serveradd.Text = "demo.anychat.cn";
+            }
+        }
+
     }
+
+    /// <summary>
+    /// 签名信息类
+    /// </summary>
+    [DataContract]
+    class JsonObject
+    {
+        [DataMember]
+        public int errorcode { get; set; }
+        [DataMember]
+        public int timestamp { get; set; }
+        [DataMember]
+        public string sigStr { get; set; }
+    }
+
 }
