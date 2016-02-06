@@ -65,7 +65,7 @@ body
 	line-height:30px; 
 	cursor:pointer;
 	color:#000000;
-	font-family:Î¢ÈíÑÅºÚ;
+	font-family:Î¢ï¿½ï¿½ï¿½Åºï¿½;
 	font-size:13px;
 	float:left;
 	margin-left:40px;
@@ -87,7 +87,7 @@ body
 #Calling
 {
 	text-align:center;
-	font-family:Î¢ÈíÑÅºÚ;
+	font-family:Î¢ï¿½ï¿½ï¿½Åºï¿½;
 	font-size:13px;
 }
 #VersionDiv
@@ -95,7 +95,7 @@ body
 	width:300px;
 	height:20px;
 	position:absolute;
-	font-family:Î¢ÈíÑÅºÚ;
+	font-family:Î¢ï¿½ï¿½ï¿½Åºï¿½;
 	font-size:13px;
 	display:none;
 	z-index:999;
@@ -111,7 +111,7 @@ body
 {
 	width:100%;
 	height:190px;
-	background: url('../images/Others/MainHead.png');
+	background: url('../images/others/MainHead.png');
 }
 #Initiative_Call_Div
 {
@@ -119,7 +119,7 @@ body
 	width:300px;
 	height:170px;
 	position:absolute;
-	background: url('../images/Hall/PrivateChat.png');
+	background: url('../images/hall/PrivateChat.png');
 	display:none;
 }
 #Initiative_Cancel_Button
@@ -129,7 +129,7 @@ body
 	width:80px; 
 	height:30px;
 	line-height:30px;
-	font-family:Î¢ÈíÑÅºÚ;
+	font-family:Î¢ï¿½ï¿½ï¿½Åºï¿½;
 	font-size:13px;
 	margin-left:auto;
 	margin-right:auto;
@@ -140,7 +140,7 @@ body
 	position:absolute;
 	width:300px;
 	height:170px;
-	background: url('../images/Hall/PrivateChat.png');
+	background: url('../images/hall/PrivateChat.png');
 	display:none;
 }
 .Div_HeadPart
@@ -160,7 +160,7 @@ body
 	width:285px; 
 	height:70px; 
 	margin:0px 10px 0px 5px;
-	font-family:Î¢ÈíÑÅºÚ;
+	font-family:Î¢ï¿½ï¿½ï¿½Åºï¿½;
 	font-size:13px;
 
 }

@@ -15,7 +15,8 @@ ol li {
 	position: absolute;
 	width: 100%;
 	text-align: center;
-	margin-top: 50px;
+	/*margin-top: 50px;*/
+	margin-top: 80px;
 
 }
 
@@ -55,7 +56,7 @@ ol li {
 #login_div {
 	width: 320px;
 	margin-left: 350px;
-	padding-top: 25px;
+	/*padding-top: 25px;*/
 }
 
 .wordage {
@@ -175,7 +176,8 @@ ol li {
 	display: block;
 	background-color: #00cae5;
 	padding: 5px 80px;
-	margin-top: 45px;
+	/*margin-top: 45px;*/
+	margin-top: 80px;
 	margin-left: 60px;
 	border: 0;
 	color: white;

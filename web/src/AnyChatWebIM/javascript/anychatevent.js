@@ -120,6 +120,7 @@ function OnAnyChatRoomOnlineUser(dwUserCount, dwRoomId) {
 // 用户进入（离开）房间，dwUserId表示用户ID号，bEnterRoom表示该用户是进入（1）或离开（0）房间
 function OnAnyChatUserAtRoom(dwUserId, bEnterRoom) {
 	if(dwUserId == mTargetUserId && bEnterRoom != 0) {
+		
 		// 请求对方音频、视频
 		BRAC_UserCameraControl(mTargetUserId, 1);
 		BRAC_UserSpeakControl(mTargetUserId, 1);
@@ -244,6 +245,7 @@ function OnAnyChatFriendStatus(dwUserId, dwStatus) {
 	if (dwStatus == 1) {	// 上线
 		DisplayOnLineUser(dwUserId);
 	} else { 				// 下线
-		Getdmo("UserListContent").removeChild(Getdmo("UserID_" + dwUserId));
+		if (Getdmo("UserID_"+dwUserId) != null)
+			Getdmo("UserListContent").removeChild(Getdmo("UserID_"+dwUserId));
 	}
 }

@@ -9,6 +9,7 @@
 <link href="./css/others.css" rel="Stylesheet" />
 <link href="./css/advanceset.css" rel="Stylesheet" />
 <script language="javascript" type="text/javascript" src="./javascript/jquery-1.8.3.min.js" charset="GB2312"></script>
+<script language="javascript" type="text/javascript" src="./javascript/anychat4html5.js" charset="GB2312"></script>
 <script language="javascript" type="text/javascript" src="./javascript/config.js" charset="GB2312"></script>
 <script language="javascript" type="text/javascript" src="./javascript/advanceset.js" charset="GB2312"></script>
 <script language="javascript" type="text/javascript" src="./javascript/videochat.js" charset="GB2312"></script>
@@ -23,7 +24,7 @@
 </head>
 <body onload="LogicInit()" style=" font-family:微软雅黑; margin:0 auto;">
 <div id="Rules" style=" text-align:center;">
-    <div id="Logo_Picture"><img src="./images/Hall/DTLOGO.png" alt="佰锐科技" /></div>
+    <div id="Logo_Picture"><img src="./images/hall/DTLOGO.png" alt="佰锐科技" /></div>
     <div id="LoginHead"></div>
     <div id="Shade_Div"></div>
     <div id="VideoShowDiv"></div>
@@ -57,6 +58,7 @@
                 <div id="mUser_Info_Div">
                     <div id="mUser_Info_Div_UserName">账号：<input type="text" id="txtUserName" /></div>
                     <div id="mUser_Info_Div_PassWord">密码：<input type="password" id="txtPassWord" /></div>
+                    <div class="wordage">登录方式：<input type="radio" id="normal_login" name="login" value="1" checked=”checked” />普通登录 <input type="radio" id="sign_login" name="login" value="2" />签名登录</div>
                     <div id="Login_Div_Btn">
                         <div id="mAdvanceSetting" onclick="DisplaySettingDiv()">高级设置</div>
                         <div id="mLoginBtn" onclick="LoginToHall()">登录</div>
@@ -65,6 +67,7 @@
                 <div id="mServer_Info_Div">
                     <div id="mServer_Info_Div_ServerAddr">地址：<input type="text" id="mDefaultServerAddr" /></div>
                     <div id="mServer_Info_Div_ServerPort">端口：<input type="text" id="mDefaultServerPort" /></div>
+                    <div id="mServer_Info_Div_AppId">应用ID：<input type="text" id="AppGuid" /></div>
                     <div id="mSaveBtn" onclick="SaveServerInfo()">保存</div>
                 </div>
                 <div id="prompt_box_div"></div>
@@ -103,7 +106,7 @@
                 <div id="mTargetPhoto"></div>
                 <div id="mTargetInfo"></div>
                 <div id="Finish_Private_Button">
-                    <img src="./images/Dialog/3b.png" alt="关闭" onclick="FinishDialogue()" />
+                    <img src="./images/dialog/3b.png" alt="关闭" onclick="FinishDialogue()" />
                     <div class="AskToFinishPrivate" id="Enquire_Div"></div>
                 </div>
             </div>
@@ -117,7 +120,7 @@
                     <div id="LeftSide_MiddleButton">
                        <select id="fontfamily" onchange="SetFontFamily()"></select>
                        <select id="fontsize" onchange="SetFontSize()"></select>
-                       <img class="ColorImg" src="./images/Dialog/Color.png" alt="颜色面板" onclick="CorrespondingDiv('DivColor','GetExpression')" />
+                       <img class="ColorImg" src="./images/dialog/Color.png" alt="颜色面板" onclick="CorrespondingDiv('DivColor','GetExpression')" />
                        <img class="ColorImg" src="./images/dialog/5.png" alt="表情" onclick="CorrespondingDiv('GetExpression','DivColor')" />
                        <img class="ColorImg" src="./images/dialog/FileDialog.png" alt="发送文件" onclick="GetFilePath()" />
                     </div>
@@ -193,7 +196,7 @@
     <!-- 主动呼叫等待框 -->
     <div id="Initiative_Call_Div">
         <div class="Div_HeadPart">
-            <img alt="取消呼叫" src="./images/Others/close.png" onclick="CancelCall()" />
+            <img alt="取消呼叫" src="./images/others/close.png" onclick="CancelCall()" />
         </div>
         <div id="Initiative_Call_Div_Content" class="Call_Div_Content"></div>
         <div class="Call_Div_Button">

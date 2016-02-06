@@ -75,7 +75,7 @@
 }
 #UserListSlider 
 {
-	background:url('../images/Hall/DT_06.png');
+	background:url('../images/hall/DT_06.png');
 	display:none;
 	margin-top:0px;
 	width:15px;
@@ -106,13 +106,13 @@
 }
 .OnLineUserRow
 {
-	background: url('../images/Hall/05.png');
+	background: url('../images/hall/05.png');
 	width:165px; 
 	height:40px; 
 	line-height:29px;
 	cursor:pointer;
 	color: #FFFFFF;
-	font-family: Î¢ÈíÑÅºÚ;
+	font-family: Î¢ï¿½ï¿½ï¿½Åºï¿½;
 	font-size: 14px;
 }
 .User
@@ -149,7 +149,7 @@
 }
 #GroupSlider 
 {
-	background:url('../images/Hall/16.png');
+	background:url('../images/hall/16.png');
 	z-index:17;
 	margin-top:0px;
 	width:15px;
@@ -179,12 +179,15 @@
 .UserNameMsg
 {
 	color: #FFFFFF;
-	font-family: Î¢ÈíÑÅºÚ;
-	font-size: 12px;
+	font-family: Î¢ï¿½ï¿½ï¿½Åºï¿½;
+	font-size: 1.0em;
+	cursor: pointer;
+	/*margin-top: -10%;
+	margin-left: -70%;*/
 }
 #mSearchTarget
 {
-	font-family: Î¢ÈíÑÅºÚ;
+	font-family: Î¢ï¿½ï¿½ï¿½Åºï¿½;
 	font-size: 12px;
 }
 #MyPhoto
@@ -198,6 +201,7 @@
 	height:40px;
 	float:left;
 	padding:0px 15px 5px 15px;
+	
 }
 .UserImg
 {
@@ -205,7 +209,7 @@
 	height:100%; 
 	float:left;
 	padding:8px 0px 0px 0px;
-	background:url('../images/Hall/OT_03.png') no-repeat;
+	background:url('../images/hall/OT_03.png') no-repeat;
 }
 .UserMsg
 {
@@ -216,7 +220,7 @@
 }
 #mSelfInfo
 {
-	font-family: Î¢ÈíÑÅºÚ;
+	font-family: Î¢ï¿½ï¿½ï¿½Åºï¿½;
 	font-size: 12px;
 	text-align:left;
 }

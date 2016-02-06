@@ -106,31 +106,20 @@ function InitInterfaceUI() {
             if (GetID("normal_login").checked){
             	if (GetID("AppGuid") && GetID("AppGuid").value.length)				// 设置应用ID
                 	BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, GetID("AppGuid").value.toString());
+
+				var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //连接服务器
+	            AddLog("BRAC_Connect(" + GetID("ServerAddr").value + "," + GetID("ServerPort").value + ")=" + errorcode, LOG_TYPE_API);
+
+				errorcode = BRAC_Login(GetID("username").value, GetID("password").value, 0);
+            	AddLog("BRAC_Login(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);            
             }
+            
             if (GetID("sign_login").checked){
                 if (GetID("AppGuid") && GetID("AppGuid").value.length){
-                	jsonObj = getSign("http://192.168.5.112:8980/", -1, GetID("username").value, GetID("AppGuid").value);
-                	if (jsonObj != null){
-                		if (jsonObj.errorcode == 0){
-                			signStr = jsonObj.sigStr;
-                			signTimestamp = jsonObj.timestamp;
-                		}                		
-                	}
+                	getSign("http://127.0.0.1:8980/", -1, GetID("username").value, GetID("AppGuid").value);
                 }
             }
-            
-            var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //连接服务器
-            AddLog("BRAC_Connect(" + GetID("ServerAddr").value + "," + GetID("ServerPort").value + ")=" + errorcode, LOG_TYPE_API);
-            
-            if (GetID("normal_login").checked){
-				errorcode = BRAC_Login(GetID("username").value, GetID("password").value, 0);
-            	AddLog("BRAC_Login(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);            	
-            }
-            if (GetID("sign_login").checked){
-            	errorcode = BRAC_LoginEx(GetID("username").value, -1, GetID("username").value, GetID("AppGuid").value, signTimestamp, signStr, "");
-            	AddLog("BRAC_LoginEx(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);
-            }
-            
+                        
             // 隐藏设置界面
             GetID("setting_div").style.display = "none";
 
@@ -592,6 +581,20 @@ function getSign(signUrl, userId, strUser, appId) {
                 case 200:
                     responseText = xmlHttpReq.responseText;
                     retVal = JSON.parse(responseText);
+                    
+                    if (retVal.errorcode == 0){
+            			var signStr = retVal.sigStr;
+            			var signTimestamp = retVal.timestamp;
+
+						//连接服务器
+			            var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //连接服务器
+			            AddLog("BRAC_Connect(" + GetID("ServerAddr").value + "," + GetID("ServerPort").value + ")=" + errorcode, LOG_TYPE_API);
+
+						//签名登录
+	                   	errorcode = BRAC_LoginEx(GetID("username").value, -1, GetID("username").value, GetID("AppGuid").value, signTimestamp, signStr, "");
+	            	    AddLog("BRAC_LoginEx(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);            			
+            		}
+
                     break;
                 case 400:
                     alert("错误的请求！\nError Code:400!");
@@ -615,7 +618,6 @@ function getSign(signUrl, userId, strUser, appId) {
         }
     }
     
-    return retVal;
 }
 
 // 创建XMLHttpRequest对象

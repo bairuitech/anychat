@@ -3,6 +3,7 @@
 <head>
 <title>AnyChatMultiCameraForWeb</title>
 <!-- 加载AnyChat for Web SDK库  -->
+<script language="javascript" type="text/javascript" src="./javascript/anychat4html5.min.js"></script>
 <script language="javascript" type="text/javascript" src="./javascript/anychatsdk.js" charset="GB2312"></script>
 <script language="javascript" type="text/javascript" src="./javascript/anychatevent.js" charset="GB2312"></script>
 <script language="javascript" type="text/javascript" src="./javascript/advanceset.js" charset="GB2312"></script>
@@ -56,6 +57,7 @@
         <div class="wordage">帐号：<input type="text" id="username" /><a id="a_error_user" style=" color:#FAFADD; font-size:15px;">&nbsp×</a></div>
 		<div class="wordage">密码：<input type="text" id="password" onfocus="PasswordFocus(this,'white')" onblur="myblur(this,'white')" value="密码可为空" style="color:#CDCDCD"/><a id="a_error_password" style=" color:#FAFADD; font-size:15px;">&nbsp×</a></div>
 		<div><input type="checkbox" id="ScreenCtrl" onclick="checkScreenCtrl()"  >打开屏幕共享</input></div>
+        <div class="wordage">登录方式：<input type="radio" id="normal_login" name="login" value="1" checked=”checked” />普通登录 <input type="radio" id="sign_login" name="login" value="2" />签名登录</div>
         <div id="Btn_div">
             <div id="setting" class="Btn" onmouseout="Mouseout('setting')" onmousemove="Mouseover('setting')" style=" float:left;">设置</div>
             <div id="loginbtn" class="Btn" onmouseout="Mouseout('loginbtn')" onmousemove="Mouseover('loginbtn')" " style=" float:right;">登录</div>
@@ -65,7 +67,8 @@
         <div id="setting_div">
             <div id="setting_div_input">
                 服务器:&nbsp<input type="text" id="ServerAddr" style="width:120px;" />&nbsp&nbsp&nbsp
-                 端口:&nbsp<input type="text" id="ServerPort" style="width:40px;" />
+                 端口:&nbsp<input type="text" id="ServerPort" style="width:40px;" /><br />
+应用ID：&nbsp<input type="text" id="AppGuid" style="width:222px;margin-top: 3px;" />                 
             </div>
         </div>
     </div>

@@ -175,9 +175,11 @@ function OnAnyChatMicStateChange(dwUserId, State) {
 
 // 用户摄像头状态发生变化，dwUserId表示用户ID号，State表示摄像头的当前状态（0：没有摄像头，1：有摄像头但没有打开，2：打开）
 function OnAnyChatCameraStateChange(dwUserId, State) {
-    if (State == 0) GetID(dwUserId + "_CameraTag").src = "";
-    if (State == 1) GetID(dwUserId + "_CameraTag").src = "./images/advanceset/camera_false.png";
-    if (State == 2) GetID(dwUserId + "_CameraTag").src = "./images/advanceset/camera_true.png";
+	if (GetID(dwUserId + "_CameraTag") != null){
+	    if (State == 0) GetID(dwUserId + "_CameraTag").src = "";
+	    if (State == 1) GetID(dwUserId + "_CameraTag").src = "./images/advanceset/camera_false.png";
+	    if (State == 2) GetID(dwUserId + "_CameraTag").src = "./images/advanceset/camera_true.png";
+	}
 }
 
 // 本地用户与其它用户的P2P网络连接状态发生变化，dwUserId表示其它用户ID号，State表示本地用户与其它用户的当前P2P网络连接状态（0：没有连接，1：仅TCP连接，2：仅UDP连接，3：TCP与UDP连接）
