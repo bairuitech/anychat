@@ -55,6 +55,11 @@ namespace AnyChatMultiCamera
 
         XmlDocument mXmlDoc = new XmlDocument();
 
+        /// <summary>
+        /// 签名Url
+        /// </summary>
+        public string signUrl = string.Empty;
+
         #endregion
 
         #region 初始化
@@ -72,7 +77,7 @@ namespace AnyChatMultiCamera
                     rThr.Start();
                 }
                 else
-                {
+                {                    
                     cbox_serverIP.Text = "demo.anychat.cn";
                     cbox_port.Text = "8906";
                     cbox_roomNumber.SelectedIndex = 5;
@@ -134,6 +139,11 @@ namespace AnyChatMultiCamera
                     connInfo.RoomID = m_roomNumber;
                     connInfo.isOpenRemoteDesktop = checkBox_RemoteDesktop.Checked;
                     connInfo.AppGuid = m_appGuid;
+                    if (rbtn_normal.Checked)
+                        connInfo.loginType = LoginType.Normal;
+                    if (rbtn_sign.Checked)
+                        connInfo.loginType = LoginType.Sign;
+                    connInfo.signServerUrl = signUrl;
 
                     RoomForm = null;
                     //hallForm = new Hall(m_userId, cbox_userIdentity.Text);
@@ -223,7 +233,11 @@ namespace AnyChatMultiCamera
                 PreviousRecordValue("previousrecord", "userName", cbox_userName.Text);
                 PreviousRecordValue("previousrecord", "roomNumber", cbox_roomNumber.Text);
                 PreviousRecordValue("previousrecord", "appGuid", cbox_appGuid.Text);
-                              
+
+                if (String.IsNullOrEmpty(signUrl))
+                {
+                    PreviousRecordValue("previousrecord", "signUrl", signUrl);
+                }   
             }
             catch (Exception ex)
             {
@@ -332,12 +346,14 @@ namespace AnyChatMultiCamera
                 cbox_port.Text = record[1];
                 cbox_userName.Text = record[2];
                 cbox_roomNumber.Text = record[3];
+                cbox_appGuid.Text = record[4];
+                signUrl = record[5];
             }
           
         }
         private String[] getPreviousRecord(string rAttribute)
         {
-            string[] record = new string[5];
+            string[] record = new string[6];
             XmlNode rMainNode = mXmlDoc.SelectSingleNode("settings");
             XmlNode rNode = rMainNode.SelectSingleNode(rAttribute);
             XmlNodeList rList = rNode.ChildNodes;
@@ -364,6 +380,9 @@ namespace AnyChatMultiCamera
                         break;
                     case "appGuid":
                         record[4] = rVal;
+                        break;
+                    case "signUrl":
+                        record[5] = rVal;
                         break;
                 }
             }
@@ -452,5 +471,21 @@ namespace AnyChatMultiCamera
         }
 
         #endregion
+
+        private void rbtn_sign_Click(object sender, EventArgs e)
+        {
+            if (cbox_serverIP.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
+            {
+                cbox_port.Text = "8912";
+            }
+        }
+
+        private void rbtn_normal_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbox_serverIP.Text.ToLower().Equals("demo.anychat.cn") && rbtn_normal.Checked)
+            {
+                cbox_port.Text = "8906";
+            }
+        }
     }
 }

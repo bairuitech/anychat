@@ -7,6 +7,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ANYCHATAPI;
+using System.IO;
+using System.Net;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+
 
 namespace AnyChatMultiCamera
 {
@@ -80,6 +85,16 @@ namespace AnyChatMultiCamera
         /// 当前选定的远程用户ID
         /// </summary>
         private int currentRemoteUserID = 0;
+        /// <summary>
+        /// 登录方式
+        /// </summary>
+        private LoginType m_loginType = LoginType.Normal;
+
+        /// <summary>
+        /// 签名Url
+        /// </summary>
+        public string m_signUrl = string.Empty;
+
         #endregion
 
         #region 构造函数
@@ -97,6 +112,8 @@ namespace AnyChatMultiCamera
             m_port = connInfo.Port;
             m_isOpenRemoteDesktop = connInfo.isOpenRemoteDesktop;
             m_appGuid = connInfo.AppGuid;
+            m_loginType = connInfo.loginType;
+            m_signUrl = connInfo.signServerUrl;
 
             this.m_loginForm = loginForm;
 
@@ -134,17 +151,65 @@ namespace AnyChatMultiCamera
                 screenCameraCtrl = 1;
                 AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CORESDK_SCREENCAMERACTRL, ref screenCameraCtrl, sizeof(int));
             }
-            if (!string.IsNullOrEmpty(m_appGuid))
+            if (m_loginType == LoginType.Normal)
             {
-                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, m_appGuid, m_appGuid.Length);
+                if (!string.IsNullOrEmpty(m_appGuid))
+                {
+                    AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, m_appGuid, m_appGuid.Length);
+                }
             }
         }
 
         private void frmRoom_Shown(object sender, EventArgs e)
         {
+            //应用签名
+            string signStr = string.Empty;
+            //签名时间戳
+            int signTimestamp = 0;
+
+            //签名登录
+            if (m_loginType == LoginType.Sign)
+            {
+                //向签名服务器发送签名POST请求，获取签名
+                //在实际应用系统中是需要在登录时输入用户名、密码之后，用户身份验证通过后向签名服务器获取应用签名
+
+
+                if (!string.IsNullOrEmpty(m_appGuid))
+                {
+                    //签名服务器Url，根据实际签名服务器部署情况进行修改
+                    string signServerUrl = m_signUrl;
+                    //传入请求参数
+                    string reqParam = "userId=" + m_myUserID + "&strUserId=" + m_myUserName + "&appId=" + m_appGuid;
+                    string responseResult = HttpPost(signServerUrl, reqParam);
+                    if (!String.IsNullOrEmpty(responseResult))
+                    {
+                        JsonObject jsonObj = ToClass<JsonObject>(responseResult);
+
+                        if (jsonObj.errorcode == 0)
+                        {
+                            signStr = jsonObj.sigStr;
+                            signTimestamp = jsonObj.timestamp;
+                        }
+                    }
+                    else
+                    {
+                        Log.SetLog("签名返回空字符串");
+                    }
+                }
+            }
             int ret = AnyChatCoreSDK.Connect(m_serverIP, m_port);
 
             createRemoteVideoDisplayZone();
+
+            if (m_loginType == LoginType.Sign)
+            {
+                ret = AnyChatCoreSDK.LoginEx(m_myUserName, m_myUserID, m_myUserName, m_appGuid, signTimestamp, signStr, string.Empty);//登录系统
+
+            }
+            if (m_loginType == LoginType.Normal)
+            {
+                ret = AnyChatCoreSDK.Login(m_myUserName, m_userPassword, 0);
+            }
 
             label_radio1.Text = string.Empty;
             label_radio2.Text = string.Empty;
@@ -166,8 +231,6 @@ namespace AnyChatMultiCamera
                 int ret = -1;
                 if (succed == 1)
                 {
-                    ret = AnyChatCoreSDK.Login(m_myUserName, m_userPassword, 0);
-
                     addLog("连接AnyChat服务器成功,正在登录系统...", LogType.LOG_TYPE_NORMAL);
                 }
                 else
@@ -916,5 +979,68 @@ namespace AnyChatMultiCamera
 
         #endregion
 
+        /// <summary>
+        /// 将Json字符串转化成对象
+        /// </summary>
+        /// <typeparam name="T">转换的对象类型</typeparam>
+        /// <param name="output">json字符串</param>
+        /// <returns></returns>
+        public static T ToClass<T>(string output)
+        {
+            object result;
+            DataContractJsonSerializer outDs = new DataContractJsonSerializer(typeof(T));
+            using (MemoryStream outMs = new MemoryStream(Encoding.UTF8.GetBytes(output)))
+            {
+                result = outDs.ReadObject(outMs);
+            }
+            return (T)result;
+        }
+
+        /// <summary>  
+        /// POST请求与获取结果  
+        /// </summary>  
+        public static string HttpPost(string Url, string postDataStr)
+        {
+            string retVal = string.Empty;
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                StreamWriter writer = new StreamWriter(request.GetRequestStream(), Encoding.ASCII);
+                writer.Write(postDataStr);
+                writer.Flush();
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string encoding = response.ContentEncoding;
+                if (encoding == null || encoding.Length < 1)
+                {
+                    encoding = "UTF-8"; //默认编码  
+                }
+                StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding(encoding));
+                retVal = reader.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                Log.SetLog("HttpPost has exception, message: " + ex.Message);
+            }
+            return retVal;
+        }
+
     }
+
+    /// <summary>
+    /// 签名信息类
+    /// </summary>
+    [DataContract]
+    class JsonObject
+    {
+        [DataMember]
+        public int errorcode { get; set; }
+        [DataMember]
+        public int timestamp { get; set; }
+        [DataMember]
+        public string sigStr { get; set; }
+    }
+
 }

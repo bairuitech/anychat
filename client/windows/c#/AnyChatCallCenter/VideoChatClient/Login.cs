@@ -646,15 +646,15 @@ namespace VideoChatClient
         {
             if (tb_serveradd.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
             {
-                tb_serveradd.Text = "cluster.anychat.cn";
+                tb_port.Text = "8912";
             }
         }
 
         private void rbtn_normal_Click(object sender, EventArgs e)
         {
-            if (tb_serveradd.Text.ToLower().Equals("cluster.anychat.cn") && rbtn_normal.Checked)
+            if (tb_serveradd.Text.ToLower().Equals("demo.anychat.cn") && rbtn_normal.Checked)
             {
-                tb_serveradd.Text = "demo.anychat.cn";
+                tb_port.Text = "8906";
             }
         }
 

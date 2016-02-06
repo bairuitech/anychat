@@ -9,6 +9,9 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;//DLLImport
 using System.IO;
 using ANYCHATAPI;
+using System.Net;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace AnyChatCSharpDemo
 {
@@ -118,15 +121,17 @@ namespace AnyChatCSharpDemo
 
         void InitChat()
         {
+            //应用签名
+            string signStr = string.Empty;
+            //签名时间戳
+            int signTimestamp = 0;
 
             string path = Application.StartupPath;
             SystemSetting.Text_OnReceive = new TextReceivedHandler(Received_Text);//文本回调涵数
             SystemSetting.TransBuffer_OnReceive = new TransBufferReceivedHandler(Received_TransBuffer);//透明通道传输回调
             SystemSetting.TransFile_Received = new TransFileReceivedHandler(Received_TransFile);//文件传输回调
             AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CORESDK_PATH, path, path.Length);
-            
-
-            
+         
             SystemSetting.Init(this.Handle);
 
             ////设置视频分辨率
@@ -140,12 +145,55 @@ namespace AnyChatCSharpDemo
             //m_ServerKey.Append("d");
             //int retkey = AnyChatCoreSDK.SetServerAuthPass(m_ServerKey);
 
-            if (!string.IsNullOrEmpty(frmLogin.m_AppGuid))
+            //普通登录
+            if (frmLogin.m_loginType == LoginType.Normal)
             {
-                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, frmLogin.m_AppGuid, frmLogin.m_AppGuid.Length);
+
+                if (!string.IsNullOrEmpty(frmLogin.m_AppGuid))
+                {
+                    AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, frmLogin.m_AppGuid, frmLogin.m_AppGuid.Length);
+                }
             }
+            //签名登录
+            if (frmLogin.m_loginType == LoginType.Sign)
+            {
+                //向签名服务器发送签名POST请求，获取签名
+                //在实际应用系统中是需要在登录时输入用户名、密码之后，用户身份验证通过后向签名服务器获取应用签名                                                
+                if (!string.IsNullOrEmpty(frmLogin.m_AppGuid))
+                {
+                    //签名服务器Url，根据实际签名服务器部署情况进行修改
+                    string signServerUrl = frmLogin.m_SignUrl;
+                    //传入请求参数
+                    string reqParam = "userId=" + m_myUserID + "&strUserId=" + frmLogin.m_UserName + "&appId=" + frmLogin.m_AppGuid;
+                    string responseResult = HttpPost(signServerUrl, reqParam);
+                    if (!String.IsNullOrEmpty(responseResult))
+                    {
+                        JsonObject jsonObj = ToClass<JsonObject>(responseResult);
+
+                        if (jsonObj.errorcode == 0)
+                        {
+                            signStr = jsonObj.sigStr;
+                            signTimestamp = jsonObj.timestamp;
+                        }
+                    }
+                    else
+                    {
+                        Print("应用签名返回空字符串");
+                    }
+                }
+            }
+
             int ret = AnyChatCoreSDK.Connect(frmLogin.m_VideoServerIP, frmLogin.m_VideoTcpPort);
-            ret = AnyChatCoreSDK.Login(frmLogin.m_UserName, "", 0);
+
+            if (frmLogin.m_loginType == LoginType.Sign)
+            {
+                ret = AnyChatCoreSDK.LoginEx(frmLogin.m_UserName, m_myUserID, frmLogin.m_UserName, frmLogin.m_AppGuid, signTimestamp, signStr, string.Empty);//登录系统
+
+            }
+            if (frmLogin.m_loginType == LoginType.Normal)
+            {
+                ret = AnyChatCoreSDK.Login(frmLogin.m_UserName, frmLogin.m_LoginPass, 0);
+            }
         }
 
         #endregion
@@ -1384,10 +1432,71 @@ namespace AnyChatCSharpDemo
                 item.Value = idx;
                 m_videoDeviceList.Add(item);
             }
-
             return retVal;
 
         }
 
+        /// <summary>
+        /// 将Json字符串转化成对象
+        /// </summary>
+        /// <typeparam name="T">转换的对象类型</typeparam>
+        /// <param name="output">json字符串</param>
+        /// <returns></returns>
+        public T ToClass<T>(string output)
+        {
+            object result;
+            DataContractJsonSerializer outDs = new DataContractJsonSerializer(typeof(T));
+            using (MemoryStream outMs = new MemoryStream(Encoding.UTF8.GetBytes(output)))
+            {
+                result = outDs.ReadObject(outMs);
+            }
+            return (T)result;
+        }
+
+        /// <summary>  
+        /// POST请求与获取结果  
+        /// </summary>  
+        public string HttpPost(string Url, string postDataStr)
+        {
+            string retVal = string.Empty;
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                StreamWriter writer = new StreamWriter(request.GetRequestStream(), Encoding.ASCII);
+                writer.Write(postDataStr);
+                writer.Flush();
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string encoding = response.ContentEncoding;
+                if (encoding == null || encoding.Length < 1)
+                {
+                    encoding = "UTF-8"; //默认编码  
+                }
+                StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding(encoding));
+                retVal = reader.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                Print("HttpPost has exception, message: " + ex.Message);
+            }
+            return retVal;
+        }
     }
+
+    /// <summary>
+    /// 签名信息类
+    /// </summary>
+    [DataContract]
+    class JsonObject
+    {
+        [DataMember]
+        public int errorcode { get; set; }
+        [DataMember]
+        public int timestamp { get; set; }
+        [DataMember]
+        public string sigStr { get; set; }
+    }
+
 }
