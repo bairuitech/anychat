@@ -76,47 +76,6 @@
     return (AnyChatAppDelegate*)[[UIApplication sharedApplication] delegate];
 }
 
-+ (id) GetServerIP
-{
-    NSString* serverIP;
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
-        serverIP =  [array objectAtIndex:0];
-        
-        if([serverIP length] == 0)
-            serverIP = kAnyChatDefaultServerIP;
-    }
-    else
-    {
-        serverIP = kAnyChatDefaultServerIP;
-    }
-    return serverIP;
-}
-
-+ (int) GetServerPort
-{
-    NSString* serverPort;
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
-        serverPort = [array objectAtIndex:1];
-        
-        if([serverPort intValue] == 0 || [serverPort intValue] == 0)
-            serverPort = kAnyChatDefaultServerPort;
-    }
-    else
-    {
-        serverPort = kAnyChatDefaultServerPort;
-    }
-    return [serverPort intValue];
-}
-
-
 #pragma mark - Bundle Settings
 // 获取默认设置
 - (void)registerDefaultsFromSettingsBundle

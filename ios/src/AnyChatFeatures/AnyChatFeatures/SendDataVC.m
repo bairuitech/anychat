@@ -4,6 +4,7 @@
 //
 
 #import "SendDataVC.h"
+#import "AnyChatVC.h"
 
 @interface SendDataVC ()
 
@@ -60,7 +61,9 @@
     theStartBtnOnClickState = NO;
     
     self.theSendViewIPLable.text = [AnyChatPlatform QueryUserStateString:-1 :BRAC_USERSTATE_INTERNETIP];
-    self.theServerViewIPLable.text = [[AnyChatVC sharedAnyChatVC] GetServerIP];
+    
+    self.theServerViewIPLable.text = kAnyChatIP;
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated

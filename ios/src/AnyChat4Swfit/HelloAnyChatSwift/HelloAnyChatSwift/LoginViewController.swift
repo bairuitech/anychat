@@ -7,6 +7,12 @@
 //  登录界面
 
 import UIKit
+import Alamofire
+
+enum LoginVCLoginMode {
+    case GeneralLogin
+    case SignLogin
+}
 
 class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAlertViewDelegate{
     
@@ -14,13 +20,17 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var ipTF: UITextField!
     @IBOutlet weak var portTF: UITextField!
+    @IBOutlet weak var guidTF: UITextField!
     
+    var loginMode = LoginVCLoginMode.GeneralLogin;
     
     let myAnyChat = AnyChatPlatform()   // AnyChat对象
     let userName = "ANYCHATSWIFT"       // 用户名
-    let ip = "demo.anychat.cn"          // IP
-    let port = "8906"                   // 端口号
+    let ip = "cluster.anychat.cn"       // IP
+    let port = "8102"                   // 端口号
+    let guid = "bb9ca6ec-e611-4208-ab8f-44b5881c41e8"                       // 应用ID(GUID)
     let roomId: Int32 = 1               // 房间号
+    let userId: Int32 = 1001
     
     // MARK: - Life
     override func viewDidLoad() {
@@ -60,8 +70,6 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
     func OnAnyChatConnect(bSuccess: Bool) {
         if bSuccess {
             print("connect success")
-            // 登录
-            AnyChatPlatform.Login(userNameTF.text, passwordTF.text)
         }else {
             AnyChatPlatform.Logout()    // 连接失败，直接logout，相当于关闭AnyChat断网重连功能
             MBProgressHUD.hideHUD()
@@ -110,6 +118,12 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
     
     // MARK: - Custom
     func setup() {
+        
+        ipTF.text = ip;
+        portTF.text = port;
+        userNameTF.text = userName;
+        guidTF.text = guid;
+        
         //空白区取消键盘（添加手势响应）
         let tapGasture = UITapGestureRecognizer(target: self, action: "viewTapped:")
         self.view.addGestureRecognizer(tapGasture)
@@ -148,7 +162,7 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
     
     // MARK: - Action
     @IBAction func submit(sender: UIButton) {
-        
+
         if userNameTF.text == "" {
             userNameTF.text = userName
         }
@@ -158,10 +172,30 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
         if portTF.text == "" {
             portTF.text = port
         }
+        
+        if (loginMode == .SignLogin) {
+            if (guidTF.text == "") {
+                MBProgressHUD .showError("应用ID不能为空")
+                return;
+            }
+        }
+        
         MBProgressHUD.showMessage("正在登录中...")
+        if loginMode == .GeneralLogin && guidTF.text != "" {
+            // 应用ID设置
+            AnyChatPlatform.SetSDKOptionString(BRAC_SO_CLOUD_APPGUID, guidTF.text);
+        }
         // 服务器连接
         AnyChatPlatform.Connect(ipTF.text!, Int32(portTF.text!)!);
         
+        if loginMode == .SignLogin && guidTF.text != "" {
+            
+            self.signLoginRequest()
+            
+        }else if loginMode == .GeneralLogin {
+            // 普通登录
+            AnyChatPlatform .Login(userNameTF.text, nil);
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -195,4 +229,50 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
         
     } 
 
+    @IBAction func onRadioBtn(sender: UIButton) {
+        if (sender.titleLabel?.text == "签名登录") {
+            loginMode = .SignLogin;
+        }else {
+            loginMode = .GeneralLogin;
+        }
+    }
+    
+    func signLoginRequest() {
+        let signServerURL = "http://192.168.1.7:8980/"
+        let parameters = [
+            "userid": String(userId),
+            "strUserid": "",
+            "appid": guid
+        ]
+        Alamofire.request(.POST, signServerURL, parameters:parameters ).responseJSON {response in
+            
+            print(response)
+            switch response.result {
+            case .Success:
+                //把得到的JSON数据转为字典
+                if let jsonDict = response.result.value as? NSDictionary{
+
+                    let errorcode = jsonDict.valueForKey("errorcode") as! Int
+                    if  errorcode == 0 {
+                        
+                        let sigStr = jsonDict.valueForKey("sigStr") as! String
+                        print (jsonDict.valueForKey("timestamp"));
+                        let timestamp = jsonDict.valueForKey("timestamp") as! Int
+                        // 扩展登录
+                        AnyChatPlatform .LoginEx(self.userNameTF.text, self.userId, nil, self.guid, Int32(timestamp), sigStr, nil)
+                    }else {
+                        print("Request Error, ErrorCode:%d",errorcode);
+                    }
+                    
+                }
+            case .Failure(let error):
+                print(error)
+            }
+            
+            
+        }
+    }
+    
+    
+    
 }

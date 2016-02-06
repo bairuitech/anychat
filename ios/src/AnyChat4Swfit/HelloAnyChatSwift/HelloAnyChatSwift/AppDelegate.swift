@@ -15,6 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+
+        // 键盘遮挡
+        let manager = IQKeyboardManager.sharedManager();
+        manager.enable = true;
+        manager.shouldResignOnTouchOutside = true;
+        manager.shouldToolbarUsesTextFieldTintColor = true;
+        manager.enableAutoToolbar = false;
+        
         NSThread.sleepForTimeInterval(2.0) // 延长launch image显示时间
         return true
     }

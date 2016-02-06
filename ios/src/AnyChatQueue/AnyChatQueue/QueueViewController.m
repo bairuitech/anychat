@@ -99,7 +99,7 @@
         {
             switch (dwErrorCode)
             {
-                case AC_ERROR_VIDEOCALL_CANCEL: // 源用户主动放弃会话
+                case GV_ERR_VIDEOCALL_CANCEL: // 源用户主动放弃会话
                 {
                     if (self.requestAlertView != nil) [self.requestAlertView dismissWithClickedButtonIndex:self.requestAlertView.cancelButtonIndex animated:YES];
                     [MBProgressHUD showError:@"坐席取消会话"];
@@ -108,7 +108,7 @@
                     break;
                 }
                     
-                case AC_ERROR_VIDEOCALL_TIMEOUT:// 会话请求超时
+                case GV_ERR_VIDEOCALL_TIMEOUT:// 会话请求超时
                 {
                     if (self.requestAlertView != nil) [self.requestAlertView dismissWithClickedButtonIndex:self.requestAlertView.cancelButtonIndex animated:YES];
                     [MBProgressHUD showError:@"请求超时"];
@@ -116,13 +116,14 @@
                     break;
                 }
                     
-                case AC_ERROR_VIDEOCALL_DISCONNECT:// 网络断线
+                case GV_ERR_VIDEOCALL_DISCONNECT:// 网络断线
                 {
                     [MBProgressHUD showError:@"网络断线"];
                     break;
                 }
-                default:
-                    break;
+                
+                
+                    
             }
             break;
         }
@@ -158,7 +159,7 @@
     if (buttonIndex == 0) { //同意
         [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY :self.remoteUserId :0 :0 :0 :nil];
     }else { //拒绝
-        [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY :self.remoteUserId :AC_ERROR_VIDEOCALL_REJECT :0 :0 :nil];
+        [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY :self.remoteUserId :GV_ERR_VIDEOCALL_REJECT :0 :0 :nil];
         [self.navigationController popViewControllerAnimated:YES];
     }
     [self.theAudioPlayer stop];

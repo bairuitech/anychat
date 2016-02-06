@@ -63,11 +63,6 @@ NSString* const kVideoQuality = @"videoquality";
 
 
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.onlineUserMArray.count;
 }
@@ -142,7 +137,7 @@ NSString* const kVideoQuality = @"videoquality";
         {
             switch (dwErrorCode)
             {
-                case AC_ERROR_VIDEOCALL_CANCEL:
+                case GV_ERR_VIDEOCALL_CANCEL:
                 {
                     [self dimissAlertView:theReplyAlertView];
                     [self showInfoAlertView:@"用户取消会话" :@"CANCEL"];
@@ -151,7 +146,7 @@ NSString* const kVideoQuality = @"videoquality";
                 }
                     
                     
-                case AC_ERROR_VIDEOCALL_REJECT:
+                case GV_ERR_VIDEOCALL_REJECT:
                 {
                     if (theWaitingAlertView != nil)
                     {
@@ -164,7 +159,7 @@ NSString* const kVideoQuality = @"videoquality";
                 }
                     
                     
-                case AC_ERROR_VIDEOCALL_OFFLINE:
+                case GV_ERR_VIDEOCALL_OFFLINE:
                 {
                     if (theWaitingAlertView != nil)
                     {
@@ -176,7 +171,7 @@ NSString* const kVideoQuality = @"videoquality";
                 }
                     
                     
-                case AC_ERROR_VIDEOCALL_BUSY:
+                case GV_ERR_VIDEOCALL_BUSY:
                 {
                     if (theWaitingAlertView != nil)
                     {
@@ -188,7 +183,7 @@ NSString* const kVideoQuality = @"videoquality";
                 }
                     
                     
-                case AC_ERROR_VIDEOCALL_TIMEOUT:
+                case GV_ERR_VIDEOCALL_TIMEOUT:
                 {
                     if (theWaitingAlertView != nil)
                     {
@@ -200,7 +195,7 @@ NSString* const kVideoQuality = @"videoquality";
                 }
                     
                     
-                case AC_ERROR_VIDEOCALL_DISCONNECT:
+                case GV_ERR_VIDEOCALL_DISCONNECT:
                 {
                     if (theWaitingAlertView != nil)
                     {
@@ -212,7 +207,7 @@ NSString* const kVideoQuality = @"videoquality";
                 }
                     
                     
-                case AC_ERROR_VIDEOCALL_NOTINCALL:
+                case GV_ERR_VIDEOCALL_NOTINCALL:
                 {
                     if (theWaitingAlertView != nil)
                     {
@@ -270,7 +265,7 @@ NSString* const kVideoQuality = @"videoquality";
             {
                 [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY
                                                  :theUserEntity.theEntityRemoteID
-                                                 :AC_ERROR_VIDEOCALL_REJECT
+                                                 :GV_ERR_VIDEOCALL_REJECT
                                                  :0
                                                  :0
                                                  :nil];
@@ -300,7 +295,7 @@ NSString* const kVideoQuality = @"videoquality";
             
             [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY
                                              :theUserEntity.theEntityRemoteID
-                                             :AC_ERROR_VIDEOCALL_CANCEL
+                                             :GV_ERR_VIDEOCALL_CANCEL
                                              :0
                                              :0
                                              :nil];
