@@ -12,7 +12,8 @@ void usage(void)
 	printf("Option:\r\n");
 	printf("\t-h  help, print this message.\r\n");
 	printf("\t-m  mode, 0 for rsa sign mode; 1 for rsa verify mode.\r\n");
-	printf("\t-u  useid, sdk userid.\r\n");
+	printf("\t-u  userid, sdk userid.\r\n");
+	printf("\t-r  struserid, struserid.\r\n");
 	printf("\t-a  appid, application guid.\r\n");
 	printf("\t-k  keyfile, rsa privateFile or publicFile.\r\n");
 	printf("\t-s  sigfile, rsa sign data file for read or write.\r\n");
@@ -29,13 +30,15 @@ int main(int argc, char* argv[])
 	std::string appid;
 	std::string keyfile;
 	std::string sigfile;
-	while( (result = getopt(argc, argv, "hm:u:a:k:s:t:")) != -1 )
+	std::string struserid;
+	while( (result = getopt(argc, argv, "hm:u:r:a:k:s:t:")) != -1 )
 	{
 		switch(result)
 		{
 		case 'h':		help = 1;					break;
 		case 'm':		mode = atoi(optarg);		break;
 		case 'u':		userid = atoi(optarg);		break;
+		case 'r':		struserid = optarg;			break;
 		case 'a':		appid = optarg;				break;
 		case 'k':		keyfile = optarg;			break;
 		case 's':		sigfile= optarg;			break;
@@ -87,7 +90,7 @@ int main(int argc, char* argv[])
 	{
 		char szSigStr[1024]= {0};
 		timestamp = 0;
-		int errorcode = AnyChatRsaSign(userid, "", appid.c_str(), szKeyBuf, szSigStr, sizeof(szSigStr), timestamp);
+		int errorcode = AnyChatRsaSign(userid, struserid.c_str(), appid.c_str(), szKeyBuf, szSigStr, sizeof(szSigStr), timestamp);
 		printf("RSA sign result, errorcode:%d, \r\n\ttimestamp:%d, \r\n\tsigstr:%s\r\n", errorcode, timestamp, szSigStr);
 
 		if (sigfile.length()){
@@ -124,7 +127,7 @@ int main(int argc, char* argv[])
 			return 0;
 		}
 
-		int errorcode = AnyChatRsaVerify(userid, "", appid.c_str(), szSignBuf, timestamp, szKeyBuf);
+		int errorcode = AnyChatRsaVerify(userid, struserid.c_str(), appid.c_str(), szSignBuf, timestamp, szKeyBuf);
 		printf("RSA verify result, errorcode:%d", errorcode);
 	}
 	return 0;
