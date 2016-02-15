@@ -5,10 +5,6 @@
 //  Created by tim.tan on 15/6/12.
 //  Copyright (c) 2015年 tim.tan. All rights reserved.
 //
-#define kQueueServer @"demo.anychat.cn"
-#define kQueuePort @"8906"
-#define kQueueUserName @"AnyChatQueue"
-
 #import "LoginViewController.h"
 #import "BusinessHallViewController.h"
 #import "MBProgressHUD+JT.h"
@@ -17,23 +13,35 @@
 #import "QueueViewController.h"
 #import "VideoViewController.h"
 #import "ServerQueueViewController.h"
+#import "RadioButton.h"
+#import "AFNetworking.h"
+
+#define kUserID 1001
+#define kSignServerURL @"http://192.168.1.7:8980/"
+#define kAnyChatGuid @"bb9ca6ec-e611-4208-ab8f-44b5881c41e8"
+#define kAnyChatIP @"demo.anychat.cn"
+#define kAnyChatPort @"8906"
+#define kAnyChatUserName @"AnyChatQueue"
+
+typedef enum {
+    AnyChatVCLoginModeGeneralLogin,
+    AnyChatVCLoginModeSignLogin
+} AnyChatVCLoginMode;
 
 @interface LoginViewController ()<UITextFieldDelegate,AnyChatNotifyMessageDelegate,AnyChatObjectEventDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *role;             //角色
 @property (weak, nonatomic) IBOutlet UITextField *server;           //服务器地址
 @property (weak, nonatomic) IBOutlet UITextField *port;             //端口
 @property (weak, nonatomic) IBOutlet UITextField *username;         //用户名
+@property (weak, nonatomic) IBOutlet UITextField *guid;             //GUID
 @property (weak, nonatomic) IBOutlet UILabel *version;              //底部 SDK版本信息
-
-@property(nonatomic, copy)NSString *serverStr;
-@property(nonatomic, copy)NSString *portStr;
-@property(nonatomic, copy)NSString *userNameStr;
 
 @property(nonatomic, strong)NSMutableArray *businessHallDicArr;     //营业厅字典数组
 @property(nonatomic, strong)NSArray *businessHallObjArr;            //营业厅模型数组
 @property(nonatomic, weak)UIPickerView *pickerView;
 @property(nonatomic, assign)int selfUserId;                         //自己的用户id
 @property(nonatomic, assign)int waitingBusinessId;                  //队列id
+@property (nonatomic, assign) AnyChatVCLoginMode loginMode; // 登录方式
 
 - (IBAction)loginAction:(UIButton *)sender;
 
@@ -69,10 +77,38 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setup];
+    [self setupNav];
+    [self setupAnyChat];
+}
+
+- (void)setup {
+    self.server.delegate = self;
+    self.port.delegate = self;
+    self.username.delegate = self;
+    
+    self.server.text = kAnyChatIP;
+    self.port.text = kAnyChatPort;
+    self.username.text = kAnyChatUserName;
+    self.guid.text = kAnyChatGuid;
+    
+    //设置底部Label文本SDK的版本信息
+    self.version.text = [AnyChatPlatform GetSDKVersion];
+    
+    //空白区取消键盘（添加手势响应）
+    UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
+    tapGr.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tapGr];
+    
+    // 自定义键盘
+    [self customKeybord];
+}
+- (void)setupNav {
     //set NavigationBar 背景颜色&title 颜色
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:16/255.0 green:45/255.0 blue:59/255.0 alpha:1.0]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    
+}
+- (void)setupAnyChat {
     // 1.初始化系统 功能：加载资源,应用程序中只需要执行一次,其他的功能接口都必须在初始化之 后才能正常使用
     [AnyChatPlatform InitSDK:0];
     
@@ -86,22 +122,6 @@
     //4.设置通知代理
     self.anyChat.notifyMsgDelegate = self;
     self.anyChat.objectDelegate = self;
-    
-    self.server.delegate = self;
-    self.port.delegate = self;
-    self.username.delegate = self;
-    
-    //设置底部Label文本SDK的版本信息
-    self.version.text = [AnyChatPlatform GetSDKVersion];
-
-    //空白区取消键盘（添加手势响应）
-    UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
-    tapGr.cancelsTouchesInView = NO;
-    [self.view addGestureRecognizer:tapGr];
-    
-    // 自定义键盘
-    [self customKeybord];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -109,14 +129,11 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
-
 #pragma mark - AnyChat Delegate
 // 连接服务器消息
 - (void) OnAnyChatConnect:(BOOL) bSuccess {
     if (bSuccess) {
-        //登录
-        self.userNameStr = (self.username.text.length == 0) ? kQueueUserName : self.username.text;
-        [AnyChatPlatform Login:self.userNameStr :nil];
+        
     }else {
         [MBProgressHUD hideHUD];
         [MBProgressHUD showError:@"连接服务器失败"];
@@ -541,16 +558,67 @@
 
 #pragma mark - Action
 - (IBAction)loginAction:(UIButton *)sender {
+    
+    if (self.server.text.length == 0 ) self.server.text = kAnyChatIP;
+    if (self.port.text.length == 0 ) self.port.text = kAnyChatPort;
+    if (self.username.text.length == 0) self.username.text = kAnyChatUserName;
+    
+    if (self.loginMode == AnyChatVCLoginModeSignLogin) {
+        if (self.guid.text.length == 0) {
+            [MBProgressHUD showError:@"应用ID不能为空"];
+            return;
+        }
+    }
+    
+    //设置应用GUID
+    if (self.loginMode == AnyChatVCLoginModeGeneralLogin && self.guid.text.length != 0) {
+        [AnyChatPlatform SetSDKOptionString:BRAC_SO_CLOUD_APPGUID :self.guid.text];
+    }
     //连接服务器，准备回调连接服务器方法 OnAnyChatConnect
     [MBProgressHUD showMessage:@"正在连接中，请稍等..."];
-    self.serverStr = (self.server.text.length == 0 ) ? kQueueServer : self.server.text;
-    self.portStr = (self.port.text.length == 0 ) ? kQueuePort : self.port.text;
-    [AnyChatPlatform Connect:self.serverStr : [self.portStr intValue]];
+    [AnyChatPlatform Connect:self.server.text : [self.port.text intValue]];
+    
+    if (self.loginMode == AnyChatVCLoginModeSignLogin && self.guid.text.length != 0) {
+        [self getSignSuccess:^(id json) {
+            if ([[json objectForKey:@"errorcode"] intValue] ==0) {
+                int timestamp = [[json objectForKey:@"timestamp"] intValue];
+                NSString *signStr = [json objectForKey:@"sigStr"];
+                [AnyChatPlatform LoginEx:self.username.text :kUserID :nil :self.guid.text :timestamp :signStr :nil];
+            }else {
+                NSLog(@"Json Error,Error Num:%@",[json objectForKey:@"errorcode"]);
+            }
+        } failure:^(NSError *error) {
+            NSLog(@"Request Error:%@",error);
+        }];
+    }else if(self.loginMode == AnyChatVCLoginModeGeneralLogin){
+        [AnyChatPlatform Login:self.username.text :nil];
+    }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)getSignSuccess:(void (^)(id))success failure:(void (^)(NSError *))failure{
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"userid"] = [NSNumber numberWithInt:kUserID];
+    params[@"strUserid"] = @"";
+    params[@"appid"] = self.guid.text;
+    
+    [manager POST:kSignServerURL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) success(responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failure) failure(error);
+    }];
+    
+}
+
+-(IBAction)onRadioBtn:(RadioButton*)sender
+{
+    if ([sender.titleLabel.text isEqualToString:@"签名登录"]) {
+        self.loginMode = AnyChatVCLoginModeSignLogin;
+    }else {
+        self.loginMode = AnyChatVCLoginModeGeneralLogin;
+    }
 }
 
 @end

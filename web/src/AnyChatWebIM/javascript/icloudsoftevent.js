@@ -238,7 +238,8 @@ function OperationFile(szRequestGuid, id) {
 
 // 获取用户图像
 function GetUserImageAddrById(userid, type) {
-    var imageid = parseInt(BRAC_GetUserInfo(userid, 4));
+    var imageid =Math.abs(parseInt(BRAC_GetUserInfo(userid, 4)));
+    
     if (type == 20)
         return "./images/avatar/20/" + imageid + ".gif";
     else if (type == 30)
@@ -301,8 +302,8 @@ function UserGroupDiv(group_id, content) {
 
     var left_image = document.createElement("img"); // 左边 用户组图标
     left_image.className = "GroupImg";
-    if (group_id == 0) left_image.src = "./images/Hall/1.png";
-    else left_image.src = "./images/Hall/2.png";
+    if (group_id == 0) left_image.src = "./images/hall/1.png";
+    else left_image.src = "./images/hall/2.png";
     group_div_left.appendChild(left_image);
 
     var group_div_right = document.createElement("div"); // 新层中添加右浮动框 放置用户组名称
@@ -365,25 +366,26 @@ function DisplayOnLineUser(userid) {
 
     var right_a = document.createElement("a");
     right_a.className = "UserNameMsg";
-    right_a.innerHTML = UserName;
+    right_a.innerHTML = UserName.length>6?UserName.substring(0,6)+"...":UserName;
     right_div.appendChild(right_a);
-
+    
+    right_a.onclick = function () { ImgDBclick(userid); }
     Getdmo("UserListContent").appendChild(main_div);
 }
 //用户分组栏
 function OpenGroup(GroupID) {
     for (var j = 0; j < mGroupList.length; j++) {//设置所有组按钮为未选中状态
-        Getdmo("Group" + mGroupList[j]).style.background = "url(./images/Hall/05.png)"; //添加背景图片
+        Getdmo("Group" + mGroupList[j]).style.background = "url(./images/hall/05.png)"; //添加背景图片
         Getdmo("Group" + mGroupList[j]).style.width = "127px";
     }
-    Getdmo("Group0").style.background = "url(./images/Hall/05.png)"; //添加背景图片
+    Getdmo("Group0").style.background = "url(./images/hall/05.png)"; //添加背景图片
     Getdmo("Group0").style.width = "127px";
     if (GroupID == 0) {//根据传过来的GroupID设置该组为选中状态
-        Getdmo("Group0").style.background = "url(./images/Hall/03.png)";
+        Getdmo("Group0").style.background = "url(./images/hall/03.png)";
         Getdmo("Group0").style.width = "165px";
     }
     else {
-        Getdmo("Group" + GroupID).style.background = "url(./images/Hall/03.png)";  //根据传过来的GroupID设置该组为选中状态
+        Getdmo("Group" + GroupID).style.background = "url(./images/hall/03.png)";  //根据传过来的GroupID设置该组为选中状态
         Getdmo("Group" + GroupID).style.width = "165px";
     }
     mCurrentGroupNum = GroupID; //设置当前选中组为全局变量  后边需要用到当前选中组ID

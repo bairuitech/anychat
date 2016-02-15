@@ -1,6 +1,6 @@
 #DialogueDiv_MainDiv
 {
-	background: url('../images/Dialog/DHK_03.png');
+	background: url('../images/dialog/DHK_03.png');
 	width:896px;
 	height:610px;
 	margin:0 auto;
@@ -34,7 +34,7 @@
 	padding-top:20px;
 	text-align:left;
 	font-size:12px;
-	font-family:Î¢ÈíÑÅºÚ;
+	font-family:Î¢ï¿½ï¿½ï¿½Åºï¿½;
 	width:150px; 
 	height:50px; 
 	margin:44px 0px 0px 10px; 
@@ -204,7 +204,7 @@
 {
 	width:120px; 
 	height:50px; 
-	font-family:Î¢ÈíÑÅºÚ; 
+	font-family:Î¢ï¿½ï¿½ï¿½Åºï¿½; 
 	font-size:12px;
 	cursor:pointer;
 	float:right; 
@@ -219,7 +219,7 @@
 	text-align:center;
 	line-height:50px;
 	color:White;
-	font-family:Î¢ÈíÑÅºÚ; 
+	font-family:Î¢ï¿½ï¿½ï¿½Åºï¿½; 
 	font-size:17px;
 	cursor:pointer;
 	margin-top:20px;
@@ -236,7 +236,7 @@
 	margin-left:20px;
 	font-weight: bold;
 	color:White;
-	font-family:Î¢ÈíÑÅºÚ; 
+	font-family:Î¢ï¿½ï¿½ï¿½Åºï¿½; 
 	font-size:22px;
 	height:55px; 
 	float:left;
@@ -261,7 +261,7 @@
 	float:left;
 	width:294px;
 }
-.setColorSpan /********* Ð¡ÑÕÉ«¿é ********/
+.setColorSpan /********* Ð¡ï¿½ï¿½É«ï¿½ï¿½ ********/
 {
 	display:inline-block;
 	overflow:hidden;
@@ -302,25 +302,25 @@
 }
 #SendMsgStyle
 {
-	font-family: Î¢ÈíÑÅºÚ; 
+	font-family: Î¢ï¿½ï¿½ï¿½Åºï¿½; 
 	color: #009900; 
 	font-size: 12px;
 }
 .ReceiveMsgStyle
 {
-	font-family: Î¢ÈíÑÅºÚ; 
+	font-family: Î¢ï¿½ï¿½ï¿½Åºï¿½; 
 	color: #0000FF;
 	font-size: 12px;
 }
 .AskInfo
 {
-	font-family:Î¢ÈíÑÅºÚ; 
+	font-family:Î¢ï¿½ï¿½ï¿½Åºï¿½; 
 	font-size:12px;
 	margin-top:15px;
 }
 .AskButtonImg
 {
-	font-family:Î¢ÈíÑÅºÚ; 
+	font-family:Î¢ï¿½ï¿½ï¿½Åºï¿½; 
 	font-size:12px;
 	height:20px; 
 	width:50px; 

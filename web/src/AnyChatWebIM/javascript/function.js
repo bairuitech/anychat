@@ -42,7 +42,7 @@ function NewLine(event) {
 function LogicInit() {
     setTimeout(function () {
         //检查是否安装了插件	
-        var NEED_ANYCHAT_APILEVEL = "8"; 					// 定义业务层需要的AnyChat API Level
+        var NEED_ANYCHAT_APILEVEL = "0"; 					// 定义业务层需要的AnyChat API Level
         var errorcode = BRAC_InitSDK(NEED_ANYCHAT_APILEVEL); 	//初始化插件
         if (errorcode == GV_ERR_SUCCESS)
 			$("#BodyDIV").show();
@@ -51,14 +51,10 @@ function LogicInit() {
     }, 500);
     var VHeight = document.body.offsetHeight; //  (包括边线的宽)
     var VWidth = document.body.offsetWidth; //  (包括边线的宽)
-    var Cookies = document.cookie;
-    var GetInfos = Cookies.split("Getdmo");
-    if (GetInfos.length > 3) { // 获得上次登录信息
-        $("#txtUserName").attr("value", GetInfos[0]); // 用户
-        $("#txtPassWord").attr("value", GetInfos[1]); // 密码
-        mDefaultServerAddr = GetInfos[2]; // 地址
-    }
+    
     document.body.style.backgroundColor = "#FFFFFF";
+
+    getLoginInfo();    
 }
 //初始化所有界面位置 和 下拉框的值
 function initialize() {
@@ -90,13 +86,26 @@ function LoginToHall() {
     var expiresDate = the_date.toGMTString(); //转换成 GMT 格式。
     mSelfUserName = Getdmo('txtUserName').value;
     mSelfPassWord = Getdmo('txtPassWord').value;
-    if (mSelfUserName != "" && mSelfPassWord != "") {
-        prompt("正在连接...<br /><img src='./images/Others/LoadImg.gif' style='width:145px;height:30px' />");
-        BRAC_Connect(Getdmo('mDefaultServerAddr').value, parseInt(Getdmo('mDefaultServerPort').value));
-        BRAC_Login(mSelfUserName, mSelfPassWord, 0);
+    if (mSelfUserName != "") {
+    	setLoginInfo();
+        prompt("正在连接...<br /><img src='./images/others/LoadImg.gif' style='width:145px;height:30px' />");
+        if (Getdmo("normal_login").checked){
+        	if (Getdmo("AppGuid") && Getdmo("AppGuid").value.length)				// 设置应用ID
+            	BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, Getdmo("AppGuid").value.toString());
+
+			var errorcode = BRAC_Connect(Getdmo("mDefaultServerAddr").value, parseInt(Getdmo("mDefaultServerPort").value)); //连接服务器
+
+			errorcode = BRAC_Login(mSelfUserName, mSelfPassWord, 0);
+        }
+        
+        if (Getdmo("sign_login").checked){
+            if (Getdmo("AppGuid") && Getdmo("AppGuid").value.length){
+            	getSign("http://127.0.0.1:8980/", -1, mSelfUserName, Getdmo("AppGuid").value);
+            }
+        }        
         document.cookie = mSelfUserName + "Getdmo" + mSelfPassWord + "Getdmo" + mDefaultServerAddr + "Getdmo; expires=" + expiresDate; //写入Cookie 设置过期时间
     }
-    else prompt("<div style='color:red;'>账号密码不能为空.</div>");
+    else prompt("<div style='color:red;'>账号不能为空.</div>");
 }
 // 登录提示信息
 function prompt(message) {
@@ -123,7 +132,7 @@ function ImgDBclick(ID) {
 		BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_REQUEST,mTargetUserId,0,0,0,"");  // 向指定的用户发送会话邀请
 		var GetUserName = BRAC_GetUserName(mTargetUserId);
         GetUserName = GetUserName.fontcolor("Red");
-        Getdmo("Initiative_Call_Div_Content").innerHTML = "向用户" + GetUserName + "发起邀请<br /><img src='./images/Others/LoadImg.gif' style='width: 145px;height:30px;' />";
+        Getdmo("Initiative_Call_Div_Content").innerHTML = "向用户" + GetUserName + "发起邀请<br /><img src='./images/others/LoadImg.gif' style='width: 145px;height:30px;' />";
         Getdmo("Shade_Div").style.display = "block";
         Getdmo("Initiative_Call_Div").style.display = "block";
     }
@@ -216,7 +225,7 @@ function StartScroll(BackGround, Scroll, Content, Line) {
         line.style.display = "block";
         ScrollSlid.onmousedown = function () {
             ScrollSlid.onmousemove = function () {
-                ScrollSlid.setCapture();
+               // ScrollSlid.setCapture();
                 if (event.clientY - 150 < backgroundheight && event.clientY > 170) {
                     ScrollSlid.style.marginTop = event.clientY - 170 + "px";
                     document.getElementById(Content).scrollTop = (event.clientY - 170) * ((scrollheight - offsetheight) / 460);
@@ -283,11 +292,11 @@ function MessageFlicker() {
     if (!mWhetherMainForm) { // 显示界面为宽频层
         mFlickerNews = setInterval(function () {
             if (GetImg) {
-                $("#SwappingDiv").css("background-image", "url('./images/dialog/flicker.png')");
+                $("#SwappingDiv").css("background-image", "url('../images/dialog/flicker.png')");
                 GetImg = false;
             }
             else {
-                $("#SwappingDiv").css("background-image", "url('./images/dialog/btntrue_move.png')");
+                $("#SwappingDiv").css("background-image", "url('../images/dialog/btntrue_move.png')");
                 GetImg = true;
             }
         }, 500);
@@ -300,4 +309,140 @@ function ReplyMsgStyle(id, Msg, type) {
         $("#" + id).css({ "color": "#999999", "height": "35px", "font-size": "12px" });
     else // 多行信息时的高度
         $("#" + id).css({ "color": "#999999", "height": "65px", "font-size": "12px" });
+}
+
+//设置登录信息，包括用户名、服务器IP、服务器端口、应用ID
+function setLoginInfo() {
+	var loginType = 0;
+    setCookie('username',Getdmo("txtUserName").value,30);
+    setCookie('ServerAddr',Getdmo("mDefaultServerAddr").value,30);
+    setCookie('ServerPort',Getdmo("mDefaultServerPort").value,30);   
+    setCookie('AppGuid',Getdmo("AppGuid").value,30);
+    if (Getdmo("normal_login").checked){
+    	loginType = Getdmo("normal_login").value;
+    }
+    if (Getdmo("sign_login").checked){
+    	loginType = Getdmo("sign_login").value;
+    }
+    setCookie('loginType',loginType,30);
+}
+
+//获取登录信息
+function getLoginInfo() {
+    Getdmo("txtUserName").value = getCookie("username");
+    var serverIP = getCookie("ServerAddr");
+    if (serverIP != "")
+        Getdmo("mDefaultServerAddr").value = serverIP;
+    var serverPort = getCookie("ServerPort");
+    if (serverPort != "")
+        Getdmo("mDefaultServerPort").value = serverPort;
+    Getdmo("AppGuid").value = getCookie("AppGuid");
+    var loginType = getCookie("loginType");
+    if (loginType == Getdmo("normal_login").value){
+    	Getdmo("normal_login").checked = true;
+    }
+	if (loginType == Getdmo("sign_login").value){
+    	Getdmo("sign_login").checked = true;
+    }    
+}
+
+//获取cookie项的cookie值
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return document.cookie.substring(c_start, c_end);
+        }
+    }
+    return "";
+}
+
+//设置cookie
+function setCookie(c_name, value, expiredays){
+　　var exdate=new Date();
+　　exdate.setDate(exdate.getDate() + expiredays);
+　　document.cookie=c_name+ "=" + value + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+}
+
+//去除字符串两边空格
+String.prototype.trim = function () {
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+//获取签名
+function getSign(signUrl, userId, strUser, appId) {
+	var retVal = null;
+	var parameter = "userid=" + userId + "&struserid=" + strUser + "&appid=" + appId ;
+    var requestURL = signUrl;
+    xmlHttpReq = createXMLHttpRequest();
+        xmlHttpReq.open("POST",requestURL,true);
+        xmlHttpReq.setRequestHeader("Content-Type","application/x-www-form-urlencoded;");
+        xmlHttpReq.send(encodeURI(encodeURI(parameter)));
+    
+    xmlHttpReq.onreadystatechange = function(){
+        if(xmlHttpReq.readyState == 4){
+            switch(xmlHttpReq.status){
+                case 200:
+                    responseText = xmlHttpReq.responseText;
+                    retVal = JSON.parse(responseText);
+                    
+                    if (retVal.errorcode == 0){
+            			var signStr = retVal.sigStr;
+            			var signTimestamp = retVal.timestamp;
+
+						//连接服务器
+			            var errorcode = BRAC_Connect(Getdmo("mDefaultServerAddr").value, parseInt(Getdmo("mDefaultServerPort").value)); //连接服务器
+			            //AddLog("BRAC_Connect(" + Getdmo("mDefaultServerPort").value + "," + Getdmo("mDefaultServerPort").value + ")=" + errorcode, LOG_TYPE_API);
+
+						//签名登录
+	                   	errorcode = BRAC_LoginEx(strUser, -1, strUser, appId, signTimestamp, signStr, "");
+	            	    //AddLog("BRAC_LoginEx(" + strUser + ")=" + errorcode, LOG_TYPE_API);            			
+            		}
+
+                    break;
+                case 400:
+                    alert("错误的请求！\nError Code:400!");
+                    break;
+                case 403:
+                    alert("拒绝请求！\nError Code:403!");
+                    break;
+                case 404:
+                    alert("请求地址不存在！\nError Code:404!");
+                    break;
+                case 500:
+                    alert("内部错误！\nError Code:500!");
+                    break;
+                case 503:
+                    alert("服务不可用！\nError Code:503!");
+                    break;
+                default:
+                    alert("请求返回异常！\nError Code:"+xmlHttpReq.status);
+                    break;
+            }
+        }
+    }
+    
+}
+
+// 创建XMLHttpRequest对象
+function createXMLHttpRequest() {
+    if (window.XMLHttpRequest) {// IE 7.0及以上版本和非IE的浏览器
+        xmlHttpReq = new XMLHttpRequest();
+    } else {// IE 6.0及以下版本
+        try {
+            xmlHttpReq = new ActiveXObject("MSXML2.XMLHTTP");
+        }catch (e) {
+            try {
+                xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+            }catch (e) {}
+        }
+    }
+    if (!xmlHttpReq) {
+        alert("当前浏览器不支持!");
+        return null;
+    }
+    return xmlHttpReq;
 }

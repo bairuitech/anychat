@@ -20,38 +20,53 @@
 		FE3EAB6019E5233A00030ECA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */; };
 		FE3EAB6119E5233A00030ECA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5F19E5233A00030ECA /* Default@2x.png */; };
 		FE439E131A5A3EA000629E8E /* Icon_featuresBtn_5_2.png in Resources */ = {isa = PBXBuildFile; fileRef = FE439E121A5A3EA000629E8E /* Icon_featuresBtn_5_2.png */; };
-		FE4EE10E1A4CFE14005A1E66 /* libaudio_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0F41A4CFE14005A1E66 /* libaudio_processing.a */; };
-		FE4EE10F1A4CFE14005A1E66 /* libaudio_processing_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0F51A4CFE14005A1E66 /* libaudio_processing_neon.a */; };
-		FE4EE1101A4CFE14005A1E66 /* libaudio_processing_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0F61A4CFE14005A1E66 /* libaudio_processing_sse2.a */; };
-		FE4EE1111A4CFE14005A1E66 /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0F71A4CFE14005A1E66 /* libcommon_audio.a */; };
-		FE4EE1121A4CFE14005A1E66 /* libcommon_audio_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0F81A4CFE14005A1E66 /* libcommon_audio_neon.a */; };
-		FE4EE1131A4CFE14005A1E66 /* libcommon_audio_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0F91A4CFE14005A1E66 /* libcommon_audio_sse2.a */; };
-		FE4EE1141A4CFE14005A1E66 /* librtc_base_approved.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0FA1A4CFE14005A1E66 /* librtc_base_approved.a */; };
-		FE4EE1151A4CFE14005A1E66 /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0FB1A4CFE14005A1E66 /* libsystem_wrappers.a */; };
-		FE4EE1161A4CFE14005A1E66 /* libanychatcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0FC1A4CFE14005A1E66 /* libanychatcore.a */; };
-		FE4EE1171A4CFE14005A1E66 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0FD1A4CFE14005A1E66 /* libavcodec.a */; };
-		FE4EE1181A4CFE14005A1E66 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0FE1A4CFE14005A1E66 /* libavformat.a */; };
-		FE4EE1191A4CFE14005A1E66 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE0FF1A4CFE14005A1E66 /* libavutil.a */; };
-		FE4EE11A1A4CFE14005A1E66 /* libcelt0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1001A4CFE14005A1E66 /* libcelt0.a */; };
-		FE4EE11B1A4CFE14005A1E66 /* libmediacore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1011A4CFE14005A1E66 /* libmediacore.a */; };
-		FE4EE11C1A4CFE14005A1E66 /* libmediashow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1021A4CFE14005A1E66 /* libmediashow.a */; };
-		FE4EE11D1A4CFE14005A1E66 /* libmediautil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1031A4CFE14005A1E66 /* libmediautil.a */; };
-		FE4EE11E1A4CFE14005A1E66 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1041A4CFE14005A1E66 /* libmp3lame.a */; };
-		FE4EE1201A4CFE14005A1E66 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1061A4CFE14005A1E66 /* libopencore-amrwb.a */; };
-		FE4EE1211A4CFE14005A1E66 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1071A4CFE14005A1E66 /* libswresample.a */; };
-		FE4EE1221A4CFE14005A1E66 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1081A4CFE14005A1E66 /* libswscale.a */; };
-		FE4EE1231A4CFE15005A1E66 /* libvo-amrwbenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE1091A4CFE14005A1E66 /* libvo-amrwbenc.a */; };
-		FE4EE1241A4CFE15005A1E66 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE10A1A4CFE14005A1E66 /* libvpx.a */; };
-		FE4EE1251A4CFE15005A1E66 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE10B1A4CFE14005A1E66 /* libx264.a */; };
-		FE4EE1261A4CFE15005A1E66 /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE10C1A4CFE14005A1E66 /* libyuv_neon.a */; };
-		FE4EE1271A4CFE15005A1E66 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4EE10D1A4CFE14005A1E66 /* libyuv.a */; };
 		FE5574501A25635C00342F39 /* ShowVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE55744D1A25635C00342F39 /* ShowVC.xib */; };
 		FE5574511A25635C00342F39 /* ShowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE55744E1A25635C00342F39 /* ShowVC.m */; };
 		FE57D7061A075F8900F87D8E /* icon_text3.png in Resources */ = {isa = PBXBuildFile; fileRef = FE57D7051A075F8900F87D8E /* icon_text3.png */; };
+		FE5EFB511C55C9C90006BE11 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB451C55C9C90006BE11 /* AFHTTPSessionManager.m */; };
+		FE5EFB521C55C9C90006BE11 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB481C55C9C90006BE11 /* AFNetworkReachabilityManager.m */; };
+		FE5EFB531C55C9C90006BE11 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB4A1C55C9C90006BE11 /* AFSecurityPolicy.m */; };
+		FE5EFB541C55C9C90006BE11 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB4C1C55C9C90006BE11 /* AFURLRequestSerialization.m */; };
+		FE5EFB551C55C9C90006BE11 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB4E1C55C9C90006BE11 /* AFURLResponseSerialization.m */; };
+		FE5EFB561C55C9C90006BE11 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB501C55C9C90006BE11 /* AFURLSessionManager.m */; };
+		FE5EFB5A1C574C620006BE11 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB591C574C620006BE11 /* RadioButton.m */; };
+		FE5EFB601C5754CF0006BE11 /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5EFB5C1C5754CF0006BE11 /* checked.png */; };
+		FE5EFB611C5754CF0006BE11 /* checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5EFB5D1C5754CF0006BE11 /* checked@2x.png */; };
+		FE5EFB621C5754CF0006BE11 /* unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5EFB5E1C5754CF0006BE11 /* unchecked.png */; };
+		FE5EFB631C5754CF0006BE11 /* unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5EFB5F1C5754CF0006BE11 /* unchecked@2x.png */; };
+		FE5EFB691C5762B20006BE11 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5EFB651C5762B20006BE11 /* error.png */; };
+		FE5EFB6A1C5762B20006BE11 /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5EFB661C5762B20006BE11 /* error@2x.png */; };
+		FE5EFB6B1C5762B20006BE11 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5EFB671C5762B20006BE11 /* success.png */; };
+		FE5EFB6C1C5762B20006BE11 /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5EFB681C5762B20006BE11 /* success@2x.png */; };
 		FE6CD55619FA3C07008BC6E4 /* bg_menu.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE6CD55419FA3C07008BC6E4 /* bg_menu.jpg */; };
 		FE9361D51A0C626000A1A597 /* Icon_onRecordVideo.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9361D31A0C626000A1A597 /* Icon_onRecordVideo.png */; };
 		FE9361D61A0C626000A1A597 /* Icon_offRecordVideo.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9361D41A0C626000A1A597 /* Icon_offRecordVideo.png */; };
 		FE9361D81A0CA05B00A1A597 /* Icon_SnapShot.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9361D71A0CA05B00A1A597 /* Icon_SnapShot.png */; };
+		FE94D0BF1C65EFE400D199DE /* libaudio_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0A61C65EFE400D199DE /* libaudio_processing.a */; };
+		FE94D0C01C65EFE400D199DE /* libaudio_processing_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0A71C65EFE400D199DE /* libaudio_processing_neon.a */; };
+		FE94D0C11C65EFE400D199DE /* libaudio_processing_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0A81C65EFE400D199DE /* libaudio_processing_sse2.a */; };
+		FE94D0C21C65EFE400D199DE /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0A91C65EFE400D199DE /* libcommon_audio.a */; };
+		FE94D0C31C65EFE400D199DE /* libcommon_audio_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0AA1C65EFE400D199DE /* libcommon_audio_neon.a */; };
+		FE94D0C41C65EFE400D199DE /* libcommon_audio_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0AB1C65EFE400D199DE /* libcommon_audio_sse2.a */; };
+		FE94D0C51C65EFE400D199DE /* librtc_base_approved.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0AC1C65EFE400D199DE /* librtc_base_approved.a */; };
+		FE94D0C61C65EFE400D199DE /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0AD1C65EFE400D199DE /* libsystem_wrappers.a */; };
+		FE94D0C71C65EFE400D199DE /* libanychatcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0AE1C65EFE400D199DE /* libanychatcore.a */; };
+		FE94D0C81C65EFE400D199DE /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0AF1C65EFE400D199DE /* libavcodec.a */; };
+		FE94D0C91C65EFE400D199DE /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0B01C65EFE400D199DE /* libavformat.a */; };
+		FE94D0CA1C65EFE400D199DE /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0B11C65EFE400D199DE /* libavutil.a */; };
+		FE94D0CB1C65EFE400D199DE /* libcelt0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0B21C65EFE400D199DE /* libcelt0.a */; };
+		FE94D0CC1C65EFE400D199DE /* libmediacore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0B31C65EFE400D199DE /* libmediacore.a */; };
+		FE94D0CD1C65EFE400D199DE /* libmediashow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0B41C65EFE400D199DE /* libmediashow.a */; };
+		FE94D0CE1C65EFE400D199DE /* libmediautil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0B51C65EFE400D199DE /* libmediautil.a */; };
+		FE94D0CF1C65EFE400D199DE /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0B61C65EFE400D199DE /* libmp3lame.a */; };
+		FE94D0D01C65EFE400D199DE /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0B71C65EFE400D199DE /* libopencore-amrwb.a */; };
+		FE94D0D11C65EFE400D199DE /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0B81C65EFE400D199DE /* libswresample.a */; };
+		FE94D0D21C65EFE400D199DE /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0B91C65EFE400D199DE /* libswscale.a */; };
+		FE94D0D31C65EFE400D199DE /* libvo-amrwbenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0BA1C65EFE400D199DE /* libvo-amrwbenc.a */; };
+		FE94D0D41C65EFE400D199DE /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0BB1C65EFE400D199DE /* libvpx.a */; };
+		FE94D0D51C65EFE400D199DE /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0BC1C65EFE400D199DE /* libx264.a */; };
+		FE94D0D61C65EFE400D199DE /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0BD1C65EFE400D199DE /* libyuv.a */; };
+		FE94D0D71C65EFE400D199DE /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D0BE1C65EFE400D199DE /* libyuv_neon.a */; };
 		FE9AFD471A6E63F900B445CF /* UserVideoSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE9AFD461A6E63F900B445CF /* UserVideoSettings.plist */; };
 		FE9B1CB01A315A12006638F6 /* RecordLocalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9B1CAE1A315A12006638F6 /* RecordLocalVC.m */; };
 		FE9B1CB11A315A12006638F6 /* RecordLocalVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE9B1CAF1A315A12006638F6 /* RecordLocalVC.xib */; };
@@ -107,6 +122,9 @@
 		FEBC7CD81A2FF58A00F81D3B /* DetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEBC7CD61A2FF58A00F81D3B /* DetailVC.xib */; };
 		FEC56CBD19D7B0320008EA42 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEC56CBC19D7B0320008EA42 /* Icon@2x.png */; };
 		FECF536D19EF721A00338859 /* bg_video-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FECF536C19EF721A00338859 /* bg_video-568h@2x.png */; };
+		FED5E3551C213EA70097A980 /* Icon_box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FED5E3531C213EA70097A980 /* Icon_box@2x.png */; };
+		FED5E3561C213EA70097A980 /* Icon_box@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FED5E3541C213EA70097A980 /* Icon_box@3x.png */; };
+		FED5E3581C213FC90097A980 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FED5E3571C213FC90097A980 /* Images.xcassets */; };
 		FED686BD1AB97B0400F8E211 /* SendDataVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED686BA1AB97B0400F8E211 /* SendDataVC.xib */; };
 		FED686BE1AB97B0400F8E211 /* SendDataVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FED686BB1AB97B0400F8E211 /* SendDataVC.m */; };
 		FED686C21AB97BA700F8E211 /* ReceiveDataVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FED686C01AB97BA700F8E211 /* ReceiveDataVC.m */; };
@@ -164,39 +182,66 @@
 		FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		FE3EAB5F19E5233A00030ECA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		FE439E121A5A3EA000629E8E /* Icon_featuresBtn_5_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_featuresBtn_5_2.png; path = Icon_featuresBtn/Icon_featuresBtn_5_2.png; sourceTree = "<group>"; };
-		FE4EE0F41A4CFE14005A1E66 /* libaudio_processing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing.a; sourceTree = "<group>"; };
-		FE4EE0F51A4CFE14005A1E66 /* libaudio_processing_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_neon.a; sourceTree = "<group>"; };
-		FE4EE0F61A4CFE14005A1E66 /* libaudio_processing_sse2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_sse2.a; sourceTree = "<group>"; };
-		FE4EE0F71A4CFE14005A1E66 /* libcommon_audio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio.a; sourceTree = "<group>"; };
-		FE4EE0F81A4CFE14005A1E66 /* libcommon_audio_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio_neon.a; sourceTree = "<group>"; };
-		FE4EE0F91A4CFE14005A1E66 /* libcommon_audio_sse2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio_sse2.a; sourceTree = "<group>"; };
-		FE4EE0FA1A4CFE14005A1E66 /* librtc_base_approved.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = librtc_base_approved.a; sourceTree = "<group>"; };
-		FE4EE0FB1A4CFE14005A1E66 /* libsystem_wrappers.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsystem_wrappers.a; sourceTree = "<group>"; };
-		FE4EE0FC1A4CFE14005A1E66 /* libanychatcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libanychatcore.a; sourceTree = "<group>"; };
-		FE4EE0FD1A4CFE14005A1E66 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavcodec.a; sourceTree = "<group>"; };
-		FE4EE0FE1A4CFE14005A1E66 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavformat.a; sourceTree = "<group>"; };
-		FE4EE0FF1A4CFE14005A1E66 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavutil.a; sourceTree = "<group>"; };
-		FE4EE1001A4CFE14005A1E66 /* libcelt0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcelt0.a; sourceTree = "<group>"; };
-		FE4EE1011A4CFE14005A1E66 /* libmediacore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediacore.a; sourceTree = "<group>"; };
-		FE4EE1021A4CFE14005A1E66 /* libmediashow.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediashow.a; sourceTree = "<group>"; };
-		FE4EE1031A4CFE14005A1E66 /* libmediautil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediautil.a; sourceTree = "<group>"; };
-		FE4EE1041A4CFE14005A1E66 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
-		FE4EE1061A4CFE14005A1E66 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
-		FE4EE1071A4CFE14005A1E66 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswresample.a; sourceTree = "<group>"; };
-		FE4EE1081A4CFE14005A1E66 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
-		FE4EE1091A4CFE14005A1E66 /* libvo-amrwbenc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libvo-amrwbenc.a"; sourceTree = "<group>"; };
-		FE4EE10A1A4CFE14005A1E66 /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libvpx.a; sourceTree = "<group>"; };
-		FE4EE10B1A4CFE14005A1E66 /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libx264.a; sourceTree = "<group>"; };
-		FE4EE10C1A4CFE14005A1E66 /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
-		FE4EE10D1A4CFE14005A1E66 /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
 		FE55744D1A25635C00342F39 /* ShowVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowVC.xib; sourceTree = "<group>"; };
 		FE55744E1A25635C00342F39 /* ShowVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowVC.m; sourceTree = "<group>"; };
 		FE55744F1A25635C00342F39 /* ShowVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowVC.h; sourceTree = "<group>"; };
 		FE57D7051A075F8900F87D8E /* icon_text3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_text3.png; sourceTree = "<group>"; };
+		FE5EFB441C55C9C90006BE11 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		FE5EFB451C55C9C90006BE11 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		FE5EFB461C55C9C90006BE11 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		FE5EFB471C55C9C90006BE11 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		FE5EFB481C55C9C90006BE11 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		FE5EFB491C55C9C90006BE11 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		FE5EFB4A1C55C9C90006BE11 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		FE5EFB4B1C55C9C90006BE11 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		FE5EFB4C1C55C9C90006BE11 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		FE5EFB4D1C55C9C90006BE11 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		FE5EFB4E1C55C9C90006BE11 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		FE5EFB4F1C55C9C90006BE11 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		FE5EFB501C55C9C90006BE11 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		FE5EFB581C574C620006BE11 /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
+		FE5EFB591C574C620006BE11 /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
+		FE5EFB5C1C5754CF0006BE11 /* checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked.png; sourceTree = "<group>"; };
+		FE5EFB5D1C5754CF0006BE11 /* checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked@2x.png"; sourceTree = "<group>"; };
+		FE5EFB5E1C5754CF0006BE11 /* unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchecked.png; sourceTree = "<group>"; };
+		FE5EFB5F1C5754CF0006BE11 /* unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked@2x.png"; sourceTree = "<group>"; };
+		FE5EFB651C5762B20006BE11 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
+		FE5EFB661C5762B20006BE11 /* error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "error@2x.png"; sourceTree = "<group>"; };
+		FE5EFB671C5762B20006BE11 /* success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = success.png; sourceTree = "<group>"; };
+		FE5EFB681C5762B20006BE11 /* success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success@2x.png"; sourceTree = "<group>"; };
 		FE6CD55419FA3C07008BC6E4 /* bg_menu.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg_menu.jpg; sourceTree = "<group>"; };
 		FE9361D31A0C626000A1A597 /* Icon_onRecordVideo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_onRecordVideo.png; path = AnyChatFeatures/Resources/video_footer/Icon_onRecordVideo.png; sourceTree = SOURCE_ROOT; };
 		FE9361D41A0C626000A1A597 /* Icon_offRecordVideo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_offRecordVideo.png; path = AnyChatFeatures/Resources/video_footer/Icon_offRecordVideo.png; sourceTree = SOURCE_ROOT; };
 		FE9361D71A0CA05B00A1A597 /* Icon_SnapShot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_SnapShot.png; path = AnyChatFeatures/Resources/video_footer/Icon_SnapShot.png; sourceTree = SOURCE_ROOT; };
+		FE94D0A01C65EFE400D199DE /* AnyChatDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatDefine.h; sourceTree = "<group>"; };
+		FE94D0A11C65EFE400D199DE /* AnyChatErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatErrorCode.h; sourceTree = "<group>"; };
+		FE94D0A21C65EFE400D199DE /* AnyChatObjectDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatObjectDefine.h; sourceTree = "<group>"; };
+		FE94D0A31C65EFE400D199DE /* AnyChatPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatPlatform.h; sourceTree = "<group>"; };
+		FE94D0A61C65EFE400D199DE /* libaudio_processing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing.a; sourceTree = "<group>"; };
+		FE94D0A71C65EFE400D199DE /* libaudio_processing_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_neon.a; sourceTree = "<group>"; };
+		FE94D0A81C65EFE400D199DE /* libaudio_processing_sse2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_sse2.a; sourceTree = "<group>"; };
+		FE94D0A91C65EFE400D199DE /* libcommon_audio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio.a; sourceTree = "<group>"; };
+		FE94D0AA1C65EFE400D199DE /* libcommon_audio_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio_neon.a; sourceTree = "<group>"; };
+		FE94D0AB1C65EFE400D199DE /* libcommon_audio_sse2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio_sse2.a; sourceTree = "<group>"; };
+		FE94D0AC1C65EFE400D199DE /* librtc_base_approved.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = librtc_base_approved.a; sourceTree = "<group>"; };
+		FE94D0AD1C65EFE400D199DE /* libsystem_wrappers.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsystem_wrappers.a; sourceTree = "<group>"; };
+		FE94D0AE1C65EFE400D199DE /* libanychatcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libanychatcore.a; sourceTree = "<group>"; };
+		FE94D0AF1C65EFE400D199DE /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavcodec.a; sourceTree = "<group>"; };
+		FE94D0B01C65EFE400D199DE /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavformat.a; sourceTree = "<group>"; };
+		FE94D0B11C65EFE400D199DE /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavutil.a; sourceTree = "<group>"; };
+		FE94D0B21C65EFE400D199DE /* libcelt0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcelt0.a; sourceTree = "<group>"; };
+		FE94D0B31C65EFE400D199DE /* libmediacore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediacore.a; sourceTree = "<group>"; };
+		FE94D0B41C65EFE400D199DE /* libmediashow.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediashow.a; sourceTree = "<group>"; };
+		FE94D0B51C65EFE400D199DE /* libmediautil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediautil.a; sourceTree = "<group>"; };
+		FE94D0B61C65EFE400D199DE /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		FE94D0B71C65EFE400D199DE /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
+		FE94D0B81C65EFE400D199DE /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswresample.a; sourceTree = "<group>"; };
+		FE94D0B91C65EFE400D199DE /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
+		FE94D0BA1C65EFE400D199DE /* libvo-amrwbenc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libvo-amrwbenc.a"; sourceTree = "<group>"; };
+		FE94D0BB1C65EFE400D199DE /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libvpx.a; sourceTree = "<group>"; };
+		FE94D0BC1C65EFE400D199DE /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libx264.a; sourceTree = "<group>"; };
+		FE94D0BD1C65EFE400D199DE /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
+		FE94D0BE1C65EFE400D199DE /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
 		FE9AFD461A6E63F900B445CF /* UserVideoSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserVideoSettings.plist; sourceTree = "<group>"; };
 		FE9B1CAD1A315A12006638F6 /* RecordLocalVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordLocalVC.h; sourceTree = "<group>"; };
 		FE9B1CAE1A315A12006638F6 /* RecordLocalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordLocalVC.m; sourceTree = "<group>"; };
@@ -248,9 +293,6 @@
 		FEBBA25F19C2CC0B009EE02C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FEBBA26019C2CC0B009EE02C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		FEBBA26919C2CC0B009EE02C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		FEBBA28019C2CD0D009EE02C /* AnyChatDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatDefine.h; sourceTree = "<group>"; };
-		FEBBA28119C2CD0D009EE02C /* AnyChatErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatErrorCode.h; sourceTree = "<group>"; };
-		FEBBA28219C2CD0D009EE02C /* AnyChatPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatPlatform.h; sourceTree = "<group>"; };
 		FEBBA2A919C2CDDE009EE02C /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		FEBBA2AB19C2CDEB009EE02C /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		FEBBA2AD19C2CE06009EE02C /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -268,6 +310,9 @@
 		FEBC7CD61A2FF58A00F81D3B /* DetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailVC.xib; sourceTree = "<group>"; };
 		FEC56CBC19D7B0320008EA42 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		FECF536C19EF721A00338859 /* bg_video-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_video-568h@2x.png"; sourceTree = "<group>"; };
+		FED5E3531C213EA70097A980 /* Icon_box@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_box@2x.png"; sourceTree = "<group>"; };
+		FED5E3541C213EA70097A980 /* Icon_box@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_box@3x.png"; sourceTree = "<group>"; };
+		FED5E3571C213FC90097A980 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AnyChatFeatures/Images.xcassets; sourceTree = "<group>"; };
 		FED686BA1AB97B0400F8E211 /* SendDataVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendDataVC.xib; sourceTree = "<group>"; };
 		FED686BB1AB97B0400F8E211 /* SendDataVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendDataVC.m; sourceTree = "<group>"; };
 		FED686BC1AB97B0400F8E211 /* SendDataVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendDataVC.h; sourceTree = "<group>"; };
@@ -319,43 +364,43 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEA90E801A4D006F001CA696 /* libc++.dylib in Frameworks */,
+				FE94D0C71C65EFE400D199DE /* libanychatcore.a in Frameworks */,
 				FEB052821A1055A50044B495 /* QuickLook.framework in Frameworks */,
-				FE4EE1111A4CFE14005A1E66 /* libcommon_audio.a in Frameworks */,
-				FE4EE10F1A4CFE14005A1E66 /* libaudio_processing_neon.a in Frameworks */,
-				FE4EE1241A4CFE15005A1E66 /* libvpx.a in Frameworks */,
-				FE4EE1261A4CFE15005A1E66 /* libyuv_neon.a in Frameworks */,
-				FE4EE11C1A4CFE14005A1E66 /* libmediashow.a in Frameworks */,
+				FE94D0D41C65EFE400D199DE /* libvpx.a in Frameworks */,
+				FE94D0C91C65EFE400D199DE /* libavformat.a in Frameworks */,
 				FEBBA2B619C2CE36009EE02C /* CoreMedia.framework in Frameworks */,
+				FE94D0CA1C65EFE400D199DE /* libavutil.a in Frameworks */,
+				FE94D0CE1C65EFE400D199DE /* libmediautil.a in Frameworks */,
 				FEBBA2B419C2CE2B009EE02C /* AVFoundation.framework in Frameworks */,
-				FE4EE1141A4CFE14005A1E66 /* librtc_base_approved.a in Frameworks */,
-				FE4EE1191A4CFE14005A1E66 /* libavutil.a in Frameworks */,
+				FE94D0C81C65EFE400D199DE /* libavcodec.a in Frameworks */,
 				FEBBA2B219C2CE21009EE02C /* AudioToolbox.framework in Frameworks */,
+				FE94D0D51C65EFE400D199DE /* libx264.a in Frameworks */,
+				FE94D0C21C65EFE400D199DE /* libcommon_audio.a in Frameworks */,
 				FEBBA2B019C2CE12009EE02C /* CoreVideo.framework in Frameworks */,
-				FE4EE1251A4CFE15005A1E66 /* libx264.a in Frameworks */,
-				FE4EE11B1A4CFE14005A1E66 /* libmediacore.a in Frameworks */,
 				FEBBA2AE19C2CE06009EE02C /* CoreAudio.framework in Frameworks */,
-				FE4EE10E1A4CFE14005A1E66 /* libaudio_processing.a in Frameworks */,
-				FE4EE1271A4CFE15005A1E66 /* libyuv.a in Frameworks */,
+				FE94D0CB1C65EFE400D199DE /* libcelt0.a in Frameworks */,
+				FE94D0CD1C65EFE400D199DE /* libmediashow.a in Frameworks */,
+				FE94D0CF1C65EFE400D199DE /* libmp3lame.a in Frameworks */,
+				FE94D0CC1C65EFE400D199DE /* libmediacore.a in Frameworks */,
+				FE94D0C61C65EFE400D199DE /* libsystem_wrappers.a in Frameworks */,
 				FEBBA2AC19C2CDEB009EE02C /* libstdc++.dylib in Frameworks */,
-				FE4EE11E1A4CFE14005A1E66 /* libmp3lame.a in Frameworks */,
-				FE4EE1131A4CFE14005A1E66 /* libcommon_audio_sse2.a in Frameworks */,
+				FE94D0D31C65EFE400D199DE /* libvo-amrwbenc.a in Frameworks */,
+				FE94D0D71C65EFE400D199DE /* libyuv_neon.a in Frameworks */,
 				FEBBA2AA19C2CDDE009EE02C /* libstdc++.6.dylib in Frameworks */,
-				FE4EE1181A4CFE14005A1E66 /* libavformat.a in Frameworks */,
-				FE4EE1231A4CFE15005A1E66 /* libvo-amrwbenc.a in Frameworks */,
-				FE4EE1121A4CFE14005A1E66 /* libcommon_audio_neon.a in Frameworks */,
-				FE4EE11A1A4CFE14005A1E66 /* libcelt0.a in Frameworks */,
-				FE4EE1161A4CFE14005A1E66 /* libanychatcore.a in Frameworks */,
-				FE4EE1151A4CFE14005A1E66 /* libsystem_wrappers.a in Frameworks */,
+				FE94D0D61C65EFE400D199DE /* libyuv.a in Frameworks */,
 				FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */,
-				FE4EE1221A4CFE14005A1E66 /* libswscale.a in Frameworks */,
-				FE4EE1211A4CFE14005A1E66 /* libswresample.a in Frameworks */,
-				FE4EE11D1A4CFE14005A1E66 /* libmediautil.a in Frameworks */,
-				FE4EE1201A4CFE14005A1E66 /* libopencore-amrwb.a in Frameworks */,
+				FE94D0C11C65EFE400D199DE /* libaudio_processing_sse2.a in Frameworks */,
 				FEBBA25319C2CC0B009EE02C /* CoreGraphics.framework in Frameworks */,
-				FE4EE1101A4CFE14005A1E66 /* libaudio_processing_sse2.a in Frameworks */,
-				FE4EE1171A4CFE14005A1E66 /* libavcodec.a in Frameworks */,
+				FE94D0C31C65EFE400D199DE /* libcommon_audio_neon.a in Frameworks */,
+				FE94D0D21C65EFE400D199DE /* libswscale.a in Frameworks */,
+				FE94D0D11C65EFE400D199DE /* libswresample.a in Frameworks */,
 				FEBBA25519C2CC0B009EE02C /* UIKit.framework in Frameworks */,
+				FE94D0D01C65EFE400D199DE /* libopencore-amrwb.a in Frameworks */,
 				FEBBA25119C2CC0B009EE02C /* Foundation.framework in Frameworks */,
+				FE94D0C01C65EFE400D199DE /* libaudio_processing_neon.a in Frameworks */,
+				FE94D0BF1C65EFE400D199DE /* libaudio_processing.a in Frameworks */,
+				FE94D0C41C65EFE400D199DE /* libcommon_audio_sse2.a in Frameworks */,
+				FE94D0C51C65EFE400D199DE /* librtc_base_approved.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,19 +418,55 @@
 			name = TextMsg_TransBuffer;
 			sourceTree = "<group>";
 		};
-		FE4EE0F31A4CFE14005A1E66 /* audioprocess */ = {
+		FE5EFB431C55C9C90006BE11 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				FE4EE0F41A4CFE14005A1E66 /* libaudio_processing.a */,
-				FE4EE0F51A4CFE14005A1E66 /* libaudio_processing_neon.a */,
-				FE4EE0F61A4CFE14005A1E66 /* libaudio_processing_sse2.a */,
-				FE4EE0F71A4CFE14005A1E66 /* libcommon_audio.a */,
-				FE4EE0F81A4CFE14005A1E66 /* libcommon_audio_neon.a */,
-				FE4EE0F91A4CFE14005A1E66 /* libcommon_audio_sse2.a */,
-				FE4EE0FA1A4CFE14005A1E66 /* librtc_base_approved.a */,
-				FE4EE0FB1A4CFE14005A1E66 /* libsystem_wrappers.a */,
+				FE5EFB441C55C9C90006BE11 /* AFHTTPSessionManager.h */,
+				FE5EFB451C55C9C90006BE11 /* AFHTTPSessionManager.m */,
+				FE5EFB461C55C9C90006BE11 /* AFNetworking.h */,
+				FE5EFB471C55C9C90006BE11 /* AFNetworkReachabilityManager.h */,
+				FE5EFB481C55C9C90006BE11 /* AFNetworkReachabilityManager.m */,
+				FE5EFB491C55C9C90006BE11 /* AFSecurityPolicy.h */,
+				FE5EFB4A1C55C9C90006BE11 /* AFSecurityPolicy.m */,
+				FE5EFB4B1C55C9C90006BE11 /* AFURLRequestSerialization.h */,
+				FE5EFB4C1C55C9C90006BE11 /* AFURLRequestSerialization.m */,
+				FE5EFB4D1C55C9C90006BE11 /* AFURLResponseSerialization.h */,
+				FE5EFB4E1C55C9C90006BE11 /* AFURLResponseSerialization.m */,
+				FE5EFB4F1C55C9C90006BE11 /* AFURLSessionManager.h */,
+				FE5EFB501C55C9C90006BE11 /* AFURLSessionManager.m */,
 			);
-			path = audioprocess;
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		FE5EFB571C574C620006BE11 /* RadioButton */ = {
+			isa = PBXGroup;
+			children = (
+				FE5EFB581C574C620006BE11 /* RadioButton.h */,
+				FE5EFB591C574C620006BE11 /* RadioButton.m */,
+			);
+			path = RadioButton;
+			sourceTree = "<group>";
+		};
+		FE5EFB5B1C5754CF0006BE11 /* radio-res-ios */ = {
+			isa = PBXGroup;
+			children = (
+				FE5EFB5C1C5754CF0006BE11 /* checked.png */,
+				FE5EFB5D1C5754CF0006BE11 /* checked@2x.png */,
+				FE5EFB5E1C5754CF0006BE11 /* unchecked.png */,
+				FE5EFB5F1C5754CF0006BE11 /* unchecked@2x.png */,
+			);
+			path = "radio-res-ios";
+			sourceTree = "<group>";
+		};
+		FE5EFB641C5762B20006BE11 /* MBHUD */ = {
+			isa = PBXGroup;
+			children = (
+				FE5EFB651C5762B20006BE11 /* error.png */,
+				FE5EFB661C5762B20006BE11 /* error@2x.png */,
+				FE5EFB671C5762B20006BE11 /* success.png */,
+				FE5EFB681C5762B20006BE11 /* success@2x.png */,
+			);
+			path = MBHUD;
 			sourceTree = "<group>";
 		};
 		FE8CF22219FA1FC1005E2F71 /* Login */ = {
@@ -422,6 +503,67 @@
 				FE04EB4F19F643B9006A5E5F /* FeaturesListVC.xib */,
 			);
 			name = FeaturesList;
+			sourceTree = "<group>";
+		};
+		FE94D09E1C65EFE400D199DE /* sdk */ = {
+			isa = PBXGroup;
+			children = (
+				FE94D09F1C65EFE400D199DE /* include */,
+				FE94D0A41C65EFE400D199DE /* libs */,
+			);
+			name = sdk;
+			path = ../../../sdk;
+			sourceTree = "<group>";
+		};
+		FE94D09F1C65EFE400D199DE /* include */ = {
+			isa = PBXGroup;
+			children = (
+				FE94D0A01C65EFE400D199DE /* AnyChatDefine.h */,
+				FE94D0A11C65EFE400D199DE /* AnyChatErrorCode.h */,
+				FE94D0A21C65EFE400D199DE /* AnyChatObjectDefine.h */,
+				FE94D0A31C65EFE400D199DE /* AnyChatPlatform.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		FE94D0A41C65EFE400D199DE /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				FE94D0A51C65EFE400D199DE /* audioprocess */,
+				FE94D0AE1C65EFE400D199DE /* libanychatcore.a */,
+				FE94D0AF1C65EFE400D199DE /* libavcodec.a */,
+				FE94D0B01C65EFE400D199DE /* libavformat.a */,
+				FE94D0B11C65EFE400D199DE /* libavutil.a */,
+				FE94D0B21C65EFE400D199DE /* libcelt0.a */,
+				FE94D0B31C65EFE400D199DE /* libmediacore.a */,
+				FE94D0B41C65EFE400D199DE /* libmediashow.a */,
+				FE94D0B51C65EFE400D199DE /* libmediautil.a */,
+				FE94D0B61C65EFE400D199DE /* libmp3lame.a */,
+				FE94D0B71C65EFE400D199DE /* libopencore-amrwb.a */,
+				FE94D0B81C65EFE400D199DE /* libswresample.a */,
+				FE94D0B91C65EFE400D199DE /* libswscale.a */,
+				FE94D0BA1C65EFE400D199DE /* libvo-amrwbenc.a */,
+				FE94D0BB1C65EFE400D199DE /* libvpx.a */,
+				FE94D0BC1C65EFE400D199DE /* libx264.a */,
+				FE94D0BD1C65EFE400D199DE /* libyuv.a */,
+				FE94D0BE1C65EFE400D199DE /* libyuv_neon.a */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		FE94D0A51C65EFE400D199DE /* audioprocess */ = {
+			isa = PBXGroup;
+			children = (
+				FE94D0A61C65EFE400D199DE /* libaudio_processing.a */,
+				FE94D0A71C65EFE400D199DE /* libaudio_processing_neon.a */,
+				FE94D0A81C65EFE400D199DE /* libaudio_processing_sse2.a */,
+				FE94D0A91C65EFE400D199DE /* libcommon_audio.a */,
+				FE94D0AA1C65EFE400D199DE /* libcommon_audio_neon.a */,
+				FE94D0AB1C65EFE400D199DE /* libcommon_audio_sse2.a */,
+				FE94D0AC1C65EFE400D199DE /* librtc_base_approved.a */,
+				FE94D0AD1C65EFE400D199DE /* libsystem_wrappers.a */,
+			);
+			path = audioprocess;
 			sourceTree = "<group>";
 		};
 		FE9B1CAB1A3158E3006638F6 /* RecordLocal */ = {
@@ -471,6 +613,8 @@
 		FE9EC5EE1A26EF3000FE2E5D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FE5EFB571C574C620006BE11 /* RadioButton */,
+				FE5EFB431C55C9C90006BE11 /* AFNetworking */,
 				FE9EC5EF1A26EF3000FE2E5D /* MBProgressHUD.h */,
 				FE9EC5F01A26EF3000FE2E5D /* MBProgressHUD.m */,
 				FE9EC5F11A26EF3000FE2E5D /* MZTimerLabel.h */,
@@ -510,6 +654,7 @@
 		FEBBA24419C2CC0B009EE02C = {
 			isa = PBXGroup;
 			children = (
+				FED5E3571C213FC90097A980 /* Images.xcassets */,
 				FEBBA25619C2CC0B009EE02C /* AnyChat */,
 				FEBBA25719C2CC0B009EE02C /* Supporting Files */,
 				FE9EC5EE1A26EF3000FE2E5D /* Utilities */,
@@ -550,8 +695,7 @@
 		FEBBA25619C2CC0B009EE02C /* AnyChat */ = {
 			isa = PBXGroup;
 			children = (
-				FEBBA27F19C2CD0D009EE02C /* include */,
-				FEBBA28319C2CD0D009EE02C /* libs */,
+				FE94D09E1C65EFE400D199DE /* sdk */,
 				FEBBA25F19C2CC0B009EE02C /* AppDelegate.h */,
 				FEBBA26019C2CC0B009EE02C /* AppDelegate.m */,
 				FE8CF22219FA1FC1005E2F71 /* Login */,
@@ -581,43 +725,6 @@
 			);
 			name = "Supporting Files";
 			path = AnyChatFeatures;
-			sourceTree = "<group>";
-		};
-		FEBBA27F19C2CD0D009EE02C /* include */ = {
-			isa = PBXGroup;
-			children = (
-				FEBBA28019C2CD0D009EE02C /* AnyChatDefine.h */,
-				FEBBA28119C2CD0D009EE02C /* AnyChatErrorCode.h */,
-				FEBBA28219C2CD0D009EE02C /* AnyChatPlatform.h */,
-			);
-			name = include;
-			path = ../../../sdk/include;
-			sourceTree = "<group>";
-		};
-		FEBBA28319C2CD0D009EE02C /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				FE4EE0F31A4CFE14005A1E66 /* audioprocess */,
-				FE4EE0FC1A4CFE14005A1E66 /* libanychatcore.a */,
-				FE4EE0FD1A4CFE14005A1E66 /* libavcodec.a */,
-				FE4EE0FE1A4CFE14005A1E66 /* libavformat.a */,
-				FE4EE0FF1A4CFE14005A1E66 /* libavutil.a */,
-				FE4EE1001A4CFE14005A1E66 /* libcelt0.a */,
-				FE4EE1011A4CFE14005A1E66 /* libmediacore.a */,
-				FE4EE1021A4CFE14005A1E66 /* libmediashow.a */,
-				FE4EE1031A4CFE14005A1E66 /* libmediautil.a */,
-				FE4EE1041A4CFE14005A1E66 /* libmp3lame.a */,
-				FE4EE1061A4CFE14005A1E66 /* libopencore-amrwb.a */,
-				FE4EE1071A4CFE14005A1E66 /* libswresample.a */,
-				FE4EE1081A4CFE14005A1E66 /* libswscale.a */,
-				FE4EE1091A4CFE14005A1E66 /* libvo-amrwbenc.a */,
-				FE4EE10A1A4CFE14005A1E66 /* libvpx.a */,
-				FE4EE10B1A4CFE14005A1E66 /* libx264.a */,
-				FE4EE10C1A4CFE14005A1E66 /* libyuv_neon.a */,
-				FE4EE10D1A4CFE14005A1E66 /* libyuv.a */,
-			);
-			name = libs;
-			path = ../../../sdk/libs;
 			sourceTree = "<group>";
 		};
 		FEBC7CCA1A2FF4F400F81D3B /* Setting */ = {
@@ -665,6 +772,8 @@
 		FECF538119EFBB3A00338859 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FE5EFB641C5762B20006BE11 /* MBHUD */,
+				FE5EFB5B1C5754CF0006BE11 /* radio-res-ios */,
 				FEDF93121ABA7BA400C1DFC0 /* UDP */,
 				FEDD96CC1A7724C80093CAF9 /* Icon_back.png */,
 				FE9EC5E61A26D14400FE2E5D /* Icon_playList2_140.png */,
@@ -689,6 +798,8 @@
 				FEA9264819E4EEB300FC42AC /* Icon_name.png */,
 				FEA9264919E4EEB300FC42AC /* Icon_room.png */,
 				FEA9264519E4EE7400FC42AC /* Icon_port.png */,
+				FED5E3531C213EA70097A980 /* Icon_box@2x.png */,
+				FED5E3541C213EA70097A980 /* Icon_box@3x.png */,
 			);
 			name = images;
 			path = Resources;
@@ -795,17 +906,22 @@
 				FEAD383A1A1353010036F8B6 /* Icon_featuresBtn_7.png in Resources */,
 				FEE6C84D19F62E9900477365 /* tableVCell.xib in Resources */,
 				FEDEE68B1A15EA74006FB454 /* Icon_offRecordVideo_Server.png in Resources */,
+				FED5E3581C213FC90097A980 /* Images.xcassets in Resources */,
 				FEEFD3471A72506F0099EAC9 /* AutodyneVC.xib in Resources */,
 				FE0D8B0619FF9CC300D5FD3E /* bg_TestMsg.jpg in Resources */,
 				FE6CD55619FA3C07008BC6E4 /* bg_menu.jpg in Resources */,
 				FEAE1A7E1A008E7300842D66 /* theMsgCell.xib in Resources */,
 				FEDD96CF1A7736040093CAF9 /* VideoSettings.plist in Resources */,
+				FE5EFB601C5754CF0006BE11 /* checked.png in Resources */,
 				FEAD38381A1353010036F8B6 /* Icon_featuresBtn_5.png in Resources */,
 				FEE6C84A19F628A300477365 /* Icon_camera_off.png in Resources */,
 				FEBC7CCF1A2FF51000F81D3B /* SettingVC.xib in Resources */,
 				FEF0B78619FA521A00FB9EEA /* UserListVC.xib in Resources */,
 				FEDEE6831A15D7D6006FB454 /* Icon_switchCamera_b_102.png in Resources */,
+				FE5EFB6A1C5762B20006BE11 /* error@2x.png in Resources */,
 				FEA910801A0231E300798D1D /* TransFileVC.xib in Resources */,
+				FED5E3551C213EA70097A980 /* Icon_box@2x.png in Resources */,
+				FE5EFB631C5754CF0006BE11 /* unchecked@2x.png in Resources */,
 				FEDEE6901A15F124006FB454 /* Icon_takePhoto_Local.png in Resources */,
 				FEA9264A19E4EEB300FC42AC /* Icon_name.png in Resources */,
 				FE20E49B19D968A800189A8A /* bg.png in Resources */,
@@ -817,6 +933,7 @@
 				FEDEE68A1A15EA74006FB454 /* Icon_offRecordVideo_Local.png in Resources */,
 				FEE6C84919F628A300477365 /* Icon_camera_on.png in Resources */,
 				FE9B1CB61A315B0C006638F6 /* RecordServerVC.xib in Resources */,
+				FE5EFB691C5762B20006BE11 /* error.png in Resources */,
 				FEDD96CD1A7724C80093CAF9 /* Icon_back.png in Resources */,
 				FEE6C84519F628A300477365 /* Icon_switchCamera_b.png in Resources */,
 				FEAD38391A1353010036F8B6 /* Icon_featuresBtn_6.png in Resources */,
@@ -829,6 +946,7 @@
 				FEA9264719E4EE7400FC42AC /* Icon_port.png in Resources */,
 				FEEFD3351A721BB60099EAC9 /* RecordSelfVC.xib in Resources */,
 				FEDEE68C1A15EA74006FB454 /* Icon_onRecordVideo_Local.png in Resources */,
+				FE5EFB621C5754CF0006BE11 /* unchecked.png in Resources */,
 				FE9361D81A0CA05B00A1A597 /* Icon_SnapShot.png in Resources */,
 				FEB863E019F0E6BE00594BF5 /* bg_video@2x.png in Resources */,
 				FEAD38371A1353010036F8B6 /* Icon_featuresBtn_4.png in Resources */,
@@ -847,6 +965,7 @@
 				FEA7EFDE1A1DC8DE00BF4F53 /* Icon_featuresBtn_8.png in Resources */,
 				FEDEE6811A15AE57006FB454 /* bg_loginTitle.png in Resources */,
 				FEE6C84419F628A300477365 /* Icon_switchCamera_w.png in Resources */,
+				FE5EFB6C1C5762B20006BE11 /* success@2x.png in Resources */,
 				FE9DD19119DA916C008889EC /* cell_01.png in Resources */,
 				FE9DD0A119DA4F92008889EC /* 5.png in Resources */,
 				FE20E49719D960C200189A8A /* btn_logout_01.png in Resources */,
@@ -856,10 +975,13 @@
 				FE3EAB6119E5233A00030ECA /* Default@2x.png in Resources */,
 				FE57D7061A075F8900F87D8E /* icon_text3.png in Resources */,
 				FE9E5D291A1B2FC500F48575 /* sound_takePhoto.wav in Resources */,
+				FED5E3561C213EA70097A980 /* Icon_box@3x.png in Resources */,
+				FE5EFB6B1C5762B20006BE11 /* success.png in Resources */,
 				FEDEE68D1A15EA74006FB454 /* Icon_onRecordVideo_Server.png in Resources */,
 				FEE6C84819F628A300477365 /* Icon_EndCall.png in Resources */,
 				FEDF93221ABA7D4400C1DFC0 /* UDP_server3.png in Resources */,
 				FE04EB5019F643B9006A5E5F /* FeaturesListVC.xib in Resources */,
+				FE5EFB611C5754CF0006BE11 /* checked@2x.png in Resources */,
 				FE9DD09F19DA4F92008889EC /* 3.png in Resources */,
 				FEDF93261ABA7D4400C1DFC0 /* UDP_receive.png in Resources */,
 				FEDEE67F1A15A698006FB454 /* bg_login.png in Resources */,
@@ -877,15 +999,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE5EFB561C55C9C90006BE11 /* AFURLSessionManager.m in Sources */,
 				FEBBA26119C2CC0B009EE02C /* AppDelegate.m in Sources */,
 				FEBBA25D19C2CC0B009EE02C /* main.m in Sources */,
 				FE0D8B0319FF8F5D00D5FD3E /* TextMsg_TransBufferVC.m in Sources */,
 				FE1B2E7519C692F300773FE6 /* VideoVC.m in Sources */,
 				FE9EC5F41A26EF3000FE2E5D /* MZTimerLabel.m in Sources */,
 				FE9B1CB51A315B0C006638F6 /* RecordServerVC.m in Sources */,
+				FE5EFB5A1C574C620006BE11 /* RadioButton.m in Sources */,
 				FEA9107F1A0231E300798D1D /* TransFileVC.m in Sources */,
+				FE5EFB511C55C9C90006BE11 /* AFHTTPSessionManager.m in Sources */,
 				FEF0B78519FA521A00FB9EEA /* UserListVC.m in Sources */,
 				FEBC7CD71A2FF58A00F81D3B /* DetailVC.m in Sources */,
+				FE5EFB521C55C9C90006BE11 /* AFNetworkReachabilityManager.m in Sources */,
 				FED686BE1AB97B0400F8E211 /* SendDataVC.m in Sources */,
 				FE5574511A25635C00342F39 /* ShowVC.m in Sources */,
 				FE9EC5F31A26EF3000FE2E5D /* MBProgressHUD.m in Sources */,
@@ -895,6 +1021,9 @@
 				FED686C21AB97BA700F8E211 /* ReceiveDataVC.m in Sources */,
 				FEBBA2BA19C2CF67009EE02C /* AnyChatVC.m in Sources */,
 				FE9B1CB01A315A12006638F6 /* RecordLocalVC.m in Sources */,
+				FE5EFB541C55C9C90006BE11 /* AFURLRequestSerialization.m in Sources */,
+				FE5EFB531C55C9C90006BE11 /* AFSecurityPolicy.m in Sources */,
+				FE5EFB551C55C9C90006BE11 /* AFURLResponseSerialization.m in Sources */,
 				FE04EB4D19F642B3006A5E5F /* FeaturesListVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -992,10 +1121,12 @@
 		FEBBA27A19C2CC0B009EE02C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 先来 王 (T34LAWGBH3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 先来 王 (T34LAWGBH3)";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AnyChatFeatures/AnyChatFeatures-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1008,8 +1139,11 @@
 					"$(inherited)",
 					../../sdk/libs,
 					../../sdk/libs/audioprocess,
+					"$(PROJECT_DIR)/AnyChatFeatures/sdk/libs/audioprocess",
+					"$(PROJECT_DIR)/AnyChatFeatures/sdk/libs",
 				);
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatFeatures;
 				PRODUCT_NAME = AnyChatFeatures;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1021,10 +1155,12 @@
 		FEBBA27B19C2CC0B009EE02C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 先来 王 (T34LAWGBH3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 先来 王 (T34LAWGBH3)";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AnyChatFeatures/AnyChatFeatures-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1037,7 +1173,10 @@
 					"$(inherited)",
 					../../sdk/libs,
 					../../sdk/libs/audioprocess,
+					"$(PROJECT_DIR)/AnyChatFeatures/sdk/libs/audioprocess",
+					"$(PROJECT_DIR)/AnyChatFeatures/sdk/libs",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatFeatures;
 				PRODUCT_NAME = AnyChatFeatures;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

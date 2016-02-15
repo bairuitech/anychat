@@ -37,5 +37,31 @@ namespace AnyChatMultiCamera
         /// 应用ID
         /// </summary>
         public string AppGuid { get; set; }
+
+        /// <summary>
+        /// 登录方式
+        /// </summary>
+        public LoginType loginType { get; set; }
+
+        /// <summary>
+        /// 签名服务器Url
+        /// </summary>
+        public string signServerUrl { get; set; }
     }
+
+    /// <summary>
+    /// 登录方式
+    /// </summary>
+    public enum LoginType
+    {
+        /// <summary>
+        /// 普通登录
+        /// </summary>
+        Normal = 1,
+        /// <summary>
+        /// 签名方式登录
+        /// </summary>
+        Sign = 2
+    }
+
 }

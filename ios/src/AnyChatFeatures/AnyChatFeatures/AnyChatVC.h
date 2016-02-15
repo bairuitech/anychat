@@ -21,17 +21,26 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
+#define kAnyChatIP @"cluster.anychat.cn"
+#define kAnyChatPort @"8102"
+
+typedef enum {
+    AnyChatVCLoginModeGeneralLogin,
+    AnyChatVCLoginModeSignLogin
+} AnyChatVCLoginMode;
 
 @class VideoVC;
 
 @interface AnyChatVC : UIViewController <NSCoding,UITextFieldDelegate,UIAlertViewDelegate,MBProgressHUDDelegate,AnyChatNotifyMessageDelegate,AnyChatTextMsgDelegate,AnyChatTransDataDelegate,AnyChatRecordSnapShotDelegate,AnyChatVideoCallDelegate,AnyChatMediaDataDelegate>
 {
     MBProgressHUD   *HUD;
+    
 }
 
 @property (weak, nonatomic) IBOutlet UITextField            *theUserName;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
+@property (weak, nonatomic) IBOutlet UITextField            *theGuid;
 @property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
 @property (weak, nonatomic) IBOutlet UIButton               *theHideKeyboardBtn;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
@@ -52,7 +61,7 @@
 @property int   theTargetUserID;
 @property int   theShowVCType;
 @property BOOL  theOnLineLoginState;
-
+@property (nonatomic, assign) AnyChatVCLoginMode loginMode; // 登录方式
 
 kGCD_SINGLETON_FOR_HEADER(AnyChatVC);
 
@@ -60,11 +69,11 @@ kGCD_SINGLETON_FOR_HEADER(AnyChatVC);
 
 - (IBAction) OnLoginBtnClicked:(id)sender;
 
-- (id) GetServerIP;
-
-- (id) GetServerPort;
-
-- (id) GetUserName;
+//- (id) GetServerIP;
+//
+//- (id) GetServerPort;
+//
+//- (id) GetUserName;
 
 - (void) OnLogout;
 

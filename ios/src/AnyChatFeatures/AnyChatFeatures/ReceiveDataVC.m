@@ -58,7 +58,8 @@
     //IP
     self.theSendViewIPLable.text = [AnyChatPlatform QueryUserStateString:[AnyChatPlatform GetSDKOptionInt:167] :BRAC_USERSTATE_INTERNETIP];
     self.theRecvViewIPLable.text = [AnyChatPlatform QueryUserStateString:-1 :BRAC_USERSTATE_INTERNETIP];
-    self.theServerViewIPLable.text = [[AnyChatVC sharedAnyChatVC] GetServerIP];
+    
+    self.theServerViewIPLable.text = kAnyChatIP;
 
 }
 

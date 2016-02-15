@@ -23,9 +23,7 @@ typedef enum {
     MBProgressHUDAnimationZoom
 } MBProgressHUDAnimation;
 
-
 @interface MBProgressHUD : UIView {
-	
 	MBProgressHUDMode mode;
     MBProgressHUDAnimation animationType;
 	

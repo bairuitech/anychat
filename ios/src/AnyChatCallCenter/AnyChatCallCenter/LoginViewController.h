@@ -8,24 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import "AnyChatAppDelegate.h"
-#import "SettingsViewController.h"
 #import "HallViewController.h"
 
 @class AnyChatPlatform;
 
 @interface LoginViewController : UIViewController
 
+@property (nonatomic, strong) IBOutlet UITextField   *theIP;
+@property (nonatomic, strong) IBOutlet UITextField   *thePort;
+@property (nonatomic, strong) IBOutlet UITextField   *theGuid;
 @property (nonatomic, strong) IBOutlet UITextField   *theUserName;
-@property (nonatomic, strong) IBOutlet UITextField   *thePassword;
 @property (nonatomic, strong) IBOutlet UIButton      *theLoginBtn;
-@property (nonatomic, strong) IBOutlet UIButton      *theSettingsBtn;
 @property (nonatomic, strong) IBOutlet UILabel       *theVersion;
-@property (nonatomic, strong) IBOutlet UILabel       *theTitleFony;
 @property (nonatomic, strong) IBOutlet UIButton      *theHideKeyboardBtn;
 @property (nonatomic, strong) LoginViewController    *LoginVC;
-
-
-- (IBAction) OnNetConfigBtnClicked:(id)sender;
 
 - (IBAction) OnLoginBtnClicked:(id)sender;
 

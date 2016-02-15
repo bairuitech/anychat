@@ -24,6 +24,10 @@ namespace AnyChatCSharpDemo
         /// </summary>
         public static string m_UserName = "";
         /// <summary>
+        /// 用户密码
+        /// </summary>
+        public static string m_LoginPass = "";
+        /// <summary>
         /// 视频服务器IP
         /// </summary>
         public static string m_VideoServerIP = "211.155.25.89";
@@ -48,6 +52,14 @@ namespace AnyChatCSharpDemo
         string mPath = Application.StartupPath + "/record.xml";
 
         XmlDocument mXmlDoc = new XmlDocument();
+        /// <summary>
+        /// 登录方式
+        /// </summary>
+        public static LoginType m_loginType = LoginType.Normal;
+        /// <summary>
+        /// 签名Url
+        /// </summary>
+        public static string m_SignUrl = string.Empty;
 
         #endregion
 
@@ -65,7 +77,7 @@ namespace AnyChatCSharpDemo
         private void btn_login_Click(object sender, EventArgs e)
         {
             string m_User = txt_username.Text.Trim();
-            string m_Pass = txt_password.Text.Trim();
+
             if (m_User.Length == 0)
             {
                 MessageBox.Show("账号不能为空", "提示");
@@ -77,8 +89,10 @@ namespace AnyChatCSharpDemo
             {
                 m_UserName = m_User;
             }
-            m_VideoServerIP = txt_serverip.Text.Trim();
 
+            m_VideoServerIP = txt_serverip.Text.Trim();
+            m_LoginPass = txt_password.Text.Trim();
+            m_AppGuid = txt_appGuid.Text.Trim();
 
             try
             {
@@ -87,6 +101,15 @@ namespace AnyChatCSharpDemo
             catch (Exception)
             {
                 MessageBox.Show("端口号是整数");
+            }
+
+            if (rbtn_normal.Checked)
+            {
+                m_loginType = LoginType.Normal;
+            }
+            if (rbtn_sign.Checked)
+            {
+                m_loginType = LoginType.Sign;
             }
 
             this.Hide();
@@ -174,6 +197,10 @@ namespace AnyChatCSharpDemo
                 PreviousRecordValue("previousrecord", "userName", txt_username.Text);
                 PreviousRecordValue("previousrecord", "appGuid", txt_appGuid.Text);
 
+                if (String.IsNullOrEmpty(m_SignUrl))
+                {
+                    PreviousRecordValue("previousrecord", "signUrl", m_SignUrl);
+                }
             }
             catch (Exception ex)
             {
@@ -222,13 +249,14 @@ namespace AnyChatCSharpDemo
                 tb_port.Text = record[1];
                 txt_username.Text = record[2];
                 txt_appGuid.Text = record[3];
+                m_SignUrl = record[4];
             }
 
         }
 
         private String[] getPreviousRecord(string rAttribute)
         {
-            string[] record = new string[4];
+            string[] record = new string[5];
             XmlNode rMainNode = mXmlDoc.SelectSingleNode("settings");
             XmlNode rNode = rMainNode.SelectSingleNode(rAttribute);
             XmlNodeList rList = rNode.ChildNodes;
@@ -253,7 +281,9 @@ namespace AnyChatCSharpDemo
                     case "appGuid":
                         record[3] = rVal;
                         break;
-
+                    case "signUrl":
+                        record[4] = rVal;
+                        break;
                 }
             }
             if (bExists)
@@ -264,6 +294,23 @@ namespace AnyChatCSharpDemo
 
 
         #endregion
+
+        private void rbtn_normal_Click(object sender, EventArgs e)
+        {
+            if (txt_serverip.Text.ToLower().Equals("demo.anychat.cn") && rbtn_normal.Checked)
+            {
+                tb_port.Text = "8906";
+            }
+        }
+
+        private void rbtn_sign_Click(object sender, EventArgs e)
+        {
+            if (txt_serverip.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
+            {
+                tb_port.Text = "8912";
+            }
+        }
+
 
     }
 }

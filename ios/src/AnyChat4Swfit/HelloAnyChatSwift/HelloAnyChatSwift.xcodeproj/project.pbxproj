@@ -11,34 +11,7 @@
 		FE4CBFA91BE4A56F00693F32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE4CBFA71BE4A56F00693F32 /* Main.storyboard */; };
 		FE4CBFAB1BE4A56F00693F32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE4CBFAA1BE4A56F00693F32 /* Assets.xcassets */; };
 		FE4CBFAE1BE4A56F00693F32 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE4CBFAC1BE4A56F00693F32 /* LaunchScreen.storyboard */; };
-		FE4CBFB91BE4A56F00693F32 /* HelloAnyChatSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CBFB81BE4A56F00693F32 /* HelloAnyChatSwiftTests.swift */; };
-		FE4CBFC41BE4A56F00693F32 /* HelloAnyChatSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CBFC31BE4A56F00693F32 /* HelloAnyChatSwiftUITests.swift */; };
 		FE4CBFD41BE4A66600693F32 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CBFD31BE4A66600693F32 /* LoginViewController.swift */; };
-		FE4CBFF61BE4AD9E00693F32 /* libaudio_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFDD1BE4AD9E00693F32 /* libaudio_processing.a */; };
-		FE4CBFF71BE4AD9E00693F32 /* libaudio_processing_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFDE1BE4AD9E00693F32 /* libaudio_processing_neon.a */; };
-		FE4CBFF81BE4AD9E00693F32 /* libaudio_processing_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFDF1BE4AD9E00693F32 /* libaudio_processing_sse2.a */; };
-		FE4CBFF91BE4AD9E00693F32 /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFE01BE4AD9E00693F32 /* libcommon_audio.a */; };
-		FE4CBFFA1BE4AD9E00693F32 /* libcommon_audio_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFE11BE4AD9E00693F32 /* libcommon_audio_neon.a */; };
-		FE4CBFFB1BE4AD9E00693F32 /* libcommon_audio_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFE21BE4AD9E00693F32 /* libcommon_audio_sse2.a */; };
-		FE4CBFFC1BE4AD9E00693F32 /* librtc_base_approved.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFE31BE4AD9E00693F32 /* librtc_base_approved.a */; };
-		FE4CBFFD1BE4AD9E00693F32 /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFE41BE4AD9E00693F32 /* libsystem_wrappers.a */; };
-		FE4CBFFE1BE4AD9E00693F32 /* libanychatcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFE51BE4AD9E00693F32 /* libanychatcore.a */; };
-		FE4CBFFF1BE4AD9E00693F32 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFE61BE4AD9E00693F32 /* libavcodec.a */; };
-		FE4CC0001BE4AD9E00693F32 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFE71BE4AD9E00693F32 /* libavformat.a */; };
-		FE4CC0011BE4AD9E00693F32 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFE81BE4AD9E00693F32 /* libavutil.a */; };
-		FE4CC0021BE4AD9E00693F32 /* libcelt0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFE91BE4AD9E00693F32 /* libcelt0.a */; };
-		FE4CC0031BE4AD9E00693F32 /* libmediacore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFEA1BE4AD9E00693F32 /* libmediacore.a */; };
-		FE4CC0041BE4AD9E00693F32 /* libmediashow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFEB1BE4AD9E00693F32 /* libmediashow.a */; };
-		FE4CC0051BE4AD9E00693F32 /* libmediautil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFEC1BE4AD9E00693F32 /* libmediautil.a */; };
-		FE4CC0061BE4AD9E00693F32 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFED1BE4AD9E00693F32 /* libmp3lame.a */; };
-		FE4CC0071BE4AD9E00693F32 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFEE1BE4AD9E00693F32 /* libopencore-amrwb.a */; };
-		FE4CC0081BE4AD9E00693F32 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFEF1BE4AD9E00693F32 /* libswresample.a */; };
-		FE4CC0091BE4AD9E00693F32 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFF01BE4AD9E00693F32 /* libswscale.a */; };
-		FE4CC00A1BE4AD9E00693F32 /* libvo-amrwbenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFF11BE4AD9E00693F32 /* libvo-amrwbenc.a */; };
-		FE4CC00B1BE4AD9E00693F32 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFF21BE4AD9E00693F32 /* libvpx.a */; };
-		FE4CC00C1BE4AD9E00693F32 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFF31BE4AD9E00693F32 /* libx264.a */; };
-		FE4CC00D1BE4AD9E00693F32 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFF41BE4AD9E00693F32 /* libyuv.a */; };
-		FE4CC00E1BE4AD9E00693F32 /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CBFF51BE4AD9E00693F32 /* libyuv_neon.a */; };
 		FE4CC0101BE4AE0500693F32 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CC00F1BE4AE0500693F32 /* AVFoundation.framework */; };
 		FE4CC0121BE4AE1300693F32 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CC0111BE4AE1300693F32 /* AudioToolbox.framework */; };
 		FE4CC0141BE4AE1B00693F32 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE4CC0131BE4AE1B00693F32 /* QuartzCore.framework */; };
@@ -56,9 +29,51 @@
 		FE55C9F21BE86E2F007B625D /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE55C9F11BE86E2F007B625D /* MZTimerLabel.m */; };
 		FE55C9F41BE8998B007B625D /* VideoParamSetting.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE55C9F31BE8998B007B625D /* VideoParamSetting.plist */; };
 		FE55C9F61BE8A107007B625D /* VideoParamSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE55C9F51BE8A107007B625D /* VideoParamSettingViewController.swift */; };
+		FE94D1291C65F29A00D199DE /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE94D1221C65F29A00D199DE /* RadioButton.m */; };
+		FE94D1421C660A1600D199DE /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D1351C6609C000D199DE /* Alamofire.framework */; };
+		FE94D1431C660A1600D199DE /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D1351C6609C000D199DE /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FEB350BE1BE79A7C00590D0F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB350BD1BE79A7C00590D0F /* User.swift */; };
 		FEB350C01BE79B4200590D0F /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB350BF1BE79B4200590D0F /* UserViewController.swift */; };
 		FEB90B401BE63585007B4749 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB90B3F1BE63585007B4749 /* VideoViewController.swift */; };
+		FEFFB69F1C1972A600011E20 /* libaudio_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6861C1972A600011E20 /* libaudio_processing.a */; };
+		FEFFB6A01C1972A600011E20 /* libaudio_processing_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6871C1972A600011E20 /* libaudio_processing_neon.a */; };
+		FEFFB6A11C1972A600011E20 /* libaudio_processing_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6881C1972A600011E20 /* libaudio_processing_sse2.a */; };
+		FEFFB6A21C1972A600011E20 /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6891C1972A600011E20 /* libcommon_audio.a */; };
+		FEFFB6A31C1972A600011E20 /* libcommon_audio_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB68A1C1972A600011E20 /* libcommon_audio_neon.a */; };
+		FEFFB6A41C1972A600011E20 /* libcommon_audio_sse2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB68B1C1972A600011E20 /* libcommon_audio_sse2.a */; };
+		FEFFB6A51C1972A600011E20 /* librtc_base_approved.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB68C1C1972A600011E20 /* librtc_base_approved.a */; };
+		FEFFB6A61C1972A600011E20 /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB68D1C1972A600011E20 /* libsystem_wrappers.a */; };
+		FEFFB6A71C1972A600011E20 /* libanychatcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB68E1C1972A600011E20 /* libanychatcore.a */; };
+		FEFFB6A81C1972A600011E20 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB68F1C1972A600011E20 /* libavcodec.a */; };
+		FEFFB6A91C1972A600011E20 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6901C1972A600011E20 /* libavformat.a */; };
+		FEFFB6AA1C1972A600011E20 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6911C1972A600011E20 /* libavutil.a */; };
+		FEFFB6AB1C1972A600011E20 /* libcelt0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6921C1972A600011E20 /* libcelt0.a */; };
+		FEFFB6AC1C1972A600011E20 /* libmediacore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6931C1972A600011E20 /* libmediacore.a */; };
+		FEFFB6AD1C1972A600011E20 /* libmediashow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6941C1972A600011E20 /* libmediashow.a */; };
+		FEFFB6AE1C1972A600011E20 /* libmediautil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6951C1972A600011E20 /* libmediautil.a */; };
+		FEFFB6AF1C1972A600011E20 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6961C1972A600011E20 /* libmp3lame.a */; };
+		FEFFB6B01C1972A600011E20 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6971C1972A600011E20 /* libopencore-amrwb.a */; };
+		FEFFB6B11C1972A600011E20 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6981C1972A600011E20 /* libswresample.a */; };
+		FEFFB6B21C1972A600011E20 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB6991C1972A600011E20 /* libswscale.a */; };
+		FEFFB6B31C1972A600011E20 /* libvo-amrwbenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB69A1C1972A600011E20 /* libvo-amrwbenc.a */; };
+		FEFFB6B41C1972A600011E20 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB69B1C1972A600011E20 /* libvpx.a */; };
+		FEFFB6B51C1972A600011E20 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB69C1C1972A600011E20 /* libx264.a */; };
+		FEFFB6B61C1972A600011E20 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB69D1C1972A600011E20 /* libyuv.a */; };
+		FEFFB6B71C1972A600011E20 /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFFB69E1C1972A600011E20 /* libyuv_neon.a */; };
+		FEFFB6DD1C197C2B00011E20 /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6BB1C197C2B00011E20 /* IQNSArray+Sort.m */; };
+		FEFFB6DE1C197C2B00011E20 /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6BD1C197C2B00011E20 /* IQUITextFieldView+Additions.m */; };
+		FEFFB6DF1C197C2B00011E20 /* IQUIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6BF1C197C2B00011E20 /* IQUIView+Hierarchy.m */; };
+		FEFFB6E01C197C2B00011E20 /* IQUIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6C11C197C2B00011E20 /* IQUIViewController+Additions.m */; };
+		FEFFB6E11C197C2B00011E20 /* IQUIWindow+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6C31C197C2B00011E20 /* IQUIWindow+Hierarchy.m */; };
+		FEFFB6E21C197C2B00011E20 /* IQKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6C81C197C2B00011E20 /* IQKeyboardManager.m */; };
+		FEFFB6E31C197C2B00011E20 /* IQKeyboardReturnKeyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6CA1C197C2B00011E20 /* IQKeyboardReturnKeyHandler.m */; };
+		FEFFB6E41C197C2B00011E20 /* IQSegmentedNextPrevious.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6CD1C197C2B00011E20 /* IQSegmentedNextPrevious.m */; };
+		FEFFB6E51C197C2B00011E20 /* IQTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6D01C197C2B00011E20 /* IQTextView.m */; };
+		FEFFB6E61C197C2B00011E20 /* IQBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6D31C197C2B00011E20 /* IQBarButtonItem.m */; };
+		FEFFB6E71C197C2B00011E20 /* IQTitleBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6D51C197C2B00011E20 /* IQTitleBarButtonItem.m */; };
+		FEFFB6E81C197C2B00011E20 /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6D71C197C2B00011E20 /* IQToolbar.m */; };
+		FEFFB6E91C197C2B00011E20 /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFFB6D91C197C2B00011E20 /* IQUIView+IQKeyboardToolbar.m */; };
+		FEFFB6EA1C197C2B00011E20 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FEFFB6DC1C197C2B00011E20 /* IQKeyboardManager.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +91,77 @@
 			remoteGlobalIDString = FE4CBF9F1BE4A56F00693F32;
 			remoteInfo = HelloAnyChatSwift;
 		};
+		FE94D1341C6609C000D199DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8111E3319A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS";
+		};
+		FE94D1361C6609C000D199DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8111E3E19A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS Tests";
+		};
+		FE94D1381C6609C000D199DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DD67C0B1A5C55C900ED2280;
+			remoteInfo = "Alamofire OSX";
+		};
+		FE94D13A1C6609C000D199DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F829C6B21A7A94F100A2CD59;
+			remoteInfo = "Alamofire OSX Tests";
+		};
+		FE94D13C1C6609C000D199DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CF626EF1BA7CB3E0011A099;
+			remoteInfo = "Alamofire tvOS";
+		};
+		FE94D13E1C6609C000D199DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CF626F81BA7CB3E0011A099;
+			remoteInfo = "Alamofire tvOS Tests";
+		};
+		FE94D1401C6609C000D199DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4202FE01B667AA100C997FB;
+			remoteInfo = "Alamofire watchOS";
+		};
+		FE94D1441C660A1600D199DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F8111E3219A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FE94D1461C660A1700D199DE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FE94D1431C660A1600D199DE /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		FE4CBFA01BE4A56F00693F32 /* HelloAnyChatSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloAnyChatSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,41 +171,8 @@
 		FE4CBFAD1BE4A56F00693F32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FE4CBFAF1BE4A56F00693F32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE4CBFB41BE4A56F00693F32 /* HelloAnyChatSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HelloAnyChatSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FE4CBFB81BE4A56F00693F32 /* HelloAnyChatSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloAnyChatSwiftTests.swift; sourceTree = "<group>"; };
-		FE4CBFBA1BE4A56F00693F32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE4CBFBF1BE4A56F00693F32 /* HelloAnyChatSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HelloAnyChatSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FE4CBFC31BE4A56F00693F32 /* HelloAnyChatSwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloAnyChatSwiftUITests.swift; sourceTree = "<group>"; };
-		FE4CBFC51BE4A56F00693F32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE4CBFD31BE4A66600693F32 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		FE4CBFD71BE4AD9E00693F32 /* AnyChatDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatDefine.h; sourceTree = "<group>"; };
-		FE4CBFD81BE4AD9E00693F32 /* AnyChatErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatErrorCode.h; sourceTree = "<group>"; };
-		FE4CBFD91BE4AD9E00693F32 /* AnyChatObjectDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatObjectDefine.h; sourceTree = "<group>"; };
-		FE4CBFDA1BE4AD9E00693F32 /* AnyChatPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatPlatform.h; sourceTree = "<group>"; };
-		FE4CBFDD1BE4AD9E00693F32 /* libaudio_processing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing.a; sourceTree = "<group>"; };
-		FE4CBFDE1BE4AD9E00693F32 /* libaudio_processing_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_neon.a; sourceTree = "<group>"; };
-		FE4CBFDF1BE4AD9E00693F32 /* libaudio_processing_sse2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_sse2.a; sourceTree = "<group>"; };
-		FE4CBFE01BE4AD9E00693F32 /* libcommon_audio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio.a; sourceTree = "<group>"; };
-		FE4CBFE11BE4AD9E00693F32 /* libcommon_audio_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio_neon.a; sourceTree = "<group>"; };
-		FE4CBFE21BE4AD9E00693F32 /* libcommon_audio_sse2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio_sse2.a; sourceTree = "<group>"; };
-		FE4CBFE31BE4AD9E00693F32 /* librtc_base_approved.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = librtc_base_approved.a; sourceTree = "<group>"; };
-		FE4CBFE41BE4AD9E00693F32 /* libsystem_wrappers.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsystem_wrappers.a; sourceTree = "<group>"; };
-		FE4CBFE51BE4AD9E00693F32 /* libanychatcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libanychatcore.a; sourceTree = "<group>"; };
-		FE4CBFE61BE4AD9E00693F32 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavcodec.a; sourceTree = "<group>"; };
-		FE4CBFE71BE4AD9E00693F32 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavformat.a; sourceTree = "<group>"; };
-		FE4CBFE81BE4AD9E00693F32 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavutil.a; sourceTree = "<group>"; };
-		FE4CBFE91BE4AD9E00693F32 /* libcelt0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcelt0.a; sourceTree = "<group>"; };
-		FE4CBFEA1BE4AD9E00693F32 /* libmediacore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediacore.a; sourceTree = "<group>"; };
-		FE4CBFEB1BE4AD9E00693F32 /* libmediashow.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediashow.a; sourceTree = "<group>"; };
-		FE4CBFEC1BE4AD9E00693F32 /* libmediautil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediautil.a; sourceTree = "<group>"; };
-		FE4CBFED1BE4AD9E00693F32 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
-		FE4CBFEE1BE4AD9E00693F32 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
-		FE4CBFEF1BE4AD9E00693F32 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswresample.a; sourceTree = "<group>"; };
-		FE4CBFF01BE4AD9E00693F32 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
-		FE4CBFF11BE4AD9E00693F32 /* libvo-amrwbenc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libvo-amrwbenc.a"; sourceTree = "<group>"; };
-		FE4CBFF21BE4AD9E00693F32 /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libvpx.a; sourceTree = "<group>"; };
-		FE4CBFF31BE4AD9E00693F32 /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libx264.a; sourceTree = "<group>"; };
-		FE4CBFF41BE4AD9E00693F32 /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
-		FE4CBFF51BE4AD9E00693F32 /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
 		FE4CC00F1BE4AE0500693F32 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FE4CC0111BE4AE1300693F32 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FE4CC0131BE4AE1B00693F32 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -143,9 +195,71 @@
 		FE55C9F11BE86E2F007B625D /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZTimerLabel.m; sourceTree = "<group>"; };
 		FE55C9F31BE8998B007B625D /* VideoParamSetting.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = VideoParamSetting.plist; sourceTree = "<group>"; };
 		FE55C9F51BE8A107007B625D /* VideoParamSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoParamSettingViewController.swift; sourceTree = "<group>"; };
+		FE94D1211C65F29A00D199DE /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
+		FE94D1221C65F29A00D199DE /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
+		FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "Alamofire-master/Alamofire.xcodeproj"; sourceTree = "<group>"; };
 		FEB350BD1BE79A7C00590D0F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FEB350BF1BE79B4200590D0F /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		FEB90B3F1BE63585007B4749 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		FEFFB6801C1972A600011E20 /* AnyChatDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatDefine.h; sourceTree = "<group>"; };
+		FEFFB6811C1972A600011E20 /* AnyChatErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatErrorCode.h; sourceTree = "<group>"; };
+		FEFFB6821C1972A600011E20 /* AnyChatObjectDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatObjectDefine.h; sourceTree = "<group>"; };
+		FEFFB6831C1972A600011E20 /* AnyChatPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatPlatform.h; sourceTree = "<group>"; };
+		FEFFB6861C1972A600011E20 /* libaudio_processing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing.a; sourceTree = "<group>"; };
+		FEFFB6871C1972A600011E20 /* libaudio_processing_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_neon.a; sourceTree = "<group>"; };
+		FEFFB6881C1972A600011E20 /* libaudio_processing_sse2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libaudio_processing_sse2.a; sourceTree = "<group>"; };
+		FEFFB6891C1972A600011E20 /* libcommon_audio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio.a; sourceTree = "<group>"; };
+		FEFFB68A1C1972A600011E20 /* libcommon_audio_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio_neon.a; sourceTree = "<group>"; };
+		FEFFB68B1C1972A600011E20 /* libcommon_audio_sse2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon_audio_sse2.a; sourceTree = "<group>"; };
+		FEFFB68C1C1972A600011E20 /* librtc_base_approved.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = librtc_base_approved.a; sourceTree = "<group>"; };
+		FEFFB68D1C1972A600011E20 /* libsystem_wrappers.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsystem_wrappers.a; sourceTree = "<group>"; };
+		FEFFB68E1C1972A600011E20 /* libanychatcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libanychatcore.a; sourceTree = "<group>"; };
+		FEFFB68F1C1972A600011E20 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavcodec.a; sourceTree = "<group>"; };
+		FEFFB6901C1972A600011E20 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavformat.a; sourceTree = "<group>"; };
+		FEFFB6911C1972A600011E20 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavutil.a; sourceTree = "<group>"; };
+		FEFFB6921C1972A600011E20 /* libcelt0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcelt0.a; sourceTree = "<group>"; };
+		FEFFB6931C1972A600011E20 /* libmediacore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediacore.a; sourceTree = "<group>"; };
+		FEFFB6941C1972A600011E20 /* libmediashow.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediashow.a; sourceTree = "<group>"; };
+		FEFFB6951C1972A600011E20 /* libmediautil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmediautil.a; sourceTree = "<group>"; };
+		FEFFB6961C1972A600011E20 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		FEFFB6971C1972A600011E20 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
+		FEFFB6981C1972A600011E20 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswresample.a; sourceTree = "<group>"; };
+		FEFFB6991C1972A600011E20 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
+		FEFFB69A1C1972A600011E20 /* libvo-amrwbenc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libvo-amrwbenc.a"; sourceTree = "<group>"; };
+		FEFFB69B1C1972A600011E20 /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libvpx.a; sourceTree = "<group>"; };
+		FEFFB69C1C1972A600011E20 /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libx264.a; sourceTree = "<group>"; };
+		FEFFB69D1C1972A600011E20 /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
+		FEFFB69E1C1972A600011E20 /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
+		FEFFB6BA1C197C2B00011E20 /* IQNSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQNSArray+Sort.h"; sourceTree = "<group>"; };
+		FEFFB6BB1C197C2B00011E20 /* IQNSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQNSArray+Sort.m"; sourceTree = "<group>"; };
+		FEFFB6BC1C197C2B00011E20 /* IQUITextFieldView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUITextFieldView+Additions.h"; sourceTree = "<group>"; };
+		FEFFB6BD1C197C2B00011E20 /* IQUITextFieldView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUITextFieldView+Additions.m"; sourceTree = "<group>"; };
+		FEFFB6BE1C197C2B00011E20 /* IQUIView+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+Hierarchy.h"; sourceTree = "<group>"; };
+		FEFFB6BF1C197C2B00011E20 /* IQUIView+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+Hierarchy.m"; sourceTree = "<group>"; };
+		FEFFB6C01C197C2B00011E20 /* IQUIViewController+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIViewController+Additions.h"; sourceTree = "<group>"; };
+		FEFFB6C11C197C2B00011E20 /* IQUIViewController+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIViewController+Additions.m"; sourceTree = "<group>"; };
+		FEFFB6C21C197C2B00011E20 /* IQUIWindow+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIWindow+Hierarchy.h"; sourceTree = "<group>"; };
+		FEFFB6C31C197C2B00011E20 /* IQUIWindow+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIWindow+Hierarchy.m"; sourceTree = "<group>"; };
+		FEFFB6C51C197C2B00011E20 /* IQKeyboardManagerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardManagerConstants.h; sourceTree = "<group>"; };
+		FEFFB6C61C197C2B00011E20 /* IQKeyboardManagerConstantsInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardManagerConstantsInternal.h; sourceTree = "<group>"; };
+		FEFFB6C71C197C2B00011E20 /* IQKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardManager.h; sourceTree = "<group>"; };
+		FEFFB6C81C197C2B00011E20 /* IQKeyboardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQKeyboardManager.m; sourceTree = "<group>"; };
+		FEFFB6C91C197C2B00011E20 /* IQKeyboardReturnKeyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardReturnKeyHandler.h; sourceTree = "<group>"; };
+		FEFFB6CA1C197C2B00011E20 /* IQKeyboardReturnKeyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQKeyboardReturnKeyHandler.m; sourceTree = "<group>"; };
+		FEFFB6CC1C197C2B00011E20 /* IQSegmentedNextPrevious.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQSegmentedNextPrevious.h; sourceTree = "<group>"; };
+		FEFFB6CD1C197C2B00011E20 /* IQSegmentedNextPrevious.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQSegmentedNextPrevious.m; sourceTree = "<group>"; };
+		FEFFB6CF1C197C2B00011E20 /* IQTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQTextView.h; sourceTree = "<group>"; };
+		FEFFB6D01C197C2B00011E20 /* IQTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQTextView.m; sourceTree = "<group>"; };
+		FEFFB6D21C197C2B00011E20 /* IQBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQBarButtonItem.h; sourceTree = "<group>"; };
+		FEFFB6D31C197C2B00011E20 /* IQBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQBarButtonItem.m; sourceTree = "<group>"; };
+		FEFFB6D41C197C2B00011E20 /* IQTitleBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQTitleBarButtonItem.h; sourceTree = "<group>"; };
+		FEFFB6D51C197C2B00011E20 /* IQTitleBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQTitleBarButtonItem.m; sourceTree = "<group>"; };
+		FEFFB6D61C197C2B00011E20 /* IQToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQToolbar.h; sourceTree = "<group>"; };
+		FEFFB6D71C197C2B00011E20 /* IQToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQToolbar.m; sourceTree = "<group>"; };
+		FEFFB6D81C197C2B00011E20 /* IQUIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
+		FEFFB6D91C197C2B00011E20 /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
+		FEFFB6DA1C197C2B00011E20 /* KeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardManager.h; sourceTree = "<group>"; };
+		FEFFB6DC1C197C2B00011E20 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,39 +268,40 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE4CC0201BE4AE7D00693F32 /* libstdc++.6.tbd in Frameworks */,
+				FEFFB69F1C1972A600011E20 /* libaudio_processing.a in Frameworks */,
+				FEFFB6B21C1972A600011E20 /* libswscale.a in Frameworks */,
+				FEFFB6B51C1972A600011E20 /* libx264.a in Frameworks */,
 				FE4CC01E1BE4AE7400693F32 /* libstdc++.tbd in Frameworks */,
+				FEFFB6A91C1972A600011E20 /* libavformat.a in Frameworks */,
+				FEFFB6AE1C1972A600011E20 /* libmediautil.a in Frameworks */,
+				FEFFB6B41C1972A600011E20 /* libvpx.a in Frameworks */,
+				FEFFB6AF1C1972A600011E20 /* libmp3lame.a in Frameworks */,
+				FEFFB6A31C1972A600011E20 /* libcommon_audio_neon.a in Frameworks */,
+				FEFFB6A01C1972A600011E20 /* libaudio_processing_neon.a in Frameworks */,
+				FEFFB6A71C1972A600011E20 /* libanychatcore.a in Frameworks */,
 				FE4CC01C1BE4AE6200693F32 /* libc++.tbd in Frameworks */,
 				FE4CC01A1BE4AE3600693F32 /* CoreAudio.framework in Frameworks */,
+				FEFFB6A41C1972A600011E20 /* libcommon_audio_sse2.a in Frameworks */,
+				FEFFB6B11C1972A600011E20 /* libswresample.a in Frameworks */,
+				FEFFB6A11C1972A600011E20 /* libaudio_processing_sse2.a in Frameworks */,
+				FEFFB6B01C1972A600011E20 /* libopencore-amrwb.a in Frameworks */,
+				FE94D1421C660A1600D199DE /* Alamofire.framework in Frameworks */,
 				FE4CC0181BE4AE2D00693F32 /* CoreVideo.framework in Frameworks */,
 				FE4CC0161BE4AE2500693F32 /* CoreMedia.framework in Frameworks */,
 				FE4CC0141BE4AE1B00693F32 /* QuartzCore.framework in Frameworks */,
+				FEFFB6B31C1972A600011E20 /* libvo-amrwbenc.a in Frameworks */,
+				FEFFB6A61C1972A600011E20 /* libsystem_wrappers.a in Frameworks */,
+				FEFFB6AC1C1972A600011E20 /* libmediacore.a in Frameworks */,
+				FEFFB6A81C1972A600011E20 /* libavcodec.a in Frameworks */,
+				FEFFB6AB1C1972A600011E20 /* libcelt0.a in Frameworks */,
 				FE4CC0121BE4AE1300693F32 /* AudioToolbox.framework in Frameworks */,
 				FE4CC0101BE4AE0500693F32 /* AVFoundation.framework in Frameworks */,
-				FE4CBFF81BE4AD9E00693F32 /* libaudio_processing_sse2.a in Frameworks */,
-				FE4CBFF91BE4AD9E00693F32 /* libcommon_audio.a in Frameworks */,
-				FE4CC0051BE4AD9E00693F32 /* libmediautil.a in Frameworks */,
-				FE4CC0061BE4AD9E00693F32 /* libmp3lame.a in Frameworks */,
-				FE4CC0071BE4AD9E00693F32 /* libopencore-amrwb.a in Frameworks */,
-				FE4CC0001BE4AD9E00693F32 /* libavformat.a in Frameworks */,
-				FE4CBFFD1BE4AD9E00693F32 /* libsystem_wrappers.a in Frameworks */,
-				FE4CBFF61BE4AD9E00693F32 /* libaudio_processing.a in Frameworks */,
-				FE4CC0081BE4AD9E00693F32 /* libswresample.a in Frameworks */,
-				FE4CBFF71BE4AD9E00693F32 /* libaudio_processing_neon.a in Frameworks */,
-				FE4CC00A1BE4AD9E00693F32 /* libvo-amrwbenc.a in Frameworks */,
-				FE4CC0011BE4AD9E00693F32 /* libavutil.a in Frameworks */,
-				FE4CC00B1BE4AD9E00693F32 /* libvpx.a in Frameworks */,
-				FE4CC0031BE4AD9E00693F32 /* libmediacore.a in Frameworks */,
-				FE4CBFFE1BE4AD9E00693F32 /* libanychatcore.a in Frameworks */,
-				FE4CC0041BE4AD9E00693F32 /* libmediashow.a in Frameworks */,
-				FE4CC00C1BE4AD9E00693F32 /* libx264.a in Frameworks */,
-				FE4CBFFB1BE4AD9E00693F32 /* libcommon_audio_sse2.a in Frameworks */,
-				FE4CC00D1BE4AD9E00693F32 /* libyuv.a in Frameworks */,
-				FE4CBFFF1BE4AD9E00693F32 /* libavcodec.a in Frameworks */,
-				FE4CC0091BE4AD9E00693F32 /* libswscale.a in Frameworks */,
-				FE4CBFFC1BE4AD9E00693F32 /* librtc_base_approved.a in Frameworks */,
-				FE4CBFFA1BE4AD9E00693F32 /* libcommon_audio_neon.a in Frameworks */,
-				FE4CC00E1BE4AD9E00693F32 /* libyuv_neon.a in Frameworks */,
-				FE4CC0021BE4AD9E00693F32 /* libcelt0.a in Frameworks */,
+				FEFFB6AA1C1972A600011E20 /* libavutil.a in Frameworks */,
+				FEFFB6AD1C1972A600011E20 /* libmediashow.a in Frameworks */,
+				FEFFB6B61C1972A600011E20 /* libyuv.a in Frameworks */,
+				FEFFB6A21C1972A600011E20 /* libcommon_audio.a in Frameworks */,
+				FEFFB6B71C1972A600011E20 /* libyuv_neon.a in Frameworks */,
+				FEFFB6A51C1972A600011E20 /* librtc_base_approved.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +325,7 @@
 		FE4CBF971BE4A56F00693F32 = {
 			isa = PBXGroup;
 			children = (
+				FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */,
 				FE4CC01F1BE4AE7D00693F32 /* libstdc++.6.tbd */,
 				FE4CC01D1BE4AE7400693F32 /* libstdc++.tbd */,
 				FE4CC01B1BE4AE6200693F32 /* libc++.tbd */,
@@ -220,8 +336,6 @@
 				FE4CC0111BE4AE1300693F32 /* AudioToolbox.framework */,
 				FE4CC00F1BE4AE0500693F32 /* AVFoundation.framework */,
 				FE4CBFA21BE4A56F00693F32 /* HelloAnyChatSwift */,
-				FE4CBFB71BE4A56F00693F32 /* HelloAnyChatSwiftTests */,
-				FE4CBFC21BE4A56F00693F32 /* HelloAnyChatSwiftUITests */,
 				FE4CBFA11BE4A56F00693F32 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -239,11 +353,11 @@
 		FE4CBFA21BE4A56F00693F32 /* HelloAnyChatSwift */ = {
 			isa = PBXGroup;
 			children = (
+				FEFFB67E1C1972A600011E20 /* sdk */,
 				FEDE64F61BF96FAA00A3AAEA /* Other */,
 				FE4CC02A1BE50E4A00693F32 /* Libs */,
-				FE4CBFD51BE4AD9E00693F32 /* AnyChatSDK */,
-				FE4CBFA31BE4A56F00693F32 /* AppDelegate.swift */,
 				FE4CBFA71BE4A56F00693F32 /* Main.storyboard */,
+				FE4CBFA31BE4A56F00693F32 /* AppDelegate.swift */,
 				FE4CBFD31BE4A66600693F32 /* LoginViewController.swift */,
 				FEB350BF1BE79B4200590D0F /* UserViewController.swift */,
 				FEB90B3F1BE63585007B4749 /* VideoViewController.swift */,
@@ -255,87 +369,11 @@
 			path = HelloAnyChatSwift;
 			sourceTree = "<group>";
 		};
-		FE4CBFB71BE4A56F00693F32 /* HelloAnyChatSwiftTests */ = {
-			isa = PBXGroup;
-			children = (
-				FE4CBFB81BE4A56F00693F32 /* HelloAnyChatSwiftTests.swift */,
-				FE4CBFBA1BE4A56F00693F32 /* Info.plist */,
-			);
-			path = HelloAnyChatSwiftTests;
-			sourceTree = "<group>";
-		};
-		FE4CBFC21BE4A56F00693F32 /* HelloAnyChatSwiftUITests */ = {
-			isa = PBXGroup;
-			children = (
-				FE4CBFC31BE4A56F00693F32 /* HelloAnyChatSwiftUITests.swift */,
-				FE4CBFC51BE4A56F00693F32 /* Info.plist */,
-			);
-			path = HelloAnyChatSwiftUITests;
-			sourceTree = "<group>";
-		};
-		FE4CBFD51BE4AD9E00693F32 /* AnyChatSDK */ = {
-			isa = PBXGroup;
-			children = (
-				FE4CBFD61BE4AD9E00693F32 /* include */,
-				FE4CBFDB1BE4AD9E00693F32 /* libs */,
-			);
-			path = AnyChatSDK;
-			sourceTree = "<group>";
-		};
-		FE4CBFD61BE4AD9E00693F32 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				FE4CBFD71BE4AD9E00693F32 /* AnyChatDefine.h */,
-				FE4CBFD81BE4AD9E00693F32 /* AnyChatErrorCode.h */,
-				FE4CBFD91BE4AD9E00693F32 /* AnyChatObjectDefine.h */,
-				FE4CBFDA1BE4AD9E00693F32 /* AnyChatPlatform.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		FE4CBFDB1BE4AD9E00693F32 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				FE4CBFDC1BE4AD9E00693F32 /* audioprocess */,
-				FE4CBFE51BE4AD9E00693F32 /* libanychatcore.a */,
-				FE4CBFE61BE4AD9E00693F32 /* libavcodec.a */,
-				FE4CBFE71BE4AD9E00693F32 /* libavformat.a */,
-				FE4CBFE81BE4AD9E00693F32 /* libavutil.a */,
-				FE4CBFE91BE4AD9E00693F32 /* libcelt0.a */,
-				FE4CBFEA1BE4AD9E00693F32 /* libmediacore.a */,
-				FE4CBFEB1BE4AD9E00693F32 /* libmediashow.a */,
-				FE4CBFEC1BE4AD9E00693F32 /* libmediautil.a */,
-				FE4CBFED1BE4AD9E00693F32 /* libmp3lame.a */,
-				FE4CBFEE1BE4AD9E00693F32 /* libopencore-amrwb.a */,
-				FE4CBFEF1BE4AD9E00693F32 /* libswresample.a */,
-				FE4CBFF01BE4AD9E00693F32 /* libswscale.a */,
-				FE4CBFF11BE4AD9E00693F32 /* libvo-amrwbenc.a */,
-				FE4CBFF21BE4AD9E00693F32 /* libvpx.a */,
-				FE4CBFF31BE4AD9E00693F32 /* libx264.a */,
-				FE4CBFF41BE4AD9E00693F32 /* libyuv.a */,
-				FE4CBFF51BE4AD9E00693F32 /* libyuv_neon.a */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		FE4CBFDC1BE4AD9E00693F32 /* audioprocess */ = {
-			isa = PBXGroup;
-			children = (
-				FE4CBFDD1BE4AD9E00693F32 /* libaudio_processing.a */,
-				FE4CBFDE1BE4AD9E00693F32 /* libaudio_processing_neon.a */,
-				FE4CBFDF1BE4AD9E00693F32 /* libaudio_processing_sse2.a */,
-				FE4CBFE01BE4AD9E00693F32 /* libcommon_audio.a */,
-				FE4CBFE11BE4AD9E00693F32 /* libcommon_audio_neon.a */,
-				FE4CBFE21BE4AD9E00693F32 /* libcommon_audio_sse2.a */,
-				FE4CBFE31BE4AD9E00693F32 /* librtc_base_approved.a */,
-				FE4CBFE41BE4AD9E00693F32 /* libsystem_wrappers.a */,
-			);
-			path = audioprocess;
-			sourceTree = "<group>";
-		};
 		FE4CC02A1BE50E4A00693F32 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				FE94D1201C65F29A00D199DE /* RadioButton */,
+				FEFFB6B81C197C2B00011E20 /* IQKeyBoardManager */,
 				FE5119611BEFC99F0052DD9B /* DZNEmptyDataSet */,
 				FE55C9EF1BE86E2F007B625D /* MZTimerLabel */,
 				FE4CC02B1BE50E4A00693F32 /* MBProgressHUD */,
@@ -373,6 +411,29 @@
 			path = MZTimerLabel;
 			sourceTree = "<group>";
 		};
+		FE94D1201C65F29A00D199DE /* RadioButton */ = {
+			isa = PBXGroup;
+			children = (
+				FE94D1211C65F29A00D199DE /* RadioButton.h */,
+				FE94D1221C65F29A00D199DE /* RadioButton.m */,
+			);
+			path = RadioButton;
+			sourceTree = "<group>";
+		};
+		FE94D12B1C6609C000D199DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FE94D1351C6609C000D199DE /* Alamofire.framework */,
+				FE94D1371C6609C000D199DE /* Alamofire iOS Tests.xctest */,
+				FE94D1391C6609C000D199DE /* Alamofire.framework */,
+				FE94D13B1C6609C000D199DE /* Alamofire OSX Tests.xctest */,
+				FE94D13D1C6609C000D199DE /* Alamofire.framework */,
+				FE94D13F1C6609C000D199DE /* Alamofire tvOS Tests.xctest */,
+				FE94D1411C6609C000D199DE /* Alamofire.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		FEDE64F61BF96FAA00A3AAEA /* Other */ = {
 			isa = PBXGroup;
 			children = (
@@ -382,6 +443,152 @@
 				FE4CC0291BE4B74400693F32 /* OCContainerHeader.h */,
 			);
 			name = Other;
+			sourceTree = "<group>";
+		};
+		FEFFB67E1C1972A600011E20 /* sdk */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFB67F1C1972A600011E20 /* include */,
+				FEFFB6841C1972A600011E20 /* libs */,
+			);
+			name = sdk;
+			path = ../../../sdk;
+			sourceTree = "<group>";
+		};
+		FEFFB67F1C1972A600011E20 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFB6801C1972A600011E20 /* AnyChatDefine.h */,
+				FEFFB6811C1972A600011E20 /* AnyChatErrorCode.h */,
+				FEFFB6821C1972A600011E20 /* AnyChatObjectDefine.h */,
+				FEFFB6831C1972A600011E20 /* AnyChatPlatform.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		FEFFB6841C1972A600011E20 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFB6851C1972A600011E20 /* audioprocess */,
+				FEFFB68E1C1972A600011E20 /* libanychatcore.a */,
+				FEFFB68F1C1972A600011E20 /* libavcodec.a */,
+				FEFFB6901C1972A600011E20 /* libavformat.a */,
+				FEFFB6911C1972A600011E20 /* libavutil.a */,
+				FEFFB6921C1972A600011E20 /* libcelt0.a */,
+				FEFFB6931C1972A600011E20 /* libmediacore.a */,
+				FEFFB6941C1972A600011E20 /* libmediashow.a */,
+				FEFFB6951C1972A600011E20 /* libmediautil.a */,
+				FEFFB6961C1972A600011E20 /* libmp3lame.a */,
+				FEFFB6971C1972A600011E20 /* libopencore-amrwb.a */,
+				FEFFB6981C1972A600011E20 /* libswresample.a */,
+				FEFFB6991C1972A600011E20 /* libswscale.a */,
+				FEFFB69A1C1972A600011E20 /* libvo-amrwbenc.a */,
+				FEFFB69B1C1972A600011E20 /* libvpx.a */,
+				FEFFB69C1C1972A600011E20 /* libx264.a */,
+				FEFFB69D1C1972A600011E20 /* libyuv.a */,
+				FEFFB69E1C1972A600011E20 /* libyuv_neon.a */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		FEFFB6851C1972A600011E20 /* audioprocess */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFB6861C1972A600011E20 /* libaudio_processing.a */,
+				FEFFB6871C1972A600011E20 /* libaudio_processing_neon.a */,
+				FEFFB6881C1972A600011E20 /* libaudio_processing_sse2.a */,
+				FEFFB6891C1972A600011E20 /* libcommon_audio.a */,
+				FEFFB68A1C1972A600011E20 /* libcommon_audio_neon.a */,
+				FEFFB68B1C1972A600011E20 /* libcommon_audio_sse2.a */,
+				FEFFB68C1C1972A600011E20 /* librtc_base_approved.a */,
+				FEFFB68D1C1972A600011E20 /* libsystem_wrappers.a */,
+			);
+			path = audioprocess;
+			sourceTree = "<group>";
+		};
+		FEFFB6B81C197C2B00011E20 /* IQKeyBoardManager */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFB6B91C197C2B00011E20 /* Categories */,
+				FEFFB6C41C197C2B00011E20 /* Constants */,
+				FEFFB6C71C197C2B00011E20 /* IQKeyboardManager.h */,
+				FEFFB6C81C197C2B00011E20 /* IQKeyboardManager.m */,
+				FEFFB6C91C197C2B00011E20 /* IQKeyboardReturnKeyHandler.h */,
+				FEFFB6CA1C197C2B00011E20 /* IQKeyboardReturnKeyHandler.m */,
+				FEFFB6CB1C197C2B00011E20 /* IQSegmentedNextPrevious */,
+				FEFFB6CE1C197C2B00011E20 /* IQTextView */,
+				FEFFB6D11C197C2B00011E20 /* IQToolbar */,
+				FEFFB6DA1C197C2B00011E20 /* KeyboardManager.h */,
+				FEFFB6DB1C197C2B00011E20 /* Resources */,
+			);
+			path = IQKeyBoardManager;
+			sourceTree = "<group>";
+		};
+		FEFFB6B91C197C2B00011E20 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFB6BA1C197C2B00011E20 /* IQNSArray+Sort.h */,
+				FEFFB6BB1C197C2B00011E20 /* IQNSArray+Sort.m */,
+				FEFFB6BC1C197C2B00011E20 /* IQUITextFieldView+Additions.h */,
+				FEFFB6BD1C197C2B00011E20 /* IQUITextFieldView+Additions.m */,
+				FEFFB6BE1C197C2B00011E20 /* IQUIView+Hierarchy.h */,
+				FEFFB6BF1C197C2B00011E20 /* IQUIView+Hierarchy.m */,
+				FEFFB6C01C197C2B00011E20 /* IQUIViewController+Additions.h */,
+				FEFFB6C11C197C2B00011E20 /* IQUIViewController+Additions.m */,
+				FEFFB6C21C197C2B00011E20 /* IQUIWindow+Hierarchy.h */,
+				FEFFB6C31C197C2B00011E20 /* IQUIWindow+Hierarchy.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		FEFFB6C41C197C2B00011E20 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFB6C51C197C2B00011E20 /* IQKeyboardManagerConstants.h */,
+				FEFFB6C61C197C2B00011E20 /* IQKeyboardManagerConstantsInternal.h */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		FEFFB6CB1C197C2B00011E20 /* IQSegmentedNextPrevious */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFB6CC1C197C2B00011E20 /* IQSegmentedNextPrevious.h */,
+				FEFFB6CD1C197C2B00011E20 /* IQSegmentedNextPrevious.m */,
+			);
+			path = IQSegmentedNextPrevious;
+			sourceTree = "<group>";
+		};
+		FEFFB6CE1C197C2B00011E20 /* IQTextView */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFB6CF1C197C2B00011E20 /* IQTextView.h */,
+				FEFFB6D01C197C2B00011E20 /* IQTextView.m */,
+			);
+			path = IQTextView;
+			sourceTree = "<group>";
+		};
+		FEFFB6D11C197C2B00011E20 /* IQToolbar */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFB6D21C197C2B00011E20 /* IQBarButtonItem.h */,
+				FEFFB6D31C197C2B00011E20 /* IQBarButtonItem.m */,
+				FEFFB6D41C197C2B00011E20 /* IQTitleBarButtonItem.h */,
+				FEFFB6D51C197C2B00011E20 /* IQTitleBarButtonItem.m */,
+				FEFFB6D61C197C2B00011E20 /* IQToolbar.h */,
+				FEFFB6D71C197C2B00011E20 /* IQToolbar.m */,
+				FEFFB6D81C197C2B00011E20 /* IQUIView+IQKeyboardToolbar.h */,
+				FEFFB6D91C197C2B00011E20 /* IQUIView+IQKeyboardToolbar.m */,
+			);
+			path = IQToolbar;
+			sourceTree = "<group>";
+		};
+		FEFFB6DB1C197C2B00011E20 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFB6DC1C197C2B00011E20 /* IQKeyboardManager.bundle */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -394,10 +601,12 @@
 				FE4CBF9C1BE4A56F00693F32 /* Sources */,
 				FE4CBF9D1BE4A56F00693F32 /* Frameworks */,
 				FE4CBF9E1BE4A56F00693F32 /* Resources */,
+				FE94D1461C660A1700D199DE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FE94D1451C660A1600D199DE /* PBXTargetDependency */,
 			);
 			name = HelloAnyChatSwift;
 			productName = HelloAnyChatSwift;
@@ -452,7 +661,7 @@
 				TargetAttributes = {
 					FE4CBF9F1BE4A56F00693F32 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 5NQ3495ZY9;
+						DevelopmentTeam = NY7AR37MRX;
 					};
 					FE4CBFB31BE4A56F00693F32 = {
 						CreatedOnToolsVersion = 7.1;
@@ -477,6 +686,12 @@
 			mainGroup = FE4CBF971BE4A56F00693F32;
 			productRefGroup = FE4CBFA11BE4A56F00693F32 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = FE94D12B1C6609C000D199DE /* Products */;
+					ProjectRef = FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				FE4CBF9F1BE4A56F00693F32 /* HelloAnyChatSwift */,
@@ -486,6 +701,58 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		FE94D1351C6609C000D199DE /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = FE94D1341C6609C000D199DE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FE94D1371C6609C000D199DE /* Alamofire iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire iOS Tests.xctest";
+			remoteRef = FE94D1361C6609C000D199DE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FE94D1391C6609C000D199DE /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = FE94D1381C6609C000D199DE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FE94D13B1C6609C000D199DE /* Alamofire OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire OSX Tests.xctest";
+			remoteRef = FE94D13A1C6609C000D199DE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FE94D13D1C6609C000D199DE /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = FE94D13C1C6609C000D199DE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FE94D13F1C6609C000D199DE /* Alamofire tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire tvOS Tests.xctest";
+			remoteRef = FE94D13E1C6609C000D199DE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FE94D1411C6609C000D199DE /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = FE94D1401C6609C000D199DE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		FE4CBF9E1BE4A56F00693F32 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
@@ -493,6 +760,7 @@
 			files = (
 				FE4CBFAE1BE4A56F00693F32 /* LaunchScreen.storyboard in Resources */,
 				FE55C9F41BE8998B007B625D /* VideoParamSetting.plist in Resources */,
+				FEFFB6EA1C197C2B00011E20 /* IQKeyboardManager.bundle in Resources */,
 				FE4CC0321BE50E4A00693F32 /* MBProgressHUD.bundle in Resources */,
 				FE4CBFAB1BE4A56F00693F32 /* Assets.xcassets in Resources */,
 				FE4CBFA91BE4A56F00693F32 /* Main.storyboard in Resources */,
@@ -520,17 +788,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEFFB6E21C197C2B00011E20 /* IQKeyboardManager.m in Sources */,
+				FEFFB6DD1C197C2B00011E20 /* IQNSArray+Sort.m in Sources */,
+				FEFFB6E01C197C2B00011E20 /* IQUIViewController+Additions.m in Sources */,
 				FEB350C01BE79B4200590D0F /* UserViewController.swift in Sources */,
 				FE55C9F61BE8A107007B625D /* VideoParamSettingViewController.swift in Sources */,
+				FEFFB6DE1C197C2B00011E20 /* IQUITextFieldView+Additions.m in Sources */,
 				FE4CBFD41BE4A66600693F32 /* LoginViewController.swift in Sources */,
 				FE4CBFA41BE4A56F00693F32 /* AppDelegate.swift in Sources */,
+				FEFFB6E61C197C2B00011E20 /* IQBarButtonItem.m in Sources */,
+				FEFFB6E71C197C2B00011E20 /* IQTitleBarButtonItem.m in Sources */,
+				FEFFB6DF1C197C2B00011E20 /* IQUIView+Hierarchy.m in Sources */,
+				FE94D1291C65F29A00D199DE /* RadioButton.m in Sources */,
 				FEB350BE1BE79A7C00590D0F /* User.swift in Sources */,
 				FE55C9F21BE86E2F007B625D /* MZTimerLabel.m in Sources */,
 				FE4CC0311BE50E4A00693F32 /* MBProgressHUD+JT.m in Sources */,
+				FEFFB6E41C197C2B00011E20 /* IQSegmentedNextPrevious.m in Sources */,
+				FEFFB6E51C197C2B00011E20 /* IQTextView.m in Sources */,
+				FEFFB6E11C197C2B00011E20 /* IQUIWindow+Hierarchy.m in Sources */,
+				FEFFB6E31C197C2B00011E20 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				FEB90B401BE63585007B4749 /* VideoViewController.swift in Sources */,
+				FEFFB6E91C197C2B00011E20 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				FE4CC0331BE50E4A00693F32 /* MBProgressHUD.m in Sources */,
 				FE5119641BEFC99F0052DD9B /* UIScrollView+EmptyDataSet.m in Sources */,
 				FE5119601BEF574C0052DD9B /* VideoParamSettingDetailController.swift in Sources */,
+				FEFFB6E81C197C2B00011E20 /* IQToolbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,7 +820,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE4CBFB91BE4A56F00693F32 /* HelloAnyChatSwiftTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,7 +827,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE4CBFC41BE4A56F00693F32 /* HelloAnyChatSwiftUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,6 +842,11 @@
 			isa = PBXTargetDependency;
 			target = FE4CBF9F1BE4A56F00693F32 /* HelloAnyChatSwift */;
 			targetProxy = FE4CBFC01BE4A56F00693F32 /* PBXContainerItemProxy */;
+		};
+		FE94D1451C660A1600D199DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Alamofire iOS";
+			targetProxy = FE94D1441C660A1600D199DE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -669,59 +954,53 @@
 		FE4CBFC91BE4A56F00693F32 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					../../../sdk/include,
-				);
+				HEADER_SEARCH_PATHS = ../../sdk/include;
 				INFOPLIST_FILE = HelloAnyChatSwift/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../../../sdk/libs,
-					../../../sdk/libs/audioprocess,
+					../../sdk/libs,
+					../../sdk/libs/audioprocess,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.HelloAnyChatSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.HelloAnyChat2Swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"SWIFT_INCLUDE_PATHS[arch=*]" = ../../sdk;
+				PROVISIONING_PROFILE = "227c7fda-fc57-4443-9e43-7104d1892c54";
 				SWIFT_OBJC_BRIDGING_HEADER = OCContainerHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				USER_HEADER_SEARCH_PATHS = "";
-				USE_HEADERMAP = YES;
 			};
 			name = Debug;
 		};
 		FE4CBFCA1BE4A56F00693F32 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					../../../sdk/include,
-				);
+				HEADER_SEARCH_PATHS = ../../sdk/include;
 				INFOPLIST_FILE = HelloAnyChatSwift/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../../../sdk/libs,
-					../../../sdk/libs/audioprocess,
+					../../sdk/libs,
+					../../sdk/libs/audioprocess,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.HelloAnyChatSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.HelloAnyChat2Swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"SWIFT_INCLUDE_PATHS[arch=*]" = ../../sdk;
+				PROVISIONING_PROFILE = "227c7fda-fc57-4443-9e43-7104d1892c54";
 				SWIFT_OBJC_BRIDGING_HEADER = OCContainerHeader.h;
-				USER_HEADER_SEARCH_PATHS = "";
-				USE_HEADERMAP = YES;
 			};
 			name = Release;
 		};

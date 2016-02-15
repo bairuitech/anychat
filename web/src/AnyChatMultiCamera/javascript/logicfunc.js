@@ -110,10 +110,25 @@ function InitInterfaceUI() {
 			GetID("password").value = "";
         if (GetID("username").value != "") {
             DisplayLoadingDiv(true);
-            var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //连接服务器
-            AddLog("BRAC_Connect(" + GetID("ServerAddr").value + "," + GetID("ServerPort").value + ")=" + errorcode, LOG_TYPE_API);
-            errorcode = BRAC_Login(GetID("username").value, GetID("password").value, 0);
-            AddLog("BRAC_Login(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);
+			setLoginInfo();			
+            
+            if (GetID("normal_login").checked){
+            	if (GetID("AppGuid") && GetID("AppGuid").value.length)				// 设置应用ID
+                	BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, GetID("AppGuid").value.toString());
+            	
+	            var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //连接服务器
+	            AddLog("BRAC_Connect(" + GetID("ServerAddr").value + "," + GetID("ServerPort").value + ")=" + errorcode, LOG_TYPE_API);
+            	
+				errorcode = BRAC_Login(GetID("username").value, GetID("password").value, 0);
+            	AddLog("BRAC_Login(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);            	
+            }
+            
+			if (GetID("sign_login").checked){
+                if (GetID("AppGuid") && GetID("AppGuid").value.length){
+                	getSign("http://127.0.0.1:8980/", -1, GetID("username").value, GetID("AppGuid").value);                	
+                }
+            }
+			
             // 隐藏设置界面
             GetID("setting_div").style.display = "none";
         }
@@ -210,6 +225,8 @@ function InitInterfaceUI() {
             InitAdvanced();
         }
     }
+    
+    getLoginInfo();    
 }
 
 function PasswordFocus(obj,color){
@@ -724,4 +741,139 @@ function RequestVideoByUserId(dwUserId)
 		BRAC_UserSpeakControl(dwUserId, 1); // 打开对方音频
 		
 	}
+}
+
+//设置登录信息，包括用户名、服务器IP、服务器端口、应用ID
+function setLoginInfo() {
+	var loginType = 0;
+    setCookie('username',GetID("username").value,30);
+    setCookie('ServerAddr',GetID("ServerAddr").value,30);
+    setCookie('ServerPort',GetID("ServerPort").value,30);   
+    setCookie('AppGuid',GetID("AppGuid").value,30);
+    if (GetID("normal_login").checked){
+    	loginType = GetID("normal_login").value;
+    }
+    if (GetID("sign_login").checked){
+    	loginType = GetID("sign_login").value;
+    }
+    setCookie('loginType',loginType,30);
+}
+
+//获取登录信息
+function getLoginInfo() {
+    GetID("username").value = getCookie("username");
+    var serverIP = getCookie("ServerAddr");
+    if (serverIP != "")
+        GetID("ServerAddr").value = serverIP;
+    var serverPort = getCookie("ServerPort");
+    if (serverPort != "")
+        GetID("ServerPort").value = serverPort;
+    GetID("AppGuid").value = getCookie("AppGuid");
+    var loginType = getCookie("loginType");
+    if (loginType == GetID("normal_login").value){
+    	GetID("normal_login").checked = true;
+    }
+	if (loginType == GetID("sign_login").value){
+    	GetID("sign_login").checked = true;
+    }    
+}
+
+//获取cookie项的cookie值
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return document.cookie.substring(c_start, c_end);
+        }
+    }
+    return "";
+}
+
+//设置cookie
+function setCookie(c_name, value, expiredays){
+　　var exdate=new Date();
+　　exdate.setDate(exdate.getDate() + expiredays);
+　　document.cookie=c_name+ "=" + value + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+}
+
+//去除字符串两边空格
+String.prototype.trim = function () {
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+//获取签名
+function getSign(signUrl, userId, strUser, appId) {
+	var retVal = null;
+	var parameter = "userid=" + userId + "&struserid=" + strUser + "&appid=" + appId ;
+    var requestURL = signUrl;
+    xmlHttpReq = createXMLHttpRequest();
+        xmlHttpReq.open("POST",requestURL,true);
+        xmlHttpReq.setRequestHeader("Content-Type","application/x-www-form-urlencoded;");
+        xmlHttpReq.send(encodeURI(encodeURI(parameter)));
+    
+    xmlHttpReq.onreadystatechange = function(){
+        if(xmlHttpReq.readyState == 4){
+            switch(xmlHttpReq.status){
+                case 200:
+                    responseText = xmlHttpReq.responseText;
+                    retVal = JSON.parse(responseText);
+                    
+                    if (retVal.errorcode == 0){
+            			var signStr = retVal.sigStr;
+            			var signTimestamp = retVal.timestamp;
+
+						//连接服务器
+			            var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //连接服务器
+			            AddLog("BRAC_Connect(" + GetID("ServerAddr").value + "," + GetID("ServerPort").value + ")=" + errorcode, LOG_TYPE_API);
+
+						//签名登录
+	                   	errorcode = BRAC_LoginEx(GetID("username").value, -1, GetID("username").value, GetID("AppGuid").value, signTimestamp, signStr, "");
+	            	    AddLog("BRAC_LoginEx(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);            			
+            		}
+                      	
+                    break;
+                case 400:
+                    alert("错误的请求！\nError Code:400!");
+                    break;
+                case 403:
+                    alert("拒绝请求！\nError Code:403!");
+                    break;
+                case 404:
+                    alert("请求地址不存在！\nError Code:404!");
+                    break;
+                case 500:
+                    alert("内部错误！\nError Code:500!");
+                    break;
+                case 503:
+                    alert("服务不可用！\nError Code:503!");
+                    break;
+                default:
+                    alert("请求返回异常！\nError Code:"+xmlHttpReq.status);
+                    break;
+            }
+        }
+    }
+}
+
+// 创建XMLHttpRequest对象
+function createXMLHttpRequest() {
+    if (window.XMLHttpRequest) {// IE 7.0及以上版本和非IE的浏览器
+        xmlHttpReq = new XMLHttpRequest();
+    } else {// IE 6.0及以下版本
+        try {
+            xmlHttpReq = new ActiveXObject("MSXML2.XMLHTTP");
+        }catch (e) {
+            try {
+                xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+            }catch (e) {}
+        }
+    }
+    if (!xmlHttpReq) {
+        alert("当前浏览器不支持!");
+        return null;
+    }
+    return xmlHttpReq;
 }

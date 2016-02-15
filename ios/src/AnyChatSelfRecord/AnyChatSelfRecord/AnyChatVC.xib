@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnyChatVC">
             <connections>
+                <outlet property="theGuid" destination="3z9-EY-OI3" id="GJI-bg-Q20"/>
                 <outlet property="theHideKeyboardBtn" destination="3av-cN-Js3" id="lsS-0f-3mY"/>
                 <outlet property="theLoginBtn" destination="Na6-1Z-fa2" id="V8L-kj-2C3"/>
                 <outlet property="theServerIP" destination="3tK-w0-pgW" id="JAZ-wR-8dv"/>
@@ -37,14 +38,14 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                 </imageView>
                 <view contentMode="scaleToFill" id="4RE-IZ-K8S" userLabel="View - header">
-                    <rect key="frame" x="61" y="135" width="200" height="127"/>
+                    <rect key="frame" x="61" y="135" width="200" height="179"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon_name.png" id="RBY-hN-7da">
                             <rect key="frame" x="0.0" y="7" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名称" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" id="8jW-Tb-7Ru" userLabel="Text Field - name">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名称" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="8jW-Tb-7Ru" userLabel="Text Field - name">
                             <rect key="frame" x="28" y="9" width="160" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -58,7 +59,7 @@
                             <rect key="frame" x="0.0" y="48" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="服务器 IP" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="25" id="3tK-w0-pgW" userLabel="Text Field - IP">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="服务器 IP" textAlignment="center" minimumFontSize="25" clearButtonMode="whileEditing" id="3tK-w0-pgW" userLabel="Text Field - IP">
                             <rect key="frame" x="28" y="51" width="160" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -72,7 +73,11 @@
                             <rect key="frame" x="0.0" y="92" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="端口" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="25" id="KW0-TX-ntw" userLabel="Text Field - Port">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon_box.png" id="cEg-hO-W38">
+                            <rect key="frame" x="5" y="135" width="23" height="23"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="端口" textAlignment="center" minimumFontSize="25" clearButtonMode="whileEditing" id="KW0-TX-ntw" userLabel="Text Field - Port">
                             <rect key="frame" x="28" y="96" width="160" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -97,6 +102,21 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
+                        <view contentMode="scaleToFill" id="5ff-PB-vNt" userLabel="View - line - down">
+                            <rect key="frame" x="0.0" y="170" width="200" height="1"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="应用ID" textAlignment="center" minimumFontSize="25" clearButtonMode="whileEditing" id="3z9-EY-OI3" userLabel="guid">
+                            <rect key="frame" x="28" y="137" width="160" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="UmV-qS-rPJ"/>
+                            </connections>
+                        </textField>
                     </subviews>
                 </view>
                 <view contentMode="scaleToFill" id="1Qn-S9-C21" userLabel="View - Footer">
@@ -118,14 +138,6 @@
                         </label>
                     </subviews>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Na6-1Z-fa2" userLabel="Button - Login">
-                    <rect key="frame" x="76" y="298" width="169" height="52"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" backgroundImage="btn_login_01.png"/>
-                    <connections>
-                        <action selector="OnLoginBtnClicked:" destination="-1" eventType="touchUpInside" id="jFF-Su-SXb"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="aiX-gy-ZuN" userLabel="Button - VideoSetting">
                     <rect key="frame" x="288" y="11" width="18" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -133,17 +145,52 @@
                         <action selector="VideoSetting:" destination="-1" eventType="touchUpInside" id="fO7-LL-TUD"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Na6-1Z-fa2" userLabel="Button - Login">
+                    <rect key="frame" x="76" y="375" width="169" height="52"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="btn_login_01.png"/>
+                    <connections>
+                        <action selector="OnLoginBtnClicked:" destination="-1" eventType="touchUpInside" id="jFF-Su-SXb"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="l7r-4a-wpo" customClass="RadioButton">
+                    <rect key="frame" x="64" y="332" width="91" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="普通登录" image="unchecked.png"/>
+                    <state key="selected" image="checked.png"/>
+                    <connections>
+                        <action selector="onRadioBtn:" destination="-1" eventType="touchUpInside" id="Ta6-lE-JuH"/>
+                        <outletCollection property="groupButtons" destination="YoB-3I-hcj" id="slW-1F-zTa"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="YoB-3I-hcj" customClass="RadioButton">
+                    <rect key="frame" x="173" y="332" width="88" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="签名登录" image="unchecked.png"/>
+                    <state key="selected" image="checked.png"/>
+                    <connections>
+                        <action selector="onRadioBtn:" destination="-1" eventType="touchUpInside" id="6IM-uU-tCh"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
     <resources>
+        <image name="Icon_box.png" width="27" height="27"/>
         <image name="Icon_ip.png" width="144" height="144"/>
         <image name="Icon_name.png" width="144" height="144"/>
         <image name="Icon_port.png" width="144" height="144"/>
         <image name="bg.png" width="640" height="1136"/>
         <image name="bg_loginTitle.png" width="323" height="176"/>
         <image name="btn_login_01.png" width="350" height="106"/>
+        <image name="checked.png" width="24" height="24"/>
+        <image name="unchecked.png" width="24" height="24"/>
     </resources>
 </document>

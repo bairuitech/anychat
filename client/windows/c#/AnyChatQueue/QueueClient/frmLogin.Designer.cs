@@ -43,12 +43,15 @@
             this.cbox_userName = new System.Windows.Forms.ComboBox();
             this.cbox_appGuid = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.rbtn_sign = new System.Windows.Forms.RadioButton();
+            this.rbtn_normal = new System.Windows.Forms.RadioButton();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lb_name
             // 
             this.lb_name.AutoSize = true;
-            this.lb_name.Location = new System.Drawing.Point(42, 99);
+            this.lb_name.Location = new System.Drawing.Point(42, 84);
             this.lb_name.Name = "lb_name";
             this.lb_name.Size = new System.Drawing.Size(68, 17);
             this.lb_name.TabIndex = 0;
@@ -56,7 +59,7 @@
             // 
             // btn_login
             // 
-            this.btn_login.Location = new System.Drawing.Point(158, 198);
+            this.btn_login.Location = new System.Drawing.Point(158, 210);
             this.btn_login.Name = "btn_login";
             this.btn_login.Size = new System.Drawing.Size(75, 23);
             this.btn_login.TabIndex = 3;
@@ -67,7 +70,7 @@
             // lb_serveradd
             // 
             this.lb_serveradd.AutoSize = true;
-            this.lb_serveradd.Location = new System.Drawing.Point(54, 32);
+            this.lb_serveradd.Location = new System.Drawing.Point(54, 19);
             this.lb_serveradd.Name = "lb_serveradd";
             this.lb_serveradd.Size = new System.Drawing.Size(56, 17);
             this.lb_serveradd.TabIndex = 3;
@@ -76,7 +79,7 @@
             // lb_port
             // 
             this.lb_port.AutoSize = true;
-            this.lb_port.Location = new System.Drawing.Point(66, 67);
+            this.lb_port.Location = new System.Drawing.Point(66, 52);
             this.lb_port.Name = "lb_port";
             this.lb_port.Size = new System.Drawing.Size(44, 17);
             this.lb_port.TabIndex = 5;
@@ -84,12 +87,13 @@
             // 
             // lbl_tipMessage
             // 
-            this.lbl_tipMessage.AutoSize = true;
-            this.lbl_tipMessage.Location = new System.Drawing.Point(166, 229);
+            this.lbl_tipMessage.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lbl_tipMessage.Location = new System.Drawing.Point(0, 245);
             this.lbl_tipMessage.Name = "lbl_tipMessage";
-            this.lbl_tipMessage.Size = new System.Drawing.Size(60, 17);
+            this.lbl_tipMessage.Size = new System.Drawing.Size(384, 17);
             this.lbl_tipMessage.TabIndex = 6;
             this.lbl_tipMessage.Text = "message";
+            this.lbl_tipMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbl_tipMessage.Visible = false;
             // 
             // cbox_userIdentity
@@ -99,7 +103,7 @@
             this.cbox_userIdentity.Items.AddRange(new object[] {
             "客户",
             "坐席"});
-            this.cbox_userIdentity.Location = new System.Drawing.Point(116, 95);
+            this.cbox_userIdentity.Location = new System.Drawing.Point(116, 80);
             this.cbox_userIdentity.Name = "cbox_userIdentity";
             this.cbox_userIdentity.Size = new System.Drawing.Size(77, 25);
             this.cbox_userIdentity.TabIndex = 2;
@@ -107,7 +111,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(54, 132);
+            this.label1.Location = new System.Drawing.Point(54, 118);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 17);
             this.label1.TabIndex = 7;
@@ -116,7 +120,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(204, 99);
+            this.label2.Location = new System.Drawing.Point(204, 84);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 17);
             this.label2.TabIndex = 0;
@@ -137,7 +141,7 @@
             "12",
             "13",
             "14"});
-            this.cbox_identityPriority.Location = new System.Drawing.Point(258, 95);
+            this.cbox_identityPriority.Location = new System.Drawing.Point(258, 80);
             this.cbox_identityPriority.Name = "cbox_identityPriority";
             this.cbox_identityPriority.Size = new System.Drawing.Size(55, 25);
             this.cbox_identityPriority.TabIndex = 2;
@@ -145,7 +149,7 @@
             // cbox_serverIP
             // 
             this.cbox_serverIP.FormattingEnabled = true;
-            this.cbox_serverIP.Location = new System.Drawing.Point(116, 28);
+            this.cbox_serverIP.Location = new System.Drawing.Point(116, 15);
             this.cbox_serverIP.Name = "cbox_serverIP";
             this.cbox_serverIP.Size = new System.Drawing.Size(197, 25);
             this.cbox_serverIP.TabIndex = 10;
@@ -153,7 +157,7 @@
             // cbox_port
             // 
             this.cbox_port.FormattingEnabled = true;
-            this.cbox_port.Location = new System.Drawing.Point(116, 63);
+            this.cbox_port.Location = new System.Drawing.Point(116, 48);
             this.cbox_port.Name = "cbox_port";
             this.cbox_port.Size = new System.Drawing.Size(197, 25);
             this.cbox_port.TabIndex = 11;
@@ -161,7 +165,7 @@
             // cbox_userName
             // 
             this.cbox_userName.FormattingEnabled = true;
-            this.cbox_userName.Location = new System.Drawing.Point(116, 128);
+            this.cbox_userName.Location = new System.Drawing.Point(116, 114);
             this.cbox_userName.Name = "cbox_userName";
             this.cbox_userName.Size = new System.Drawing.Size(197, 25);
             this.cbox_userName.TabIndex = 12;
@@ -169,7 +173,7 @@
             // cbox_appGuid
             // 
             this.cbox_appGuid.FormattingEnabled = true;
-            this.cbox_appGuid.Location = new System.Drawing.Point(116, 159);
+            this.cbox_appGuid.Location = new System.Drawing.Point(116, 145);
             this.cbox_appGuid.Name = "cbox_appGuid";
             this.cbox_appGuid.Size = new System.Drawing.Size(197, 25);
             this.cbox_appGuid.TabIndex = 14;
@@ -177,11 +181,44 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(54, 163);
+            this.label3.Location = new System.Drawing.Point(54, 149);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 17);
             this.label3.TabIndex = 13;
             this.label3.Text = "应用ID：";
+            // 
+            // rbtn_sign
+            // 
+            this.rbtn_sign.AutoSize = true;
+            this.rbtn_sign.Location = new System.Drawing.Point(239, 179);
+            this.rbtn_sign.Name = "rbtn_sign";
+            this.rbtn_sign.Size = new System.Drawing.Size(74, 21);
+            this.rbtn_sign.TabIndex = 18;
+            this.rbtn_sign.Text = "签名登录";
+            this.rbtn_sign.UseVisualStyleBackColor = true;
+            this.rbtn_sign.Click += new System.EventHandler(this.rbtn_sign_Click);
+            // 
+            // rbtn_normal
+            // 
+            this.rbtn_normal.AutoSize = true;
+            this.rbtn_normal.Checked = true;
+            this.rbtn_normal.Location = new System.Drawing.Point(117, 179);
+            this.rbtn_normal.Name = "rbtn_normal";
+            this.rbtn_normal.Size = new System.Drawing.Size(74, 21);
+            this.rbtn_normal.TabIndex = 19;
+            this.rbtn_normal.TabStop = true;
+            this.rbtn_normal.Text = "普通登录";
+            this.rbtn_normal.UseVisualStyleBackColor = true;
+            this.rbtn_normal.Click += new System.EventHandler(this.rbtn_normal_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(43, 181);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(68, 17);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "登录方式：";
             // 
             // frmLogin
             // 
@@ -189,6 +226,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 262);
+            this.Controls.Add(this.rbtn_sign);
+            this.Controls.Add(this.rbtn_normal);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.cbox_appGuid);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cbox_userName);
@@ -237,6 +277,9 @@
         private System.Windows.Forms.ComboBox cbox_userName;
         private System.Windows.Forms.ComboBox cbox_appGuid;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton rbtn_sign;
+        private System.Windows.Forms.RadioButton rbtn_normal;
+        private System.Windows.Forms.Label label4;
     }
 }
 

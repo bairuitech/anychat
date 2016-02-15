@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UITextField            *theRoomNO;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
+@property (weak, nonatomic) IBOutlet UITextField            *theGuid;
 @property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
 @property (weak, nonatomic) IBOutlet UIButton               *theHideKeyboardBtn;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersion;
@@ -47,14 +48,6 @@
 - (IBAction) OnLoginBtnClicked:(id)sender;
 
 - (NSMutableArray *) getOnlineUserArray;
-
-- (id) GetServerIP;
-
-- (id) GetServerPort;
-
-- (id) GetUserName;
-
-- (id) GetRoomNO;
 
 - (void) OnLogout;
 

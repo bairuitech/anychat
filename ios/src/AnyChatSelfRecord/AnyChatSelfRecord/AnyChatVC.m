@@ -4,9 +4,24 @@
 //
 
 #import "AnyChatVC.h"
+#import "RadioButton.h"
+#import "AFNetworking.h"
+
+#define kAnyChatRoomID 1
+#define kUserID 1001
+#define kSignServerURL @"http://192.168.1.7:8980/"
+#define kAnyChatIP @"cluster.anychat.cn"
+#define kAnyChatPort @"8102"
+#define kAnyChatUserName @"AnyChat"
+#define kAnyChatGuid @"bb9ca6ec-e611-4208-ab8f-44b5881c41e8"
+
+typedef enum {
+    AnyChatVCLoginModeGeneralLogin,
+    AnyChatVCLoginModeSignLogin
+} AnyChatVCLoginMode;
 
 @interface AnyChatVC ()
-
+@property (nonatomic, assign) AnyChatVCLoginMode loginMode; // 登录方式
 @end
 
 @implementation AnyChatVC
@@ -18,6 +33,7 @@
 @synthesize theUserName;
 @synthesize theServerIP;
 @synthesize theServerPort;
+@synthesize theGuid;
 @synthesize theLoginBtn;
 @synthesize theHideKeyboardBtn;
 @synthesize theFeaturesNO;
@@ -69,13 +85,6 @@
     [self setUI];
 }
 
-#pragma mark - Memory Warning Method
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 
 #pragma mark - Shared Instance
 
@@ -110,8 +119,8 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode
 {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     self.onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
-    
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
         //用户自定义视频参数设置
@@ -226,79 +235,6 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 
 #pragma mark -
 #pragma mark - Get & Save Settings Method
-
-- (id) GetServerIP
-{
-    NSString* serverIP;
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
-        serverIP =  [array objectAtIndex:0];
-        
-        if([serverIP length] == 0)
-        {
-            theServerIP.text = @"demo.anychat.cn";
-            serverIP = theServerIP.text;
-        }
-    }
-    else
-    {
-        theServerIP.text = @"demo.anychat.cn";
-        serverIP = theServerIP.text;
-    }
-    return serverIP;
-}
-
-- (id) GetServerPort
-{
-    NSString* serverPort;
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
-        serverPort = [array objectAtIndex:1];
-        
-        if([serverPort intValue] == 0 || [serverPort length] == 0)
-        {
-            theServerPort.text = @"8906";
-            serverPort = theServerPort.text;
-        }
-    }
-    else
-    {
-        theServerPort.text = @"8906";
-        serverPort = theServerPort.text;
-    }
-    return serverPort;
-}
-
-- (id) GetUserName
-{
-    NSString* userName;
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
-        userName =  [array objectAtIndex:2];
-        
-        if([userName length] == 0)
-        {
-            theUserName.text = @"AnyChat";
-            userName = theServerIP.text;
-        }
-    }
-    else
-    {
-        theUserName.text = @"AnyChat";
-        userName = theUserName.text;
-    }
-    return userName;
-}
-
 - (void)saveSettings
 {
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -320,6 +256,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     [theServerIP resignFirstResponder];
     [theServerPort resignFirstResponder];
     [theUserName resignFirstResponder];
+    [theGuid resignFirstResponder];
 }
 
 - (IBAction)OnLoginBtnClicked:(id)sender
@@ -341,40 +278,80 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 
 - (void) OnLogin
 {
-    if (theLoginState == NO)
-    {
-        [self showLoadingAnimated];
-        
-        if([theServerIP.text length] == 0)
-        {
-            theServerIP.text = [self GetServerIP];
+    if([theUserName.text length] == 0) {
+        theUserName.text = kAnyChatUserName;
+    }
+    if([theServerIP.text length] == 0) {
+        theServerIP.text = kAnyChatIP;
+    }
+    if([theServerPort.text length] == 0) {
+        theServerPort.text = kAnyChatPort;
+    }
+    if (self.loginMode == AnyChatVCLoginModeSignLogin) {
+        if (theGuid.text.length == 0) {
+            MBProgressHUD *mbHUD= [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            mbHUD.labelText = @"应用ID不能为空";
+            mbHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"error"]];
+            mbHUD.mode = MBProgressHUDModeCustomView;
+            mbHUD.removeFromSuperViewOnHide = YES;
+            [mbHUD hide:YES afterDelay:0.7];
+            
+            return;
         }
-        if([theServerPort.text length] == 0)
-        {
-            theServerPort.text = [self GetServerPort];
-        }
-        if([theUserName.text length] == 0)
-        {
-            theUserName.text = [self GetUserName];
-        }
-        [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
-        [AnyChatPlatform Login:theUserName.text : @""];
+    }
+    
+    [self showLoadingAnimated];
+    
+    if (self.loginMode == AnyChatVCLoginModeGeneralLogin && theGuid.text.length != 0) {
+        [AnyChatPlatform SetSDKOptionString:BRAC_SO_CLOUD_APPGUID :theGuid.text];
+    }
+    
+    [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
+    
+    if (self.loginMode == AnyChatVCLoginModeSignLogin && theGuid.text.length != 0) {
+        [self getSignSuccess:^(id json) {
+            if ([[json objectForKey:@"errorcode"] intValue] ==0) {
+                int timestamp = [[json objectForKey:@"timestamp"] intValue];
+                NSString *signStr = [json objectForKey:@"sigStr"];
+                [AnyChatPlatform LoginEx:theUserName.text :kUserID :nil :theGuid.text :timestamp :signStr :nil];
+            }else {
+                NSLog(@"Json Error,Error Num:%@",[json objectForKey:@"errorcode"]);
+            }
+        } failure:^(NSError *error) {
+            NSLog(@"Request Error:%@",error);
+        }];
+    }else if(self.loginMode == AnyChatVCLoginModeGeneralLogin){
+        [AnyChatPlatform Login:theUserName.text :nil];
     }
     
     [self hideKeyBoard];
 }
 
+- (void)getSignSuccess:(void (^)(id))success failure:(void (^)(NSError *))failure{
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"userid"] = [NSNumber numberWithInt:kUserID];
+    params[@"strUserid"] = @"";
+    params[@"appid"] = theGuid.text;
+    
+    [manager POST:kSignServerURL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) success(responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failure) failure(error);
+    }];
+    
+}
+
 - (void) OnLogout
 {
-    if (theLoginState == YES)
-    {
-        [AnyChatPlatform Logout];
-        
-        theLoginState = NO;
-        
-        theStateInfo.text = @"• Logout Server.";
-        [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
-    }
+    [AnyChatPlatform Logout];
+    
+    theLoginState = NO;
+    
+    theStateInfo.text = @"• Logout Server.";
+    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -419,41 +396,11 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 
 - (void)showLoadingAnimated
 {
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-    
-    HUD.delegate = self;
-    HUD.dimBackground = YES;
+    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     HUD.labelText = @"AnyChatSingleVideo";
     HUD.detailsLabelText = @"Loading...";
-    
-    [HUD showWhileExecuting:@selector(onLoginLoadingAnimatedRunTime) onTarget:self withObject:nil animated:YES];
 }
 
-- (void)onLoginLoadingAnimatedRunTime
-{
-    int theTimes = 0;
-    while (theLoginState == NO && theTimes < 6)
-    {
-        sleep(1);
-        theTimes++;
-        
-        if (theTimes == 5 ) {
-            [self timeOutMsg];
-        }
-    }
-    
-    if (theLoginState == YES ){
-    }
-}
-
-- (void) timeOutMsg
-{
-    if (theLoginState == NO)
-    {
-        theStateInfo.text = @"Login timeout,please check the Network and Setting.";
-    }
-}
 
 
 #pragma mark - Rotation
@@ -470,10 +417,10 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 {
     [self.navigationController setNavigationBarHidden:YES];
     
-    theUserName.text = [self GetUserName];
-    theServerIP.text = [self GetServerIP];
-    theServerPort.text = [self GetServerPort];
-    
+    theUserName.text = kAnyChatUserName;
+    theServerIP.text = kAnyChatIP;
+    theServerPort.text = kAnyChatPort;
+    theGuid.text = kAnyChatGuid;
     [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theUserName addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -487,6 +434,15 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     
     [self prefersStatusBarHidden];
     
+}
+
+-(IBAction)onRadioBtn:(RadioButton*)sender
+{
+    if ([sender.titleLabel.text isEqualToString:@"签名登录"]) {
+        self.loginMode = AnyChatVCLoginModeSignLogin;
+    }else {
+        self.loginMode = AnyChatVCLoginModeGeneralLogin;
+    }
 }
 
 

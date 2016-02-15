@@ -252,10 +252,15 @@ namespace AnyChatSignServer
                 int timeStamp = 0;
                 string signStr = string.Empty;
 
+                //签名参数
+                System.Console.WriteLine("签名参数：userId = " + userId + ",strUserId = " + strUserId + ",appId = " + appid);
+
                 int errorcode = -1;
                 errorcode = AnyChatSign.AnyChatRsaSign(userId, sbUserId, sbAppId, sbPrivateKey, outSignStr, signStrSize, ref timeStamp);
                 if (errorcode == 0)
                 {
+                    System.Console.WriteLine("[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "]" + "   签名成功，时间戳为：" + timeStamp + ",签名为：" + outSignStr);
+
                     signStr = outSignStr.ToString();
 
                     Object dataObj = new { signStr = signStr, signTimestampe = timeStamp };

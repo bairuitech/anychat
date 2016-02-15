@@ -7,9 +7,24 @@
 //
 
 #import "AnyChatViewController.h"
+#import "RadioButton.h"
+#import "AFNetworking.h"
+
+#define kAnyChatRoomID 1
+#define kUserID 1001
+#define kSignServerURL @"http://192.168.6.102:8980/"
+#define kAnyChatIP @"cluster.anychat.cn"
+#define kAnyChatPort @"8102"
+#define kAnyChatUserName @"AnyChat"
+#define kAnyChatGuid @"bb9ca6ec-e611-4208-ab8f-44b5881c41e8"
+
+typedef enum {
+    AnyChatVCLoginModeGeneralLogin,
+    AnyChatVCLoginModeSignLogin
+} AnyChatVCLoginMode;
 
 @interface AnyChatViewController ()
-
+@property (nonatomic, assign) AnyChatVCLoginMode loginMode; // 登录方式
 @end
 
 @implementation AnyChatViewController
@@ -25,6 +40,7 @@
 @synthesize theUserName;
 @synthesize theServerIP;
 @synthesize theServerPort;
+@synthesize theGuid;
 @synthesize theLoginBtn;
 @synthesize theLoginAlertView;
 @synthesize theHideKeyboardBtn;
@@ -52,6 +68,8 @@
     
     anyChat = [[AnyChatPlatform alloc] init];
     anyChat.notifyMsgDelegate = self;
+    // 设置应用ID
+//    [AnyChatPlatform SetSDKOptionString:BRAC_SO_CLOUD_APPGUID :nil];
     
     //创建默认视频参数
     [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
@@ -149,9 +167,9 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 70.0f;
-}
+//- (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//	return 81.0f;
+//}
 
 
 #pragma mark - TextField Delegate
@@ -174,14 +192,18 @@
     if (bSuccess)
     {
         theStateInfo.text = @"• Success connected to server";
+    }else {
+        
+        theStateInfo.text = @"• Fail connected to server";
+        [HUD hide:YES];
     }
 }
 
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode
 {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
-    
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
         theOnLineLoginState = YES;
@@ -192,9 +214,9 @@
         
         if([theRoomNO.text length] == 0)
         {
-            theRoomNO.text = [self GetRoomNO];
+            theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
         }
-        [AnyChatPlatform EnterRoom:[theRoomNO.text intValue] :@""];
+        [AnyChatPlatform EnterRoom:kAnyChatRoomID :@""];
     }
     else
     {
@@ -207,13 +229,8 @@
 // 用户进入房间消息
 - (void) OnAnyChatEnterRoom:(int) dwRoomId : (int) dwErrorCode
 {
-    if (dwErrorCode != 0)
-    {
+    if (dwErrorCode != 0) {
         theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
-    }
-    else
-    {
-        [self timeOutMsg];
     }
     
     [onLineUserTableView reloadData];
@@ -254,8 +271,7 @@
 }
 
 // 网络断开消息
-- (void) OnAnyChatLinkClose:(int) dwErrorCode
-{
+- (void) OnAnyChatLinkClose:(int) dwErrorCode {
     [videoVC FinishVideoChat];
     [AnyChatPlatform LeaveRoom:-1];
     [AnyChatPlatform Logout];
@@ -269,103 +285,6 @@
 
 
 #pragma mark - Get & Save Settings Method
-
-- (id) GetServerIP
-{
-    NSString* serverIP;
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
-        serverIP =  [array objectAtIndex:0];
-        
-        if([serverIP length] == 0)
-        {
-            theServerIP.text = @"demo.anychat.cn";
-            serverIP = theServerIP.text;
-        }
-    }
-    else
-    {
-        theServerIP.text = @"demo.anychat.cn";
-        serverIP = theServerIP.text;
-    }
-    return serverIP;
-}
-
-- (id) GetServerPort
-{
-    NSString* serverPort;
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
-        serverPort = [array objectAtIndex:1];
-        
-        if([serverPort intValue] == 0 || [serverPort length] == 0)
-        {
-            theServerPort.text = @"8906";
-            serverPort = theServerPort.text;
-        }
-    }
-    else
-    {
-        theServerPort.text = @"8906";
-        serverPort = theServerPort.text;
-    }
-    return serverPort;
-}
-
-- (id) GetUserName
-{
-    NSString* userName;
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
-        userName =  [array objectAtIndex:2];
-        
-        if([userName length] == 0)
-        {
-            theUserName.text = @"AnyChat";
-            userName = theServerIP.text;
-        }
-    }
-    else
-    {
-        theUserName.text = @"AnyChat";
-        userName = theUserName.text;
-    }
-    return userName;
-}
-
-- (id) GetRoomNO
-{
-    NSString* roomNO;
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        NSMutableArray* array = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
-        roomNO = [array objectAtIndex:3];
-        
-        if([roomNO intValue] == 0 || [roomNO length] == 0)
-        {
-            theRoomNO.text = @"1";
-            roomNO = theRoomNO.text;
-        }
-    }
-    else
-    {
-        theRoomNO.text = @"1";
-        roomNO = theRoomNO.text;
-    }
-    return roomNO;
-}
-
 - (void)saveSettings
 {   // save settings to file
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -389,12 +308,12 @@
     return onLineUserList;
 }
 
-- (IBAction)hideKeyBoard
-{
+- (IBAction)hideKeyBoard {
     [theServerIP resignFirstResponder];
     [theServerPort resignFirstResponder];
     [theUserName resignFirstResponder];
     [theRoomNO resignFirstResponder];
+    [theGuid resignFirstResponder];
 }
 
 - (IBAction)OnLoginBtnClicked:(id)sender
@@ -411,28 +330,72 @@
 
 - (void) OnLogin
 {
-    if (theOnLineLoginState == NO)
-    {
-        [self showLoadingAnimated];
-        
-        
-        if([theServerIP.text length] == 0)
-        {
-            theServerIP.text = [self GetServerIP];
+    
+    if([theUserName.text length] == 0) {
+        theUserName.text = kAnyChatUserName;
+    }
+    if([theServerIP.text length] == 0) {
+        theServerIP.text = kAnyChatIP;
+    }
+    if([theServerPort.text length] == 0) {
+        theServerPort.text = kAnyChatPort;
+    }
+    if (self.loginMode == AnyChatVCLoginModeSignLogin) {
+        if (theGuid.text.length == 0) {
+            MBProgressHUD *mbHUD= [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            mbHUD.labelText = @"应用ID不能为空";
+            mbHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"error"]];
+            mbHUD.mode = MBProgressHUDModeCustomView;
+            mbHUD.removeFromSuperViewOnHide = YES;
+            [mbHUD hide:YES afterDelay:0.7];
+            
+            return;
         }
-        if([theServerPort.text length] == 0)
-        {
-            theServerPort.text = [self GetServerPort];
-        }
-        if([theUserName.text length] == 0)
-        {
-            theUserName.text = [self GetUserName];
-        }
-        [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
-        [AnyChatPlatform Login:theUserName.text : @""];
     }
     
+    [self showLoadingAnimated];
+    
+    if (self.loginMode == AnyChatVCLoginModeGeneralLogin && theGuid.text.length != 0) {
+        [AnyChatPlatform SetSDKOptionString:BRAC_SO_CLOUD_APPGUID :theGuid.text];
+    }
+    
+    [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
+    
+    if (self.loginMode == AnyChatVCLoginModeSignLogin && theGuid.text.length != 0) {
+        [self getSignSuccess:^(id json) {
+            if ([[json objectForKey:@"errorcode"] intValue] ==0) {
+                int timestamp = [[json objectForKey:@"timestamp"] intValue];
+                NSString *signStr = [json objectForKey:@"sigStr"];
+                [AnyChatPlatform LoginEx:theUserName.text :kUserID :nil :theGuid.text :timestamp :signStr :nil];
+            }else {
+                NSLog(@"Json Error,Error Num:%@",[json objectForKey:@"errorcode"]);
+            }
+        } failure:^(NSError *error) {
+            NSLog(@"Request Error:%@",error);
+        }];
+    }else if(self.loginMode == AnyChatVCLoginModeGeneralLogin){
+        [AnyChatPlatform Login:theUserName.text :nil];
+    }
+    
+    
     [self hideKeyBoard];
+}
+
+- (void)getSignSuccess:(void (^)(id))success failure:(void (^)(NSError *))failure{
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"userid"] = [NSNumber numberWithInt:kUserID];
+    params[@"strUserid"] = @"";
+    params[@"appid"] = theGuid.text;
+    
+    [manager POST:kSignServerURL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) success(responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failure) failure(error);
+    }];
+    
 }
 
 - (void) OnLogout
@@ -462,38 +425,9 @@
 
 - (void)showLoadingAnimated
 {
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-    
-    HUD.delegate = self;
-    HUD.dimBackground = YES;
-    HUD.labelText = @"HelloAnyChat";
-    HUD.detailsLabelText = @"Connecting...";
-    
-    [HUD showWhileExecuting:@selector(onLoginLoadingAnimatedRunTime) onTarget:self withObject:nil animated:YES];
-}
-
-- (void)onLoginLoadingAnimatedRunTime
-{
-    int theTimes = 0;
-    while (theOnLineLoginState == NO && theTimes < 10)
-    {
-        sleep(1);
-        theTimes++;
-        
-        if (theTimes == 9 )
-        {
-            [self timeOutMsg];
-        }
-    }
-}
-
-- (void) timeOutMsg
-{
-    if (theOnLineLoginState == NO)
-    {
-        theStateInfo.text = @"Login timeout,please check the Network and Setting.";
-    }
+    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    HUD.labelText = @"helloAnyChat";
+    HUD.detailsLabelText = @"Loading...";
 }
 
 #pragma mark - UI Controls
@@ -502,10 +436,11 @@
 {
     [self.navigationController setNavigationBarHidden:YES];
     
-    theRoomNO.text = [self GetRoomNO];
-    theUserName.text = [self GetUserName];
-    theServerIP.text = [self GetServerIP];
-    theServerPort.text = [self GetServerPort];
+    theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
+    theUserName.text = kAnyChatUserName;
+    theServerIP.text = kAnyChatIP;
+    theServerPort.text = kAnyChatPort;
+    theGuid.text = kAnyChatGuid;
     
     [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -517,21 +452,21 @@
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
     
-    if (k_iPhone4)
-    {
-        onLineUserTableView.frame = CGRectMake(0, 240, 320, 210);
-    }
-    else if (k_iPhone5)
-    {
-        onLineUserTableView.frame = CGRectMake(0, 258, 320, 280);
-    }
-    
     [theVersion setText:[AnyChatPlatform GetSDKVersion]];
     [self prefersStatusBarHidden];
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 70.0f)];
     onLineUserTableView.tableFooterView = footerView;
     
+}
+
+-(IBAction)onRadioBtn:(RadioButton*)sender
+{
+    if ([sender.titleLabel.text isEqualToString:@"签名登录"]) {
+        self.loginMode = AnyChatVCLoginModeSignLogin;
+    }else {
+        self.loginMode = AnyChatVCLoginModeGeneralLogin;
+    }
 }
 
 

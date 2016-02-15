@@ -179,18 +179,37 @@ $(function () {
         }
 
         setLoginInfo();
-        if ($("#AppGuid") && $("#AppGuid").val().length)				// 设置应用ID
-            BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, $("#AppGuid").val().toString());
-
+        if ($("#normal_login").checked){
+        	if ($("#AppGuid") && $("#AppGuid").val().length)				// 设置应用ID
+            	BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, $("#AppGuid").val().toString());
+		}
+        if ($("#sign_login").checked){
+            if ($("#AppGuid") && $("#AppGuid").val().length){
+            	jsonObj = getSign("http://192.168.5.112:8980/", -1, $("#username").val(), $("#AppGuid").val());
+            	if (jsonObj != null){
+            		if (jsonObj.errorcode == 0){
+            			signStr = jsonObj.sigStr;
+            			signTimestamp = jsonObj.timestamp;
+            		}                		
+            	}
+            }
+        }
         userType = parseInt($("#askSelect option:selected").val()); // 获取目标用户类型
         $("#poptip li").remove(); //清除营业厅
         $("#LOADING_GREY_DIV img").show(); //显示登录等待蒙层
         $("#LOADING_GREY_DIV").show(); //显示登录蒙层
         /**连接服务器*/
         BRAC_Connect(mDefaultServerAddr, mDefaultServerPort);
-
-        /**登入anychat*/
-        var loginTag = BRAC_Login($("#username").val(), "", 0);
+		
+		var errorcode = -1;
+		if ($("#normal_login").checked){
+			errorcode = BRAC_Login($("#username").val(), "", 0);
+        	AddLog("BRAC_Login(" + $("#username").val() + ")=" + errorcode, LOG_TYPE_API);            	
+        }
+        if ($("#sign_login").checked){
+        	errorcode = BRAC_LoginEx($("#username").val(), -1, $("#username").val(), $("#AppGuid").val(), signTimestamp, signStr, "");
+        	AddLog("BRAC_LoginEx(" + $("#username").val() + ")=" + errorcode, LOG_TYPE_API);
+        }
 
         // 退出大厅按钮
         $("#roomOut").off().click(systemOut);
@@ -694,6 +713,14 @@ function setLoginInfo() {
     setCookie('AppGuid', $("#AppGuid").val(), 30);
     setCookie('askSelect', $("#askSelect").get(0).selectedIndex, 30);
     setCookie('PrioritySelect', $("#dwPrioritySelect").get(0).selectedIndex, 30);
+    var loginType = 0;
+	if ($("#normal_login").checked){
+    	loginType = $("#normal_login").val();
+    }
+    if ($("#sign_login").checked){
+    	loginType = $("#sign_login").val();
+    }
+    setCookie('loginType',loginType,30);       
 }
 
 //获取登录信息
@@ -708,6 +735,13 @@ function getLoginInfo() {
     $("#AppGuid").val(getCookie("AppGuid"));
     $("#askSelect").get(0).selectedIndex = getCookie("askSelect");
     $("#dwPrioritySelect").get(0).selectedIndex = getCookie("PrioritySelect");
+    var loginType = getCookie("loginType");
+	if (loginType == $("#normal_login").val()){
+    	$("#normal_login").checked = true;
+    }
+	if (loginType == $("#sign_login").val()){
+    	$("#sign_login").checked = true;
+    }     
 }
 
 //获取cookie项的cookie值
@@ -729,4 +763,36 @@ function setCookie(c_name, value, expiredays) {
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + expiredays);
     document.cookie = c_name + "=" + value + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+}
+
+//获取签名
+function getSign(signUrl, userId, strUserId, appId) {
+	var retVal = null;
+	
+    $.ajax( {
+        url : signUrl,
+        dataType : "json", //传参的数据类型
+        type : "post", //传参方式，get 或post
+        data : {
+            userid : userId, 
+			struserid : strUserId,
+			appid : appId
+        },
+        error : function(data) { //若Ajax处理失败后返回的信息
+        	//document.getElementById("txt").innerHTML = "Ajax处理失败，返回值：" + data.errorcode;
+			alert("Ajax处理失败，返回值：" + data.errorcode);
+        },
+        success : function(data) { //若Ajax处理成功后返回的信息
+        	resultMsg = "";
+        	if (data.errorcode != 0){
+        		alert("返回有错，返回值：" + data.errorcode);
+        	}else {
+        		retVal = data ;
+        	}
+            
+        }
+    });    		
+
+    
+    return retVal;
 }

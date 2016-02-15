@@ -118,6 +118,7 @@ function FinishDialogue() {
     finish_btn.innerHTML = "结束";
     finish_btn.onclick = function () {
         mWhetherMainForm = false;  // 设置会话框状态属性为false
+        BRAC_VideoCallControl(BRAC_VIDEOCALL_EVENT_FINISH,mTargetUserId,0,0,0,""); 
         BackToHall(); // 退回大厅
     }
     Getdmo("Enquire_Div").appendChild(finish_btn);

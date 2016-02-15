@@ -135,3 +135,11 @@
 	width:310px; 
 	height:20px;
 }
+.wordage{
+	margin: 10px 0px;
+}
+#mServer_Info_Div_AppId
+{
+	width:310px;
+	margin: 10px 0px 10px 0px;	
+}

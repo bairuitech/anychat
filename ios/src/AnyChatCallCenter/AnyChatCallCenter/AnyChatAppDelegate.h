@@ -16,10 +16,6 @@
 
 + (AnyChatAppDelegate*) GetApp;
 
-+ (id) GetServerIP;
-
-+ (int) GetServerPort;
-
 // 获取默认设置
 - (void)registerDefaultsFromSettingsBundle;
 

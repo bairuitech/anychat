@@ -45,28 +45,31 @@ namespace AnyChatCSharpDemo
             this.lb_port = new System.Windows.Forms.Label();
             this.txt_appGuid = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.rbtn_sign = new System.Windows.Forms.RadioButton();
+            this.rbtn_normal = new System.Windows.Forms.RadioButton();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txt_username
             // 
-            this.txt_username.Location = new System.Drawing.Point(122, 84);
+            this.txt_username.Location = new System.Drawing.Point(113, 71);
             this.txt_username.Name = "txt_username";
-            this.txt_username.Size = new System.Drawing.Size(202, 21);
+            this.txt_username.Size = new System.Drawing.Size(211, 21);
             this.txt_username.TabIndex = 0;
             this.txt_username.Text = "guest001";
             // 
             // txt_password
             // 
-            this.txt_password.Location = new System.Drawing.Point(122, 124);
+            this.txt_password.Location = new System.Drawing.Point(113, 99);
             this.txt_password.Name = "txt_password";
             this.txt_password.PasswordChar = '*';
-            this.txt_password.Size = new System.Drawing.Size(202, 21);
+            this.txt_password.Size = new System.Drawing.Size(211, 21);
             this.txt_password.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(49, 88);
+            this.label1.Location = new System.Drawing.Point(49, 75);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 1;
@@ -75,7 +78,7 @@ namespace AnyChatCSharpDemo
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(49, 128);
+            this.label2.Location = new System.Drawing.Point(49, 103);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 12);
             this.label2.TabIndex = 1;
@@ -83,7 +86,7 @@ namespace AnyChatCSharpDemo
             // 
             // btn_login
             // 
-            this.btn_login.Location = new System.Drawing.Point(87, 213);
+            this.btn_login.Location = new System.Drawing.Point(92, 203);
             this.btn_login.Name = "btn_login";
             this.btn_login.Size = new System.Drawing.Size(75, 23);
             this.btn_login.TabIndex = 2;
@@ -94,7 +97,7 @@ namespace AnyChatCSharpDemo
             // btn_canel
             // 
             this.btn_canel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btn_canel.Location = new System.Drawing.Point(194, 213);
+            this.btn_canel.Location = new System.Drawing.Point(199, 203);
             this.btn_canel.Name = "btn_canel";
             this.btn_canel.Size = new System.Drawing.Size(75, 23);
             this.btn_canel.TabIndex = 3;
@@ -104,10 +107,10 @@ namespace AnyChatCSharpDemo
             // 
             // lbl_status
             // 
-            this.lbl_status.AutoSize = true;
-            this.lbl_status.Location = new System.Drawing.Point(150, 260);
+            this.lbl_status.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lbl_status.Location = new System.Drawing.Point(0, 252);
             this.lbl_status.Name = "lbl_status";
-            this.lbl_status.Size = new System.Drawing.Size(47, 12);
+            this.lbl_status.Size = new System.Drawing.Size(372, 12);
             this.lbl_status.TabIndex = 4;
             this.lbl_status.Text = "message";
             this.lbl_status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -123,24 +126,24 @@ namespace AnyChatCSharpDemo
             // 
             // txt_serverip
             // 
-            this.txt_serverip.Location = new System.Drawing.Point(122, 44);
+            this.txt_serverip.Location = new System.Drawing.Point(113, 44);
             this.txt_serverip.Name = "txt_serverip";
-            this.txt_serverip.Size = new System.Drawing.Size(101, 21);
+            this.txt_serverip.Size = new System.Drawing.Size(113, 21);
             this.txt_serverip.TabIndex = 7;
             this.txt_serverip.Text = "demo.anychat.cn";
             // 
             // tb_port
             // 
-            this.tb_port.Location = new System.Drawing.Point(256, 44);
+            this.tb_port.Location = new System.Drawing.Point(276, 44);
             this.tb_port.Name = "tb_port";
-            this.tb_port.Size = new System.Drawing.Size(68, 21);
+            this.tb_port.Size = new System.Drawing.Size(48, 21);
             this.tb_port.TabIndex = 8;
             this.tb_port.Text = "8906";
             // 
             // lb_port
             // 
             this.lb_port.AutoSize = true;
-            this.lb_port.Location = new System.Drawing.Point(229, 47);
+            this.lb_port.Location = new System.Drawing.Point(241, 47);
             this.lb_port.Name = "lb_port";
             this.lb_port.Size = new System.Drawing.Size(29, 12);
             this.lb_port.TabIndex = 1;
@@ -148,19 +151,52 @@ namespace AnyChatCSharpDemo
             // 
             // txt_appGuid
             // 
-            this.txt_appGuid.Location = new System.Drawing.Point(122, 164);
+            this.txt_appGuid.Location = new System.Drawing.Point(113, 128);
             this.txt_appGuid.Name = "txt_appGuid";
-            this.txt_appGuid.Size = new System.Drawing.Size(202, 21);
+            this.txt_appGuid.Size = new System.Drawing.Size(211, 21);
             this.txt_appGuid.TabIndex = 0;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(49, 168);
+            this.label4.Location = new System.Drawing.Point(49, 132);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 12);
             this.label4.TabIndex = 1;
             this.label4.Text = "应用ID";
+            // 
+            // rbtn_sign
+            // 
+            this.rbtn_sign.AutoSize = true;
+            this.rbtn_sign.Location = new System.Drawing.Point(253, 159);
+            this.rbtn_sign.Name = "rbtn_sign";
+            this.rbtn_sign.Size = new System.Drawing.Size(71, 16);
+            this.rbtn_sign.TabIndex = 18;
+            this.rbtn_sign.Text = "签名登录";
+            this.rbtn_sign.UseVisualStyleBackColor = true;
+            this.rbtn_sign.Click += new System.EventHandler(this.rbtn_sign_Click);
+            // 
+            // rbtn_normal
+            // 
+            this.rbtn_normal.AutoSize = true;
+            this.rbtn_normal.Checked = true;
+            this.rbtn_normal.Location = new System.Drawing.Point(113, 159);
+            this.rbtn_normal.Name = "rbtn_normal";
+            this.rbtn_normal.Size = new System.Drawing.Size(71, 16);
+            this.rbtn_normal.TabIndex = 19;
+            this.rbtn_normal.TabStop = true;
+            this.rbtn_normal.Text = "普通登录";
+            this.rbtn_normal.UseVisualStyleBackColor = true;
+            this.rbtn_normal.Click += new System.EventHandler(this.rbtn_normal_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(48, 161);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 12);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "登录方式";
             // 
             // frmLogin
             // 
@@ -169,7 +205,10 @@ namespace AnyChatCSharpDemo
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.CancelButton = this.btn_canel;
-            this.ClientSize = new System.Drawing.Size(372, 299);
+            this.ClientSize = new System.Drawing.Size(372, 264);
+            this.Controls.Add(this.rbtn_sign);
+            this.Controls.Add(this.rbtn_normal);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.tb_port);
             this.Controls.Add(this.txt_serverip);
             this.Controls.Add(this.lbl_status);
@@ -208,5 +247,8 @@ namespace AnyChatCSharpDemo
         private Label lb_port;
         private TextBox txt_appGuid;
         private Label label4;
+        private RadioButton rbtn_sign;
+        private RadioButton rbtn_normal;
+        private Label label5;
     }
 }
