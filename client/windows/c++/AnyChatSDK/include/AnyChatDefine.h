@@ -173,6 +173,9 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_SUPPORTAUDIOCODEC	211	///< 设置支持的音频编码器
 #define BRAC_SO_CORESDK_DISABLEMEDIACONSUL	212	///< 禁止媒体协商
 #define BRAC_SO_CORESDK_QUERYTIMEOUTTIME	213	///< 信息查询超时时间（参数为：int型，单位：ms，默认值1000）
+#define BRAC_SO_CORESDK_REMOTEASSISTHWND	214	///< 远程协助窗口句柄
+#define BRAC_SO_CORESDK_REMOTEASSISTXPOS	215	///< 远程协助窗口滚动条位置（X）
+#define BRAC_SO_CORESDK_REMOTEASSISTYPOS	216	///< 远程协助窗口滚动条位置（Y）
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -290,12 +293,14 @@ enum BRAC_VideoShowDriver{
 #define BRAC_VIDEOCALL_EVENT_FINISH			4	///< 挂断（结束）呼叫会话
 
 // 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
-#define BRAC_VIDEOCALL_FLAGS_AUDIO		0x01	///< 语音通话
-#define BRAC_VIDEOCALL_FLAGS_VIDEO		0x02	///< 视频通话
-#define BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	0x10	///< 禁止源（呼叫端）音频
-#define BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	0x20	///< 禁止源（呼叫端）视频
-#define BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	0x40	///< 禁止目标（被呼叫端）音频
-#define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x80	///< 禁止目标（被呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_AUDIO		0x0001	///< 语音通话
+#define BRAC_VIDEOCALL_FLAGS_VIDEO		0x0002	///< 视频通话
+#define BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	0x0010	///< 禁止源（呼叫端）音频
+#define BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	0x0020	///< 禁止源（呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	0x0040	///< 禁止目标（被呼叫端）音频
+#define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x0080	///< 禁止目标（被呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_ASSISTREQ	0x0100	///< 请求目标用户远程协助
+#define BRAC_VIDEOCALL_FLAGS_CONTROLREQ	0x0200	///< 请求控制目标用户
 
 // 远程视频方向修正标志定义
 #define BRAC_ROTATION_FLAGS_MIRRORED	0x1000	///< 图像需要镜像翻转
