@@ -4,8 +4,8 @@
     android:versionCode="1"
     android:versionName="Anychat Queue 1.0">
 
-    <uses-sdk android:minSdkVersion="9"
-        android:targetSdkVersion="11" />
+    <uses-sdk android:minSdkVersion="11"
+        android:targetSdkVersion="12" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />

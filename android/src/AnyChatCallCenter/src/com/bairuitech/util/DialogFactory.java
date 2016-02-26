@@ -27,6 +27,7 @@ public class DialogFactory {
 	private TextView mTextViewTitle;
 	private EditText mEditIP;
 	private EditText mEditPort;
+	private EditText mEditGuid;
 	private ConfigEntity configEntity;
 
 	public static int mCurrentDialogId = 0;
@@ -127,6 +128,9 @@ public class DialogFactory {
 		mEditPort.setText(configEntity.port + "");
 		mEditIP = (EditText) view.findViewById(R.id.edit_serverip);
 		mEditIP.setText(configEntity.ip);
+		
+		mEditGuid = (EditText) view.findViewById(R.id.edit_appkey);
+		mEditGuid.setText(configEntity.guid);
 		ImageView imageView = (ImageView) view.findViewById(R.id.image_cancel);
 		Button buttonR = (Button) view.findViewById(R.id.btn_resume);
 		buttonR.setOnClickListener(new OnClickListener() {
@@ -136,6 +140,8 @@ public class DialogFactory {
 				// TODO Auto-generated method stub
 				final String strServerIP = mEditIP.getText().toString();
 				final String strPort = mEditPort.getText().toString();
+				final String strGuid = mEditGuid.getText().toString();
+				mEditGuid.setText("90A9545C-30F7-4F5A-8B56-9CB111706A24");
 				String strMessage = mContext
 						.getString(R.string.str_serveripinput);
 				if (strServerIP.length() == 0) {
@@ -151,6 +157,7 @@ public class DialogFactory {
 				}
 				configEntity.ip = strServerIP;
 				configEntity.port = Integer.valueOf(strPort);
+				configEntity.guid = strGuid;
 				ConfigService.SaveConfig(mContext,
 						configEntity);
 				dialog.dismiss();

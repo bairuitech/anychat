@@ -53,7 +53,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		InitSDK();
 		InitLayout();
 
-		// 如果视频流过来了，则把背景设置成透明的
+		// 如果视频流过来了，则把背景设置成透明的//每0.2秒执行一次
 		handler.postDelayed(runnable, UPDATEVIDEOBITDELAYMILLIS);
 	}
 

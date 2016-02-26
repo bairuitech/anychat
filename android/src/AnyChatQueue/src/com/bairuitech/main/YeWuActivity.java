@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -182,7 +183,7 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 	public void OnAnyChatObjectEvent(int dwObjectType, int dwObjectId,
 			int dwEventType, int dwParam1, int dwParam2, int dwParam3,
 			int dwParam4, String strParam) {
-		
+		Log.i("yewuActivity","yewuActivity 触发了");
 		switch(dwEventType) {
 		
 		//营业厅数据同步，回调一次返回一个营业厅对象id（有多少营业厅回调多少次）

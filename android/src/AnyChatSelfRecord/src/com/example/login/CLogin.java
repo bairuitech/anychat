@@ -18,6 +18,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -44,12 +45,13 @@ public class CLogin extends Activity implements AnyChatBaseEvent {
 	private EditText mNameEdit; // 用户名
 	private EditText mIPEdit;   // ip
 	private EditText mPortEdit; // 端口
+	private EditText mGuidEdit; //Guid
 	private TextView mBuildMsg; // 版本信息
 	private Button mBtnStart;
 	private Button mBtnWaiting;
 	private LinearLayout mWaitingLayout;
 	private LinearLayout mProgressLayout;
-
+	private String mStrGuid;
 	private String mStrIP = "demo.anychat.cn";
 	private String mStrName = "name";
 	private int mPort = 8906;
@@ -93,6 +95,7 @@ public class CLogin extends Activity implements AnyChatBaseEvent {
 		mIPEdit = (EditText) findViewById(R.id.login_ip);
 		mNameEdit = (EditText) findViewById(R.id.login_name);
 		mPortEdit = (EditText) findViewById(R.id.login_port);
+		mGuidEdit = (EditText) findViewById(R.id.app_guid);
 		mBuildMsg = (TextView) findViewById(R.id.buildMsg);
 		mBtnStart = (Button) findViewById(R.id.mainUIStartBtn);
 		mBtnWaiting = (Button) findViewById(R.id.mainUIWaitingBtn);
@@ -111,6 +114,7 @@ public class CLogin extends Activity implements AnyChatBaseEvent {
 		mIPEdit.setText(mStrIP);
 		mNameEdit.setText(mStrName);
 		mPortEdit.setText(String.valueOf(mPort));
+		mGuidEdit.setText(mStrGuid);
 	}
 	
 	private void setDisPlayMetrics() {
@@ -125,6 +129,7 @@ public class CLogin extends Activity implements AnyChatBaseEvent {
 		mStrName = preferences.getString("UserName", "name");
 		mStrIP = preferences.getString("UserIP", "demo.anychat.cn");
 		mPort = preferences.getInt("UserPort", 8906);
+		mStrGuid = preferences.getString("guid", "");
 	}
 
 	// 登录成功后保存相关数据
@@ -134,6 +139,7 @@ public class CLogin extends Activity implements AnyChatBaseEvent {
 		preferencesEditor.putString("UserIP", mStrIP);
 		preferencesEditor.putString("UserName", mStrName);
 		preferencesEditor.putInt("UserPort", mPort);
+		preferencesEditor.putString("guid", mStrGuid);
 		preferencesEditor.commit();
 	}
 
@@ -145,7 +151,12 @@ public class CLogin extends Activity implements AnyChatBaseEvent {
 				mStrName = mNameEdit.getText().toString().trim();
 				mStrIP = mIPEdit.getText().toString().trim();
 				mPort = Integer.parseInt(mPortEdit.getText().toString().trim());
-
+				
+				mStrGuid = mGuidEdit.getText().toString().trim();
+				if(!TextUtils.isEmpty(mStrGuid)){
+					AnyChatCoreSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_CLOUD_APPGUID, mStrGuid);
+				};
+				
 				Log.d("AnyChatx", "name:"+mStrName+ "->ip:"+ mStrIP+ "->port"+ mPort);
 				mAnyChatSDK.Connect(mStrIP, mPort);
 				mAnyChatSDK.Login(mStrName, "");

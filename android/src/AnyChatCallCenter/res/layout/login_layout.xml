@@ -60,6 +60,31 @@
                 android:layout_height="wrap_content"
                 android:text="@string/str_login" />
         </LinearLayout>
+         <RadioGroup 
+            	android:layout_width="match_parent"
+            	android:layout_height="wrap_content"
+            	android:orientation="horizontal"
+            	android:gravity="center"
+            	android:id="@+id/radio_gp"
+            	android:visibility="gone">
+            <RadioButton 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="普通登录"
+                android:id="@+id/btn1"
+                android:textColor="#000000"
+                android:checked="true"/>
+            <RadioButton 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:id="@+id/btn2"
+                android:layout_marginLeft="30dp"
+                android:textColor="#000000"
+                android:text="签名登陆"/>
+        </RadioGroup>
+        
 
         <RelativeLayout
             android:layout_width="match_parent"

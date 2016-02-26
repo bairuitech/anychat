@@ -1,8 +1,12 @@
 package com.example.helloanychat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
@@ -10,6 +14,7 @@ import com.bairuitech.anychat.AnyChatDefine;
 import com.example.config.ConfigEntity;
 import com.example.config.ConfigService;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,6 +23,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -31,13 +40,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements AnyChatBaseEvent {
 	// 视频配置界面标识
 	public static final int ACTIVITY_ID_VIDEOCONFIG = 1;
-
+	private static final String url = "demo.anychat.cn:8930";
 	private ListView mRoleList;
 	private EditText mEditIP;
 	private EditText mEditPort;
@@ -50,22 +61,49 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private Button mBtnWaiting;
 	private LinearLayout mWaitingLayout;
 	private LinearLayout mProgressLayout;
-
-	private String mStrIP = "demo.anychat.cn";
+	private EditText appGuidKey;
+	
+	private String guidStr;
+	private String mStrIP = "cluster.anychat.cn";
 	private String mStrName = "name";
 	private int mSPort = 8906;
 	private int mSRoomID = 1;
-
 	private final int SHOWLOGINSTATEFLAG = 1; // 显示的按钮是登陆状态的标识
 	private final int SHOWWAITINGSTATEFLAG = 2; // 显示的按钮是等待状态的标识
 	private final int SHOWLOGOUTSTATEFLAG = 3; // 显示的按钮是登出状态的标识
 	private final int LOCALVIDEOAUTOROTATION = 1; // 本地视频自动旋转控制
+	
+	private RadioButton radioBtn1;
+	private RadioButton radioBtn2;
+	
 
 	private List<RoleInfo> mRoleInfoList = new ArrayList<RoleInfo>();
 	private RoleListAdapter mAdapter;
 	private int UserselfID;
 
 	public AnyChatCoreSDK anyChatSDK;
+	
+	private static final int REQUEST_SUCESS = 1;
+	private Handler handler = new Handler(){
+		public void handleMessage(Message msg) {
+			if(msg.what == REQUEST_SUCESS){
+				JSONObject object;
+				try {
+					object = new JSONObject(msg.obj.toString());
+					int errCode = object.optInt("errorcode");
+					int timeStamp = object.optInt("timestamp");
+					String signedStr = object.optString("sigStr");
+					if(errCode == 0){
+						anyChatSDK.LoginEx(mStrName,1001, "1001", guidStr, timeStamp, signedStr,"");
+					}
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		};
+	};
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -93,8 +131,11 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 					LOCALVIDEOAUTOROTATION);
 		}
 	}
-
+	
 	private void InitLayout() {
+		System.out.println("app start");
+		appGuidKey = (EditText) findViewById(R.id.app_guid_key);
+		appGuidKey.setText("90A9545C-30F7-4F5A-8B56-9CB111706A24");
 		mRoleList = (ListView) this.findViewById(R.id.roleListView);
 		mEditIP = (EditText) this.findViewById(R.id.mainUIEditIP);
 		mEditPort = (EditText) this.findViewById(R.id.mainUIEditPort);
@@ -107,6 +148,9 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mBtnLogout = (Button) this.findViewById(R.id.mainUILogoutBtn);
 		mBtnWaiting = (Button) this.findViewById(R.id.mainUIWaitingBtn);
 		mWaitingLayout = (LinearLayout) this.findViewById(R.id.waitingLayout);
+		
+		radioBtn1  = (RadioButton) findViewById(R.id.btn1);
+		radioBtn2  = (RadioButton) findViewById(R.id.btn2);
 
 		mRoleList.setDivider(null);
 		mBottomConnMsg.setText("No content to the server");
@@ -115,22 +159,76 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				+ anyChatSDK.GetSDKSubVersion() + "  Build time: "
 				+ anyChatSDK.GetSDKBuildTime());
 		mBottomBuildMsg.setGravity(Gravity.CENTER_HORIZONTAL);
+		
 		mBtnStart.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if (checkInputData()) {
-					setBtnVisible(SHOWWAITINGSTATEFLAG);
-					mSRoomID = Integer.parseInt(mEditRoomID.getText()
-							.toString().trim());
-					mStrName = mEditName.getText().toString().trim();
-					mStrIP = mEditIP.getText().toString().trim();
-					mSPort = Integer.parseInt(mEditPort.getText().toString()
-							.trim());
-
-					anyChatSDK.Connect(mStrIP, mSPort);
-					anyChatSDK.Login(mStrName, "");
+				//普通登录
+				if(isSigned()){
+					if (checkInputData()) {
+						//如果
+						guidStr = appGuidKey.getText().toString().trim();
+						
+						if(!TextUtils.isEmpty(guidStr)){
+							AnyChatCoreSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_CLOUD_APPGUID, guidStr);
+						}	
+						setBtnVisible(SHOWWAITINGSTATEFLAG);
+						mSRoomID = Integer.parseInt(mEditRoomID.getText()
+								.toString().trim());
+						mStrName = mEditName.getText().toString().trim();
+						mStrIP = mEditIP.getText().toString().trim();
+						mSPort = Integer.parseInt(mEditPort.getText().toString()
+								.trim());
+						
+						anyChatSDK.Connect(mStrIP, mSPort);
+						anyChatSDK.Login(mStrName, "");
+						
+						}
+				}else {
+					System.out.println("签名登录");
+					if (checkInputData()) {
+						//如果
+						guidStr = appGuidKey.getText().toString().trim();
+						if(TextUtils.isEmpty(guidStr)){
+							Toast.makeText(MainActivity.this, "appId 不能为空", Toast.LENGTH_LONG).show();
+							appGuidKey.setFocusable(true);
+						}
+						setBtnVisible(SHOWWAITINGSTATEFLAG);
+						mSRoomID = Integer.parseInt(mEditRoomID.getText()
+								.toString().trim());
+						mStrName = mEditName.getText().toString().trim();
+						mStrIP = mEditIP.getText().toString().trim();
+						mSPort = Integer.parseInt(mEditPort.getText().toString()
+								.trim());
+						
+						anyChatSDK.Connect(mStrIP, mSPort);
+						
+						final HashMap<String,String> map = new HashMap<String, String>();
+						map.put("userid","1001");
+//						map.put("strUserid","1001");
+						map.put("appid","90A9545C-30F7-4F5A-8B56-9CB111706A24");
+						new Thread(){
+							@Override
+							public void run() {
+								
+								String reslutString = HttpUtil.httpRequestPost(url, map);
+								if(TextUtils.isEmpty(reslutString)){
+									Log.i("HelloAnychat", "httprequest failed");
+								}else{
+									Message msg = Message.obtain(handler,REQUEST_SUCESS,reslutString);
+									handler.sendMessage(msg);
+								}
+								
+							}
+						}.start();
+						
+					}
 				}
+			}
+
+			private boolean isSigned() {
+				return radioBtn1.isChecked()?true:false;
 			}
 		});
 
@@ -138,7 +236,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				
 				setBtnVisible(SHOWLOGINSTATEFLAG);
 				anyChatSDK.LeaveRoom(-1);
 				anyChatSDK.Logout();
@@ -158,7 +256,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	// 读取登陆数据
 	private void readLoginDate() {
 		SharedPreferences preferences = getSharedPreferences("LoginInfo", 0);
-		mStrIP = preferences.getString("UserIP", "demo.anychat.cn");
+		mStrIP = preferences.getString("UserIP", "cluster.anychat.cn");
 		mStrName = preferences.getString("UserName", "name");
 		mSPort = preferences.getInt("UserPort", 8906);
 		mSRoomID = preferences.getInt("UserRoomID", 1);
@@ -180,7 +278,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		String port = mEditPort.getText().toString().trim();
 		String name = mEditName.getText().toString().trim();
 		String roomID = mEditRoomID.getText().toString().trim();
-
 		if (ValueUtils.isStrEmpty(ip)) {
 			mBottomConnMsg.setText("请输入IP");
 			return false;
@@ -273,9 +370,13 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 
 	@Override
 	public void OnAnyChatConnectMessage(boolean bSuccess) {
+		//
+		
 		if (!bSuccess) {
+			
 			setBtnVisible(SHOWLOGINSTATEFLAG);
 			mBottomConnMsg.setText("连接服务器失败，自动重连，请稍后...");
+			System.out.println("connect failed");
 		}
 	}
 

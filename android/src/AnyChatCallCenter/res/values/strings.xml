@@ -12,6 +12,7 @@
     <string name="server_connect_error">服务器连接失败!</string>
     <string name="str_serverip">服务器地址: </string>
     <string name="str_serverport">服务器端口号: </string>
+    <string name="str_appkey">app应用ID: </string>
     <string name="str_serveripinput">请输入服务器地址! </string>
     <string name="str_serverportinput">请输入服务器端口号!</string>
     <string name="str_againlogin">账号在异处登陆，请重新登录</string>

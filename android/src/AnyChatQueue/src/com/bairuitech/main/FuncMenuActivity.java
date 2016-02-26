@@ -322,7 +322,7 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
 				String name = AnyChatCoreSDK.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA,mobject.get(index), AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
 				
 				HashMap<String, Object> itemMap = new HashMap<String, Object>();
-				itemMap.put("ItemImage", arrFuncIcons[index]);
+				itemMap.put("ItemImage", arrFuncIcons[index%4]);
 				itemMap.put("ItemText",name);
 				mArrItem.add(itemMap);
 			}

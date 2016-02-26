@@ -118,6 +118,41 @@
                 android:layout_marginBottom="5dip"
                 android:background="#FFFFFF" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:gravity="center|center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/porttip" />
+
+                <EditText
+                    android:id="@+id/app_guid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="app_guid(非必填)"
+                    android:textColorHint="#bfbfbf"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="280dp"
+                android:layout_height="1dip"
+                android:layout_marginBottom="5dip"
+                android:background="#FFFFFF" />
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="fill_parent"
