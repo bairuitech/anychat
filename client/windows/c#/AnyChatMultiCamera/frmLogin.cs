@@ -80,7 +80,7 @@ namespace AnyChatMultiCamera
                 {                    
                     cbox_serverIP.Text = "demo.anychat.cn";
                     cbox_port.Text = "8906";
-                    cbox_roomNumber.SelectedIndex = 5;
+                    cbox_roomNumber.SelectedIndex = 0;
                 }
 
                 //初始化log日志文件
@@ -482,9 +482,12 @@ namespace AnyChatMultiCamera
 
         private void rbtn_normal_CheckedChanged(object sender, EventArgs e)
         {
-            if (cbox_serverIP.Text.ToLower().Equals("demo.anychat.cn") && rbtn_normal.Checked)
+            if (cbox_serverIP.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
             {
+                cbox_serverIP.Text = "cloud.anychat.cn";
                 cbox_port.Text = "8906";
+                if (string.IsNullOrEmpty(cbox_appGuid.Text))
+                    cbox_appGuid.Text = "fbe957d1-c25a-4992-9e75-d993294a5d56";
             }
         }
     }

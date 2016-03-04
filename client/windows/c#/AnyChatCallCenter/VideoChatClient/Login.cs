@@ -646,7 +646,10 @@ namespace VideoChatClient
         {
             if (tb_serveradd.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
             {
-                tb_port.Text = "8912";
+                tb_serveradd.Text = "cloud.anychat.cn";
+                tb_port.Text = "8906";
+                if (string.IsNullOrEmpty(tb_appGuid.Text))
+                    tb_appGuid.Text = "fbe957d1-c25a-4992-9e75-d993294a5d56";
             }
         }
 

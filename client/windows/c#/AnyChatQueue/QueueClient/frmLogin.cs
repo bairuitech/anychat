@@ -89,11 +89,7 @@ namespace QueueClient
                         cbox_serverIP.Text = "demo.anychat.cn";
                         cbox_port.Text = "8906";
                     }
-                    if (rbtn_sign.Checked)
-                    {
-                        cbox_serverIP.Text = "cluster.anychat.cn";
-                        cbox_port.Text = "8102";
-                    }
+
                     cbox_userIdentity.SelectedIndex = 0;
                     cbox_identityPriority.SelectedIndex = 5;
                 }
@@ -696,9 +692,13 @@ namespace QueueClient
         private void rbtn_sign_Click(object sender, EventArgs e)
         {
             if (cbox_serverIP.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
-            {                
-                cbox_port.Text = "8912";
+            {
+                cbox_serverIP.Text = "cloud.anychat.cn";
+                cbox_port.Text = "8906";
+                if (string.IsNullOrEmpty(cbox_appGuid.Text))
+                    cbox_appGuid.Text = "fbe957d1-c25a-4992-9e75-d993294a5d56";
             }
+
         }
 
     }
