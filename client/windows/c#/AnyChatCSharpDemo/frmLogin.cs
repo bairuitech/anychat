@@ -307,7 +307,10 @@ namespace AnyChatCSharpDemo
         {
             if (txt_serverip.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
             {
-                tb_port.Text = "8912";
+                txt_serverip.Text = "cloud.anychat.cn";
+                tb_port.Text = "8906";
+                if (string.IsNullOrEmpty(txt_appGuid.Text))
+                    txt_appGuid.Text = "fbe957d1-c25a-4992-9e75-d993294a5d56";
             }
         }
 
