@@ -143,7 +143,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 	// 初始化布局层
 	private void InitLayout() {
 		mEditGuid = (EditText) findViewById(R.id.main_et_guid);
-		mEditGuid.setText("90A9545C-30F7-4F5A-8B56-9CB111706A24");
 		mEditIP = (EditText) this.findViewById(R.id.mainUIEditIP);
 		mEditPort = (EditText) this.findViewById(R.id.mainUIEditPort);
 		mEditName = (EditText) this.findViewById(R.id.main_et_name);
@@ -265,15 +264,16 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 		mEditIP.setText(mStrIP);
 		mEditName.setText(mStrName);
 		mEditPort.setText(String.valueOf(mSPort));
+		mEditGuid.setText(mStrGuid);
 	}
 
 	// 读取登陆数据
 	private void readLoginDate() {
 		SharedPreferences preferences = getSharedPreferences("LoginInfo", 0);
-		mStrIP = preferences.getString("UserIP", "cluster.anychat.cn");
-		mStrName = preferences.getString("UserName", "name");
+		mStrIP = preferences.getString("UserIP", "cloud.anychat.cn");
+		mStrName = preferences.getString("UserName", "Android");
 		mSPort = preferences.getInt("UserPort", 8906);
-		mStrGuid = preferences.getString("userGuid","");
+		mStrGuid = preferences.getString("userGuid","fbe957d1-c25a-4992-9e75-d993294a5d56");
 	}
 
 	// 保存登陆相关数据

@@ -131,7 +131,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mEditAppKey = (EditText) findViewById(R.id.appkey_main_et);
 		radioBtn1 = (RadioButton) findViewById(R.id.btn1);
 		radioBtn2 = (RadioButton) findViewById(R.id.btn2);
-		mEditAppKey.setText("90A9545C-30F7-4F5A-8B56-9CB111706A24");
+		mEditAppKey.setText("fbe957d1-c25a-4992-9e75-d993294a5d56");
 		
 		mBottomBuildMsg = (TextView) this
 				.findViewById(R.id.mainUIbottomBuildMsg);
@@ -220,8 +220,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	// 读取登陆数据
 	private void readLoginDate() {
 		SharedPreferences preferences = getSharedPreferences("LoginInfo", 0);
-		mStrIP = preferences.getString("UserIP", "cluster.anychat.cn");
-		mStrName = preferences.getString("UserName", "name");
+		mStrIP = preferences.getString("UserIP", "cloud.anychat.cn");
+		mStrName = preferences.getString("UserName", "Android");
 		mSPort = preferences.getInt("UserPort", 8906);
 	}
 

@@ -162,9 +162,8 @@
             android:id="@+id/app_guid_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="app_guid(非必填)"
+            android:hint="应用Id"
             android:background="@null"
-            android:textColor="#ffffff"
             android:textColorHint="#bfbfbf"
             android:textSize="14sp"/>
         

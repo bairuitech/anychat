@@ -141,7 +141,7 @@ public class DialogFactory {
 				final String strServerIP = mEditIP.getText().toString();
 				final String strPort = mEditPort.getText().toString();
 				final String strGuid = mEditGuid.getText().toString();
-				mEditGuid.setText("90A9545C-30F7-4F5A-8B56-9CB111706A24");
+				mEditGuid.setText("fbe957d1-c25a-4992-9e75-d993294a5d56");
 				String strMessage = mContext
 						.getString(R.string.str_serveripinput);
 				if (strServerIP.length() == 0) {

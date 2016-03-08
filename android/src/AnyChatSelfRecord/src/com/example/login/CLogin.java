@@ -126,10 +126,10 @@ public class CLogin extends Activity implements AnyChatBaseEvent {
 	// 读取登录数据
 	private void readLoginData() {
 		SharedPreferences preferences = getSharedPreferences("LoginInfo", 0);
-		mStrName = preferences.getString("UserName", "name");
-		mStrIP = preferences.getString("UserIP", "demo.anychat.cn");
+		mStrName = preferences.getString("UserName", "Android01");
+		mStrIP = preferences.getString("UserIP", "cloud.anychat.cn");
 		mPort = preferences.getInt("UserPort", 8906);
-		mStrGuid = preferences.getString("guid", "");
+		mStrGuid = preferences.getString("guid", "fbe957d1-c25a-4992-9e75-d993294a5d56");
 	}
 
 	// 登录成功后保存相关数据
