@@ -179,13 +179,13 @@ $(function () {
         }
 
         setLoginInfo();
-        if ($("#normal_login").checked){
+        if ($("#normal_login")[0].checked){
         	if ($("#AppGuid") && $("#AppGuid").val().length)				// 设置应用ID
             	BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, $("#AppGuid").val().toString());
 		}
-        if ($("#sign_login").checked){
+        if ($("#sign_login")[0].checked){
             if ($("#AppGuid") && $("#AppGuid").val().length){
-            	jsonObj = getSign("http://192.168.5.112:8980/", -1, $("#username").val(), $("#AppGuid").val());
+            	jsonObj = getSign("http://demo.anychat.cn:8930/", -1, $("#username").val(), $("#AppGuid").val());
             	if (jsonObj != null){
             		if (jsonObj.errorcode == 0){
             			signStr = jsonObj.sigStr;
@@ -202,11 +202,11 @@ $(function () {
         BRAC_Connect(mDefaultServerAddr, mDefaultServerPort);
 		
 		var errorcode = -1;
-		if ($("#normal_login").checked){
+		if ($("#normal_login")[0].checked){
 			errorcode = BRAC_Login($("#username").val(), "", 0);
         	AddLog("BRAC_Login(" + $("#username").val() + ")=" + errorcode, LOG_TYPE_API);            	
         }
-        if ($("#sign_login").checked){
+        if ($("#sign_login")[0].checked){
         	errorcode = BRAC_LoginEx($("#username").val(), -1, $("#username").val(), $("#AppGuid").val(), signTimestamp, signStr, "");
         	AddLog("BRAC_LoginEx(" + $("#username").val() + ")=" + errorcode, LOG_TYPE_API);
         }
@@ -714,10 +714,10 @@ function setLoginInfo() {
     setCookie('askSelect', $("#askSelect").get(0).selectedIndex, 30);
     setCookie('PrioritySelect', $("#dwPrioritySelect").get(0).selectedIndex, 30);
     var loginType = 0;
-	if ($("#normal_login").checked){
+	if ($("#normal_login")[0].checked){
     	loginType = $("#normal_login").val();
     }
-    if ($("#sign_login").checked){
+    if ($("#sign_login")[0].checked){
     	loginType = $("#sign_login").val();
     }
     setCookie('loginType',loginType,30);       
@@ -727,20 +727,18 @@ function setLoginInfo() {
 function getLoginInfo() {
     $("#username").val(getCookie("username"))
     var serverIP = getCookie("ServerAddr");
-    if (serverIP != "")
-        $("#ServerAddr").val((serverIP != "") ? serverIP : mDefaultServerAddr);
+	$("#ServerAddr").val((serverIP != "") ? serverIP : mDefaultServerAddr);
     var serverPort = getCookie("ServerPort");
-    if (serverPort != "")
-        $("#ServerPort").val((serverPort != "") ? serverPort : mDefaultServerPort);
+    $("#ServerPort").val((serverPort != "") ? serverPort : mDefaultServerPort);
     $("#AppGuid").val(getCookie("AppGuid"));
     $("#askSelect").get(0).selectedIndex = getCookie("askSelect");
     $("#dwPrioritySelect").get(0).selectedIndex = getCookie("PrioritySelect");
     var loginType = getCookie("loginType");
 	if (loginType == $("#normal_login").val()){
-    	$("#normal_login").checked = true;
+    	$("#normal_login")[0].checked = true;
     }
 	if (loginType == $("#sign_login").val()){
-    	$("#sign_login").checked = true;
+    	$("#sign_login")[0].checked = true;
     }     
 }
 

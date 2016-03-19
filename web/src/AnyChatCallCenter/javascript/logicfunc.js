@@ -107,7 +107,7 @@ function InitInterfaceUI() {
             }
             if (GetID("sign_login").checked){
                 if (GetID("AppGuid") && GetID("AppGuid").value.length){
-                	jsonObj = getSign("http://192.168.5.112:8980/", -1, GetID("username").value, GetID("AppGuid").value);
+                	jsonObj = getSign("http://demo.anychat.cn:8930/", -1, GetID("username").value, GetID("AppGuid").value);
                 	if (jsonObj != null){
                 		if (jsonObj.errorcode == 0){
                 			signStr = jsonObj.sigStr;
@@ -440,11 +440,9 @@ function setLoginInfo() {
 function getLoginInfo() {
     GetID("username").value = getCookie("username");
     var serverIP = getCookie("ServerAddr");
-    if (serverIP != "")
-        GetID("ServerAddr").value = serverIP;
+	GetID("ServerAddr").value = (serverIP != "") ? serverIP : mDefaultServerAddr;        
     var serverPort = getCookie("ServerPort");
-    if (serverPort != "")
-        GetID("ServerPort").value = serverPort;
+	GetID("ServerPort").value = (serverPort != "") ? serverPort : mDefaultServerPort;        
     GetID("AppGuid").value = getCookie("AppGuid");
     var loginType = getCookie("loginType");
     if (loginType == GetID("normal_login").value){

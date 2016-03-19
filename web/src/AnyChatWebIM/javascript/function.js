@@ -100,7 +100,7 @@ function LoginToHall() {
         
         if (Getdmo("sign_login").checked){
             if (Getdmo("AppGuid") && Getdmo("AppGuid").value.length){
-            	getSign("http://127.0.0.1:8980/", -1, mSelfUserName, Getdmo("AppGuid").value);
+            	getSign("http://demo.anychat.cn:8930/", -1, mSelfUserName, Getdmo("AppGuid").value);
             }
         }        
         document.cookie = mSelfUserName + "Getdmo" + mSelfPassWord + "Getdmo" + mDefaultServerAddr + "Getdmo; expires=" + expiresDate; //写入Cookie 设置过期时间
@@ -331,11 +331,9 @@ function setLoginInfo() {
 function getLoginInfo() {
     Getdmo("txtUserName").value = getCookie("username");
     var serverIP = getCookie("ServerAddr");
-    if (serverIP != "")
-        Getdmo("mDefaultServerAddr").value = serverIP;
-    var serverPort = getCookie("ServerPort");
-    if (serverPort != "")
-        Getdmo("mDefaultServerPort").value = serverPort;
+	Getdmo("mDefaultServerAddr").value = (serverIP != "") ? serverIP : mDefaultServerAddr;        
+    var serverPort = getCookie("ServerPort");    
+	Getdmo("mDefaultServerPort").value = (serverPort != "") ? serverPort : mDefaultServerPort;        
     Getdmo("AppGuid").value = getCookie("AppGuid");
     var loginType = getCookie("loginType");
     if (loginType == Getdmo("normal_login").value){
