@@ -273,6 +273,7 @@ var ANYCHAT_SERVERQUERY_STRIDBYUSERID	=	3;	// 根据用户ID查询字符串ID
 // 视频显示插件设置参数
 var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// 在视频上迭加文字、图片等内容
 var ANYCHATWEB_VIDEO_SO_DISABLEFULLSCREEN = 9;	// 禁止双击视频全屏显示
+var ANYCHATWEB_VIDEO_SO_EXTENDEDSCREEN	=	10;	// 扩展屏显示视频
 
 // 插件最低需求版本号
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
@@ -290,15 +291,11 @@ var bSupportCluster = false;					// 是否支持集群系统
 
 // 初始化SDK，返回出错代码
 function BRAC_InitSDK(apilevel) {	
-	var ua = navigator.userAgent.toLowerCase();
-	var info = {
-		ie: /msie/.test(ua) && !/opera/.test(ua),
-		op: !/msie/.test(ua) && /opera/.test(ua),
-		sa: /version.*safari/.test(ua),
-		ch: /chrome/.test(ua),
-		ff: /gecko/.test(ua) && /webkit/.test(ua)
-	};
-	if(info.op || info.sa ||info.ch || info.ff) {
+	//是否支持Html5
+	var isSurportH5 = window.applicationCache;
+	var browser = getBrowser();
+	
+	if(isSurportH5 && !(browser == "IE" || browser == "Safari" || browser == "unknown browser")) {
 		anychat = null;
 		anychat = AnyChatSDK();
 		anychat.InitSDK(0);
@@ -318,6 +315,7 @@ function BRAC_InitSDK(apilevel) {
 		bSupportScriptObject = true;
 		bSupportObjectBusiness = true;
 		bSupportCluster = true;
+		
 		return GV_ERR_SUCCESS;
 	}
 	
@@ -914,5 +912,41 @@ function BRAC_GetUserStreamInfoString(dwUserId, dwStreamIndex, infoname) {
 	return anychat.GetUserStreamInfoString(dwUserId, dwStreamIndex, infoname);
 }
 
+// 获取当前浏览器
+function getBrowser(){
+	var browser = "unknown browser";	
+	var ua = navigator.userAgent.toLowerCase();
+	
+	var info = {
+		ie: /msie/.test(ua) && !/opera/.test(ua),
+		op: !/msie/.test(ua) && /opera/.test(ua),
+		sa: /version.*safari/.test(ua),
+		ch: /chrome/.test(ua) && window.navigator.webkitPersistentStorage,
+		ff: /firefox/.test(ua),
+		qh360: /chrome/.test(ua) && !window.navigator.webkitPersistentStorage,
+		qq: /qqbrowser/.test(ua),
+        sg: /metasr/.test(ua)        
+	};	
+	
+	if (info.ch){
+		browser = "Chrome";
+	}else if (info.ie){
+		browser = "IE";
+	}else if (info.ff){
+		browser = "Firefox";
+	}else if (info.sa){
+		browser = "Safari";
+	}else if (info.qh360){
+		browser = "360浏览器";
+	}else if (info.op){
+		browser = "Opera";
+	}else if (info.qq){
+		browser = "QQ浏览器";
+	}else if (info.sg){
+		browser = "搜狗浏览器";
+	}
+	
+	return browser;
+}
 
 

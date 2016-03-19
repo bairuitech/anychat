@@ -273,6 +273,7 @@ var ANYCHAT_SERVERQUERY_STRIDBYUSERID	=	3;	// 根据用户ID查询字符串ID
 // 视频显示插件设置参数
 var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// 在视频上迭加文字、图片等内容
 var ANYCHATWEB_VIDEO_SO_DISABLEFULLSCREEN = 9;	// 禁止双击视频全屏显示
+var ANYCHATWEB_VIDEO_SO_EXTENDEDSCREEN	=	10;	// 扩展屏显示视频
 
 // 插件最低需求版本号
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
