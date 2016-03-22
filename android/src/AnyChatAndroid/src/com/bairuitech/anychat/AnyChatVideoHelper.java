@@ -40,6 +40,10 @@ public class AnyChatVideoHelper {
 		return index;
 	}
 	
+	public void UnBindVideo(int index) {
+		SetVideoUser(index, -1);
+	}
+	
 	public void SetVideoUser(int index, int userid) {
 		if(index < 0 || index >= MAX_VIDEO_NUM)
 			return;

@@ -162,6 +162,22 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_CORESDK_EXTVIDEOINPUT, 0);
 		}
 	}
+	
+	// 关闭摄像头
+	public void CloseCamera() {
+		try {
+			if(null != mCamera)	{
+				mCamera.stopPreview(); 
+				mCamera.setPreviewCallbackWithBuffer(null);
+				bIfPreview = false; 
+				mVideoPixfmt = -1;
+				mCamera.release();
+				mCamera = null;     
+			}
+		} catch (Exception ex) {
+
+		}
+	}
 
 	// 获取系统中摄像头的数量
 	public int GetCameraNumber() {
@@ -225,7 +241,9 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 	// 根据摄像头的序号选择摄像头（0 - GetCameraNumber()）
 	public void SelectCamera(int iCameraId) {
 		try {
-			if(iCurrentCameraId==iCameraId || Camera.getNumberOfCameras() <= iCameraId || currentHolder == null)
+			if(Camera.getNumberOfCameras() <= iCameraId || currentHolder == null)
+				return;
+			if(null != mCamera && iCurrentCameraId==iCameraId)
 				return;
 			iCurrentCameraId = iCameraId;
 			if(null != mCamera)	{
