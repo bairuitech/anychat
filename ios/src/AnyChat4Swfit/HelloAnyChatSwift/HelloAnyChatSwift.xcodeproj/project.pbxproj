@@ -182,7 +182,6 @@
 		FE4CC01B1BE4AE6200693F32 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FE4CC01D1BE4AE7400693F32 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		FE4CC01F1BE4AE7D00693F32 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
-		FE4CC0291BE4B74400693F32 /* OCContainerHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCContainerHeader.h; sourceTree = SOURCE_ROOT; };
 		FE4CC02C1BE50E4A00693F32 /* MBProgressHUD+JT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+JT.h"; sourceTree = "<group>"; };
 		FE4CC02D1BE50E4A00693F32 /* MBProgressHUD+JT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+JT.m"; sourceTree = "<group>"; };
 		FE4CC02E1BE50E4A00693F32 /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
@@ -198,6 +197,7 @@
 		FE94D1211C65F29A00D199DE /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
 		FE94D1221C65F29A00D199DE /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
 		FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "Alamofire-master/Alamofire.xcodeproj"; sourceTree = "<group>"; };
+		FE9D73111CA0F085004147E8 /* OCContainerHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCContainerHeader.h; sourceTree = "<group>"; };
 		FEB350BD1BE79A7C00590D0F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FEB350BF1BE79B4200590D0F /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		FEB90B3F1BE63585007B4749 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
@@ -440,7 +440,7 @@
 				FE4CBFAA1BE4A56F00693F32 /* Assets.xcassets */,
 				FE4CBFAC1BE4A56F00693F32 /* LaunchScreen.storyboard */,
 				FE4CBFAF1BE4A56F00693F32 /* Info.plist */,
-				FE4CC0291BE4B74400693F32 /* OCContainerHeader.h */,
+				FE9D73111CA0F085004147E8 /* OCContainerHeader.h */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -961,19 +961,19 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
-				HEADER_SEARCH_PATHS = ../../sdk/include;
+				HEADER_SEARCH_PATHS = ../../../sdk/include;
 				INFOPLIST_FILE = HelloAnyChatSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../../sdk/libs,
-					../../sdk/libs/audioprocess,
+					../../../sdk/libs,
+					../../../sdk/libs/audioprocess,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.HelloAnyChat2Swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "227c7fda-fc57-4443-9e43-7104d1892c54";
-				SWIFT_OBJC_BRIDGING_HEADER = OCContainerHeader.h;
+				SWIFT_OBJC_BRIDGING_HEADER = HelloAnyChatSwift/OCContainerHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -988,19 +988,19 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
-				HEADER_SEARCH_PATHS = ../../sdk/include;
+				HEADER_SEARCH_PATHS = ../../../sdk/include;
 				INFOPLIST_FILE = HelloAnyChatSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../../sdk/libs,
-					../../sdk/libs/audioprocess,
+					../../../sdk/libs,
+					../../../sdk/libs/audioprocess,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.HelloAnyChat2Swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "227c7fda-fc57-4443-9e43-7104d1892c54";
-				SWIFT_OBJC_BRIDGING_HEADER = OCContainerHeader.h;
+				SWIFT_OBJC_BRIDGING_HEADER = HelloAnyChatSwift/OCContainerHeader.h;
 			};
 			name = Release;
 		};

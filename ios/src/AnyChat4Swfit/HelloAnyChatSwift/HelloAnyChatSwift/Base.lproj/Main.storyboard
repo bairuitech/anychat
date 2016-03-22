@@ -54,18 +54,18 @@
                                             <constraint firstAttribute="height" constant="1" id="Ri0-b6-0sU"/>
                                         </constraints>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_pass" translatesAutoresizingMaskIntoConstraints="NO" id="MkD-cI-0XD" userLabel="pass">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_room" translatesAutoresizingMaskIntoConstraints="NO" id="MkD-cI-0XD" userLabel="pass">
                                         <rect key="frame" x="5" y="53" width="27" height="27"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="27" id="kM5-Lh-TaZ"/>
                                             <constraint firstAttribute="height" constant="27" id="oIZ-hu-915"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入登录密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="nzk-f7-AUh">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入房间号" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="nzk-f7-AUh">
                                         <rect key="frame" x="42" y="51" width="188" height="30"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lJO-WK-L2c" userLabel="line2">
                                         <rect key="frame" x="0.0" y="85" width="229.5" height="1"/>
@@ -252,8 +252,8 @@
                     <connections>
                         <outlet property="guidTF" destination="y8C-Zm-Zla" id="8GR-YN-vJn"/>
                         <outlet property="ipTF" destination="quQ-lz-rij" id="r5t-Ld-iVY"/>
-                        <outlet property="passwordTF" destination="nzk-f7-AUh" id="3zo-Ra-Knh"/>
                         <outlet property="portTF" destination="AMM-6i-LCk" id="ows-WK-a68"/>
+                        <outlet property="roomTF" destination="nzk-f7-AUh" id="1cQ-XP-6tQ"/>
                         <outlet property="userNameTF" destination="S1L-sW-uYZ" id="D0Q-y0-TFd"/>
                         <segue destination="Wvx-5x-7MG" kind="push" identifier="UserList" id="nxN-le-c15"/>
                     </connections>
@@ -560,8 +560,8 @@
         <image name="login_box" width="27" height="27"/>
         <image name="login_btn" width="195" height="60"/>
         <image name="login_logo" width="167" height="119"/>
-        <image name="login_pass" width="27" height="27"/>
         <image name="login_port" width="27" height="27"/>
+        <image name="login_room" width="27" height="27"/>
         <image name="login_user" width="27" height="27"/>
         <image name="nav_back" width="17" height="30"/>
         <image name="nav_logout" width="23" height="30"/>

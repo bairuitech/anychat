@@ -17,7 +17,7 @@ enum LoginVCLoginMode {
 class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAlertViewDelegate{
     
     @IBOutlet weak var userNameTF: UITextField!
-    @IBOutlet weak var passwordTF: UITextField!
+    @IBOutlet weak var roomTF: UITextField!
     @IBOutlet weak var ipTF: UITextField!
     @IBOutlet weak var portTF: UITextField!
     @IBOutlet weak var guidTF: UITextField!
@@ -26,11 +26,12 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
     
     let myAnyChat = AnyChatPlatform()   // AnyChat对象
     let userName = "ANYCHATSWIFT"       // 用户名
-    let ip = "cluster.anychat.cn"       // IP
-    let port = "8102"                   // 端口号
-    let guid = "bb9ca6ec-e611-4208-ab8f-44b5881c41e8"                       // 应用ID(GUID)
+    let ip = "cloud.anychat.cn"       // IP
+    let port = "8906"                   // 端口号
+    let guid = "fbe957d1-c25a-4992-9e75-d993294a5d56"                       // 应用ID(GUID)
     let roomId: Int32 = 1               // 房间号
     let userId: Int32 = 1001
+    let signUrl = "http://demo.anychat.cn:8930/"
     
     // MARK: - Life
     override func viewDidLoad() {
@@ -81,7 +82,7 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
         if dwErrorCode == 0 {
             print("login success")
             // 进入房间
-            AnyChatPlatform.EnterRoom(roomId, nil)
+            AnyChatPlatform.EnterRoom(Int32(self.roomTF.text!)!, nil)
         }else {
             print("login error")
         }
@@ -123,6 +124,7 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
         portTF.text = port;
         userNameTF.text = userName;
         guidTF.text = guid;
+        roomTF.text = String(self.roomId)
         
         //空白区取消键盘（添加手势响应）
         let tapGasture = UITapGestureRecognizer(target: self, action: "viewTapped:")
@@ -171,6 +173,9 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
         }
         if portTF.text == "" {
             portTF.text = port
+        }
+        if roomTF.text == "" {
+            roomTF.text = String(roomId)
         }
         
         if (loginMode == .SignLogin) {
@@ -238,13 +243,12 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
     }
     
     func signLoginRequest() {
-        let signServerURL = "http://192.168.1.7:8980/"
         let parameters = [
             "userid": String(userId),
             "strUserid": "",
             "appid": guid
         ]
-        Alamofire.request(.POST, signServerURL, parameters:parameters ).responseJSON {response in
+        Alamofire.request(.POST, self.signUrl, parameters:parameters ).responseJSON {response in
             
             print(response)
             switch response.result {
