@@ -90,7 +90,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_LOCALVIDEO_FPSCTRL		=	33;	///< 本地视频编码帧率控制（参数为int型，同服务器配置：VideoFps）
 	public static final int BRAC_SO_LOCALVIDEO_PRESETCTRL	=	34;	///< 本地视频编码预设参数控制（参数为int型，1-5）
 	public static final int BRAC_SO_LOCALVIDEO_APPLYPARAM	=	35;	///< 应用本地视频编码参数，使得前述修改即时生效（参数为int型：1 使用新参数，0 使用默认参数）
-	public static final int BRAC_SO_LOCALVIDEO_VIDEOSIZEPOLITIC=36;///< 本地视频采集分辩率控制策略（参数为int型，0 自动向下逐级匹配[默认]；1 使用采集设备默认分辩率），当配置的分辩率不被采集设备支持时有效
+	public static final int BRAC_SO_LOCALVIDEO_VIDEOSIZEPOLITIC=36;	///< 本地视频采集分辩率控制策略（参数为int型，0 自动向下逐级匹配[默认]；1 使用采集设备默认分辩率），当配置的分辩率不被采集设备支持时有效
 	public static final int BRAC_SO_LOCALVIDEO_DEINTERLACE	=	37;	///< 本地视频反交织参数控制（参数为int型： 0 不进行反交织处理[默认]；1 反交织处理），当输入视频源是隔行扫描源（如电视信号）时通过反交织处理可以提高画面质量
 	public static final int BRAC_SO_LOCALVIDEO_WIDTHCTRL	=	38;	///< 本地视频采集分辨率宽度控制（参数为int型，同服务器配置：VideoWidth）
 	public static final int BRAC_SO_LOCALVIDEO_HEIGHTCTRL	=	39;	///< 本地视频采集分辨率高度控制（参数为int型，同服务器配置：VideoHeight）
@@ -106,6 +106,9 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_LOCALVIDEO_SURFACEROTATION=	99;	///< 设置本地视频预览显示旋转角度（参数为int型，角度）
 	public static final int BRAC_SO_LOCALVIDEO_CAMERAFACE	=	100;///< 本地摄像头方向（前置、后置）
 	public static final int BRAC_SO_LOCALVIDEO_DEVICEMODE	=	103;///< 设备类型
+	public static final int BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP=105;///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
+	public static final int BRAC_SO_LOCALVIDEO_DEVICENAME	=	106;///< 本地视频采集设备名称，用于设置打开指定摄像头设备（参数为字符串类型）
+	public static final int BRAC_SO_LOCALVIDEO_CLIPMODE		=	107;///< 本地视频裁剪模式（参数为int型， 0 自动[默认]，禁止自动旋转时有效）
 	
 	public static final int BRAC_SO_NETWORK_P2PPOLITIC		=	40;	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 	public static final int BRAC_SO_NETWORK_P2PCONNECT		=	41;	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -244,6 +247,8 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_RECORD_FLAGS_LOCALCB	= 0x00000800;	///< 触发本地回调
 	public static final int ANYCHAT_RECORD_FLAGS_STREAM		= 0x00001000;	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
 	public static final int ANYCHAT_RECORD_FLAGS_USERFILENAME=0x00002000;	///< 用户自定义文件名
+	public static final int ANYCHAT_RECORD_FLAGS_ERRORCODE	= 0x00004000;	///< 支持出错代码
+	public static final int ANYCHAT_RECORD_FLAGS_MULTISTREAM= 0x00008000;	///< 支持多路流的录制（拍照）
 
 	
 	
