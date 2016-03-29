@@ -1,8 +1,6 @@
 //
 //  VideoVC.h
 //  AnyChatFeatures
-//
-//  Created by alexChen .
 //  Copyright (c) 2014年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
 //
 
@@ -21,8 +19,8 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-#define kAnyChatIP @"cluster.anychat.cn"
-#define kAnyChatPort @"8102"
+#define kAnyChatIP @"demo.anychat.cn"
+#define kAnyChatPort @"8906"
 
 typedef enum {
     AnyChatVCLoginModeGeneralLogin,
