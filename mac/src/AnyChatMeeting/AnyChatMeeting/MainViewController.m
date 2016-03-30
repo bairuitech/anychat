@@ -77,8 +77,7 @@
 - (void) OnAnyChatConnect:(BOOL) bSuccess {
     NSString *appendMessage;
     if (bSuccess) { //连接成功
-        //登录
-        [AnyChatPlatform Login:self.username.stringValue :@""];
+        
         appendMessage = @"• Success connected to server";
     }else {
         appendMessage = @" Failed connected to server. ";
@@ -448,7 +447,18 @@
     if (self.username.stringValue.length == 0) self.username.stringValue = @"Jack";
     if (self.roomId.stringValue.length == 0) self.roomId.stringValue = @"23";
     //连接服务器
+    /*
+     * AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+     * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+     * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+     */
     [AnyChatPlatform Connect:self.server.stringValue :[self.port.stringValue intValue]];
+    
+    //登录
+    /*
+     * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+     */
+    [AnyChatPlatform Login:self.username.stringValue :@""];
 }
 
 //注销
