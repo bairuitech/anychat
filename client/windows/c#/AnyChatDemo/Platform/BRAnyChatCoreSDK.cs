@@ -134,6 +134,8 @@ namespace ANYCHATAPI
 		public const int BRAC_RECORD_FLAGS_SNAPSHOT     = 0x400;    // 拍照
 		public const int BRAC_RECORD_FLAGS_LOCALCB      = 0x800;    // 触发本地回调
 		public const int BRAC_RECORD_FLAGS_STREAM		= 0x1000;   // 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+        public const int BRAC_RECORD_FLAGS_USERFILENAME = 0x2000;	// 用户自定义文件名
+        public const int BRAC_RECORD_FLAGS_MULTISTREAM  = 0x8000;	// 支持多路流的录制（拍照）
 
 		// 客户端、服务器端录制标志定义保持统一
 		public const int ANYCHAT_RECORD_FLAGS_VIDEO     = BRAC_RECORD_FLAGS_VIDEO;
@@ -999,6 +1001,53 @@ namespace ANYCHATAPI
         public static extern int SetDataEncDecCallBack(DataEncDec_CallBack function, int userValue);
 
         /// <summary>
+        /// 录像、快照任务完成回调函数定义
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="fileName"></param>
+        /// <param name="param"></param>
+        /// <param name="recordType"></param>
+        /// <param name="userValue"></param>
+        public delegate void RecordSnapShot_CallBack(int userId, string fileName, int param, bool recordType, int userValue);
+
+        /// <summary>
+        /// 录像、快照任务完成扩展回调函数定义
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="fileName"></param>
+        /// <param name="elapse"></param>
+        /// <param name="flags"></param>
+        /// <param name="param"></param>
+        /// <param name="userStr"></param>
+        /// <param name="userValue"></param>
+        public delegate void RecordSnapShotEx_CallBack(int userId, string fileName, int elapse, int flags, int param, string userStr, int userValue);
+
+        /// <summary>
+        /// 录像、快照任务完成扩展回调函数定义
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="errorCode"></param>
+        /// <param name="fileName"></param>
+        /// <param name="elapse"></param>
+        /// <param name="flags"></param>
+        /// <param name="param"></param>
+        /// <param name="userStr"></param>
+        /// <param name="userValue"></param>
+        public delegate void RecordSnapShotEx2_CallBack(int userId, int errorCode, string fileName, int elapse, int flags, int param, string userStr, int userValue);
+
+        /// <summary>
+        /// 视频屏幕事件回调函数定义
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="type"></param>
+        /// <param name="key"></param>
+        /// <param name="flags"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <param name="userValue"></param>
+        public delegate void VideoScreenEvent_CallBack(int userId, int type, int key, int flags, int wParam, int lParam, int userValue);
+
+        /// <summary>
         /// 业务对象事件通知回调函数定义
         /// </summary>
         /// <param name="dwObjectType"></param>
@@ -1342,7 +1391,7 @@ namespace ANYCHATAPI
         /// <param name="param">参数</param>
         /// <returns>0为成功，否则失败</returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_StreamRecordCtrl", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int StreamRecordCtrl(int userId, bool startRecord, ulong flags, int param);
+        public static extern int StreamRecordCtrl(int userId, bool startRecord, int flags, int param);
 
         /// <summary>
         /// 开启或关闭录像（扩展）
@@ -1354,7 +1403,7 @@ namespace ANYCHATAPI
         /// <param name="userstr">自定义参数（字符串）</param>
         /// <returns>0为成功，否则失败</returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_StreamRecordCtrlEx", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int StreamRecordCtrlEx(int userId, bool startRecord, ulong flags, int param, string userstr);
+        public static extern int StreamRecordCtrlEx(int userId, bool startRecord, int flags, int param, string userstr);
 
         /// <summary>
         /// 抓取视频，对指定用户进行拍照
@@ -1364,7 +1413,7 @@ namespace ANYCHATAPI
         /// <param name="param"></param>
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SnapShot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SnapShot(int userId, ulong flags, int param);
+        public static extern int SnapShot(int userId, int flags, int param);
 
         /// <summary>
         /// 是否打开SDK日记

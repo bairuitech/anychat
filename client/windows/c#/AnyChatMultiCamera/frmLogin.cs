@@ -116,7 +116,6 @@ namespace AnyChatMultiCamera
                         m_userName = cbox_userName.Text;
                         m_userPassword = txt_password.Text;
                         m_roomNumber = Int32.Parse(cbox_roomNumber.Text);
-                        m_appGuid = cbox_appGuid.Text;
                     }
                     catch (Exception)
                     {
@@ -139,11 +138,6 @@ namespace AnyChatMultiCamera
                     connInfo.RoomID = m_roomNumber;
                     connInfo.isOpenRemoteDesktop = checkBox_RemoteDesktop.Checked;
                     connInfo.AppGuid = m_appGuid;
-                    if (rbtn_normal.Checked)
-                        connInfo.loginType = LoginType.Normal;
-                    if (rbtn_sign.Checked)
-                        connInfo.loginType = LoginType.Sign;
-                    connInfo.signServerUrl = signUrl;
 
                     RoomForm = null;
                     //hallForm = new Hall(m_userId, cbox_userIdentity.Text);
@@ -225,19 +219,13 @@ namespace AnyChatMultiCamera
                 RecordValue("ipList", "ip", cbox_serverIP.Text);
                 RecordValue("portList", "port", cbox_port.Text);
                 RecordValue("userNameList", "userName", cbox_userName.Text);
-                //RecordValue("roomNumberList", "roomNumber", cbox_roomNumber.Text);
-                RecordValue("appGuidList", "appGuid", cbox_appGuid.Text);
+
 
                 PreviousRecordValue("previousrecord", "ip", cbox_serverIP.Text);
                 PreviousRecordValue("previousrecord", "port", cbox_port.Text);
                 PreviousRecordValue("previousrecord", "userName", cbox_userName.Text);
                 PreviousRecordValue("previousrecord", "roomNumber", cbox_roomNumber.Text);
-                PreviousRecordValue("previousrecord", "appGuid", cbox_appGuid.Text);
 
-                if (String.IsNullOrEmpty(signUrl))
-                {
-                    PreviousRecordValue("previousrecord", "signUrl", signUrl);
-                }   
             }
             catch (Exception ex)
             {
@@ -270,10 +258,6 @@ namespace AnyChatMultiCamera
                         break;
                     case "roomNumberList":
                         if (rVal == cbox_roomNumber.Text)
-                            i = 1;
-                        break;
-                    case "appGuidList":
-                        if (rVal == cbox_appGuid.Text)
                             i = 1;
                         break;
                 }
@@ -336,8 +320,6 @@ namespace AnyChatMultiCamera
             DisplayVal(cbox_serverIP, "ipList");
             DisplayVal(cbox_port, "portList");
             DisplayVal(cbox_userName, "userNameList");
-            //DisplayVal(cbox_roomNumber, "roomNumberList");
-            DisplayVal(cbox_appGuid, "appGuidList");
 
             string[] record = getPreviousRecord("previousrecord");
             if (record != null)
@@ -346,8 +328,6 @@ namespace AnyChatMultiCamera
                 cbox_port.Text = record[1];
                 cbox_userName.Text = record[2];
                 cbox_roomNumber.Text = record[3];
-                cbox_appGuid.Text = record[4];
-                signUrl = record[5];
             }
           
         }
@@ -471,24 +451,5 @@ namespace AnyChatMultiCamera
         }
 
         #endregion
-
-        private void rbtn_sign_Click(object sender, EventArgs e)
-        {
-            if (cbox_serverIP.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
-            {
-                cbox_port.Text = "8912";
-            }
-        }
-
-        private void rbtn_normal_CheckedChanged(object sender, EventArgs e)
-        {
-            if (cbox_serverIP.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
-            {
-                cbox_serverIP.Text = "cloud.anychat.cn";
-                cbox_port.Text = "8906";
-                if (string.IsNullOrEmpty(cbox_appGuid.Text))
-                    cbox_appGuid.Text = "fbe957d1-c25a-4992-9e75-d993294a5d56";
-            }
-        }
     }
 }

@@ -92,7 +92,6 @@ namespace AnyChatCSharpDemo
 
             m_VideoServerIP = txt_serverip.Text.Trim();
             m_LoginPass = txt_password.Text.Trim();
-            m_AppGuid = txt_appGuid.Text.Trim();
 
             try
             {
@@ -103,14 +102,6 @@ namespace AnyChatCSharpDemo
                 MessageBox.Show("端口号是整数");
             }
 
-            if (rbtn_normal.Checked)
-            {
-                m_loginType = LoginType.Normal;
-            }
-            if (rbtn_sign.Checked)
-            {
-                m_loginType = LoginType.Sign;
-            }
 
             this.Hide();
             frmRoom m_FR = new frmRoom();
@@ -195,7 +186,6 @@ namespace AnyChatCSharpDemo
                 PreviousRecordValue("previousrecord", "ip", txt_serverip.Text);
                 PreviousRecordValue("previousrecord", "port", tb_port.Text);
                 PreviousRecordValue("previousrecord", "userName", txt_username.Text);
-                PreviousRecordValue("previousrecord", "appGuid", txt_appGuid.Text);
 
                 if (String.IsNullOrEmpty(m_SignUrl))
                 {
@@ -248,15 +238,13 @@ namespace AnyChatCSharpDemo
                 txt_serverip.Text = record[0];
                 tb_port.Text = record[1];
                 txt_username.Text = record[2];
-                txt_appGuid.Text = record[3];
-                m_SignUrl = record[4];
             }
 
         }
 
         private String[] getPreviousRecord(string rAttribute)
         {
-            string[] record = new string[5];
+            string[] record = new string[3];
             XmlNode rMainNode = mXmlDoc.SelectSingleNode("settings");
             XmlNode rNode = rMainNode.SelectSingleNode(rAttribute);
             XmlNodeList rList = rNode.ChildNodes;
@@ -278,12 +266,6 @@ namespace AnyChatCSharpDemo
                     case "userName":
                         record[2] = rVal;
                         break;
-                    case "appGuid":
-                        record[3] = rVal;
-                        break;
-                    case "signUrl":
-                        record[4] = rVal;
-                        break;
                 }
             }
             if (bExists)
@@ -294,25 +276,6 @@ namespace AnyChatCSharpDemo
 
 
         #endregion
-
-        private void rbtn_normal_Click(object sender, EventArgs e)
-        {
-            if (txt_serverip.Text.ToLower().Equals("demo.anychat.cn") && rbtn_normal.Checked)
-            {
-                tb_port.Text = "8906";
-            }
-        }
-
-        private void rbtn_sign_Click(object sender, EventArgs e)
-        {
-            if (txt_serverip.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
-            {
-                txt_serverip.Text = "cloud.anychat.cn";
-                tb_port.Text = "8906";
-                if (string.IsNullOrEmpty(txt_appGuid.Text))
-                    txt_appGuid.Text = "fbe957d1-c25a-4992-9e75-d993294a5d56";
-            }
-        }
 
 
     }

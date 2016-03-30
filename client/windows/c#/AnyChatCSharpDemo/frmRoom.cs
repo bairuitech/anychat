@@ -145,55 +145,18 @@ namespace AnyChatCSharpDemo
             //m_ServerKey.Append("d");
             //int retkey = AnyChatCoreSDK.SetServerAuthPass(m_ServerKey);
 
-            //普通登录
-            if (frmLogin.m_loginType == LoginType.Normal)
-            {
-
-                if (!string.IsNullOrEmpty(frmLogin.m_AppGuid))
-                {
-                    AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, frmLogin.m_AppGuid, frmLogin.m_AppGuid.Length);
-                }
-            }
-            //签名登录
-            if (frmLogin.m_loginType == LoginType.Sign)
-            {
-                //向签名服务器发送签名POST请求，获取签名
-                //在实际应用系统中是需要在登录时输入用户名、密码之后，用户身份验证通过后向签名服务器获取应用签名                                                
-                if (!string.IsNullOrEmpty(frmLogin.m_AppGuid))
-                {
-                    //签名服务器Url，根据实际签名服务器部署情况进行修改
-                    string signServerUrl = frmLogin.m_SignUrl;
-                    //传入请求参数
-                    string reqParam = "userId=" + m_myUserID + "&strUserId=" + frmLogin.m_UserName + "&appId=" + frmLogin.m_AppGuid;
-                    string responseResult = HttpPost(signServerUrl, reqParam);
-                    if (!String.IsNullOrEmpty(responseResult))
-                    {
-                        JsonObject jsonObj = ToClass<JsonObject>(responseResult);
-
-                        if (jsonObj.errorcode == 0)
-                        {
-                            signStr = jsonObj.sigStr;
-                            signTimestamp = jsonObj.timestamp;
-                        }
-                    }
-                    else
-                    {
-                        Print("应用签名返回空字符串");
-                    }
-                }
-            }
-
+            /* AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+             * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+             * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+             */
             int ret = AnyChatCoreSDK.Connect(frmLogin.m_VideoServerIP, frmLogin.m_VideoTcpPort);
 
-            if (frmLogin.m_loginType == LoginType.Sign)
-            {
-                ret = AnyChatCoreSDK.LoginEx(frmLogin.m_UserName, m_myUserID, frmLogin.m_UserName, frmLogin.m_AppGuid, signTimestamp, signStr, string.Empty);//登录系统
+            /*
+             * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，
+             * 详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+             */
+            ret = AnyChatCoreSDK.Login(frmLogin.m_UserName, frmLogin.m_LoginPass, 0);
 
-            }
-            if (frmLogin.m_loginType == LoginType.Normal)
-            {
-                ret = AnyChatCoreSDK.Login(frmLogin.m_UserName, frmLogin.m_LoginPass, 0);
-            }
         }
 
         #endregion
