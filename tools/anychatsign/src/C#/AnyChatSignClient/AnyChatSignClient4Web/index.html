@@ -20,9 +20,9 @@
 		<span id="txt" style="color: green"></span><br>    		
     	<script type="text/javascript">
 			function doSign() {
-		        $.ajax( {
-		            url : "http://192.168.0.2:8980",
-		            dataType : "json", //传参的数据类型
+		        $.ajax({
+		            url : "http://demo.anychat.cn:8930",
+		            dataType : "jsonp", //传参的数据类型
 		            type : "post", //传参方式，get 或post
 		            data : {
 		                userid : $("#userid").val(), 
