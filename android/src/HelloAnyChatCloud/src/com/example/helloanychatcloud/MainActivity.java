@@ -45,6 +45,10 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements AnyChatBaseEvent {
 	// 视频配置界面标识
 	public static final int ACTIVITY_ID_VIDEOCONFIG = 1;
+
+    /**
+     * 默认的签名服务器地址，只针对默认的AppID进行签名，其他应用AppID的签名需要自己部署签名服务器
+     */
 	private static final String url = "http://demo.anychat.cn:8930";
 	private ListView mRoleList;
 	private EditText mEditIP;
