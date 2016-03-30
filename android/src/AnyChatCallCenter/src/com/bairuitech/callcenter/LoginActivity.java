@@ -1,17 +1,10 @@
 package com.bairuitech.callcenter;
 
-import java.util.HashMap;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.bussinesscenter.BussinessCenter;
-import com.bairuitech.callcenter.R;
 import com.bairuitech.util.*;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -20,8 +13,6 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -30,8 +21,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.Toast;
 
 public class LoginActivity extends Activity implements AnyChatBaseEvent,
 		 OnClickListener {
@@ -44,32 +33,8 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 	private Dialog dialog;
 	private AnyChatCoreSDK anychat;
 	private boolean bNeedRelease = false;
-	private String mAppKey;
 	private String strUserName;
-	private RadioButton btn1;
-	
-	private static final String url = "demo.anychat.cn:8930";
-	private static final int REQUEST_SIGNED = 1;
-	Handler handler = new Handler(){
-		
-		public void handleMessage(Message msg) {
-			if(msg.what == REQUEST_SIGNED){
-				try {
-					JSONObject object = new JSONObject(msg.obj.toString());
-					int errCode = object.optInt("errorcode");
-					int timeStamp = object.optInt("timestamp");
-					String signedStr = object.optString("sigStr");
-					if(errCode == 0){
-						anychat.LoginEx(strUserName,1001, "1001", mAppKey, timeStamp, signedStr,"");
-					}
-					
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-	};
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -139,8 +104,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		this.setContentView(R.layout.login_layout);
 		
-		btn1 = (RadioButton) findViewById(R.id.btn1);
-		
 		mEditAccount = (EditText) findViewById(R.id.edit_account);
 		
 		mCheckRemember = (CheckBox) findViewById(R.id.check_issavepass);
@@ -188,51 +151,20 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 			BaseMethod.showToast(this.getString(R.string.str_account_input_hint), this);
 			return;
 		}
-		mAppKey = configEntity.guid;
-		
-		if(isSigned()){
-			if(null != mAppKey && !mAppKey.equals("")){
-				AnyChatCoreSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_CLOUD_APPGUID, configEntity.guid);
-			}
-			
-			this.anychat.Connect(configEntity.ip, configEntity.port);
-			this.anychat.Login(strUserName, "123");
-			loginBtn.setClickable(false);
-			mProgressLogin.show();
-		}else {
-			if(null != mAppKey && !mAppKey.equals("")){
-				final HashMap<String, String> map = new HashMap<String, String>();
-				map.put("userid","1001");
-				map.put("strUserid", "1001");
-				map.put("appid", "90A9545C-30F7-4F5A-8B56-9CB111706A24");
-				
-				new Thread(){
-					public void run() {
-						
-						String result = HttpUtil.httpRequestPost(url, map);
-						
-						if(null == result){
-							System.out.println("请求失败");
-						}else{
-							Message msg = Message.obtain(handler,REQUEST_SIGNED,result);
-							handler.sendMessage(msg);
-							System.out.println(result);
-						}
-					};
-				}.start();
-			}else{
-				Toast.makeText(LoginActivity.this,"appId不能为空",Toast.LENGTH_LONG).show();
-			}
 
-			
-		}
-		
-		
-	}
-
-	private boolean isSigned() {
-		// TODO Auto-generated method stub
-		return btn1.isChecked()?true:false;
+        /**
+         *AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+         *连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+         *连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+         */
+        this.anychat.Connect(configEntity.ip, configEntity.port);
+        /***
+         * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，
+         * 详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+         */
+        this.anychat.Login(strUserName, "123");
+        loginBtn.setClickable(false);
+        mProgressLogin.show();
 	}
 
 	protected void onDestroy() {

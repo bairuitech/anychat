@@ -131,60 +131,7 @@
                 android:layout_marginBottom="5dip"
                 android:background="#FFFFFF" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|center_vertical"
-            android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:gravity="center|center_vertical" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/smalltip_2" />
-
-                <EditText
-                    android:id="@+id/main_et_guid"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:hint="app_guid"
-                    android:textColorHint="#bfbfbf"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="273dp"
-                android:layout_height="1dip"
-                android:layout_marginBottom="5dip"
-                android:background="#FFFFFF" />
-        </LinearLayout>
-        <LinearLayout android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:visibility="gone">
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="登录方式"
-                android:textSize="16sp"
-                android:layout_marginLeft="30dp"/>
-              <Spinner 
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="10dp"
-	            android:layout_marginRight="20dp"
-	            />
-        </LinearLayout>
-      
 		<RadioGroup 
 		    android:id="@+id/id_rg_btn"
 		    android:layout_width="wrap_content"

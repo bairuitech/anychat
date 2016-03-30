@@ -15,10 +15,9 @@ public class ConfigService {
         configEntity.password = share.getString("password", "");
         configEntity.IsSaveNameAndPw = share.getString("IsSaveNameAndPw", "").equals("1") ? true : false;
       
-        configEntity.ip = share.getString("ip", "cloud.anychat.cn");
+        configEntity.ip = share.getString("ip", "demo.anychat.cn");
         configEntity.port = share.getInt("port", 8906);
-        configEntity.guid = share.getString("guid", "fbe957d1-c25a-4992-9e75-d993294a5d56");
-        
+
         configEntity.configMode = share.getInt("configMode", ConfigEntity.VIDEO_MODE_CUSTOMCONFIG);
         configEntity.resolution_width = share.getInt("resolution_width", 320);
         configEntity.resolution_height = share.getInt("resolution_height", 240);
@@ -50,8 +49,7 @@ public class ConfigService {
         
         editor.putString("ip", configEntity.ip);
         editor.putInt("port", configEntity.port);
-        editor.putString("guid", configEntity.guid);
-        
+
         editor.putInt("configMode", configEntity.configMode);
         editor.putInt("resolution_width", configEntity.resolution_width);
         editor.putInt("resolution_height", configEntity.resolution_height);

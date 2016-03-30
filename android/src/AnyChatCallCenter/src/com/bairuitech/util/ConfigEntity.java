@@ -13,7 +13,6 @@ public class ConfigEntity {
 	public String password = "";
 
 	public String ip = "";
-	public String guid = "";
 	public int port;
 	
 	public int configMode = VIDEO_MODE_SERVERCONFIG;

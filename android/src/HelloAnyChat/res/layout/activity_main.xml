@@ -146,59 +146,7 @@
             android:layout_marginTop="2dp"
             android:background="#FFFFFF" />
     </TableLayout>
-    <LinearLayout 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="65dip"
-        android:layout_marginTop="10dp">
-        <ImageView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:src="@drawable/smalltip_4"/>
-        <EditText 
-            android:id="@+id/app_guid_key"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="应用Id"
-            android:background="@null"
-            android:textColorHint="#bfbfbf"
-            android:textSize="14sp"/>
-        
-    </LinearLayout>
- 	<View
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:layout_marginLeft="75dp"
-            android:layout_marginRight="75dp"
-            android:layout_marginTop="2dp"
-            android:background="#FFFFFF" />
- 	 <RadioGroup 
-            	android:layout_width="match_parent"
-            	android:layout_height="wrap_content"
-            	android:orientation="horizontal"
-            	android:gravity="center"
-            	android:id="@+id/radio_gp"
-            	android:visibility="gone">
-            <RadioButton 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:text="普通登录"
-                android:id="@+id/btn1"
-                android:checked="true"
-                android:textColor="#333333"/>
-            <RadioButton 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:id="@+id/btn2"
-                android:layout_marginLeft="10dp"
-                android:textColor="#333333"
-                android:text="签名登陆"/>
-        </RadioGroup>
+
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

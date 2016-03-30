@@ -66,31 +66,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dip"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:text="@string/str_appkey"
-                android:textColor="@android:color/black" />
-
-            <EditText
-                android:id="@+id/edit_appkey"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dip"
-                android:layout_weight="1"
-                android:background="@drawable/chat_edit"
-                android:inputType="number" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
             <Button

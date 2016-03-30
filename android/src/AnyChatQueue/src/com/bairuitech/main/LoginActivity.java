@@ -1,14 +1,5 @@
 package com.bairuitech.main;
 
-
-
-
-
-import java.util.HashMap;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
@@ -18,9 +9,6 @@ import com.bairuitech.common.CustomApplication;
 import com.bairuitech.common.ScreenInfo;
 import com.bairuitech.common.ValueUtils;
 import com.example.anychatqueue.R;
-
-
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,9 +17,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -39,34 +24,24 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatObjectEvent {
-	private String mStrIP = "cluster.anychat.cn";		//默认ip
+	private String mStrIP = "demo.anychat.cn";		//默认ip
 	private String mStrName = "Tom";				//自定义
 	private int mSPort = 8906;						//端口
-	private String mStrGuid;						
-	private int index = 0;
-	private static final int REQUEST_SIGNED = 1;
 	private final int SHOWLOGINSTATEFLAG = 1; 		// 显示的按钮是登陆状态的标识
 	private final int SHOWWAITINGSTATEFLAG = 2; 	// 显示的按钮是等待状态的标识
 	private final int LOCALVIDEOAUTOROTATION = 1; 	// 本地视频自动旋转控制
 	private final int ACTIVITY_ID_MAINUI = 1; 	    // MainActivity的id标致，onActivityResult返回
 	private int USER_TYPE_ID; 					//0代表是进入客户界面，2代表是接入座席界面
-	private static final String url = "http://192.168.6.116:8980";
-	private EditText mEditGuid;						//Guid
 	private EditText mEditIP;						// ip
 	private EditText mEditPort;						// 端口
 	private EditText mEditName;						// 用户名
@@ -81,29 +56,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 	private RadioGroup rg;
 	
 	public AnyChatCoreSDK anyChatSDK;
-	private Spinner spinner;
-	
-	private static final int REQUEST_SUCESS = 1;
-	private Handler handler = new Handler(){
-		public void handleMessage(Message msg) {
-			if(msg.what == REQUEST_SIGNED){
-				JSONObject object;
-				try {
-					object = new JSONObject(msg.obj.toString());
-					int errCode = object.optInt("errorcode");
-					int timeStamp = object.optInt("timestamp");
-					String signedStr = object.optString("sigStr");
-					if(errCode == 0){
-						anyChatSDK.LoginEx(mStrName,1001, "1001", mStrName, timeStamp, signedStr,"");
-					}
-					
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-				
-			}
-		};
-	};
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -142,7 +94,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 	
 	// 初始化布局层
 	private void InitLayout() {
-		mEditGuid = (EditText) findViewById(R.id.main_et_guid);
 		mEditIP = (EditText) this.findViewById(R.id.mainUIEditIP);
 		mEditPort = (EditText) this.findViewById(R.id.mainUIEditPort);
 		mEditName = (EditText) this.findViewById(R.id.main_et_name);
@@ -154,34 +105,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 		mWaitingLayout = (LinearLayout) this.findViewById(R.id.waitingLayout);
 
 		mBottomConnMsg.setText("No content to the server");
-		
-		
-		spinner = (Spinner) findViewById(R.id.spinner);
-		String[] arr = {"普通登录","签名登录"};
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(LoginActivity.this, android.R.layout.simple_spinner_item, arr);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
-		spinner.setSelection(0);
-		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				if(arg2 == 0){
-					index = 0;
-				}else if(arg2 == 1){
-					index = 1;
-				}
-				
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				index = 0;
-			}
-		});
 		// 初始化bottom_tips信息
 		mBottomBuildMsg.setText(" V" + anyChatSDK.GetSDKMainVersion() + "."
 				+ anyChatSDK.GetSDKSubVersion() + "  Build time: "
@@ -209,49 +133,22 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 				mStrName = mEditName.getText().toString().trim();
 				mStrIP = mEditIP.getText().toString().trim();
 				mSPort = Integer.parseInt(mEditPort.getText().toString()
-						.trim());
-				//设置GUID
-				mStrGuid = mEditGuid.getText().toString().trim();
-				
-				if(index == 0){
-					if (checkInputData()) {
-						
-						if(!TextUtils.isEmpty(mStrGuid)){
-							AnyChatCoreSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_CLOUD_APPGUID, mStrGuid);
-						}
-						//连接服务器
-						anyChatSDK.Connect(mStrIP, mSPort);
-						anyChatSDK.Login(mStrName, "");//登录
-					}
-				}else if(index == 1){
-					if(!TextUtils.isEmpty(mStrGuid)){
-						AnyChatCoreSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_CLOUD_APPGUID, mStrGuid);
-					}
-					if(null != mStrGuid && !mStrGuid.equals("")){
-						final HashMap<String, String> map = new HashMap<String, String>();
-						map.put("userid","1001");
-						map.put("strUserid", "1001");
-						map.put("appid", "90A9545C-30F7-4F5A-8B56-9CB111706A24");
-						
-						new Thread(){
-							public void run() {
-								
-								String result = HttpUtil.httpRequestPost(url, map);
-								
-								if(null == result){
-									System.out.println("请求失败");
-								}else{
-									Message msg = Message.obtain(handler,REQUEST_SIGNED,result);
-									handler.sendMessage(msg);
-									System.out.println(result);
-								}
-							};
-						}.start();
-					}else{
-						setBtnVisible(SHOWLOGINSTATEFLAG);
-						Toast.makeText(LoginActivity.this,"appId不能为空",Toast.LENGTH_LONG).show();
-					}
-				}
+                        .trim());
+
+                if (checkInputData()) {
+                    /**
+                     *AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+                     *连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+                     *连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+                     */
+                    anyChatSDK.Connect(mStrIP, mSPort); //连接服务器
+
+                    /***
+                     * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，
+                     * 详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+                     */
+                    anyChatSDK.Login(mStrName, "");//登录
+                }
 				break;
 			default:
 				break;
@@ -264,16 +161,14 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 		mEditIP.setText(mStrIP);
 		mEditName.setText(mStrName);
 		mEditPort.setText(String.valueOf(mSPort));
-		mEditGuid.setText(mStrGuid);
 	}
 
 	// 读取登陆数据
 	private void readLoginDate() {
 		SharedPreferences preferences = getSharedPreferences("LoginInfo", 0);
-		mStrIP = preferences.getString("UserIP", "cloud.anychat.cn");
+		mStrIP = preferences.getString("UserIP", "demo.anychat.cn");
 		mStrName = preferences.getString("UserName", "Android");
 		mSPort = preferences.getInt("UserPort", 8906);
-		mStrGuid = preferences.getString("userGuid","fbe957d1-c25a-4992-9e75-d993294a5d56");
 	}
 
 	// 保存登陆相关数据
@@ -283,7 +178,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 		preferencesEditor.putString("UserIP", mStrIP);
 		preferencesEditor.putString("UserName", mStrName);
 		preferencesEditor.putInt("UserPort", mSPort);
-		preferencesEditor.putString("userGuid", mStrGuid);
 		preferencesEditor.commit();
 	}
 

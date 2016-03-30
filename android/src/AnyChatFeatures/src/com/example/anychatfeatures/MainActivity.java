@@ -1,21 +1,11 @@
 package com.example.anychatfeatures;
 
-import java.util.HashMap;
-
-import javax.security.auth.PrivateCredentialPermission;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.example.anychatfeatures.R;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.example.common.CustomApplication;
-import com.example.common.HttpUtil;
 import com.example.common.ScreenInfo;
 import com.example.common.ValueUtils;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,8 +14,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -37,19 +25,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements AnyChatBaseEvent {
-	private String mStrIP = "cluster.anychat.cn";
+	private String mStrIP = "demo.anychat.cn";
 	private String mStrName = "name";
 	private int mSPort = 8906;
-	private String mAppKey;
-	private static final String url = "http://192.168.6.116:8980";
-	private static final int REQUEST_SIGNED = 1;
-	
+
 	private final int SHOWLOGINSTATEFLAG = 1; 		// 显示的按钮是登陆状态的标识
 	private final int SHOWWAITINGSTATEFLAG = 2; 	// 显示的按钮是等待状态的标识
 	private final int LOCALVIDEOAUTOROTATION = 1; 	// 本地视频自动旋转控制
@@ -58,7 +41,6 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private EditText mEditIP;						// ip
 	private EditText mEditPort;						// 端口
 	private EditText mEditName;						// 用户名
-	private EditText mEditAppKey;						// 用户名
 	private TextView mBottomConnMsg;				// 连接服务器状态
 	private TextView mBottomBuildMsg;				// 版本编译信息
 	private Button mBtnStart;						// 开始登录
@@ -67,27 +49,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	private LinearLayout mProgressLayout;			// 加载动画层
 	private CustomApplication mCustomApplication;
 	private Toast mToast;	
-	private RadioButton radioBtn1;
-	private RadioButton radioBtn2;
 
 	public AnyChatCoreSDK anyChatSDK;
-	Handler handler = new Handler(){
-		
-		public void handleMessage(Message msg) {
-			if(msg.what == REQUEST_SIGNED){
-				try {
-					JSONObject object = new JSONObject(msg.obj.toString());
-					int errCode = object.optInt("errorcode");
-					int timeStamp = object.optInt("timestamp");
-					String signedStr = object.optString("sigStr");
-					anyChatSDK.LoginEx(mStrName,1001, "1001", mAppKey, timeStamp, signedStr,"");
-					
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-	};
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -128,13 +91,11 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mEditPort = (EditText) this.findViewById(R.id.mainUIEditPort);
 		mEditName = (EditText) this.findViewById(R.id.main_et_name);
 		mBottomConnMsg = (TextView) this.findViewById(R.id.mainUIbottomConnMsg);
-		mEditAppKey = (EditText) findViewById(R.id.appkey_main_et);
-		radioBtn1 = (RadioButton) findViewById(R.id.btn1);
-		radioBtn2 = (RadioButton) findViewById(R.id.btn2);
-		mEditAppKey.setText("fbe957d1-c25a-4992-9e75-d993294a5d56");
-		
-		mBottomBuildMsg = (TextView) this
-				.findViewById(R.id.mainUIbottomBuildMsg);
+//		mEditAppKey = (EditText) findViewById(R.id.appkey_main_et);
+//		radioBtn1 = (RadioButton) findViewById(R.id.btn1);
+//		radioBtn2 = (RadioButton) findViewById(R.id.btn2);
+
+		mBottomBuildMsg = (TextView) this.findViewById(R.id.mainUIbottomBuildMsg);
 		mBtnStart = (Button) this.findViewById(R.id.mainUIStartBtn);
 		mBtnWaiting = (Button) this.findViewById(R.id.mainUIWaitingBtn);
 		mWaitingLayout = (LinearLayout) this.findViewById(R.id.waitingLayout);
@@ -159,54 +120,25 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 					mStrName = mEditName.getText().toString().trim();
 					mStrIP = mEditIP.getText().toString().trim();
 					mSPort = Integer.parseInt(mEditPort.getText().toString()
-							.trim());
-					mAppKey = mEditAppKey.getText().toString().trim();
-					
-					
-					//
-					anyChatSDK.Connect(mStrIP, mSPort);
-					
-					if(isSigned()){
-						if(null != mAppKey && !mAppKey.equals("")){
-							final HashMap<String, String> map = new HashMap<String, String>();
-							map.put("userid","1001");
-							map.put("strUserid", "1001");
-							map.put("appid", "90A9545C-30F7-4F5A-8B56-9CB111706A24");
-							
-							new Thread(){
-								public void run() {
-									
-									String result = HttpUtil.httpRequestPost(url, map);
-									
-									if(null == result){
-										System.out.println("请求失败");
-									}else{
-										Message msg = Message.obtain(handler,REQUEST_SIGNED,result);
-										handler.sendMessage(msg);
-										System.out.println(result);
-									}
-								};
-							}.start();
-						}else{
-							Toast.makeText(MainActivity.this,"appId不能为空",Toast.LENGTH_LONG).show();
-						}
-					}else{
-						System.out.println("普通登陆");
-						if(null != mAppKey && !mAppKey.equals("")){
-							AnyChatCoreSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_CLOUD_APPGUID, mAppKey);
-						}
-						anyChatSDK.Login(mStrName, "");
-					}
+                            .trim());
+
+                    /**
+                     *AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+                     *连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+                     *连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+                     */
+                    anyChatSDK.Connect(mStrIP, mSPort);
+                    /***
+                     * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，
+                     * 详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+                     */
+                    anyChatSDK.Login(mStrName, "");
 				}
 				
 				break;
 			default:
 				break;
 			}
-		}
-
-		private boolean  isSigned() {
-			return radioBtn1.isChecked()?false:true;
 		}
 	};
 
@@ -220,7 +152,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 	// 读取登陆数据
 	private void readLoginDate() {
 		SharedPreferences preferences = getSharedPreferences("LoginInfo", 0);
-		mStrIP = preferences.getString("UserIP", "cloud.anychat.cn");
+		mStrIP = preferences.getString("UserIP", "demo.anychat.cn");
 		mStrName = preferences.getString("UserName", "Android");
 		mSPort = preferences.getInt("UserPort", 8906);
 	}
