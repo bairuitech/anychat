@@ -10,7 +10,9 @@ AnyChatQueue		AnyChatQueueÖÇÄÜÅÅ¶ÓÑÝÊ¾¹¤³Ì£¬ÑÝÊ¾AnyChatµÄÒµÎñ¶ÓÁÐ¹¦ÄÜ£¬Õ¹Ê¾ÁË×øÏ
 
 AnyChatSelfRecord	AnyChatSelfRecordÑÝÊ¾¹¤³Ì£¬ÑÝÊ¾ÁËAnyChat×¥ÅÄÂ¼ÏñµÄ¿ª·¢Á÷³Ì£»
 
-helloAnyChat		AnyChat for AndroidÑÝÊ¾¹¤³Ì£¬ÒÔ×î¾«¼òµÄ´úÂëÊµÏÖÁËÒ»¸öhello world!¹¤³Ì£¬Õ¹Ê¾ÁËAnyChat SDKµÄ»ù±¾¿ª·¢Á÷³Ì£¬¹©¶ÔAnyChat½øÐÐ³õ²½ÁË½âµÄ³ÌÐòÔ±²Î¿¼£»
+helloAnyChat		AnyChat for iOSÑÝÊ¾¹¤³Ì(ÆÕÍ¨µÇÂ¼°æ±¾)£¬ÒÔ×î¾«¼òµÄ´úÂëÊµÏÖÁËÒ»¸öhello world!¹¤³Ì£¬Õ¹Ê¾ÁËAnyChat SDKµÄ»ù±¾¿ª·¢Á÷³Ì£¬¹©¶ÔAnyChat½øÐÐ³õ²½ÁË½âµÄ³ÌÐòÔ±²Î¿¼£»
+
+helloAnyChatcloud	AnyChatcloud for iOSÑÝÊ¾¹¤³Ì(Ç©ÃûµÇÂ¼°æ±¾)£¬ÒÔ×î¾«¼òµÄ´úÂëÊµÏÖÁËÒ»¸öhello world!¹¤³Ì£¬Õ¹Ê¾ÁËAnyChat SDKµÄ»ù±¾¿ª·¢Á÷³Ì£¬¹©¶ÔAnyChat½øÐÐ³õ²½ÁË½âµÄ³ÌÐòÔ±²Î¿¼£»
 
 AnyChat4Swfit\HelloAnyChatSwift	HelloAnyChatSwiftÑÝÊ¾¹¤³Ì£¬Ê¹ÓÃÆ»¹ûSwiftÓïÑÔÊµÏÖÁËAnyChat SDKµÄ»ù±¾¿ª·¢Á÷³Ì£¬¸Ã°æ±¾ÎªÎÞÇ©ÃûµÇÂ¼°æ±¾,¹©¶ÔAnyChat½øÐÐ³õ²½ÁË½âµÄ³ÌÐòÔ±²Î¿¼£»
 

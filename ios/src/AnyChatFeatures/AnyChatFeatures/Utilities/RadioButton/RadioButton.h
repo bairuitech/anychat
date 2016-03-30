@@ -28,7 +28,7 @@
 @interface RadioButton : UIButton
 
 // Outlet collection of links to other buttons in the group.
-@property (nonatomic, strong) IBOutletCollection(RadioButton) NSArray* groupButtons;
+//@property (nonatomic, strong) IBOutletCollection(RadioButton) NSArray* groupButtons;
 
 // Currently selected radio button in the group.
 // If there are multiple buttons selected then it returns the first one.

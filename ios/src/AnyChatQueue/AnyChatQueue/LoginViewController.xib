@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
             <connections>
-                <outlet property="guid" destination="ZbF-Pu-cvH" id="vww-dh-78R"/>
                 <outlet property="port" destination="hnG-lG-YJI" id="gwp-Ja-2g5"/>
                 <outlet property="role" destination="1aI-NL-xop" id="wL7-xz-1UI"/>
                 <outlet property="server" destination="xpL-5C-c6s" id="r3b-ET-cSt"/>
@@ -192,38 +191,6 @@
                                 <constraint firstItem="6ha-Sq-Mzs" firstAttribute="leading" secondItem="rZa-qq-aFC" secondAttribute="leading" id="wUm-g1-K2u"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mBU-fh-gFw" userLabel="View4">
-                            <rect key="frame" x="60" y="192" width="200" height="40"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading_icon_box" translatesAutoresizingMaskIntoConstraints="NO" id="gi5-7E-Rot">
-                                    <rect key="frame" x="0.0" y="7" width="27" height="27"/>
-                                </imageView>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="应用ID" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ZbF-Pu-cvH">
-                                    <rect key="frame" x="37" y="11" width="163" height="19"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </textField>
-                                <view alpha="0.80000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xbb-FU-YpF" userLabel="line">
-                                    <rect key="frame" x="0.0" y="39" width="200" height="1"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="1" id="pMq-mu-SRv"/>
-                                    </constraints>
-                                </view>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="Xbb-FU-YpF" secondAttribute="bottom" id="1T1-yd-72R"/>
-                                <constraint firstItem="gi5-7E-Rot" firstAttribute="leading" secondItem="mBU-fh-gFw" secondAttribute="leading" id="8Nf-Fa-fTr"/>
-                                <constraint firstItem="ZbF-Pu-cvH" firstAttribute="leading" secondItem="gi5-7E-Rot" secondAttribute="trailing" constant="10" id="DL3-H3-jze"/>
-                                <constraint firstAttribute="trailing" secondItem="Xbb-FU-YpF" secondAttribute="trailing" id="ayL-Rg-LQk"/>
-                                <constraint firstAttribute="trailing" secondItem="ZbF-Pu-cvH" secondAttribute="trailing" id="iEN-gW-soT"/>
-                                <constraint firstItem="Xbb-FU-YpF" firstAttribute="leading" secondItem="mBU-fh-gFw" secondAttribute="leading" id="iKS-1Q-zHE"/>
-                                <constraint firstAttribute="centerY" secondItem="gi5-7E-Rot" secondAttribute="centerY" id="jXq-ay-U18"/>
-                                <constraint firstAttribute="centerY" secondItem="ZbF-Pu-cvH" secondAttribute="centerY" id="sBN-e7-xL3"/>
-                            </constraints>
-                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kGW-WI-Oec" userLabel="center_line">
                             <rect key="frame" x="159" y="249" width="1" height="2"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -232,20 +199,6 @@
                                 <constraint firstAttribute="height" constant="2" id="j31-Hf-4zb"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84L-Ud-nkG" customClass="RadioButton">
-                            <rect key="frame" x="64" y="238" width="90" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="90" id="Zcp-Ni-ZCb"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="普通登录" image="unchecked"/>
-                            <state key="selected" title="普通登录" image="checked"/>
-                            <connections>
-                                <action selector="onRadioBtn:" destination="-1" eventType="touchUpInside" id="geb-hC-9SW"/>
-                                <outletCollection property="groupButtons" destination="6E7-1q-5Px" id="Os4-cU-CKe"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fyD-3R-CJJ">
                             <rect key="frame" x="61" y="270" width="187" height="60"/>
                             <constraints>
@@ -260,30 +213,12 @@
                                 <action selector="loginAction:" destination="-1" eventType="touchUpInside" id="6sS-Tc-i3c"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6E7-1q-5Px" customClass="RadioButton">
-                            <rect key="frame" x="165" y="238" width="90" height="24"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="签名登录" image="unchecked"/>
-                            <state key="selected" image="checked"/>
-                            <connections>
-                                <action selector="onRadioBtn:" destination="-1" eventType="touchUpInside" id="bh0-Td-Hxw"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="mBU-fh-gFw" firstAttribute="width" secondItem="dwN-rU-dHb" secondAttribute="width" id="7Zf-NV-wjx"/>
-                        <constraint firstItem="mBU-fh-gFw" firstAttribute="height" secondItem="dwN-rU-dHb" secondAttribute="height" id="9Mk-AQ-SQF"/>
-                        <constraint firstItem="kGW-WI-Oec" firstAttribute="top" secondItem="mBU-fh-gFw" secondAttribute="bottom" constant="17" id="A0R-Of-rEj"/>
-                        <constraint firstItem="mBU-fh-gFw" firstAttribute="centerX" secondItem="h89-3B-BeO" secondAttribute="centerX" id="Bb1-ZD-Ab1"/>
                         <constraint firstItem="rZa-qq-aFC" firstAttribute="top" secondItem="I28-Va-dYh" secondAttribute="bottom" constant="8" id="DcD-aQ-3XA"/>
-                        <constraint firstItem="6E7-1q-5Px" firstAttribute="centerY" secondItem="84L-Ud-nkG" secondAttribute="centerY" id="EgU-AZ-AvN"/>
-                        <constraint firstItem="6E7-1q-5Px" firstAttribute="width" secondItem="84L-Ud-nkG" secondAttribute="width" id="IDm-Vx-tor"/>
-                        <constraint firstItem="84L-Ud-nkG" firstAttribute="centerY" secondItem="kGW-WI-Oec" secondAttribute="centerY" id="IPN-44-TCz"/>
                         <constraint firstItem="dwN-rU-dHb" firstAttribute="height" secondItem="I28-Va-dYh" secondAttribute="height" id="JdQ-da-NHX"/>
                         <constraint firstItem="dwN-rU-dHb" firstAttribute="width" secondItem="I28-Va-dYh" secondAttribute="width" id="KUB-nW-wkI"/>
-                        <constraint firstItem="kGW-WI-Oec" firstAttribute="leading" secondItem="84L-Ud-nkG" secondAttribute="trailing" constant="5" id="MOq-mF-s5H"/>
                         <constraint firstAttribute="height" constant="330" id="OJD-Yf-vwR"/>
                         <constraint firstAttribute="centerX" secondItem="NYu-hR-HMJ" secondAttribute="centerX" id="QZq-AV-NAT"/>
                         <constraint firstAttribute="centerX" secondItem="fyD-3R-CJJ" secondAttribute="centerX" constant="5.5" id="UpD-Ye-lmy"/>
@@ -296,8 +231,7 @@
                         <constraint firstAttribute="centerX" secondItem="I28-Va-dYh" secondAttribute="centerX" constant="-1" id="h1p-Bw-k8j"/>
                         <constraint firstAttribute="centerX" secondItem="rZa-qq-aFC" secondAttribute="centerX" id="ktZ-qU-gf0"/>
                         <constraint firstItem="kGW-WI-Oec" firstAttribute="centerX" secondItem="h89-3B-BeO" secondAttribute="centerX" id="pga-Q4-ZN6"/>
-                        <constraint firstItem="mBU-fh-gFw" firstAttribute="top" secondItem="rZa-qq-aFC" secondAttribute="bottom" constant="8" id="ykB-sc-LIY"/>
-                        <constraint firstItem="6E7-1q-5Px" firstAttribute="leading" secondItem="kGW-WI-Oec" secondAttribute="trailing" constant="5" id="zJu-L0-qX7"/>
+                        <constraint firstAttribute="bottom" secondItem="kGW-WI-Oec" secondAttribute="bottom" constant="79" id="vai-uo-kJR"/>
                         <constraint firstAttribute="bottom" secondItem="fyD-3R-CJJ" secondAttribute="bottom" id="zQ1-oY-EPE"/>
                     </constraints>
                 </view>
@@ -325,13 +259,10 @@
     <resources>
         <image name="bg" width="754" height="1339"/>
         <image name="btn_whiteline" width="187" height="60"/>
-        <image name="checked" width="24" height="24"/>
         <image name="loading_icon_IP" width="27" height="27"/>
-        <image name="loading_icon_box" width="27" height="27"/>
         <image name="loading_icon_port" width="27" height="27"/>
         <image name="loading_icon_someone" width="27" height="27"/>
         <image name="loading_icon_user" width="27" height="27"/>
         <image name="login_img_bg" width="189" height="52"/>
-        <image name="unchecked" width="24" height="24"/>
     </resources>
 </document>

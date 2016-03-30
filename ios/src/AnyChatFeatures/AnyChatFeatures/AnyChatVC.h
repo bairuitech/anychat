@@ -38,7 +38,6 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UITextField            *theUserName;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
-@property (weak, nonatomic) IBOutlet UITextField            *theGuid;
 @property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
 @property (weak, nonatomic) IBOutlet UIButton               *theHideKeyboardBtn;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
@@ -66,12 +65,6 @@ kGCD_SINGLETON_FOR_HEADER(AnyChatVC);
 - (IBAction) hideKeyBoard;
 
 - (IBAction) OnLoginBtnClicked:(id)sender;
-
-//- (id) GetServerIP;
-//
-//- (id) GetServerPort;
-//
-//- (id) GetUserName;
 
 - (void) OnLogout;
 

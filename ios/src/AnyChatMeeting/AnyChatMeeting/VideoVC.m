@@ -148,6 +148,8 @@
         if (buttonIndex == 0)
         {
             [self FinishVideoChat];
+            [[AnyChatVC sharedAnyChatVC] OnLoginBtnClicked:nil];
+            
             [self.navigationController popViewControllerAnimated:YES];
         }
     }

@@ -13,27 +13,17 @@
 #import "QueueViewController.h"
 #import "VideoViewController.h"
 #import "ServerQueueViewController.h"
-#import "RadioButton.h"
-#import "AFNetworking.h"
 
 #define kUserID 1001
-#define kSignServerURL @"http://192.168.1.7:8980/"
-#define kAnyChatGuid @"bb9ca6ec-e611-4208-ab8f-44b5881c41e8"
 #define kAnyChatIP @"demo.anychat.cn"
 #define kAnyChatPort @"8906"
 #define kAnyChatUserName @"AnyChatQueue"
-
-typedef enum {
-    AnyChatVCLoginModeGeneralLogin,
-    AnyChatVCLoginModeSignLogin
-} AnyChatVCLoginMode;
 
 @interface LoginViewController ()<UITextFieldDelegate,AnyChatNotifyMessageDelegate,AnyChatObjectEventDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *role;             //角色
 @property (weak, nonatomic) IBOutlet UITextField *server;           //服务器地址
 @property (weak, nonatomic) IBOutlet UITextField *port;             //端口
 @property (weak, nonatomic) IBOutlet UITextField *username;         //用户名
-@property (weak, nonatomic) IBOutlet UITextField *guid;             //GUID
 @property (weak, nonatomic) IBOutlet UILabel *version;              //底部 SDK版本信息
 
 @property(nonatomic, strong)NSMutableArray *businessHallDicArr;     //营业厅字典数组
@@ -41,7 +31,7 @@ typedef enum {
 @property(nonatomic, weak)UIPickerView *pickerView;
 @property(nonatomic, assign)int selfUserId;                         //自己的用户id
 @property(nonatomic, assign)int waitingBusinessId;                  //队列id
-@property (nonatomic, assign) AnyChatVCLoginMode loginMode; // 登录方式
+
 
 - (IBAction)loginAction:(UIButton *)sender;
 
@@ -90,7 +80,6 @@ typedef enum {
     self.server.text = kAnyChatIP;
     self.port.text = kAnyChatPort;
     self.username.text = kAnyChatUserName;
-    self.guid.text = kAnyChatGuid;
     
     //设置底部Label文本SDK的版本信息
     self.version.text = [AnyChatPlatform GetSDKVersion];
@@ -562,63 +551,22 @@ typedef enum {
     if (self.server.text.length == 0 ) self.server.text = kAnyChatIP;
     if (self.port.text.length == 0 ) self.port.text = kAnyChatPort;
     if (self.username.text.length == 0) self.username.text = kAnyChatUserName;
-    
-    if (self.loginMode == AnyChatVCLoginModeSignLogin) {
-        if (self.guid.text.length == 0) {
-            [MBProgressHUD showError:@"应用ID不能为空"];
-            return;
-        }
-    }
-    
-    //设置应用GUID
-    if (self.loginMode == AnyChatVCLoginModeGeneralLogin && self.guid.text.length != 0) {
-        [AnyChatPlatform SetSDKOptionString:BRAC_SO_CLOUD_APPGUID :self.guid.text];
-    }
+
     //连接服务器，准备回调连接服务器方法 OnAnyChatConnect
     [MBProgressHUD showMessage:@"正在连接中，请稍等..."];
+    /*
+     * AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+     * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+     * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+     */
+    
     [AnyChatPlatform Connect:self.server.text : [self.port.text intValue]];
     
-    if (self.loginMode == AnyChatVCLoginModeSignLogin && self.guid.text.length != 0) {
-        [self getSignSuccess:^(id json) {
-            if ([[json objectForKey:@"errorcode"] intValue] ==0) {
-                int timestamp = [[json objectForKey:@"timestamp"] intValue];
-                NSString *signStr = [json objectForKey:@"sigStr"];
-                [AnyChatPlatform LoginEx:self.username.text :kUserID :nil :self.guid.text :timestamp :signStr :nil];
-            }else {
-                NSLog(@"Json Error,Error Num:%@",[json objectForKey:@"errorcode"]);
-            }
-        } failure:^(NSError *error) {
-            NSLog(@"Request Error:%@",error);
-        }];
-    }else if(self.loginMode == AnyChatVCLoginModeGeneralLogin){
-        [AnyChatPlatform Login:self.username.text :nil];
-    }
-}
+    /*
+     * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+     */
+    [AnyChatPlatform Login:self.username.text :nil];
 
-- (void)getSignSuccess:(void (^)(id))success failure:(void (^)(NSError *))failure{
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"userid"] = [NSNumber numberWithInt:kUserID];
-    params[@"strUserid"] = @"";
-    params[@"appid"] = self.guid.text;
-    
-    [manager POST:kSignServerURL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if (success) success(responseObject);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if (failure) failure(error);
-    }];
-    
-}
-
--(IBAction)onRadioBtn:(RadioButton*)sender
-{
-    if ([sender.titleLabel.text isEqualToString:@"签名登录"]) {
-        self.loginMode = AnyChatVCLoginModeSignLogin;
-    }else {
-        self.loginMode = AnyChatVCLoginModeGeneralLogin;
-    }
 }
 
 @end

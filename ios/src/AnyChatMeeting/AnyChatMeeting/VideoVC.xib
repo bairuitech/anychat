@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoVC">
@@ -31,7 +31,7 @@
                         <navigationItem title="Title" id="Ogv-2w-Te1">
                             <barButtonItem key="leftBarButtonItem" style="plain" id="rRZ-mw-Wvv" userLabel="Bar Button Item - left">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="djr-we-g4B" userLabel="Button - back">
-                                    <rect key="frame" x="5" y="11" width="28" height="21"/>
+                                    <rect key="frame" x="7" y="11" width="28" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="Icon_back.png" backgroundImage="Icon_back.png"/>
                                     <connections>
@@ -41,7 +41,7 @@
                             </barButtonItem>
                             <barButtonItem key="rightBarButtonItem" id="1eA-4M-uUx" userLabel="Bar Button Item - Right">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6q6-sG-3qN" userLabel="Button - switchCamera">
-                                    <rect key="frame" x="293" y="12" width="22" height="20"/>
+                                    <rect key="frame" x="291" y="12" width="22" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" image="Icon_switchCamera_w_102.png" backgroundImage="Icon_switchCamera_w_102.png">
@@ -203,9 +203,4 @@
         <image name="Icon_switchCamera_w_102.png" width="102" height="102"/>
         <image name="bg_video.png" width="320" height="480"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

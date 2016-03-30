@@ -7,20 +7,14 @@
 //
 
 #import "AnyChatVC.h"
-#import "AFNetworking.h"
-#import "RadioButton.h"
 
 #define kAnyChatUserName @"AnyChat"
-#define kAnyChatGuid @"bb9ca6ec-e611-4208-ab8f-44b5881c41e8"
-
-#define kSignServerURL @"http://192.168.1.7:8980/"
 #define kUserID 1001
 
 @interface AnyChatVC ()
 
-@property (strong)NSString *textField0;
-@property (weak, nonatomic) IBOutlet RadioButton *generaLoginBtn;
-@property (weak, nonatomic) IBOutlet RadioButton *signLoginBtn;
+//@property (strong)NSString *textField0;
+
 
 @end
 
@@ -34,7 +28,6 @@
 @synthesize theUserName;
 @synthesize theServerIP;
 @synthesize theServerPort;
-@synthesize theGuid;
 @synthesize theLoginBtn;
 @synthesize theHideKeyboardBtn;
 @synthesize theFeaturesName;
@@ -585,7 +578,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     [theServerIP resignFirstResponder];
     [theServerPort resignFirstResponder];
     [theUserName resignFirstResponder];
-    [theGuid resignFirstResponder];
+
 }
 
 - (IBAction)OnLoginBtnClicked:(id)sender
@@ -612,61 +605,24 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     if([theServerPort.text length] == 0) {
         theServerPort.text = kAnyChatPort;
     }
-    if (self.loginMode == AnyChatVCLoginModeSignLogin) {
-        if (theGuid.text.length == 0) {
-            MBProgressHUD *mbHUD= [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            mbHUD.labelText = @"应用ID不能为空";
-            mbHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"error"]];
-            mbHUD.mode = MBProgressHUDModeCustomView;
-            mbHUD.removeFromSuperViewOnHide = YES;
-            [mbHUD hide:YES afterDelay:0.7];
-            
-            return;
-        }
-    }
-    
+
     [self showLoadingAnimated];
     
+    /*
+     * AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+     * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+     * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+     */
     
-    if (self.loginMode == AnyChatVCLoginModeGeneralLogin && theGuid.text.length != 0) {
-        [AnyChatPlatform SetSDKOptionString:BRAC_SO_CLOUD_APPGUID :theGuid.text];
-    }
     [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
     
-    if (self.loginMode == AnyChatVCLoginModeSignLogin && theGuid.text.length != 0) {
-        [self getSignSuccess:^(id json) {
-            if ([[json objectForKey:@"errorcode"] intValue] ==0) {
-                int timestamp = [[json objectForKey:@"timestamp"] intValue];
-                NSString *signStr = [json objectForKey:@"sigStr"];
-                [AnyChatPlatform LoginEx:theUserName.text :kUserID :nil :theGuid.text :timestamp :signStr :nil];
-            }else {
-                NSLog(@"Json Error,Error Num:%@",[json objectForKey:@"errorcode"]);
-            }
-        } failure:^(NSError *error) {
-            NSLog(@"Request Error:%@",error);
-        }];
-    }else if(self.loginMode == AnyChatVCLoginModeGeneralLogin){
-        [AnyChatPlatform Login:theUserName.text :nil];
-    }
+    /*
+     * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+     */
+    [AnyChatPlatform Login:theUserName.text :nil];
+
     
     [self hideKeyBoard];
-    
-}
-
-- (void)getSignSuccess:(void (^)(id))success failure:(void (^)(NSError *))failure{
-
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"userid"] = [NSNumber numberWithInt:kUserID];
-    params[@"strUserid"] = @"";
-    params[@"appid"] = theGuid.text;
-    
-    [manager POST:kSignServerURL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if (success) success(responseObject);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if (failure) failure(error);
-    }];
     
 }
 
@@ -785,10 +741,6 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     theUserName.text = kAnyChatUserName;
     theServerIP.text = kAnyChatIP;
     theServerPort.text = kAnyChatPort;
-    theGuid.text = kAnyChatGuid;
-    self.loginMode = AnyChatVCLoginModeGeneralLogin;
-    self.generaLoginBtn.selected = YES;
-    self.signLoginBtn.selected = NO;
     
     [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -804,16 +756,6 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     [self prefersStatusBarHidden];
     
 }
-
--(IBAction)onRadioBtn:(RadioButton*)sender
-{
-    if ([sender.titleLabel.text isEqualToString:@"签名登录"]) {
-        self.loginMode = AnyChatVCLoginModeSignLogin;
-    }else {
-        self.loginMode = AnyChatVCLoginModeGeneralLogin;
-    }
-}
-
 
 
 @end

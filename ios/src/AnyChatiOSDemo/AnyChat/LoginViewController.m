@@ -71,8 +71,16 @@
 {
     if([theUserName.text length] == 0)
         theUserName.text=@"iPhone";
-    
+    /*
+     * AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+     * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+     * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+     */
     [AnyChatPlatform Connect:[AnyChatAppDelegate GetServerIP] : [AnyChatAppDelegate GetServerPort]];
+    
+    /*
+     * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+     */
     [AnyChatPlatform Login:theUserName.text : thePassword.text];
 }
 

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnyChatVC">
             <connections>
-                <outlet property="generaLoginBtn" destination="OB0-cV-L5r" id="akX-id-g7G"/>
-                <outlet property="signLoginBtn" destination="Yr3-XM-aZH" id="JiU-iv-0fR"/>
-                <outlet property="theGuid" destination="Wgs-Us-yxA" id="BxS-hX-gyd"/>
                 <outlet property="theHideKeyboardBtn" destination="3av-cN-Js3" id="lsS-0f-3mY"/>
                 <outlet property="theLoginBtn" destination="Na6-1Z-fa2" id="V8L-kj-2C3"/>
                 <outlet property="theServerIP" destination="3tK-w0-pgW" id="JAZ-wR-8dv"/>
@@ -101,48 +98,6 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
-                        <view contentMode="scaleToFill" id="sQF-oH-Xmo" userLabel="View - line - down">
-                            <rect key="frame" x="20" y="173" width="200" height="1"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        </view>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon_box.png" id="Cwp-UX-VIS" userLabel="guid">
-                            <rect key="frame" x="22" y="139" width="25" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="应用ID" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="Wgs-Us-yxA" userLabel="guidTextField">
-                            <rect key="frame" x="48" y="141" width="160" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="IUX-eF-6kt"/>
-                            </connections>
-                        </textField>
-                        <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OB0-cV-L5r" customClass="RadioButton">
-                            <rect key="frame" x="11" y="184" width="96" height="24"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="普通登录" image="unchecked.png"/>
-                            <state key="selected" image="checked.png"/>
-                            <connections>
-                                <action selector="onRadioBtn:" destination="-1" eventType="touchUpInside" id="jmR-Ei-cb3"/>
-                                <outletCollection property="groupButtons" destination="Yr3-XM-aZH" id="Ty5-p4-gA7"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Yr3-XM-aZH" customClass="RadioButton">
-                            <rect key="frame" x="116" y="184" width="96" height="24"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="签名登录" image="unchecked.png"/>
-                            <state key="selected" image="checked.png"/>
-                            <connections>
-                                <action selector="onRadioBtn:" destination="-1" eventType="touchUpInside" id="h7v-yS-6Md"/>
-                            </connections>
-                        </button>
                     </subviews>
                 </view>
                 <view contentMode="scaleToFill" id="1Qn-S9-C21" userLabel="View - Footer">
@@ -159,7 +114,7 @@
                             <rect key="frame" x="0.0" y="15" width="320" height="15"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -179,14 +134,11 @@
         </view>
     </objects>
     <resources>
-        <image name="Icon_box.png" width="27" height="27"/>
         <image name="Icon_ip.png" width="144" height="144"/>
         <image name="Icon_name.png" width="144" height="144"/>
         <image name="Icon_port.png" width="144" height="144"/>
         <image name="bg.png" width="640" height="1136"/>
         <image name="bg_loginTitle.png" width="323" height="176"/>
         <image name="btn_login_01.png" width="350" height="106"/>
-        <image name="checked.png" width="24" height="24"/>
-        <image name="unchecked.png" width="24" height="24"/>
     </resources>
 </document>

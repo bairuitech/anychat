@@ -28,7 +28,6 @@
 @property (weak, nonatomic) IBOutlet UITextField            *theRoomNO;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
-@property (weak, nonatomic) IBOutlet UITextField            *theGuid;
 @property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
 @property (weak, nonatomic) IBOutlet UIButton               *theHideKeyboardBtn;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersion;
@@ -41,7 +40,6 @@
 @property BOOL theOnLineLoginState;
 @property int theMyUserID;
 @property int theTargetUserID;
-
 
 - (IBAction) hideKeyBoard;
 

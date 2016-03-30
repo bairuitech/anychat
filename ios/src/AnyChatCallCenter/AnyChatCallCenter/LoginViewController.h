@@ -16,7 +16,6 @@
 
 @property (nonatomic, strong) IBOutlet UITextField   *theIP;
 @property (nonatomic, strong) IBOutlet UITextField   *thePort;
-@property (nonatomic, strong) IBOutlet UITextField   *theGuid;
 @property (nonatomic, strong) IBOutlet UITextField   *theUserName;
 @property (nonatomic, strong) IBOutlet UIButton      *theLoginBtn;
 @property (nonatomic, strong) IBOutlet UILabel       *theVersion;
