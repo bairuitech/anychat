@@ -42,16 +42,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txt_password = new System.Windows.Forms.TextBox();
             this.checkBox_RemoteDesktop = new System.Windows.Forms.CheckBox();
-            this.cbox_appGuid = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.rbtn_sign = new System.Windows.Forms.RadioButton();
-            this.rbtn_normal = new System.Windows.Forms.RadioButton();
-            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_login
             // 
-            this.btn_login.Location = new System.Drawing.Point(158, 207);
+            this.btn_login.Location = new System.Drawing.Point(159, 166);
             this.btn_login.Name = "btn_login";
             this.btn_login.Size = new System.Drawing.Size(75, 23);
             this.btn_login.TabIndex = 3;
@@ -80,7 +75,7 @@
             // lbl_tipMessage
             // 
             this.lbl_tipMessage.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lbl_tipMessage.Location = new System.Drawing.Point(0, 245);
+            this.lbl_tipMessage.Location = new System.Drawing.Point(0, 218);
             this.lbl_tipMessage.Name = "lbl_tipMessage";
             this.lbl_tipMessage.Size = new System.Drawing.Size(384, 17);
             this.lbl_tipMessage.TabIndex = 6;
@@ -170,67 +165,12 @@
             this.checkBox_RemoteDesktop.Text = "打开屏幕共享";
             this.checkBox_RemoteDesktop.UseVisualStyleBackColor = true;
             // 
-            // cbox_appGuid
-            // 
-            this.cbox_appGuid.FormattingEnabled = true;
-            this.cbox_appGuid.Location = new System.Drawing.Point(117, 145);
-            this.cbox_appGuid.Name = "cbox_appGuid";
-            this.cbox_appGuid.Size = new System.Drawing.Size(197, 25);
-            this.cbox_appGuid.TabIndex = 16;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(55, 149);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 17);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "应用ID：";
-            // 
-            // rbtn_sign
-            // 
-            this.rbtn_sign.AutoSize = true;
-            this.rbtn_sign.Location = new System.Drawing.Point(240, 178);
-            this.rbtn_sign.Name = "rbtn_sign";
-            this.rbtn_sign.Size = new System.Drawing.Size(74, 21);
-            this.rbtn_sign.TabIndex = 18;
-            this.rbtn_sign.Text = "签名登录";
-            this.rbtn_sign.UseVisualStyleBackColor = true;
-            this.rbtn_sign.Click += new System.EventHandler(this.rbtn_sign_Click);
-            // 
-            // rbtn_normal
-            // 
-            this.rbtn_normal.AutoSize = true;
-            this.rbtn_normal.Checked = true;
-            this.rbtn_normal.Location = new System.Drawing.Point(117, 178);
-            this.rbtn_normal.Name = "rbtn_normal";
-            this.rbtn_normal.Size = new System.Drawing.Size(74, 21);
-            this.rbtn_normal.TabIndex = 19;
-            this.rbtn_normal.TabStop = true;
-            this.rbtn_normal.Text = "普通登录";
-            this.rbtn_normal.UseVisualStyleBackColor = true;
-            this.rbtn_normal.CheckedChanged += new System.EventHandler(this.rbtn_normal_CheckedChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(43, 180);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(68, 17);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "登录方式：";
-            // 
             // frmLogin
             // 
             this.AcceptButton = this.btn_login;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 262);
-            this.Controls.Add(this.rbtn_sign);
-            this.Controls.Add(this.rbtn_normal);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.cbox_appGuid);
-            this.Controls.Add(this.label4);
+            this.ClientSize = new System.Drawing.Size(384, 235);
             this.Controls.Add(this.checkBox_RemoteDesktop);
             this.Controls.Add(this.txt_password);
             this.Controls.Add(this.cbox_userName);
@@ -248,9 +188,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(400, 300);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(400, 300);
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "登录";
@@ -277,11 +215,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txt_password;
         private System.Windows.Forms.CheckBox checkBox_RemoteDesktop;
-        private System.Windows.Forms.ComboBox cbox_appGuid;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.RadioButton rbtn_sign;
-        private System.Windows.Forms.RadioButton rbtn_normal;
-        private System.Windows.Forms.Label label5;
     }
 }
 

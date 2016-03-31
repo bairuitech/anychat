@@ -47,6 +47,7 @@
             this.label_radio2 = new System.Windows.Forms.Label();
             this.label_radio1 = new System.Windows.Forms.Label();
             this.btnSetting = new System.Windows.Forms.Button();
+            this.btnRecord = new System.Windows.Forms.Button();
             this.btnLeaveRoom = new System.Windows.Forms.Button();
             this.panel_Left = new System.Windows.Forms.Panel();
             this.dgv_onlineuser = new System.Windows.Forms.DataGridView();
@@ -56,6 +57,9 @@
             this.gvc_audio = new System.Windows.Forms.DataGridViewImageColumn();
             this.gvc_video = new System.Windows.Forms.DataGridViewImageColumn();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnSnapshot = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cmbBoxSelectVideo = new System.Windows.Forms.ComboBox();
             this.panel_Center_Top.SuspendLayout();
             this.groupBox_RemoteVideo.SuspendLayout();
             this.panel_Center.SuspendLayout();
@@ -157,11 +161,15 @@
             // 
             // panel_Center_Bottom_OptZone
             // 
+            this.panel_Center_Bottom_OptZone.Controls.Add(this.cmbBoxSelectVideo);
+            this.panel_Center_Bottom_OptZone.Controls.Add(this.label1);
             this.panel_Center_Bottom_OptZone.Controls.Add(this.label_radio4);
             this.panel_Center_Bottom_OptZone.Controls.Add(this.label_radio3);
             this.panel_Center_Bottom_OptZone.Controls.Add(this.label_radio2);
             this.panel_Center_Bottom_OptZone.Controls.Add(this.label_radio1);
             this.panel_Center_Bottom_OptZone.Controls.Add(this.btnSetting);
+            this.panel_Center_Bottom_OptZone.Controls.Add(this.btnSnapshot);
+            this.panel_Center_Bottom_OptZone.Controls.Add(this.btnRecord);
             this.panel_Center_Bottom_OptZone.Controls.Add(this.btnLeaveRoom);
             this.panel_Center_Bottom_OptZone.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel_Center_Bottom_OptZone.Location = new System.Drawing.Point(609, 0);
@@ -172,7 +180,7 @@
             // label_radio4
             // 
             this.label_radio4.AutoSize = true;
-            this.label_radio4.Location = new System.Drawing.Point(8, 305);
+            this.label_radio4.Location = new System.Drawing.Point(8, 334);
             this.label_radio4.Name = "label_radio4";
             this.label_radio4.Size = new System.Drawing.Size(77, 12);
             this.label_radio4.TabIndex = 3;
@@ -182,7 +190,7 @@
             // label_radio3
             // 
             this.label_radio3.AutoSize = true;
-            this.label_radio3.Location = new System.Drawing.Point(8, 279);
+            this.label_radio3.Location = new System.Drawing.Point(8, 308);
             this.label_radio3.Name = "label_radio3";
             this.label_radio3.Size = new System.Drawing.Size(77, 12);
             this.label_radio3.TabIndex = 3;
@@ -192,7 +200,7 @@
             // label_radio2
             // 
             this.label_radio2.AutoSize = true;
-            this.label_radio2.Location = new System.Drawing.Point(8, 254);
+            this.label_radio2.Location = new System.Drawing.Point(8, 283);
             this.label_radio2.Name = "label_radio2";
             this.label_radio2.Size = new System.Drawing.Size(77, 12);
             this.label_radio2.TabIndex = 2;
@@ -202,7 +210,7 @@
             // label_radio1
             // 
             this.label_radio1.AutoSize = true;
-            this.label_radio1.Location = new System.Drawing.Point(8, 225);
+            this.label_radio1.Location = new System.Drawing.Point(8, 254);
             this.label_radio1.Name = "label_radio1";
             this.label_radio1.Size = new System.Drawing.Size(77, 12);
             this.label_radio1.TabIndex = 1;
@@ -211,7 +219,7 @@
             // 
             // btnSetting
             // 
-            this.btnSetting.Location = new System.Drawing.Point(16, 111);
+            this.btnSetting.Location = new System.Drawing.Point(16, 51);
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(120, 36);
             this.btnSetting.TabIndex = 0;
@@ -219,9 +227,19 @@
             this.btnSetting.UseVisualStyleBackColor = true;
             this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
+            // btnRecord
+            // 
+            this.btnRecord.Location = new System.Drawing.Point(16, 93);
+            this.btnRecord.Name = "btnRecord";
+            this.btnRecord.Size = new System.Drawing.Size(120, 36);
+            this.btnRecord.TabIndex = 0;
+            this.btnRecord.Text = "开始录像";
+            this.btnRecord.UseVisualStyleBackColor = true;
+            this.btnRecord.Click += new System.EventHandler(this.btnRecord_Click);
+            // 
             // btnLeaveRoom
             // 
-            this.btnLeaveRoom.Location = new System.Drawing.Point(16, 44);
+            this.btnLeaveRoom.Location = new System.Drawing.Point(16, 12);
             this.btnLeaveRoom.Name = "btnLeaveRoom";
             this.btnLeaveRoom.Size = new System.Drawing.Size(120, 36);
             this.btnLeaveRoom.TabIndex = 0;
@@ -274,7 +292,6 @@
             this.dgv_onlineuser.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_onlineuser.Size = new System.Drawing.Size(251, 730);
             this.dgv_onlineuser.TabIndex = 6;
-            this.dgv_onlineuser.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_onlineuser_RowLeave);
             this.dgv_onlineuser.Click += new System.EventHandler(this.dgv_onlineuser_Click);
             // 
             // gvc_character
@@ -326,6 +343,39 @@
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // btnSnapshot
+            // 
+            this.btnSnapshot.Location = new System.Drawing.Point(16, 195);
+            this.btnSnapshot.Name = "btnSnapshot";
+            this.btnSnapshot.Size = new System.Drawing.Size(120, 36);
+            this.btnSnapshot.TabIndex = 0;
+            this.btnSnapshot.Text = "拍照";
+            this.btnSnapshot.UseVisualStyleBackColor = true;
+            this.btnSnapshot.Click += new System.EventHandler(this.btnSnapshot_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(14, 159);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "选择：";
+            // 
+            // cmbBoxSelectVideo
+            // 
+            this.cmbBoxSelectVideo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxSelectVideo.FormattingEnabled = true;
+            this.cmbBoxSelectVideo.Items.AddRange(new object[] {
+            "1号视频",
+            "2号视频",
+            "3号视频",
+            "4号视频"});
+            this.cmbBoxSelectVideo.Location = new System.Drawing.Point(61, 156);
+            this.cmbBoxSelectVideo.Name = "cmbBoxSelectVideo";
+            this.cmbBoxSelectVideo.Size = new System.Drawing.Size(75, 20);
+            this.cmbBoxSelectVideo.TabIndex = 5;
             // 
             // frmRoom2
             // 
@@ -382,5 +432,9 @@
         private System.Windows.Forms.Panel panel_OtherVideoZone;
         private System.Windows.Forms.GroupBox groupBox_LocalVideo;
         private System.Windows.Forms.Panel panel_OwnerVideoZone;
+        private System.Windows.Forms.Button btnRecord;
+        private System.Windows.Forms.Button btnSnapshot;
+        private System.Windows.Forms.ComboBox cmbBoxSelectVideo;
+        private System.Windows.Forms.Label label1;
     }
 }

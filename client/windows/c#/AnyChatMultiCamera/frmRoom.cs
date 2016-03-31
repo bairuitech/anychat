@@ -18,6 +18,7 @@ namespace AnyChatMultiCamera
     public partial class frmRoom2 : Form
     {
         #region 变量定义区域
+
         /// <summary>
         /// 视频放大宽度
         /// </summary>
@@ -89,11 +90,18 @@ namespace AnyChatMultiCamera
         /// 登录方式
         /// </summary>
         private LoginType m_loginType = LoginType.Normal;
-
         /// <summary>
         /// 签名Url
         /// </summary>
         public string m_signUrl = string.Empty;
+        /// <summary>
+        /// 远程用户Id
+        /// </summary>
+        public int remoteUserID = 0;
+        /// <summary>
+        /// 是否在录像的标志
+        /// </summary>
+        public bool isRecord = false;
 
         #endregion
 
@@ -151,65 +159,29 @@ namespace AnyChatMultiCamera
                 screenCameraCtrl = 1;
                 AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CORESDK_SCREENCAMERACTRL, ref screenCameraCtrl, sizeof(int));
             }
-            if (m_loginType == LoginType.Normal)
-            {
-                if (!string.IsNullOrEmpty(m_appGuid))
-                {
-                    AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, m_appGuid, m_appGuid.Length);
-                }
-            }
+
+            SystemSetting.AnyChatRecordSnapShot_Handler = new SystemSetting.AnyChatRecordSnapShotCallBack(RecordSnapShot);
+            SystemSetting.AnyChatRecordSnapShotEx_Handler = new SystemSetting.AnyChatRecordSnapShotExCallBack(RecordSnapShotEx);
+            SystemSetting.AnyChatVideoScreenEvent_Handler = new SystemSetting.AnyChatVideoScreenEventCallBack(VideoScreenEvent);
+
+            cmbBoxSelectVideo.SelectedIndex = 0;
         }
 
         private void frmRoom_Shown(object sender, EventArgs e)
         {
-            //应用签名
-            string signStr = string.Empty;
-            //签名时间戳
-            int signTimestamp = 0;
-
-            //签名登录
-            if (m_loginType == LoginType.Sign)
-            {
-                //向签名服务器发送签名POST请求，获取签名
-                //在实际应用系统中是需要在登录时输入用户名、密码之后，用户身份验证通过后向签名服务器获取应用签名
-
-
-                if (!string.IsNullOrEmpty(m_appGuid))
-                {
-                    //签名服务器Url，根据实际签名服务器部署情况进行修改
-                    string signServerUrl = m_signUrl;
-                    //传入请求参数
-                    string reqParam = "userId=" + m_myUserID + "&strUserId=" + m_myUserName + "&appId=" + m_appGuid;
-                    string responseResult = HttpPost(signServerUrl, reqParam);
-                    if (!String.IsNullOrEmpty(responseResult))
-                    {
-                        JsonObject jsonObj = ToClass<JsonObject>(responseResult);
-
-                        if (jsonObj.errorcode == 0)
-                        {
-                            signStr = jsonObj.sigStr;
-                            signTimestamp = jsonObj.timestamp;
-                        }
-                    }
-                    else
-                    {
-                        Log.SetLog("签名返回空字符串");
-                    }
-                }
-            }
+            /* AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+             * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+             * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+             */
             int ret = AnyChatCoreSDK.Connect(m_serverIP, m_port);
 
             createRemoteVideoDisplayZone();
 
-            if (m_loginType == LoginType.Sign)
-            {
-                ret = AnyChatCoreSDK.LoginEx(m_myUserName, m_myUserID, m_myUserName, m_appGuid, signTimestamp, signStr, string.Empty);//登录系统
-
-            }
-            if (m_loginType == LoginType.Normal)
-            {
-                ret = AnyChatCoreSDK.Login(m_myUserName, m_userPassword, 0);
-            }
+            /*
+             * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，
+             * 详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+             */
+            ret = AnyChatCoreSDK.Login(m_myUserName, m_userPassword, 0);
 
             label_radio1.Text = string.Empty;
             label_radio2.Text = string.Empty;
@@ -460,11 +432,13 @@ namespace AnyChatMultiCamera
 
             string curTime = string.Empty;
             curTime = "【" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "】";
+            var currentLen = txt_OutputMessage.TextLength;
+
             txt_OutputMessage.AppendText(curTime + logText + "\r\n");
-            txt_OutputMessage.Select(txt_OutputMessage.TextLength + curTime.Length, logText.Length);    // 需要修改颜色的部分
+            txt_OutputMessage.Select(currentLen, logText.Length);    // 需要修改颜色的部分
             txt_OutputMessage.SelectionColor = logColor;       // 颜色
             txt_OutputMessage.ScrollToCaret();
-            txt_OutputMessage.Select(txt_OutputMessage.Text.Length, 0);
+            //txt_OutputMessage.Select(txt_OutputMessage.Text.Length, 0);
 
         }
 
@@ -751,11 +725,18 @@ namespace AnyChatMultiCamera
 
                 DataGridViewRow dgvr = dgv_onlineuser.SelectedRows[0];
 
-                int remoteUserID = Int32.Parse(dgvr.Cells["gvc_userID"].Value.ToString());
+                remoteUserID = Int32.Parse(dgvr.Cells["gvc_userID"].Value.ToString());
+                string remoteUserName = dgvr.Cells["gvc_username"].Value.ToString();
+
                 if (remoteUserID == m_myUserID || remoteUserID == currentRemoteUserID) return;
+
+                //关闭上一个远程用户的视频
+                controlRemoteVideo(currentRemoteUserID, false);
 
                 currentRemoteUserID = remoteUserID;
                 controlRemoteVideo(remoteUserID, true);
+
+                groupBox_RemoteVideo.Text = "远程视频显示区域" + "（用户：" + remoteUserName + "）";
             }
             catch (Exception ex) { }
 
@@ -931,7 +912,7 @@ namespace AnyChatMultiCamera
                 if (leaveUserID == m_myUserID) return;
                 if (leaveUserID == currentRemoteUserID)
                 {
-                    controlRemoteVideo(leaveUserID, false);
+                    //controlRemoteVideo(leaveUserID, false);
                 }
             }
         }
@@ -1025,6 +1006,97 @@ namespace AnyChatMultiCamera
                 Log.SetLog("HttpPost has exception, message: " + ex.Message);
             }
             return retVal;
+        }
+
+        private void btnRecord_Click(object sender, EventArgs e)
+        {
+            int recordUserId = -1;
+            int recordFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SERVER + AnyChatCoreSDK.BRAC_RECORD_FLAGS_VIDEO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_AUDIO + 
+                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_MIXAUDIO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_MIXVIDEO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_STEREO +
+                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_ABREAST + AnyChatCoreSDK.BRAC_RECORD_FLAGS_STREAM + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_LOCALCB;
+            if (!isRecord)
+            {
+                //设置录制参数
+                int record_width = 1280;
+                int record_height = 960;
+                int VADCtrol = 0;
+                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_RECORD_WIDTH, ref record_width, sizeof(int));
+                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_RECORD_HEIGHT, ref record_height, sizeof(int));
+                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_AUDIO_VADCTRL, ref VADCtrol, sizeof(int)); 
+                
+                //开始录像
+                AnyChatCoreSDK.StreamRecordCtrl(recordUserId, true, recordFlags, 0);
+                addLog("StreamRecordCtrl(" + recordUserId + ", " + true + ", " + recordFlags + ", 0 " + string.Empty + ")", LogType.LOG_TYPE_API);
+                isRecord = true;
+                btnRecord.Text = "结束录像";
+            }
+            else
+            {
+                //结束录像
+                AnyChatCoreSDK.StreamRecordCtrl(recordUserId, false, recordFlags, 0);
+                addLog("StreamRecordCtrl(" + recordUserId + ", " + false + ", " + recordFlags + ", 0 " + string.Empty + ")", LogType.LOG_TYPE_API);
+                isRecord = false;
+                btnRecord.Text = "开始录像";
+                int VADCtrol = 1;
+                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_AUDIO_VADCTRL, ref VADCtrol, sizeof(int)); 
+            }
+
+        }
+
+
+        private void btnSnapshot_Click(object sender, EventArgs e)
+        {
+            if (remoteUserID == 0) remoteUserID = -1;
+
+            int snapshotFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SNAPSHOT + AnyChatCoreSDK.BRAC_RECORD_FLAGS_SERVER + AnyChatCoreSDK.BRAC_RECORD_FLAGS_LOCALCB +
+                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_MULTISTREAM;
+
+            AnyChatCoreSDK.StreamRecordCtrlEx(remoteUserID, true, snapshotFlags, cmbBoxSelectVideo.SelectedIndex, "snapshot");
+            addLog("StreamRecordCtrlEx(" + remoteUserID + ", " + true + ", " + snapshotFlags + "," + cmbBoxSelectVideo.SelectedIndex + "," + string.Empty + ")", LogType.LOG_TYPE_API);
+
+            //AnyChatCoreSDK.SnapShot(remoteUserID, snapshotFlags, cmbBoxSelectVideo.SelectedIndex);
+            //addLog("SnapShot(" + remoteUserID + ", " + snapshotFlags + "," + cmbBoxSelectVideo.SelectedIndex + ")", LogType.LOG_TYPE_API);
+        }
+
+        /// <summary>
+        /// 录像和拍照
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="fileName"></param>
+        /// <param name="param"></param>
+        /// <param name="recordType"></param>
+        /// <param name="userValue"></param>
+        private void RecordSnapShot(int userId, string fileName, int param, bool recordType, int userValue)
+        {
+            MessageBox.Show(fileName);
+        }
+
+        /// <summary>
+        /// 录像和拍照
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="fileName"></param>
+        /// <param name="param"></param>
+        /// <param name="recordType"></param>
+        /// <param name="userValue"></param>
+        private void RecordSnapShotEx(int userId, string fileName, int elapse, int flags, int param, string userStr, int userValue)
+        {
+            int recordFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SERVER + AnyChatCoreSDK.BRAC_RECORD_FLAGS_VIDEO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_AUDIO +
+                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_MIXAUDIO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_MIXVIDEO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_STEREO +
+                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_ABREAST + AnyChatCoreSDK.BRAC_RECORD_FLAGS_STREAM + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_LOCALCB;
+            int snapshotFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SNAPSHOT + AnyChatCoreSDK.BRAC_RECORD_FLAGS_SERVER + AnyChatCoreSDK.BRAC_RECORD_FLAGS_LOCALCB +
+                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_MULTISTREAM;
+            string logHeader = "生成录像文件为：";
+
+            if (flags == snapshotFlags)
+                logHeader = "生成拍照文件为：";
+
+            addLog(logHeader + fileName + "，时长" + elapse + "秒", LogType.LOG_TYPE_NORMAL);
+        }
+
+        private void VideoScreenEvent(int userId, int type, int key, int flags, int wParam, int lParam, int userValue)
+        {
+
         }
 
     }

@@ -84,11 +84,8 @@ namespace QueueClient
                 }
                 else
                 {
-                    if (rbtn_normal.Checked)
-                    {
-                        cbox_serverIP.Text = "demo.anychat.cn";
-                        cbox_port.Text = "8906";
-                    }
+                    cbox_serverIP.Text = "demo.anychat.cn";
+                    cbox_port.Text = "8906";
 
                     cbox_userIdentity.SelectedIndex = 0;
                     cbox_identityPriority.SelectedIndex = 5;
@@ -117,11 +114,6 @@ namespace QueueClient
         //单击登录
         private void btn_login_Click(object sender, EventArgs e)
         {
-            //应用签名
-            string signStr = string.Empty;
-            //签名时间戳
-            int signTimestamp = 0;
-
             try
             {
                 if (cbox_userIdentity.Text != "")
@@ -133,7 +125,6 @@ namespace QueueClient
                         addr = cbox_serverIP.Text;
                         port = Convert.ToInt32(cbox_port.Text);
                         m_userName = cbox_userName.Text;
-                        m_appGuid = cbox_appGuid.Text;
                         m_userIdentity = (UserIdentityType)cbox_userIdentity.SelectedIndex;
                         m_identityPriority = Int32.Parse(cbox_identityPriority.Text);
                     }
@@ -148,56 +139,18 @@ namespace QueueClient
                       
                     }
                     SystemSetting.Init(this.Handle);
-                    //普通登录
-                    if (rbtn_normal.Checked)
-                    {
-                        if (!string.IsNullOrEmpty(m_appGuid))
-                        {
-                            AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CLOUD_APPGUID, m_appGuid, m_appGuid.Length);
-                        }
-                    }
-                    //签名登录
-                    if (rbtn_sign.Checked)
-                    {
-                        //向签名服务器发送签名POST请求，获取签名
-                        //在实际应用系统中是需要在登录时输入用户名、密码之后，用户身份验证通过后向签名服务器获取应用签名
 
-
-                        if (!string.IsNullOrEmpty(m_appGuid))
-                        {
-                            //签名服务器Url，根据实际签名服务器部署情况进行修改
-                            string signServerUrl = signUrl;
-                            //传入请求参数
-                            string reqParam = "userId=" + m_userId + "&strUserId=" + m_userName + "&appId=" + m_appGuid;
-                            string responseResult = HttpPost(signServerUrl, reqParam);
-                            if (!String.IsNullOrEmpty(responseResult))
-                            {
-                                JsonObject jsonObj = ToClass<JsonObject>(responseResult);
-
-                                if (jsonObj.errorcode == 0)
-                                {
-                                    signStr = jsonObj.sigStr;
-                                    signTimestamp = jsonObj.timestamp;
-                                }
-                            }
-                            else
-                            {
-                                Log.SetLog("签名返回空字符串");
-                            }
-                        }
-                    }
-
+                    /* AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+                     * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+                     * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+                     */
                     AnyChatCoreSDK.Connect(addr, port);
 
-                    if (rbtn_sign.Checked)
-                    {
-                        int ret = -1;
-                        ret = AnyChatCoreSDK.LoginEx(m_userName, m_userId, m_userName, m_appGuid, signTimestamp, signStr, string.Empty);//登录系统                    
-                    }
-                    if (rbtn_normal.Checked)
-                    {
-                        int ret = AnyChatCoreSDK.Login(m_userName, "123", 0);//登录系统
-                    }
+                    /*
+                     * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，
+                     * 详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+                     */
+                    int ret = AnyChatCoreSDK.Login(m_userName, "123", 0);//登录系统
 
                     RecordLoginTrace();
 
@@ -372,7 +325,6 @@ namespace QueueClient
                 RecordValue("ipList", "ip", cbox_serverIP.Text);
                 RecordValue("portList", "port", cbox_port.Text);
                 RecordValue("userNameList", "userName", cbox_userName.Text);
-                RecordValue("appGuidList", "appGuid", cbox_appGuid.Text);
                 //RecordValue("userIdentity", "userIdentity", cbox_userIdentity.SelectedIndex.ToString());
                 //RecordValue("identityPriority", "identityPriority", cbox_identityPriority.SelectedIndex.ToString());
 
@@ -381,7 +333,6 @@ namespace QueueClient
                 PreviousRecordValue("previousrecord", "userName", cbox_userName.Text);                
                 PreviousRecordValue("previousrecord", "userIdentity", cbox_userIdentity.Text);
                 PreviousRecordValue("previousrecord", "identityPriority", cbox_identityPriority.Text);
-                PreviousRecordValue("previousrecord", "appGuid", cbox_appGuid.Text);
 
                 if (String.IsNullOrEmpty(signUrl))
                 {
@@ -415,20 +366,6 @@ namespace QueueClient
                         break;
                     case "userNameList":
                         if (rVal == cbox_userName.Text)
-                            i = 1;
-                        break;
-                    /*
-                    case "userIdentity":
-                        if (rVal == cbox_userIdentity.Text)
-                            i = 1;
-                        break;
-                    case "identityPriority":
-                        if (rVal == cbox_identityPriority.Text)
-                            i = 1;
-                        break;
-                     */ 
-                    case "appGuidList":
-                        if (rVal == cbox_appGuid.Text)
                             i = 1;
                         break;
                 }
@@ -491,7 +428,6 @@ namespace QueueClient
             DisplayVal(cbox_serverIP, "ipList");
             DisplayVal(cbox_port, "portList");
             DisplayVal(cbox_userName, "userNameList");
-            DisplayVal(cbox_appGuid, "appGuidList");
             //DisplayVal(cbox_userIdentity, "userIdentity");
             //DisplayVal(cbox_identityPriority, "identityPriority");
 
@@ -503,8 +439,6 @@ namespace QueueClient
                 cbox_userName.Text = record[2];
                 cbox_userIdentity.Text = record[3];
                 cbox_identityPriority.Text = record[4];
-                cbox_appGuid.Text = record[5];
-                signUrl = record[6];
             }
           
         }
@@ -680,27 +614,6 @@ namespace QueueClient
             }
             return retVal;
         }
-
-        private void rbtn_normal_Click(object sender, EventArgs e)
-        {
-            if (cbox_serverIP.Text.ToLower().Equals("demo.anychat.cn") && rbtn_normal.Checked)
-            {                
-                cbox_port.Text = "8906";
-            }
-        }
-
-        private void rbtn_sign_Click(object sender, EventArgs e)
-        {
-            if (cbox_serverIP.Text.ToLower().Equals("demo.anychat.cn") && rbtn_sign.Checked)
-            {
-                cbox_serverIP.Text = "cloud.anychat.cn";
-                cbox_port.Text = "8906";
-                if (string.IsNullOrEmpty(cbox_appGuid.Text))
-                    cbox_appGuid.Text = "fbe957d1-c25a-4992-9e75-d993294a5d56";
-            }
-
-        }
-
     }
 
     /// <summary>

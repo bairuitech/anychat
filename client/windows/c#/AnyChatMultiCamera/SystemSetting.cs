@@ -69,6 +69,12 @@ namespace ANYCHATAPI
             //设置业务对象事件通知回调函数
             AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_OBJECTEVENT, Marshal.GetFunctionPointerForDelegate(ObjectEvent_callBack), hWnd);
 
+            AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_STREAMRECORD, Marshal.GetFunctionPointerForDelegate(RecordSnapShot_callBack), hWnd);
+
+            AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_STREAMRECORDEX, Marshal.GetFunctionPointerForDelegate(RecordSnapShotEx_callBack), hWnd);
+
+            AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_SCREENEVENT, Marshal.GetFunctionPointerForDelegate(VideoScreenEvent_callBack), hWnd);
+
             return isok;
         }
 
@@ -103,6 +109,12 @@ namespace ANYCHATAPI
         static AnyChatCoreSDK.VideoCallEvent_CallBack VideoCallEvent_callBack = new AnyChatCoreSDK.VideoCallEvent_CallBack(VideoCallEvent_CallBack);
 
         static AnyChatCoreSDK.OnObjectEventNotifyCallBack ObjectEvent_callBack = new AnyChatCoreSDK.OnObjectEventNotifyCallBack(ObjectEvent_CallBack);
+
+        static AnyChatCoreSDK.RecordSnapShot_CallBack RecordSnapShot_callBack = new AnyChatCoreSDK.RecordSnapShot_CallBack(RecordCallBack_Callback);
+
+        static AnyChatCoreSDK.RecordSnapShotEx_CallBack RecordSnapShotEx_callBack = new AnyChatCoreSDK.RecordSnapShotEx_CallBack(RecordSnapShotEx_CallBack);
+
+        static AnyChatCoreSDK.VideoScreenEvent_CallBack VideoScreenEvent_callBack = new AnyChatCoreSDK.VideoScreenEvent_CallBack(VideoScreenEvent_CallBack);
        
         public static SetRecordReceivedHandler SetRecordReceivedCallBack = null;
         /// <summary>
@@ -291,5 +303,88 @@ namespace ANYCHATAPI
                 AnyChatObjectEvent_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
             }
         }
+
+        /// <summary>
+        /// 录像、快照任务完成回调
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="fileName"></param>
+        /// <param name="param"></param>
+        /// <param name="recordType"></param>
+        /// <param name="userValue"></param>
+        public delegate void AnyChatRecordSnapShotCallBack(int userId, string fileName, int param, bool recordType, int userValue);
+        public static AnyChatRecordSnapShotCallBack AnyChatRecordSnapShot_Handler;
+        private static void RecordSnapShot_CallBack(int userId, string fileName, int param, bool recordType, int userValue)
+        {
+            if (AnyChatRecordSnapShot_Handler != null)
+            {
+                AnyChatRecordSnapShot_Handler(userId, fileName, param, recordType, userValue);
+            }
+        }
+
+        /// <summary>
+        /// 录像、快照任务完成回调
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="fileName"></param>
+        /// <param name="elapse"></param>
+        /// <param name="flags"></param>
+        /// <param name="param"></param>
+        /// <param name="userStr"></param>
+        /// <param name="userValue"></param>
+        public delegate void AnyChatRecordSnapShotExCallBack(int userId, string fileName, int elapse, int flags, int param, string userStr, int userValue);
+        public static AnyChatRecordSnapShotExCallBack AnyChatRecordSnapShotEx_Handler;
+        private static void RecordSnapShotEx_CallBack(int userId, string fileName, int elapse, int flags, int param, string userStr, int userValue)
+        {
+            if (AnyChatRecordSnapShotEx_Handler != null)
+            {
+                AnyChatRecordSnapShotEx_Handler(userId, fileName, elapse, flags, param, userStr, userValue);
+            }
+        }
+
+        /// <summary>
+        /// 录像、快照任务完成回调
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="errorCode"></param>
+        /// <param name="fileName"></param>
+        /// <param name="elapse"></param>
+        /// <param name="flags"></param>
+        /// <param name="param"></param>
+        /// <param name="userStr"></param>
+        /// <param name="userValue"></param>
+        public delegate void AnyChatRecordSnapShotEx2CallBack(int userId, int errorCode, string fileName, int elapse, int flags, int param, string userStr, int userValue);
+        public static AnyChatRecordSnapShotEx2CallBack AnyChatRecordSnapShotEx2_Handler;
+        private static void RecordSnapShotEx2_CallBack(int userId, int errorCode, string fileName, int elapse, int flags, int param, string userStr, int userValue)
+        {
+            if (AnyChatRecordSnapShotEx2_Handler != null)
+            {
+                AnyChatRecordSnapShotEx2_Handler(userId, errorCode, fileName, elapse, flags, param, userStr, userValue);
+            }
+        }
+
+        /// <summary>
+        /// 视频屏幕事件回调
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="type"></param>
+        /// <param name="key"></param>
+        /// <param name="flags"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <param name="userValue"></param>
+        public delegate void AnyChatVideoScreenEventCallBack(int userId, int type, int key, int flags, int wParam, int lParam, int userValue);
+        public static AnyChatVideoScreenEventCallBack AnyChatVideoScreenEvent_Handler;
+        private static void VideoScreenEvent_CallBack(int userId, int type, int key, int flags, int wParam, int lParam, int userValue)
+        {
+            if (AnyChatVideoScreenEvent_Handler != null)
+            {
+                AnyChatVideoScreenEvent_Handler(userId, type, key, flags, wParam, lParam, userValue);
+            }
+        }
+
+
+
+
     }
 }
