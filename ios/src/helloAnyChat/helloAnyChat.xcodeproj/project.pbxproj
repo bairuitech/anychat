@@ -16,14 +16,7 @@
 		FE3EAB6019E5233A00030ECA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */; };
 		FE3EAB6119E5233A00030ECA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3EAB5F19E5233A00030ECA /* Default@2x.png */; };
 		FE85404619D515A800253FA0 /* tableVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE85404519D515A800253FA0 /* tableVCell.xib */; };
-		FE94CE3F1C634C6400D199DE /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE94CE2D1C634C6400D199DE /* AFHTTPSessionManager.m */; };
-		FE94CE401C634C6400D199DE /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE94CE301C634C6400D199DE /* AFNetworkReachabilityManager.m */; };
-		FE94CE411C634C6400D199DE /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = FE94CE321C634C6400D199DE /* AFSecurityPolicy.m */; };
-		FE94CE421C634C6400D199DE /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FE94CE341C634C6400D199DE /* AFURLRequestSerialization.m */; };
-		FE94CE431C634C6400D199DE /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FE94CE361C634C6400D199DE /* AFURLResponseSerialization.m */; };
-		FE94CE441C634C6400D199DE /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE94CE381C634C6400D199DE /* AFURLSessionManager.m */; };
 		FE94CE451C634C6400D199DE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FE94CE3B1C634C6400D199DE /* MBProgressHUD.m */; };
-		FE94CE461C634C6400D199DE /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE94CE3E1C634C6400D199DE /* RadioButton.m */; };
 		FE94CE4C1C643AFA00D199DE /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = FE94CE481C643AFA00D199DE /* checked.png */; };
 		FE94CE4D1C643AFA00D199DE /* checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE94CE491C643AFA00D199DE /* checked@2x.png */; };
 		FE94CE4E1C643AFA00D199DE /* unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = FE94CE4A1C643AFA00D199DE /* unchecked.png */; };
@@ -113,23 +106,8 @@
 		FE3EAB5E19E5233A00030ECA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "helloAnyChat/Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		FE3EAB5F19E5233A00030ECA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "helloAnyChat/Resources/Default@2x.png"; sourceTree = "<group>"; };
 		FE85404519D515A800253FA0 /* tableVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = tableVCell.xib; sourceTree = "<group>"; };
-		FE94CE2C1C634C6400D199DE /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
-		FE94CE2D1C634C6400D199DE /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
-		FE94CE2E1C634C6400D199DE /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
-		FE94CE2F1C634C6400D199DE /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
-		FE94CE301C634C6400D199DE /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
-		FE94CE311C634C6400D199DE /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
-		FE94CE321C634C6400D199DE /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
-		FE94CE331C634C6400D199DE /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
-		FE94CE341C634C6400D199DE /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
-		FE94CE351C634C6400D199DE /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
-		FE94CE361C634C6400D199DE /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
-		FE94CE371C634C6400D199DE /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
-		FE94CE381C634C6400D199DE /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		FE94CE3A1C634C6400D199DE /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		FE94CE3B1C634C6400D199DE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		FE94CE3D1C634C6400D199DE /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
-		FE94CE3E1C634C6400D199DE /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
 		FE94CE481C643AFA00D199DE /* checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked.png; sourceTree = "<group>"; };
 		FE94CE491C643AFA00D199DE /* checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked@2x.png"; sourceTree = "<group>"; };
 		FE94CE4A1C643AFA00D199DE /* unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchecked.png; sourceTree = "<group>"; };
@@ -279,31 +257,9 @@
 		FE94CE2A1C634C6400D199DE /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				FE94CE2B1C634C6400D199DE /* AFNetworking */,
 				FE94CE391C634C6400D199DE /* MBProgressHUD */,
-				FE94CE3C1C634C6400D199DE /* RadioButton */,
 			);
 			path = Libs;
-			sourceTree = "<group>";
-		};
-		FE94CE2B1C634C6400D199DE /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				FE94CE2C1C634C6400D199DE /* AFHTTPSessionManager.h */,
-				FE94CE2D1C634C6400D199DE /* AFHTTPSessionManager.m */,
-				FE94CE2E1C634C6400D199DE /* AFNetworking.h */,
-				FE94CE2F1C634C6400D199DE /* AFNetworkReachabilityManager.h */,
-				FE94CE301C634C6400D199DE /* AFNetworkReachabilityManager.m */,
-				FE94CE311C634C6400D199DE /* AFSecurityPolicy.h */,
-				FE94CE321C634C6400D199DE /* AFSecurityPolicy.m */,
-				FE94CE331C634C6400D199DE /* AFURLRequestSerialization.h */,
-				FE94CE341C634C6400D199DE /* AFURLRequestSerialization.m */,
-				FE94CE351C634C6400D199DE /* AFURLResponseSerialization.h */,
-				FE94CE361C634C6400D199DE /* AFURLResponseSerialization.m */,
-				FE94CE371C634C6400D199DE /* AFURLSessionManager.h */,
-				FE94CE381C634C6400D199DE /* AFURLSessionManager.m */,
-			);
-			path = AFNetworking;
 			sourceTree = "<group>";
 		};
 		FE94CE391C634C6400D199DE /* MBProgressHUD */ = {
@@ -313,15 +269,6 @@
 				FE94CE3B1C634C6400D199DE /* MBProgressHUD.m */,
 			);
 			path = MBProgressHUD;
-			sourceTree = "<group>";
-		};
-		FE94CE3C1C634C6400D199DE /* RadioButton */ = {
-			isa = PBXGroup;
-			children = (
-				FE94CE3D1C634C6400D199DE /* RadioButton.h */,
-				FE94CE3E1C634C6400D199DE /* RadioButton.m */,
-			);
-			path = RadioButton;
 			sourceTree = "<group>";
 		};
 		FE94CE471C643AFA00D199DE /* radio-res-ios */ = {
@@ -646,19 +593,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEBBA26119C2CC0B009EE02C /* AppDelegate.m in Sources */,
-				FE94CE411C634C6400D199DE /* AFSecurityPolicy.m in Sources */,
 				FEB0A3711A523BE50065FDB7 /* SettingVC.m in Sources */,
 				FEBBA25D19C2CC0B009EE02C /* main.m in Sources */,
-				FE94CE431C634C6400D199DE /* AFURLResponseSerialization.m in Sources */,
 				FEB0A3721A523BE50065FDB7 /* DetailVC.m in Sources */,
 				FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */,
-				FE94CE3F1C634C6400D199DE /* AFHTTPSessionManager.m in Sources */,
-				FE94CE421C634C6400D199DE /* AFURLRequestSerialization.m in Sources */,
 				FE94CE451C634C6400D199DE /* MBProgressHUD.m in Sources */,
-				FE94CE441C634C6400D199DE /* AFURLSessionManager.m in Sources */,
-				FE94CE401C634C6400D199DE /* AFNetworkReachabilityManager.m in Sources */,
 				FEBBA2BA19C2CF67009EE02C /* AnyChatViewController.m in Sources */,
-				FE94CE461C634C6400D199DE /* RadioButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

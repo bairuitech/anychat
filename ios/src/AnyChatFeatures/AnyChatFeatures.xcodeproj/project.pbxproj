@@ -23,13 +23,6 @@
 		FE5574501A25635C00342F39 /* ShowVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE55744D1A25635C00342F39 /* ShowVC.xib */; };
 		FE5574511A25635C00342F39 /* ShowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE55744E1A25635C00342F39 /* ShowVC.m */; };
 		FE57D7061A075F8900F87D8E /* icon_text3.png in Resources */ = {isa = PBXBuildFile; fileRef = FE57D7051A075F8900F87D8E /* icon_text3.png */; };
-		FE5EFB511C55C9C90006BE11 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB451C55C9C90006BE11 /* AFHTTPSessionManager.m */; };
-		FE5EFB521C55C9C90006BE11 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB481C55C9C90006BE11 /* AFNetworkReachabilityManager.m */; };
-		FE5EFB531C55C9C90006BE11 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB4A1C55C9C90006BE11 /* AFSecurityPolicy.m */; };
-		FE5EFB541C55C9C90006BE11 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB4C1C55C9C90006BE11 /* AFURLRequestSerialization.m */; };
-		FE5EFB551C55C9C90006BE11 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB4E1C55C9C90006BE11 /* AFURLResponseSerialization.m */; };
-		FE5EFB561C55C9C90006BE11 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB501C55C9C90006BE11 /* AFURLSessionManager.m */; };
-		FE5EFB5A1C574C620006BE11 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5EFB591C574C620006BE11 /* RadioButton.m */; };
 		FE5EFB601C5754CF0006BE11 /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5EFB5C1C5754CF0006BE11 /* checked.png */; };
 		FE5EFB611C5754CF0006BE11 /* checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5EFB5D1C5754CF0006BE11 /* checked@2x.png */; };
 		FE5EFB621C5754CF0006BE11 /* unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5EFB5E1C5754CF0006BE11 /* unchecked.png */; };
@@ -186,21 +179,6 @@
 		FE55744E1A25635C00342F39 /* ShowVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowVC.m; sourceTree = "<group>"; };
 		FE55744F1A25635C00342F39 /* ShowVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowVC.h; sourceTree = "<group>"; };
 		FE57D7051A075F8900F87D8E /* icon_text3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_text3.png; sourceTree = "<group>"; };
-		FE5EFB441C55C9C90006BE11 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
-		FE5EFB451C55C9C90006BE11 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
-		FE5EFB461C55C9C90006BE11 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
-		FE5EFB471C55C9C90006BE11 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
-		FE5EFB481C55C9C90006BE11 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
-		FE5EFB491C55C9C90006BE11 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
-		FE5EFB4A1C55C9C90006BE11 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
-		FE5EFB4B1C55C9C90006BE11 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
-		FE5EFB4C1C55C9C90006BE11 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
-		FE5EFB4D1C55C9C90006BE11 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
-		FE5EFB4E1C55C9C90006BE11 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
-		FE5EFB4F1C55C9C90006BE11 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
-		FE5EFB501C55C9C90006BE11 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		FE5EFB581C574C620006BE11 /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
-		FE5EFB591C574C620006BE11 /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
 		FE5EFB5C1C5754CF0006BE11 /* checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked.png; sourceTree = "<group>"; };
 		FE5EFB5D1C5754CF0006BE11 /* checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked@2x.png"; sourceTree = "<group>"; };
 		FE5EFB5E1C5754CF0006BE11 /* unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchecked.png; sourceTree = "<group>"; };
@@ -418,35 +396,6 @@
 			name = TextMsg_TransBuffer;
 			sourceTree = "<group>";
 		};
-		FE5EFB431C55C9C90006BE11 /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				FE5EFB441C55C9C90006BE11 /* AFHTTPSessionManager.h */,
-				FE5EFB451C55C9C90006BE11 /* AFHTTPSessionManager.m */,
-				FE5EFB461C55C9C90006BE11 /* AFNetworking.h */,
-				FE5EFB471C55C9C90006BE11 /* AFNetworkReachabilityManager.h */,
-				FE5EFB481C55C9C90006BE11 /* AFNetworkReachabilityManager.m */,
-				FE5EFB491C55C9C90006BE11 /* AFSecurityPolicy.h */,
-				FE5EFB4A1C55C9C90006BE11 /* AFSecurityPolicy.m */,
-				FE5EFB4B1C55C9C90006BE11 /* AFURLRequestSerialization.h */,
-				FE5EFB4C1C55C9C90006BE11 /* AFURLRequestSerialization.m */,
-				FE5EFB4D1C55C9C90006BE11 /* AFURLResponseSerialization.h */,
-				FE5EFB4E1C55C9C90006BE11 /* AFURLResponseSerialization.m */,
-				FE5EFB4F1C55C9C90006BE11 /* AFURLSessionManager.h */,
-				FE5EFB501C55C9C90006BE11 /* AFURLSessionManager.m */,
-			);
-			path = AFNetworking;
-			sourceTree = "<group>";
-		};
-		FE5EFB571C574C620006BE11 /* RadioButton */ = {
-			isa = PBXGroup;
-			children = (
-				FE5EFB581C574C620006BE11 /* RadioButton.h */,
-				FE5EFB591C574C620006BE11 /* RadioButton.m */,
-			);
-			path = RadioButton;
-			sourceTree = "<group>";
-		};
 		FE5EFB5B1C5754CF0006BE11 /* radio-res-ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -613,8 +562,6 @@
 		FE9EC5EE1A26EF3000FE2E5D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				FE5EFB571C574C620006BE11 /* RadioButton */,
-				FE5EFB431C55C9C90006BE11 /* AFNetworking */,
 				FE9EC5EF1A26EF3000FE2E5D /* MBProgressHUD.h */,
 				FE9EC5F01A26EF3000FE2E5D /* MBProgressHUD.m */,
 				FE9EC5F11A26EF3000FE2E5D /* MZTimerLabel.h */,
@@ -999,19 +946,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE5EFB561C55C9C90006BE11 /* AFURLSessionManager.m in Sources */,
 				FEBBA26119C2CC0B009EE02C /* AppDelegate.m in Sources */,
 				FEBBA25D19C2CC0B009EE02C /* main.m in Sources */,
 				FE0D8B0319FF8F5D00D5FD3E /* TextMsg_TransBufferVC.m in Sources */,
 				FE1B2E7519C692F300773FE6 /* VideoVC.m in Sources */,
 				FE9EC5F41A26EF3000FE2E5D /* MZTimerLabel.m in Sources */,
 				FE9B1CB51A315B0C006638F6 /* RecordServerVC.m in Sources */,
-				FE5EFB5A1C574C620006BE11 /* RadioButton.m in Sources */,
 				FEA9107F1A0231E300798D1D /* TransFileVC.m in Sources */,
-				FE5EFB511C55C9C90006BE11 /* AFHTTPSessionManager.m in Sources */,
 				FEF0B78519FA521A00FB9EEA /* UserListVC.m in Sources */,
 				FEBC7CD71A2FF58A00F81D3B /* DetailVC.m in Sources */,
-				FE5EFB521C55C9C90006BE11 /* AFNetworkReachabilityManager.m in Sources */,
 				FED686BE1AB97B0400F8E211 /* SendDataVC.m in Sources */,
 				FE5574511A25635C00342F39 /* ShowVC.m in Sources */,
 				FE9EC5F31A26EF3000FE2E5D /* MBProgressHUD.m in Sources */,
@@ -1021,9 +964,6 @@
 				FED686C21AB97BA700F8E211 /* ReceiveDataVC.m in Sources */,
 				FEBBA2BA19C2CF67009EE02C /* AnyChatVC.m in Sources */,
 				FE9B1CB01A315A12006638F6 /* RecordLocalVC.m in Sources */,
-				FE5EFB541C55C9C90006BE11 /* AFURLRequestSerialization.m in Sources */,
-				FE5EFB531C55C9C90006BE11 /* AFSecurityPolicy.m in Sources */,
-				FE5EFB551C55C9C90006BE11 /* AFURLResponseSerialization.m in Sources */,
 				FE04EB4D19F642B3006A5E5F /* FeaturesListVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
