@@ -12,11 +12,11 @@ AnyChatSelfRecord	AnyChatSelfRecord演示工程，演示了AnyChat抓拍录像的开发流程；
 
 helloAnyChat		AnyChat for iOS演示工程(普通登录版本)，以最精简的代码实现了一个hello world!工程，展示了AnyChat SDK的基本开发流程，供对AnyChat进行初步了解的程序员参考；
 
-helloAnyChatcloud	AnyChatcloud for iOS演示工程(签名登录版本)，以最精简的代码实现了一个hello world!工程，展示了AnyChat SDK的基本开发流程，供对AnyChat进行初步了解的程序员参考；
+helloAnyChatcloud	AnyChatcloud for iOS演示工程，以最精简的代码实现了一个hello world!工程，展示了AnyChat SDK的基本开发流程，该版本提供了签名登录方式登录到AnyChat视频云平台的默认演示应用;；
 
 AnyChat4Swfit\HelloAnyChatSwift	HelloAnyChatSwift演示工程，使用苹果Swift语言实现了AnyChat SDK的基本开发流程，该版本为无签名登录版本,供对AnyChat进行初步了解的程序员参考；
 
-AnyChatCloudSwfit\HelloAnyChatCloudSwift HelloAnyChatCloudSwift演示工程，使用苹果Swift语言实现了AnyChat SDK的基本开发流程，该版本为提供签名登录版本;
+AnyChatCloudSwfit\HelloAnyChatCloudSwift HelloAnyChatCloudSwift演示工程，使用苹果Swift语言实现了AnyChat SDK的基本开发流程，该版本提供了签名登录方式登录到AnyChat视频云平台的默认演示应用;;
 
 
 
