@@ -1,8 +1,8 @@
 AnyChatCallCenter	AnyChat视频呼叫（VideoCall）功能演示工程，展示了一对一语音、视频交互（对讲、通话）的基本功能；
 
-helloAnyChat		AnyChat for Android演示工程，以最精简的代码实现了一个hello world!工程，展示了AnyChat SDK的基本开发流程，供对AnyChat进行初步了解的程序员参考,该版本为无签名登录版本；
+helloAnyChat		AnyChat for Android演示工程，以最精简的代码实现了一个hello world!工程，展示了AnyChat SDK的基本开发流程，供对AnyChat进行初步了解的程序员参考；
 
-HelloAnyChatCloud		AnyChat for Android演示工程，以最精简的代码实现了一个hello world!工程，展示了AnyChat SDK的基本开发流程，供对AnyChat进行初步了解的程序员参考,该版本为提供签名登录版本;；
+HelloAnyChatCloud		AnyChat for Android演示工程，以最精简的代码实现了一个hello world!工程，展示了AnyChat SDK的基本开发流程，供对AnyChat进行初步了解的程序员参考,该版本提供了签名登录方式登录到AnyChat视频云平台的默认演示应用；
 
 AnyChatFeatures		AnyChat完整功能演示程序，以清单的方式，演示了AnyChat的主要功能，供对AnyChat进行深度开发的程序员参考；
 
