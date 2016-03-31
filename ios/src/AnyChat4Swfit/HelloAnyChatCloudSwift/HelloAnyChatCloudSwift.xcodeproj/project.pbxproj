@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0444B7151CACB9D600051DC3 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0444B7141CACB9D600051DC3 /* RadioButton.m */; };
 		FE4CBFA41BE4A56F00693F32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CBFA31BE4A56F00693F32 /* AppDelegate.swift */; };
 		FE4CBFA91BE4A56F00693F32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE4CBFA71BE4A56F00693F32 /* Main.storyboard */; };
 		FE4CBFAB1BE4A56F00693F32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE4CBFAA1BE4A56F00693F32 /* Assets.xcassets */; };
@@ -29,7 +30,6 @@
 		FE55C9F21BE86E2F007B625D /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE55C9F11BE86E2F007B625D /* MZTimerLabel.m */; };
 		FE55C9F41BE8998B007B625D /* VideoParamSetting.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE55C9F31BE8998B007B625D /* VideoParamSetting.plist */; };
 		FE55C9F61BE8A107007B625D /* VideoParamSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE55C9F51BE8A107007B625D /* VideoParamSettingViewController.swift */; };
-		FE94D1291C65F29A00D199DE /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE94D1221C65F29A00D199DE /* RadioButton.m */; };
 		FE94D1421C660A1600D199DE /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D1351C6609C000D199DE /* Alamofire.framework */; };
 		FE94D1431C660A1600D199DE /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FE94D1351C6609C000D199DE /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FEB350BE1BE79A7C00590D0F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB350BD1BE79A7C00590D0F /* User.swift */; };
@@ -164,6 +164,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0444B7131CACB9D600051DC3 /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
+		0444B7141CACB9D600051DC3 /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
 		FE4CBFA01BE4A56F00693F32 /* HelloAnyChatCloudSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloAnyChatCloudSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE4CBFA31BE4A56F00693F32 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE4CBFA81BE4A56F00693F32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -194,8 +196,6 @@
 		FE55C9F11BE86E2F007B625D /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZTimerLabel.m; sourceTree = "<group>"; };
 		FE55C9F31BE8998B007B625D /* VideoParamSetting.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = VideoParamSetting.plist; sourceTree = "<group>"; };
 		FE55C9F51BE8A107007B625D /* VideoParamSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoParamSettingViewController.swift; sourceTree = "<group>"; };
-		FE94D1211C65F29A00D199DE /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
-		FE94D1221C65F29A00D199DE /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
 		FE94D12A1C6609C000D199DE /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "Alamofire-master/Alamofire.xcodeproj"; sourceTree = "<group>"; };
 		FE9D73111CA0F085004147E8 /* OCContainerHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCContainerHeader.h; sourceTree = "<group>"; };
 		FEB350BD1BE79A7C00590D0F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -322,6 +322,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0444B7121CACB9D600051DC3 /* RadioButton */ = {
+			isa = PBXGroup;
+			children = (
+				0444B7131CACB9D600051DC3 /* RadioButton.h */,
+				0444B7141CACB9D600051DC3 /* RadioButton.m */,
+			);
+			path = RadioButton;
+			sourceTree = "<group>";
+		};
 		FE4CBF971BE4A56F00693F32 = {
 			isa = PBXGroup;
 			children = (
@@ -372,7 +381,7 @@
 		FE4CC02A1BE50E4A00693F32 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				FE94D1201C65F29A00D199DE /* RadioButton */,
+				0444B7121CACB9D600051DC3 /* RadioButton */,
 				FEFFB6B81C197C2B00011E20 /* IQKeyBoardManager */,
 				FE5119611BEFC99F0052DD9B /* DZNEmptyDataSet */,
 				FE55C9EF1BE86E2F007B625D /* MZTimerLabel */,
@@ -409,15 +418,6 @@
 				FE55C9F11BE86E2F007B625D /* MZTimerLabel.m */,
 			);
 			path = MZTimerLabel;
-			sourceTree = "<group>";
-		};
-		FE94D1201C65F29A00D199DE /* RadioButton */ = {
-			isa = PBXGroup;
-			children = (
-				FE94D1211C65F29A00D199DE /* RadioButton.h */,
-				FE94D1221C65F29A00D199DE /* RadioButton.m */,
-			);
-			path = RadioButton;
 			sourceTree = "<group>";
 		};
 		FE94D12B1C6609C000D199DE /* Products */ = {
@@ -793,13 +793,13 @@
 				FEFFB6E01C197C2B00011E20 /* IQUIViewController+Additions.m in Sources */,
 				FEB350C01BE79B4200590D0F /* UserViewController.swift in Sources */,
 				FE55C9F61BE8A107007B625D /* VideoParamSettingViewController.swift in Sources */,
+				0444B7151CACB9D600051DC3 /* RadioButton.m in Sources */,
 				FEFFB6DE1C197C2B00011E20 /* IQUITextFieldView+Additions.m in Sources */,
 				FE4CBFD41BE4A66600693F32 /* LoginViewController.swift in Sources */,
 				FE4CBFA41BE4A56F00693F32 /* AppDelegate.swift in Sources */,
 				FEFFB6E61C197C2B00011E20 /* IQBarButtonItem.m in Sources */,
 				FEFFB6E71C197C2B00011E20 /* IQTitleBarButtonItem.m in Sources */,
 				FEFFB6DF1C197C2B00011E20 /* IQUIView+Hierarchy.m in Sources */,
-				FE94D1291C65F29A00D199DE /* RadioButton.m in Sources */,
 				FEB350BE1BE79A7C00590D0F /* User.swift in Sources */,
 				FE55C9F21BE86E2F007B625D /* MZTimerLabel.m in Sources */,
 				FE4CC0311BE50E4A00693F32 /* MBProgressHUD+JT.m in Sources */,
