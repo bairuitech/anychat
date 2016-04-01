@@ -1,7 +1,8 @@
 #if !defined(BR_ANYCHAT_CORE_SDK_H__INCLUDED_)
 #define BR_ANYCHAT_CORE_SDK_H__INCLUDED_
 
-#include "GVSDK.h"
+#include <mmsystem.h>
+#include <wingdi.h>
 #include "AnyChatDefine.h"
 #include "AnyChatObjectDefine.h"
 #include "GVErrorCodeDefine.h"
@@ -14,17 +15,21 @@
 
 
 
-#define BRAC_API extern "C"
+#define BRAC_API extern "C" __declspec(dllexport)
 
 
 // 视频数据回调函数定义
 typedef void (CALLBACK * BRAC_VideoData_CallBack)(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, BITMAPINFOHEADER bmiHeader, LPVOID lpUserValue);
 // 视频数据扩展回调函数定义（增加时间戳）
 typedef void (CALLBACK * BRAC_VideoDataEx_CallBack)(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, BITMAPINFOHEADER bmiHeader, DWORD dwTimeStamp, LPVOID lpUserValue);
+// 视频数据扩展回调函数定义（增加时间戳，支持多路流）
+typedef void (CALLBACK * BRAC_VideoDataEx2_CallBack)(DWORD dwUserid, DWORD dwStreamIndex, LPVOID lpBuf, DWORD dwLen, BITMAPINFOHEADER bmiHeader, DWORD dwTimeStamp, LPVOID lpUserValue);
 // 音频数据回调函数定义
 typedef void (CALLBACK * BRAC_AudioData_CallBack)(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, WAVEFORMATEX waveFormatEx, LPVOID lpUserValue);
 // 音频数据扩展回调函数定义（增加时间戳）
 typedef void (CALLBACK * BRAC_AudioDataEx_CallBack)(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, WAVEFORMATEX waveFormatEx, DWORD dwTimeStamp, LPVOID lpUserValue);
+// 音频数据扩展回调函数定义（增加时间戳，支持多路流）
+typedef void (CALLBACK * BRAC_AudioDataEx2_CallBack)(DWORD dwUserid, DWORD dwStreamIndex, LPVOID lpBuf, DWORD dwLen, WAVEFORMATEX waveFormatEx, DWORD dwTimeStamp, LPVOID lpUserValue);
 // 文字消息回调函数定义
 typedef void (CALLBACK * BRAC_TextMessage_CallBack)(DWORD dwFromUserid, DWORD dwToUserid, BOOL bSecret, LPCTSTR lpMsgBuf, DWORD dwLen, LPVOID lpUserValue);
 // 透明通道数据回调函数定义
@@ -41,6 +46,8 @@ typedef void (CALLBACK * BRAC_SDKFilterData_CallBack)(LPBYTE lpBuf, DWORD dwLen,
 typedef void (CALLBACK * BRAC_RecordSnapShot_CallBack)(DWORD dwUserid, LPCTSTR lpFileName, DWORD dwParam, BOOL bRecordType, LPVOID lpUserValue);
 // 录像、快照任务完成扩展回调函数定义
 typedef void (CALLBACK * BRAC_RecordSnapShotEx_CallBack)(DWORD dwUserId, LPCTSTR lpFileName, DWORD dwElapse, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
+// 录像、快照任务完成扩展回调函数定义
+typedef void (CALLBACK * BRAC_RecordSnapShotEx2_CallBack)(DWORD dwUserId, DWORD dwErrorCode, LPCTSTR lpFileName, DWORD dwElapse, DWORD dwFlags, DWORD dwParam, LPCTSTR lpUserStr, LPVOID lpUserValue);
 // 异步消息通知回调函数定义
 typedef void (CALLBACK* BRAC_NotifyMessage_CallBack)(DWORD dwNotifyMsg, DWORD wParam, DWORD lParam, LPVOID lpUserValue);
 // 视频屏幕事件回调函数定义
@@ -105,6 +112,8 @@ BRAC_API DWORD BRAC_SetCallBack(DWORD dwCBType, LPVOID lpFunction, LPVOID lpUser
 BRAC_API DWORD BRAC_Connect(LPCTSTR lpServerAddr, DWORD dwPort);
 // 登录系统
 BRAC_API DWORD BRAC_Login(LPCTSTR lpUserName, LPCTSTR lpPassword, DWORD dwPassEncType);
+// 登录系统（扩展）
+BRAC_API DWORD BRAC_LoginEx(LPCTSTR lpNickName, DWORD dwUserId, LPCTSTR lpStrUserId=NULL, LPCTSTR lpAppId=NULL, DWORD dwTimeStamp=0, LPCTSTR lpSigStr=NULL, LPCTSTR lpStrParam=NULL);
 // 进入房间
 BRAC_API DWORD BRAC_EnterRoom(DWORD dwRoomid, LPCTSTR lpRoomPass, DWORD dwPassEncType);
 // 进入房间
@@ -117,8 +126,10 @@ BRAC_API DWORD BRAC_Logout(VOID);
 // 释放所有资源
 BRAC_API DWORD BRAC_Release(VOID);
 
-// 获取当前房间在线用户列表
+// 获取当前房间在线用户列表（推荐使用：BRAC_GetRoomOnlineUsers）
 BRAC_API DWORD BRAC_GetOnlineUser(LPDWORD lpUserIDArray, DWORD& dwUserNum);
+// 获取指定房间在线用户列表
+BRAC_API DWORD BRAC_GetRoomOnlineUsers(DWORD dwRoomId, LPDWORD lpUserIDArray, DWORD& dwUserNum);
 // 查询用户摄像头的状态
 BRAC_API DWORD BRAC_GetCameraState(DWORD dwUserid, DWORD& dwState);
 // 查询用户发言状态
@@ -158,12 +169,23 @@ BRAC_API DWORD BRAC_GetCurAudioPlayback(TCHAR* lpDeviceName, DWORD dwLen);
 
 // 操作用户视频
 BRAC_API DWORD BRAC_UserCameraControl(DWORD dwUserid, BOOL bOpen);
+// 操作用户视频（扩展）
+BRAC_API DWORD BRAC_UserCameraControlEx(DWORD dwUserid, BOOL bOpen, DWORD dwStreamIndex=0, DWORD dwFlags=0, LPCTSTR lpStrParam=NULL);
 // 操作用户语音
 BRAC_API DWORD BRAC_UserSpeakControl(DWORD dwUserid, BOOL bOpen);
+// 操作用户语音（扩展）
+BRAC_API DWORD BRAC_UserSpeakControlEx(DWORD dwUserid, BOOL bOpen, DWORD dwStreamIndex=0, DWORD dwFlags=0, LPCTSTR lpStrParam=NULL);
 // 设置视频显示位置
 BRAC_API DWORD BRAC_SetVideoPos(DWORD dwUserid, HWND hWnd, DWORD dwLeft, DWORD dwTop, DWORD dwRight, DWORD dwBottom);
+// 设置视频显示位置（扩展）
+BRAC_API DWORD BRAC_SetVideoPosEx(DWORD dwUserid, HWND hWnd, DWORD dwLeft=0, DWORD dwTop=0, DWORD dwRight=0, DWORD dwBottom=0, DWORD dwStreamIndex=0, DWORD dwFlags=0);
 // 重绘指定用户的视频
 BRAC_API DWORD BRAC_RepaintVideo(DWORD dwUserId, HDC hDC);
+// 设置指定用户音视频流相关参数（主要针对本地用户）
+BRAC_API DWORD BRAC_SetUserStreamInfo(DWORD dwUserId, DWORD dwStreamIndex, int infoname, char FAR* infoval, int infolen);
+// 获取指定用户音视频流相关参数
+BRAC_API DWORD BRAC_GetUserStreamInfo(DWORD dwUserId, DWORD dwStreamIndex, int infoname, char FAR* infoval, int infolen);
+
 
 // 获取指定音频设备的当前音量
 BRAC_API DWORD BRAC_AudioGetVolume(BRAC_AudioDevice device, DWORD& dwVolume);
@@ -215,12 +237,26 @@ BRAC_API DWORD BRAC_MultiCastControl(LPCTSTR lpMultiCastAddr, DWORD dwPort, LPCT
 
 // 设置外部输入视频格式
 BRAC_API DWORD BRAC_SetInputVideoFormat(BRAC_PixelFormat pixFmt, DWORD dwWidth, DWORD dwHeight, DWORD dwFps, DWORD dwFlags);
+// 设置外部输入视频格式（扩展）
+BRAC_API DWORD BRAC_SetInputVideoFormatEx(DWORD dwStreamIndex, DWORD dwCodecId, DWORD pixFmt, DWORD dwWidth, DWORD dwHeight, DWORD dwFps, DWORD dwFlags);
 // 外部视频数据输入
 BRAC_API DWORD BRAC_InputVideoData(LPBYTE lpVideoFrame, DWORD dwSize, DWORD dwTimeStamp);
+// 外部视频数据输入（扩展）
+BRAC_API DWORD BRAC_InputVideoDataEx(DWORD dwStreamIndex, LPBYTE lpVideoFrame, DWORD dwSize, DWORD dwTimeStamp, DWORD dwFlags);
 // 设置外部输入音频格式
 BRAC_API DWORD BRAC_SetInputAudioFormat(DWORD dwChannels, DWORD dwSamplesPerSec, DWORD dwBitsPerSample, DWORD dwFlags);
+// 设置外部输入音频格式（扩展）
+BRAC_API DWORD BRAC_SetInputAudioFormatEx(DWORD dwStreamIndex, DWORD dwCodecId, DWORD dwChannels, DWORD dwSamplesPerSec, DWORD dwBitsPerSample, DWORD dwFlags);
 // 外部音频数据输入
 BRAC_API DWORD BRAC_InputAudioData(LPBYTE lpSamples, DWORD dwSize, DWORD dwTimeStamp);
+// 外部音频数据输入（扩展）
+BRAC_API DWORD BRAC_InputAudioDataEx(DWORD dwStreamIndex, LPBYTE lpSamples, DWORD dwSize, DWORD dwTimeStamp, DWORD dwFlags);
+
+// 获取音频播放数据
+BRAC_API DWORD BRAC_FetchAudioPlayBuffer(LPBYTE lpSamples, DWORD dwSize, DWORD wParam);
+
+// 向服务器动态查询相关信息
+BRAC_API DWORD BRAC_QueryInfoFromServer(DWORD dwInfoName, TCHAR* lpInParam, DWORD dwInSize, TCHAR* lpResult, DWORD& dwOutSize, DWORD dwFlags=0);
 
 
 // 视频呼叫事件控制（请求、回复、挂断等）
@@ -249,6 +285,8 @@ BRAC_API DWORD BRAC_ObjectGetValue(DWORD dwObjectType, DWORD dwObjectId, DWORD d
 BRAC_API DWORD BRAC_ObjectSetValue(DWORD dwObjectType, DWORD dwObjectId, DWORD dwInfoName, TCHAR* lpInfoValue, DWORD dwLen);
 // 对象参数控制
 BRAC_API DWORD BRAC_ObjectControl(DWORD dwObjectType, DWORD dwObjectId, DWORD dwCtrlCode, DWORD dwParam1=0, DWORD dwParam2=0, DWORD dwParam3=0, DWORD dwParam4=0, LPCTSTR lpStrValue=NULL);
+
+
 
 
 #endif //BR_ANYCHAT_CORE_SDK_H__INCLUDED_

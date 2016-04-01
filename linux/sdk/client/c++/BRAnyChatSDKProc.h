@@ -3,6 +3,12 @@
 #ifndef _BR_ANY_CHAT_SDK_PROC_H__
 #define _BR_ANY_CHAT_SDK_PROC_H__
 
+#ifdef __AFX_H__
+	#define	BR_AFX_MANAGE_STATE	AFX_MANAGE_STATE(AfxGetStaticModuleState())
+#else
+	#define	BR_AFX_MANAGE_STATE
+#endif //__AFX_H__
+
 #include "BRAnyChatCoreSDK.h"
 
 
@@ -110,6 +116,7 @@ protected:
 	// 视频数据回调函数定义
 	static void CALLBACK VideoData_CallBack(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, BITMAPINFOHEADER bmiHeader, LPVOID lpUserValue)
 	{
+		BR_AFX_MANAGE_STATE;
 		CBRAnyChatSDKProc*	pAnyChatSDKProc = (CBRAnyChatSDKProc*)lpUserValue;
 		if(pAnyChatSDKProc)
 			pAnyChatSDKProc->OnAnyChatVideoDataCallBack(dwUserid,lpBuf,dwLen,&bmiHeader);
@@ -117,6 +124,7 @@ protected:
 	// 音频数据回调函数定义
 	static void CALLBACK AudioData_CallBack(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, WAVEFORMATEX waveFormatEx, LPVOID lpUserValue)
 	{
+		BR_AFX_MANAGE_STATE;
 		CBRAnyChatSDKProc*	pAnyChatSDKProc = (CBRAnyChatSDKProc*)lpUserValue;
 		if(pAnyChatSDKProc)
 			pAnyChatSDKProc->OnAnyChatAudioDataCallBack(dwUserid,lpBuf,dwLen,&waveFormatEx);
@@ -124,6 +132,7 @@ protected:
 	// 文字消息回调函数定义
 	static void CALLBACK TextMessage_CallBack(DWORD dwFromUserid, DWORD dwToUserid, BOOL bSecret, LPCTSTR lpMsgBuf, DWORD dwLen, LPVOID lpUserValue)
 	{
+		BR_AFX_MANAGE_STATE;
 		CBRAnyChatSDKProc*	pAnyChatSDKProc = (CBRAnyChatSDKProc*)lpUserValue;
 		if(pAnyChatSDKProc)
 			pAnyChatSDKProc->OnAnyChatTextMsgCallBack(dwFromUserid,dwToUserid,bSecret,lpMsgBuf,dwLen);
@@ -131,6 +140,7 @@ protected:
 	// 透明通道数据回调函数定义
 	static void CALLBACK TransBuffer_CallBack(DWORD dwUserid, LPBYTE lpBuf, DWORD dwLen, LPVOID lpUserValue)
 	{
+		BR_AFX_MANAGE_STATE;
 		CBRAnyChatSDKProc*	pAnyChatSDKProc = (CBRAnyChatSDKProc*)lpUserValue;
 		if(pAnyChatSDKProc)
 			pAnyChatSDKProc->OnAnyChatTransBufferCallBack(dwUserid,lpBuf,dwLen);
@@ -138,6 +148,7 @@ protected:
 	// 透明通道数据扩展回调函数定义
 	static void CALLBACK TransBufferEx_CallBack(DWORD dwUserid, LPBYTE lpBuf, DWORD dwLen, DWORD wParam, DWORD lParam, DWORD dwTaskId, LPVOID lpUserValue)
 	{
+		BR_AFX_MANAGE_STATE;
 		CBRAnyChatSDKProc*	pAnyChatSDKProc = (CBRAnyChatSDKProc*)lpUserValue;
 		if(pAnyChatSDKProc)
 			pAnyChatSDKProc->OnAnyChatTransBufferExCallBack(dwUserid,lpBuf,dwLen,wParam,lParam,dwTaskId);
@@ -145,6 +156,7 @@ protected:
 	// 文件传输回调函数定义
 	static void CALLBACK TransFile_CallBack(DWORD dwUserid, LPCTSTR lpFileName, LPCTSTR lpTempFilePath, DWORD dwFileLength, DWORD wParam, DWORD lParam, DWORD dwTaskId, LPVOID lpUserValue)
 	{
+		BR_AFX_MANAGE_STATE;
 		CBRAnyChatSDKProc*	pAnyChatSDKProc = (CBRAnyChatSDKProc*)lpUserValue;
 		if(pAnyChatSDKProc)
 			pAnyChatSDKProc->OnAnyChatTransFileCallBack(dwUserid,lpFileName,lpTempFilePath,dwFileLength,wParam,lParam,dwTaskId);
@@ -152,6 +164,7 @@ protected:
 	// 音量变化回调函数定义
 	static void CALLBACK VolumeChange_CallBack(BRAC_AudioDevice device, DWORD dwCurrentVolume, LPVOID lpUserValue)
 	{
+		BR_AFX_MANAGE_STATE;
 		CBRAnyChatSDKProc*	pAnyChatSDKProc = (CBRAnyChatSDKProc*)lpUserValue;
 		if(pAnyChatSDKProc)
 			pAnyChatSDKProc->OnAnyChatVolumeChangeCallBack(device,dwCurrentVolume);
@@ -159,6 +172,7 @@ protected:
 	// SDK Filter 通信数据回调函数定义
 	static void CALLBACK SDKFilterData_CallBack(LPBYTE lpBuf, DWORD dwLen, LPVOID lpUserValue)
 	{
+		BR_AFX_MANAGE_STATE;
 		CBRAnyChatSDKProc*	pAnyChatSDKProc = (CBRAnyChatSDKProc*)lpUserValue;
 		if(pAnyChatSDKProc)
 			pAnyChatSDKProc->OnAnyChatSDKFilterDataCallBack(lpBuf,dwLen);
@@ -166,6 +180,7 @@ protected:
 	// 录像、快照任务完成回调函数定义
 	static void CALLBACK RecordSnapShot_CallBack(DWORD dwUserid, LPCTSTR lpFileName, DWORD dwParam, BOOL bRecordType, LPVOID lpUserValue)
 	{
+		BR_AFX_MANAGE_STATE;
 		CBRAnyChatSDKProc*	pAnyChatSDKProc = (CBRAnyChatSDKProc*)lpUserValue;
 		if(pAnyChatSDKProc)
 			pAnyChatSDKProc->OnAnyChatRecordSnapShotCallBack(dwUserid,lpFileName,dwParam,bRecordType);
@@ -173,6 +188,7 @@ protected:
 	// 异步消息通知回调函数定义
 	static void CALLBACK NotifyMessage_CallBack(DWORD dwNotifyMsg, DWORD wParam, DWORD lParam, LPVOID lpUserValue)
 	{
+		BR_AFX_MANAGE_STATE;
 		CBRAnyChatSDKProc*	pAnyChatSDKProc = (CBRAnyChatSDKProc*)lpUserValue;
 		if(!pAnyChatSDKProc)
 			return;
