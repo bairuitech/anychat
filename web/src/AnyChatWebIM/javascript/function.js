@@ -89,21 +89,12 @@ function LoginToHall() {
     if (mSelfUserName != "") {
     	setLoginInfo();
         prompt("正在连接...<br /><img src='./images/others/LoadImg.gif' style='width:145px;height:30px' />");
-        if (Getdmo("normal_login").checked){
-        	if (Getdmo("AppGuid") && Getdmo("AppGuid").value.length)				// 设置应用ID
-            	BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, Getdmo("AppGuid").value.toString());
-
-			var errorcode = BRAC_Connect(Getdmo("mDefaultServerAddr").value, parseInt(Getdmo("mDefaultServerPort").value)); //连接服务器
-
-			errorcode = BRAC_Login(mSelfUserName, mSelfPassWord, 0);
-        }
         
-        if (Getdmo("sign_login").checked){
-            if (Getdmo("AppGuid") && Getdmo("AppGuid").value.length){
-            	getSign("http://demo.anychat.cn:8930/", -1, mSelfUserName, Getdmo("AppGuid").value);
-            }
-        }        
-        document.cookie = mSelfUserName + "Getdmo" + mSelfPassWord + "Getdmo" + mDefaultServerAddr + "Getdmo; expires=" + expiresDate; //写入Cookie 设置过期时间
+        var errorcode = BRAC_Connect(Getdmo("mDefaultServerAddr").value, parseInt(Getdmo("mDefaultServerPort").value)); //连接服务器
+
+		errorcode = BRAC_Login(mSelfUserName, mSelfPassWord, 0);
+
+		document.cookie = mSelfUserName + "Getdmo" + mSelfPassWord + "Getdmo" + mDefaultServerAddr + "Getdmo; expires=" + expiresDate; //写入Cookie 设置过期时间
     }
     else prompt("<div style='color:red;'>账号不能为空.</div>");
 }
@@ -316,15 +307,7 @@ function setLoginInfo() {
 	var loginType = 0;
     setCookie('username',Getdmo("txtUserName").value,30);
     setCookie('ServerAddr',Getdmo("mDefaultServerAddr").value,30);
-    setCookie('ServerPort',Getdmo("mDefaultServerPort").value,30);   
-    setCookie('AppGuid',Getdmo("AppGuid").value,30);
-    if (Getdmo("normal_login").checked){
-    	loginType = Getdmo("normal_login").value;
-    }
-    if (Getdmo("sign_login").checked){
-    	loginType = Getdmo("sign_login").value;
-    }
-    setCookie('loginType',loginType,30);
+    setCookie('ServerPort',Getdmo("mDefaultServerPort").value,30);
 }
 
 //获取登录信息
@@ -333,15 +316,7 @@ function getLoginInfo() {
     var serverIP = getCookie("ServerAddr");
 	Getdmo("mDefaultServerAddr").value = (serverIP != "") ? serverIP : mDefaultServerAddr;        
     var serverPort = getCookie("ServerPort");    
-	Getdmo("mDefaultServerPort").value = (serverPort != "") ? serverPort : mDefaultServerPort;        
-    Getdmo("AppGuid").value = getCookie("AppGuid");
-    var loginType = getCookie("loginType");
-    if (loginType == Getdmo("normal_login").value){
-    	Getdmo("normal_login").checked = true;
-    }
-	if (loginType == Getdmo("sign_login").value){
-    	Getdmo("sign_login").checked = true;
-    }    
+	Getdmo("mDefaultServerPort").value = (serverPort != "") ? serverPort : mDefaultServerPort;           
 }
 
 //获取cookie项的cookie值
@@ -363,84 +338,4 @@ function setCookie(c_name, value, expiredays){
 　　var exdate=new Date();
 　　exdate.setDate(exdate.getDate() + expiredays);
 　　document.cookie=c_name+ "=" + value + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
-}
-
-//去除字符串两边空格
-String.prototype.trim = function () {
-    return this.replace(/(^\s*)|(\s*$)/g, "");
-}
-
-//获取签名
-function getSign(signUrl, userId, strUser, appId) {
-	var retVal = null;
-	var parameter = "userid=" + userId + "&struserid=" + strUser + "&appid=" + appId ;
-    var requestURL = signUrl;
-    xmlHttpReq = createXMLHttpRequest();
-        xmlHttpReq.open("POST",requestURL,true);
-        xmlHttpReq.setRequestHeader("Content-Type","application/x-www-form-urlencoded;");
-        xmlHttpReq.send(encodeURI(encodeURI(parameter)));
-    
-    xmlHttpReq.onreadystatechange = function(){
-        if(xmlHttpReq.readyState == 4){
-            switch(xmlHttpReq.status){
-                case 200:
-                    responseText = xmlHttpReq.responseText;
-                    retVal = JSON.parse(responseText);
-                    
-                    if (retVal.errorcode == 0){
-            			var signStr = retVal.sigStr;
-            			var signTimestamp = retVal.timestamp;
-
-						//连接服务器
-			            var errorcode = BRAC_Connect(Getdmo("mDefaultServerAddr").value, parseInt(Getdmo("mDefaultServerPort").value)); //连接服务器
-			            //AddLog("BRAC_Connect(" + Getdmo("mDefaultServerPort").value + "," + Getdmo("mDefaultServerPort").value + ")=" + errorcode, LOG_TYPE_API);
-
-						//签名登录
-	                   	errorcode = BRAC_LoginEx(strUser, -1, strUser, appId, signTimestamp, signStr, "");
-	            	    //AddLog("BRAC_LoginEx(" + strUser + ")=" + errorcode, LOG_TYPE_API);            			
-            		}
-
-                    break;
-                case 400:
-                    alert("错误的请求！\nError Code:400!");
-                    break;
-                case 403:
-                    alert("拒绝请求！\nError Code:403!");
-                    break;
-                case 404:
-                    alert("请求地址不存在！\nError Code:404!");
-                    break;
-                case 500:
-                    alert("内部错误！\nError Code:500!");
-                    break;
-                case 503:
-                    alert("服务不可用！\nError Code:503!");
-                    break;
-                default:
-                    alert("请求返回异常！\nError Code:"+xmlHttpReq.status);
-                    break;
-            }
-        }
-    }
-    
-}
-
-// 创建XMLHttpRequest对象
-function createXMLHttpRequest() {
-    if (window.XMLHttpRequest) {// IE 7.0及以上版本和非IE的浏览器
-        xmlHttpReq = new XMLHttpRequest();
-    } else {// IE 6.0及以下版本
-        try {
-            xmlHttpReq = new ActiveXObject("MSXML2.XMLHTTP");
-        }catch (e) {
-            try {
-                xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
-            }catch (e) {}
-        }
-    }
-    if (!xmlHttpReq) {
-        alert("当前浏览器不支持!");
-        return null;
-    }
-    return xmlHttpReq;
 }

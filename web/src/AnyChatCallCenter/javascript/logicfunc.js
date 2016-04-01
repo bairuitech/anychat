@@ -101,32 +101,21 @@ function InitInterfaceUI() {
         if (GetID("username").value != "") {
             DisplayLoadingDiv(true);
             setLoginInfo();
-            if (GetID("normal_login").checked){
-            	if (GetID("AppGuid") && GetID("AppGuid").value.length)				// 设置应用ID
-                	BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, GetID("AppGuid").value.toString());
-            }
-            if (GetID("sign_login").checked){
-                if (GetID("AppGuid") && GetID("AppGuid").value.length){
-                	jsonObj = getSign("http://demo.anychat.cn:8930/", -1, GetID("username").value, GetID("AppGuid").value);
-                	if (jsonObj != null){
-                		if (jsonObj.errorcode == 0){
-                			signStr = jsonObj.sigStr;
-                			signTimestamp = jsonObj.timestamp;
-                		}                		
-                	}
-                }
-            }
-
+            
+			/* AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+             * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+             * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+             */
             var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); //连接服务器
             AddLog("BRAC_Connect(" + GetID("ServerAddr").value + "," + GetID("ServerPort").value + ")=" + errorcode, LOG_TYPE_API);
-			if (GetID("normal_login").checked){
-				errorcode = BRAC_Login(GetID("username").value, GetID("password").value, 0);
-            	AddLog("BRAC_Login(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);            	
-            }
-            if (GetID("sign_login").checked){
-            	errorcode = BRAC_LoginEx(GetID("username").value, -1, GetID("username").value, GetID("AppGuid").value, signTimestamp, signStr, "");
-            	AddLog("BRAC_LoginEx(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);
-            }            
+			
+			/*
+             * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，
+             * 详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+             */
+			errorcode = BRAC_Login(GetID("username").value, GetID("password").value, 0);
+        	AddLog("BRAC_Login(" + GetID("username").value + ")=" + errorcode, LOG_TYPE_API);            	
+                    
             // 隐藏设置界面
             GetID("setting_div").style.display = "none";
         }
@@ -425,15 +414,7 @@ function setLoginInfo() {
     setCookie('username', GetID("username").value, 30);
     setCookie('ServerAddr', GetID("ServerAddr").value, 30);
     setCookie('ServerPort', GetID("ServerPort").value, 30);
-    setCookie('AppGuid', GetID("AppGuid").value, 30);
-    var loginType = 0;
-    if (GetID("normal_login").checked){
-    	loginType = GetID("normal_login").value;
-    }
-    if (GetID("sign_login").checked){
-    	loginType = GetID("sign_login").value;
-    }
-    setCookie('loginType',loginType,30);    
+ 
 }
 
 //获取登录信息
@@ -443,14 +424,6 @@ function getLoginInfo() {
 	GetID("ServerAddr").value = (serverIP != "") ? serverIP : mDefaultServerAddr;        
     var serverPort = getCookie("ServerPort");
 	GetID("ServerPort").value = (serverPort != "") ? serverPort : mDefaultServerPort;        
-    GetID("AppGuid").value = getCookie("AppGuid");
-    var loginType = getCookie("loginType");
-    if (loginType == GetID("normal_login").value){
-    	GetID("normal_login").checked = true;
-    }
-	if (loginType == GetID("sign_login").value){
-    	GetID("sign_login").checked = true;
-    }     
 }
 
 //获取cookie项的cookie值
@@ -472,62 +445,5 @@ function setCookie(c_name, value, expiredays) {
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + expiredays);
     document.cookie = c_name + "=" + value + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
-}
-
-//去除字符串两边空格
-String.prototype.trim = function () {
-    return this.replace(/(^\s*)|(\s*$)/g, "");
-}
-
-//获取签名
-function getSign(signUrl, userId, strUserId, appId) {
-	var retVal = null;
-	
-    $.ajax( {
-        url : signUrl,
-        dataType : "json", //传参的数据类型
-        type : "post", //传参方式，get 或post
-        data : {
-            userid : userId, 
-			struserid : strUserId,
-			appid : appId
-        },
-        error : function(data) { //若Ajax处理失败后返回的信息
-        	//document.getElementById("txt").innerHTML = "Ajax处理失败，返回值：" + data.errorcode;
-			alert("Ajax处理失败，返回值：" + data.errorcode);
-        },
-        success : function(data) { //若Ajax处理成功后返回的信息
-        	resultMsg = "";
-        	if (data.errorcode != 0){
-        		alert("返回有错，返回值：" + data.errorcode);
-        	}else {
-        		retVal = data ;
-        	}
-            
-        }
-    });    		
-
-    
-    return retVal;
-}
-
-// 创建XMLHttpRequest对象
-function createXMLHttpRequest() {
-    if (window.XMLHttpRequest) {// IE 7.0及以上版本和非IE的浏览器
-        xmlHttpReq = new XMLHttpRequest();
-    } else {// IE 6.0及以下版本
-        try {
-            xmlHttpReq = new ActiveXObject("MSXML2.XMLHTTP");
-        }catch (e) {
-            try {
-                xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
-            }catch (e) {}
-        }
-    }
-    if (!xmlHttpReq) {
-        alert("当前浏览器不支持!");
-        return null;
-    }
-    return xmlHttpReq;
 }
 
