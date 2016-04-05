@@ -5,9 +5,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BRAnyChatSDKDemo", "BRAnyCh
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnyChatVideoMixer", "AnyChatVideoMixer\AnyChatVideoMixer.vcproj", "{9E00D5BE-A553-4A4D-A392-420F572E2588}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnyChatInputVideo", "AnyChatInputVideo\AnyChatInputVideo.vcproj", "{65CC8377-CC2F-4AA8-8600-CECB1AF39A0E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnyChatInputVideo", "AnyChatInputVideo\AnyChatInputVideo.vcproj", "{84AA1E4D-76B3-4FF7-BC93-3578E8011CD0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hello AnyChat", "Hello AnyChat\Hello AnyChat.vcproj", "{27BDD8C4-91C2-4CE6-8CD2-134292AB7E3A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hello AnyChat", "Hello AnyChat\Hello AnyChat.vcproj", "{89812FFB-D489-4372-8D8F-4D36372A7A93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +23,14 @@ Global
 		{9E00D5BE-A553-4A4D-A392-420F572E2588}.Debug|Win32.Build.0 = Debug|Win32
 		{9E00D5BE-A553-4A4D-A392-420F572E2588}.Release|Win32.ActiveCfg = Release|Win32
 		{9E00D5BE-A553-4A4D-A392-420F572E2588}.Release|Win32.Build.0 = Release|Win32
-		{65CC8377-CC2F-4AA8-8600-CECB1AF39A0E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{65CC8377-CC2F-4AA8-8600-CECB1AF39A0E}.Debug|Win32.Build.0 = Debug|Win32
-		{65CC8377-CC2F-4AA8-8600-CECB1AF39A0E}.Release|Win32.ActiveCfg = Release|Win32
-		{65CC8377-CC2F-4AA8-8600-CECB1AF39A0E}.Release|Win32.Build.0 = Release|Win32
-		{27BDD8C4-91C2-4CE6-8CD2-134292AB7E3A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{27BDD8C4-91C2-4CE6-8CD2-134292AB7E3A}.Debug|Win32.Build.0 = Debug|Win32
-		{27BDD8C4-91C2-4CE6-8CD2-134292AB7E3A}.Release|Win32.ActiveCfg = Release|Win32
-		{27BDD8C4-91C2-4CE6-8CD2-134292AB7E3A}.Release|Win32.Build.0 = Release|Win32
+		{84AA1E4D-76B3-4FF7-BC93-3578E8011CD0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{84AA1E4D-76B3-4FF7-BC93-3578E8011CD0}.Debug|Win32.Build.0 = Debug|Win32
+		{84AA1E4D-76B3-4FF7-BC93-3578E8011CD0}.Release|Win32.ActiveCfg = Release|Win32
+		{84AA1E4D-76B3-4FF7-BC93-3578E8011CD0}.Release|Win32.Build.0 = Release|Win32
+		{89812FFB-D489-4372-8D8F-4D36372A7A93}.Debug|Win32.ActiveCfg = Debug|Win32
+		{89812FFB-D489-4372-8D8F-4D36372A7A93}.Debug|Win32.Build.0 = Debug|Win32
+		{89812FFB-D489-4372-8D8F-4D36372A7A93}.Release|Win32.ActiveCfg = Release|Win32
+		{89812FFB-D489-4372-8D8F-4D36372A7A93}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
