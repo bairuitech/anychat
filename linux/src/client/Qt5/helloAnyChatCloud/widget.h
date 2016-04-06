@@ -8,9 +8,7 @@
 #include <QDebug>
 #include <QString>
 #include <QCloseEvent>
-#include <windows.h>
 #include <stdio.h>
-#include <atltypes.h>
 
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
@@ -32,7 +30,8 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 
-	CRect m_UserRect[2];
+    QRect m_LocalUser;
+    QRect m_RemoteUser;
     
     QString m_strLogInfo;           //显示sys消息
     QTimer *m_pTimer;               //定时器

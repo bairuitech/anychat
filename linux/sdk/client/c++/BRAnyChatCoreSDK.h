@@ -1,8 +1,7 @@
 #if !defined(BR_ANYCHAT_CORE_SDK_H__INCLUDED_)
 #define BR_ANYCHAT_CORE_SDK_H__INCLUDED_
 
-#include <mmsystem.h>
-#include <wingdi.h>
+#include "GVSDK.h"
 #include "AnyChatDefine.h"
 #include "AnyChatObjectDefine.h"
 #include "GVErrorCodeDefine.h"
@@ -15,7 +14,7 @@
 
 
 
-#define BRAC_API extern "C" __declspec(dllexport)
+#define BRAC_API extern "C"
 
 
 // 视频数据回调函数定义

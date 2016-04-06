@@ -114,12 +114,12 @@ void Widget::response_callback(QNetworkReply* http_reply)
 						QString serveraddr = ui->ServerAddrlineEdit->text();
 						QString serverport = ui->ServerPortlineEdit->text();
 						QString username = ui->UserNamelineEdit->text();
-						BRAC_Connect(LPCTSTR(serveraddr.toStdString().c_str()), serverport.toInt());
+                        BRAC_Connect(serveraddr.toStdString().c_str(), serverport.toInt());
                         QString str_appid = ui->Appid_lineEdit->text();
                         QByteArray ba = m_qsign_data.toLatin1();
                         char *pSign = ba.data();
 
-						BRAC_LoginEx(LPCTSTR(username.toStdString().c_str()), 33, LPCTSTR(0), LPCTSTR(str_appid.toStdString().c_str()), pthis->m_sign_ts, LPCTSTR(pSign));
+                        BRAC_LoginEx(username.toStdString().c_str(), 33, 0, str_appid.toStdString().c_str(), pthis->m_sign_ts, pSign);
 						QString roomId = ui->RoomId_lineEdit->text();
 						QString pwd = "";
 						BRAC_EnterRoom(roomId.toInt(), (LPCTSTR)pwd.toStdString().c_str(), 0);
@@ -279,8 +279,8 @@ void Widget::HelloChatInit()
     m_pTimer->start();
     connect(m_pTimer,SIGNAL(timeout()),this,SLOT(TimerProc()));
 
-    m_UserRect[0].SetRect(30, 420, 231, 600);
-    m_UserRect[1].SetRect(280, 30, 791, 390);
+    m_LocalUser.setRect(30, 390, 202, 181);
+    m_RemoteUser.setRect(280, 10, 512, 361);
 }
 
 void Widget::HelloChatLogin()
@@ -298,11 +298,11 @@ void Widget::HelloChatLogin()
 		QString serveraddr = ui->ServerAddrlineEdit->text();
 		QString serverport = ui->ServerPortlineEdit->text();
 		QString username = ui->UserNamelineEdit->text();
-		BRAC_Connect(LPCTSTR(serveraddr.toStdString().c_str()), (DWORD)serverport.toInt());
-		BRAC_Login(LPCTSTR(username.toStdString().c_str()), LPCTSTR(""), 0);
+        BRAC_Connect(serveraddr.toStdString().c_str(), serverport.toInt());
+        BRAC_Login(username.toStdString().c_str(), "", 0);
 		QString roomId = ui->RoomId_lineEdit->text();
 		QString pwd = "";
-		BRAC_EnterRoom(roomId.toInt(), (LPCTSTR)pwd.toStdString().c_str(), 0);
+        BRAC_EnterRoom(roomId.toInt(), pwd.toStdString().c_str(), 0);
     }
 }
 
@@ -353,7 +353,7 @@ long Widget::OnGVClientEnterRoom(WPARAM wParam, LPARAM lParam)
     if(lParam == 0) 
     {
         logstr.sprintf("#INFO# Success enter room %d,user %d",roomid, m_SelfId);
-		BRAC_SetVideoPos(-1, (HWND)this->winId(), m_UserRect[0].left, m_UserRect[0].top, m_UserRect[0].right, m_UserRect[0].bottom);
+        BRAC_SetVideoPos(-1, (HWND)this->winId(), m_LocalUser.left(), m_LocalUser.top(), m_LocalUser.right(), m_LocalUser.bottom());
 		
         //Open Local Camera
         BRAC_UserCameraControl(-1, TRUE);
@@ -660,7 +660,7 @@ void Widget::on_UserlistWidget_doubleClicked(const QModelIndex &index)
         ui->RemoteUserlabel->clear();
     }
 
-	BRAC_SetVideoPos(m_iUserID[row], (HWND)this->winId(), m_UserRect[1].left, m_UserRect[1].top, m_UserRect[1].right, m_UserRect[1].bottom);
+    BRAC_SetVideoPos(m_iUserID[row], (HWND)this->winId(), m_RemoteUser.left(), m_RemoteUser.top(), m_RemoteUser.right(), m_RemoteUser.bottom());
     
 	BRAC_UserCameraControl(m_iUserID[row],1);      
     BRAC_UserSpeakControl (m_iUserID[row],1);
