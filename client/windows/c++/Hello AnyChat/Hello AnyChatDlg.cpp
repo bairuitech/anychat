@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include <WINSOCK2.H>
+#include <afxinet.h>
 #include "Hello AnyChat.h"
 #include "Hello AnyChatDlg.h"
 #include "VideoSetDlg.h"
@@ -62,6 +63,7 @@ BEGIN_MESSAGE_MAP(CHelloAnyChatDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_VIDEOCTRL, OnButtonVideoCtrl)
 	ON_BN_CLICKED(IDC_BUTTON_AUDIOCTRL, OnButtonAudioCtrl)
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_CHECK1, &CHelloAnyChatDlg::OnBnClickedCheck1)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -197,7 +199,8 @@ void CHelloAnyChatDlg::initUI()
 	m_userList.SetExtendedStyle(LVS_EX_FULLROWSELECT|LVS_EX_GRIDLINES|LVS_EX_HEADERDRAGDROP);
 	m_userList.InsertColumn(0, "姓名", LVCFMT_CENTER,110);
 	m_userList.InsertColumn(1, "ID", LVCFMT_CENTER,188); 
-	
+	SetDlgItemText(IDC_EDIT_APPID, "fbe957d1-c25a-4992-9e75-d993294a5d56");
+
 	UpdateData(FALSE);
 }
 
@@ -275,6 +278,126 @@ void CHelloAnyChatDlg::DrawUserVideo(DWORD dwUserid, LPVOID lpBuf, DWORD dwLen, 
 	pBMI = NULL;
 }
 
+// 
+void CHelloAnyChatDlg::SignLogin(CString serverUrl, CString strAppId, CString strUserId, CString strServerIP, DWORD dwPort, CString strUserName)
+{
+	CString strLogMsg;
+	try
+	{
+		if(serverUrl.IsEmpty())
+			return;
+		if(strAppId.IsEmpty())
+			return;
+
+		CInternetSession session;//建立会话
+		CString strObject;
+		CHttpConnection* pConnection = session.GetHttpConnection(serverUrl, 0, 8930, NULL, NULL);
+		if(pConnection == NULL)
+		{
+			session.Close();
+			return;	
+		}
+		CHttpFile *pF = pConnection->OpenRequest(CHttpConnection::HTTP_VERB_POST, strObject, NULL, 1, 
+																	NULL, TEXT("HTTP/1.1"), INTERNET_FLAG_NO_COOKIES);
+		if(pF == NULL)
+		{
+			session.Close();
+			delete pConnection;
+			pConnection = NULL;
+			return;
+		}
+
+		CString head_appid("appid=");
+		CString head_userid("userid=");
+		CString head_strUserid("strUserid=");
+		CString str_userid_value("");
+		CString head_add("&");
+		CString content_data=head_appid + strAppId + head_add + head_userid + strUserId + head_add + head_strUserid + str_userid_value;
+		DWORD contentLeng = content_data.GetLength();
+
+		CString strHeaders_add("\r\n");
+		CString strContentType("Content-Type: application/json");
+		CString strContentLength("Content-Length: ");
+		char szContentLeng[16] = {0};
+		_snprintf(szContentLeng, sizeof(szContentLeng), "%d", contentLeng);
+		CString strLeng(szContentLeng);
+		CString strHeaders = strContentType + strHeaders_add + strContentLength + strLeng + + strHeaders_add;
+		
+		DWORD dwRet;
+		pF->SendRequest(strHeaders, (LPVOID)(LPCTSTR)content_data, contentLeng);
+		pF->QueryInfoStatusCode(dwRet);  
+		if (dwRet != HTTP_STATUS_OK)  
+		{  
+			//服务器不接受请求  
+			session.Close();  
+			delete pConnection;
+			pConnection = NULL;  
+			delete pF;
+			pF = NULL;  
+			return;  
+		}  
+		else
+			OutputDebugStr("请求成功");
+
+		CString szData,szAllData;
+		while(pF->ReadString(szData))
+		{
+			//读取文件
+			szAllData+="\r\n";
+			szAllData+=szData;
+		}
+
+		session.Close();
+		pConnection->Close();
+		delete pConnection;
+		pF->Close();
+		delete pF;
+		OutputDebugStr("获取数据成功");
+
+		// 此处解析json数据
+		OutputDebugStr(szAllData);
+		szAllData.TrimLeft("\r\n");		
+		DWORD dwAllDataSize = szAllData.GetLength();
+ 		char* alldata = new char[dwAllDataSize+1];
+		if(!alldata)
+			return;
+ 		memset(alldata, '\0', dwAllDataSize+1);
+ 		_snprintf(alldata, dwAllDataSize+1, "%s", szAllData);
+
+		string param1Value, param2Value, param3Value;
+		if(alldata[0] == '{' && alldata[dwAllDataSize-1] == '}')
+		{
+			std::string data = std::string(alldata).substr(1, dwAllDataSize-2);
+			char temp[1024] = {0};
+			strcat(temp, data.c_str());
+			char* p = strtok(temp, ","); 
+			while(p != NULL)
+			{
+				string keyvalue = std::string(p);
+				size_t pos = keyvalue.find(":");
+				string keyWord = keyvalue.substr(0, pos);
+				if(strcmp(keyWord.c_str(),"\"errorcode\"") == 0)
+					param1Value = keyvalue.substr(pos+1);
+				else if(strcmp(keyWord.c_str(), "\"timestamp\"") == 0)
+					param2Value = keyvalue.substr(pos+1);
+				else
+					param3Value = keyvalue.substr(pos+1);
+
+				p = strtok(NULL,",");
+			}
+		}
+
+		BRAC_Connect(strServerIP.GetBuffer(0), dwPort);
+		BRAC_LoginEx(strUserName.GetBuffer(0), 33, 0, strAppId, atoi(param2Value.c_str()), param3Value.c_str());
+
+		if(alldata)
+			delete[] alldata;
+	}
+	catch(CException *e)
+	{
+		strLogMsg.Format("获取数据失败");
+	}
+}
 
 void CHelloAnyChatDlg::OnLogin() 
 {
@@ -290,7 +413,7 @@ void CHelloAnyChatDlg::OnLogin()
 		AfxMessageBox("Invalid  server ip address or port!");
 		return;
 	}
-	
+
 	if (strUserName.IsEmpty())
 	{
 		AfxMessageBox("Must input username for login system!");
@@ -303,8 +426,28 @@ void CHelloAnyChatDlg::OnLogin()
 		return;
 	}
 
-	BRAC_Connect(strServerIP.GetBuffer(0), m_port);
-	BRAC_Login(strUserName.GetBuffer(0), "", 0);
+	CString strAppID;	// APPID
+	CButton* pCheckBox = (CButton *)GetDlgItem(IDC_CHECK1);
+	int state = pCheckBox->GetCheck();
+	if(1 == state)	///< 签名登录
+	{
+		CEdit* pEdit = (CEdit*)GetDlgItem(IDC_EDIT_APPID);
+		GetDlgItemText(IDC_EDIT_APPID, strAppID);
+		if(strAppID.IsEmpty())
+		{
+			AfxMessageBox("Must input appid for login system!");
+			return;
+		}
+
+		CString strServerUrl = "demo.anychat.cn";		///< 签名服务器地址
+		CString strUserId = "33";						///< 用户编码
+		SignLogin(strServerUrl, strAppID, strUserId, strServerIP, m_port, strUserName);
+	}
+	else	///< 普通登录
+	{
+		BRAC_Connect(strServerIP.GetBuffer(0), m_port);
+		BRAC_Login(strUserName.GetBuffer(0), "", 0);
+	}
 }
 
 void CHelloAnyChatDlg::OnLogout() 
@@ -655,4 +798,16 @@ void CHelloAnyChatDlg::writeLoginDataFile()
 	outFile.close();
 }
 
-
+void CHelloAnyChatDlg::OnBnClickedCheck1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CButton* pCheckBox = (CButton *)GetDlgItem(IDC_CHECK1);
+	if(pCheckBox->GetCheck())
+	{
+		GetDlgItem(IDC_EDIT_APPID)->EnableWindow(TRUE);
+	}  
+	else
+	{
+		GetDlgItem(IDC_EDIT_APPID)->EnableWindow(FALSE);
+	}	
+}

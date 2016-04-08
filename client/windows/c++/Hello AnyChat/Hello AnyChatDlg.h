@@ -56,11 +56,13 @@ public:
 	// 刷新用户列表
 	void updateUserList();
 
+	void SignLogin(CString serverUrl, CString strAppId, CString strUserId, CString strServerIP, DWORD dwPort, CString strUserName);
+
 // Dialog Data
 	//{{AFX_DATA(CHelloAnyChatDlg)
 	enum { IDD = IDD_HELLOANYCHAT_DIALOG };
-	CButton	m_videoBtn;
-	CButton	m_audioBtn;
+	CButton		m_videoBtn;
+	CButton		m_audioBtn;
 	CListCtrl	m_userList;
 	CButton		m_logoutBtn;
 	CButton		m_loginBtn;
@@ -97,6 +99,8 @@ protected:
 	afx_msg void OnButtonAudioCtrl();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedCheck1();
 };
 
 //{{AFX_INSERT_LOCATION}}
