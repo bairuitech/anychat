@@ -8,20 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0444B7151CACB9D600051DC3 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0444B7141CACB9D600051DC3 /* RadioButton.m */; };
-		5340CA3B1CCCDB7C0054B7CF /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA2D1CCCDB7C0054B7CF /* Alamofire.swift */; };
-		5340CA3C1CCCDB7C0054B7CF /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA2E1CCCDB7C0054B7CF /* Download.swift */; };
-		5340CA3D1CCCDB7C0054B7CF /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA2F1CCCDB7C0054B7CF /* Error.swift */; };
-		5340CA3E1CCCDB7C0054B7CF /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA301CCCDB7C0054B7CF /* Manager.swift */; };
-		5340CA3F1CCCDB7C0054B7CF /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA311CCCDB7C0054B7CF /* MultipartFormData.swift */; };
-		5340CA401CCCDB7C0054B7CF /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA321CCCDB7C0054B7CF /* ParameterEncoding.swift */; };
-		5340CA411CCCDB7C0054B7CF /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA331CCCDB7C0054B7CF /* Request.swift */; };
-		5340CA421CCCDB7C0054B7CF /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA341CCCDB7C0054B7CF /* Response.swift */; };
-		5340CA431CCCDB7C0054B7CF /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA351CCCDB7C0054B7CF /* ResponseSerialization.swift */; };
-		5340CA441CCCDB7C0054B7CF /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA361CCCDB7C0054B7CF /* Result.swift */; };
-		5340CA451CCCDB7C0054B7CF /* ServerTrustPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA371CCCDB7C0054B7CF /* ServerTrustPolicy.swift */; };
-		5340CA461CCCDB7C0054B7CF /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA381CCCDB7C0054B7CF /* Stream.swift */; };
-		5340CA471CCCDB7C0054B7CF /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA391CCCDB7C0054B7CF /* Upload.swift */; };
-		5340CA481CCCDB7C0054B7CF /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340CA3A1CCCDB7C0054B7CF /* Validation.swift */; };
 		FE4CBFA41BE4A56F00693F32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CBFA31BE4A56F00693F32 /* AppDelegate.swift */; };
 		FE4CBFA91BE4A56F00693F32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE4CBFA71BE4A56F00693F32 /* Main.storyboard */; };
 		FE4CBFAB1BE4A56F00693F32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE4CBFAA1BE4A56F00693F32 /* Assets.xcassets */; };
@@ -121,20 +107,6 @@
 /* Begin PBXFileReference section */
 		0444B7131CACB9D600051DC3 /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
 		0444B7141CACB9D600051DC3 /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
-		5340CA2D1CCCDB7C0054B7CF /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
-		5340CA2E1CCCDB7C0054B7CF /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
-		5340CA2F1CCCDB7C0054B7CF /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		5340CA301CCCDB7C0054B7CF /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
-		5340CA311CCCDB7C0054B7CF /* MultipartFormData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
-		5340CA321CCCDB7C0054B7CF /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
-		5340CA331CCCDB7C0054B7CF /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		5340CA341CCCDB7C0054B7CF /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		5340CA351CCCDB7C0054B7CF /* ResponseSerialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerialization.swift; sourceTree = "<group>"; };
-		5340CA361CCCDB7C0054B7CF /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		5340CA371CCCDB7C0054B7CF /* ServerTrustPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTrustPolicy.swift; sourceTree = "<group>"; };
-		5340CA381CCCDB7C0054B7CF /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
-		5340CA391CCCDB7C0054B7CF /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
-		5340CA3A1CCCDB7C0054B7CF /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		FE4CBFA01BE4A56F00693F32 /* HelloAnyChatCloudSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloAnyChatCloudSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE4CBFA31BE4A56F00693F32 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE4CBFA81BE4A56F00693F32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -301,20 +273,6 @@
 		5340CA2C1CCCDB7C0054B7CF /* Alamofire */ = {
 			isa = PBXGroup;
 			children = (
-				5340CA2D1CCCDB7C0054B7CF /* Alamofire.swift */,
-				5340CA2E1CCCDB7C0054B7CF /* Download.swift */,
-				5340CA2F1CCCDB7C0054B7CF /* Error.swift */,
-				5340CA301CCCDB7C0054B7CF /* Manager.swift */,
-				5340CA311CCCDB7C0054B7CF /* MultipartFormData.swift */,
-				5340CA321CCCDB7C0054B7CF /* ParameterEncoding.swift */,
-				5340CA331CCCDB7C0054B7CF /* Request.swift */,
-				5340CA341CCCDB7C0054B7CF /* Response.swift */,
-				5340CA351CCCDB7C0054B7CF /* ResponseSerialization.swift */,
-				5340CA361CCCDB7C0054B7CF /* Result.swift */,
-				5340CA371CCCDB7C0054B7CF /* ServerTrustPolicy.swift */,
-				5340CA381CCCDB7C0054B7CF /* Stream.swift */,
-				5340CA391CCCDB7C0054B7CF /* Upload.swift */,
-				5340CA3A1CCCDB7C0054B7CF /* Validation.swift */,
 			);
 			path = Alamofire;
 			sourceTree = "<group>";
@@ -707,39 +665,25 @@
 				FEFFB6DD1C197C2B00011E20 /* IQNSArray+Sort.m in Sources */,
 				FEFFB6E01C197C2B00011E20 /* IQUIViewController+Additions.m in Sources */,
 				FEB350C01BE79B4200590D0F /* UserViewController.swift in Sources */,
-				5340CA481CCCDB7C0054B7CF /* Validation.swift in Sources */,
 				FE55C9F61BE8A107007B625D /* VideoParamSettingViewController.swift in Sources */,
 				0444B7151CACB9D600051DC3 /* RadioButton.m in Sources */,
 				FEFFB6DE1C197C2B00011E20 /* IQUITextFieldView+Additions.m in Sources */,
-				5340CA421CCCDB7C0054B7CF /* Response.swift in Sources */,
-				5340CA461CCCDB7C0054B7CF /* Stream.swift in Sources */,
 				FE4CBFD41BE4A66600693F32 /* LoginViewController.swift in Sources */,
-				5340CA431CCCDB7C0054B7CF /* ResponseSerialization.swift in Sources */,
 				FE4CBFA41BE4A56F00693F32 /* AppDelegate.swift in Sources */,
-				5340CA441CCCDB7C0054B7CF /* Result.swift in Sources */,
 				FEFFB6E61C197C2B00011E20 /* IQBarButtonItem.m in Sources */,
 				FEFFB6E71C197C2B00011E20 /* IQTitleBarButtonItem.m in Sources */,
 				FEFFB6DF1C197C2B00011E20 /* IQUIView+Hierarchy.m in Sources */,
-				5340CA3D1CCCDB7C0054B7CF /* Error.swift in Sources */,
 				FEB350BE1BE79A7C00590D0F /* User.swift in Sources */,
 				FE55C9F21BE86E2F007B625D /* MZTimerLabel.m in Sources */,
 				FE4CC0311BE50E4A00693F32 /* MBProgressHUD+JT.m in Sources */,
 				FEFFB6E41C197C2B00011E20 /* IQSegmentedNextPrevious.m in Sources */,
-				5340CA411CCCDB7C0054B7CF /* Request.swift in Sources */,
-				5340CA3B1CCCDB7C0054B7CF /* Alamofire.swift in Sources */,
 				FEFFB6E51C197C2B00011E20 /* IQTextView.m in Sources */,
-				5340CA471CCCDB7C0054B7CF /* Upload.swift in Sources */,
-				5340CA3C1CCCDB7C0054B7CF /* Download.swift in Sources */,
 				FEFFB6E11C197C2B00011E20 /* IQUIWindow+Hierarchy.m in Sources */,
 				FEFFB6E31C197C2B00011E20 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				FEB90B401BE63585007B4749 /* VideoViewController.swift in Sources */,
-				5340CA451CCCDB7C0054B7CF /* ServerTrustPolicy.swift in Sources */,
 				FEFFB6E91C197C2B00011E20 /* IQUIView+IQKeyboardToolbar.m in Sources */,
-				5340CA3F1CCCDB7C0054B7CF /* MultipartFormData.swift in Sources */,
 				FE4CC0331BE50E4A00693F32 /* MBProgressHUD.m in Sources */,
 				FE5119641BEFC99F0052DD9B /* UIScrollView+EmptyDataSet.m in Sources */,
-				5340CA401CCCDB7C0054B7CF /* ParameterEncoding.swift in Sources */,
-				5340CA3E1CCCDB7C0054B7CF /* Manager.swift in Sources */,
 				FE5119601BEF574C0052DD9B /* VideoParamSettingDetailController.swift in Sources */,
 				FEFFB6E81C197C2B00011E20 /* IQToolbar.m in Sources */,
 			);
