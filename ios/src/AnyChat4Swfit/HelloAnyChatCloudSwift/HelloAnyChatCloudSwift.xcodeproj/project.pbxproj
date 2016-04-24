@@ -270,13 +270,6 @@
 			path = RadioButton;
 			sourceTree = "<group>";
 		};
-		5340CA2C1CCCDB7C0054B7CF /* Alamofire */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Alamofire;
-			sourceTree = "<group>";
-		};
 		FE4CBF971BE4A56F00693F32 = {
 			isa = PBXGroup;
 			children = (
@@ -326,7 +319,6 @@
 		FE4CC02A1BE50E4A00693F32 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				5340CA2C1CCCDB7C0054B7CF /* Alamofire */,
 				0444B7121CACB9D600051DC3 /* RadioButton */,
 				FEFFB6B81C197C2B00011E20 /* IQKeyBoardManager */,
 				FE5119611BEFC99F0052DD9B /* DZNEmptyDataSet */,
