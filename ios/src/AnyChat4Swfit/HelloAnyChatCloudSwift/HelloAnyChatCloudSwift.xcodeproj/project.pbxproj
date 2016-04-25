@@ -889,7 +889,7 @@
 				HEADER_SEARCH_PATHS = ../../../sdk/include;
 				INFOPLIST_FILE = HelloAnyChatSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../sdk/libs,
@@ -917,7 +917,7 @@
 				HEADER_SEARCH_PATHS = ../../../sdk/include;
 				INFOPLIST_FILE = HelloAnyChatSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../sdk/libs,
