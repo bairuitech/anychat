@@ -278,6 +278,7 @@ var ANYCHATWEB_VIDEO_SO_EXTENDEDSCREEN	=	10;	// 扩展屏显示视频
 // 插件最低需求版本号
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
 var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.4";
+var CUR_ANYCHAT_PLUGIN_VAR = "";
 
 /********************************************
  *				方法定义部分				*
@@ -346,18 +347,18 @@ function BRAC_InitSDK(apilevel) {
 		anychatobj.width = "1 px";
 		anychatobj.height = "1 px";
 	    // 测试插件是否安装
-	    var anychatpluginver = anychatobj.GetVersion(0);
+	    CUR_ANYCHAT_PLUGIN_VAR = anychatobj.GetVersion(0);
 	    var videopluginver = videoobj.GetVersion(0);
 	    // 判断插件的版本是否太旧
-	    var bRightVersion = ((anychatpluginver >= MIN_ANYCHAT_PLUGIN_VER) && (videopluginver >= MIN_VIDEO_PLUGIN_VER));
+	    var bRightVersion = ((CUR_ANYCHAT_PLUGIN_VAR >= MIN_ANYCHAT_PLUGIN_VER) && (videopluginver >= MIN_VIDEO_PLUGIN_VER));
 		// 判断插件是否支持录像扩展API接口
-		bSupportStreamRecordCtrlEx = (anychatpluginver >= "1.0.1.0");
+		bSupportStreamRecordCtrlEx = (CUR_ANYCHAT_PLUGIN_VAR >= "1.0.1.0");
 		// 判断插件是否支持业务对象API接口
-		bSupportObjectBusiness = (anychatpluginver >= "1.0.2.3");
+		bSupportObjectBusiness = (CUR_ANYCHAT_PLUGIN_VAR >= "1.0.2.3");
 		// 判断插件是否支持多路流API接口
-		bSupportMultiStream = (anychatpluginver >= "1.0.3.1");
+		bSupportMultiStream = (CUR_ANYCHAT_PLUGIN_VAR >= "1.0.3.1");
 		// 判断插件是否支持集群系统
-		bSupportCluster = (anychatpluginver >= "1.0.4.0");
+		bSupportCluster = (CUR_ANYCHAT_PLUGIN_VAR >= "1.0.4.0");
 		// 判断当前的API Level是否满足业务层的需要
 		if(apilevel > anychatobj.GetVersion(2))
 			bRightVersion = false;
@@ -910,6 +911,13 @@ function BRAC_GetUserStreamInfoString(dwUserId, dwStreamIndex, infoname) {
 	if(!bSupportMultiStream)
 		return "";
 	return anychat.GetUserStreamInfoString(dwUserId, dwStreamIndex, infoname);
+}
+
+// 向服务器动态查询相关信息
+function QueryInfoFromServer(dwInfoName, lpInParam) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.5.0")
+		return "";
+	return anychat.QueryInfoFromServer(dwInfoName, lpInParam);
 }
 
 // 获取当前浏览器
