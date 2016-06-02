@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04B125911CEDBF390008E358 /* TextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B125901CEDBF390008E358 /* TextModel.m */; };
+		04B125941CEDC1DA0008E358 /* TextModelTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B125931CEDC1DA0008E358 /* TextModelTool.m */; };
 		FB3679A819D8453E008D9C5E /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB3679A719D8453E008D9C5E /* VideoViewController.xib */; };
 		FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD379719D82B4B000FF14E /* QuartzCore.framework */; };
 		FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B2E7319C692F300773FE6 /* VideoViewController.m */; };
@@ -96,6 +98,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04B1258F1CEDBF390008E358 /* TextModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextModel.h; sourceTree = "<group>"; };
+		04B125901CEDBF390008E358 /* TextModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextModel.m; sourceTree = "<group>"; };
+		04B125921CEDC1DA0008E358 /* TextModelTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextModelTool.h; sourceTree = "<group>"; };
+		04B125931CEDC1DA0008E358 /* TextModelTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextModelTool.m; sourceTree = "<group>"; };
 		FB3679A719D8453E008D9C5E /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
 		FBCD379719D82B4B000FF14E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FE1B2E7219C692F300773FE6 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
@@ -246,6 +252,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04B1258E1CEDBF150008E358 /* textModel */ = {
+			isa = PBXGroup;
+			children = (
+				04B1258F1CEDBF390008E358 /* TextModel.h */,
+				04B125901CEDBF390008E358 /* TextModel.m */,
+				04B125921CEDC1DA0008E358 /* TextModelTool.h */,
+				04B125931CEDC1DA0008E358 /* TextModelTool.m */,
+			);
+			path = textModel;
+			sourceTree = "<group>";
+		};
 		FE01D91119D41858005D1189 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +416,7 @@
 		FEBBA25619C2CC0B009EE02C /* helloAnyChat */ = {
 			isa = PBXGroup;
 			children = (
+				04B1258E1CEDBF150008E358 /* textModel */,
 				FE94CFB61C65EA6200D199DE /* sdk */,
 				FE94CE2A1C634C6400D199DE /* Libs */,
 				FEBBA25F19C2CC0B009EE02C /* AppDelegate.h */,
@@ -595,7 +613,9 @@
 				FEBBA26119C2CC0B009EE02C /* AppDelegate.m in Sources */,
 				FEB0A3711A523BE50065FDB7 /* SettingVC.m in Sources */,
 				FEBBA25D19C2CC0B009EE02C /* main.m in Sources */,
+				04B125941CEDC1DA0008E358 /* TextModelTool.m in Sources */,
 				FEB0A3721A523BE50065FDB7 /* DetailVC.m in Sources */,
+				04B125911CEDBF390008E358 /* TextModel.m in Sources */,
 				FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */,
 				FE94CE451C634C6400D199DE /* MBProgressHUD.m in Sources */,
 				FEBBA2BA19C2CF67009EE02C /* AnyChatViewController.m in Sources */,

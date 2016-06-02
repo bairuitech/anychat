@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TextModel.h"
 
 @interface TextModelTool : NSObject
+
++ (void)saveText:(TextModel *)model;
+
++ (TextModel *)textModel;
 
 @end

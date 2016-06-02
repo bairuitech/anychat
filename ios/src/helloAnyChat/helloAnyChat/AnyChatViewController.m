@@ -7,6 +7,8 @@
 //
 
 #import "AnyChatViewController.h"
+#import "textModel/TextModel.h"
+#import "textModel/TextModelTool.h"
 
 #define kAnyChatRoomID 1
 #define kUserID 1001
@@ -64,6 +66,23 @@
     
     //创建默认视频参数
     [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
+    
+    
+    TextModel *textModel = [TextModelTool textModel];
+    if (textModel.chatIp) {
+        self.theRoomNO.text = textModel.roomId;
+        self.theUserName.text = textModel.userName;
+        self.theServerIP.text = textModel.chatIp;
+        self.theServerPort.text = textModel.chatPort;
+    }else{
+        textModel.roomId = self.theRoomNO.text;
+        textModel.userName = self.theUserName.text;
+        textModel.chatIp = self.theServerIP.text;
+        textModel.chatPort = self.theServerPort.text;
+    }
+
+    
+    [TextModelTool saveText:textModel];
 }
 
 
@@ -78,6 +97,8 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
+    
 }
 
 #pragma mark - Rotation

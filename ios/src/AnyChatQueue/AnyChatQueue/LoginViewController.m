@@ -13,6 +13,8 @@
 #import "QueueViewController.h"
 #import "VideoViewController.h"
 #import "ServerQueueViewController.h"
+#import "TextModelTool.h"
+#import "TextModel.h"
 
 #define kUserID 1001
 #define kAnyChatIP @"demo.anychat.cn"
@@ -70,6 +72,24 @@
     [self setup];
     [self setupNav];
     [self setupAnyChat];
+    
+    
+    TextModel *textModel = [TextModelTool textModel];
+    if (textModel.chatIp) {
+        self.role.text = textModel.roomId;
+        self.username.text = textModel.userName;
+        self.server.text = textModel.chatIp;
+        self.port.text = textModel.chatPort;
+    }else{
+        textModel.roomId = self.role.text;
+        textModel.userName = self.username.text;
+        textModel.chatIp = self.server.text;
+        textModel.chatPort = self.port.text;
+    }
+    
+    
+    [TextModelTool saveText:textModel];
+    
 }
 
 - (void)setup {

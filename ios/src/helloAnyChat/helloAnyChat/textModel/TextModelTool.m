@@ -8,6 +8,23 @@
 
 #import "TextModelTool.h"
 
+
+
+#define TextFile [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"text.data"]
 @implementation TextModelTool
+
++ (void)saveText:(TextModel *)model{
+    [NSKeyedArchiver archiveRootObject:model toFile:TextFile];
+}
+
++ (TextModel *)textModel{
+    
+    TextModel *text = [NSKeyedUnarchiver unarchiveObjectWithFile:TextFile];
+    
+    return text;
+    
+}
+
+
 
 @end
