@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Chinese (P.R.C.) resources
+// 中文(中华人民共和国) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 #ifdef _WIN32
@@ -27,18 +27,18 @@ LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -66,7 +66,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\Hello AnyChat.ico"
+IDR_MAINFRAME           ICON                    "res\\Hello AnyChat.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -74,10 +74,10 @@ IDR_MAINFRAME           ICON    DISCARDABLE     "res\\Hello AnyChat.ico"
 //
 
 IDD_HELLOANYCHAT_DIALOG DIALOGEX 0, 0, 636, 405
-STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "Hello AnyChat"
-FONT 9, "宋体"
+FONT 9, "宋体", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "退出",IDLOGOUT,467,13,38,20,0,WS_EX_STATICEDGE
     LTEXT           "IP地址：",IDC_STATIC,19,9,33,8
@@ -88,66 +88,51 @@ BEGIN
     LTEXT           "房间号：",IDC_STATIC,251,25,32,10
     EDITTEXT        IDC_EDIT_PORT,287,7,92,14,ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        IDC_EDIT_ROOM,287,25,92,14,ES_AUTOHSCROLL | ES_NUMBER
-    CTEXT           "用户列表",IDC_STATIC_USERLISTTITLE,49,59,146,8,
-                    SS_CENTERIMAGE
+    CTEXT           "用户列表",IDC_STATIC_USERLISTTITLE,49,59,146,8,SS_CENTERIMAGE
     DEFPUSHBUTTON   "登录",IDLOGIN,417,13,38,20,0,WS_EX_STATICEDGE
-    CONTROL         "List1",IDC_LIST_USERMSG,"SysListView32",WS_BORDER | 
-                    WS_TABSTOP,21,72,201,126
+    CONTROL         "List1",IDC_LIST_USERMSG,"SysListView32",WS_BORDER | WS_TABSTOP,21,72,201,126
     GROUPBOX        "",IDC_STATIC_SELFVIEW,22,205,202,153
     GROUPBOX        "",IDC_STATIC_REMOTEVIEW,235,68,380,289
     LTEXT           "Static",IDC_STATIC_SDKVER,239,390,327,8
-    LTEXT           "No connnect to the server!",IDC_STATIC_LINKMSG,23,390,
-                    188,8
+    LTEXT           "No connnect to the server!",IDC_STATIC_LINKMSG,23,390,188,8
     PUSHBUTTON      "设置",IDC_BUTTON_SETTING,24,364,42,17
     PUSHBUTTON      "打开音频",IDC_BUTTON_AUDIOCTRL,109,364,48,18
     PUSHBUTTON      "打开视频",IDC_BUTTON_VIDEOCTRL,173,364,47,17
+    LTEXT           "应用ID：",IDC_STATIC,251,47,33,8
+    EDITTEXT        IDC_EDIT_APPID,287,45,92,14,ES_AUTOHSCROLL | ES_NUMBER | WS_DISABLED
+    CONTROL         "",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,384,46,11,14
 END
 
-IDD_DIALOG_VIDEOSET DIALOG DISCARDABLE  0, 0, 284, 168
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_DIALOG_VIDEOSET DIALOG  0, 0, 284, 168
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
 FONT 10, "System"
 BEGIN
     LTEXT           "录音设备：",IDC_STATIC,16,30,40,8
-    COMBOBOX        IDC_COMBO_VIDEODEVICE,56,13,139,56,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO_AUDIODEVICE,56,28,139,58,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
-    CONTROL         "服务器配置参数优先",IDC_CHK_SERVERPRIORITY,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,16,64,88,10
-    COMBOBOX        IDC_COMBO_BITRATE,56,80,64,138,CBS_DROPDOWN | WS_VSCROLL | 
-                    WS_TABSTOP
-    COMBOBOX        IDC_COMBO_FRAMERATE,56,97,64,113,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO_QUALITY,56,114,64,72,CBS_DROPDOWN | WS_VSCROLL | 
-                    WS_TABSTOP
-    COMBOBOX        IDC_COMBO_RESOLUTION,56,131,64,114,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO_PREPARAM,56,149,64,56,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_VIDEODEVICE,56,13,139,56,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_AUDIODEVICE,56,28,139,58,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "服务器配置参数优先",IDC_CHK_SERVERPRIORITY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,64,88,10
+    COMBOBOX        IDC_COMBO_BITRATE,56,80,64,138,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_FRAMERATE,56,97,64,113,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_QUALITY,56,114,64,72,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_RESOLUTION,56,131,64,114,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_PREPARAM,56,149,64,56,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     LTEXT           "码率：",IDC_STATIC,16,83,25,8
     LTEXT           "帧率：",IDC_STATIC,16,99,25,8
     LTEXT           "质量：",IDC_STATIC,16,115,25,8
     LTEXT           "分辨率：",IDC_STATIC,16,133,33,8
     LTEXT           "预设：",IDC_STATIC,16,149,25,8
-    COMBOBOX        IDC_COMBO_AUDIOMODE,165,81,71,73,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
-    CONTROL         "VAD (静音检测)",IDC_CHECK_ENABLEVAD,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,141,102,67,10
-    CONTROL         "AEC (回音消除)",IDC_CHECK_ENABLEECHO,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,210,100,67,10
-    CONTROL         "NS (噪音抑制)",IDC_CHECK_ENABLENS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,210,121,64,10
-    CONTROL         "AGC (自动增益)",IDC_CHECK_ENABLEAGC,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,141,121,68,10
+    COMBOBOX        IDC_COMBO_AUDIOMODE,165,81,71,73,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "VAD (静音检测)",IDC_CHECK_ENABLEVAD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,141,102,67,10
+    CONTROL         "AEC (回音消除)",IDC_CHECK_ENABLEECHO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,210,100,67,10
+    CONTROL         "NS (噪音抑制)",IDC_CHECK_ENABLENS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,210,121,64,10
+    CONTROL         "AGC (自动增益)",IDC_CHECK_ENABLEAGC,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,141,121,68,10
     LTEXT           "放声设备：",IDC_STATIC,16,46,40,8
-    COMBOBOX        IDC_COMBO_PLAYDEVICE,56,44,139,56,CBS_DROPDOWN | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_PLAYDEVICE,56,44,139,56,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "视频设备：",IDC_STATIC,16,16,41,8
 END
 
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -170,15 +155,13 @@ BEGIN
     BEGIN
         BLOCK "080404B0"
         BEGIN
-            VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "Hello AnyChat Microsoft 基础类应用程序\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "Hello AnyChat\0"
-            VALUE "LegalCopyright", "版权所有 (C) 2014\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "Hello AnyChat.EXE\0"
-            VALUE "ProductName", "Hello AnyChat 应用程序\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "FileDescription", "Hello AnyChat Microsoft 基础类应用程序"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "Hello AnyChat"
+            VALUE "LegalCopyright", "版权所有 (C) 2014"
+            VALUE "OriginalFilename", "Hello AnyChat.EXE"
+            VALUE "ProductName", "Hello AnyChat 应用程序"
+            VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -187,8 +170,6 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -196,7 +177,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO 
 BEGIN
     IDD_HELLOANYCHAT_DIALOG, DIALOG
     BEGIN
@@ -216,7 +197,7 @@ BEGIN
 END
 #endif    // APSTUDIO_INVOKED
 
-#endif    // Chinese (P.R.C.) resources
+#endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

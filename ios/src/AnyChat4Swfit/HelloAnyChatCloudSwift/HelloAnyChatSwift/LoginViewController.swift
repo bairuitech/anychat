@@ -7,7 +7,6 @@
 //  登录界面
 
 import UIKit
-import Alamofire
 
 enum LoginVCLoginMode {
     case GeneralLogin
@@ -254,7 +253,8 @@ class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAle
             "strUserid": "",
             "appid": guid
         ]
-        Alamofire.request(.POST, self.signUrl, parameters:parameters ).responseJSON {response in
+        
+        request(.POST, self.signUrl, parameters:parameters ).responseJSON {response in
             
             print(response)
             switch response.result {

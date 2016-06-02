@@ -228,7 +228,7 @@
         {
             theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
         }
-        [AnyChatPlatform EnterRoom:kAnyChatRoomID :@""];
+        [AnyChatPlatform EnterRoom:(int)[theRoomNO.text integerValue] :@""];
     }
     else
     {
@@ -410,6 +410,7 @@
     [self.navigationController setNavigationBarHidden:YES];
     
     theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
+    theRoomNO.keyboardType = UIKeyboardTypePhonePad;
     theUserName.text = kAnyChatUserName;
     theServerIP.text = kAnyChatIP;
     theServerPort.text = kAnyChatPort;

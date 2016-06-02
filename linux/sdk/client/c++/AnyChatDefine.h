@@ -84,6 +84,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_RECORD_HEIGHT				142	///< 录制文件高度设置（参数为：int型，如：240）
 #define BRAC_SO_RECORD_FILENAMERULE			143	///< 录制文件名命名规则（参数为：int型）
 #define BRAC_SO_RECORD_CLIPMODE				144	///< 录制视频裁剪模式（参数为：int型）
+#define BRAC_SO_RECORD_DISABLEDATEDIR		145	///< 录制文件不按日期分目录保存，全部生成在指定文件夹中（参数为：int型， 0禁止[默认] 1 开启）
 
 #define BRAC_SO_CORESDK_TMPDIR				14	///< 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 #define BRAC_SO_CORESDK_MAGICADJUST			15	///< 内核调试参数
@@ -128,6 +129,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_LOCALVIDEO_DEVICEMODE		103	///< 设备类型
 #define BRAC_SO_LOCALVIDEO_TVFORMAT			104	///< 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
 #define BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP	105	///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
+#define BRAC_SO_LOCALVIDEO_DEVICENAME		106	///< 本地视频采集设备名称，用于设置打开指定摄像头设备（参数为字符串类型）
 
 #define BRAC_SO_NETWORK_P2PPOLITIC			40	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 #define BRAC_SO_NETWORK_P2PCONNECT			41	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -165,6 +167,15 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_UPLOADLOGINFO		134	///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
 #define BRAC_SO_CORESDK_WRITELOG			135	///< 写入调试信息到客户端日志文件中
 #define BRAC_SO_CORESDK_NEWLOGFILE			136	///< 产生新的日志文件
+#define BRAC_SO_CORESDK_SUPPORTSIP			137	///< 判断当前是否支持SIP通信
+#define BRAC_SO_CORESDK_SUPPORTHTML5		138	///< 判断当前是否支持HTML5
+#define BRAC_SO_CORESDK_SUPPORTVIDEOCODEC	210	///< 设置支持的视频编码器
+#define BRAC_SO_CORESDK_SUPPORTAUDIOCODEC	211	///< 设置支持的音频编码器
+#define BRAC_SO_CORESDK_DISABLEMEDIACONSUL	212	///< 禁止媒体协商
+#define BRAC_SO_CORESDK_QUERYTIMEOUTTIME	213	///< 信息查询超时时间（参数为：int型，单位：ms，默认值1000）
+#define BRAC_SO_CORESDK_REMOTEASSISTHWND	214	///< 远程协助窗口句柄
+#define BRAC_SO_CORESDK_REMOTEASSISTXPOS	215	///< 远程协助窗口滚动条位置（X）
+#define BRAC_SO_CORESDK_REMOTEASSISTYPOS	216	///< 远程协助窗口滚动条位置（Y）
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -175,8 +186,25 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_UDPTRACE_SOURCESENDNUM		166	///< UDP数据包跟踪源发包数量
 #define BRAC_SO_UDPTRACE_SENDUSERID			167	///< UDP数据包跟踪源用户ID
 
+// 用户多媒体流参数定义（API：BRAC_GetUserStreamInfo 传入参数）
+#define BRAC_STREAMINFO_VIDEOWIDTH			180 ///< 视频流宽度
+#define BRAC_STREAMINFO_VIDEOHEIGHT			181	///< 视频流高度
+#define BRAC_STREAMINFO_VIDEOFPS			182	///< 视频流帧率
+#define BRAC_STREAMINFO_VIDEOBITRATE		183	///< 视频流码率，单位：bps
+#define BRAC_STREAMINFO_VIDEOCODECID		184	///< 视频流编码器ID
+#define BRAC_STREAMINFO_VIDEOPACKLOSSRATE	185	///< 视频流丢包率
+#define BRAC_STREAMINFO_ADUIOCHANNELS		190	///< 音频流通道数
+#define BRAC_STREAMINFO_AUDIOSAMPLERATE		191	///< 音频流采样率
+#define BRAC_STREAMINFO_AUDIOBITRATE		192	///< 音频流码率，单位：bps
+#define BRAC_STREAMINFO_AUDIOCODECID		193	///< 音频流编码器ID
+#define BRAC_STREAMINFO_AUDIOPACKLOSSRATE	194	///< 音频流丢包率
+
+
 #define BRAC_SO_OBJECT_INITFLAGS			200	///< 业务对象身份初始化
 
+#define BRAC_SO_CLOUD_APPGUID				300	///< 云平台应用GUID（参数为：字符串类型，连接服务器之前设置）
+#define BRAC_SO_CLOUD_ACCTYPE				301	///< 云平台应用集成账号类型
+#define BRAC_SO_CLOUD_APPID3RD				302	///< 云平台应用集成时第三方平台的应用GUID
 
 
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
@@ -196,8 +224,9 @@ enum BRAC_VideoShowDriver{
 #define BRAC_RECORD_FLAGS_STEREO		0x00000200	///< 录制音频时，将其它人的声音混合为立体声后录制
 #define BRAC_RECORD_FLAGS_SNAPSHOT		0x00000400	///< 拍照
 #define BRAC_RECORD_FLAGS_LOCALCB		0x00000800	///< 触发本地回调
-#define BRAC_RECORD_FLAGS_STREAM		0x00001000	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+#define BRAC_RECORD_FLAGS_STREAM		0x00001000	///< 对视频流进行录制（效率高）
 #define BRAC_RECORD_FLAGS_USERFILENAME	0x00002000	///< 用户自定义文件名
+
 
 // 客户端、服务器端录制标志定义保持统一
 #if !defined(ANYCHAT_RECORD_FLAGS_VIDEO)
@@ -212,6 +241,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_RECORD_FLAGS_LOCALCB		BRAC_RECORD_FLAGS_LOCALCB
 #define ANYCHAT_RECORD_FLAGS_STREAM			BRAC_RECORD_FLAGS_STREAM
 #define ANYCHAT_RECORD_FLAGS_USERFILENAME	BRAC_RECORD_FLAGS_USERFILENAME
+#define ANYCHAT_RECORD_FLAGS_ERRORCODE		0x00004000	///< 支持出错代码
 #endif
 
 
@@ -263,12 +293,14 @@ enum BRAC_VideoShowDriver{
 #define BRAC_VIDEOCALL_EVENT_FINISH			4	///< 挂断（结束）呼叫会话
 
 // 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
-#define BRAC_VIDEOCALL_FLAGS_AUDIO		0x01	///< 语音通话
-#define BRAC_VIDEOCALL_FLAGS_VIDEO		0x02	///< 视频通话
-#define BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	0x10	///< 禁止源（呼叫端）音频
-#define BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	0x20	///< 禁止源（呼叫端）视频
-#define BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	0x40	///< 禁止目标（被呼叫端）音频
-#define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x80	///< 禁止目标（被呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_AUDIO		0x0001	///< 语音通话
+#define BRAC_VIDEOCALL_FLAGS_VIDEO		0x0002	///< 视频通话
+#define BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	0x0010	///< 禁止源（呼叫端）音频
+#define BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	0x0020	///< 禁止源（呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	0x0040	///< 禁止目标（被呼叫端）音频
+#define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x0080	///< 禁止目标（被呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_ASSISTREQ	0x0100	///< 请求目标用户远程协助
+#define BRAC_VIDEOCALL_FLAGS_CONTROLREQ	0x0200	///< 请求控制目标用户
 
 // 远程视频方向修正标志定义
 #define BRAC_ROTATION_FLAGS_MIRRORED	0x1000	///< 图像需要镜像翻转
@@ -294,7 +326,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_CBTYPE_VIDEODATA				2	///< 视频数据回调
 #define BRAC_CBTYPE_VIDEODATAEX				3	///< 视频数据扩展回调
 #define BRAC_CBTYPE_AUDIODATA				4	///< 音频数据回调
-#define BRAC_CBTYPE_AUDIODATAEX				5	///< 音频数据回调扩展回调
+#define BRAC_CBTYPE_AUDIODATAEX				5	///< 音频数据扩展回调
 #define BRAC_CBTYPE_TEXTMESSAGE				6	///< 文字消息回调
 #define BRAC_CBTYPE_TRANSBUFFER				7	///< 透明通道数据回调
 #define BRAC_CBTYPE_TRANSBUFFEREX			8	///< 透明通道数据扩展回调
@@ -308,6 +340,9 @@ enum BRAC_VideoShowDriver{
 #define BRAC_CBTYPE_SCREENEVENT				16	///< 屏幕事件回调
 #define BRAC_CBTYPE_NETWORKDATASEND			17	///< 网络数据回调
 #define BRAC_CBTYPE_OBJECTEVENT				18	///< 业务对象事件通知
+#define BRAC_CBTYPE_VIDEODATAEX2			19	///< 视频数据扩展回调（支持多路流）
+#define BRAC_CBTYPE_AUDIODATAEX2			20	///< 音频数据扩展回调（支持多路流）
+#define BRAC_CBTYPE_STREAMRECORDEX2			21	///< 录像快照任务完成通知扩展回调（支持出错代码）
 
 
 // 视频裁剪模式定义
@@ -318,6 +353,10 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_VIDEOCLIPMODE_DYNAMIC		4	///< 动态模式，由上层应用根据分辩率来调整显示表面，保持画面不变形
 
 
+// 服务器信息查询常量定义（API：BRAC_QueryInfoFromServer 传入参数）
+#define ANYCHAT_SERVERQUERY_USERIDBYNAME	1	///< 根据用户昵称查询用户ID
+#define ANYCHAT_SERVERQUERY_USERIDBYSTRID	2	///< 根据字符串ID查询用户ID
+#define ANYCHAT_SERVERQUERY_STRIDBYUSERID	3	///< 根据用户ID查询字符串ID
 
 
 

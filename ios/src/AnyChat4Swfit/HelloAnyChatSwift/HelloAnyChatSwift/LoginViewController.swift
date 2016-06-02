@@ -7,7 +7,7 @@
 //  登录界面
 
 import UIKit
-import Alamofire
+//import Alamofire
 
 class LoginViewController: UIViewController, AnyChatNotifyMessageDelegate, UIAlertViewDelegate{
     
