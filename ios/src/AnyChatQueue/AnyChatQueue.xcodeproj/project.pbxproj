@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-<<<<<<< HEAD
 		0444B7201CACC0A200051DC3 /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0444B71F1CACC0A200051DC3 /* MZTimerLabel.m */; };
 		04B1259A1CEDC8050008E358 /* TextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B125971CEDC8050008E358 /* TextModel.m */; };
 		04B1259B1CEDC8050008E358 /* TextModelTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B125991CEDC8050008E358 /* TextModelTool.m */; };
-=======
->>>>>>> 0116440468c209276b6d764ae46fbfdcbf769e70
+
 		226B21591B3B17A200712478 /* ServerQueueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 226B21571B3B17A200712478 /* ServerQueueViewController.m */; };
 		226B215A1B3B17A200712478 /* ServerQueueViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 226B21581B3B17A200712478 /* ServerQueueViewController.xib */; };
 		22D560051B2B2B2100FE5DC2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D560041B2B2B2100FE5DC2 /* main.m */; };
@@ -76,15 +74,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-<<<<<<< HEAD
 		0444B71E1CACC0A200051DC3 /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZTimerLabel.h; sourceTree = "<group>"; };
 		0444B71F1CACC0A200051DC3 /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZTimerLabel.m; sourceTree = "<group>"; };
 		04B125961CEDC8050008E358 /* TextModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextModel.h; sourceTree = "<group>"; };
 		04B125971CEDC8050008E358 /* TextModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextModel.m; sourceTree = "<group>"; };
 		04B125981CEDC8050008E358 /* TextModelTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextModelTool.h; sourceTree = "<group>"; };
 		04B125991CEDC8050008E358 /* TextModelTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextModelTool.m; sourceTree = "<group>"; };
-=======
->>>>>>> 0116440468c209276b6d764ae46fbfdcbf769e70
+
 		226B21561B3B17A200712478 /* ServerQueueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerQueueViewController.h; sourceTree = "<group>"; };
 		226B21571B3B17A200712478 /* ServerQueueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerQueueViewController.m; sourceTree = "<group>"; };
 		226B21581B3B17A200712478 /* ServerQueueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServerQueueViewController.xib; sourceTree = "<group>"; };
@@ -213,7 +209,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-<<<<<<< HEAD
 		0444B71D1CACC0A200051DC3 /* MZTimerLable */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,8 +229,7 @@
 			path = textModel;
 			sourceTree = "<group>";
 		};
-=======
->>>>>>> 0116440468c209276b6d764ae46fbfdcbf769e70
+
 		22D55FF61B2B2B2100FE5DC2 = {
 			isa = PBXGroup;
 			children = (
