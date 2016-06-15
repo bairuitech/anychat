@@ -18,6 +18,10 @@
 #   import <AppKit/NSView.h>
 #endif
 
+#include "AnyChatDefine.h"
+#include "AnyChatErrorCode.h"
+#include "AnyChatObjectDefine.h"
+
 #if !defined(BITMAPINFOHEADER_DEFINE)
 #define BITMAPINFOHEADER_DEFINE
 typedef struct tagBITMAPINFOHEADER {
@@ -388,33 +392,25 @@ typedef struct tagWAVEFORMATEX{
  *	AnyChat for iOS API方法定义
  */
 @interface AnyChatPlatform : NSObject {
-    
-    id<AnyChatNotifyMessageDelegate>    notifyMsgDelegate;
-    id<AnyChatStateChangeDelegate>		stateChangeDelegate;
-    id<AnyChatPrivateChatDelegate>		priateChatDelegate;
-    id<AnyChatTransDataDelegate>		transDataDelegate;
-    id<AnyChatTextMsgDelegate>			textMsgDelegate;
-    id<AnyChatRecordSnapShotDelegate>	recordSnapShotDelegate;
-    id<AnyChatMediaDataDelegate>        mediaDataDelegate;
-    id<AnyChatVideoCallDelegate>		videoCallDelegate;
-    id<AnyChatUserInfoDelegate>         userInfoDelegate;
-    id<AnyChatDataEncDecDelegate>		dataEncDecDelegate;
-    id<AnyChatObjectEventDelegate>      objectDelegate;
+
 }
 
-@property (nonatomic, assign) id<AnyChatNotifyMessageDelegate>  	notifyMsgDelegate;
-@property (nonatomic, assign) id<AnyChatStateChangeDelegate>		stateChangeDelegate;
-@property (nonatomic, assign) id<AnyChatPrivateChatDelegate>		priateChatDelegate;
-@property (nonatomic, assign) id<AnyChatTransDataDelegate>			transDataDelegate;
-@property (nonatomic, assign) id<AnyChatTextMsgDelegate>			textMsgDelegate;
-@property (nonatomic, assign) id<AnyChatRecordSnapShotDelegate>		recordSnapShotDelegate;
-@property (nonatomic, assign) id<AnyChatMediaDataDelegate>          mediaDataDelegate;
-@property (nonatomic, assign) id<AnyChatVideoCallDelegate>          videoCallDelegate;
-@property (nonatomic, assign) id<AnyChatUserInfoDelegate>           userInfoDelegate;
-@property (nonatomic, assign) id<AnyChatDataEncDecDelegate>			dataEncDecDelegate;
-@property (nonatomic, assign) id<AnyChatObjectEventDelegate>		objectDelegate;
+@property (nonatomic, weak) id<AnyChatNotifyMessageDelegate>  	notifyMsgDelegate;
+@property (nonatomic, weak) id<AnyChatStateChangeDelegate>		stateChangeDelegate;
+@property (nonatomic, weak) id<AnyChatPrivateChatDelegate>		priateChatDelegate;
+@property (nonatomic, weak) id<AnyChatTransDataDelegate>		transDataDelegate;
+@property (nonatomic, weak) id<AnyChatTextMsgDelegate>			textMsgDelegate;
+@property (nonatomic, weak) id<AnyChatRecordSnapShotDelegate>	recordSnapShotDelegate;
+@property (nonatomic, weak) id<AnyChatMediaDataDelegate>        mediaDataDelegate;
+@property (nonatomic, weak) id<AnyChatVideoCallDelegate>        videoCallDelegate;
+@property (nonatomic, weak) id<AnyChatUserInfoDelegate>         userInfoDelegate;
+@property (nonatomic, weak) id<AnyChatDataEncDecDelegate>       dataEncDecDelegate;
+@property (nonatomic, weak) id<AnyChatObjectEventDelegate>      objectDelegate;
 
 - (void) OnRecvAnyChatNotify:(NSDictionary*) dict;
+
+// 获取单例对象
++ (AnyChatPlatform *) getInstance;
 
 // 获取SDK版本信息
 + (NSString*) GetSDKVersion;
@@ -436,7 +432,7 @@ typedef struct tagWAVEFORMATEX{
 
 
 // 连接服务器
-// ,第一个参数为你需要连接的 AnyChat 核心服务器地址,如果您部署 AnyChat 核心服务器 的地址为 192.168.1.8,则传入这个地址;第二个参数为端口号
+// 第一个参数为你需要连接的 AnyChat 核心服务器地址,如果您部署 AnyChat 核心服务器 的地址为 192.168.1.8,则传入这个地址;第二个参数为端口号
 /**
  *  连接服务器 : 用于与服务器建立连接。
  *
