@@ -59,7 +59,7 @@
     
     [AnyChatPlatform InitSDK:0];
     
-    anyChat = [[AnyChatPlatform alloc] init];
+    anyChat = [AnyChatPlatform getInstance];
     anyChat.notifyMsgDelegate = self;
     // 设置应用ID
 //    [AnyChatPlatform SetSDKOptionString:BRAC_SO_CLOUD_APPGUID :nil];

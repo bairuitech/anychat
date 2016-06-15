@@ -126,7 +126,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
     
     //3.初始化sdk的核心类对象 AnyChatPlatform
-    self.anyChat = [[AnyChatPlatform alloc] init];
+    self.anyChat = [AnyChatPlatform getInstance];
     
     //4.设置通知代理
     self.anyChat.notifyMsgDelegate = self;

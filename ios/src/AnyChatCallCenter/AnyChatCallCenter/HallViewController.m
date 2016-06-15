@@ -52,7 +52,7 @@ NSString* const kVideoQuality = @"videoquality";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
     
-    theAnyChat = [[AnyChatPlatform alloc] init];
+    theAnyChat = [AnyChatPlatform getInstance];
     theAnyChat.userInfoDelegate = self;
     theAnyChat.videoCallDelegate = self;
     theAnyChat.notifyMsgDelegate = self;

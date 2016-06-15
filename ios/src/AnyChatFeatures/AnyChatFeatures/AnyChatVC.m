@@ -63,7 +63,7 @@
     
     [AnyChatPlatform InitSDK:0];
     
-    anyChat = [[AnyChatPlatform alloc] init];
+    anyChat = [AnyChatPlatform getInstance];
     anyChat.notifyMsgDelegate = self;
     anyChat.textMsgDelegate = self;
     anyChat.transDataDelegate = self;

@@ -56,7 +56,7 @@
     
     [AnyChatPlatform InitSDK:0];
     
-    anyChat = [[AnyChatPlatform alloc] init];
+    anyChat = [AnyChatPlatform getInstance];
     anyChat.notifyMsgDelegate = self;
     
     //创建默认视频参数
