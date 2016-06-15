@@ -192,7 +192,7 @@ typedef struct tagWAVEFORMATEX{
  *  @param bPublicChat 是否是公共聊天
  */
 - (void) OnAnyChatChatModeChg:(int) dwUserId : (BOOL) bPublicChat;
-#warning - 不清楚 dwRequestId
+
 /**
  *  用户私聊请求消息
  *
@@ -200,7 +200,7 @@ typedef struct tagWAVEFORMATEX{
  *  @param dwRequestId
  */
 - (void) OnAnyChatPrivateRequest:(int) dwUserId : (int) dwRequestId;
-#warning - 不清楚 dwErrorCode
+
 /**
  *  用户私聊请求回复消息
  *
@@ -285,7 +285,7 @@ typedef struct tagWAVEFORMATEX{
  *	AnyChat 录像、拍照事件协议
  */
 @protocol AnyChatRecordSnapShotDelegate <NSObject>
-// 录像完成事件
+
 /**
  *  视频录制完成事件
  *
@@ -298,8 +298,7 @@ typedef struct tagWAVEFORMATEX{
  *  @param lpUserStr   用户自定义参数,字符串类型
  */
 - (void) OnAnyChatRecordCallBack:(int) dwUserid : (int) dwErrorCode : (NSString*) lpFileName : (int) dwElapse : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr;
-// 拍照完成事件
-#warning - 不清楚
+
 /**
  *  拍照完成事件
  *
@@ -318,7 +317,7 @@ typedef struct tagWAVEFORMATEX{
  *  AnyChat 音频、视频数据回调事件协议
  */
 @protocol AnyChatMediaDataDelegate <NSObject>
-// 视频数据回调
+
 /**
  *  视频数据回调
  *
@@ -328,7 +327,7 @@ typedef struct tagWAVEFORMATEX{
  *  @param dwTimeStamp 整形值,签名的时间戳,由签名工具返回
  */
 - (void) OnAnyChatVideoDataExCallBack:(int) dwUserid : (NSData*) lpBuf : (BITMAPINFOHEADER) bmiHeader : (int) dwTimeStamp;
-// 音频数据回调
+
 /**
  *  音频数据回调
  *
@@ -415,7 +414,6 @@ typedef struct tagWAVEFORMATEX{
 // 获取SDK版本信息
 + (NSString*) GetSDKVersion;
 
-// 激活（关闭）SDK调用日志
 /**
  *  激活(关闭)SDK调用日志 : 打开,或是关闭 SDK 调用期间所产生的日志
  *
@@ -645,21 +643,21 @@ typedef struct tagWAVEFORMATEX{
  *  当设备没有打开时,返回空值。
  */
 + (int) SelectVideoCapture: (NSString*) szCaptureName;
-// 获取当前使用的视频采集设备
+
 /**
  *  获取当前使用的视频采集设备名称
  *
  *  @return 当前已打开的视频采集设备名称
  */
 + (NSString*) GetCurVideoCapture;
-// 枚举本地音频采集设备
+
 /**
  *  枚举本地音频采集设备
  *
  *  @return 返回设备列表
  */
 + (NSMutableArray*) EnumAudioCapture;
-// 选择指定的音频采集设备
+
 /**
  *  选择指定的音频采集设备 ： 当用户有多个音频采集设备时,可以通过该方法选用指定的音频采集设备。 采集设备名称必须是调用“EnumAudioCapture”方法枚举得到。
  *
@@ -668,14 +666,14 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示成功,否则为出错代码
  */
 + (int) SelectAudioCapture: (NSString*) szCaptureName;
-// 获取当前使用的音频采集设备
+
 /**
  *  获取当前使用的音频采集设备 ： 获取当前使用的音频采集设备
  *
  *  @return 当前已打开的音频采集设备名称
  */
 + (NSString*) GetCurAudioCapture;
-// 枚举本地音频播放设备
+
 /**
  *  枚举本地音频采集设备 ： iPhone 设备有两个播放设备:Receiver( 筒)、Speaker(喇叭)。AnyChat
  默认使用 Speaker 播放声音,如需转到 Receiver 则需要进行选择
@@ -683,7 +681,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 返回设备列表
  */
 + (NSMutableArray*) EnumAudioPlayback;
-// 选择指定的音频播放设备
+
 /**
  *  选择指定的音频播放设备 ： 可以通过该方法选用指定的音频播放设备,在 Receiver 和 Speaker 之间切换。 播放设备名称必须是调用“EnumAudioPlayback”方法枚举得到。
  *
@@ -692,7 +690,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示成功,否则为出错代码
  */
 + (int) SelectAudioPlayback: (NSString*) szDeviceName;
-// 获取当前使用的音频播放设备
+
 /**
  *  获取当前使用的音频播放设备
  *
@@ -700,7 +698,6 @@ typedef struct tagWAVEFORMATEX{
  */
 + (NSString*) GetCurAudioPlayback;
 
-// 操作用户视频
 /**
  *  用户视频控制,打开或关闭本地摄像头,或请求对方的视频 ： 用户视频控制,打开或关闭本地摄像头,或请求对方的视频
  *
@@ -710,9 +707,9 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示成功,否则为出错代码
  */
 + (int) UserCameraControl: (int) dwUserid : (BOOL) bOpen;
-// 操作用户语音
+
 /**
- *  用户发言控制 ： 对于本地用户,该方法是直接操作用户的 Mic,而对于其它用户,该方法只 是向对方发送一个请求(取消)音频流的申请,并不会直接操作对方的 Mic。
+ *  用户音频控制 ： 对于本地用户,该方法是直接操作用户的 Mic,而对于其它用户,该方法只 是向对方发送一个请求(取消)音频流的申请,并不会直接操作对方的 Mic。
  *
  *  @param dwUserid 用户编号,为-1 表示对本地发言进行控制
  *  @param bOpen    是否允许用户发言,当 dwUserid=-1 时,1 表示请求发言(拿 Mic),0 表示停止发言(放 Mic)
@@ -720,7 +717,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示成功,否则为出错代码
  */
 + (int) UserSpeakControl: (int) dwUserid : (BOOL) bOpen;
-// 设置视频显示位置
+
 /**
  *  设置视频显示位置,或是刷新视频显示
  *
@@ -736,7 +733,6 @@ typedef struct tagWAVEFORMATEX{
 + (int) SetVideoPos: (int) dwUserid : (NSObject*) surface : (int) left : (int) top : (int) width : (int) height;
 
 
-// 获取指定音频设备的当前音量
 /**
  *  获取指定音频设备的当前音量 ： 根据设备类型(device)参数的不同,可以获取放音设备(WaveOut)和录音
  设备(WaveIn)的当前音量大小。
@@ -749,7 +745,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 当前音量大小
  */
 + (int) AudioGetVolume:(int) device;
-// 设置指定音频设备的音量
+
 /**
  *   获取指定音频设备的当前音量 ： 根据设备类型(device)参数的不同,可以获取放音设备(WaveOut)和录音
  设备(WaveIn)的当前音量大小。
@@ -763,7 +759,6 @@ typedef struct tagWAVEFORMATEX{
  */
 + (int) AudioSetVolume:(int) device : (int) dwVolume;
 
-// 用户音、视频录制
 /**
  *  对指定用户的音视频流进行录制。
  *
@@ -775,7 +770,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示录制指令被 SDK 成功接收,否则为出错代码
  */
 + (int) StreamRecordCtrl: (int) dwUserId : (BOOL) bStartRecord : (int) dwFlags : (int) dwParam;
-// 用户音、视频录制(扩展)
+
 /**
  *  对指定用户的音视频流进行录制(扩展)
  *
@@ -788,7 +783,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示录制指令被 SDK 成功接收,否则为出错代码
  */
 + (int) StreamRecordCtrlEx: (int) dwUserId : (BOOL) bStartRecord : (int) dwFlags : (int) dwParam : (NSString*)lpUserStr;
-// 对用户的视频进行抓拍（快照）
+
 /**
  *  对指定用户的视频进行抓拍 : 该方法只是向 SDK 下达图像抓拍任务,视频抓拍完成之后, 将触发回调事
  件:OnAnyChatSnapShotCallBack。
@@ -801,7 +796,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示抓拍指令被 SDK 成功接收,否则为出错代码
  */
 + (int) SnapShot: (int) dwUserId : (int) dwFlags : (int) dwParam;
-// 获取音频播放数据
+
 /**
  *   获取音频播放数据
  *
@@ -811,7 +806,6 @@ typedef struct tagWAVEFORMATEX{
  */
 + (NSData*) FetchAudioPlayBuffer: (int)dwSize;
 
-// 透明通道传送缓冲区
 /**
  *  透明通道传送缓冲区
  *
@@ -821,9 +815,9 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示成功,否则为出错代码
  */
 + (int) TransBuffer: (int) dwUserid : (NSData*) lpBuf;
-// 透明通道传送缓冲区扩展
+
 /**
- *  透明通道传送缓冲区
+ *  透明通道传送缓冲区（扩展方法）
  *
  *  @param dwUserid 目标用户编号,只针对某一个用户,不能为-1(所有人)
  *  @param lpBuf    缓冲区,≤1024KB(1MB),内部会自动分包处理
@@ -839,7 +833,7 @@ typedef struct tagWAVEFORMATEX{
  (2)、TransBufferEx 适合数据量大、对实时性要求不高的需求;
  */
 + (int) TransBufferEx: (int) dwUserid : (NSData*) lpBuf : (int) wParam : (int) lParam : (int) dwFlags;
-// 传送文件
+
 /**
  *  传送文件给指定用户
  *
@@ -852,7 +846,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return >0 表示任务 ID 号(可利用该 ID 查询该任务的传输进度),否则表示出 错。
  */
 + (int) TransFile: (int) dwUserid : (NSString*) lpLocalPathName : (int) wParam : (int) lParam : (int) dwFlags;
-// 查询传输任务相关信息
+
 /**
  *  查询传输任务相关信息
  *
@@ -871,7 +865,7 @@ typedef struct tagWAVEFORMATEX{
  *
  *  @return <#return value description#>
  */
-#warning - 不清楚
+
 + (int) CancelTransTask: (int) dwUserid : (int) dwTaskId;
 // 传送文本消息
 /**
@@ -887,7 +881,7 @@ typedef struct tagWAVEFORMATEX{
  对方收到该消息后,会触发 AnyChatTextMsgDelegate 接口的接口函数的调用。
  */
 + (int) SendTextMessage: (int) dwUserid : (BOOL) bSecret : (NSString*) lpMsgBuf;
-// 发送SDK Filter 通信数据
+
 /**
  *  向服务器发送 SDK Filter 通信数据 : 服务器收到数据后,会将该缓冲区数据全部提交给 SDK Filter,由 SDK Filter 来解析,该缓冲区的内容对于本 SDK 和服务器来说,都是透明的。
  *
@@ -897,7 +891,6 @@ typedef struct tagWAVEFORMATEX{
  */
 + (int) SendSDKFilterData: (NSData*) lpBuf;
 
-// 更改当前的聊天模式
 /**
  *  更改当前的聊天模式
  *
@@ -905,9 +898,8 @@ typedef struct tagWAVEFORMATEX{
  *
  *  @return <#return value description#>
  */
-#warning - 不清楚
 + (int) ChangeChatMode: (int) dwChatMode;
-// 获取指定用户当前的聊天模式
+
 /**
  *  获取指定用户当前的聊天模式
  *
@@ -925,7 +917,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return <#return value description#>
  */
 + (int) PrivateChatRequest: (int) dwUserid;
-// 回复对方的私聊请求
+
 /**
  *  回复对方的私聊请求
  *
@@ -947,7 +939,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return <#return value description#>
  */
 + (int) PrivateChatEchoEx: (int) dwUserid : (int) dwRequestid : (int) dwErrorCode;
-// 退出与某用户的私聊，或者将某用户从自己的私聊列表中清除
+
 /**
  *  退出与某用户的私聊，或者将某用户从自己的私聊列表中清除
  *
@@ -957,7 +949,6 @@ typedef struct tagWAVEFORMATEX{
  */
 + (int) PrivateChatExit: (int) dwUserid;
 
-// SDK内核参数设置
 /**
  *  SDK 内核参数设置(整形值参数) ： 可以通过该方法对AnyChat Core SDK内部的参数进行设置,实现特殊的功
  能要求。
@@ -968,7 +959,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示成功,否则为出错代码
  */
 + (int) SetSDKOptionInt:(int) optname : (int) value;
-// SDK内核参数设置
+
 /**
  *  SDK 内核参数设置(字符串值参数) ： 可以通过该方法对AnyChat Core SDK内部的参数进行设置,实现特殊的功 能要求。
  *
@@ -978,7 +969,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示成功,否则为出错代码
  */
 + (int) SetSDKOptionString:(int) optname : (NSString*) value;
-// SDK内核参数状态查询
+
 /**
  *  SDK 内核参数状态查询(整形值) ： 可以通过该方法对AnyChat Core SDK内部的参数进行状态查询,获取当前的设置。
  *
@@ -987,7 +978,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 返回查询结果
  */
 + (int) GetSDKOptionInt:(int) optname;
-// SDK内核参数状态查询
+
 /**
  *  SDK 内核参数状态查询(字符串) ： 可以通过该方法对AnyChat Core SDK内部的参数进行状态查询,获取当前的设置。
  *
@@ -1057,7 +1048,6 @@ typedef struct tagWAVEFORMATEX{
  */
 + (int) InputAudioData: (NSData*) lpSamples : (int) dwTimeStamp;
 
-// 视频呼叫事件控制（请求、回复、挂断等）
 /**
  *  对视频呼叫业务流程进行控制,发起视频呼叫,或是结束视频通话等。
  *
@@ -1087,7 +1077,6 @@ typedef struct tagWAVEFORMATEX{
  */
 + (NSString*) QueryInfoFromServer: (int) dwInfoName : (NSString*) lpInParam : (int) dwFlags;
 
-// 获取用户好友ID列表
 /**
  *  获取本地用户的好友列表;
  *
@@ -1096,7 +1085,7 @@ typedef struct tagWAVEFORMATEX{
  *  当客户端登录系统成功之后,会触发异步消息:WM_GV_LOGINSYSTEM,同时 服务器会向客户端发送用户好友信息,当客户端接收完成之后会触发客户端的 异步消息:WM_GV_USERINFOUPDATE,且该消息的 lParam 为 0,表示好友列表有 更新。所以该 API 通常在接收到WM_GV_USERINFOUPDATE 异步消息之后调用。
  */
 + (NSMutableArray*) GetUserFriends;
-// 获取好友在线状态
+
 /**
  *  获取本地用户的好友在线状态,根据状态可以知道好友是否在线。
  *
@@ -1105,14 +1094,14 @@ typedef struct tagWAVEFORMATEX{
  *  @return 返回该好友的在线状态:0 离线, 1 在线
  */
 + (int) GetFriendStatus: (int) dwFriendUserId;
-// 获取用户分组ID列表
+
 /**
  *  获取本地用户的好友分组列表,返回好友分组 ID 列表数组 : 登录成功之后调用有效。好友分组是指将好友归纳到某一个组别下,如“家 人”、“大学同学”以及“老师”等。每一个分组对应一个分组 ID,通过分组 ID 可以获取分组的名称。
  *
  *  @return 用户 ID 数组
  */
 + (NSMutableArray*) GetUserGroups;
-// 获取分组下面的好友列表
+
 /**
  *  获取分组所对应的用户列表,即该分组下有多少用户 : 登录成功之后调用有效。通过该 API 接口,可以获得每一个分组下面的用户 列表,进而可以获得该分组下每一个用户的详细信息。
  
@@ -1121,9 +1110,8 @@ typedef struct tagWAVEFORMATEX{
  *
  *  @return 用户 ID 数组
  */
-#warning - 不清楚
 + (NSMutableArray*) GetGroupFriends: (int) dwGroupId;
-// 获取用户信息
+
 /**
  *  获取好友用户的详细信息。
  *
@@ -1136,7 +1124,7 @@ typedef struct tagWAVEFORMATEX{
  关于好友用户信息这一部分,对于 AnyChat 来说是透明的,业务服务器设置 了什么样的信息,客户端便可以获取到什么样的信息,AnyChat 只是提供了一个 信息传输的中间通道,业务层可以自由扩展。
  */
 + (NSString*) GetUserInfo: (int) dwUserId : (int) dwInfoId;
-// 获取用户分组名称
+
 /**
  *  根据分组 ID 获取分组名称 :  登录成功之后调用有效。分组名称由业务服务器设置。
  *
@@ -1145,7 +1133,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 分组名称字符串
  */
 + (NSString*) GetGroupName: (int) dwGroupId;
-// 用户信息控制
+
 /**
  *  对用户信息进行控制 : 登录成功之后调用有效。该 API 调用之后,会向业务服务器发送信息控制指 令,将会触发业务服务器对应的回调函数。
  *
@@ -1162,7 +1150,7 @@ typedef struct tagWAVEFORMATEX{
 
 
 #pragma mark-  业务排队
-// 获取业务对象列表
+
 /**
  *  获取业务对象的 Id 数组 : 可以通过该方法查询业务对象的整形 id 数组,如服务区域的业务队列的 id 数组。
  *
@@ -1171,7 +1159,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return id 数组
  */
 + (NSMutableArray*) ObjectGetIdList: (int) dwObjectType;
-// 获取业务对象参数值（整型）
+
 /**
  *  获取对象属性值(整型) : 可以通过该方法查询业务对象的整形属性值,如队列人数,排队时间等。
  *
@@ -1182,7 +1170,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 业务对象属性值
  */
 + (int) ObjectGetIntValue: (int) dwObjectType : (int) dwObjectId : (int) dwInfoName;
-// 获取业务对象参数值（字符串）
+
 /**
  *  获取对象属性值(字符串) : 以通过该方法查询业务对象的字符串属性,如服务区域名称,队列名称等。
  *
@@ -1193,7 +1181,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 业务对象属性值
  */
 + (NSString*) ObjectGetStringValue: (int) dwObjectType : (int) dwObjectId : (int) dwInfoName;
-// 业务对象参数设置（整形）
+
 /**
  *  设置对象属性值(整形)
  *
@@ -1205,7 +1193,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示成功,否则为错误代码
  */
 + (int) ObjectSetIntValue: (int) dwObjectType : (int) dwObjectId : (int) dwInfoName : (int) dwValue;
-// 业务对象参数设置（字符串）
+
 /**
  *  设置对象属性值(字符串)
  *
@@ -1217,7 +1205,7 @@ typedef struct tagWAVEFORMATEX{
  *  @return 0 表示成功,否则为错误代码
  */
 + (int) ObjectSetStringValue: (int) dwObjectType : (int) dwObjectId : (int) dwInfoName : (NSString*) lpStrValue;
-// 业务对象参数控制
+
 /**
  *  对业务对象进行参数控制 : 可以通过该方法对业务对象进行参数控制,如进/出服务区域,进/出队列, 开始/结束服务等。
  *
