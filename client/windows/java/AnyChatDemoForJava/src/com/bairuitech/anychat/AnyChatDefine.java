@@ -90,7 +90,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_LOCALVIDEO_FPSCTRL		=	33;	///< 本地视频编码帧率控制（参数为int型，同服务器配置：VideoFps）
 	public static final int BRAC_SO_LOCALVIDEO_PRESETCTRL	=	34;	///< 本地视频编码预设参数控制（参数为int型，1-5）
 	public static final int BRAC_SO_LOCALVIDEO_APPLYPARAM	=	35;	///< 应用本地视频编码参数，使得前述修改即时生效（参数为int型：1 使用新参数，0 使用默认参数）
-	public static final int BRAC_SO_LOCALVIDEO_VIDEOSIZEPOLITIC=36;///< 本地视频采集分辩率控制策略（参数为int型，0 自动向下逐级匹配[默认]；1 使用采集设备默认分辩率），当配置的分辩率不被采集设备支持时有效
+	public static final int BRAC_SO_LOCALVIDEO_VIDEOSIZEPOLITIC=36;	///< 本地视频采集分辩率控制策略（参数为int型，0 自动向下逐级匹配[默认]；1 使用采集设备默认分辩率），当配置的分辩率不被采集设备支持时有效
 	public static final int BRAC_SO_LOCALVIDEO_DEINTERLACE	=	37;	///< 本地视频反交织参数控制（参数为int型： 0 不进行反交织处理[默认]；1 反交织处理），当输入视频源是隔行扫描源（如电视信号）时通过反交织处理可以提高画面质量
 	public static final int BRAC_SO_LOCALVIDEO_WIDTHCTRL	=	38;	///< 本地视频采集分辨率宽度控制（参数为int型，同服务器配置：VideoWidth）
 	public static final int BRAC_SO_LOCALVIDEO_HEIGHTCTRL	=	39;	///< 本地视频采集分辨率高度控制（参数为int型，同服务器配置：VideoHeight）
@@ -106,6 +106,9 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_LOCALVIDEO_SURFACEROTATION=	99;	///< 设置本地视频预览显示旋转角度（参数为int型，角度）
 	public static final int BRAC_SO_LOCALVIDEO_CAMERAFACE	=	100;///< 本地摄像头方向（前置、后置）
 	public static final int BRAC_SO_LOCALVIDEO_DEVICEMODE	=	103;///< 设备类型
+	public static final int BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP=105;///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
+	public static final int BRAC_SO_LOCALVIDEO_DEVICENAME	=	106;///< 本地视频采集设备名称，用于设置打开指定摄像头设备（参数为字符串类型）
+	public static final int BRAC_SO_LOCALVIDEO_CLIPMODE		=	107;///< 本地视频裁剪模式（参数为int型， 0 自动[默认]，禁止自动旋转时有效）
 	
 	public static final int BRAC_SO_NETWORK_P2PPOLITIC		=	40;	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 	public static final int BRAC_SO_NETWORK_P2PCONNECT		=	41;	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -131,11 +134,23 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_VIDEOSHOW_AUTOROTATION	=	85;	///< 远程视频显示自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
 	public static final int BRAC_SO_VIDEOSHOW_CLIPMODE		=	86;	///< 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
 
-	public static final int BRAC_SO_CORESDK_DEVICEMODE		=	130;///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
-	public static final int BRAC_SO_CORESDK_SCREENCAMERACTRL=	131;///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
-	public static final int BRAC_SO_CORESDK_DATAENCRYPTION	=	132;///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
-	public static final int BRAC_SO_CORESDK_UPLOADLOGINFO	=	134;///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
-	public static final int BRAC_SO_CORESDK_WRITELOG		=	135;///< 写入调试信息到客户端日志文件中
+	public static final int BRAC_SO_CORESDK_DEVICEMODE		=	130; ///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+	public static final int BRAC_SO_CORESDK_SCREENCAMERACTRL=	131; ///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
+	public static final int BRAC_SO_CORESDK_DATAENCRYPTION	=	132; ///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
+	public static final int BRAC_SO_CORESDK_UPLOADLOGINFO	=	134; ///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
+	public static final int BRAC_SO_CORESDK_WRITELOG		=	135; ///< 写入调试信息到客户端日志文件中
+	
+	public static final int BRAC_SO_UDPTRACE_MODE			=	160; ///< UDP数据包跟踪模式
+	public static final int BRAC_SO_UDPTRACE_PACKSIZE		=	161; ///< UDP数据包跟踪的大小，单位：BYTE
+	public static final int BRAC_SO_UDPTRACE_BITRATE		=	162; ///< UDP数据包跟踪的包速率，单位：bps
+	public static final int BRAC_SO_UDPTRACE_START			=	163; ///< UDP数据包跟踪控制（参数为int型，1 启动， 0 停止）
+	public static final int BRAC_SO_UDPTRACE_LOCALRECVNUM	=	164; ///< UDP数据包跟踪本地接收包数量
+	public static final int BRAC_SO_UDPTRACE_SERVERRECVNUM	=	165; ///< UDP数据包跟踪服务器接收包数量
+	public static final int BRAC_SO_UDPTRACE_SOURCESENDNUM	=	166; ///< UDP数据包跟踪源发包数量
+	public static final int BRAC_SO_UDPTRACE_SENDUSERID		=	167; ///< UDP数据包跟踪源用户ID
+
+	public static final int BRAC_SO_OBJECT_INITFLAGS		=	200; ///< 业务对象身份初始化
+	public static final int BRAC_SO_CLOUD_APPGUID			=	300; ///< 云平台应用GUID（参数为：字符串类型，连接服务器之前设置）
 	
 	// 传输任务信息参数定义
 	public static final int BRAC_TRANSTASK_PROGRESS			=	1;	///< 传输任务进度查询（参数为：int型（0 ~ 100））
@@ -152,6 +167,7 @@ public class AnyChatDefine {
 	public static final int BRAC_RECORD_FLAGS_ABREAST		=	0x00000100;	///< 录制视频时，将其它人的视频并列录制
 	public static final int BRAC_RECORD_FLAGS_STEREO		=	0x00000200;	///< 录制音频时，将其它人的声音混合为立体声后录制
 	public static final int BRAC_RECORD_FLAGS_STREAM	    =   0x00001000;	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+	public static final int BRAC_RECORD_FLAGS_USERFILENAME	=	0x00002000; ///< 用户自定义文件名
 
 
 	// 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
@@ -204,6 +220,11 @@ public class AnyChatDefine {
 	public static final int BRAC_USERINFO_CTRLCODE_DEBUGLOG =   9;	///< 输出本地用户的调试日志，wParam为调试日志类型
 	public static final int BRAC_USERINFO_CTRLCODE_LVORIENTFIX=	10;	///< 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
 	
+	// 服务器信息查询常量定义（API：BRAC_QueryInfoFromServer 传入参数）
+	public static final int ANYCHAT_SERVERQUERY_USERIDBYNAME =	1;	///< 根据用户昵称查询用户ID
+	public static final int ANYCHAT_SERVERQUERY_USERIDBYSTRID=	2;	///< 根据字符串ID查询用户ID
+	public static final int ANYCHAT_SERVERQUERY_STRIDBYUSERID=	3;	///< 根据用户ID查询字符串ID
+	
 	// 常见出错代码定义
     public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< 没有错误
     public static final int BRAC_ERRORCODE_SESSION_QUIT		= 100101;///< 源用户主动放弃会话
@@ -225,6 +246,9 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_RECORD_FLAGS_SNAPSHOT	= 0x00000400;	///< 拍照
 	public static final int ANYCHAT_RECORD_FLAGS_LOCALCB	= 0x00000800;	///< 触发本地回调
 	public static final int ANYCHAT_RECORD_FLAGS_STREAM		= 0x00001000;	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+	public static final int ANYCHAT_RECORD_FLAGS_USERFILENAME=0x00002000;	///< 用户自定义文件名
+	public static final int ANYCHAT_RECORD_FLAGS_ERRORCODE	= 0x00004000;	///< 支持出错代码
+	public static final int ANYCHAT_RECORD_FLAGS_MULTISTREAM= 0x00008000;	///< 支持多路流的录制（拍照）
 
 	
 	
