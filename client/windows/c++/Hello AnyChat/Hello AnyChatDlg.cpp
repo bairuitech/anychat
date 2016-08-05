@@ -335,9 +335,7 @@ void CHelloAnyChatDlg::SignLogin(CString serverUrl, CString strAppId, CString st
 			delete pF;
 			pF = NULL;  
 			return;  
-		}  
-		else
-			OutputDebugStr("请求成功");
+		}
 
 		CString szData,szAllData;
 		while(pF->ReadString(szData))
@@ -352,10 +350,8 @@ void CHelloAnyChatDlg::SignLogin(CString serverUrl, CString strAppId, CString st
 		delete pConnection;
 		pF->Close();
 		delete pF;
-		OutputDebugStr("获取数据成功");
 
 		// 此处解析json数据
-		OutputDebugStr(szAllData);
 		szAllData.TrimLeft("\r\n");		
 		DWORD dwAllDataSize = szAllData.GetLength();
  		char* alldata = new char[dwAllDataSize+1];
