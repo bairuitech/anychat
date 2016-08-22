@@ -89,15 +89,8 @@ function OnAnyChatSDKFilterData(lpBuf, dwLen) {
 
 }
 
-// 收到录像或拍照完成事件
-function OnAnyChatRecordSnapShot(dwUserId, lpFileName, dwParam, bRecordType) {
-	
-}
-
-// 收到录像或拍照完成事件（扩展）
-function OnAnyChatRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr) {
-	// alert("OnAnyChatRecordSnapShotEx（扩展）");
-	// alert("录像成功，文件路径是："+lpFileName+"，时长："+dwElapse);
+// 收到录像或拍照完成事件（扩展：增加errorcode）
+function OnAnyChatRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr) {
 
 }
 

@@ -386,6 +386,8 @@ function BRAC_InitSDK(apilevel) {
 				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShot', 	OnAnyChatRecordSnapShot);
 			if(typeof(OnAnyChatRecordSnapShotEx) == "function" && bSupportStreamRecordCtrlEx)
 				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx', OnAnyChatRecordSnapShotEx);
+			if(typeof(OnAnyChatRecordSnapShotEx2) == "function" && bSupportCluster)
+				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx2', OnAnyChatRecordSnapShotEx2);
 			if(typeof(OnAnyChatObjectEvent) == "function" && bSupportObjectBusiness)
 				BRAC_RegisterCallBack(anychat, 'OnObjectEvent', OnAnyChatObjectEvent);		
 		} else {
