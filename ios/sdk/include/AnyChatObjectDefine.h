@@ -8,9 +8,10 @@
 #define ANYCHAT_OBJECT_TYPE_CLIENTUSER		8	///< 客户端用户对象，用于与服务器交换数据
 
 // 通用标识定义
-#define ANYCHAT_OBJECT_FLAGS_CLIENT			0	///< 普通客户
-#define ANYCHAT_OBJECT_FLAGS_AGENT			2	///< 坐席用户
-#define ANYCHAT_OBJECT_FLAGS_MANANGER		4	///< 管理用户
+#define ANYCHAT_OBJECT_FLAGS_CLIENT		0x00	///< 普通客户
+#define ANYCHAT_OBJECT_FLAGS_AGENT		0x02	///< 坐席用户
+#define ANYCHAT_OBJECT_FLAGS_MANANGER	0x04	///< 管理用户
+#define ANYCHAT_OBJECT_FLAGS_AUTOMODE	0x10	///< 自动服务模式
 
 #define ANYCHAT_INVALID_OBJECT_ID           -1	///< 无效的对象ID
 
