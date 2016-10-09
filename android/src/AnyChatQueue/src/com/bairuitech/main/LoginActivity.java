@@ -302,9 +302,11 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 			mCustomApplication.setUserType(USER_TYPE_ID);
 			mBottomConnMsg.setText("Connect to the server success.");
 			//初始化业务对象属性身份
-			InitClientObjectInfo(dwUserId);	
+//			InitClientObjectInfo(dwUserId);
 			
 			Intent intent = new Intent(LoginActivity.this,FuncMenuActivity.class);
+            intent.putExtra("dwUserId",dwUserId);
+            intent.putExtra("USER_TYPE_ID",USER_TYPE_ID);
 			startActivity(intent);	
 			
 			setBtnVisible(SHOWLOGINSTATEFLAG);
