@@ -10,4 +10,7 @@
 
 @interface VideoViewController : UIViewController
 @property(nonatomic, assign)int remoteUserId;
+
+-(void)openRemoteView;
+
 @end

@@ -176,6 +176,7 @@
         }else if([self.role.text isEqualToString:@"坐席"]) {
             videoVC.remoteUserId = self.customerId;
         }
+        _vv=videoVC;
         [self.navigationController pushViewController:videoVC animated:YES];
     }
 }
@@ -183,7 +184,13 @@
 // 房间在线用户消息
 - (void) OnAnyChatOnlineUser:(int) dwUserNum : (int) dwRoomId {}
 // 用户进入房间消息
-- (void) OnAnyChatUserEnterRoom:(int) dwUserId {}
+- (void) OnAnyChatUserEnterRoom:(int) dwUserId {
+    NSLog(@"%i=======%i",dwUserId,self.vv.remoteUserId);
+    if (dwUserId == self.vv.remoteUserId) {
+        [self.vv openRemoteView];
+    }
+    
+}
 // 用户退出房间消息
 - (void) OnAnyChatUserLeaveRoom:(int) dwUserId {}
 // 网络断开消息

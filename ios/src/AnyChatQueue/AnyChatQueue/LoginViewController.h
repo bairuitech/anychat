@@ -12,9 +12,14 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 #import "AnyChatObjectDefine.h"
+@class VideoViewController;
 
 @interface LoginViewController : UIViewController
 @property (strong, nonatomic) AnyChatPlatform   *anyChat;       //anyChat对象
 @property (assign, nonatomic) int remoteUserId;                 //坐席客服id
-@property (assign, nonatomic) int customerId;                   //客户id
+@property (assign, nonatomic) int customerId;
+//客户id
+
+@property(nonatomic,weak) VideoViewController* vv;
+
 @end

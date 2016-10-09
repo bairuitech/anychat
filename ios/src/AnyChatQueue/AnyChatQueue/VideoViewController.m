@@ -106,6 +106,18 @@
     self.localVideoView.layer.masksToBounds = YES;
 }
 
+-(void)openRemoteView
+{
+    NSLog(@"openThirdRemoteView");
+    NSLog(@"%i",self.remoteUserId);
+    
+    [AnyChatPlatform UserSpeakControl:self.remoteUserId :YES];
+    [AnyChatPlatform UserCameraControl:self.remoteUserId : YES];
+    //[AnyChatPlatform SetVideoPos:self.remoteUserId2 :self.remoteVideoView2 :0:0:200:200];
+    [AnyChatPlatform SetVideoPos:self.remoteUserId :self.remoteVideoView :0:0:0:0];
+}
+
+
 // 开始视频通话
 - (void)StartVideoChat
 {
