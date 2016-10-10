@@ -60,6 +60,8 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
 		ApplyVideoConfig();	
 		//初始化sdk
 		InitSDK();
+        //初始化业务对象属性身份
+        InitClientObjectInfo();
 		//初始化布局
 		InitLayout();
 	}
@@ -72,6 +74,21 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
 		anychat.SetBaseEvent(this);//基本登陆事件接口
 		anychat.SetObjectEvent(this);//排队事件接口；
 	}
+
+    //初始化服务对象事件；触发回调OnAnyChatObjectEvent函数
+    private void InitClientObjectInfo() {
+        int dwUserId = getIntent().getIntExtra("dwUserId", 0);
+        //业务对象身份初始化；0代表普通客户，2是代表座席 (USER_TYPE_ID)
+        AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_OBJECT_INITFLAGS, getIntent().getIntExtra("userTypeCode", 0));
+        //业务对象优先级设定；
+        int dwPriority = 10;
+        AnyChatCoreSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER,dwUserId,AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_PRIORITY, dwPriority);
+        //业务对象属性设定，关联技能分组，-1表示具备所有业务技能
+        int dwAttribute = -1;
+        AnyChatCoreSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER, dwUserId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwAttribute);
+        // 向服务器发送数据同步请求指令
+        AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA, AnyChatObjectDefine.ANYCHAT_INVALID_OBJECT_ID, AnyChatObjectDefine.ANYCHAT_OBJECT_CTRL_SYNCDATA, dwUserId, 0, 0, 0, "");
+    }
 
 	private void InitLayout() {
 		
