@@ -129,9 +129,10 @@
     [AnyChatPlatform UserCameraControl:-1 : YES];
     [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
     
-//    [AnyChatPlatform UserSpeakControl:self.remoteUserId :YES];
-//    [AnyChatPlatform UserCameraControl:self.remoteUserId : YES];
-//    [AnyChatPlatform SetVideoPos:self.remoteUserId :self.remoteVideoView :0:0:0:0];
+    //打开对方的视频
+    [AnyChatPlatform UserSpeakControl:self.remoteUserId :YES];
+    [AnyChatPlatform UserCameraControl:self.remoteUserId : YES];
+    [AnyChatPlatform SetVideoPos:self.remoteUserId :self.remoteVideoView :0:0:0:0];
     
 }
 
