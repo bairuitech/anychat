@@ -79,11 +79,11 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
     private void InitClientObjectInfo() {
         int dwUserId = getIntent().getIntExtra("dwUserId", 0);
         //业务对象身份初始化；0代表普通客户，2是代表座席 (USER_TYPE_ID)
-        AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_OBJECT_INITFLAGS, getIntent().getIntExtra("USER_TYPE_ID", 0));
+        AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_OBJECT_INITFLAGS, getIntent().getIntExtra("userTypeCode", 0));
         //业务对象优先级设定；
         int dwPriority = 10;
         AnyChatCoreSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER,dwUserId,AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_PRIORITY, dwPriority);
-        //业务对象属性设定,必须是-1；
+        //业务对象属性设定，关联技能分组，-1表示具备所有业务技能
         int dwAttribute = -1;
         AnyChatCoreSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER, dwUserId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwAttribute);
         // 向服务器发送数据同步请求指令

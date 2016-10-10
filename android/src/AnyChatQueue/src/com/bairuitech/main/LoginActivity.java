@@ -41,7 +41,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 	private final int SHOWWAITINGSTATEFLAG = 2; 	// 显示的按钮是等待状态的标识
 	private final int LOCALVIDEOAUTOROTATION = 1; 	// 本地视频自动旋转控制
 	private final int ACTIVITY_ID_MAINUI = 1; 	    // MainActivity的id标致，onActivityResult返回
-	private int USER_TYPE_ID; 					//0代表是进入客户界面，2代表是接入座席界面
+	private int mUserTypeCode; 					//0代表是进入客户界面，2代表是接入座席界面
 	private EditText mEditIP;						// ip
 	private EditText mEditPort;						// 端口
 	private EditText mEditName;						// 用户名
@@ -118,7 +118,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 			
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				USER_TYPE_ID = checkedId == R.id.customer ? 0 : 2;
+                mUserTypeCode = checkedId == R.id.customer ? 0 : 2;
 			}
 		});
 	}
@@ -299,14 +299,12 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 			mCustomApplication.setSelfUserName(mEditName.getText()
 					.toString());
 			mCustomApplication.setUserID(dwUserId);
-			mCustomApplication.setUserType(USER_TYPE_ID);
+			mCustomApplication.setUserType(mUserTypeCode);
 			mBottomConnMsg.setText("Connect to the server success.");
-			//初始化业务对象属性身份
-//			InitClientObjectInfo(dwUserId);
-			
+
 			Intent intent = new Intent(LoginActivity.this,FuncMenuActivity.class);
             intent.putExtra("dwUserId",dwUserId);
-            intent.putExtra("USER_TYPE_ID",USER_TYPE_ID);
+            intent.putExtra("userTypeCode",mUserTypeCode);
 			startActivity(intent);	
 			
 			setBtnVisible(SHOWLOGINSTATEFLAG);
@@ -316,22 +314,6 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,AnyChatO
 			mBottomConnMsg.setText("登录失败，errorCode：" + dwErrorCode);
 		}
 	}
-
-
-	//初始化服务对象事件；触发回调OnAnyChatObjectEvent函数
-	private void InitClientObjectInfo(int dwUserId) {
-		//业务对象身份初始化；0代表普通客户，2是代表座席 (USER_TYPE_ID)
-		AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_OBJECT_INITFLAGS, USER_TYPE_ID);
-		//业务对象优先级设定；
-		int dwPriority = 10;
-		AnyChatCoreSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER,dwUserId,AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_PRIORITY, dwPriority);
-		//业务对象属性设定,必须是-1；
-		int dwAttribute = -1;
-		AnyChatCoreSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER, dwUserId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwAttribute);
-		// 向服务器发送数据同步请求指令
-		AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA, AnyChatObjectDefine.ANYCHAT_INVALID_OBJECT_ID, AnyChatObjectDefine.ANYCHAT_OBJECT_CTRL_SYNCDATA, dwUserId, 0, 0, 0, "");	
-	}
-
 
 	@Override
 	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
