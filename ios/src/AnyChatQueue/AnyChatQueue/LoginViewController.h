@@ -17,9 +17,8 @@
 @interface LoginViewController : UIViewController
 @property (strong, nonatomic) AnyChatPlatform   *anyChat;       //anyChat对象
 @property (assign, nonatomic) int remoteUserId;                 //坐席客服id
-@property (assign, nonatomic) int customerId;
-//客户id
+@property (assign, nonatomic) int customerId;                   //客户id
 
-@property(nonatomic,weak) VideoViewController* vv;
+@property(nonatomic,weak) VideoViewController* videoViewController; //视频通话控制器
 
 @end

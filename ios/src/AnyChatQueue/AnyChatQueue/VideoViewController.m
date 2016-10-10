@@ -106,14 +106,11 @@
     self.localVideoView.layer.masksToBounds = YES;
 }
 
+//打开对方的视频
 -(void)openRemoteView
 {
-    NSLog(@"openThirdRemoteView");
-    NSLog(@"%i",self.remoteUserId);
-    
     [AnyChatPlatform UserSpeakControl:self.remoteUserId :YES];
     [AnyChatPlatform UserCameraControl:self.remoteUserId : YES];
-    //[AnyChatPlatform SetVideoPos:self.remoteUserId2 :self.remoteVideoView2 :0:0:200:200];
     [AnyChatPlatform SetVideoPos:self.remoteUserId :self.remoteVideoView :0:0:0:0];
 }
 
@@ -132,9 +129,9 @@
     [AnyChatPlatform UserCameraControl:-1 : YES];
     [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
     
-    [AnyChatPlatform UserSpeakControl:self.remoteUserId :YES];
-    [AnyChatPlatform UserCameraControl:self.remoteUserId : YES];
-    [AnyChatPlatform SetVideoPos:self.remoteUserId :self.remoteVideoView :0:0:0:0];
+//    [AnyChatPlatform UserSpeakControl:self.remoteUserId :YES];
+//    [AnyChatPlatform UserCameraControl:self.remoteUserId : YES];
+//    [AnyChatPlatform SetVideoPos:self.remoteUserId :self.remoteVideoView :0:0:0:0];
     
 }
 
