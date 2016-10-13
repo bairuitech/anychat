@@ -177,13 +177,20 @@
             videoVC.remoteUserId = self.customerId;
         }
         [self.navigationController pushViewController:videoVC animated:YES];
+        _videoViewController=videoVC;
     }
 }
 
 // 房间在线用户消息
-- (void) OnAnyChatOnlineUser:(int) dwUserNum : (int) dwRoomId {}
+- (void) OnAnyChatOnlineUser:(int) dwUserNum : (int) dwRoomId {
+    [self.videoViewController openRemoteView];
+}
 // 用户进入房间消息
-- (void) OnAnyChatUserEnterRoom:(int) dwUserId {}
+- (void) OnAnyChatUserEnterRoom:(int) dwUserId {
+    if (dwUserId == self.videoViewController.remoteUserId) {
+        [self.videoViewController openRemoteView];
+    }
+}
 // 用户退出房间消息
 - (void) OnAnyChatUserLeaveRoom:(int) dwUserId {}
 // 网络断开消息
@@ -449,9 +456,7 @@
 //开始编辑输入框的时候，软键盘出现，执行此事件
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-
     CGRect frame = textField.frame;
-    NSLog(@"==%@",NSStringFromCGRect(frame));
     int offset = frame.origin.y + 32 - (self.view.frame.size.height - 216.0);//键盘高度216
     NSTimeInterval animationDuration = 0.30f;
     [UIView beginAnimations:@"ResizeForKeyBoard" context:nil];

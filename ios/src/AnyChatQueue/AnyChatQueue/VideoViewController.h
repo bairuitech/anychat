@@ -10,4 +10,8 @@
 
 @interface VideoViewController : UIViewController
 @property(nonatomic, assign)int remoteUserId;
+
+//打开对方的视频
+-(void)openRemoteView;
+
 @end
