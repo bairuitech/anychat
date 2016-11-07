@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QueueHelp</RootNamespace>
-    <AssemblyName>QueueHelp</AssemblyName>
+    <AssemblyName>AnyChatQueueHelp</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -76,6 +76,7 @@
     <Compile Include="CommandHelp.cs" />
     <Compile Include="ConversationInfo.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="LoginInfo.cs" />
     <Compile Include="ParamInfo.cs" />
     <Compile Include="Promise.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

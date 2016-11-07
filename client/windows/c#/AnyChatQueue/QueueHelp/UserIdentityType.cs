@@ -21,5 +21,6 @@ namespace QueueHelp
         /// 管理者
         /// </summary>
         Manager = 2
+
     }
 }

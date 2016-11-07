@@ -296,6 +296,10 @@ namespace ANYCHATAPI
         /// </summary>
         public const int ANYCHAT_OBJECT_FLAGS_MANANGER  = 4;
         /// <summary>
+        /// 自动服务模式
+        /// </summary>
+        public const int ANYCHAT_OBJECT_FLAGS_AUTOMODE  = 16;
+        /// <summary>
         /// 无效的对象ID
         /// </summary>
         public const int ANYCHAT_INVALID_OBJECT_ID      = -1;
@@ -1114,6 +1118,16 @@ namespace ANYCHATAPI
         /// <returns>0为成功，否则失败</returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_EnterRoom", CallingConvention = CallingConvention.Cdecl)]
         public static extern int EnterRoom(int roomid, string roomPass, int passEncType);
+
+        /// <summary>
+        /// 进入房间扩展接口
+        /// </summary>
+        /// <param name="roomId">字符串形式的房间号，如Guid</param>
+        /// <param name="roomPass"></param>
+        /// <param name="passEncType"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_EnterRoomEx", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int EnterRoomEx(string roomId, string roomPass, int passEncType);
 
         /// <summary>
         /// 离开房间
