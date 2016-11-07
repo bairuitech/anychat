@@ -403,15 +403,15 @@ namespace QueueClient
         {
             int serviceUserID = 0;
             AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_INFO_SERVICEUSERID, ref serviceUserID);
-
-            StringBuilder sbUserName = new StringBuilder(100);
-
-            AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, userID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbUserName);
+            
+            byte[] userNameByte = new byte[255];
+            AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, userID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, ref userNameByte[0]);
+            string userName = byteToString(userNameByte);
 
             if (userID == -1)
                 lbl_agent_remoteUser.Text = string.Empty;
             else
-                lbl_agent_remoteUser.Text = "当前服务用户ID：" + userID + "，用户名为：" + sbUserName.ToString();
+                lbl_agent_remoteUser.Text = "当前服务用户ID：" + userID + "，用户名为：" + userName.ToString();
         }
 
         private void btn_return_Click(object sender, EventArgs e)
@@ -520,7 +520,7 @@ namespace QueueClient
             {
                 btn_return.Visible = false;
 
-                ShowCallMessage(Properties.Resources._14, userItem.Name + "向您发起视频会话邀请...");
+                ShowCallMessage(Properties.Resources._14, "【" + userItem.Name + "】向您发起视频会话邀请...");
 
                 Button btn_accepted = new Button();
                 btn_accepted.Font = new Font("微软雅黑", 20);
@@ -984,12 +984,16 @@ namespace QueueClient
                         AreaInfo area = new AreaInfo();
                         area.AreaID = dwObjectId;
                         StringBuilder sbAreaName = new StringBuilder();                                                
-                        AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbAreaName);
-                        area.AreaName = sbAreaName.ToString();
+                        //AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbAreaName);
+                        //area.AreaName = sbAreaName.ToString();
 
-                        StringBuilder sbAreaDesc = new StringBuilder(200);
-                        AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_DESCRIPTION, sbAreaDesc);
-                        area.AreaDescription = sbAreaDesc.ToString();
+                        byte[] areaNameByte = new byte[255];
+                        AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, ref areaNameByte[0]);
+                        area.AreaName = byteToString(areaNameByte);
+
+                        byte[] areaDescByte = new byte[255];
+                        AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_DESCRIPTION, ref areaDescByte[0]);
+                        area.AreaDescription = byteToString(areaDescByte);
 
                         AddAreaToForm(area);
 
@@ -1016,8 +1020,11 @@ namespace QueueClient
         /// <param name="dwErrorCode"></param>
         private void AnyChatEnterAreaResult_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
         {
-            StringBuilder sbAreaName = new StringBuilder(100);
-            AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbAreaName);
+            string areaName = string.Empty;
+
+            byte[] areaNameByte = new byte[255];
+            AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, ref areaNameByte[0]);
+            areaName = byteToString(areaNameByte);
 
             if (dwParam1 != 0)
                 return;
@@ -1028,7 +1035,7 @@ namespace QueueClient
             {
                 //显示营业厅的队列
                 case UserIdentityType.Client:
-                    InitQueuePanel(sbAreaName.ToString());
+                    InitQueuePanel(areaName);
 
                     int idx = 0;
                     //获取营业厅内的队列信息
@@ -1041,13 +1048,13 @@ namespace QueueClient
                         QueueInfo queue = new QueueInfo();
                         queue.QueueID = queueID;
 
-                        StringBuilder sbQueueName = new StringBuilder();
-                        AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbQueueName);
-                        queue.QueueName = sbQueueName.ToString();
+                        byte[] queueNameByte = new byte[255];
+                        AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, ref queueNameByte[0]);
+                        queue.QueueName = byteToString(queueNameByte); ;
 
-                        StringBuilder sbQueueDesc = new StringBuilder();
-                        AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_DESCRIPTION, sbQueueDesc);
-                        queue.QueueDescription = sbQueueDesc.ToString();
+                        byte[] queueDescByte = new byte[255];
+                        AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_DESCRIPTION, ref queueDescByte[0]);
+                        queue.QueueDescription = byteToString(queueDescByte);
 
                         int queueUserCount = 0;
                         AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_QUEUE_INFO_LENGTH, ref queueUserCount);
@@ -1233,23 +1240,23 @@ namespace QueueClient
                     btnStartService.Enabled = true;
                     btnStopService.Enabled = false;
                     lbl_CurrentStatus.Text = statusText + "空闲";
-                    comboBox_AgentStatus.SelectedIndex = 0;
                     showAgentServiceFace();
+                    comboBox_AgentStatus.Enabled = true;
                 }
                 if (dwParam1 == AnyChatCoreSDK.ANYCHAT_AGENT_STATUS_WORKING)
                 {
-                    comboBox_AgentStatus.SelectedIndex = 1;
                     lbl_CurrentStatus.Text = statusText + "忙";
+                    comboBox_AgentStatus.Enabled = false;
                 }
                 if (dwParam1 == AnyChatCoreSDK.ANYCHAT_AGENT_STATUS_PAUSED)
                 {
-                    comboBox_AgentStatus.SelectedIndex = 2;
                     lbl_CurrentStatus.Text = statusText + "暂停";
+                    comboBox_AgentStatus.Enabled = true;
                 }
                 if (dwParam1 == AnyChatCoreSDK.ANYCHAT_AGENT_STATUS_CLOSEED)
                 {
-                    comboBox_AgentStatus.SelectedIndex = 3;
                     lbl_CurrentStatus.Text = statusText + "关闭";
+                    comboBox_AgentStatus.Enabled = true;
                 }
             }
         }
@@ -1303,10 +1310,11 @@ namespace QueueClient
         private UserInfo GetUserInfoByUserId(int id)
         {
             UserInfo mode = new UserInfo();
-            StringBuilder sbUserName = new StringBuilder(100);
-            AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, id, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbUserName);
+
+            byte[] userNameByte = new byte[255];
+            AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, id, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, ref userNameByte[0]);
             mode.Id = id;
-            mode.Name = sbUserName.ToString();
+            mode.Name = byteToString(userNameByte);
             return mode;
         }
 
@@ -1828,22 +1836,24 @@ namespace QueueClient
 
         }
 
-        // 转换接收到的字符串 
-        public string UTF8ToUnicode(string recvStr)
+        /// <summary>
+        /// 字节转字符串
+        /// </summary>
+        /// <param name="byteStr">字节数组</param>
+        /// <returns>转换后的字符串</returns>
+        public string byteToString(byte[] byteStr)
         {
-            byte[] tempStr = Encoding.UTF8.GetBytes(recvStr);
-            byte[] tempDef = Encoding.Convert(Encoding.UTF8, Encoding.Default, tempStr);
-            string msgBody = Encoding.Default.GetString(tempDef);
-            return msgBody;
+            string retVal = "";
+            try
+            {
+                retVal = System.Text.Encoding.GetEncoding("GB18030").GetString(byteStr, 0, byteStr.Length);
+            }
+            catch(Exception exp)
+            {
+                Console.Write(exp.Message);
+            }
+            return retVal.TrimEnd('\0');
         }
-        /*
-        // 转换要发送的字符数组 
-        public byte[] UnicodeToUTF8(string sendStr)
-        {
-            string tempUTF8 = Encoding.UTF8.GetBytes(sendStr);
-            byte[] msgBody = Encoding.UTF8.GetBytes(tempUTF8);
-            return msgBody;
-        }
-        */
+
     }
 }
