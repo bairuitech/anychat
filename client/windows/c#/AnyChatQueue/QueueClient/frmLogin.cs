@@ -13,7 +13,7 @@ using System.Threading;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
+//using System.Runtime.Serialization.Json;
 
 
 namespace QueueClient
@@ -66,6 +66,16 @@ namespace QueueClient
         /// </summary>
         public string signUrl = string.Empty;
 
+        /// <summary>
+        /// 自动路由标识
+        /// </summary>
+        public bool m_isAutoRouter = true;
+
+        /// <summary>
+        /// 技能值，默认三个技能相加（1 + 2 + 4）
+        /// </summary>
+        public int m_skillsValue = 7;
+
         #endregion
 
         #region 初始化
@@ -75,7 +85,7 @@ namespace QueueClient
         {
             try
             {
-
+                cmbBox_Router.SelectedIndex = 1;
                 if (File.Exists(mPath))
                 {
                     mXmlDoc.Load(mPath);
@@ -127,6 +137,18 @@ namespace QueueClient
                         m_userName = cbox_userName.Text;
                         m_userIdentity = (UserIdentityType)cbox_userIdentity.SelectedIndex;
                         m_identityPriority = Int32.Parse(cbox_identityPriority.Text);
+                        if (m_userIdentity == UserIdentityType.Agent)
+                        {
+                            if (cmbBox_Router.SelectedIndex == 1)
+                            {
+                                m_isAutoRouter = true;
+                            }
+                            else
+                            {
+                                m_isAutoRouter = false;
+                            }
+                            
+                        }
                     }
                     catch (Exception)
                     {
@@ -234,7 +256,15 @@ namespace QueueClient
                         m_userId = m.WParam.ToInt32();//保存当前ID
                         hallForm = null;
                         //hallForm = new Hall(m_userId, cbox_userIdentity.Text);
-                        hallForm = new frmHall(m_userId, m_userName, m_userIdentity, m_identityPriority, this);
+                        LoginInfo loginInfo = new LoginInfo();
+                        loginInfo.userID = m_userId;
+                        loginInfo.userName = m_userName;
+                        loginInfo.userIdType = m_userIdentity;
+                        loginInfo.userPriority = m_identityPriority;
+                        loginInfo.isRouterMode = m_isAutoRouter;
+                        loginInfo.userSkills = m_skillsValue;
+
+                        hallForm = new frmHall(loginInfo, this);
                         this.Hide();
                         hallForm.Show();
                     }
@@ -566,24 +596,7 @@ namespace QueueClient
         }
 
         #endregion
-
-        /// <summary>
-        /// 将Json字符串转化成对象
-        /// </summary>
-        /// <typeparam name="T">转换的对象类型</typeparam>
-        /// <param name="output">json字符串</param>
-        /// <returns></returns>
-        public static T ToClass<T>(string output)
-        {
-            object result;
-            DataContractJsonSerializer outDs = new DataContractJsonSerializer(typeof(T));
-            using (MemoryStream outMs = new MemoryStream(Encoding.UTF8.GetBytes(output)))
-            {
-                result = outDs.ReadObject(outMs);
-            }
-            return (T)result;
-        }
-
+        
         /// <summary>  
         /// POST请求与获取结果  
         /// </summary>  
@@ -614,21 +627,56 @@ namespace QueueClient
             }
             return retVal;
         }
-    }
 
-    /// <summary>
-    /// 签名信息类
-    /// </summary>
-    [DataContract]
-    class JsonObject
-    {
-        [DataMember]
-        public int errorcode { get; set; }
-        [DataMember]
-        public int timestamp { get; set; }
-        [DataMember]
-        public string sigStr { get; set; }
-    }
+        private void cbox_userIdentity_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (cbox_userIdentity.SelectedIndex == 1)
+            {               
+                pnl_AutoRouter.Show();
+                pnl_selectSkill.Show();
+            }
+            else
+            {
+                pnl_AutoRouter.Hide();
+                pnl_selectSkill.Hide();
+            }
+        }
+
+        private void chkBox_skill_cash_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBox_skill_cash.Checked)
+            {
+                m_skillsValue = m_skillsValue + 1;
+            }else{
+                m_skillsValue = m_skillsValue - 1;
+            }
+
+        }
+
+        private void chkBox_skill_finance_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBox_skill_finance.Checked)
+            {
+                m_skillsValue = m_skillsValue + 2;
+            }
+            else
+            {
+                m_skillsValue = m_skillsValue - 2;
+            }
+        }
+
+        private void chkBox_skill_loan_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBox_skill_loan.Checked)
+            {
+                m_skillsValue = m_skillsValue + 4;
+            }
+            else
+            {
+                m_skillsValue = m_skillsValue - 4;
+            }
+        }
+    }   
 
 
 }

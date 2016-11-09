@@ -296,6 +296,10 @@ namespace ANYCHATAPI
         /// </summary>
         public const int ANYCHAT_OBJECT_FLAGS_MANANGER  = 4;
         /// <summary>
+        /// 自动服务模式
+        /// </summary>
+        public const int ANYCHAT_OBJECT_FLAGS_AUTOMODE  = 16;
+        /// <summary>
         /// 无效的对象ID
         /// </summary>
         public const int ANYCHAT_INVALID_OBJECT_ID      = -1;
@@ -905,17 +909,15 @@ namespace ANYCHATAPI
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetVideoCallEventCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetVideoCallEventCallBack(VideoCallEvent_CallBack function, int userValue);
-		
-		
+				
 		/// <summary>
         /// 设置服务器验证密码
         /// </summary>
 		/// <param name="key"></param>
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetServerAuthPass", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SetServerAuthPass(StringBuilder key);
-		
-		
+        public static extern int SetServerAuthPass(string key);
+				
         /// <summary>
         /// 发送消息
         /// </summary>
@@ -935,7 +937,7 @@ namespace ANYCHATAPI
         /// <param name="bufLen">缓冲区长度</param>
         /// <returns>0为成功，否则失败</returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetUserName", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetUserName(int userId, StringBuilder userName, int bufLen);
+        public static extern int GetUserName(int userId, ref byte userName, int bufLen);
 
         /// <summary>
         /// 初始化系统
@@ -1116,6 +1118,16 @@ namespace ANYCHATAPI
         public static extern int EnterRoom(int roomid, string roomPass, int passEncType);
 
         /// <summary>
+        /// 进入房间扩展接口
+        /// </summary>
+        /// <param name="roomId">字符串形式的房间号，如Guid</param>
+        /// <param name="roomPass"></param>
+        /// <param name="passEncType"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_EnterRoomEx", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int EnterRoomEx(string roomId, string roomPass, int passEncType);
+
+        /// <summary>
         /// 离开房间
         /// </summary>
         /// <param name="roomid">房间号</param>
@@ -1131,7 +1143,7 @@ namespace ANYCHATAPI
         /// <param name="len">长度</param>
         /// <returns>0为成功，否则失败</returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetRoomName", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int[] GetRoomName(int roomid, StringBuilder roomName, int len);
+        public static extern int[] GetRoomName(int roomid, ref byte roomName, int len);
 
         /// <summary>
         /// 获取指定房间在线用户列表
@@ -1203,7 +1215,7 @@ namespace ANYCHATAPI
         /// <param name="infolen">参数长度</param>
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_QueryUserState", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int QueryUserState(int userid, int infoname, StringBuilder infoval, int infolen);
+        public static extern int QueryUserState(int userid, int infoname, ref byte infoval, int infolen);
         // BRAC_API DWORD BRAC_QueryUserState(DWORD dwUserId, int infoname, char FAR* infoval, int infolen);
 
         /// <summary>
@@ -1366,7 +1378,7 @@ namespace ANYCHATAPI
         /// </summary>
         /// <returns></returns>
 		[DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_QueryTransTaskInfo", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int QueryTransTaskInfo(int userid, int taskid, int infoname, StringBuilder infoval, int infolen);
+        public static extern int QueryTransTaskInfo(int userid, int taskid, int infoname, ref byte infoval, int infolen);
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_QueryTransTaskInfo", CallingConvention = CallingConvention.Cdecl)]
         public static extern int QueryTransTaskInfo(int userid, int taskid, int infoname, ref double infoval, int infolen);
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_QueryTransTaskInfo", CallingConvention = CallingConvention.Cdecl)]
@@ -1477,7 +1489,7 @@ namespace ANYCHATAPI
         /// <param name="length"></param>
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetCurVideoCapture", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetCurVideoCapture(StringBuilder deviceName, int length);
+        public static extern int GetCurVideoCapture(ref byte deviceName, int length);
 
         /// <summary>
         /// 枚举音频录音设备
@@ -1503,7 +1515,7 @@ namespace ANYCHATAPI
         /// <param name="length"></param>
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetCurAudioCapture", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetCurAudioCapture(StringBuilder deviceName, int length);
+        public static extern int GetCurAudioCapture(ref byte deviceName, int length);
 		
 		/// <summary>
         /// 枚举音频播放设备
@@ -1529,7 +1541,7 @@ namespace ANYCHATAPI
         /// <param name="length"></param>
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetCurAudioPlayback", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetCurAudioPlayback(StringBuilder deviceName, int length);
+        public static extern int GetCurAudioPlayback(ref byte deviceName, int length);
 		
 		/// <summary>
         /// 组播功能控制
@@ -1595,13 +1607,13 @@ namespace ANYCHATAPI
         /// 获取用户信息
         /// </summary>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetUserInfo", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetUserInfo(int dwUserId, int dwInfoId, StringBuilder lpInfoValue, int dwLen);
+        public static extern int GetUserInfo(int dwUserId, int dwInfoId, ref byte lpInfoValue, int dwLen);
 		
 		/// <summary>
         /// 获取用户分组名称
         /// </summary>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetGroupName", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetGroupName(int dwGroupId, StringBuilder lpGroupName, int dwLen);
+        public static extern int GetGroupName(int dwGroupId, ref byte lpGroupName, int dwLen);
 
 		/// <summary>
         /// 用户信息控制
@@ -1619,7 +1631,7 @@ namespace ANYCHATAPI
         /// <param name="infolen"></param>
         /// <returns></returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetUserStreamInfo", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetUserStreamInfo(int userId, int streamIndex, int infoname, StringBuilder infoval, int infolen);
+        public static extern int GetUserStreamInfo(int userId, int streamIndex, int infoname, ref byte infoval, int infolen);
 
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_GetUserStreamInfo", CallingConvention = CallingConvention.Cdecl)]
         public static extern int GetUserStreamInfo(int userId, int streamIndex, int infoname, ref int infoval, int infolen);
@@ -1667,7 +1679,7 @@ namespace ANYCHATAPI
         /// <param name="dwInfoName">属性名</param>
         /// </summary>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_ObjectGetValue", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int BRAC_ObjectGetValue(int dwObjectType, int dwObjectId, int dwInfoName, StringBuilder value);
+        public static extern int BRAC_ObjectGetValue(int dwObjectType, int dwObjectId, int dwInfoName, ref byte value);
 
         /// <summary>
         /// 设置对象的属性值(整型)
