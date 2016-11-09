@@ -15,13 +15,15 @@
 #import "ServerQueueViewController.h"
 #import "TextModelTool.h"
 #import "TextModel.h"
+#import "CustomButton.h"
 
 #define kUserID 1001
 #define kAnyChatIP @"demo.anychat.cn"
 #define kAnyChatPort @"8906"
 #define kAnyChatUserName @"AnyChatQueue"
 
-@interface LoginViewController ()<UITextFieldDelegate,AnyChatNotifyMessageDelegate,AnyChatObjectEventDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+
+@interface LoginViewController ()<UITextFieldDelegate,AnyChatNotifyMessageDelegate,AnyChatObjectEventDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *role;             //角色
 @property (weak, nonatomic) IBOutlet UITextField *server;           //服务器地址
 @property (weak, nonatomic) IBOutlet UITextField *port;             //端口
@@ -33,9 +35,20 @@
 @property(nonatomic, weak)UIPickerView *pickerView;
 @property(nonatomic, assign)int selfUserId;                         //自己的用户id
 @property(nonatomic, assign)int waitingBusinessId;                  //队列id
+@property (weak, nonatomic) IBOutlet UIButton *autoRoute;
+@property (weak, nonatomic) IBOutlet CustomButton *cash;
+@property (weak, nonatomic) IBOutlet CustomButton *manage;
+@property (weak, nonatomic) IBOutlet CustomButton *loan;
+@property (weak, nonatomic) IBOutlet UIView *settingAllView;
 
+@property (weak, nonatomic) UIActionSheet *autoRouteActionSheet;
 
 - (IBAction)loginAction:(UIButton *)sender;
+- (IBAction)autoRouteAction:(id)sender;
+- (IBAction)cashAction:(id)sender;
+- (IBAction)manageAction:(id)sender;
+- (IBAction)loanAction:(id)sender;
+
 
 @end
 
@@ -90,6 +103,29 @@
     
     [TextModelTool saveText:textModel];
     
+    [self initAddSubViewWithQueues];
+    
+    [self setupSkills];
+    
+    if([self.role.text isEqualToString:@"普通用户"]){
+        
+        self.settingAllView.hidden = YES;
+    }
+    
+}
+
+-(void)initAddSubViewWithQueues{
+    
+    [self.cash initTheSubView];
+    [self.manage initTheSubView];
+    [self.loan initTheSubView];
+}
+
+-(void)setupSkills{
+    
+    [self.cash setCustomUI:@"现金" withisChecked:YES];
+    [self.manage setCustomUI:@"理财" withisChecked:YES];
+    [self.loan setCustomUI:@"贷款" withisChecked:YES];
 }
 
 - (void)setup {
@@ -157,7 +193,9 @@
         // 初始化本地对象信息
         if ([self.role.text isEqualToString:@"普通用户"]) {
             [self InitClientObjectInfo:dwUserId :0];
-        }else if([self.role.text isEqualToString:@"坐席"]) {
+        }else if([self.role.text isEqualToString:@"坐席"] && [self.autoRoute.titleLabel.text isEqualToString:@"开启"]) {
+            [self InitClientObjectInfo:dwUserId :ANYCHAT_OBJECT_FLAGS_AGENT+ANYCHAT_OBJECT_FLAGS_AUTOMODE];
+        }else if([self.role.text isEqualToString:@"坐席"] && [self.autoRoute.titleLabel.text isEqualToString:@"关闭"]) {
             [self InitClientObjectInfo:dwUserId :ANYCHAT_OBJECT_FLAGS_AGENT];
         }
     }else {
@@ -442,7 +480,15 @@
 // 15.坐席等待用户(没人排队)
 -(void) AnyChatAgentWaitingUser:(int)dwObjectType {
     NSLog(@"坐席等待用户");
-    [MBProgressHUD showError:@"暂时还没有顾客排队，请稍后再试"];
+    if([self.autoRoute.titleLabel.text isEqualToString:@"开启"]){
+        
+        [MBProgressHUD showSuccess:@"正在服务"];
+        
+    }
+    else if([self.autoRoute.titleLabel.text isEqualToString:@"关闭"]){
+        
+        [MBProgressHUD showError:@"暂时还没有顾客排队，请稍后再试"];
+    }
     
 }
 
@@ -456,7 +502,9 @@
 //开始编辑输入框的时候，软键盘出现，执行此事件
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
+
     CGRect frame = textField.frame;
+    NSLog(@"==%@",NSStringFromCGRect(frame));
     int offset = frame.origin.y + 32 - (self.view.frame.size.height - 216.0);//键盘高度216
     NSTimeInterval animationDuration = 0.30f;
     [UIView beginAnimations:@"ResizeForKeyBoard" context:nil];
@@ -490,8 +538,14 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (component ==0) {
         if (row ==0) {
+            
+            self.settingAllView.hidden = YES;
+            
             return @"普通用户";
         }else if (row == 1) {
+            
+            self.settingAllView.hidden = NO;
+            
             return @"坐席";
         }
     }
@@ -525,7 +579,31 @@
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_OBJECT_INITFLAGS : dwAgentFlags]; // 0 普通用户 2 坐席
     // 客户端用户对象优先级
     [AnyChatPlatform ObjectSetIntValue:ANYCHAT_OBJECT_TYPE_CLIENTUSER :mSelfUserId :ANYCHAT_OBJECT_INFO_PRIORITY :10];
-    [AnyChatPlatform ObjectSetIntValue:ANYCHAT_OBJECT_TYPE_CLIENTUSER :mSelfUserId :ANYCHAT_OBJECT_INFO_ATTRIBUTE :-1];
+    
+    //坐席  开启自动路由
+    if(dwAgentFlags == ANYCHAT_OBJECT_FLAGS_AGENT+ANYCHAT_OBJECT_FLAGS_AUTOMODE){
+    
+        int attribute = 0;
+        if(self.cash.isChecked){
+        
+            attribute = attribute + 1;
+        }
+        if(self.manage.isChecked){
+            
+            attribute = attribute + 2;
+        }
+        if(self.loan.isChecked){
+        
+            attribute = attribute + 4;
+        }
+        
+        [AnyChatPlatform ObjectSetIntValue:ANYCHAT_OBJECT_TYPE_CLIENTUSER :mSelfUserId :ANYCHAT_OBJECT_INFO_ATTRIBUTE :attribute];
+    }
+    else{
+    
+        [AnyChatPlatform ObjectSetIntValue:ANYCHAT_OBJECT_TYPE_CLIENTUSER :mSelfUserId :ANYCHAT_OBJECT_INFO_ATTRIBUTE :-1];
+    }
+    
     // 向服务器发送数据同步请求指令
     [AnyChatPlatform ObjectControl: ANYCHAT_OBJECT_TYPE_AREA :ANYCHAT_INVALID_OBJECT_ID :ANYCHAT_OBJECT_CTRL_SYNCDATA :mSelfUserId :0 :0 :0 :nil];
 }
@@ -593,5 +671,52 @@
     [AnyChatPlatform Login:self.username.text :nil];
 
 }
+
+- (IBAction)autoRouteAction:(id)sender {
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"开启",@"关闭", nil];
+    
+    [actionSheet showInView:self.view];
+    self.autoRouteActionSheet = actionSheet;
+}
+
+- (IBAction)cashAction:(id)sender {
+    
+    CustomButton *btn = (CustomButton *)sender;
+
+    [btn setCustomUI:@"现金" withisChecked:!btn.isChecked];
+
+}
+
+- (IBAction)manageAction:(id)sender {
+    
+    CustomButton *btn = (CustomButton *)sender;
+    
+    [btn setCustomUI:@"理财" withisChecked:!btn.isChecked];
+}
+
+- (IBAction)loanAction:(id)sender {
+    
+    CustomButton *btn = (CustomButton *)sender;
+    
+    [btn setCustomUI:@"贷款" withisChecked:!btn.isChecked];
+}
+
+#pragma mark -UIActionSheetDelegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+
+    if(actionSheet == self.autoRouteActionSheet){
+    
+        if(buttonIndex == 0){
+            
+            [self.autoRoute setTitle:@"开启" forState:UIControlStateNormal];
+            
+        }else if (buttonIndex == 1){
+            
+            [self.autoRoute setTitle:@"关闭" forState:UIControlStateNormal];
+        }
+    }
+}
+
 
 @end
