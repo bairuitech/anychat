@@ -74,6 +74,8 @@ namespace AnyChatServer
         {
             this.rtb_message.AppendText("用户登录成功:OnUserLoginAction(" + "userId:" + userId.ToString() + ",userName:" + userName.ToString()
                  + ",level:" + level.ToString() + ",addr:" + addr + ",userValue:" + userValue.ToString() + ")\n");
+
+            showOnlineUserCount();
         }
 
         // 用户申请进入房间回调函数定义
@@ -130,6 +132,7 @@ namespace AnyChatServer
         void OnUserLogoutActionExCallBack_main(int userId, int errorcode, int userValue)
         {
             this.rtb_message.AppendText("用户注销:OnUserLogoutAction(" + "userId:" + userId.ToString() + ",errorcode:" + errorcode.ToString() + ")\n");
+            showOnlineUserCount();
         }
 
         /// <summary>
@@ -317,5 +320,14 @@ namespace AnyChatServer
 
         }
 
+        /// <summary>
+        /// 显示在线用户数量
+        /// </summary>
+        private void showOnlineUserCount()
+        {
+            int onlineUsersCount = 0;
+            AnyChatServerSDK.BRAS_GetOnlineUsers(-1, null, ref onlineUsersCount);
+            lbl_onlineUserCount.Text = "在线用户数：" + onlineUsersCount;
+        }
     }
 }
