@@ -93,13 +93,13 @@ public class DialogFactory {
 		mDialog.setCancelable(false);
 		switch (dwDialogId) {
 		case DIALOGID_CALLING:
-			initCallingDialog(mDialog, object);
+			initCallingDialog(mDialog, object,mApplication);
 			break;
 		case DIALOGID_CALLRESUME:
 			initCallResume(mDialog, object);
 			break;
 		case DIALOGID_ENDCALL:
-			initEndSessionResumeDialg1(mDialog, object,mApplication);
+			initEndSessionResumeDialg1(mDialog, context,object,mApplication);
 			break;
 		case DIALOGID_EXIT:
 			initQuitResumeDialg(mDialog,mApplication);
@@ -180,7 +180,7 @@ public class DialogFactory {
 	 * @param dialog
 	 * @param object
 	 */
-	public void initCallingDialog(final Dialog dialog, Object object) {
+	public void initCallingDialog(final Dialog dialog, Object object, final CustomApplication mApplication) {
 		final int userId = (Integer) object;
 		View view = mLayoutInlater.inflate(R.layout.dialog_calling, null);
 		ImageView buttonCancel = (ImageView) view.findViewById(R.id.btn_cancel);
@@ -195,6 +195,7 @@ public class DialogFactory {
 								AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT,
 								0, 0, "");
 				dialog.dismiss();
+                AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, mApplication.getUserID(), AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_FINISHSERVICE, 0, 0, 0, 0, "");
 			}
 		});
 		String strTitle = mContext.getString(R.string.str_calling);
@@ -381,7 +382,7 @@ public class DialogFactory {
 	 * @param dialog
 	 * @param object
 	 */
-	public void initEndSessionResumeDialg1(final Dialog dialog,
+	public void initEndSessionResumeDialg1(final Dialog dialog, final Activity context,
 			final Object object,final CustomApplication mApplication) {
 		final int userId = (Integer) object;
 		Log.e("userID", userId+"");
@@ -400,8 +401,9 @@ public class DialogFactory {
 				//调用内核方法执行；
 				BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userId, 0,
 						0, BussinessCenter.selfUserId, "");
-				
-			}
+                BaseMethod.showToast("正在结束视频通话...", context);
+
+            }
 		});
 		buttonCancel.setOnClickListener(new OnClickListener() {
 

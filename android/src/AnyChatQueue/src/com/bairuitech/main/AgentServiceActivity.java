@@ -51,6 +51,9 @@ public class AgentServiceActivity extends Activity implements
 	private ListView listView;
 	private SimpleAdapter adapter;
 	private CustomApplication mApplication;
+
+     /** 自动路由 **/
+     private int isAutoMode;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -63,7 +66,9 @@ public class AgentServiceActivity extends Activity implements
 		initSdk();
 		//初始化布局
 		initView();
-	}
+        isAutoMode = getIntent().getIntExtra("isAutoMode", 0);
+        AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, mApplication.getUserID(), AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_SERVICESTATUS, AnyChatObjectDefine.ANYCHAT_AGENT_STATUS_CLOSEED, 0, 0, 0, "");
+    }
 
 	private void initView() {
 		//全局变量
@@ -115,6 +120,7 @@ public class AgentServiceActivity extends Activity implements
 	protected void onRestart() {
 		// TODO Auto-generated method stub
 		initSdk();
+        AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, mApplication.getUserID(), AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_SERVICESTATUS, AnyChatObjectDefine.ANYCHAT_AGENT_STATUS_WAITTING, 0, 0, 0, "");
 		super.onRestart();
 	}
 
@@ -242,27 +248,27 @@ public class AgentServiceActivity extends Activity implements
 		Log.i("ANYCHAT", "OnAnyChatLinkCloseMessage:" + dwErrorCode);
 	}
 
-	public void OnAnyChatVideoCallEvent(int dwEventType, int dwUserId,
+	public void OnAnyChatVideoCallEvent(int dwEventType, int targetUserId,
 			int dwErrorCode, int dwFlags, int dwParam, String userStr) {
 		// TODO Auto-generated method stub
 		switch (dwEventType) {
 
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST:
 			BussinessCenter.getBussinessCenter().onVideoCallRequest(
-					dwUserId, dwFlags, dwParam, userStr);
+                    targetUserId, dwFlags, dwParam, userStr);
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
 			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_REQUEST,
-					dwUserId, this,mApplication);
+                    targetUserId, this,mApplication);
 			dialog.show();
 			break;
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_REPLY:
 			BussinessCenter.getBussinessCenter().onVideoCallReply(
-					dwUserId, dwErrorCode, dwFlags, dwParam, userStr);
+                    targetUserId, dwErrorCode, dwFlags, dwParam, userStr);
 			
 			if (dwErrorCode == AnyChatDefine.BRAC_ERRORCODE_SUCCESS) {
 				dialog = DialogFactory.getDialog(
-						DialogFactory.DIALOGID_CALLING, dwUserId,
+						DialogFactory.DIALOGID_CALLING, targetUserId,
 						AgentServiceActivity.this,mApplication);
 				dialog.show();
 
@@ -270,6 +276,7 @@ public class AgentServiceActivity extends Activity implements
 				if (dialog != null && dialog.isShowing()) {
 					dialog.dismiss();
 				}
+                anychat.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, targetUserId, 0, 0, 0, "");
 			}
 			break;
 		case AnyChatDefine.BRAC_VIDEOCALL_EVENT_START:
@@ -277,8 +284,12 @@ public class AgentServiceActivity extends Activity implements
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
 			BussinessCenter.getBussinessCenter().onVideoCallStart(
-					dwUserId, dwFlags, dwParam, userStr,mApplication);
+                    targetUserId, dwFlags, dwParam, userStr,mApplication);
 			break;
+        case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
+            Log.e("queueactivity", "会话结束回调");
+            AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, mApplication.getUserID(), AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_FINISHSERVICE, 0, 0, 0, 0, "");
+            break;
 		}
 	}
 
@@ -287,8 +298,12 @@ public class AgentServiceActivity extends Activity implements
 		// TODO Auto-generated method stub
 		switch (arg0.getId()) {
 		case R.id.id_btn_startserver:
-			//开始服务
-			AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, mApplication.getUserID(), AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_SERVICEREQUEST, 0, 0, 0, 0, "");
+            //开始服务
+            if (isAutoMode == 0) {
+                AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, mApplication.getUserID(), AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_SERVICESTATUS, AnyChatObjectDefine.ANYCHAT_AGENT_STATUS_WAITTING, 0, 0, 0, "");
+            } else {
+                AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, mApplication.getUserID(), AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_SERVICEREQUEST, 0, 0, 0, 0, "");
+            }
 			break;
 		case R.id.returnImgBtn:
 			
@@ -329,8 +344,24 @@ public class AgentServiceActivity extends Activity implements
 			{
 				anychat.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST, dwParam2, 0, 0, 0, "");
 			}
-			break;	
-			
+            if(isAutoMode == 0 && mApplication.getUserType() == 1 && dwParam2 == mApplication.getUserID())
+            {
+                anychat.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST, dwParam1, 0, 0, 0, "");
+            }
+			break;
+        case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_STATUSCHANGE:
+            if (dwObjectType == AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT && mApplication.getUserID() == dwObjectId) {
+                if (dwParam1 == AnyChatObjectDefine.ANYCHAT_AGENT_STATUS_WAITTING) {
+                    start.setText("准备状态");
+                }else if (dwParam1 == AnyChatObjectDefine.ANYCHAT_AGENT_STATUS_WORKING){
+                    start.setText("忙碌状态");
+                }else if (dwParam1 == AnyChatObjectDefine.ANYCHAT_AGENT_STATUS_PAUSED){
+                    start.setText("离开状态");
+                }else if (dwParam1 == AnyChatObjectDefine.ANYCHAT_AGENT_STATUS_CLOSEED){
+                    start.setText("未服务状态");
+                }
+            }
+            break;
 		case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_WAITINGUSER:				
 			BaseMethod.showToast("暂时无人排队中...", AgentServiceActivity.this);		
 			break;

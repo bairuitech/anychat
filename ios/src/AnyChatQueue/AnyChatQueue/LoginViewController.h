@@ -20,5 +20,4 @@
 @property (assign, nonatomic) int customerId;                   //客户id
 
 @property(nonatomic,weak) VideoViewController* videoViewController; //视频通话控制器
-
 @end
