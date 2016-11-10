@@ -449,9 +449,11 @@ namespace AnyChatMultiCamera
         private void UpdateUserList(int m_UserID, int m_Index)
         {
             OnlineUserInfo m_TempOnlineUserInfo = new OnlineUserInfo();//创建用户在线列表（自定义，包含用户属性）
-            StringBuilder m_TempName = new StringBuilder(30);
-            int ret = AnyChatCoreSDK.GetUserName(m_UserID, m_TempName, 30);//获取用户账号
-            m_TempOnlineUserInfo.m_UserName = m_TempName.ToString();
+
+            byte[] userNameByte = new byte[255];
+            int ret = AnyChatCoreSDK.GetUserName(m_UserID, ref userNameByte[0], 30);//获取用户账号
+            m_TempOnlineUserInfo.m_UserName = byteToString(userNameByte);
+
             m_TempOnlineUserInfo.m_UserID = m_UserID;
             m_TempOnlineUserInfo.m_Index = m_Index;
             m_TempOnlineUserInfo.m_Permission = new int[] { 0, 0, 0 };//用户权限
@@ -464,9 +466,9 @@ namespace AnyChatMultiCamera
         /// <returns></returns>
         private string GetUserNameByID(int m_UserID)
         {
-            StringBuilder m_TempName = new StringBuilder(30);
-            int ret = AnyChatCoreSDK.GetUserName(m_UserID, m_TempName, 30);//获取用户账号
-            return m_TempName.ToString();
+            byte[] userNameByte = new byte[255];
+            int ret = AnyChatCoreSDK.GetUserName(m_UserID, ref userNameByte[0], 30);//获取用户账号
+            return byteToString(userNameByte);
         }
         /// <summary>
         /// 通过用户账号获得用户ID
@@ -619,13 +621,15 @@ namespace AnyChatMultiCamera
                 //m_ShowWnd.MouseLeave += new EventHandler(m_ShowWnd_MouseLeave);
                 panel_OwnerVideoZone.Controls.Add(m_ShowWnd);
 
-
                 AnyChatCoreSDK.SetUserStreamInfo(-1, streamIndex, AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_DEVICENAME, videoDeviceName[idx], videoDeviceName[idx].ToCharArray().Length);
                 addLog("SetUserStreamInfo(-1," + streamIndex + ", AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_DEVICENAME," + videoDeviceName[idx] + ", " + videoDeviceName[idx].ToCharArray().Length + ")", LogType.LOG_TYPE_API);
+
                 AnyChatCoreSDK.SetVideoPosEx(-1, m_ShowWnd.Handle, 0, 0, m_ShowWnd.Width, m_ShowWnd.Height, streamIndex, 0);
                 addLog("SetVideoPosEx(-1," + m_ShowWnd.Handle + ", 0, 0," + m_ShowWnd.Width + ", " + m_ShowWnd.Height + ", " + streamIndex + ", 0)", LogType.LOG_TYPE_API);
+
                 AnyChatCoreSDK.UserCameraControlEx(-1, true, streamIndex, 0, string.Empty);
                 addLog("UserCameraControlEx(-1, true, " + streamIndex + ", 0, " + string.Empty + ")", LogType.LOG_TYPE_API);
+
                 AnyChatCoreSDK.UserSpeakControlEx(-1, true, streamIndex, 0, string.Empty);
                 addLog("UserSpeakControlEx(-1, true, " + streamIndex + ", 0, " + string.Empty + ")", LogType.LOG_TYPE_API);
 
@@ -977,6 +981,21 @@ namespace AnyChatMultiCamera
             return (T)result;
         }
 
+        /// <summary>
+        /// 将对象转化成字符串
+        /// </summary>
+        /// <param name="jsonObject"></param>
+        /// <returns></returns>
+        public static string stringify(object jsonObject)
+        {
+            using (var ms = new MemoryStream())
+            {
+                new DataContractJsonSerializer(jsonObject.GetType()).WriteObject(ms, jsonObject);
+                return Encoding.UTF8.GetString(ms.ToArray());
+            }
+        }
+
+
         /// <summary>  
         /// POST请求与获取结果  
         /// </summary>  
@@ -1013,7 +1032,13 @@ namespace AnyChatMultiCamera
             int recordUserId = -1;
             int recordFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SERVER + AnyChatCoreSDK.BRAC_RECORD_FLAGS_VIDEO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_AUDIO + 
                                 AnyChatCoreSDK.BRAC_RECORD_FLAGS_MIXAUDIO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_MIXVIDEO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_STEREO +
-                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_ABREAST + AnyChatCoreSDK.BRAC_RECORD_FLAGS_STREAM + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_LOCALCB;
+                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_ABREAST + AnyChatCoreSDK.BRAC_RECORD_FLAGS_STREAM + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_LOCALCB + 
+                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_USERFILENAME;
+
+            //自定义录像文件名称
+            FileObject fileObj = new FileObject();
+            fileObj.filename = "20160420.mp4";
+
             if (!isRecord)
             {
                 //设置录制参数
@@ -1025,16 +1050,16 @@ namespace AnyChatMultiCamera
                 AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_AUDIO_VADCTRL, ref VADCtrol, sizeof(int)); 
                 
                 //开始录像
-                AnyChatCoreSDK.StreamRecordCtrl(recordUserId, true, recordFlags, 0);
-                addLog("StreamRecordCtrl(" + recordUserId + ", " + true + ", " + recordFlags + ", 0 " + string.Empty + ")", LogType.LOG_TYPE_API);
+                AnyChatCoreSDK.StreamRecordCtrlEx(recordUserId, true, recordFlags, 0, stringify(fileObj));
+                addLog("StreamRecordCtrlEx(" + recordUserId + ", " + true + ", " + recordFlags + ", 0 " + stringify(fileObj) + ")", LogType.LOG_TYPE_API);
                 isRecord = true;
                 btnRecord.Text = "结束录像";
             }
             else
             {
                 //结束录像
-                AnyChatCoreSDK.StreamRecordCtrl(recordUserId, false, recordFlags, 0);
-                addLog("StreamRecordCtrl(" + recordUserId + ", " + false + ", " + recordFlags + ", 0 " + string.Empty + ")", LogType.LOG_TYPE_API);
+                AnyChatCoreSDK.StreamRecordCtrlEx(recordUserId, false, recordFlags, 0, stringify(fileObj));
+                addLog("StreamRecordCtrlEx(" + recordUserId + ", " + false + ", " + recordFlags + ", 0 " + stringify(fileObj) + ")", LogType.LOG_TYPE_API);
                 isRecord = false;
                 btnRecord.Text = "开始录像";
                 int VADCtrol = 1;
@@ -1099,6 +1124,25 @@ namespace AnyChatMultiCamera
 
         }
 
+        /// <summary>
+        /// 字节转字符串
+        /// </summary>
+        /// <param name="byteStr">字节数组</param>
+        /// <returns>转换后的字符串</returns>
+        public string byteToString(byte[] byteStr)
+        {
+            string retVal = "";
+            try
+            {
+                retVal = System.Text.Encoding.GetEncoding("GB18030").GetString(byteStr, 0, byteStr.Length);
+            }
+            catch (Exception exp)
+            {
+                Console.Write(exp.Message);
+            }
+            return retVal.TrimEnd('\0');
+        }
+
     }
 
     /// <summary>
@@ -1115,4 +1159,10 @@ namespace AnyChatMultiCamera
         public string sigStr { get; set; }
     }
 
+    [DataContract]
+    class FileObject
+    {
+        [DataMember]
+        public string filename { get; set; }
+    }
 }

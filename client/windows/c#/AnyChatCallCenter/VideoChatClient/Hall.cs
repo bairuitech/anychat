@@ -284,7 +284,7 @@ namespace VideoChatClient
                 UserInfo userItem = GetUserInfoByUserId(dwUserId);
                 if (userItem != null)
                 {
-                    ShowCallMessage(Properties.Resources._14, userItem.Name + "向您发起视频会话邀请...");
+                    ShowCallMessage(Properties.Resources._14, "【" + userItem.Name + "】"+ "向您发起视频会话邀请...");
 
                     Button btn_accepted = new Button();
                     btn_accepted.Font = new Font("微软雅黑", 20);
@@ -360,8 +360,8 @@ namespace VideoChatClient
                 UserInfo tUserItem = GetUserInfoByUserId(getOtherInSession());
                 if (tUserItem != null)
                 {
-                    lb_tuserName.Text = tUserItem.Name;
-                    lb_suserName.Text = m_UserName;
+                    lb_tuserName.Text = tUserItem.Name + "（对方）";
+                    lb_suserName.Text = m_UserName + "（自己）";
                     OpenCameraAndSpeak(m_UserId, true);//打开自己的音视频
                     pan_users.Hide();
                     pan_call.Hide();
@@ -727,9 +727,10 @@ namespace VideoChatClient
             UserInfo selfUserItem = new UserInfo();
             selfUserItem.Id = m_UserId;
             selfUserItem.Name = m_UserName;
-            StringBuilder str = new StringBuilder();
-            AnyChatCoreSDK.QueryUserState(selfUserItem.Id, AnyChatCoreSDK.BRAC_USERSTATE_INTERNETIP, str, 15);
-            selfUserItem.Ip = str.ToString();
+            
+            byte[] ipByte = new byte[100];
+            AnyChatCoreSDK.QueryUserState(selfUserItem.Id, AnyChatCoreSDK.BRAC_USERSTATE_INTERNETIP, ref ipByte[0], 20);
+            selfUserItem.Ip = byteToString(ipByte);
             AddUser(selfUserItem);
             int num=0;
             AnyChatCoreSDK.GetUserFriends(null,ref num);
@@ -745,16 +746,18 @@ namespace VideoChatClient
                 {
                     continue;
                 }
-                UserInfo userItem = new UserInfo();
-                StringBuilder friendInfo = new StringBuilder(30);
+                UserInfo userItem = new UserInfo();                
                 int lenth = 30;
                 userItem.Id = friendId;
-                AnyChatCoreSDK.GetUserInfo(friendId, USERDATA_USERNAME, friendInfo, lenth);
-                string userName = friendInfo.ToString();
-                userItem.Name = friendInfo.ToString();
-                AnyChatCoreSDK.GetUserInfo(friendId, USERDATA_USERADRESSIP, friendInfo, lenth);
-                string userIp = friendInfo.ToString();
-                userItem.Ip = friendInfo.ToString();
+                byte[] userNameByte = new byte[255];
+                AnyChatCoreSDK.GetUserInfo(friendId, USERDATA_USERNAME, ref userNameByte[0], lenth);
+                string userName = byteToString(userNameByte);
+                userItem.Name = userName;
+
+                byte[] userAddressIPByte = new byte[100];
+                AnyChatCoreSDK.GetUserInfo(friendId, USERDATA_USERADRESSIP, ref userAddressIPByte[0], lenth);
+                string userIp = byteToString(userAddressIPByte);
+                userItem.Ip = userIp;
                 bool ishave = false;
                 foreach (UserInfo u in users)
                 {
@@ -810,6 +813,26 @@ namespace VideoChatClient
                Log.SetLog("VideoChat.Hall.timer_call_Tick       timer_call_Tick：" + ex.Message.ToString());
            }
        }
+
+       /// <summary>
+       /// 字节转字符串
+       /// </summary>
+       /// <param name="byteStr">字节数组</param>
+       /// <returns>转换后的字符串</returns>
+       public string byteToString(byte[] byteStr)
+       {
+           string retVal = "";
+           try
+           {
+               retVal = System.Text.Encoding.GetEncoding("GB18030").GetString(byteStr, 0, byteStr.Length);
+           }
+           catch (Exception exp)
+           {
+               Console.Write(exp.Message);
+           }
+           return retVal.TrimEnd('\0');
+       }
+
     }
      #endregion
 }

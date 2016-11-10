@@ -37,7 +37,15 @@ namespace AnyChatCSharpDemo
 
         int m_ReceiveUserID = -1;
         int m_ReceiveTaskID = -1;
+        /// <summary>
+        /// 传输方式
+        /// </summary>
+        TransType transType = TransType.TextMessage;
 
+        /// <summary>
+        /// 是否选择自己
+        /// </summary>
+        bool chooseMyself = false;
         #endregion
 
         #region 调用WIN的API
@@ -129,6 +137,7 @@ namespace AnyChatCSharpDemo
             string path = Application.StartupPath;
             SystemSetting.Text_OnReceive = new TextReceivedHandler(Received_Text);//文本回调涵数
             SystemSetting.TransBuffer_OnReceive = new TransBufferReceivedHandler(Received_TransBuffer);//透明通道传输回调
+            SystemSetting.TransBufferEx_OnReceive = new TransBufferExReceivedHandler(Received_TransBufferEx);  //透明通道传输回调
             SystemSetting.TransFile_Received = new TransFileReceivedHandler(Received_TransFile);//文件传输回调
             AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CORESDK_PATH, path, path.Length);
          
@@ -157,6 +166,8 @@ namespace AnyChatCSharpDemo
              */
             ret = AnyChatCoreSDK.Login(frmLogin.m_UserName, frmLogin.m_LoginPass, 0);
 
+            comboBox_TransType.SelectedIndex = (int)TransType.TextMessage;
+            transType = TransType.TextMessage;
         }
 
         #endregion
@@ -386,9 +397,9 @@ namespace AnyChatCSharpDemo
                     //Print("登录服务器成功，自己的用户编号为：" + userid.ToString());
                     Print("登录服务器成功，自己的用户账号为：" + frmLogin.m_UserName);
                     m_myUserID = userid;
-                    StringBuilder userName = new StringBuilder(30);
 
-                    int ret = AnyChatCoreSDK.GetUserName(userid, userName, 30);
+                    //StringBuilder userName = new StringBuilder(30);
+                    //int ret = AnyChatCoreSDK.GetUserName(userid, userName, 30);
 
                     AnyChatCoreSDK.EnterRoom(m_RoomID, "", 0);
                 }
@@ -555,9 +566,13 @@ namespace AnyChatCSharpDemo
         private void UpdateUserList(int m_UserID,int m_Index)
         {
             clsMemberList.MemberItem m_TempItem = new clsMemberList.MemberItem();//创建用户在线列表（自定义，包含用户属性）
+            
             StringBuilder m_TempName = new StringBuilder(30);
-            int ret = AnyChatCoreSDK.GetUserName(m_UserID, m_TempName, 30);//获取用户账号
-            m_TempItem.m_UserName = m_TempName.ToString();
+
+            byte[] userNameByte = new byte[255];
+            int ret = AnyChatCoreSDK.GetUserName(m_UserID, ref userNameByte[0], 30);//获取用户账号
+
+            m_TempItem.m_UserName = byteToString(userNameByte);
             m_TempItem.m_UserID = m_UserID;
             m_TempItem.m_Index = m_Index;
             m_TempItem.m_Permission = new int[] { 0, 0, 0 };//用户权限
@@ -570,9 +585,9 @@ namespace AnyChatCSharpDemo
         /// <returns></returns>
         private string GetUserNameByID(int m_UserID)
         {
-            StringBuilder m_TempName = new StringBuilder(30);
-            int ret = AnyChatCoreSDK.GetUserName(m_UserID, m_TempName, 30);//获取用户账号
-            return m_TempName.ToString();
+            byte[] userNameByte = new byte[255];
+            int ret = AnyChatCoreSDK.GetUserName(m_UserID, ref userNameByte[0], 30);//获取用户账号
+            return byteToString(userNameByte);
         }
         /// <summary>
         /// 通过用户账号获得用户ID
@@ -853,10 +868,9 @@ namespace AnyChatCSharpDemo
             string m_Message = rtxt_sendtxt.Text;
             if (m_Message.Length == 0)
             {
-                MessageBox.Show("发送文本不能为空","提示");
+                MessageBox.Show("发送内容不能为空","提示");
                 return;
             }
-            
 
             int length = UnicodeEncoding.Default.GetBytes(m_Message).Length;
             int m_TempUserID = -1;
@@ -873,22 +887,56 @@ namespace AnyChatCSharpDemo
                         break;
                     }
                 }
-                
+
+            }
+            if (transType == TransType.TransBuffer || transType == TransType.TransBuffer)
+            {
+                if (m_TempUserID == -1 && !chooseMyself)
+                {
+                    MessageBox.Show("请选择目标用户！", "提示");
+                    return;
+                }
+                if (chooseMyself) m_TempUserID = 0;
             }
             bool m_Secret = false;
             if (m_TempUserID != -1) m_Secret = true;
-            int ret = AnyChatCoreSDK.SendTextMessage(m_TempUserID, m_Secret, m_Message, length);
+            int ret = -1;
+            byte[] buffer = UnicodeEncoding.Default.GetBytes(m_Message);
+            int taskId = 0;
+            switch (transType)
+            {
+                case TransType.TextMessage:
+                    ret = AnyChatCoreSDK.SendTextMessage(m_TempUserID, m_Secret, m_Message, length);
+                    break;
+                case TransType.TransBuffer:
+
+                    ret = AnyChatCoreSDK.TransBuffer(m_TempUserID, buffer, length);
+                    break;
+                case TransType.TransBufferEx:
+
+                    ret = AnyChatCoreSDK.TransBufferEx(m_TempUserID, buffer, length, 0, 0, 0, ref taskId);
+                    break;
+            }
+
 
             //显示聊天内容
             string m_DispMsg = "我 To   " + m_TempUserName+" ";
             ShowText(m_DispMsg, txt_Accept.TextLength, m_DispMsg.Length, Color.Green, new Font("黑体", 9, FontStyle.Bold));
             ShowText(DateTime.Now.ToString(), txt_Accept.TextLength, DateTime.Now.ToString().Length, Color.Green, new Font("黑体", 9, FontStyle.Bold));
             ShowText("\r\n", txt_Accept.TextLength, 4, Color.Blue, new Font("宋体", 12));
-            ShowText("    ", txt_Accept.TextLength, 4, Color.Blue, new Font("宋体", 12));
-            ShowText(m_Message, txt_Accept.TextLength, m_Message.Length, Color.Black, new Font("黑体", 9));
+            ShowText("    ", txt_Accept.TextLength, 4, Color.Blue, new Font("宋体", 12));            
+            if (transType == TransType.TransBufferEx)
+            {
+                ShowText(m_Message + ",taskId：" + taskId, txt_Accept.TextLength, m_Message.Length, Color.Black, new Font("黑体", 9));
+            }
+            else
+            {
+                ShowText(m_Message, txt_Accept.TextLength, m_Message.Length, Color.Black, new Font("黑体", 9));
+            }
             ShowText("\r\n\r\n", txt_Accept.TextLength, 8, Color.Blue, new Font("宋体", 12));
             rtxt_sendtxt.Text = "";
         }
+
         /// <summary>
         /// 键盘按下组合键
         /// </summary>
@@ -1019,7 +1067,16 @@ namespace AnyChatCSharpDemo
                 if (dgv_onlineuser.SelectedRows.Count == 0) return;
                 DataGridViewRow dgvr = dgv_onlineuser.SelectedRows[0];
                 string m_TempUserName = dgvr.Cells["gvc_username"].Value.ToString();
-                if (m_TempUserName == frmLogin.m_UserName) return;
+                if (m_TempUserName == frmLogin.m_UserName)
+                {
+                    chooseMyself = true;
+                    return;
+                }
+                else
+                {
+                    chooseMyself = false;
+                }
+                
                 lbl_touser.Text = "我 对 " + m_TempUserName + " 说：";
             }
             catch (Exception ex) { }
@@ -1258,46 +1315,72 @@ namespace AnyChatCSharpDemo
                 if (m_Command.Length > 3)
                 {
                     string[] m_Packet = m_Command.Split(":".ToCharArray());
-                    //选择是否接收文件
-                    if (m_Packet[0] == "003" && m_Packet[3] == "file")
-                    {
-                        int m_TempUserID = Convert.ToInt32(m_Packet[1]);
-                        string m_pacName = GetUserNameByID(m_TempUserID);
-                        DialogResult r = MessageBox.Show("文件名：" + m_Packet[2].ToString() + "，是否接收？", m_pacName + "发送文件请求", MessageBoxButtons.YesNo);
-                        if (r == System.Windows.Forms.DialogResult.Yes)
+                    if (m_Packet.Length > 0){
+                        //选择是否接收文件
+                        if (m_Packet[0] == "003" && m_Packet[3] == "file")
                         {
-                            FolderBrowserDialog fbd = new FolderBrowserDialog();
-                            if (fbd.ShowDialog() == DialogResult.OK)
+                            int m_TempUserID = Convert.ToInt32(m_Packet[1]);
+                            string m_pacName = GetUserNameByID(m_TempUserID);
+                            DialogResult r = MessageBox.Show("文件名：" + m_Packet[2].ToString() + "，是否接收？", m_pacName + "发送文件请求", MessageBoxButtons.YesNo);
+                            if (r == System.Windows.Forms.DialogResult.Yes)
                             {
-                                receivePath = fbd.SelectedPath;
-                                string m_Message = "003:" + m_myUserID.ToString() + ":" + "fileisok:";
+                                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                                if (fbd.ShowDialog() == DialogResult.OK)
+                                {
+                                    receivePath = fbd.SelectedPath;
+                                    string m_Message = "003:" + m_myUserID.ToString() + ":" + "fileisok:";
+                                    byte[] buffer = Encoding.Default.GetBytes(m_Message);
+                                    int rett = AnyChatCoreSDK.TransBuffer(m_TempUserID, buffer, buffer.Length);
+                                }
+                            }
+                            else
+                            { 
+                            
+                                string m_Message = "003:" + m_myUserID.ToString() + ":" + "fileisno:"+m_Packet[2].ToString();
                                 byte[] buffer = Encoding.Default.GetBytes(m_Message);
                                 int rett = AnyChatCoreSDK.TransBuffer(m_TempUserID, buffer, buffer.Length);
                             }
                         }
+                        //发送文件
+                        else if (m_Packet[0] == "003" && m_Packet[2] == "fileisok")
+                        {
+                            int taskId = 0;
+                            int m_TempUserID = Convert.ToInt32(m_Packet[1]);
+                            int flag = AnyChatCoreSDK.TransFile(m_TempUserID, sendPath, 1, 0, 0, ref taskId);
+                            Print("成功发送" + sendPath + "文件");
+                        }
+                        else if (m_Packet[0] == "003" && m_Packet[2] == "fileisno")
+                        {
+                            string m_tempName = GetUserNameByID(Convert.ToInt32(m_Packet[1]));
+                            Print(m_tempName + "拒绝接收文件" + m_Packet[3].ToString());
+                        }
                         else
-                        { 
-                            
-                            string m_Message = "003:" + m_myUserID.ToString() + ":" + "fileisno:"+m_Packet[2].ToString();
-                            byte[] buffer = Encoding.Default.GetBytes(m_Message);
-                            int rett = AnyChatCoreSDK.TransBuffer(m_TempUserID, buffer, buffer.Length);
+                        {
+                            string m_UserName = GetUserNameByID(userId);
+                            Print("用户：" + m_UserName + " 发来信息：" + m_Command);
                         }
                     }
-                    //发送文件
-                    else if (m_Packet[0] == "003" && m_Packet[2] == "fileisok")
-                    {
-                        int taskId = 0;
-                        int m_TempUserID = Convert.ToInt32(m_Packet[1]);
-                        int flag = AnyChatCoreSDK.TransFile(m_TempUserID, sendPath, 1, 0, 0, ref taskId);
-                        Print("成功发送" + sendPath + "文件");
-                    }
-                    else if (m_Packet[0] == "003" && m_Packet[2] == "fileisno")
-                    { 
-                        string m_tempName = GetUserNameByID(Convert.ToInt32(m_Packet[1]));
-                        Print(m_tempName + "拒绝接收文件" + m_Packet[3].ToString());
-                    }
-
                 }
+                else
+                {
+                    string m_UserName = GetUserNameByID(userId);
+                    Print("用户：" + m_UserName + " 发来信息：" + m_Command);
+                }                
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void Received_TransBufferEx(int userId, IntPtr buf, int len, int wParam, int lParam, int taskId, int userValue)
+        {
+            //过滤信息（）
+            string m_Command = Marshal.PtrToStringAnsi(buf);
+            try
+            {
+                string m_UserName = GetUserNameByID(userId);
+                Print("用户：" + m_UserName + " 发来信息：" + m_Command + "，taskId：" + taskId);
             }
             catch (Exception ex)
             {
@@ -1445,6 +1528,30 @@ namespace AnyChatCSharpDemo
                 Print("HttpPost has exception, message: " + ex.Message);
             }
             return retVal;
+        }
+
+        private void comboBox_TransType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            transType = (TransType)comboBox_TransType.SelectedIndex;
+        }
+
+        /// <summary>
+        /// 字节转字符串
+        /// </summary>
+        /// <param name="byteStr">字节数组</param>
+        /// <returns>转换后的字符串</returns>
+        public string byteToString(byte[] byteStr)
+        {
+            string retVal = "";
+            try
+            {
+                retVal = System.Text.Encoding.GetEncoding("GB18030").GetString(byteStr, 0, byteStr.Length);
+            }
+            catch (Exception exp)
+            {
+                Console.Write(exp.Message);
+            }
+            return retVal.TrimEnd('\0');
         }
     }
 

@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VideoChatHelp</RootNamespace>
-    <AssemblyName>VideoChatHelp</AssemblyName>
+    <AssemblyName>AnyChatCallCenterHelp</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

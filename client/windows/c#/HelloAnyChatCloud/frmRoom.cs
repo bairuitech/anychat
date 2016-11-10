@@ -431,10 +431,6 @@ namespace AnyChatCSharpDemo
                     //Print("登录服务器成功，自己的用户编号为：" + userid.ToString());
                     Print("登录服务器成功，自己的用户账号为：" + frmLogin.m_UserName);
                     m_myUserID = userid;
-                    StringBuilder userName = new StringBuilder(30);
-
-                    int ret = AnyChatCoreSDK.GetUserName(userid, userName, 30);
-
                     AnyChatCoreSDK.EnterRoom(m_RoomID, "", 0);
                 }
                 else
@@ -600,9 +596,11 @@ namespace AnyChatCSharpDemo
         private void UpdateUserList(int m_UserID,int m_Index)
         {
             clsMemberList.MemberItem m_TempItem = new clsMemberList.MemberItem();//创建用户在线列表（自定义，包含用户属性）
-            StringBuilder m_TempName = new StringBuilder(30);
-            int ret = AnyChatCoreSDK.GetUserName(m_UserID, m_TempName, 30);//获取用户账号
-            m_TempItem.m_UserName = m_TempName.ToString();
+
+            byte[] userNameByte = new byte[100];
+            int ret = AnyChatCoreSDK.GetUserName(m_UserID, ref userNameByte[0], 30);//获取用户账号
+            m_TempItem.m_UserName = byteToString(userNameByte);
+
             m_TempItem.m_UserID = m_UserID;
             m_TempItem.m_Index = m_Index;
             m_TempItem.m_Permission = new int[] { 0, 0, 0 };//用户权限
@@ -615,9 +613,9 @@ namespace AnyChatCSharpDemo
         /// <returns></returns>
         private string GetUserNameByID(int m_UserID)
         {
-            StringBuilder m_TempName = new StringBuilder(30);
-            int ret = AnyChatCoreSDK.GetUserName(m_UserID, m_TempName, 30);//获取用户账号
-            return m_TempName.ToString();
+            byte[] userNameByte = new byte[100];
+            int ret = AnyChatCoreSDK.GetUserName(m_UserID, ref userNameByte[0], 30);//获取用户账号
+            return byteToString(userNameByte);
         }
         /// <summary>
         /// 通过用户账号获得用户ID
@@ -1490,6 +1488,25 @@ namespace AnyChatCSharpDemo
                 Print("HttpPost has exception, message: " + ex.Message);
             }
             return retVal;
+        }
+
+        /// <summary>
+        /// 字节转字符串
+        /// </summary>
+        /// <param name="byteStr">字节数组</param>
+        /// <returns>转换后的字符串</returns>
+        public string byteToString(byte[] byteStr)
+        {
+            string retVal = "";
+            try
+            {
+                retVal = System.Text.Encoding.GetEncoding("GB18030").GetString(byteStr, 0, byteStr.Length);
+            }
+            catch (Exception exp)
+            {
+                Console.Write(exp.Message);
+            }
+            return retVal.TrimEnd('\0');
         }
     }
 

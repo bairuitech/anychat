@@ -64,7 +64,7 @@ namespace ANYCHATAPI
             ///与服务器端数据回调
             //AnyChatCoreSDK.SetSDKFilterDataCallBack(filterData_callback, hWnd.ToInt32());
             ///提供服务器端验证
-            AnyChatCoreSDK.SetServerAuthPass(new StringBuilder(""));
+            AnyChatCoreSDK.SetServerAuthPass("");
             //保存视频
             AnyChatCoreSDK.SetRecordCallBack(RecordCallBack_Callback, hWnd.ToInt32());
             //设置音量变化回调函数
