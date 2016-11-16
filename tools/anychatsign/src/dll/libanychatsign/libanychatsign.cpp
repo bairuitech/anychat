@@ -34,6 +34,23 @@ char *_strupr_s(char *str, int size)
 }
 #endif
 
+/**
+ *	对字符串进行MD5加密
+ *	@return 成功返回0，否则为出错代码
+ */ 
+int MD5_EncryptMessage(const char * message, std::string &encrystr)
+{
+	if(!message || !strlen(message))
+		return -1;
+	char digest[33] = {0};
+	unsigned char md5value[MD5_DIGEST_LENGTH] = {0};
+	MD5((unsigned char*)message, strlen(message), md5value);
+	for (int i=0; i<16; i++)
+		_snprintf(digest+i*2, 3, "%02x", md5value[i]);
+	encrystr = digest;
+	return 0;
+}
+
 
 // 对应用接入信息使用私钥进行签名
 int AnyChatRsaSign(int dwUserId, const char* lpStrUserId, const char* lpAppId, const char* lpPrivateKey, char* lpOutSigStr, int dwSigStrSize, int& dwTimeStamp)
@@ -53,9 +70,10 @@ int AnyChatRsaSign(int dwUserId, const char* lpStrUserId, const char* lpAppId, c
 		char szStrUserId[200] = {0};
 		if(lpStrUserId && strlen(lpStrUserId))
 			_snprintf(szStrUserId, sizeof(szStrUserId), "%s", lpStrUserId);
-		_snprintf(szMessage, sizeof(szMessage), "{\"id\":%d, \"strid\":%s, \"appid\":%s, \"timestamp\":%d}", dwUserId, szStrUserId, lpAppId, dwTimeStamp);
-		unsigned char md5value[MD5_DIGEST_LENGTH] = {0};
-		MD5((unsigned char*)szMessage, strlen(szMessage), md5value);
+		_snprintf(szMessage, sizeof(szMessage), "{\"id\":%d, \"strid\":\"%s\", \"appid\":\"%s\", \"timestamp\":%d}", dwUserId, szStrUserId, lpAppId, dwTimeStamp);
+		std::string strMD5Value; 
+		MD5_EncryptMessage(szMessage, strMD5Value);
+
 		//由公钥内存字符串转化为openssl的RSA结构
 		lpBioMem = BIO_new(BIO_s_mem());
 		if(!lpBioMem)
@@ -69,7 +87,7 @@ int AnyChatRsaSign(int dwUserId, const char* lpStrUserId, const char* lpAppId, c
 			break;
 		unsigned char signRet[200];
 		unsigned int signLen;
-		if(RSA_sign(NID_md5, md5value, MD5_DIGEST_LENGTH, signRet, &signLen, lpRsa) != 1)
+		if(RSA_sign(NID_md5, (const unsigned char *)strMD5Value.c_str(), strMD5Value.size(), signRet, &signLen, lpRsa) != 1)
 			break;
 
 		std::string sigstr = base64_encode((unsigned char *)signRet, signLen);
@@ -98,10 +116,10 @@ int AnyChatRsaVerify(int dwUserId, const char* lpStrUserId, const char* lpAppId,
 		char szStrUserId[200] = {0};
 		if(lpStrUserId && strlen(lpStrUserId))
 			_snprintf(szStrUserId, sizeof(szStrUserId), "%s", lpStrUserId);
-		_snprintf(szMessage, sizeof(szMessage), "{\"id\":%d, \"strid\":%s, \"appid\":%s, \"timestamp\":%d}", dwUserId, szStrUserId, lpAppId, dwTimeStamp);
+		_snprintf(szMessage, sizeof(szMessage), "{\"id\":%d, \"strid\":\"%s\", \"appid\":\"%s\", \"timestamp\":%d}", dwUserId, szStrUserId, lpAppId, dwTimeStamp);
 		std::string sigstr_orig = base64_decode(lpSigStr);
-		unsigned char md5value[MD5_DIGEST_LENGTH] = {0};
-		MD5((unsigned char*)szMessage, strlen(szMessage), md5value);
+		std::string strMD5Value; 
+		MD5_EncryptMessage(szMessage, strMD5Value);
 
 		//由公钥内存字符串转化为openssl的RSA结构
 		lpBioMem = BIO_new(BIO_s_mem());
@@ -115,7 +133,7 @@ int AnyChatRsaVerify(int dwUserId, const char* lpStrUserId, const char* lpAppId,
 		if(NULL == lpRsa)
 			break;
 		//签名验证
-		if(RSA_verify(NID_md5, md5value, MD5_DIGEST_LENGTH, (unsigned char*)sigstr_orig.c_str(), (unsigned int)sigstr_orig.length(), lpRsa) != 1)
+		if(RSA_verify(NID_md5, (const unsigned char *)strMD5Value.c_str(), strMD5Value.size(), (unsigned char*)sigstr_orig.c_str(), (unsigned int)sigstr_orig.length(), lpRsa) != 1)
 			break;
 		ret = 0;
 	} while (0);
