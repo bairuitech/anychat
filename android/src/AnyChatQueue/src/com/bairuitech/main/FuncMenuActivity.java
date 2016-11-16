@@ -49,20 +49,41 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
 	private List<Integer> mobject =new ArrayList<Integer>(); //装载营业厅ID
 	private ArrayList<HashMap<String, Object>> mArrItem;	 //装载适配器数据
 
+    /** id **/
+    private int dwUserId;
+    /** 类型 **/
+    private int userTypeCode;
+    private int queueType;
+    /** 自动路由 **/
+    private int isAutoMode;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//自定义标题栏
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_func_menu);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);  
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
+        SetData();
 		//视频参数配置
 		ApplyVideoConfig();	
 		//初始化sdk
 		InitSDK();
+        //初始化业务对象属性身份
+        InitClientObjectInfo();
 		//初始化布局
 		InitLayout();
 	}
+
+    /**
+     * 初始化从前个界面传进来的数据
+     */
+    private void SetData() {
+        dwUserId = getIntent().getIntExtra("dwUserId", 0);
+        userTypeCode = getIntent().getIntExtra("userTypeCode", 0);
+        queueType = getIntent().getIntExtra("queueType", -1);
+        isAutoMode = getIntent().getIntExtra("autoMode", 0);
+    }
 
 	private void InitSDK() {
 		//初始化sdk
@@ -72,6 +93,36 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
 		anychat.SetBaseEvent(this);//基本登陆事件接口
 		anychat.SetObjectEvent(this);//排队事件接口；
 	}
+
+    //初始化服务对象事件；触发回调OnAnyChatObjectEvent函数
+    private void InitClientObjectInfo() {
+        int dwAgentFlags = 0;
+        switch (userTypeCode) {
+            case AnyChatObjectDefine.ANYCHAT_OBJECT_FLAGS_CLIENT:
+                dwAgentFlags = AnyChatObjectDefine.ANYCHAT_OBJECT_FLAGS_CLIENT; // 客户标识
+                break;
+            case AnyChatObjectDefine.ANYCHAT_OBJECT_FLAGS_AGENT:
+                dwAgentFlags = AnyChatObjectDefine.ANYCHAT_OBJECT_FLAGS_AGENT; // 坐席标识
+                if (isAutoMode == 0) {
+                    dwAgentFlags = AnyChatObjectDefine.ANYCHAT_OBJECT_FLAGS_AGENT + AnyChatObjectDefine.ANYCHAT_OBJECT_FLAGS_AUTOMODE; // 自动路由坐席标识
+                }
+                break;
+        }
+
+        //业务对象身份初始化；0代表普通客户，2是代表座席 (USER_TYPE_ID)
+        AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_OBJECT_INITFLAGS, dwAgentFlags);
+        //业务对象优先级设定；
+        int dwPriority = 10;
+        AnyChatCoreSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER,dwUserId,AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_PRIORITY, dwPriority);
+        //业务对象属性设定，关联技能分组，-1表示具备所有业务技能
+        int dwAttribute = -1;
+        if (isAutoMode == 0) {
+            dwAttribute = queueType;
+        }
+        AnyChatCoreSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER, dwUserId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, dwAttribute);
+        // 向服务器发送数据同步请求指令
+        AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA, AnyChatObjectDefine.ANYCHAT_INVALID_OBJECT_ID, AnyChatObjectDefine.ANYCHAT_OBJECT_CTRL_SYNCDATA, dwUserId, 0, 0, 0, "");
+    }
 
 	private void InitLayout() {
 		
@@ -288,6 +339,7 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
 			
 			Intent in=new Intent();
 			in.setClass(FuncMenuActivity.this,AgentServiceActivity.class);
+            in.putExtra("isAutoMode",isAutoMode);
 			startActivity(in);
 			waitingpd.dismiss();
 		}

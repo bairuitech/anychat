@@ -37,6 +37,14 @@
 	<string>MainWindow</string>
 	<key>UIStatusBarHidden</key>
 	<true/>
+    
+    <key>NSCameraUsageDescription</key>
+    <string>cameraDesciption</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>microphoneDesciption</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>photoDesciption</string>
+    
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

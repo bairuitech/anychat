@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">智能排队 +</string>
+    <string name="HelloTitle">AnyChatQueuePlus</string>
+    <string name="endCall1">End call</string>
+    <string name="title_activity_func_menu">FuncMenu</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="voiceVideoInteraction">音视频交互</string>
+    <string name="textChat">文字聊天</string>
+    <string name="alphaChannel">透明通道</string>
+    <string name="fileTransfer">文件传输</string>
+    <string name="lovalVideoRecord">本地录像</string>
+    <string name="serverVideoRecord">服务器录像</string>
+    <string name="photograph">视频抓拍</string>
+    <string name="videoCall">呼叫中心</string>
+    <string name="udpTrace">网络检测评估</string>
+    <string name="config">设置</string>
+    <string name="dialog_read_from_dir">Open from dir</string>
+    <string name="str_dialog_title_protip">提示</string>
+    <string name="str_calling">呼叫成功，正在等待用户响应</string>
+    <string name="str_call">呼叫</string>
+    <string name="str_pause">确定</string>
+    <string name="str_cancel">取消</string>
+    <string name="str_exit">退出</string>
+    <string name="end_session">开始录制</string>
+    <string name="str_serverlink_close">与服务器断开连接,请检查您的网络</string>
+    <string name="str_endsession">您确定要结束当前服务吗？</string>
+    <string name="sessioning_reqite">请求与您通话！</string>
+    <string name="str_resume">确认</string>
+    <string name="str_welecoeTitle">Welcome to AnyChat</string>
+    <string name="str_funcTitle">营业厅列表</string>
+    <string name="str_rolesListTitle">用户列表</string>
+    <string name="str_returncode_bussiness">呼叫对象正忙，请稍后再试</string>
+    <string name="str_returncode_offline">呼叫用户不在线</string>
+    <string name="str_user_offline">目标用户离线</string>
+    <string name="str_returncode_requestcancel">座席取消呼叫</string>
+    <string name="str_returncode_requestrefuse">用户拒绝被呼叫</string>
+    <string name="str_returncode_disconnect">对方网络异常</string>
+    <string name="str_returncode_timeout">呼叫超时</string>
+    <string name="title_activity_part">PartActivity</string>
+    <string name="str_serverip">服务器地址: </string>
+    <string name="str_serverport">服务器端口号: </string>
+    <string name="str_networkcheck">当前网络连接有异常，请检查网络</string>
+    <string name="str_exitresume">是否想要退出整个应用程序</string>
+    <string name="str_serveripinput">请输入服务器地址! </string>
+    <string name="str_serverportinput">请输入服务器端口号!</string>
+    <string name="str_againlogin">账号在异处登陆，请重新登录</string>
+    <string name="str_login_failed">登录系统失败</string>
+    <string name="str_enterroom_failed">进入房间失败</string>
+    <string name="str_lggin_failed">登录失败</string>
+    <string name="str_accept">接受</string>
+    <string name="str_refuse">拒绝</string>
+    <string name="session_end">会话已经挂断</string>
+    <string name="title_activity_video_server">VideoServer</string>
+    <string name="title_activity_test">TestActivity</string>
+
+</resources>

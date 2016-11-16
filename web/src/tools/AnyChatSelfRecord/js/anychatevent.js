@@ -86,8 +86,12 @@ function OnAnyChatSDKFilterData(lpBuf, dwLen) {
 
 }
 
-// 收到录像或拍照完成事件
-function OnAnyChatRecordSnapShot(dwUserId, lpFileName, dwParam, bRecordType) {
+// 收到录像或拍照完成事件（扩展：增加errorcode）
+function OnAnyChatRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr) {
+	if(dwErrorCode != 0) {
+		// 提示用户拍照，或录制失败
+		return;
+	}
 	var szUrl = BRAC_GetSDKOptionStringEx(BRAC_SO_LOCALPATH2URL, lpFileName, 0);
 	// 关闭本地视频
 	BRAC_UserCameraControl(mSelfUserId, 0);
@@ -118,10 +122,6 @@ function OnAnyChatRecordSnapShot(dwUserId, lpFileName, dwParam, bRecordType) {
 	}
 }
 
-// 收到录像或拍照完成事件（扩展）
-function OnAnyChatRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags,dwParam, lpUserStr) {
-
-}
 
 /*******************************************************************************
  * AnyChat SDK核心业务流程 *

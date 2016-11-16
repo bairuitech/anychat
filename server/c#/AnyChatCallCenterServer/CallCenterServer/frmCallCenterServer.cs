@@ -183,6 +183,8 @@ namespace QueueServer
                      + ",level:" + level.ToString() + ",addr:" + addr + ",userValue:" + userValue.ToString() + ")\n");
                 rtb_message.Focus();
                 rtb_message.SelectionStart = rtb_message.TextLength;
+
+                showOnlineUserCount();
             }
             catch (Exception ex)
             {
@@ -310,6 +312,7 @@ namespace QueueServer
                 this.rtb_message.AppendText("用户注销:OnUserLogoutAction(" + "userId:" + userId.ToString() + ",userValue:" + userValue.ToString() + ")\n");
                 rtb_message.Focus();
                 rtb_message.SelectionStart = rtb_message.TextLength;
+                showOnlineUserCount();
             }
             catch (Exception ex)
             {
@@ -508,32 +511,40 @@ namespace QueueServer
 
             QueueInfo queueInfo = new QueueInfo();
             queueInfo.QueueID = 101;
-            queueInfo.QueueName = "个人业务队列";
-            queueInfo.QueueDescription = "办理开户、挂失、转帐业务";
-            queueInfo.businessType = BusinessType.PersonalBusiness;
+            queueInfo.QueueName = "现金业务队列";
+            queueInfo.QueueDescription = "办理开户、提现、转帐业务";
+            queueInfo.businessType = BusinessType.CashBusiness;
             queueInfo.QueuePriority = 0;
             queueInfo.intTag = 2;
             queueInfo.AreaID = areaInfo.AreaID;
             createQueue(queueInfo);
 
             queueInfo.QueueID = 102;
-            queueInfo.QueueName = "个人业务队列(VIP)";
-            queueInfo.QueueDescription = "办理开户、挂失、转帐业务";
-            queueInfo.businessType = BusinessType.PersonalBusiness;
+            queueInfo.QueueName = "现金业务队列(VIP)";
+            queueInfo.QueueDescription = "办理开户、提现、转帐业务";
+            queueInfo.businessType = BusinessType.CashBusiness;
             queueInfo.QueuePriority = 10;
             queueInfo.intTag = 2;
             queueInfo.AreaID = areaInfo.AreaID;
             createQueue(queueInfo);
 
             queueInfo.QueueID = 103;
-            queueInfo.QueueName = "对公业务队列";
-            queueInfo.QueueDescription = "办理支票、回单、基本户业务";
-            queueInfo.businessType = BusinessType.CompanyBusiness;
+            queueInfo.QueueName = "投资理财业务队列";
+            queueInfo.QueueDescription = "办理投资、理财业务";
+            queueInfo.businessType = BusinessType.FinancialBusiness;
             queueInfo.QueuePriority = 0;
             queueInfo.intTag = 3;
             queueInfo.AreaID = areaInfo.AreaID;
             createQueue(queueInfo);
 
+            queueInfo.QueueID = 104;
+            queueInfo.QueueName = "投资理财业务队列(VIP)";
+            queueInfo.QueueDescription = "办理投资、理财业务";
+            queueInfo.businessType = BusinessType.FinancialBusiness;
+            queueInfo.QueuePriority = 8;
+            queueInfo.intTag = 3;
+            queueInfo.AreaID = areaInfo.AreaID;
+            createQueue(queueInfo);
 
             areaInfo.AreaID = 10002;
             areaInfo.AreaName = "天河路营业厅";
@@ -541,23 +552,40 @@ namespace QueueServer
             createArea(areaInfo);
 
             queueInfo.QueueID = 201;
-            queueInfo.QueueName = "投资理财业务队列";
-            queueInfo.QueueDescription = "办理基金、理财产品、贵金属业务";
-            queueInfo.businessType = BusinessType.PersonalBusiness;
+            queueInfo.QueueName = "现金业务队列";
+            queueInfo.QueueDescription = "办理开户、提现、转帐业务";
+            queueInfo.businessType = BusinessType.CashBusiness;
             queueInfo.QueuePriority = 0;
             queueInfo.intTag = 2;
             queueInfo.AreaID = areaInfo.AreaID;
             createQueue(queueInfo);
 
             queueInfo.QueueID = 202;
-            queueInfo.QueueName = "商业贷款业务队列";
-            queueInfo.QueueDescription = "办理房贷、车贷业务";
-            queueInfo.businessType = BusinessType.PersonalBusiness;
+            queueInfo.QueueName = "投资理财业务队列(VIP)";
+            queueInfo.QueueDescription = "办理投资、理财业务";
+            queueInfo.businessType = BusinessType.FinancialBusiness;
+            queueInfo.QueuePriority = 0;
+            queueInfo.intTag = 2;
+            queueInfo.AreaID = areaInfo.AreaID;
+            createQueue(queueInfo);
+
+            queueInfo.QueueID = 203;
+            queueInfo.QueueName = "现金业务队列(VIP)";
+            queueInfo.QueueDescription = "办理开户、提现、转帐业务";
+            queueInfo.businessType = BusinessType.CashBusiness;
             queueInfo.QueuePriority = 10;
             queueInfo.intTag = 3;
             queueInfo.AreaID = areaInfo.AreaID;
             createQueue(queueInfo);
 
+            queueInfo.QueueID = 204;
+            queueInfo.QueueName = "理财业务队列(VIP)";
+            queueInfo.QueueDescription = "办理投资、理财业务";
+            queueInfo.businessType = BusinessType.FinancialBusiness;
+            queueInfo.QueuePriority = 10;
+            queueInfo.intTag = 3;
+            queueInfo.AreaID = areaInfo.AreaID;
+            createQueue(queueInfo);
 
             this.rtb_message.AppendText("成功初化始智能排队业务数据\n");
 
@@ -617,6 +645,16 @@ namespace QueueServer
         private void lb_version_DoubleClick(object sender, EventArgs e)
         {
             //new frmTest().Show();
+        }
+
+        /// <summary>
+        /// 显示在线用户数量
+        /// </summary>
+        private void showOnlineUserCount()
+        {
+            int onlineUsersCount = 0;
+            AnyChatServerSDK.BRAS_GetOnlineUsers(-1, null, ref onlineUsersCount);
+            gb_onlineEquipment.Text = "在线用户数：" + onlineUsersCount;
         }
     }
 }

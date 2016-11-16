@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransType.cs" />
     <EmbeddedResource Include="frmLogin.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmLogin.cs</DependentUpon>
