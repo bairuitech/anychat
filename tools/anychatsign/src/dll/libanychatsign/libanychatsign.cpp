@@ -198,7 +198,6 @@ int AnyChatRsaSign(int dwUserId, const char* lpStrUserId, const char* lpAppId, c
 		time_t tNow = time(NULL);
 		struct tm *gmt = gmtime(&tNow);		// 采用格林威治(GMT)时间
 		dwTimeStamp = (int)mktime(gmt);
-		dwTimeStamp = 1479337006;
 		_strupr_s((char*)lpAppId, strlen(lpAppId)+1);
 		char szStrUserId[200] = {0};
 		if(lpStrUserId && strlen(lpStrUserId))
