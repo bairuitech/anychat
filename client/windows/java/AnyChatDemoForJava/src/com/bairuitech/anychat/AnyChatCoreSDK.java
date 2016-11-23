@@ -140,9 +140,18 @@ public class AnyChatCoreSDK
 	public native int StreamRecordCtrl(int userid, int bstartrecord, int flags, int param);
 	// 用户音、视频录制（扩展）
 	public native int StreamRecordCtrlEx(int userid, int bstartrecord, int flags, int param, String szUserStr);
+	// 用户图像抓拍
+	public native int SnapShot(int userid, int flags, int param);
+	
+	// 获取指定音频设备的当前音量
+	public native int AudioGetVolume(int device);
+	// 设置指定音频设备的音量
+	public native int AudioSetVolume(int device, int volume);
     
     // 获取指定用户的字符串类型状态
     public native String QueryUserStateString(int userid, int infoname);
+	// 获取指定用户的整型状态
+    public native int QueryUserStateInt(int userid, int infoname);
     // 获取指定用户的说话音量(0 ~ 100)
     public native int GetUserSpeakVolume(int userid);
     // 获取指定用户的摄像头状态
@@ -153,6 +162,11 @@ public class AnyChatCoreSDK
 	public native int GetUserVideoWidth(int userid);
 	// 获取指定用户的视频分辨率高度
 	public native int GetUserVideoHeight(int userid);
+	
+	// 获取指定房间的字符串类型状态
+    public native String QueryRoomStateString(int roomid, int infoname);
+	// 获取指定房间的整型状态
+    public native int QueryRoomStateInt(int roomid, int infoname);
 
 	// 设置服务器认证密码
 	public native int SetServerAuthPass(String Password);
@@ -260,6 +274,8 @@ public class AnyChatCoreSDK
 	
 	// IP组播功能控制
 	public native int MultiCastControl(String lpMultiCastAddr, int dwPort, String lpNicAddr, int dwTTL, int dwFlags);
+	// 向服务器动态查询相关信息
+	public native String QueryInfoFromServer(int dwInfoName, String strInParam, int dwFlags);
 	
 	// 获取业务对象列表
 	public static native int[] ObjectGetIdList(int dwObjectType);
