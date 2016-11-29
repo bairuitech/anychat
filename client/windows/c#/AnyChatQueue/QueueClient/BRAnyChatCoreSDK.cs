@@ -1061,7 +1061,7 @@ namespace ANYCHATAPI
         /// <param name="dwParam4"></param>
         /// <param name="strParam"></param>
         /// <returns></returns>
-        public delegate void OnObjectEventNotifyCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam);
+        public delegate void OnObjectEventNotifyCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue);
 
         /// <summary>
         /// 设置回调函数

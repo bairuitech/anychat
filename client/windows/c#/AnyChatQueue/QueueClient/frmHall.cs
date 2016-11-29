@@ -912,18 +912,18 @@ namespace QueueClient
         #endregion
 
         #region 业务对象事件处理
-        private void ObjectEvent_CallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        private void ObjectEvent_CallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue)
         {
             switch (dwEventType)
             {
                 case AnyChatCoreSDK.ANYCHAT_OBJECT_EVENT_UPDATE:
-                    AnyChatObjectEventUpdate_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+                    AnyChatObjectEventUpdate_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam, lpUserValue);
                     break;
                 case AnyChatCoreSDK.ANYCHAT_OBJECT_EVENT_SYNCDATAFINISH:
-                    AnyChatObjectSyncDataFinish_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+                    AnyChatObjectSyncDataFinish_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam, lpUserValue);
                     break;
                 case AnyChatCoreSDK.ANYCHAT_AREA_EVENT_ENTERRESULT:
-                    AnyChatEnterAreaResult_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+                    AnyChatEnterAreaResult_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam, lpUserValue);
                     break;
                 case AnyChatCoreSDK.ANYCHAT_AREA_EVENT_LEAVERESULT:
                     AnyChatLeaveAreaResult_Handler(dwObjectType, dwObjectId, dwParam1);
@@ -957,6 +957,7 @@ namespace QueueClient
                     break;
 
             }
+            
         }
 
         /// <summary>
@@ -964,7 +965,7 @@ namespace QueueClient
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
-        private void AnyChatObjectEventUpdate_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        private void AnyChatObjectEventUpdate_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue)
         {
             try
             {
@@ -1007,7 +1008,7 @@ namespace QueueClient
             }
         }
 
-        private void AnyChatObjectSyncDataFinish_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        private void AnyChatObjectSyncDataFinish_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue)
         {
 
         }
@@ -1018,7 +1019,7 @@ namespace QueueClient
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
         /// <param name="dwErrorCode"></param>
-        private void AnyChatEnterAreaResult_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        private void AnyChatEnterAreaResult_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue)
         {
             string areaName = string.Empty;
 
