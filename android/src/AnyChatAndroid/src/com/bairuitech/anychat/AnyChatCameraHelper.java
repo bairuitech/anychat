@@ -75,8 +75,28 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 				}
 			}
 			// 指定的分辩率不支持时，用默认的分辩率替代
-			if(!bSetPreviewSize)
-				parameters.setPreviewSize(320, 240);
+            if(!bSetPreviewSize) {
+                Size size = null;
+                for (int i = 0; i < previewSizes.size(); i++) {
+                    if(previewSizes.get(i).width <= iSettingsWidth || previewSizes.get(i).height <= iSettingsHeight) {
+                        if (previewSizes.get(i).width < 320 && previewSizes.get(i).height < 240) {
+                            size = previewSizes.get(i-1);
+                        } else {
+                            size = previewSizes.get(i);
+                        }
+                        break;
+                    }
+                }
+
+                if (size != null) {
+                    parameters.setPreviewSize(size.width, size.height);
+                } else {
+                    if (previewSizes != null && previewSizes.size() > 0) {
+                        Size s = previewSizes.get(previewSizes.size()-1);
+                        parameters.setPreviewSize(s.width, s.height);
+                    }
+                }
+            }
 			
 			// 设置视频采集帧率
 			List<int[]> fpsRange = parameters.getSupportedPreviewFpsRange();
