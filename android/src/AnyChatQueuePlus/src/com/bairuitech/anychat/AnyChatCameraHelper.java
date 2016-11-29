@@ -1,6 +1,8 @@
 package com.bairuitech.anychat;
 
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.content.Context;
@@ -60,41 +62,35 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			
 			// 获取camera支持的相关参数，判断是否可以设置
 			List<Size> previewSizes = mCamera.getParameters().getSupportedPreviewSizes();
-
+            Collections.sort(previewSizes, new CameraSizeComparator());
 			// 获取当前设置的分辩率参数
 			int iSettingsWidth = AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL);
 			int iSettingsHeight = AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL);
 			boolean bSetPreviewSize = false;
-			for (int i = 0; i < previewSizes.size(); i++) {
-				Size s = previewSizes.get(i);
-				AnyChatCoreSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_CORESDK_WRITELOG, "Camera Preview size: " + s.width + " x " + s.height);
-				if(s.width == iSettingsWidth && s.height == iSettingsHeight) {
-					bSetPreviewSize = true;
-					parameters.setPreviewSize(iSettingsWidth, iSettingsHeight);
-					break;
-				}
-			}
-			// 指定的分辩率不支持时，用默认的分辩率替代
-            if(!bSetPreviewSize) {
-                Size size = null;
+            if (previewSizes.size() == 1) {
+                bSetPreviewSize = true;
+                parameters.setPreviewSize(previewSizes.get(0).width, previewSizes.get(0).height);
+            } else {
                 for (int i = 0; i < previewSizes.size(); i++) {
-                    if(previewSizes.get(i).width <= iSettingsWidth || previewSizes.get(i).height <= iSettingsHeight) {
-                        if (previewSizes.get(i).width < 320 && previewSizes.get(i).height < 240) {
-                            size = previewSizes.get(i-1);
-                        } else {
-                            size = previewSizes.get(i);
-                        }
+                    Size s = previewSizes.get(i);
+                    AnyChatCoreSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_CORESDK_WRITELOG, "Camera Preview size: " + s.width + " x " + s.height);
+                    if(s.width == iSettingsWidth && s.height == iSettingsHeight) {
+                        bSetPreviewSize = true;
+                        parameters.setPreviewSize(iSettingsWidth, iSettingsHeight);
+                        break;
+                    } else if(s.width >= iSettingsWidth || s.height >= iSettingsHeight) {
+                        bSetPreviewSize = true;
+                        parameters.setPreviewSize(s.width, s.height);
                         break;
                     }
                 }
+            }
 
-                if (size != null) {
-                    parameters.setPreviewSize(size.width, size.height);
-                } else {
-                    if (previewSizes != null && previewSizes.size() > 0) {
-                        Size s = previewSizes.get(previewSizes.size()-1);
-                        parameters.setPreviewSize(s.width, s.height);
-                    }
+            // 指定的分辩率不支持时，用默认的分辩率替代
+            if(!bSetPreviewSize) {
+                if (previewSizes != null && previewSizes.size() > 0) {
+                    Size s = previewSizes.get(previewSizes.size()-1);
+                    parameters.setPreviewSize(s.width, s.height);
                 }
             }
 			
@@ -164,7 +160,25 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			e.printStackTrace();
 		}	
 	}
-	
+
+    class CameraSizeComparator implements Comparator<Size> {
+        public int compare(Camera.Size lhs, Camera.Size rhs) {
+            if(lhs.width == rhs.width){
+                if(lhs.height == rhs.height){
+                    return 0;
+                } else if(lhs.height > rhs.height){
+                    return 1;
+                } else{
+                    return -1;
+                }
+            } else if(lhs.width > rhs.width){
+                return 1;
+            } else{
+                return -1;
+            }
+        }
+    }
+
 	// 摄像头采集控制
 	public void CaptureControl(boolean bCapture) {
 		bNeedCapture = bCapture;
