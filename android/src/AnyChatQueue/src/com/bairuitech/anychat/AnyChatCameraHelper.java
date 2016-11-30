@@ -86,7 +86,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
                 }
             }
 
-            // 指定的分辩率不支持时，用默认的分辩率替代
+            // 指定的分辩率不支持时，拿去手机支持分辨率中最高的分辨率进行设置
             if(!bSetPreviewSize) {
                 if (previewSizes != null && previewSizes.size() > 0) {
                     Size s = previewSizes.get(previewSizes.size()-1);
