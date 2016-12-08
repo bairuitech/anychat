@@ -271,6 +271,7 @@ var BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;	// 本地视频采集方向修正，wParam为方
 var ANYCHAT_SERVERQUERY_USERIDBYNAME	=	1;	// 根据用户昵称查询用户ID
 var ANYCHAT_SERVERQUERY_USERIDBYSTRID	=	2;	// 根据字符串ID查询用户ID
 var ANYCHAT_SERVERQUERY_STRIDBYUSERID	=	3;	// 根据用户ID查询字符串ID
+var ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	=	100;// 查询指定队列的坐席服务信息
 
 // 视频显示插件设置参数
 var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// 在视频上迭加文字、图片等内容
@@ -451,28 +452,32 @@ function BRAC_AttachIE11Event(obj, _strEventId, _functionCallback) {
 
 // 创建视频显示插件
 function BRAC_NativeCreateVideoPlugin(userid, parentobj, id, streamindex) {
-	var videoobj = BRAC_GetDmoObject(id);
-	if(videoobj != null) {
-		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
-		videoobj.SetUserId(userid);
-		if(bSupportMultiStream)
-			videoobj.SetStreamIndex(streamindex);
-	} else {
-		// 创建视频显示插件
-		videoobj = document.createElement("object")
-		if (window.ActiveXObject || "ActiveXObject" in window)
-			videoobj.classid = "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7";
-		else
-			videoobj.type = "application/anychat-video";
-		videoobj.id = id;
-		parentobj.appendChild(videoobj);
-		videoobj.width = "100%";
-		videoobj.height = "100%";
-		// 关联到AnyChat SDK
-		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
-		videoobj.SetUserId(userid);
-		if(bSupportMultiStream)
-			videoobj.SetStreamIndex(streamindex);
+	try{
+		var videoobj = BRAC_GetDmoObject(id);
+		if(videoobj != null) {
+			videoobj.SetIPCGuid(BRAC_GetIPCGuid());
+			videoobj.SetUserId(userid);
+			if(bSupportMultiStream)
+				videoobj.SetStreamIndex(streamindex);
+		} else {
+			// 创建视频显示插件
+			videoobj = document.createElement("object")
+			if (window.ActiveXObject || "ActiveXObject" in window)
+				videoobj.classid = "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7";
+			else
+				videoobj.type = "application/anychat-video";
+			videoobj.id = id;
+			parentobj.appendChild(videoobj);
+			videoobj.width = "100%";
+			videoobj.height = "100%";
+			// 关联到AnyChat SDK
+			videoobj.SetIPCGuid(BRAC_GetIPCGuid());
+			videoobj.SetUserId(userid);
+			if(bSupportMultiStream)
+				videoobj.SetStreamIndex(streamindex);
+		}			
+	}catch(e){
+		console.log("CreateVideoPlugin function has exception：" + e);
 	}	
 }
 

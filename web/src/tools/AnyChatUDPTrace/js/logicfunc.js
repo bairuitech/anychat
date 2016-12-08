@@ -20,6 +20,8 @@ var y=0,x=5,t=1,symbol=true,isSend=-1,timeSet,tipAlert=true;//动态控制标识
 
 var o=[">",">",">",">",">",">"];
 var o2=["<","<","<","<","<","<"];
+var isNeedAppID = false;       					//是否需要AppGuid
+var mDefaultAppID = "fbe957d1-c25a-4992-9e75-d993294a5d56";  //默认演示应用AppID
 
 var controller=function(op){
 	isSend=op;
@@ -123,7 +125,13 @@ function ConfigAnyChatParameter(){
 }
 
 // 初始化界面元素
-function InitInterfaceUI() {
+function InitInterfaceUI() {	
+	//是否显示登录页面的应用ID的输入框
+	if(!isNeedAppID){
+		GetID("AppIDDiv").style.display = "none";
+	}else{
+
+	}
 	
     // 下载插件按钮鼠标划入划出时间
     GetID("prompt_div_btn_load").onmouseover = function () {
@@ -140,7 +148,11 @@ function InitInterfaceUI() {
     
   // 登录AnyChat服务器
     GetID("loginRoom").onclick = function () {
-    	
+        setLoginInfo();
+        if (isNeedAppID){
+			if (GetID("AppID") && GetID("AppID").value.length)				// 设置应用ID
+	            BRAC_SetSDKOption(BRAC_SO_CLOUD_APPGUID, GetID("AppID").value.toString());        	
+        }
     	if(GetID("sendRadio").checked){
     		GetID("server_sendtoU2").style.display="none";
     		GetID("otherUser").style.display="none";
@@ -160,7 +172,7 @@ function InitInterfaceUI() {
 				mDefaultServerPort=parseInt(GetID("ServerPort").value);
 	    		var errorcode = BRAC_Connect(GetID("ServerAddr").value, parseInt(GetID("ServerPort").value)); // 连接服务器
 	            errorcode = BRAC_Login(GetID("username").value, "", 0);
-	    		BRAC_EnterRoom(GetID("roomID").value, "", 0);
+	    		
 	    	}else{
 	    		alert("用户名不能为空！");
 	    		GetID("username").focus();
@@ -207,6 +219,7 @@ function InitInterfaceUI() {
 		GetID("server_recv").innerHTML="0";
 	}
 	
+    getLoginInfo();	
 }
 
 // 显示等待进度条，提示用户操作正在进行中
@@ -296,9 +309,61 @@ function getIp(ip,id){
     GetID("getIp").appendChild(script);
     
     setTimeout(function() {
-		GetID(id).innerHTML=remote_ip_info.country+" "+remote_ip_info.province+" "+remote_ip_info.city+" "+remote_ip_info.isp;
+    	try{
+    		GetID(id).innerHTML=remote_ip_info.country+" "+remote_ip_info.province+" "+remote_ip_info.city+" "+remote_ip_info.isp;
+    	}catch(e){
+    		console.log("getIp function has exception：" + e);
+    		
+    	}
+		
 	}, 1000); 
 }
 
+//设置登录信息，包括用户名、服务器IP、服务器端口、应用ID
+function setLoginInfo() {
+    setCookie('username', GetID("username").value, 30);
+    setCookie('ServerAddr', GetID("ServerAddr").value, 30);
+    setCookie('ServerPort', GetID("ServerPort").value, 30); 
+    setCookie('roomID', GetID("roomID").value, 30); 
+    
+    if (isNeedAppID){
+		setCookie('AppID', GetID("AppID").value, 30);
+    }    
+}
 
+//获取登录信息
+function getLoginInfo() {
+    GetID("username").value = getCookie("username");
+    var serverIP = getCookie("ServerAddr");
+	GetID("ServerAddr").value = (serverIP != "") ? serverIP : mDefaultServerAddr;        
+    var serverPort = getCookie("ServerPort");
+	GetID("ServerPort").value = (serverPort != "") ? serverPort : mDefaultServerPort;
+	var roomID = getCookie("roomID");
+	GetID("roomID").value = (roomID != "") ? roomID : 5;
+    if (isNeedAppID){
+	    var appID = getCookie("AppID");
+	    GetID("AppID").value = ((appID != "") ? appID : mDefaultAppID);    	
+    }         
+}
+
+//获取cookie项的cookie值
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return document.cookie.substring(c_start, c_end);
+        }
+    }
+    return "";
+}
+
+//设置cookie
+function setCookie(c_name, value, expiredays) {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + value + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+}
 
