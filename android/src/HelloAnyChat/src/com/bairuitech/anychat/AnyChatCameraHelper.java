@@ -67,6 +67,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
 			int iSettingsWidth = AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL);
 			int iSettingsHeight = AnyChatCoreSDK.GetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL);
 			boolean bSetPreviewSize = false;
+            boolean bExistDefaultSize = false;
             if (previewSizes.size() == 1) {
                 bSetPreviewSize = true;
                 parameters.setPreviewSize(previewSizes.get(0).width, previewSizes.get(0).height);
@@ -83,12 +84,16 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
                         parameters.setPreviewSize(s.width, s.height);
                         break;
                     }
+                    if(s.width == 320 && s.height == 240)
+                        bExistDefaultSize = true;
                 }
             }
 
-			// 指定的分辩率不支持时，拿去手机支持分辨率中最高的分辨率进行设置
+			// 指定的分辩率不支持时，使用手机支持分辨率中最高的分辨率进行设置
 			if(!bSetPreviewSize) {
-                if (previewSizes != null && previewSizes.size() > 0) {
+                if(bExistDefaultSize) {
+                    parameters.setPreviewSize(320, 240);
+                } else if (previewSizes.size() > 0) {
                     Size s = previewSizes.get(0);
                     parameters.setPreviewSize(s.width, s.height);
                 }
