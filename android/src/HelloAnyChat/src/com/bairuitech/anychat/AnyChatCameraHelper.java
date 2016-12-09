@@ -89,7 +89,7 @@ public class AnyChatCameraHelper implements SurfaceHolder.Callback{
                 }
             }
 
-			// 指定的分辩率不支持时，使用手机支持分辨率中最高的分辨率进行设置
+            // 指定的分辩率不支持时，如果当前手机支持320x240分辨率，优选设置320x240分辨率否则使用手机支持分辨率中最低的分辨率进行设置
 			if(!bSetPreviewSize) {
                 if(bExistDefaultSize) {
                     parameters.setPreviewSize(320, 240);
