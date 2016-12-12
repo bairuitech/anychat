@@ -142,6 +142,16 @@ public class AnyChatCoreSDK
     public native int UserSpeakControl(int userid, int bopen);
     // 用户音频控制（扩展）
     public native int UserSpeakControlEx(int userid, int bopen, int streamindex, int flags, String strparam);
+    
+    // 设置指定用户音视频流相关参数（整型值）
+ 	public native int SetUserStreamInfoInt(int userid, int streamindex, int infoname, int infovalue);
+ 	// 设置指定用户音视频流相关参数（字符串值）
+ 	public native int SetUserStreamInfoString(int userid, int streamindex, int infoname, String infovalue);
+ 	// 查询指定用户音视频流相关参数（整型值）
+ 	public native int GetUserStreamInfoInt(int userid, int streamindex, int infoname);
+ 	// 查询指定用户音视频流相关参数（字符串值）
+ 	public native String GetUserStreamInfoString(int userid, int streamindex, int infoname);
+    
     // 用户音、视频录制
 	public native int StreamRecordCtrl(int userid, int bstartrecord, int flags, int param);
 	// 用户音、视频录制（扩展）
