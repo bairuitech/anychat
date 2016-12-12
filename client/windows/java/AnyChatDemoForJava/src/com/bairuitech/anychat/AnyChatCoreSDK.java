@@ -132,10 +132,16 @@ public class AnyChatCoreSDK
     public native int[] GetRoomOnlineUsers(int roomid);
     // 设置视频显示位置
     public native int SetVideoPos(int userid, Component s, int lef, int top, int right, int bottom);
+    // 设置视频显示位置（扩展）
+    public native int SetVideoPosEx(int userid, Component s, int lef, int top, int right, int bottom, int streamindex, int flags);
     // 用户摄像头控制
     public native int UserCameraControl(int userid, int bopen);
+    // 用户摄像头控制（扩展）
+    public native int UserCameraControlEx(int userid, int bopen, int streamindex, int flags, String strparam);
     // 用户音频控制
     public native int UserSpeakControl(int userid, int bopen);
+    // 用户音频控制（扩展）
+    public native int UserSpeakControlEx(int userid, int bopen, int streamindex, int flags, String strparam);
     // 用户音、视频录制
 	public native int StreamRecordCtrl(int userid, int bstartrecord, int flags, int param);
 	// 用户音、视频录制（扩展）
