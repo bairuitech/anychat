@@ -16,6 +16,8 @@ public class AnyChatCoreSDK
 	AnyChatRecordEvent		recordEvent;
 	AnyChatObjectEvent		objectEvent;
 	
+	private static AnyChatCoreSDK mAnyChat = null;		// 单例模式对象
+	
 	private final int HANDLE_TYPE_NOTIFYMSG = 1;		// 消息通知
 	private final int HANDLE_TYPE_TEXTMSG 	= 2;		// 文字信息
 	private final int HANDLE_TYPE_TRANSFILE = 3;		// 文件传输
@@ -25,6 +27,14 @@ public class AnyChatCoreSDK
 	private static int HANDLE_TYPE_VIDEOCALL= 7;		// 视频呼叫
 	private static int HANDLE_TYPE_RECORD	= 8;		// 录像、拍照
 	private static int HANDLE_TYPE_OBJECTEVENT= 9;		// 业务对象事件
+	
+	// 获取单例模式对象
+	public synchronized static AnyChatCoreSDK getInstance()
+	{
+		if(mAnyChat==null)
+			mAnyChat = new AnyChatCoreSDK();
+		return mAnyChat;
+	}
 	
 	// 设置AnyChat基本事件通知接口
 	public void SetBaseEvent(AnyChatBaseEvent e)

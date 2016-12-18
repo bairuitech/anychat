@@ -43,7 +43,15 @@ public class AnyChatDemo implements AnyChatBaseEvent, AnyChatTextMsgEvent,
 	static void initSdk()
 	{
 		if(anychat==null)
-			anychat = new AnyChatCoreSDK();
+			anychat = AnyChatCoreSDK.getInstance();
+		// 如果BRAnyChatCore.dll及其它库不在当前路径下，则需要设置相关库的路径，实现应用程序与AnyChat库的解耦
+		int ret = anychat.SetSDKOptionString(AnyChatDefine.BRAC_SO_CORESDK_PATH, "C:\\Program Files (x86)\\BaiRuiTech\\AnyChatWeb");
+		if(ret != 0)
+			ret = anychat.SetSDKOptionString(AnyChatDefine.BRAC_SO_CORESDK_PATH, "C:\\Program Files\\BaiRuiTech\\AnyChatWeb");
+		if(ret != 0)
+			ret = anychat.SetSDKOptionString(AnyChatDefine.BRAC_SO_CORESDK_PATH, "D:\\Program Files (x86)\\BaiRuiTech\\AnyChatWeb");
+		if(ret != 0)
+			ret = anychat.SetSDKOptionString(AnyChatDefine.BRAC_SO_CORESDK_PATH, "D:\\Program Files\\BaiRuiTech\\AnyChatWeb");
 		anychat.SetBaseEvent(mInstance);
 	}
 	
