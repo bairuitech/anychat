@@ -57,6 +57,7 @@ var BRAC_SO_CORESDK_ACTIVESTATE = 			25;	// 应用程序活动状态控制（参数为int型， 
 var BRAC_SO_CORESDK_EXTVIDEOINPUT = 		26;	// 外部扩展视频输入控制（参数为int型， 0 关闭外部视频输入[默认]， 1 启用外部视频输入）
 var BRAC_SO_CORESDK_EXTAUDIOINPUT = 		27;	// 外部扩展音频输入控制（参数为int型， 0 关闭外部音频输入[默认]， 1 启用外部音频输入）
 var BRAC_SO_CORESDK_LOWDELAYCTRL = 			28;	// 低延迟模式控制（参数为int型，0 关闭低延迟模式[默认]， 1 启用低延迟模式）
+var BRAC_SO_CORESDK_NEWGUID	=				29;	// 产生新的GUID字符串
 
 var BRAC_SO_LOCALVIDEO_BITRATECTRL = 		30;	// 本地视频编码码率设置（参数为int型，单位bps，同服务器配置：VideoBitrate）
 var BRAC_SO_LOCALVIDEO_QUALITYCTRL = 		31;	// 本地视频编码质量因子控制（参数为int型，同服务器配置：VideoQuality）
@@ -107,6 +108,16 @@ var BRAC_SO_CORESDK_SCREENCAMERACTRL =		131;// 桌面共享功能控制（参数为：int型，
 var BRAC_SO_CORESDK_UPLOADLOGINFO =			134;// 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
 var BRAC_SO_CORESDK_WRITELOG	=			135;// 写入调试信息到本地日志文件中
 var BRAC_SO_CORESDK_NEWLOGFILE	=			136;// 产生新的日志文件
+var BRAC_SO_CORESDK_SUPPORTVIDEOCODEC =		210;// 设置支持的视频编码器
+var BRAC_SO_CORESDK_SUPPORTAUDIOCODEC =		211;// 设置支持的音频编码器
+var BRAC_SO_CORESDK_DISABLEMEDIACONSUL =	212;// 禁止媒体协商
+var BRAC_SO_CORESDK_QUERYTIMEOUTTIME =		213;// 信息查询超时时间（参数为：int型，单位：ms，默认值1000）
+var BRAC_SO_CORESDK_REMOTEASSISTHWND =		214;// 远程协助窗口句柄
+var BRAC_SO_CORESDK_REMOTEASSISTXPOS =		215;// 远程协助窗口滚动条位置（X）
+var BRAC_SO_CORESDK_REMOTEASSISTYPOS =		216;// 远程协助窗口滚动条位置（Y）
+var BRAC_SO_CORESDK_DISABLEDNSCONNECT=		219;// 屏蔽DNS寻址
+var BRAC_SO_CORESDK_LOGFILEROOTPATH	=		220;// 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
+var BRAC_SO_CORESDK_KEEPALLLOGFILES	=		221;// 保存客户端所有日志文件（不覆盖之前的日志文件）
 
 var BRAC_SO_UDPTRACE_MODE		=			160;// UDP数据包跟踪模式
 var BRAC_SO_UDPTRACE_PACKSIZE	=			161;// UDP数据包跟踪的大小，单位：BYTE
@@ -478,7 +489,7 @@ function BRAC_NativeCreateVideoPlugin(userid, parentobj, id, streamindex) {
 		}			
 	}catch(e){
 		console.log("CreateVideoPlugin function has exception：" + e);
-	}	
+	}
 }
 
 // 设置视频显示位置

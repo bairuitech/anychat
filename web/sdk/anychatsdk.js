@@ -57,6 +57,7 @@ var BRAC_SO_CORESDK_ACTIVESTATE = 			25;	// 应用程序活动状态控制（参数为int型， 
 var BRAC_SO_CORESDK_EXTVIDEOINPUT = 		26;	// 外部扩展视频输入控制（参数为int型， 0 关闭外部视频输入[默认]， 1 启用外部视频输入）
 var BRAC_SO_CORESDK_EXTAUDIOINPUT = 		27;	// 外部扩展音频输入控制（参数为int型， 0 关闭外部音频输入[默认]， 1 启用外部音频输入）
 var BRAC_SO_CORESDK_LOWDELAYCTRL = 			28;	// 低延迟模式控制（参数为int型，0 关闭低延迟模式[默认]， 1 启用低延迟模式）
+var BRAC_SO_CORESDK_NEWGUID	=				29;	// 产生新的GUID字符串
 
 var BRAC_SO_LOCALVIDEO_BITRATECTRL = 		30;	// 本地视频编码码率设置（参数为int型，单位bps，同服务器配置：VideoBitrate）
 var BRAC_SO_LOCALVIDEO_QUALITYCTRL = 		31;	// 本地视频编码质量因子控制（参数为int型，同服务器配置：VideoQuality）
@@ -107,6 +108,16 @@ var BRAC_SO_CORESDK_SCREENCAMERACTRL =		131;// 桌面共享功能控制（参数为：int型，
 var BRAC_SO_CORESDK_UPLOADLOGINFO =			134;// 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
 var BRAC_SO_CORESDK_WRITELOG	=			135;// 写入调试信息到本地日志文件中
 var BRAC_SO_CORESDK_NEWLOGFILE	=			136;// 产生新的日志文件
+var BRAC_SO_CORESDK_SUPPORTVIDEOCODEC =		210;// 设置支持的视频编码器
+var BRAC_SO_CORESDK_SUPPORTAUDIOCODEC =		211;// 设置支持的音频编码器
+var BRAC_SO_CORESDK_DISABLEMEDIACONSUL =	212;// 禁止媒体协商
+var BRAC_SO_CORESDK_QUERYTIMEOUTTIME =		213;// 信息查询超时时间（参数为：int型，单位：ms，默认值1000）
+var BRAC_SO_CORESDK_REMOTEASSISTHWND =		214;// 远程协助窗口句柄
+var BRAC_SO_CORESDK_REMOTEASSISTXPOS =		215;// 远程协助窗口滚动条位置（X）
+var BRAC_SO_CORESDK_REMOTEASSISTYPOS =		216;// 远程协助窗口滚动条位置（Y）
+var BRAC_SO_CORESDK_DISABLEDNSCONNECT=		219;// 屏蔽DNS寻址
+var BRAC_SO_CORESDK_LOGFILEROOTPATH	=		220;// 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
+var BRAC_SO_CORESDK_KEEPALLLOGFILES	=		221;// 保存客户端所有日志文件（不覆盖之前的日志文件）
 
 var BRAC_SO_UDPTRACE_MODE		=			160;// UDP数据包跟踪模式
 var BRAC_SO_UDPTRACE_PACKSIZE	=			161;// UDP数据包跟踪的大小，单位：BYTE
@@ -271,6 +282,7 @@ var BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;	// 本地视频采集方向修正，wParam为方
 var ANYCHAT_SERVERQUERY_USERIDBYNAME	=	1;	// 根据用户昵称查询用户ID
 var ANYCHAT_SERVERQUERY_USERIDBYSTRID	=	2;	// 根据字符串ID查询用户ID
 var ANYCHAT_SERVERQUERY_STRIDBYUSERID	=	3;	// 根据用户ID查询字符串ID
+var ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	=	100;// 查询指定队列的坐席服务信息
 
 // 视频显示插件设置参数
 var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// 在视频上迭加文字、图片等内容
@@ -451,29 +463,33 @@ function BRAC_AttachIE11Event(obj, _strEventId, _functionCallback) {
 
 // 创建视频显示插件
 function BRAC_NativeCreateVideoPlugin(userid, parentobj, id, streamindex) {
-	var videoobj = BRAC_GetDmoObject(id);
-	if(videoobj != null) {
-		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
-		videoobj.SetUserId(userid);
-		if(bSupportMultiStream)
-			videoobj.SetStreamIndex(streamindex);
-	} else {
-		// 创建视频显示插件
-		videoobj = document.createElement("object")
-		if (window.ActiveXObject || "ActiveXObject" in window)
-			videoobj.classid = "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7";
-		else
-			videoobj.type = "application/anychat-video";
-		videoobj.id = id;
-		parentobj.appendChild(videoobj);
-		videoobj.width = "100%";
-		videoobj.height = "100%";
-		// 关联到AnyChat SDK
-		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
-		videoobj.SetUserId(userid);
-		if(bSupportMultiStream)
-			videoobj.SetStreamIndex(streamindex);
-	}	
+	try{
+		var videoobj = BRAC_GetDmoObject(id);
+		if(videoobj != null) {
+			videoobj.SetIPCGuid(BRAC_GetIPCGuid());
+			videoobj.SetUserId(userid);
+			if(bSupportMultiStream)
+				videoobj.SetStreamIndex(streamindex);
+		} else {
+			// 创建视频显示插件
+			videoobj = document.createElement("object")
+			if (window.ActiveXObject || "ActiveXObject" in window)
+				videoobj.classid = "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7";
+			else
+				videoobj.type = "application/anychat-video";
+			videoobj.id = id;
+			parentobj.appendChild(videoobj);
+			videoobj.width = "100%";
+			videoobj.height = "100%";
+			// 关联到AnyChat SDK
+			videoobj.SetIPCGuid(BRAC_GetIPCGuid());
+			videoobj.SetUserId(userid);
+			if(bSupportMultiStream)
+				videoobj.SetStreamIndex(streamindex);
+		}			
+	}catch(e){
+		console.log("CreateVideoPlugin function has exception：" + e);
+	}
 }
 
 // 设置视频显示位置
