@@ -112,6 +112,8 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP=105;///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
 	public static final int BRAC_SO_LOCALVIDEO_DEVICENAME	=	106;///< 本地视频采集设备名称，用于设置打开指定摄像头设备（参数为字符串类型）
 	public static final int BRAC_SO_LOCALVIDEO_CLIPMODE		=	107;///< 本地视频裁剪模式（参数为int型， 0 自动[默认]，禁止自动旋转时有效）
+	public static final int BRAC_SO_LOCALVIDEO_SCREENHWND	=	108;///< 屏幕采集窗口句柄
+	public static final int BRAC_SO_LOCALVIDEO_SCREENFLAGS	=	109;///< 屏幕采集标志（参数为int型）
 	
 	public static final int BRAC_SO_NETWORK_P2PPOLITIC		=	40;	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 	public static final int BRAC_SO_NETWORK_P2PCONNECT		=	41;	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -154,7 +156,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_CORESDK_DFCFLIVE		=	218;
 	public static final int BRAC_SO_CORESDK_DISABLEDNSCONNECT =	219; ///< 屏蔽DNS寻址
 	public static final int BRAC_SO_CORESDK_LOGFILEROOTPATH	=	220; ///< 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
-	public static final int BRAC_SO_CORESDK_KEEPALLLOGFILES	=	221; ///< 保存客户端所有日志文件（不覆盖之前的日志文件）
+	public static final int BRAC_SO_CORESDK_LOGFILERULE		=	221; ///< 客户端日志文件保存规则（参数为int型，0 自动覆盖[默认] 1 按日期保存，不覆盖）
 	
 	public static final int BRAC_SO_UDPTRACE_MODE			=	160; ///< UDP数据包跟踪模式
 	public static final int BRAC_SO_UDPTRACE_PACKSIZE		=	161; ///< UDP数据包跟踪的大小，单位：BYTE
