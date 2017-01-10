@@ -10,12 +10,12 @@ namespace BusinessObject
     public enum BusinessType
     {
         /// <summary>
-        /// 个人业务
+        /// 现金业务
         /// </summary>
-        PersonalBusiness = 1,
+        CashBusiness = 1,
         /// <summary>
-        /// 公司业务
+        /// 理财业务
         /// </summary>
-        CompanyBusiness = 2
+        FinancialBusiness = 2
     }
 }

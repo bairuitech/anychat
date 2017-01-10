@@ -12,8 +12,8 @@ using System.Xml;
 using System.Threading;
 using System.IO;
 using System.Net;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
+//using System.Runtime.Serialization;
+//using System.Runtime.Serialization.Json;
 
 namespace VideoChatClient
 {
@@ -530,6 +530,7 @@ namespace VideoChatClient
             }
         }
 
+        /*
         /// <summary>
         /// 将Json字符串转化成对象
         /// </summary>
@@ -539,14 +540,15 @@ namespace VideoChatClient
         public static T ToClass<T>(string output)
         {
             object result;
-            DataContractJsonSerializer outDs = new DataContractJsonSerializer(typeof(T));
+            //DataContractJsonSerializer outDs = new DataContractJsonSerializer(typeof(T));
             using (MemoryStream outMs = new MemoryStream(Encoding.UTF8.GetBytes(output)))
             {
                 result = outDs.ReadObject(outMs);
             }
             return (T)result;
         }
-
+        */
+          
         /// <summary>  
         /// POST请求与获取结果  
         /// </summary>  
@@ -580,6 +582,7 @@ namespace VideoChatClient
 
     }
 
+    /*
     /// <summary>
     /// 签名信息类
     /// </summary>
@@ -593,5 +596,5 @@ namespace VideoChatClient
         [DataMember]
         public string sigStr { get; set; }
     }
-
+    */
 }

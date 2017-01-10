@@ -67,6 +67,8 @@
             this.lb_fbl = new System.Windows.Forms.Label();
             this.cbb_fbl = new System.Windows.Forms.ComboBox();
             this.btnSetting = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.comboBox_TransType = new System.Windows.Forms.ComboBox();
             this.pnl_userlist.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_onlineuser)).BeginInit();
             this.menu_user.SuspendLayout();
@@ -91,7 +93,7 @@
             this.pnl_video.Location = new System.Drawing.Point(169, 23);
             this.pnl_video.Name = "pnl_video";
             this.pnl_video.Size = new System.Drawing.Size(480, 384);
-            this.pnl_video.TabIndex = 1;
+            this.pnl_video.TabIndex = 1;           
             // 
             // pnl_local
             // 
@@ -437,12 +439,37 @@
             this.btnSetting.UseVisualStyleBackColor = true;
             this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(231, 629);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 12);
+            this.label1.TabIndex = 26;
+            this.label1.Text = "选择通信方式：";
+            // 
+            // comboBox_TransType
+            // 
+            this.comboBox_TransType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_TransType.FormattingEnabled = true;
+            this.comboBox_TransType.Items.AddRange(new object[] {
+            "文本消息",
+            "透明通道",
+            "透明通道扩展"});
+            this.comboBox_TransType.Location = new System.Drawing.Point(326, 624);
+            this.comboBox_TransType.Name = "comboBox_TransType";
+            this.comboBox_TransType.Size = new System.Drawing.Size(93, 20);
+            this.comboBox_TransType.TabIndex = 27;
+            this.comboBox_TransType.SelectedIndexChanged += new System.EventHandler(this.comboBox_TransType_SelectedIndexChanged);
+            // 
             // frmRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.ClientSize = new System.Drawing.Size(984, 682);
+            this.Controls.Add(this.comboBox_TransType);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSetting);
             this.Controls.Add(this.lb_fbl);
             this.Controls.Add(this.lbl_a_speed);
@@ -518,5 +545,7 @@
         private System.Windows.Forms.Label lb_fbl;
         private System.Windows.Forms.ComboBox cbb_fbl;
         private System.Windows.Forms.Button btnSetting;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboBox_TransType;
     }
 }

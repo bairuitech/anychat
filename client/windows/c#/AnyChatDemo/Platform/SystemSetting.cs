@@ -55,7 +55,7 @@ namespace ANYCHATAPI
             ///与服务器端数据回调
             //AnyChatCoreSDK.SetSDKFilterDataCallBack(filterData_callback, hWnd.ToInt32());
             ///提供服务器端验证
-            AnyChatCoreSDK.SetServerAuthPass(new StringBuilder(""));
+            AnyChatCoreSDK.SetServerAuthPass("");
             //保存视频
             AnyChatCoreSDK.SetRecordCallBack(RecordCallBack_Callback, hWnd.ToInt32());
             //设置音量变化回调函数
@@ -280,13 +280,13 @@ namespace ANYCHATAPI
         /// <param name="dwParam4"></param>
         /// <param name="strParam"></param>
         /// <param name="lpUserValue"></param>
-        public delegate void AnyChatObjectEventCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam);
+        public delegate void AnyChatObjectEventCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue);
         public static AnyChatObjectEventCallBack AnyChatObjectEvent_Handler;
-        private static void ObjectEvent_CallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        private static void ObjectEvent_CallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue)
         {
             if (AnyChatObjectEvent_Handler != null)
             {
-                AnyChatObjectEvent_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+                AnyChatObjectEvent_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam, lpUserValue);
             }
         }
     }

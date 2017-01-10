@@ -70,6 +70,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_RECORD_HEIGHT			=	142;///< 录制文件高度设置（参数为：int型，如：240）
 	public static final int BRAC_SO_RECORD_FILENAMERULE		=	143;///< 录制文件名命名规则（参数为：int型）
 	public static final int BRAC_SO_RECORD_CLIPMODE			=	144;///< 录制视频裁剪模式（参数为：int型）
+	public static final int BRAC_SO_RECORD_DISABLEDATEDIR	=	145;///< 录制文件不按日期分目录保存，全部生成在指定文件夹中（参数为：int型， 0禁止[默认] 1 开启）
 	
 	public static final int BRAC_SO_CORESDK_TMPDIR			=	14;	///< 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 	public static final int BRAC_SO_CORESDK_LOADCODEC		=	16;	///< 加载外部编解码器（参数为字符串TCHAR类型，必须是完整的绝对路径，包含文件名，或包含文件名的绝对路径）
@@ -83,6 +84,8 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_CORESDK_BUILDTIME		=	24;	///< 查询SDK编译时间（参数为字符串TCHAR类型）
 	public static final int BRAC_SO_CORESDK_EXTVIDEOINPUT	=	26;	///< 外部扩展视频输入控制（参数为int型， 0 关闭外部视频输入[默认]， 1 启用外部视频输入）
 	public static final int BRAC_SO_CORESDK_EXTAUDIOINPUT	=	27;	///< 外部扩展音频输入控制（参数为int型， 0 关闭外部音频输入[默认]， 1 启用外部音频输入）
+	public static final int BRAC_SO_CORESDK_LOWDELAYCTRL	=	28;	///< 低延迟模式控制（参数为int型，0 关闭低延迟模式[默认]， 1 启用低延迟模式）
+	public static final int BRAC_SO_CORESDK_NEWGUID			=	29;	///< 产生新的GUID字符串
 	
 	public static final int BRAC_SO_LOCALVIDEO_BITRATECTRL	=	30;	///< 本地视频编码码率设置（参数为int型，单位bps，同服务器配置：VideoBitrate）
 	public static final int BRAC_SO_LOCALVIDEO_QUALITYCTRL	=	31;	///< 本地视频编码质量因子控制（参数为int型，同服务器配置：VideoQuality）
@@ -109,6 +112,8 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP=105;///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
 	public static final int BRAC_SO_LOCALVIDEO_DEVICENAME	=	106;///< 本地视频采集设备名称，用于设置打开指定摄像头设备（参数为字符串类型）
 	public static final int BRAC_SO_LOCALVIDEO_CLIPMODE		=	107;///< 本地视频裁剪模式（参数为int型， 0 自动[默认]，禁止自动旋转时有效）
+	public static final int BRAC_SO_LOCALVIDEO_SCREENHWND	=	108;///< 屏幕采集窗口句柄
+	public static final int BRAC_SO_LOCALVIDEO_SCREENFLAGS	=	109;///< 屏幕采集标志（参数为int型）
 	
 	public static final int BRAC_SO_NETWORK_P2PPOLITIC		=	40;	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 	public static final int BRAC_SO_NETWORK_P2PCONNECT		=	41;	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -139,6 +144,19 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_CORESDK_DATAENCRYPTION	=	132; ///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
 	public static final int BRAC_SO_CORESDK_UPLOADLOGINFO	=	134; ///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
 	public static final int BRAC_SO_CORESDK_WRITELOG		=	135; ///< 写入调试信息到客户端日志文件中
+	public static final int BRAC_SO_CORESDK_NEWLOGFILE		=	136; ///< 产生新的日志文件
+	public static final int BRAC_SO_CORESDK_SUPPORTVIDEOCODEC =	210; ///< 设置支持的视频编码器
+	public static final int BRAC_SO_CORESDK_SUPPORTAUDIOCODEC =	211; ///< 设置支持的音频编码器
+	public static final int BRAC_SO_CORESDK_DISABLEMEDIACONSUL=	212; ///< 禁止媒体协商
+	public static final int BRAC_SO_CORESDK_QUERYTIMEOUTTIME=	213; ///< 信息查询超时时间（参数为：int型，单位：ms，默认值1000）
+	public static final int BRAC_SO_CORESDK_REMOTEASSISTHWND=	214; ///< 远程协助窗口句柄
+	public static final int BRAC_SO_CORESDK_REMOTEASSISTXPOS=	215; ///< 远程协助窗口滚动条位置（X）
+	public static final int BRAC_SO_CORESDK_REMOTEASSISTYPOS=	216; ///< 远程协助窗口滚动条位置（Y）
+	public static final int BRAC_SO_CORESDK_FITTENCENTLIVE	=	217; ///< 兼容腾讯视频直播SDK
+	public static final int BRAC_SO_CORESDK_DFCFLIVE		=	218;
+	public static final int BRAC_SO_CORESDK_DISABLEDNSCONNECT =	219; ///< 屏蔽DNS寻址
+	public static final int BRAC_SO_CORESDK_LOGFILEROOTPATH	=	220; ///< 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
+	public static final int BRAC_SO_CORESDK_LOGFILERULE		=	221; ///< 客户端日志文件保存规则（参数为int型，0 自动覆盖[默认] 1 按日期保存，不覆盖）
 	
 	public static final int BRAC_SO_UDPTRACE_MODE			=	160; ///< UDP数据包跟踪模式
 	public static final int BRAC_SO_UDPTRACE_PACKSIZE		=	161; ///< UDP数据包跟踪的大小，单位：BYTE

@@ -676,7 +676,7 @@ namespace ANYCHATAPI
         /// <param name="lParam">缓冲区附带信息2</param>
         /// <param name="taskId">传输任务编号</param>
         /// <param name="userValue">自定义参数</param>
-        public delegate void TransBufferCallBackEx(int userId, IntPtr buf, int len,int wParam,int lParam,int taskId, int userValue);
+        public delegate void TransBufferExCallBack(int userId, IntPtr buf, int len, int wParam, int lParam, int taskId, int userValue);
 
         /// <summary>
         /// 传输文件回调函数定义
@@ -964,7 +964,7 @@ namespace ANYCHATAPI
         /// <param name="userValue">附带信息</param>
         /// <returns>0为成功，否则失败</param>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetTransBufferExCallBack", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SetTransBufferExCallBack(TransBufferCallBackEx function, int userValue);
+        public static extern int SetTransBufferExCallBack(TransBufferExCallBack function, int userValue);
 
         /// <summary>
         /// 设置文件传输回调函数
@@ -1061,7 +1061,7 @@ namespace ANYCHATAPI
         /// <param name="dwParam4"></param>
         /// <param name="strParam"></param>
         /// <returns></returns>
-        public delegate void OnObjectEventNotifyCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam);
+        public delegate void OnObjectEventNotifyCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue);
 
         /// <summary>
         /// 设置回调函数

@@ -70,7 +70,6 @@
             this.rtb_message.ReadOnly = true;
             this.rtb_message.Size = new System.Drawing.Size(401, 448);
             this.rtb_message.TabIndex = 0;
-            this.rtb_message.Text = "";
             // 
             // gb_onlineEquipment
             // 
@@ -80,7 +79,7 @@
             this.gb_onlineEquipment.Size = new System.Drawing.Size(516, 474);
             this.gb_onlineEquipment.TabIndex = 4;
             this.gb_onlineEquipment.TabStop = false;
-            this.gb_onlineEquipment.Text = "Online users";
+            this.gb_onlineEquipment.Text = "在线用户数：0";
             // 
             // lv_onlineUsers
             // 

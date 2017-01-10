@@ -484,8 +484,10 @@ import com.example.anychatqueue.R;
 		switch (dwEventType) {
 		
 		case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_STATUSCHANGE:
-			onDestroy();
-			finish();
+            if(dwObjectId == mApplication.getUserID()) {
+                onDestroy();
+                finish();
+            }
 			break;
 
 		}
