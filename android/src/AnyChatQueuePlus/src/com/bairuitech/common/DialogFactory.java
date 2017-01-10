@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.bairuitech.anychat.AnyChatDefine;
 import com.bairuitech.anychat.AnyChatObjectDefine;
 import com.bairuitech.main.BussinessCenter;
 import com.bairuitech.main.LoginActivity;
+import com.bairuitech.main.QueueActivity;
 import com.example.anychatqueueplusplus.R;
 
 
@@ -195,10 +197,10 @@ public class DialogFactory {
 								AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT,
 								0, 0, "");
 				dialog.dismiss();
-                AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AGENT, mApplication.getUserID(), AnyChatObjectDefine.ANYCHAT_AGENT_CTRL_FINISHSERVICE, 0, 0, 0, 0, "");
-			}
-		});
-		String strTitle = mContext.getString(R.string.str_calling);
+                BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userId, 0, 0, 0, "");
+            }
+        });
+        String strTitle = mContext.getString(R.string.str_calling);
 		initDialogTitle(view, strTitle, userId);
 		dialog.setContentView(view);
 	}
@@ -306,7 +308,11 @@ public class DialogFactory {
 		TextView buttonAccept = (TextView) view.findViewById(R.id.btn_accept);
 		TextView buttonRefuse = (TextView) view.findViewById(R.id.btn_refuse);
 		TextView showView = (TextView) view.findViewById(R.id.txt_dialog_prompt);
-		showView.setText("座席"+mApplication.getTargetUserName()+"请求与您视频通话");
+        if (TextUtils.isEmpty(mApplication.getReceivedTips())) {
+            showView.setText("座席"+mApplication.getTargetUserName()+"请求与您视频通话");
+        } else {
+            showView.setText(mApplication.getReceivedTips());
+        }
 		showView.setTextColor(Color.BLUE);
 		buttonAccept.setOnClickListener(new OnClickListener() {
 
@@ -329,7 +335,7 @@ public class DialogFactory {
 						"");
 				dialog.dismiss();
 				BussinessCenter.getBussinessCenter().stopSessionMusic();
-				mContext.finish();
+                BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, userId, 0, 0, 0, "");
 			}
 		});
 		

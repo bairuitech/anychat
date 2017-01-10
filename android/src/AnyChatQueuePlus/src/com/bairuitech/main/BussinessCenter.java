@@ -115,8 +115,13 @@ public void realse() {
 			BaseMethod.showToast(strMessage, mContext);
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_REFUSE:
-			strMessage = mContext.getString(R.string.str_returncode_requestrefuse);
+            if (mContext instanceof QueueActivity) {
+                strMessage = mContext.getString(R.string.str_returncode_requestrefuse);
+            } else {
+                strMessage = "用户拒绝被呼叫";
+            }
 			BaseMethod.showToast(strMessage, mContext);
+            BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, dwUserId, 0, 0, 0, "");
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_OFFLINE:
 			strMessage = mContext.getString(R.string.str_returncode_offline);
@@ -125,10 +130,14 @@ public void realse() {
 			mContext.finish();
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_QUIT:
-			strMessage = mContext.getString(R.string.str_returncode_requestcancel);
+            if (mContext instanceof QueueActivity) {
+                strMessage = "座席取消呼叫";
+            } else {
+                strMessage = mContext.getString(R.string.str_returncode_requestcancel);
+            }
 			BaseMethod.showToast(strMessage, mContext);
 			stopSessionMusic();
-			mContext.finish();
+            BussinessCenter.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH, dwUserId, 0, 0, 0, "");
 			break;
 		case AnyChatDefine.BRAC_ERRORCODE_SESSION_TIMEOUT:
 			strMessage = mContext.getString(R.string.str_returncode_timeout);

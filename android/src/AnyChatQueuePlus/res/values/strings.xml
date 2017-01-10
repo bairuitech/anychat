@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">智能排队 +</string>
+    <string name="app_name">AnyChatQueuePlus</string>
     <string name="HelloTitle">AnyChatQueuePlus</string>
     <string name="endCall1">End call</string>
     <string name="title_activity_func_menu">FuncMenu</string>
@@ -35,8 +35,8 @@
     <string name="str_returncode_bussiness">呼叫对象正忙，请稍后再试</string>
     <string name="str_returncode_offline">呼叫用户不在线</string>
     <string name="str_user_offline">目标用户离线</string>
-    <string name="str_returncode_requestcancel">座席取消呼叫</string>
-    <string name="str_returncode_requestrefuse">用户拒绝被呼叫</string>
+    <string name="str_returncode_requestcancel">用户取消呼叫</string>
+    <string name="str_returncode_requestrefuse">座席拒绝被呼叫</string>
     <string name="str_returncode_disconnect">对方网络异常</string>
     <string name="str_returncode_timeout">呼叫超时</string>
     <string name="title_activity_part">PartActivity</string>

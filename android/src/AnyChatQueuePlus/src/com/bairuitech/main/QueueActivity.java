@@ -3,12 +3,7 @@ package com.bairuitech.main;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.bairuitech.anychat.AnyChatBaseEvent;
-import com.bairuitech.anychat.AnyChatCoreSDK;
-import com.bairuitech.anychat.AnyChatDefine;
-import com.bairuitech.anychat.AnyChatObjectDefine;
-import com.bairuitech.anychat.AnyChatObjectEvent;
-import com.bairuitech.anychat.AnyChatVideoCallEvent;
+import com.bairuitech.anychat.*;
 import com.bairuitech.common.BaseMethod;
 import com.bairuitech.common.CustomApplication;
 import com.bairuitech.common.DialogFactory;
@@ -33,8 +28,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.json.JSONObject;
 
- public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatVideoCallEvent,AnyChatObjectEvent{
+public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatVideoCallEvent,AnyChatObjectEvent,AnyChatTransDataEvent {
 	private Button  quickButton;
 	private AnyChatCoreSDK anychat;
 	private Dialog dialog;
@@ -131,6 +127,7 @@ import android.widget.Toast;
 		anychat.SetBaseEvent(this);
 		anychat.SetVideoCallEvent(this);
 		anychat.SetObjectEvent(this);
+        anychat.SetTransDataEvent(this);
 		Log.i("ANYCHAT", "initSdk");
 	}
 	
@@ -235,8 +232,9 @@ import android.widget.Toast;
 					dwUserId, dwFlags, dwParam, userStr);
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
-			
-			mApplication.setTargetUserName(anychat.GetUserName(dwUserId));
+
+            mApplication.setReceivedTips(null);
+			mApplication.setTargetUserName(anychat.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER,dwUserId,AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME));
 			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_REQUEST,
 					dwUserId, this,mApplication);
 			dialog.show();
@@ -267,7 +265,41 @@ import android.widget.Toast;
 			BussinessCenter.getBussinessCenter().onVideoCallStart(
 					dwUserId, dwFlags, dwParam, userStr,mApplication);
 			break;
+        case AnyChatDefine.BRAC_VIDEOCALL_EVENT_FINISH:
+            Log.e("queueactivity", "会话结束回调");
+            finish();
+            break;
 		}
 	}
 
-}
+     @Override
+     public void OnAnyChatTransFile(int dwUserid, String FileName, String TempFilePath, int dwFileLength, int wParam, int lParam, int dwTaskId) {
+
+     }
+
+     @Override
+     public void OnAnyChatTransBuffer(int dwUserid, byte[] lpBuf, int dwLen) {
+         try {
+             if (lpBuf != null) {
+                 String returnData = new String(lpBuf, "UTF-8");
+                 JSONObject json = new JSONObject(returnData);
+                 if ("videoCall".equals(json.optString("commandType")) && json.optInt("isAutoMode") == 1) {
+                     int mTargetUserId = json.optInt("targetUserId");//用户id
+                     anychat.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST, mTargetUserId, 0, 0, 0, "");//呼叫目标用户，如坐席
+                 }
+             }
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+     }
+
+     @Override
+     public void OnAnyChatTransBufferEx(int dwUserid, byte[] lpBuf, int dwLen, int wparam, int lparam, int taskid) {
+
+     }
+
+     @Override
+     public void OnAnyChatSDKFilterData(byte[] lpBuf, int dwLen) {
+
+     }
+ }
