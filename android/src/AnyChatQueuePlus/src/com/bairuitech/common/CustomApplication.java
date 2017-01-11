@@ -11,7 +11,8 @@ public class CustomApplication extends Application{
 	private String targetUserName;		//对方用户名字
 	private int RoomId;					//进入房间号
 	private  int TargetUserId;			//对方用户Id
-	
+    private String ReceivedTips;		//呼叫请求提示
+
 	public void onCreate() {
 		super.onCreate();
 	}
@@ -83,5 +84,12 @@ public class CustomApplication extends Application{
 		this.targetUserName = targetUserName;
 	}
 
-	
+    public String getReceivedTips() {
+        return ReceivedTips;
+    }
+
+    public void setReceivedTips(String receivedTips) {
+        this.ReceivedTips = receivedTips;
+    }
+
 }

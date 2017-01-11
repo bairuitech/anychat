@@ -261,6 +261,13 @@ public class AgentServiceActivity extends Activity implements
                     targetUserId, dwFlags, dwParam, userStr);
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
+
+            String nickName = anychat.ObjectGetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER,targetUserId,AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_NAME);
+            if (mApplication.getUserType() == 2 && mUserSetting == 0 && isAutoMode == 0) {
+                mApplication.setReceivedTips("用户"+nickName+"请求与您视频通话，是否接受？");
+            } else {
+                mApplication.setReceivedTips("客服"+nickName+"请求与您视频通话，是否接受？");
+            }
 			dialog = DialogFactory.getDialog(DialogFactory.DIALOGID_REQUEST,
                     targetUserId, this,mApplication);
 			dialog.show();
@@ -342,14 +349,12 @@ public class AgentServiceActivity extends Activity implements
 		switch (dwEventType) {
 		
 		case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_SERVICENOTIFY:
-			//当客户角色是座席（服务器发的一个广播所有的座席都会触发到故需加限制条件)
-			if(mApplication.getUserType() == 2 && dwParam1 == mApplication.getUserID())
-			{
-				anychat.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST, dwParam2, 0, 0, 0, "");
-			}
-			 if(isAutoMode == 0 && mUserSetting == 0 && mApplication.getUserType() == 1 && dwParam2 == mApplication.getUserID())
-            {
-                anychat.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST, dwParam1, 0, 0, 0, "");
+            if(mUserSetting == 0 && isAutoMode == 0 && dwParam1 == mApplication.getUserID()) {
+                String jsonStr = "{\"commandType\":\"videoCall\",\"targetUserId\":" + dwParam1 + ",\"isAutoMode\":1}";
+                byte[] bytes = jsonStr.toString().getBytes();
+                anychat.TransBuffer(dwParam2, bytes, bytes.length);
+            } else {
+                anychat.VideoCallControl(AnyChatDefine.BRAC_VIDEOCALL_EVENT_REQUEST, dwParam2, 0, 0, 0, "");
             }
 			break;	
 		case AnyChatObjectDefine.ANYCHAT_AGENT_EVENT_STATUSCHANGE:	

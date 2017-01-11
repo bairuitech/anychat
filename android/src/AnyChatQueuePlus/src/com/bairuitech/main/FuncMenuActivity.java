@@ -369,7 +369,6 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
             Intent in=new Intent();
             in.setClass(FuncMenuActivity.this,AgentServiceActivity.class);
             in.putExtra("isAutoMode",isAutoMode);
-            in.putExtra("isAutoMode",isAutoMode);
             in.putExtra("userSetting", mUserSetting);// 1服务端设置，0客户端设置
             startActivity(in);
             waitingpd.dismiss();
