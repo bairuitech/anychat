@@ -127,7 +127,7 @@
     [self initAddSubViewWithQueues];
     
     if([self.role.titleLabel.text isEqualToString:@"普通用户"]){
-    
+        
         self.settingAllView.hidden = YES;
     }
     
@@ -138,7 +138,7 @@
 }
 
 -(void)initAddSubViewWithQueues{
-
+    
     [self.queue1 initTheSubView];
     [self.queue2 initTheSubView];
     [self.queue3 initTheSubView];
@@ -146,12 +146,12 @@
 }
 
 -(void)setupQueues{
-
+    
     [self.queue1 setCustomUI:@"队列组1" withisChecked:YES];
     [self.queue2 setCustomUI:@"队列组2" withisChecked:YES];
     [self.queue3 setCustomUI:@"队列组3" withisChecked:YES];
     [self.queue4 setCustomUI:@"队列组4" withisChecked:YES];
-
+    
 }
 
 -(void)setupSkills{
@@ -302,7 +302,7 @@
             [btn setCustomUI:@"存款" withisChecked:YES];
         }
     }
-
+    
 }
 
 - (IBAction)queue4Action:(id)sender {
@@ -332,22 +332,22 @@
 
 #pragma mark -UIActionSheetDelegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-
+    
     if(actionSheet == self.roleActionSheet){
         
         if(buttonIndex == 0){
-        
+            
             [self.role setTitle:@"普通用户" forState:UIControlStateNormal];
             
             self.settingAllView.hidden = YES;
             
         }else if (buttonIndex == 1){
-        
+            
             [self.role setTitle:@"坐席" forState:UIControlStateNormal];
             
             self.settingAllView.hidden = NO;
         }
-    
+        
     }else if(actionSheet == self.priorityActionSheet){
         
         if(buttonIndex == 0){
@@ -471,11 +471,11 @@
         if ([self.role.titleLabel.text isEqualToString:@"普通用户"]) {
             [self InitClientObjectInfo:dwUserId :0];
         }else if([self.role.titleLabel.text isEqualToString:@"坐席"]) {
-        
+            
             //自动路由开启
             if ([self.userInfoSetting.titleLabel.text isEqualToString:@"客户端设置"]&&[self.autoRoute.titleLabel.text isEqualToString:@"开启"]) {
                 [self InitClientObjectInfo:dwUserId :ANYCHAT_OBJECT_FLAGS_AUTOMODE+ANYCHAT_OBJECT_FLAGS_AGENT];
-               
+                
             }
             else
             {
@@ -491,7 +491,7 @@
 // 用户进入房间消息
 - (void) OnAnyChatEnterRoom:(int) dwRoomId : (int) dwErrorCode {
     NSLog(@"用户进入房间");
-
+    
     if (dwErrorCode == 0) {
         VideoViewController *videoVC = [[VideoViewController alloc] init];
         if ([self.role.titleLabel.text isEqualToString:@"普通用户"]) {
@@ -643,6 +643,12 @@
             serverQVC.businessListIdArray = queuesArray;
             serverQVC.businessHallId = dwObjectId;
             serverQVC.selfUserId = self.selfUserId;
+            
+            //坐席开启了路由模式
+            if ([self.role.titleLabel.text isEqualToString:@"坐席"]  && [self.autoRoute.titleLabel.text isEqualToString:@"开启"])
+            {
+                serverQVC.isCustomerServiceAutoMode = YES;
+            }
             [self.navigationController pushViewController:serverQVC animated:YES];
         }
         
@@ -751,13 +757,22 @@
 // 14.坐席服务通知(有人排队)
 -(void) AnyChatAgentServiceNotify:(int)dwAgentId :(int)clientId {
     NSLog(@"坐席服务通知---AnyChatAgentServiceNotify");
-    if ([self.role.titleLabel.text isEqualToString:@"坐席"] && self.selfUserId == dwAgentId) {
+    //关闭了自动路由
+    if ([self.role.titleLabel.text isEqualToString:@"坐席"] && self.selfUserId == dwAgentId && [self.autoRoute.titleLabel.text isEqualToString:@"关闭"]) {
         self.customerId = clientId;
         // 呼叫用户
         [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REQUEST :clientId :0 :0 :0 :nil];
         ServerQueueViewController *serverQVC = [self.navigationController.viewControllers lastObject];
         serverQVC.waitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫请求中，等待客户响应..." message:nil delegate:serverQVC cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
         [serverQVC.waitingAlertView show];
+    }
+    //开启了自动路由
+    else if ([self.role.titleLabel.text isEqualToString:@"坐席"] && self.selfUserId == dwAgentId && [self.autoRoute.titleLabel.text isEqualToString:@"开启"])
+    {
+        self.customerId = clientId;
+        NSDictionary *dict = @{@"commandType":@"videoCall",@"targetUserId":@(dwAgentId),@"isAutoMode":@(1)};
+        NSString* string =  [self DataTOjsonString:dict];
+        [AnyChatPlatform TransBuffer:clientId :[string dataUsingEncoding:NSUTF8StringEncoding]];
     }
 }
 
@@ -766,12 +781,12 @@
     NSLog(@"坐席等待用户");
     
     if([self.autoRoute.titleLabel.text isEqualToString:@"开启"]){
-    
+        
         [MBProgressHUD showSuccess:@"正在服务"];
-
+        
     }
     else if([self.autoRoute.titleLabel.text isEqualToString:@"关闭"]){
-    
+        
         [MBProgressHUD showError:@"暂时还没有顾客排队，请稍后再试"];
     }
     
@@ -845,7 +860,7 @@
     if(dwAgentFlags==0)
     {
         NSLog(@"普通用户");
-    // 客户端用户对象优先级
+        // 客户端用户对象优先级
         [AnyChatPlatform ObjectSetIntValue:ANYCHAT_OBJECT_TYPE_CLIENTUSER :mSelfUserId :ANYCHAT_OBJECT_INFO_PRIORITY :10];
         [AnyChatPlatform ObjectSetIntValue:ANYCHAT_OBJECT_TYPE_CLIENTUSER :mSelfUserId :ANYCHAT_OBJECT_INFO_ATTRIBUTE :-1];
         
@@ -875,9 +890,9 @@
             if (self.queue4.isChecked) {
                 [array addObject:@2004];
             }
-
             
-             dict=@{@"flags":[NSString stringWithFormat:@"%d",dwAgentFlags],@"priority":@"10",@"queuegroups":array};
+            
+            dict=@{@"flags":[NSString stringWithFormat:@"%d",dwAgentFlags],@"priority":@"10",@"queuegroups":array};
             
             NSString* string =  [self DataTOjsonString:dict];
             

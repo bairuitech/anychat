@@ -12,4 +12,5 @@
 @property(nonatomic, assign)int businessId;                             // 队列id
 @property (weak, nonatomic) IBOutlet UILabel *queuUserSiteLabel;        // 队列用户位置
 @property (weak, nonatomic) IBOutlet UILabel *queueUserCountLabel;      // 队列人数
+@property(nonatomic, assign)int isCustomerServiceAutoMode;              //是否开启了自动路由模式
 @end

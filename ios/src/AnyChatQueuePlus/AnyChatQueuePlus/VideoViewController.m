@@ -126,6 +126,14 @@
     
 }
 
+-(void)openRemoteView
+{
+    [AnyChatPlatform UserSpeakControl:self.remoteUserId :YES];
+    [AnyChatPlatform UserCameraControl:self.remoteUserId : YES];
+    [AnyChatPlatform SetVideoPos:self.remoteUserId :self.remoteVideoView :0:0:0:0];
+}
+
+
 //创建和初始化 AVCaptureVideoPreviewLayer 对象,实现本地视频的显示
 - (void) OnLocalVideoInit:(id)session {
     self.localCaptureLayer = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];

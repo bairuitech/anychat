@@ -16,7 +16,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 
-@interface QueueViewController ()<UIAlertViewDelegate,UIActionSheetDelegate,AnyChatVideoCallDelegate,AVAudioPlayerDelegate>
+@interface QueueViewController ()<UIAlertViewDelegate,UIActionSheetDelegate,AnyChatVideoCallDelegate,AVAudioPlayerDelegate,AnyChatTransDataDelegate>
 @property(strong, nonatomic) AnyChatPlatform *anyChat;                  //anyChat对象
 @property(weak, nonatomic) LoginViewController *loginVC;
 @property(nonatomic, assign)int remoteUserId;                           //客服人员id号
@@ -35,9 +35,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.loginVC = [self.navigationController.viewControllers objectAtIndex:0];
-    self.anyChat = self.loginVC.anyChat;
+    self.anyChat = [AnyChatPlatform getInstance];
     self.anyChat.videoCallDelegate = self;
-
+    self.anyChat.transDataDelegate = self;
+    
     NSString *businessName = [AnyChatPlatform ObjectGetStringValue:ANYCHAT_OBJECT_TYPE_QUEUE :(int)self.businessId :ANYCHAT_OBJECT_INFO_NAME];
     self.title = [NSString stringWithFormat:@"%@-排队等待中",businessName];
     
@@ -58,6 +59,8 @@
     
     self.navigationItem.hidesBackButton = YES;
     
+    self.isCustomerServiceAutoMode = NO;
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -77,12 +80,46 @@
     [self.theAudioPlayer play];
 }
 
+
+- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString
+{
+    if (jsonString == nil) {
+        return nil;
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err)
+    {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+
+
+- (void) OnAnyChatTransBufferCallBack:(int) dwUserid : (NSData*) lpBuf{
+    //如果透明通道收到数据则进行解析
+    if(lpBuf){
+        NSString *result = [[NSString alloc] initWithData:lpBuf encoding:NSUTF8StringEncoding];
+        NSDictionary* jsonObj = [self dictionaryWithJsonString:result];
+        if ([jsonObj[@"commandType"] isEqualToString: @"videoCall"] && [jsonObj[@"isAutoMode"] intValue] == 1){
+            self.isCustomerServiceAutoMode = YES;
+            [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REQUEST :[jsonObj[@"targetUserId"] intValue]:0 :0 :0 :nil];
+        }
+    }
+}
+
+
 #pragma mark - AnyChat Call Delegate
 - (void) OnAnyChatVideoCallEventCallBack:(int) dwEventType : (int) dwUserId : (int) dwErrorCode : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr{
     self.remoteUserId = dwUserId;
     self.loginVC.remoteUserId = dwUserId;
     switch (dwEventType) {
-        
+            
         case BRAC_VIDEOCALL_EVENT_REQUEST://呼叫请求 1
         {
             NSLog(@"BRAC_VIDEOCALL_EVENT_REQUEST");
@@ -123,8 +160,16 @@
                     [MBProgressHUD showError:@"网络断线"];
                     break;
                 }
-                
-                
+                    
+                case GV_ERR_VIDEOCALL_REJECT: // 目标用户拒绝会话
+                {
+                    // 退出队列
+                    [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_CTRL_USERLEAVE :0 :0 :0 :0 :nil];
+                    [self.navigationController popViewControllerAnimated:YES];
+                    [MBProgressHUD showError:@"客服拒绝视频通话"];
+                    break;
+                }
+                    
                     
             }
             break;
@@ -136,7 +181,7 @@
             [AnyChatPlatform EnterRoom:dwParam :nil];
             break;
         }
-        
+            
         case BRAC_VIDEOCALL_EVENT_FINISH://挂断（结束）呼叫会话 4
         {
             // 关闭设备
@@ -170,9 +215,25 @@
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        //退出队列
-        [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_CTRL_USERLEAVE :0 :0 :0 :0 :nil];
-        [self.navigationController popViewControllerAnimated:YES];
+        
+        if (self.isCustomerServiceAutoMode==YES) {
+            //用户主动取消对话
+            [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY
+                                             :self.remoteUserId
+                                             :GV_ERR_VIDEOCALL_CANCEL
+                                             :0
+                                             :0
+                                             :nil];
+            //退出队列
+            [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_CTRL_USERLEAVE :0 :0 :0 :0 :nil];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else
+        {
+            //退出队列
+            [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_CTRL_USERLEAVE :0 :0 :0 :0 :nil];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
 }
 

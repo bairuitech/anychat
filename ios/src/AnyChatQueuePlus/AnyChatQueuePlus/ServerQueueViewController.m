@@ -16,12 +16,16 @@
 #import "AnyChatObjectDefine.h"
 
 #import "MBProgressHUD+JT.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface ServerQueueViewController ()<UITableViewDataSource,UITableViewDelegate,AnyChatVideoCallDelegate,UIActionSheetDelegate,UIAlertViewDelegate>
 @property(strong, nonatomic) AnyChatPlatform *anyChat;          //anyChat对象
 @property(weak, nonatomic) LoginViewController *loginVC;
 @property(nonatomic, strong)NSArray *businesses;
 @property(nonatomic, assign)int remoteUserId;
+
+@property(nonatomic, strong)UIAlertView *requestAlertView;
+@property(nonatomic, strong) AVAudioPlayer *theAudioPlayer;             // 音乐播放器
 
 - (IBAction)startServerClick:(UIButton *)sender;
 @end
@@ -55,7 +59,6 @@
     
     // 添加退出按钮
     [self setupBackButton];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,6 +73,23 @@
     self.remoteUserId = dwUserId;
     switch (dwEventType) {
             
+        case BRAC_VIDEOCALL_EVENT_REQUEST://呼叫请求 1
+        {
+            NSLog(@"BRAC_VIDEOCALL_EVENT_REQUEST");
+            self.remoteUserId = dwUserId;
+            self.loginVC.remoteUserId = dwUserId;
+            
+            NSString *serviceName = [AnyChatPlatform ObjectGetStringValue:ANYCHAT_OBJECT_TYPE_CLIENTUSER :dwUserId :ANYCHAT_OBJECT_INFO_NAME];
+            self.requestAlertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"用户 %@请求与您视频通话，是否接受?",serviceName] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"接受",@"拒绝" ,nil];
+            self.requestAlertView.delegate = self;
+            [self.requestAlertView show];
+            
+            [self.theAudioPlayer play];
+            
+            break;
+            
+        }
+            
         case BRAC_VIDEOCALL_EVENT_REPLY:// 呼叫请求回复 2
         {
             switch (dwErrorCode)
@@ -77,6 +97,10 @@
                 case GV_ERR_VIDEOCALL_CANCEL: // 源用户主动放弃会话
                 {
                     if (self.waitingAlertView != nil) [self.waitingAlertView dismissWithClickedButtonIndex:self.waitingAlertView.cancelButtonIndex animated:YES];
+                    
+                    if(self.requestAlertView!=nil)
+                        [self.requestAlertView dismissWithClickedButtonIndex:self.requestAlertView.cancelButtonIndex animated:YES];
+                    
                     break;
                 }
                     
@@ -135,6 +159,9 @@
                 }
                     
             }
+            
+            //结束服务
+            [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AGENT :self.selfUserId :ANYCHAT_AGENT_CTRL_FINISHSERVICE :0 :0 :0 :0 :nil];
             
             break;
         }
@@ -217,6 +244,19 @@
                                              :nil];
         }
     }
+    else if(alertView == self.requestAlertView)
+    {
+        if (buttonIndex == 0) { //同意
+            [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY :self.remoteUserId :0 :0 :0 :nil];
+        }else { //拒绝
+            [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY :self.remoteUserId :GV_ERR_VIDEOCALL_REJECT :0 :0 :nil];
+            //然后结束本次服务
+            [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AGENT :self.selfUserId :ANYCHAT_AGENT_CTRL_FINISHSERVICE :0 :0 :0 :0 :nil];
+            
+        }
+        [self.theAudioPlayer stop];
+        
+    }
 }
 
 #pragma mark - Custom Method
@@ -233,11 +273,11 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
 }
 
+
 #pragma mark - Action
 - (IBAction)startServerClick:(UIButton *)sender {
     // 开始服务
     [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AGENT :self.selfUserId :ANYCHAT_AGENT_CTRL_SERVICEREQUEST :0 :0 :0 :0 :nil];
-
 }
 - (void)backAction:(UIControlEvents *)event {
     
