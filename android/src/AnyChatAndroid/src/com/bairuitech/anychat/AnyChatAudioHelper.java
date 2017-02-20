@@ -253,7 +253,7 @@ public class AnyChatAudioHelper {
 			{											
 				try {
 					int ret = mAudioRecord.read(recordbuf, 0, recordbuf.length);
-					if(ret ==  AudioRecord.ERROR_INVALID_OPERATION || ret == AudioRecord.ERROR_BAD_VALUE)
+					if(ret == AudioRecord.ERROR || ret ==  AudioRecord.ERROR_INVALID_OPERATION || ret == AudioRecord.ERROR_BAD_VALUE)
 						break;
 					// 通过AnyChat的外部音频输入接口将音频采样数据传入内核
 					AnyChatCoreSDK.InputAudioData(recordbuf, ret, 0);
