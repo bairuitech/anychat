@@ -62,6 +62,11 @@ function OnAnyChatRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse,
 
 }
 
+// AnyChatCoreSDK异步事件
+function OnAnyChatCoreSDKEvent(dwEventType, lpEventJsonStr) {
+	
+}
+
 
 /********************************************
  *		AnyChat SDK核心业务流程				*

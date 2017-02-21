@@ -408,7 +408,9 @@ function BRAC_InitSDK(apilevel) {
 			if(typeof(OnAnyChatRecordSnapShotEx2) == "function" && bSupportCluster)
 				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx2', OnAnyChatRecordSnapShotEx2);
 			if(typeof(OnAnyChatObjectEvent) == "function" && bSupportObjectBusiness)
-				BRAC_RegisterCallBack(anychat, 'OnObjectEvent', OnAnyChatObjectEvent);		
+				BRAC_RegisterCallBack(anychat, 'OnObjectEvent', OnAnyChatObjectEvent);
+			if(typeof(OnAnyChatObjectEvent) == "function" && CUR_ANYCHAT_PLUGIN_VAR >= "1.0.6.0")
+				BRAC_RegisterCallBack(anychat, 'OnAnyChatCoreSDKEvent', OnAnyChatCoreSDKEvent);	
 		} else {
 			document.body.removeChild(insertdiv);
 		}
