@@ -49,6 +49,10 @@ public class AnyChatCoreSDK
 		return mAnyChat;
 	}
 	
+	private AnyChatCoreSDK() {
+		
+	}
+	
 	// 设置AnyChat基本事件通知接口
 	public void SetBaseEvent(AnyChatBaseEvent e)
 	{

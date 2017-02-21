@@ -35,12 +35,18 @@ public class AnyChatObjectDefine {
 	public static final int ANYCHAT_OBJECT_INFO_DESCRIPTION	=	11;		///< 对象描述
 	public static final int ANYCHAT_OBJECT_INFO_INTTAG		=	12;		///< 对象标签，整型，上层应用自定义
 	public static final int ANYCHAT_OBJECT_INFO_STRINGTAG	=	13;		///< 对象标签，字符串，上层应用自定义
+	public static final int ANYCHAT_OBJECT_INFO_GUID		=	14;		///< 对象GUID
+	public static final int ANYCHAT_OBJECT_INFO_STATUSJSON	=	15;		///< 对象状态属性集合
 
 	// 服务区域信息类型定义
 	public static final int ANYCHAT_AREA_INFO_AGENTCOUNT	=	401;	///< 服务区域客服用户数
 	public static final int ANYCHAT_AREA_INFO_GUESTCOUNT	=	402;	///< 服务区域内访客的用户数（没有排入队列的用户）
 	public static final int ANYCHAT_AREA_INFO_QUEUEUSERCOUNT=	403;	///< 服务区域内排队的用户数
 	public static final int ANYCHAT_AREA_INFO_QUEUECOUNT	=	404;	///< 服务区域内队列的数量
+	public static final int ANYCHAT_AREA_INFO_AGENTIDLIST	=	405;	///< 服务区域客服ID列表
+	public static final int ANYCHAT_AREA_INFO_IDLEAGENTCOUNT=	406;	///< 服务区域空闲坐席数量
+	public static final int ANYCHAT_AREA_INFO_STATUSJSON	=	407;	///< 服务区域状态信息，返回Json数据
+	public static final int ANYCHAT_AREA_INFO_WAITINGCOUNT	=	408;	///< 服务区域内等候服务用户数（出了队列，但没有坐席服务的用户）
 
 	// 队列状态信息类型定义
 	public static final int ANYCHAT_QUEUE_INFO_MYSEQUENCENO	=	501;	///< 自己在该队列中的序号
@@ -48,6 +54,7 @@ public class AnyChatObjectDefine {
 	public static final int ANYCHAT_QUEUE_INFO_MYENTERQUEUETIME=503;	///< 进入队列的时间
 	public static final int ANYCHAT_QUEUE_INFO_LENGTH		=	504;	///< 队列长度（有多少人在排队），整型
 	public static final int ANYCHAT_QUEUE_INFO_WAITTIMESECOND=	508;	///< 自己在队列中的等待时间（排队时长），单位：秒
+	public static final int ANYCHAT_QUEUE_INFO_AGENTINFO	=	509;	///< 服务当前队列的坐席信息，返回Json数据
 
 	// 客服状态信息类型定义
 	public static final int ANYCHAT_AGENT_INFO_SERVICESTATUS=	601;	///< 服务状态，整型
@@ -55,6 +62,8 @@ public class AnyChatObjectDefine {
 	public static final int ANYCHAT_AGENT_INFO_SERVICEBEGINTIME=603;	///< 当前服务的开始时间，整型
 	public static final int ANYCHAT_AGENT_INFO_SERVICETOTALTIME=604;	///< 累计服务时间，整型，单位：秒
 	public static final int ANYCHAT_AGENT_INFO_SERVICETOTALNUM=	605;	///< 累计服务的用户数，整型
+	public static final int ANYCHAT_AGENT_INFO_SERVICEUSERINFO=	606;	///< 当前服务用户信息，字符串
+	public static final int ANYCHAT_AGENT_INFO_RELATEQUEUES	=	607;	///< 关联队列List，字符串
 
 
 	/**
@@ -65,6 +74,8 @@ public class AnyChatObjectDefine {
 	public static final int ANYCHAT_OBJECT_CTRL_CREATE		=	2;		///< 创建一个对象
 	public static final int ANYCHAT_OBJECT_CTRL_SYNCDATA	=	3;		///< 同步对象数据给指定用户，dwObjectId=-1，表示同步该类型的所有对象
 	public static final int ANYCHAT_OBJECT_CTRL_DEBUGOUTPUT	=	4;		///< 对象调试信息输出
+	public static final int ANYCHAT_OBJECT_CTRL_DELETE		=	5;		///< 删除对象
+	public static final int ANYCHAT_OBJECT_CTRL_MODIFY		=	6;		///< 修改对象信息
 
 	// 服务区域控制常量定义
 	public static final int ANYCHAT_AREA_CTRL_USERENTER		=	401;	///< 进入服务区域
