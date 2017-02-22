@@ -9,7 +9,15 @@ public class ConfigService {
 	public static ConfigEntity LoadConfig(Context context)
 	{
 		ConfigEntity configEntity = new ConfigEntity();
-    	SharedPreferences  share = context.getSharedPreferences("perference", Context.MODE_WORLD_WRITEABLE);  
+    		SharedPreferences sharedPreferences;
+		int currentapiVersion=android.os.Build.VERSION.SDK_INT;
+		if(currentapiVersion>=24){
+			sharedPreferences = context.getSharedPreferences(
+					"featuresConfig", Context.MODE_PRIVATE);
+		}else{
+			sharedPreferences = context.getSharedPreferences(
+					"featuresConfig", Context.MODE_WORLD_WRITEABLE);
+		}  
 
         configEntity.name = share.getString("name", "");
         configEntity.password = share.getString("password", "");
@@ -40,8 +48,16 @@ public class ConfigService {
 	
 	public static void SaveConfig(Context context,ConfigEntity configEntity)
 	{
-    	SharedPreferences  share = context.getSharedPreferences("perference",  Context.MODE_WORLD_WRITEABLE);  
-        Editor editor = share.edit();//取得编辑器
+    	SharedPreferences sharedPreferences;
+		int currentapiVersion=android.os.Build.VERSION.SDK_INT;
+		if(currentapiVersion>=24){
+			sharedPreferences = context.getSharedPreferences(
+					"featuresConfig", Context.MODE_PRIVATE);
+		}else{
+			sharedPreferences = context.getSharedPreferences(
+					"featuresConfig", Context.MODE_WORLD_WRITEABLE);
+		}
+        Editor editor = sharedPreferences.edit();//取得编辑器
         
         editor.putString("name", configEntity.name);
         editor.putString("password", configEntity.password);

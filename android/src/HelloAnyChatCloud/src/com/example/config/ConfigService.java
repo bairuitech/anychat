@@ -7,8 +7,15 @@ import android.content.SharedPreferences.Editor;
 public class ConfigService {
 	public static ConfigEntity LoadConfig(Context context) {
 		ConfigEntity configEntity = new ConfigEntity();
-		SharedPreferences sharedPreferences = context.getSharedPreferences(
-				"featuresConfig", Context.MODE_WORLD_WRITEABLE);
+		SharedPreferences sharedPreferences;
+		int currentapiVersion=android.os.Build.VERSION.SDK_INT;
+		if(currentapiVersion>=24){
+			sharedPreferences = context.getSharedPreferences(
+					"featuresConfig", Context.MODE_PRIVATE);
+		}else{
+			sharedPreferences = context.getSharedPreferences(
+					"featuresConfig", Context.MODE_WORLD_WRITEABLE);
+		}
 		
 		configEntity.mConfigMode = sharedPreferences.getInt("ConfigMode", ConfigEntity.VIDEO_MODE_CUSTOMCONFIG);
 		configEntity.mResolutionWidth = sharedPreferences.getInt("ResolutionWidth", 320);
@@ -33,8 +40,16 @@ public class ConfigService {
 	
 	public static void SaveConfig(Context context,ConfigEntity configEntity)
 	{
-    	SharedPreferences  share = context.getSharedPreferences("featuresConfig",  Context.MODE_WORLD_WRITEABLE);  
-        Editor editor = share.edit();//取得编辑器
+    	SharedPreferences sharedPreferences;
+		int currentapiVersion=android.os.Build.VERSION.SDK_INT;
+		if(currentapiVersion>=24){
+			sharedPreferences = context.getSharedPreferences(
+					"featuresConfig", Context.MODE_PRIVATE);
+		}else{
+			sharedPreferences = context.getSharedPreferences(
+					"featuresConfig", Context.MODE_WORLD_WRITEABLE);
+		}
+        Editor editor = sharedPreferences.edit();//取得编辑器
         
         editor.putInt("ConfigMode", configEntity.mConfigMode);
         editor.putInt("ResolutionWidth", configEntity.mResolutionWidth);
