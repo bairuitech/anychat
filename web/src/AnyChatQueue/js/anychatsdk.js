@@ -941,10 +941,59 @@ function BRAC_GetUserStreamInfoString(dwUserId, dwStreamIndex, infoname) {
 }
 
 // 向服务器动态查询相关信息
-function QueryInfoFromServer(dwInfoName, lpInParam) {
+function BRAC_QueryInfoFromServer(dwInfoName, lpInParam) {
 	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.5.0")
 		return "";
 	return anychat.QueryInfoFromServer(dwInfoName, lpInParam);
+}
+
+// 文件传输扩展接口
+function BRAC_TransFileEx(lpTaskGuid, dwUserId, lpLocalPathName, dwFlags, lpStrParam) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.TransFileEx(lpTaskGuid, dwUserId, lpLocalPathName, dwFlags, lpStrParam);
+}
+
+// 传输任务查询扩展接口
+function BRAC_QueryTransTaskInfoEx(lpTaskGuid, dwInfoName) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.QueryTransTaskInfoEx(lpTaskGuid, dwInfoName);
+}
+
+// 取消传输任务扩展接口
+function BRAC_CancelTransTaskEx(lpTaskGuid, dwFlags, dwErrorCode) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.CancelTransTaskEx(lpTaskGuid, dwFlags, dwErrorCode);
+}
+
+// 流媒体播放初始化
+function BRAC_StreamPlayInit(lpTaskGuid, lpStreamPath, dwFlags, lpStrParam) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.StreamPlayInit(lpTaskGuid, lpStreamPath, dwFlags, lpStrParam);
+}
+
+// 流媒体播放控制
+function BRAC_StreamPlayControl(lpTaskGuid, dwCtrlCode, dwParam, dwFlags, lpStrParam) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.StreamPlayControl(lpTaskGuid, dwCtrlCode, dwParam, dwFlags, lpStrParam);
+}
+
+// 流媒体播放获取参数信息
+function BRAC_StreamPlayGetInfo(lpTaskGuid, dwInfoName) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return "";
+	return anychat.StreamPlayGetInfo(lpTaskGuid, dwInfoName);
+}
+
+// 流媒体播放释放资源
+function BRAC_StreamPlayDestroy(lpTaskGuid, dwFlags) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.StreamPlayDestroy(lpTaskGuid, dwFlags);
 }
 
 // 获取当前浏览器
