@@ -94,6 +94,11 @@ function OnAnyChatRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse,
 
 }
 
+// AnyChatCoreSDK异步事件
+function OnAnyChatCoreSDKEvent(dwEventType, lpEventJsonStr) {
+	
+}
+
 /*******************************************************************************
  * AnyChat SDK核心业务流程 *
  ******************************************************************************/
@@ -104,9 +109,10 @@ function OnAnyChatConnect(bSuccess, errorcode) {
 
 // 客户端登录系统，dwUserId表示自己的用户ID号，errorcode表示登录结果：0 成功，否则为出错代码，参考出错代码定义
 function OnAnyChatLoginSystem(dwUserId, errorcode) {
-	
+	console.log("login errorCode = " + errorcode);
 	if (errorcode == 0) {
 		mSelfUserId = dwUserId;
+		BRAC_EnterRoom(GetID("roomID").value, "", 0);
 	}
 
 }

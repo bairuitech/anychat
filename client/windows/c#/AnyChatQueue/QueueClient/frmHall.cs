@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,56 +15,63 @@ namespace QueueClient
 {
     public partial class frmHall : Form
     {
-        #region å˜é‡å®šä¹‰
+        #region ±äÁ¿¶¨Òå
 
         int m_UserId = -1;
         string m_UserName = "";
         int intCallTimer = 0;
         private List<UserInfo> users = new List<UserInfo>();
-        public const int AC_ERROR_VIDEOCALL_CANCEL = 100101;       ///  æºç”¨æˆ·ä¸»åŠ¨æ”¾å¼ƒä¼šè¯
-        public const int AC_ERROR_VIDEOCALL_OFFLINE = 100102;      ///< ç›®æ ‡ç”¨æˆ·ä¸åœ¨çº¿
-        public const int AC_ERROR_VIDEOCALL_BUSY = 100103;       ///< ç›®æ ‡ç”¨æˆ·å¿™
-        public const int AC_ERROR_VIDEOCALL_REJECT = 100104;       ///< ç›®æ ‡ç”¨æˆ·æ‹’ç»ä¼šè¯
-        public const int AC_ERROR_VIDEOCALL_TIMEOUT = 100105;       ///< ä¼šè¯è¯·æ±‚è¶…æ—¶
-        public const int AC_ERROR_VIDEOCALL_DISCONNECT = 100106;       ///< ç½‘ç»œæ–­çº¿
-        public const int USERDATA_USERNAME = 1;       ///< ç”¨æˆ·å§“å
-        public const int USERDATA_USERADRESSIP = 2;       ///< ç”¨æˆ·åœ°å€
-        public const int USER_OFFLINE = 0; ///< ç”¨æˆ·ç¦»çº¿                                                  ///
-        public const int USER_ONLINE = 1; ///< ç”¨æˆ·ä¸Šçº¿
+        public const int AC_ERROR_VIDEOCALL_CANCEL = 100101;       ///  Ô´ÓÃ»§Ö÷¶¯·ÅÆú»á»°
+        public const int AC_ERROR_VIDEOCALL_OFFLINE = 100102;      ///< Ä¿±êÓÃ»§²»ÔÚÏß
+        public const int AC_ERROR_VIDEOCALL_BUSY = 100103;       ///< Ä¿±êÓÃ»§Ã¦
+        public const int AC_ERROR_VIDEOCALL_REJECT = 100104;       ///< Ä¿±êÓÃ»§¾Ü¾ø»á»°
+        public const int AC_ERROR_VIDEOCALL_TIMEOUT = 100105;       ///< »á»°ÇëÇó³¬Ê±
+        public const int AC_ERROR_VIDEOCALL_DISCONNECT = 100106;       ///< ÍøÂç¶ÏÏß
+        public const int USERDATA_USERNAME = 1;       ///< ÓÃ»§ĞÕÃû
+        public const int USERDATA_USERADRESSIP = 2;       ///< ÓÃ»§µØÖ·
+        public const int USER_OFFLINE = 0; ///< ÓÃ»§ÀëÏß                                                  ///
+        public const int USER_ONLINE = 1; ///< ÓÃ»§ÉÏÏß
         public bool bReleased = false;
         /// <summary>
-        /// å½“å‰ä¼šè¯
+        /// µ±Ç°»á»°
         /// </summary>
         private ConversationInfo ConversationMode = null;
 
         /// <summary>
-        /// ç”¨æˆ·èº«ä»½æ ‡è¯†
+        /// ÓÃ»§Éí·İ±êÊ¶
         /// </summary>
         public UserIdentityType m_userIdentity = UserIdentityType.Client;
         /// <summary>
-        /// èº«ä»½ä¼˜å…ˆçº§
+        /// Éí·İÓÅÏÈ¼¶
         /// </summary>
         public int m_identityPriority = 10;
-
         /// <summary>
-        /// ä¿å­˜è¢«éšè—çš„ç™»å½•çª—å£
+        /// Â·ÓÉ±êÊ¶
+        /// </summary>
+        public bool m_router = true;
+        /// <summary>
+        /// ×øÏ¯ÓµÓĞµÄ¼¼ÄÜ
+        /// </summary>
+        public int m_skill = 0;
+        /// <summary>
+        /// ±£´æ±»Òş²ØµÄµÇÂ¼´°¿Ú
         /// </summary>
         public frmLogin m_loginForm = null;
 
         /// <summary>
-        /// å½“å‰çš„ä¸šåŠ¡åŠŸèƒ½
+        /// µ±Ç°µÄÒµÎñ¹¦ÄÜ
         /// </summary>
         public BusinessFuncType currentBusinessFunc = BusinessFuncType.None;
         /// <summary>
-        /// å½“å‰è¢«é€‰æ‹©çš„è¥ä¸šå…
+        /// µ±Ç°±»Ñ¡ÔñµÄÓªÒµÌü
         /// </summary>
         public AreaInfo selectedArea = null;
         /// <summary>
-        /// å½“å‰è¢«é€‰æ‹©çš„é˜Ÿåˆ—
+        /// µ±Ç°±»Ñ¡ÔñµÄ¶ÓÁĞ
         /// </summary>
         public QueueInfo selectedQueue = null;
         /// <summary>
-        /// æ˜¯å¦è¿›å…¥è¥ä¸šå…
+        /// ÊÇ·ñ½øÈëÓªÒµÌü
         /// </summary>
         public bool isEnterArea = false;
 
@@ -73,24 +80,24 @@ namespace QueueClient
         string replaceTotalCount = string.Empty;
         string replaceQueuePosition = string.Empty;
         /// <summary>
-        /// è¿›å…¥é˜Ÿåˆ—åæ’é˜Ÿç­‰å¾…ä¿¡æ¯
+        /// ½øÈë¶ÓÁĞºóÅÅ¶ÓµÈ´ıĞÅÏ¢
         /// </summary>
-        private string enterQueueWaitingMessage = "å½“å‰æ’é˜Ÿäººæ•°å…±ï¼š{0} äºº  æ‚¨ç°åœ¨æ’åœ¨ç¬¬ {1} ä½ " + Environment.NewLine +"å·²ç­‰å¾…æ—¶é—´ï¼š{2}";
+        private string enterQueueWaitingMessage = "µ±Ç°ÅÅ¶ÓÈËÊı¹²£º{0} ÈË  ÄúÏÖÔÚÅÅÔÚµÚ {1} Î» " + Environment.NewLine +"ÒÑµÈ´ıÊ±¼ä£º{2}";
 
         private int mTargetUserId = 0;
 
         /// <summary>
-        /// è¥ä¸šå…åˆ—è¡¨
+        /// ÓªÒµÌüÁĞ±í
         /// </summary>
         private List<AreaInfo> areaList = new List<AreaInfo>();
         /// <summary>
-        /// é˜Ÿåˆ—åˆ—è¡¨
+        /// ¶ÓÁĞÁĞ±í
         /// </summary>
         private List<QueueInfo> queueList = new List<QueueInfo>();
 
         #endregion
 
-        #region æ„é€ å‡½æ•°
+        #region ¹¹Ôìº¯Êı
 
         public frmHall()
         {
@@ -119,11 +126,38 @@ namespace QueueClient
             InitializeComponent();
         }
 
+        public frmHall(int r_UserId, string r_UserName, UserIdentityType r_userIdentityType, int r_identityPriority, bool r_router, frmLogin loginForm)
+        {
+            m_UserId = r_UserId;
+            m_UserName = r_UserName;
+            m_userIdentity = r_userIdentityType;
+            m_identityPriority = r_identityPriority;
+            m_router = r_router;
+            //this.loginForm = loginForm;
+            this.m_loginForm = loginForm;
+
+            InitializeComponent();
+        }
+
+        public frmHall(LoginInfo loginUserInfo, frmLogin loginForm)
+        {
+            m_UserId = loginUserInfo.userID;
+            m_UserName = loginUserInfo.userName;
+            m_userIdentity = loginUserInfo.userIdType;
+            m_identityPriority = loginUserInfo.userPriority;
+            m_router = loginUserInfo.isRouterMode;
+            m_skill = loginUserInfo.userSkills;
+
+            //this.loginForm = loginForm;
+            this.m_loginForm = loginForm;
+
+            InitializeComponent();
+        }
         #endregion
 
-        #region åˆå§‹åŒ–åŠç•Œé¢æ“ä½œæ–¹æ³•
+        #region ³õÊ¼»¯¼°½çÃæ²Ù×÷·½·¨
 
-        //çª—ä½“åŠ è½½
+        //´°Ìå¼ÓÔØ
         private void Hall_Load(object sender, EventArgs e)
         {
 
@@ -133,7 +167,7 @@ namespace QueueClient
             lbl_agent_remoteUser.Text = string.Empty;
         }
 
-        //çª—ä½“å…³é—­
+        //´°Ìå¹Ø±Õ
         private void Hall_FormClosed(object sender, FormClosedEventArgs e)
         {
 
@@ -144,7 +178,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// éšè—æ‰€æœ‰çš„Panel
+        /// Òş²ØËùÓĞµÄPanel
         /// </summary>
         private void HideAllPanel()
         {
@@ -162,7 +196,7 @@ namespace QueueClient
 
 
         /// <summary>
-        /// æç¤ºç­‰å¾…æ¶ˆæ¯
+        /// ÌáÊ¾µÈ´ıÏûÏ¢
         /// </summary>
         /// <param name="bit"></param>
         /// <param name="str"></param>
@@ -190,7 +224,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// è¿”å›æŒ‰é’®æ˜¯å¦æ˜¾ç¤º
+        /// ·µ»Ø°´Å¥ÊÇ·ñÏÔÊ¾
         /// </summary>
         /// <param name="isShow"></param>
         private void isShowReturnButton(bool isShow)
@@ -212,11 +246,11 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// åˆå§‹åŒ–å®¢æˆ·ç«¯å¯¹è±¡
+        /// ³õÊ¼»¯¿Í»§¶Ë¶ÔÏó
         /// </summary>
-        /// <param name="mSelfUserId">ç”¨æˆ·id</param>
-        /// <param name="userIdentityType">ç”¨æˆ·èº«ä»½ç±»å‹</param>
-        /// <param name="userPriority">ç”¨æˆ·ä¼˜å…ˆçº§</param>
+        /// <param name="mSelfUserId">ÓÃ»§id</param>
+        /// <param name="userIdentityType">ÓÃ»§Éí·İÀàĞÍ</param>
+        /// <param name="userPriority">ÓÃ»§ÓÅÏÈ¼¶</param>
         public void InitClientObjectInfo(int mSelfUserId, UserIdentityType userIdentityType, int userPriority = 10)
         {
             //int userIdentity;
@@ -226,41 +260,49 @@ namespace QueueClient
                 case UserIdentityType.Client:                    
                     objectFlag = AnyChatCoreSDK.ANYCHAT_OBJECT_FLAGS_CLIENT;
                     break;
-                case UserIdentityType.Agent:                   
-                    objectFlag = AnyChatCoreSDK.ANYCHAT_OBJECT_FLAGS_AGENT;
+                case UserIdentityType.Agent:   
+                    if (m_router)
+                        objectFlag = AnyChatCoreSDK.ANYCHAT_OBJECT_FLAGS_AGENT + AnyChatCoreSDK.ANYCHAT_OBJECT_FLAGS_AUTOMODE;
+                    else
+                        objectFlag = AnyChatCoreSDK.ANYCHAT_OBJECT_FLAGS_AGENT;
                     break;
                 default:                    
                     objectFlag = AnyChatCoreSDK.ANYCHAT_OBJECT_FLAGS_CLIENT;
                     break;
             }
 
-            //ä¸šåŠ¡å¯¹è±¡èº«ä»½åˆå§‹åŒ–
+            //ÒµÎñ¶ÔÏóÉí·İ³õÊ¼»¯
             AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_OBJECT_INITFLAGS, ref objectFlag, sizeof(int));
-            //ç”¨æˆ·å¯¹è±¡ä¼˜å…ˆçº§
+            //ÓÃ»§¶ÔÏóÓÅÏÈ¼¶
             AnyChatCoreSDK.BRAC_ObjectSetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, mSelfUserId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_PRIORITY, ref userPriority, sizeof(int));
-            //å¯¹è±¡å±æ€§èµ‹å€¼
-            int userAttribute = -1;
-            AnyChatCoreSDK.BRAC_ObjectSetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, mSelfUserId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_ATTRIBUTE, ref userAttribute, sizeof(int));
+            //¶ÔÏóÊôĞÔ¸³Öµ
+            if (userIdentityType == UserIdentityType.Agent)
+                AnyChatCoreSDK.BRAC_ObjectSetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, mSelfUserId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_ATTRIBUTE, ref m_skill, sizeof(int));
+            else
+            {
+                int userAttribute = -1;
+                AnyChatCoreSDK.BRAC_ObjectSetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, mSelfUserId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_ATTRIBUTE, ref userAttribute, sizeof(int));
+            }
 
-            //å‘é€æœåŠ¡åŒºåŸŸæ•°æ®åŒæ­¥è¯·æ±‚æŒ‡ä»¤
+            //·¢ËÍ·şÎñÇøÓòÊı¾İÍ¬²½ÇëÇóÖ¸Áî
             AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, AnyChatCoreSDK.ANYCHAT_INVALID_OBJECT_ID, AnyChatCoreSDK.ANYCHAT_OBJECT_CTRL_SYNCDATA,
                                             mSelfUserId, 0, 0, 0, string.Empty);
 
-            ShowWaitingMessage(Properties.Resources._15, "æ­£åœ¨åŠ è½½è¥ä¸šå…ï¼Œè¯·ç¨å€™......");
+            ShowWaitingMessage(Properties.Resources._15, "ÕıÔÚ¼ÓÔØÓªÒµÌü£¬ÇëÉÔºò......");
         }
 
         private void btnStopService_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("ä½ ç¡®å®šç»“æŸå½“å‰çš„è§†é¢‘æœåŠ¡å—ï¼Ÿ", "æç¤º", MessageBoxButtons.OKCancel, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.OK)
+            if (MessageBox.Show("ÄãÈ·¶¨½áÊøµ±Ç°µÄÊÓÆµ·şÎñÂğ£¿", "ÌáÊ¾", MessageBoxButtons.OKCancel, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.OK)
             {
-                AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_FINISH, mTargetUserId, 0, 0, 0, ""); 	// æŒ‚æ–­
+                AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_FINISH, mTargetUserId, 0, 0, 0, ""); 	// ¹Ò¶Ï
                 //btn_return.Enabled = true;
             }
         }
 
         private void btnStartService_Click(object sender, EventArgs e)
         {
-            //å®¢æœå¼€å§‹æœåŠ¡
+            //¿Í·ş¿ªÊ¼·şÎñ
             AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_CTRL_SERVICEREQUEST, 0, 0, 0, 0, "");
 
             btn_return.Enabled = false;
@@ -269,7 +311,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// æ˜¾ç¤ºåå¸­æœåŠ¡ç•Œé¢
+        /// ÏÔÊ¾×øÏ¯·şÎñ½çÃæ
         /// </summary>
         private void showAgentServiceFace()
         {
@@ -287,7 +329,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// æ˜¾ç¤ºå®¢æˆ·è§†é¢‘ç•Œé¢
+        /// ÏÔÊ¾¿Í»§ÊÓÆµ½çÃæ
         /// </summary>
         private void showClientVideoFace()
         {
@@ -300,18 +342,18 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// æ˜¾ç¤ºé˜Ÿåˆ—åˆ—è¡¨
+        /// ÏÔÊ¾¶ÓÁĞÁĞ±í
         /// </summary>
         private void showQueueListFace()
         {
             HideAllPanel();
-            lbl_tipMessage.Text = selectedArea.AreaName + " é˜Ÿåˆ—åˆ—è¡¨";
+            lbl_tipMessage.Text = selectedArea.AreaName + " ¶ÓÁĞÁĞ±í";
             if (!panel_queue.Visible) panel_queue.Show();
             if (!btn_return.Visible) btn_return.Visible = true;
         }
 
         /// <summary>
-        /// ç§»å‡ºæç¤ºç•Œé¢ä¸­åŠ¨æ€ç”Ÿæˆçš„æŒ‰é’®
+        /// ÒÆ³öÌáÊ¾½çÃæÖĞ¶¯Ì¬Éú³ÉµÄ°´Å¥
         /// </summary>
         private void RemoveWaitingMessageButton()
         {
@@ -333,27 +375,27 @@ namespace QueueClient
         {
             if (m_userIdentity == UserIdentityType.Agent)
             {
-                //é˜Ÿåˆ—æ•°é‡
+                //¶ÓÁĞÊıÁ¿
                 int queueCount = 0;
                 AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, selectedArea.AreaID, AnyChatCoreSDK.ANYCHAT_AREA_INFO_QUEUECOUNT, ref queueCount);
 
-                //é˜Ÿåˆ—æ€»ç”¨æˆ·æ•°
+                //¶ÓÁĞ×ÜÓÃ»§Êı
                 int queuesUserCount = 0;
                 AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, selectedArea.AreaID, AnyChatCoreSDK.ANYCHAT_AREA_INFO_QUEUEUSERCOUNT, ref queuesUserCount);
 
-                //åœ¨è¥ä¸šå…æœªè¿›å…¥é˜Ÿåˆ—äººæ•°
+                //ÔÚÓªÒµÌüÎ´½øÈë¶ÓÁĞÈËÊı
                 int atAreaUserCount = 0;
                 AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, selectedArea.AreaID, AnyChatCoreSDK.ANYCHAT_AREA_INFO_GUESTCOUNT, ref atAreaUserCount);
 
 
-                //ç´¯è®¡æœåŠ¡çš„ç”¨æˆ·æ•°
+                //ÀÛ¼Æ·şÎñµÄÓÃ»§Êı
                 int servicedUserCount = 0;
                 int retCode = AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_INFO_SERVICETOTALNUM, ref servicedUserCount);                
                     
-                lbl_agent_queueNumber.Text = "å½“å‰æœåŠ¡çš„é˜Ÿåˆ—æ•°é‡ä¸ºï¼š " + queueCount + " ä¸ª";
-                lbl_agent_currentTotalUserCount.Text = "å½“å‰æ’é˜Ÿçš„ç”¨æˆ·æ€»æ•°ä¸ºï¼š " + queuesUserCount + " äºº";
-                lbl_agent_servicedUserCount.Text = "å·²æœåŠ¡äººæ•°ä¸ºï¼š " + servicedUserCount + " äºº";
-                lbl_agent_atAreaUserCount.Text = "æœªè¿›å…¥é˜Ÿåˆ—ç”¨æˆ·æ•°ä¸ºï¼š" + atAreaUserCount + " äºº";
+                lbl_agent_queueNumber.Text = "µ±Ç°·şÎñµÄ¶ÓÁĞÊıÁ¿Îª£º " + queueCount + " ¸ö";
+                lbl_agent_currentTotalUserCount.Text = "µ±Ç°ÅÅ¶ÓµÄÓÃ»§×ÜÊıÎª£º " + queuesUserCount + " ÈË";
+                lbl_agent_servicedUserCount.Text = "ÒÑ·şÎñÈËÊıÎª£º " + servicedUserCount + " ÈË";
+                lbl_agent_atAreaUserCount.Text = "Î´½øÈë¶ÓÁĞÓÃ»§ÊıÎª£º" + atAreaUserCount + " ÈË";
             }
         }
 
@@ -361,15 +403,15 @@ namespace QueueClient
         {
             int serviceUserID = 0;
             AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_INFO_SERVICEUSERID, ref serviceUserID);
-
-            StringBuilder sbUserName = new StringBuilder(100);
-
-            AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, userID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbUserName);
+            
+            byte[] userNameByte = new byte[255];
+            AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, userID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, ref userNameByte[0]);
+            string userName = byteToString(userNameByte);
 
             if (userID == -1)
                 lbl_agent_remoteUser.Text = string.Empty;
             else
-                lbl_agent_remoteUser.Text = "å½“å‰æœåŠ¡ç”¨æˆ·IDï¼š" + userID + "ï¼Œç”¨æˆ·åä¸ºï¼š" + sbUserName.ToString();
+                lbl_agent_remoteUser.Text = "µ±Ç°·şÎñÓÃ»§ID£º" + userID + "£¬ÓÃ»§ÃûÎª£º" + userName.ToString();
         }
 
         private void btn_return_Click(object sender, EventArgs e)
@@ -377,10 +419,10 @@ namespace QueueClient
             switch (currentBusinessFunc)
             {
                 case BusinessFuncType.SelectAreaFunc:
-                    //é€€å‡ºè¥ä¸šå…
+                    //ÍË³öÓªÒµÌü
                     int iAreaID = selectedArea.AreaID;
                     AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, iAreaID, AnyChatCoreSDK.ANYCHAT_AREA_CTRL_USERLEAVE, 0, 0, 0, 0, string.Empty);
-                    ShowWaitingMessage(Properties.Resources._15, "æ­£åœ¨é€€å‡ºè¥ä¸šå…ï¼Œè¯·ç¨å€™......");
+                    ShowWaitingMessage(Properties.Resources._15, "ÕıÔÚÍË³öÓªÒµÌü£¬ÇëÉÔºò......");
                     break;
 
                 case BusinessFuncType.SelectQueueFunc:
@@ -400,29 +442,29 @@ namespace QueueClient
 
         private void panel_area_VisibleChanged(object sender, EventArgs e)
         {
-            if (((Panel)sender).Visible) lbl_tipMessage.Text = "è¥ä¸šå…åˆ—è¡¨";
+            if (((Panel)sender).Visible) lbl_tipMessage.Text = "ÓªÒµÌüÁĞ±í";
         }
 
 
 
         #endregion
         
-        #region è§†é¢‘å‘¼å«ä¸šåŠ¡å®é™…å¤„ç†
+        #region ÊÓÆµºô½ĞÒµÎñÊµ¼Ê´¦Àí
 
-        //å‘¼å«ç­‰å¾…
+        //ºô½ĞµÈ´ı
         private void VideoCall_WaitCall_Handler()
         {
             try
             {
                 intCallTimer = 60;
-                ShowCallMessage(Properties.Resources._15, "å‘¼å«è¯·æ±‚ä¸­ï¼Œç­‰å¾…ç”¨æˆ·å“åº”...");
+                ShowCallMessage(Properties.Resources._15, "ºô½ĞÇëÇóÖĞ£¬µÈ´ıÓÃ»§ÏìÓ¦...");
                 //timer_call.Start();
-                timer_call.Stop();//å…³é—­è®¡æ—¶å™¨ï¼Œç¡®è®¤çŠ¶æ€
+                timer_call.Stop();//¹Ø±Õ¼ÆÊ±Æ÷£¬È·ÈÏ×´Ì¬
                 Button btn_cancall = new Button();
-                btn_cancall.Font = new Font("å¾®è½¯é›…é»‘", 20);
+                btn_cancall.Font = new Font("Î¢ÈíÑÅºÚ", 20);
                 btn_cancall.Size = new Size(140, 50);
                 btn_cancall.Location = new Point(panel_call.Width / 2 - btn_cancall.Width / 2, pic_call.Top + pic_call.Height + 30);
-                btn_cancall.Text = "å–æ¶ˆ";
+                btn_cancall.Text = "È¡Ïû";
                 btn_cancall.Tag = "btn";
                 btn_cancall.BackColor = Color.Red;
                 btn_cancall.ForeColor = Color.White;
@@ -435,24 +477,24 @@ namespace QueueClient
             }
             catch (Exception ex)
             {
-                Log.SetLog("QueueClient.Hall.WaitCall       WaitCallï¼š" + ex.Message.ToString());
+                Log.SetLog("QueueClient.Hall.WaitCall       WaitCall£º" + ex.Message.ToString());
             }
         }
 
-        //å•å‡»å–æ¶ˆå‘¼å«
+        //µ¥»÷È¡Ïûºô½Ğ
         void btn_cancall_Click(object sender, EventArgs e)
         {
 
             CanCall();
 
         }
-        //å–æ¶ˆå‘¼å«
+        //È¡Ïûºô½Ğ
         private void CanCall()
         {
-            //å‘é€è§†é¢‘å‘¼å«å›å¤æŒ‡ä»¤ï¼ŒdwErrcode=100101
+            //·¢ËÍÊÓÆµºô½Ğ»Ø¸´Ö¸Áî£¬dwErrcode=100101
             AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_REPLY, ConversationMode.TuserId, AC_ERROR_VIDEOCALL_CANCEL, 0, 0, "");
             ConversationMode = null;
-            InitFaceAfterEndCall(Properties.Resources._20, "å·²ç»å–æ¶ˆå‘¼å«");
+            InitFaceAfterEndCall(Properties.Resources._20, "ÒÑ¾­È¡Ïûºô½Ğ");
 
             AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_CTRL_FINISHSERVICE, 0, 0, 0, 0, "");	
             refreshServicedUserInfo(-1);
@@ -460,14 +502,14 @@ namespace QueueClient
             showAgentServiceFace();
 
         }
-        //æ¥æ”¶åˆ°è§†é¢‘å‘¼å«è¯·æ±‚å¤„ç†
+        //½ÓÊÕµ½ÊÓÆµºô½ĞÇëÇó´¦Àí
 
         private void VideoCall_Request_Handler(int dwUserId, int dwParam, string lpUserStr)
         {
 
             if (this.WindowState == FormWindowState.Minimized)
                 this.WindowState = FormWindowState.Normal;
-            timer_call.Stop();//å…³é—­è®¡æ—¶å™¨ï¼Œç¡®è®¤çŠ¶æ€
+            timer_call.Stop();//¹Ø±Õ¼ÆÊ±Æ÷£¬È·ÈÏ×´Ì¬
 
             timer_queueWaiting.Stop();
             ConversationMode = new ConversationInfo();
@@ -478,13 +520,13 @@ namespace QueueClient
             {
                 btn_return.Visible = false;
 
-                ShowCallMessage(Properties.Resources._14, userItem.Name + "å‘æ‚¨å‘èµ·è§†é¢‘ä¼šè¯é‚€è¯·...");
+                ShowCallMessage(Properties.Resources._14, "¡¾" + userItem.Name + "¡¿ÏòÄú·¢ÆğÊÓÆµ»á»°ÑûÇë...");
 
                 Button btn_accepted = new Button();
-                btn_accepted.Font = new Font("å¾®è½¯é›…é»‘", 20);
+                btn_accepted.Font = new Font("Î¢ÈíÑÅºÚ", 20);
                 btn_accepted.Size = new Size(140, 50);
                 btn_accepted.Location = new Point(panel_call.Width / 2 - btn_accepted.Width - 10, pic_call.Top + pic_call.Height + 30);
-                btn_accepted.Text = "æ¥å—";
+                btn_accepted.Text = "½ÓÊÜ";
                 btn_accepted.Tag = "btn";
                 btn_accepted.BackColor = Color.Lime;
                 btn_accepted.ForeColor = Color.White;
@@ -492,10 +534,10 @@ namespace QueueClient
                 panel_call.Controls.Add(btn_accepted);
 
                 Button btn_refuse = new Button();
-                btn_refuse.Font = new Font("å¾®è½¯é›…é»‘", 20);
+                btn_refuse.Font = new Font("Î¢ÈíÑÅºÚ", 20);
                 btn_refuse.Size = new Size(140, 50);
                 btn_refuse.Location = new Point(panel_call.Width / 2 + 10, pic_call.Top + pic_call.Height + 30);
-                btn_refuse.Text = "æ‹’ç»";
+                btn_refuse.Text = "¾Ü¾ø";
                 btn_refuse.Tag = "btn";
                 btn_refuse.BackColor = Color.Red;
                 btn_refuse.ForeColor = Color.White;
@@ -510,10 +552,10 @@ namespace QueueClient
         }
 
 
-        //å¼€å§‹ä¼šè¯
+        //¿ªÊ¼»á»°
         private void VideoCall_SessionStart_Handler(int roomId)
         {
-            //ç•Œé¢åˆ‡æ¢
+            //½çÃæÇĞ»»
             HideAllPanel();
 
             switch (m_userIdentity)
@@ -522,10 +564,12 @@ namespace QueueClient
                     showAgentServiceFace();
                     break;
                 case UserIdentityType.Client:
-                    lbl_tipMessage.Text = selectedQueue.QueueName + " - æœåŠ¡çª—å£";
+                    lbl_tipMessage.Text = selectedQueue.QueueName + " - ·şÎñ´°¿Ú";
                     break;
             }
+
             AnyChatCoreSDK.EnterRoom(roomId, "", 0);
+            //AnyChatCoreSDK.EnterRoomEx(roomId, "", 0);
             SoundPlayer Player = new SoundPlayer();
             Player.Stream = Properties.Resources.system;
             Player.Play();
@@ -533,28 +577,28 @@ namespace QueueClient
 
         }
 
-        //æ¥å—è§†é¢‘å‘¼å«é‚€è¯·
+        //½ÓÊÜÊÓÆµºô½ĞÑûÇë
         void btn_accepted_Click(object sender, EventArgs e)
         {
-            //å‘é€è§†é¢‘å‘¼å«å›å¤æŒ‡ä»¤ï¼ŒdwErrcode=0
+            //·¢ËÍÊÓÆµºô½Ğ»Ø¸´Ö¸Áî£¬dwErrcode=0
             AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_REPLY, ConversationMode.SuserId, 0, 0, 0, "");
        }
 
-        // æ‹’ç»è§†é¢‘å‘¼å«é‚€è¯·
+        // ¾Ü¾øÊÓÆµºô½ĞÑûÇë
         void btn_refuse_Click(object sender, EventArgs e)
         {
 
-            //å‘é€è§†é¢‘å‘¼å«å›å¤æŒ‡ä»¤ï¼ŒdwErrcode=100104
+            //·¢ËÍÊÓÆµºô½Ğ»Ø¸´Ö¸Áî£¬dwErrcode=100104
             AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_REPLY, ConversationMode.SuserId, AC_ERROR_VIDEOCALL_REJECT, 0, 0, "");
             ConversationMode = null;
-            InitFaceAfterEndCall(Properties.Resources._5, "å·²ç»æ‹’ç»ä¼šè¯...");
+            InitFaceAfterEndCall(Properties.Resources._5, "ÒÑ¾­¾Ü¾ø»á»°...");
 
             showQueueListFace();
         }
 
 
         /// <summary>
-        /// è¿›å…¥æˆ¿é—´æˆåŠŸ
+        /// ½øÈë·¿¼ä³É¹¦
         /// </summary>
         public void EnterRoomSuccess()
         {
@@ -575,23 +619,23 @@ namespace QueueClient
             
             if (tUserItem != null)
             {
-                lbl_client_remoteUserName.Text = tUserItem.Name + "(åå¸­)";
-                lbl_client_localUserName.Text = m_UserName + "(è‡ªå·±)";
-                OpenCameraAndSpeak(m_UserId, true);//æ‰“å¼€è‡ªå·±çš„éŸ³è§†é¢‘
+                lbl_client_remoteUserName.Text = tUserItem.Name + "(×øÏ¯)";
+                lbl_client_localUserName.Text = m_UserName + "(×Ô¼º)";
+                OpenCameraAndSpeak(m_UserId, true);//´ò¿ª×Ô¼ºµÄÒôÊÓÆµ
                 //panel_users.Hide();
                 //panel_call.Hide();
 
             }
 
         }
-        //æ“ä½œåŒæ–¹éŸ³è§†é¢‘è®¾å¤‡
+        //²Ù×÷Ë«·½ÒôÊÓÆµÉè±¸
         public void OpenCameraAndSpeak(int userId, bool isopen)
         {
 
             if (isopen)
             {
 
-                //æ‰“å¼€å‘¼å«è€…éŸ³è§†é¢‘
+                //´ò¿ªºô½ĞÕßÒôÊÓÆµ
                 AnyChatCoreSDK.UserCameraControl(userId, true);
                 AnyChatCoreSDK.UserSpeakControl(userId, true);
 
@@ -599,7 +643,7 @@ namespace QueueClient
                 {
                     case UserIdentityType.Agent:
                         if (userId == m_UserId)
-                            //æ˜¾ç¤ºåå¸­ç«¯æœ¬åœ°éŸ³è§†é¢‘
+                            //ÏÔÊ¾×øÏ¯¶Ë±¾µØÒôÊÓÆµ
                             AnyChatCoreSDK.SetVideoPos(userId, picBox_agent_localVideo.Handle, 0, 0, picBox_agent_localVideo.Width, picBox_agent_localVideo.Height);
                         else
                             AnyChatCoreSDK.SetVideoPos(userId, picBox_agent_remoteVideo.Handle, 0, 0, picBox_agent_remoteVideo.Width, picBox_agent_remoteVideo.Height);
@@ -608,7 +652,7 @@ namespace QueueClient
 
                     case UserIdentityType.Client:
                         if (userId == m_UserId)
-                            //æ˜¾ç¤ºæœ¬åœ°éŸ³è§†é¢‘
+                            //ÏÔÊ¾±¾µØÒôÊÓÆµ
                             AnyChatCoreSDK.SetVideoPos(userId, picBox_client_localVideo.Handle, 0, 0, picBox_client_localVideo.Width, picBox_client_localVideo.Height);
                         else
                             AnyChatCoreSDK.SetVideoPos(userId, picBox_client_remoteVideo.Handle, 0, 0, picBox_client_remoteVideo.Width, picBox_client_remoteVideo.Height);
@@ -625,12 +669,12 @@ namespace QueueClient
                 AnyChatCoreSDK.UserSpeakControl(userId, false);
             }
 
-            //éŸ³é‡åˆ·æ–°
+            //ÒôÁ¿Ë¢ĞÂ
             timer_speak.Enabled = isopen;
 
         }
 
-        //è§†é¢‘å‘¼å«å›å¤
+        //ÊÓÆµºô½Ğ»Ø¸´
         private void VideoCall_Reply_Handler(int userId, int dwErrorCode, int wParam, string lpStr)
         {
 
@@ -638,7 +682,7 @@ namespace QueueClient
                 this.WindowState = FormWindowState.Normal;
             RemoveCallButton();
             intCallTimer = 3;
-            //ShowCallMessage(Properties.Resources._18, "ä¼šè¯å·²ç»“æŸ...");
+            //ShowCallMessage(Properties.Resources._18, "»á»°ÒÑ½áÊø...");
             ConversationMode = null;
             switch (dwErrorCode)
             {
@@ -649,22 +693,22 @@ namespace QueueClient
                     VideoCall_WaitCall_Handler();
                     break;
                 case AC_ERROR_VIDEOCALL_CANCEL:
-                    ShowCallMessage(Properties.Resources._20, "å¯¹æ–¹å–æ¶ˆå‘¼å«...");
+                    ShowCallMessage(Properties.Resources._20, "¶Ô·½È¡Ïûºô½Ğ...");
                     break;
                 case AC_ERROR_VIDEOCALL_REJECT:
-                    ShowCallMessage(Properties.Resources._5, "å¯¹æ–¹æ‹’ç»ä¼šè¯...");
+                    ShowCallMessage(Properties.Resources._5, "¶Ô·½¾Ü¾ø»á»°...");
                     break;
                 case AC_ERROR_VIDEOCALL_BUSY:
-                    ShowCallMessage(Properties.Resources._8, "ç›®æ ‡ç”¨æˆ·æ­£å¿™,è¯·ç¨åé‡è¯•...");
+                    ShowCallMessage(Properties.Resources._8, "Ä¿±êÓÃ»§ÕıÃ¦,ÇëÉÔºóÖØÊÔ...");
                     break;
                 case AC_ERROR_VIDEOCALL_OFFLINE:
-                    ShowCallMessage(Properties.Resources._18, "å¯¹æ–¹å·²ç¦»çº¿...");
+                    ShowCallMessage(Properties.Resources._18, "¶Ô·½ÒÑÀëÏß...");
                     break;
                 case AC_ERROR_VIDEOCALL_TIMEOUT:
-                    ShowCallMessage(Properties.Resources._1, "ä¼šè¯è¯·æ±‚å·²è¶…æ—¶...");
+                    ShowCallMessage(Properties.Resources._1, "»á»°ÇëÇóÒÑ³¬Ê±...");
                     break;
                 case AC_ERROR_VIDEOCALL_DISCONNECT:
-                    ShowCallMessage(Properties.Resources._18, "å¯¹æ–¹ç½‘ç»œæ–­å¼€...");
+                    ShowCallMessage(Properties.Resources._18, "¶Ô·½ÍøÂç¶Ï¿ª...");
                     break;
             }
             if (dwErrorCode != 0)
@@ -685,13 +729,15 @@ namespace QueueClient
                         showQueueListFace();
                         break;
                  }
+
+                AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_FINISH, getOtherInSession(), 0, 0, 0, "");                
             }
 
             Log.SetLog("VideoCall_Reply_Handler" + dwErrorCode);
            
         }
 
-        //è§†é¢‘å‘¼å«ç»“æŸ
+        //ÊÓÆµºô½Ğ½áÊø
         private void VideoCall_Finished_Handler(Bitmap bit, string strMsg)
         {
 
@@ -730,7 +776,7 @@ namespace QueueClient
 
         }
 
-        //å‘¼å«ç»“æŸååˆå§‹åŒ–ç•Œé¢
+        //ºô½Ğ½áÊøºó³õÊ¼»¯½çÃæ
         private void InitFaceAfterEndCall(Bitmap bit, string strMsg)
         {
 
@@ -744,7 +790,7 @@ namespace QueueClient
 
         }
 
-        //ç§»é™¤å‘¼å«æµç¨‹æŒ‰é’®
+        //ÒÆ³ıºô½ĞÁ÷³Ì°´Å¥
         private void RemoveCallButton()
         {
 
@@ -763,7 +809,7 @@ namespace QueueClient
 
         }
 
-        //æç¤ºå‘¼å«æ¶ˆæ¯
+        //ÌáÊ¾ºô½ĞÏûÏ¢
         private void ShowCallMessage(Bitmap bit, string str)
         {
             HideAllPanel();
@@ -782,9 +828,9 @@ namespace QueueClient
         }
 
 
-        //éŸ³é‡åˆ·æ–°è®¡æ—¶å™¨
-        int intSuserSpeakValue = 0;//ä¸»åŠ¨æ–¹éŸ³é‡
-        int intTuserSpeakValue = 0;//è¢«åŠ¨æ–¹éŸ³é‡
+        //ÒôÁ¿Ë¢ĞÂ¼ÆÊ±Æ÷
+        int intSuserSpeakValue = 0;//Ö÷¶¯·½ÒôÁ¿
+        int intTuserSpeakValue = 0;//±»¶¯·½ÒôÁ¿
         private void timer_speak_Tick(object sender, EventArgs e)
         {
             if (ConversationMode != null)
@@ -801,7 +847,7 @@ namespace QueueClient
             }
         }
 
-        //è¢«åŠ¨è€…éŸ³é‡æ¡é‡ç»˜
+        //±»¶¯ÕßÒôÁ¿ÌõÖØ»æ
         private void pic_tuserSound_Paint(object sender, PaintEventArgs e)
         {
 
@@ -811,7 +857,7 @@ namespace QueueClient
 
         }
 
-        //ä¸»åŠ¨è€…éŸ³é‡æ¡é‡ç»˜
+        //Ö÷¶¯ÕßÒôÁ¿ÌõÖØ»æ
         private void pic_suserSound_Paint(object sender, PaintEventArgs e)
         {
 
@@ -821,17 +867,17 @@ namespace QueueClient
 
         }
 
-        //å‘é€è§†é¢‘å‘¼å«ç»“æŸæŒ‡ä»¤ï¼ŒæŒ‚æ–­ä¼šè¯
+        //·¢ËÍÊÓÆµºô½Ğ½áÊøÖ¸Áî£¬¹Ò¶Ï»á»°
         private void btn_hungUp_Click(object sender, EventArgs e)
         {
 
-            //å‘é€è§†é¢‘å‘¼å«å›å¤æŒ‡ä»¤ï¼ŒdwErrcode=100104
+            //·¢ËÍÊÓÆµºô½Ğ»Ø¸´Ö¸Áî£¬dwErrcode=100104
             AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_FINISH, getOtherInSession(), 0, 0, 0, "");
 
         }
 
         /// <summary>
-        /// æ˜¾ç¤ºæœåŠ¡åŒºåŸŸ
+        /// ÏÔÊ¾·şÎñÇøÓò
         /// </summary>
         private void showServiceArea()
         {
@@ -840,44 +886,44 @@ namespace QueueClient
 
         #endregion
 
-        #region è§†é¢‘å‘¼å«äº‹ä»¶å¤„ç†
+        #region ÊÓÆµºô½ĞÊÂ¼ş´¦Àí
         private void VideoCallEvent_CallBack(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, string lpUserStr)
         {
             switch (dwEventType)
             {
-                //å‘¼å«è¯·æ±‚äº‹ä»¶
+                //ºô½ĞÇëÇóÊÂ¼ş
                 case AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_REQUEST:
                     VideoCall_Request_Handler(dwUserId, dwParam, lpUserStr);
                     break;
-                //å‘¼å«å›å¤äº‹ä»¶
+                //ºô½Ğ»Ø¸´ÊÂ¼ş
                 case AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_REPLY:
                     VideoCall_Reply_Handler(dwUserId, dwErrorCode, dwParam, lpUserStr);
                     break;
-                //å‘¼å«å¼€å§‹äº‹ä»¶
+                //ºô½Ğ¿ªÊ¼ÊÂ¼ş
                 case AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_START:
                     VideoCall_SessionStart_Handler(dwParam);
                     break;
-                //å‘¼å«ç»“æŸäº‹ä»¶
+                //ºô½Ğ½áÊøÊÂ¼ş
                 case AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_FINISH:
-                    VideoCall_Finished_Handler(Properties.Resources._18, "ä¼šè¯å·²ç»“æŸ...");
+                    VideoCall_Finished_Handler(Properties.Resources._18, "»á»°ÒÑ½áÊø...");
                     break;
             }
         }
         #endregion
 
-        #region ä¸šåŠ¡å¯¹è±¡äº‹ä»¶å¤„ç†
-        private void ObjectEvent_CallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        #region ÒµÎñ¶ÔÏóÊÂ¼ş´¦Àí
+        private void ObjectEvent_CallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue)
         {
             switch (dwEventType)
             {
                 case AnyChatCoreSDK.ANYCHAT_OBJECT_EVENT_UPDATE:
-                    AnyChatObjectEventUpdate_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+                    AnyChatObjectEventUpdate_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam, lpUserValue);
                     break;
                 case AnyChatCoreSDK.ANYCHAT_OBJECT_EVENT_SYNCDATAFINISH:
-                    AnyChatObjectSyncDataFinish_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+                    AnyChatObjectSyncDataFinish_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam, lpUserValue);
                     break;
                 case AnyChatCoreSDK.ANYCHAT_AREA_EVENT_ENTERRESULT:
-                    AnyChatEnterAreaResult_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+                    AnyChatEnterAreaResult_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam, lpUserValue);
                     break;
                 case AnyChatCoreSDK.ANYCHAT_AREA_EVENT_LEAVERESULT:
                     AnyChatLeaveAreaResult_Handler(dwObjectType, dwObjectId, dwParam1);
@@ -911,14 +957,15 @@ namespace QueueClient
                     break;
 
             }
+            
         }
 
         /// <summary>
-        /// å¯¹è±¡æ›´æ–°äº‹ä»¶
+        /// ¶ÔÏó¸üĞÂÊÂ¼ş
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
-        private void AnyChatObjectEventUpdate_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        private void AnyChatObjectEventUpdate_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue)
         {
             try
             {
@@ -934,16 +981,20 @@ namespace QueueClient
                         panel_area.Dock = DockStyle.Fill;
                         if (!panel_area.Visible) panel_area.Show();
 
-                        //å¢åŠ æœåŠ¡åŒºåŸŸæ˜¾ç¤º
+                        //Ôö¼Ó·şÎñÇøÓòÏÔÊ¾
                         AreaInfo area = new AreaInfo();
                         area.AreaID = dwObjectId;
-                        StringBuilder sbAreaName = new StringBuilder(100);
-                        AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbAreaName);
-                        area.AreaName = sbAreaName.ToString();
+                        StringBuilder sbAreaName = new StringBuilder();                                                
+                        //AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbAreaName);
+                        //area.AreaName = sbAreaName.ToString();
 
-                        StringBuilder sbAreaDesc = new StringBuilder(200);
-                        AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_DESCRIPTION, sbAreaDesc);
-                        area.AreaDescription = sbAreaDesc.ToString();
+                        byte[] areaNameByte = new byte[255];
+                        AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, ref areaNameByte[0]);
+                        area.AreaName = byteToString(areaNameByte);
+
+                        byte[] areaDescByte = new byte[255];
+                        AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_DESCRIPTION, ref areaDescByte[0]);
+                        area.AreaDescription = byteToString(areaDescByte);
 
                         AddAreaToForm(area);
 
@@ -952,26 +1003,29 @@ namespace QueueClient
             }
             catch (Exception exp)
             {
-                Log.SetLog("AnyChatObjectEventUpdate_Handler å¼‚å¸¸ï¼š" + exp.Message);
+                Log.SetLog("AnyChatObjectEventUpdate_Handler Òì³££º" + exp.Message);
 
             }
         }
 
-        private void AnyChatObjectSyncDataFinish_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        private void AnyChatObjectSyncDataFinish_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue)
         {
 
         }
 
         /// <summary>
-        /// è¿›å…¥æœåŠ¡åŒºåŸŸç»“æœé€šçŸ¥äº‹ä»¶
+        /// ½øÈë·şÎñÇøÓò½á¹ûÍ¨ÖªÊÂ¼ş
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
         /// <param name="dwErrorCode"></param>
-        private void AnyChatEnterAreaResult_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        private void AnyChatEnterAreaResult_Handler(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue)
         {
-            StringBuilder sbAreaName = new StringBuilder(100);
-            AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbAreaName);
+            string areaName = string.Empty;
+
+            byte[] areaNameByte = new byte[255];
+            AnyChatCoreSDK.BRAC_ObjectGetValue(dwObjectType, dwObjectId, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, ref areaNameByte[0]);
+            areaName = byteToString(areaNameByte);
 
             if (dwParam1 != 0)
                 return;
@@ -980,12 +1034,12 @@ namespace QueueClient
 
             switch (m_userIdentity)
             {
-                //æ˜¾ç¤ºè¥ä¸šå…çš„é˜Ÿåˆ—
+                //ÏÔÊ¾ÓªÒµÌüµÄ¶ÓÁĞ
                 case UserIdentityType.Client:
-                    InitQueuePanel(sbAreaName.ToString());
+                    InitQueuePanel(areaName);
 
                     int idx = 0;
-                    //è·å–è¥ä¸šå…å†…çš„é˜Ÿåˆ—ä¿¡æ¯
+                    //»ñÈ¡ÓªÒµÌüÄÚµÄ¶ÓÁĞĞÅÏ¢
                     AnyChatCoreSDK.BRAC_ObjectGetIdList(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, null, ref idx);
                     int[] queueIds = new int[idx];
                     AnyChatCoreSDK.BRAC_ObjectGetIdList(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueIds, ref idx);
@@ -995,13 +1049,13 @@ namespace QueueClient
                         QueueInfo queue = new QueueInfo();
                         queue.QueueID = queueID;
 
-                        StringBuilder sbQueueName = new StringBuilder();
-                        AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbQueueName);
-                        queue.QueueName = sbQueueName.ToString();
+                        byte[] queueNameByte = new byte[255];
+                        AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, ref queueNameByte[0]);
+                        queue.QueueName = byteToString(queueNameByte); ;
 
-                        StringBuilder sbQueueDesc = new StringBuilder();
-                        AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_DESCRIPTION, sbQueueDesc);
-                        queue.QueueDescription = sbQueueDesc.ToString();
+                        byte[] queueDescByte = new byte[255];
+                        AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_DESCRIPTION, ref queueDescByte[0]);
+                        queue.QueueDescription = byteToString(queueDescByte);
 
                         int queueUserCount = 0;
                         AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_QUEUE_INFO_LENGTH, ref queueUserCount);
@@ -1016,7 +1070,9 @@ namespace QueueClient
                     break;
 
                 case UserIdentityType.Agent:
-                    lbl_tipMessage.Text = "åå¸­æœåŠ¡çª—å£";
+                    lbl_tipMessage.Text = "×øÏ¯·şÎñ´°¿Ú";
+
+                    comboBox_AgentStatus.SelectedIndex = 0;
 
                     showAgentServiceFace();
 
@@ -1028,7 +1084,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// ç¦»å¼€æœåŠ¡åŒºåŸŸç»“æœé€šçŸ¥äº‹ä»¶
+        /// Àë¿ª·şÎñÇøÓò½á¹ûÍ¨ÖªÊÂ¼ş
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
@@ -1043,7 +1099,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// è¥ä¸šå…çŠ¶æ€å˜åŒ–äº‹ä»¶
+        /// ÓªÒµÌü×´Ì¬±ä»¯ÊÂ¼ş
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
@@ -1064,7 +1120,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// è¿›å…¥é˜Ÿåˆ—ç»“æœé€šçŸ¥äº‹ä»¶
+        /// ½øÈë¶ÓÁĞ½á¹ûÍ¨ÖªÊÂ¼ş
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
@@ -1089,14 +1145,14 @@ namespace QueueClient
                 HideAllPanel();
                 if (!panel_waitingMessage.Visible) panel_waitingMessage.Show();
 
-                lbl_tipMessage.Text = selectedQueue.QueueName +  " - æ’é˜Ÿç­‰å¾…ä¸­";
+                lbl_tipMessage.Text = selectedQueue.QueueName +  " - ÅÅ¶ÓµÈ´ıÖĞ";
 
             }
 
         }
 
         /// <summary>
-        /// ç¦»å¼€é˜Ÿåˆ—ç»“æœé€šçŸ¥äº‹ä»¶
+        /// Àë¿ª¶ÓÁĞ½á¹ûÍ¨ÖªÊÂ¼ş
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
@@ -1109,7 +1165,7 @@ namespace QueueClient
                 currentBusinessFunc = BusinessFuncType.SelectAreaFunc;
                 //selectedQueue = null;               
 
-                //ç¦»å¼€é˜Ÿåˆ—åæ˜¾ç¤ºé˜Ÿåˆ—åˆ—è¡¨ç•Œé¢
+                //Àë¿ª¶ÓÁĞºóÏÔÊ¾¶ÓÁĞÁĞ±í½çÃæ
                 RemoveWaitingMessageButton();
 
                 showQueueListFace();
@@ -1118,7 +1174,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// å…¶ä»–ç”¨æˆ·è¿›å…¥é˜Ÿåˆ—
+        /// ÆäËûÓÃ»§½øÈë¶ÓÁĞ
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
@@ -1129,7 +1185,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// å…¶ä»–ç”¨æˆ·ç¦»å¼€é˜Ÿåˆ—
+        /// ÆäËûÓÃ»§Àë¿ª¶ÓÁĞ
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
@@ -1140,7 +1196,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// é˜Ÿåˆ—çŠ¶æ€å˜åŒ–ç»“æœé€šçŸ¥äº‹ä»¶
+        /// ¶ÓÁĞ×´Ì¬±ä»¯½á¹ûÍ¨ÖªÊÂ¼ş
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
@@ -1165,13 +1221,14 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// åå¸­çŠ¶æ€å˜åŒ–ç»“æœé€šçŸ¥äº‹ä»¶
+        /// ×øÏ¯×´Ì¬±ä»¯½á¹ûÍ¨ÖªÊÂ¼ş
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
         /// <param name="dwParam1"></param>
         private void AnyChatAgentStatusChange_Handler(int dwObjectType, int dwObjectId, int dwParam1)
         {
+            var statusText = "×øÏ¯µ±Ç°×´Ì¬£º";
             if (dwObjectType == AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT && m_UserId == dwObjectId)
             {
                 if (dwParam1 == AnyChatCoreSDK.ANYCHAT_AGENT_STATUS_WAITTING)
@@ -1183,18 +1240,34 @@ namespace QueueClient
                     btn_return.Enabled = true;
                     btnStartService.Enabled = true;
                     btnStopService.Enabled = false;
-
+                    lbl_CurrentStatus.Text = statusText + "¿ÕÏĞ";
                     showAgentServiceFace();
+                    comboBox_AgentStatus.Enabled = true;
+                }
+                if (dwParam1 == AnyChatCoreSDK.ANYCHAT_AGENT_STATUS_WORKING)
+                {
+                    lbl_CurrentStatus.Text = statusText + "Ã¦";
+                    comboBox_AgentStatus.Enabled = false;
+                }
+                if (dwParam1 == AnyChatCoreSDK.ANYCHAT_AGENT_STATUS_PAUSED)
+                {
+                    lbl_CurrentStatus.Text = statusText + "ÔİÍ£";
+                    comboBox_AgentStatus.Enabled = true;
+                }
+                if (dwParam1 == AnyChatCoreSDK.ANYCHAT_AGENT_STATUS_CLOSEED)
+                {
+                    lbl_CurrentStatus.Text = statusText + "¹Ø±Õ";
+                    comboBox_AgentStatus.Enabled = true;
                 }
             }
         }
 
         /// <summary>
-        /// åå¸­æœåŠ¡é€šçŸ¥äº‹ä»¶
+        /// ×øÏ¯·şÎñÍ¨ÖªÊÂ¼ş
         /// </summary>
-        /// <param name="dwAgentId">åå¸­Id</param>
-        /// <param name="clientId">æœåŠ¡çš„å®¢æˆ·Id</param>
-        /// <param name="dwQueueId">å®¢æˆ·æ‰€åœ¨é˜Ÿåˆ—Id</param>
+        /// <param name="dwAgentId">×øÏ¯Id</param>
+        /// <param name="clientId">·şÎñµÄ¿Í»§Id</param>
+        /// <param name="dwQueueId">¿Í»§ËùÔÚ¶ÓÁĞId</param>
         /// <param name="dwErrorCode"></param>
         private void AnyChatAgentServiceNotify_Handler(int dwAgentId, int clientId, int dwQueueId)
         {
@@ -1202,26 +1275,25 @@ namespace QueueClient
             {
                 refreshServicedUserInfo(clientId);
 
-                //å‘é€è§†é¢‘å‘¼å«ï¼Œæœ€åä¸¤ä¸ªå‚æ•°ä¸ºè‡ªå®šä¹‰å‚æ•°
+                //·¢ËÍÊÓÆµºô½Ğ£¬×îºóÁ½¸ö²ÎÊıÎª×Ô¶¨Òå²ÎÊı
                 AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_REQUEST, clientId, 0, 0, 0, m_UserName);
                 intCallTimer = 10;
                 mTargetUserId = clientId;
-                ShowCallMessage(Properties.Resources._23, "æ­£åœ¨å‘èµ·è§†é¢‘å‘¼å«è¯·æ±‚...");
+                ShowCallMessage(Properties.Resources._23, "ÕıÔÚ·¢ÆğÊÓÆµºô½ĞÇëÇó...");
                 timer_call.Start();
-
             }
 
         }
 
         /// <summary>
-        /// åå¸­ç­‰å¾…ç”¨æˆ·é€šçŸ¥äº‹ä»¶
+        /// ×øÏ¯µÈ´ıÓÃ»§Í¨ÖªÊÂ¼ş
         /// </summary>
         /// <param name="dwObjectType"></param>
         /// <param name="dwObjectId"></param>
         /// <param name="dwErrorCode"></param>
         private void AnyChatAgentWaitingUser_Handler()
         {
-            MessageBox.Show("é˜Ÿåˆ—ä¸­å·²æ²¡æœ‰å®¢æˆ·ï¼");
+            MessageBox.Show("¶ÓÁĞÖĞÒÑÃ»ÓĞ¿Í»§£¡");
             btn_return.Enabled = true;
             btnStartService.Enabled = true;
             btnStopService.Enabled = false;
@@ -1229,27 +1301,28 @@ namespace QueueClient
 
         #endregion
 
-        #region å¸®åŠ©å‡½æ•°
+        #region °ïÖúº¯Êı
 
         /// <summary>
-        /// æ ¹æ®IDè·å–ç”¨æˆ·å¯¹è±¡(ä¸èƒ½è·å–è‡ªå·±çš„)
+        /// ¸ù¾İID»ñÈ¡ÓÃ»§¶ÔÏó(²»ÄÜ»ñÈ¡×Ô¼ºµÄ)
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         private UserInfo GetUserInfoByUserId(int id)
         {
             UserInfo mode = new UserInfo();
-            StringBuilder sbUserName = new StringBuilder(100);
-            AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, id, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, sbUserName);
+
+            byte[] userNameByte = new byte[255];
+            AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_CLIENTUSER, id, AnyChatCoreSDK.ANYCHAT_OBJECT_INFO_NAME, ref userNameByte[0]);
             mode.Id = id;
-            mode.Name = sbUserName.ToString();
+            mode.Name = byteToString(userNameByte);
             return mode;
         }
 
         /// <summary>
-        /// è·å–é€šè¯ä¸­çš„å¦å¤–ä¸€æ–¹
+        /// »ñÈ¡Í¨»°ÖĞµÄÁíÍâÒ»·½
         /// </summary>
-        /// <returns>é€šè¯ä¸­å¦å¤–ä¸€æ–¹çš„userid</returns>
+        /// <returns>Í¨»°ÖĞÁíÍâÒ»·½µÄuserid</returns>
         public int getOtherInSession()
         {
             if (ConversationMode != null)
@@ -1263,7 +1336,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// æ ¼å¼åŒ–ç§’ä¸ºâ€œåˆ†:ç§’â€å½¢å¼
+        /// ¸ñÊ½»¯ÃëÎª¡°·Ö:Ãë¡±ĞÎÊ½
         /// </summary>
         /// <param name="second"></param>
         /// <returns></returns>
@@ -1273,7 +1346,7 @@ namespace QueueClient
             string retVal = string.Empty;
 
             int s = second;
-            int min = 0;// åˆ†
+            int min = 0;// ·Ö
             if (s > 60)
             {
                 min = s / 60;
@@ -1284,10 +1357,10 @@ namespace QueueClient
                 }
             }
 
-            retVal = "" + s + "ç§’";
+            retVal = "" + s + "Ãë";
             if (min > 0)
             {
-                retVal = "" + min + "åˆ†" + retVal;
+                retVal = "" + min + "·Ö" + retVal;
             }
 
             return retVal;
@@ -1296,7 +1369,7 @@ namespace QueueClient
 
         #endregion
 
-        #region è®¡æ—¶å™¨æ§åˆ¶å‘¼å«è¿‡ç¨‹ç•Œé¢æ˜¾ç¤º
+        #region ¼ÆÊ±Æ÷¿ØÖÆºô½Ğ¹ı³Ì½çÃæÏÔÊ¾
 
         private void timer_call_Tick(object sender, EventArgs e)
         {
@@ -1318,22 +1391,22 @@ namespace QueueClient
             }
             catch (Exception ex)
             {
-                Log.SetLog("QueueClient.Hall.timer_call_Tick       timer_call_Tickï¼š" + ex.Message.ToString());
+                Log.SetLog("QueueClient.Hall.timer_call_Tick       timer_call_Tick£º" + ex.Message.ToString());
             }
         }
         #endregion
 
-        #region è¥ä¸šå…æ•°æ®å¤„ç†
+        #region ÓªÒµÌüÊı¾İ´¦Àí
 
         /// <summary>
-        /// æ¯ä¸ªè¥ä¸šå…ä¹‹é—´çš„é—´éš”
+        /// Ã¿¸öÓªÒµÌüÖ®¼äµÄ¼ä¸ô
         /// </summary>
         int areaInterval = 30;
         int intAreaLeft = 0;
         int intAreaTop = 30;
 
         /// <summary>
-        /// åˆå§‹åŒ–è£…è½½è¥ä¸šå…æ•°æ®çš„panel
+        /// ³õÊ¼»¯×°ÔØÓªÒµÌüÊı¾İµÄpanel
         /// </summary>
         private void InitAreaPanel()
         {
@@ -1344,11 +1417,11 @@ namespace QueueClient
             panel_area.Controls.Clear();
 
             panel_area.Show();
-            lbl_tipMessage.Text = "è¥ä¸šå…åˆ—è¡¨";
+            lbl_tipMessage.Text = "ÓªÒµÌüÁĞ±í";
         }
 
         /// <summary>
-        /// æ·»åŠ è¥ä¸šå…åˆ°ç•Œé¢ä¸­
+        /// Ìí¼ÓÓªÒµÌüµ½½çÃæÖĞ
         /// </summary>
         /// <param name="mode"></param>
         private void AddAreaToForm(AreaInfo mode)
@@ -1356,7 +1429,7 @@ namespace QueueClient
             PictureBox areaBox = new PictureBox();
             areaBox.Name = "area" + mode.AreaID;
             areaBox.Tag = mode;
-            //æ¯ä¸ªareaBoxçš„å®½åº¦ä¸º300ã€é«˜åº¦ä¸º120
+            //Ã¿¸öareaBoxµÄ¿í¶ÈÎª300¡¢¸ß¶ÈÎª120
             areaBox.Size = new Size(300, 120);
             if (intAreaLeft < areaBox.Width * 3 + areaInterval * 2)
                 intAreaLeft += areaInterval;
@@ -1381,7 +1454,7 @@ namespace QueueClient
         }
         
         /// <summary>
-        /// é¼ æ ‡ç¦»å¼€è¥ä¸šå…
+        /// Êó±êÀë¿ªÓªÒµÌü
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1397,7 +1470,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// é¼ æ ‡è¿›å…¥è¥ä¸šå…
+        /// Êó±ê½øÈëÓªÒµÌü
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1418,7 +1491,7 @@ namespace QueueClient
         
 
         /// <summary>
-        /// ç»˜åˆ¶è¥ä¸šå…å›¾æ ‡
+        /// »æÖÆÓªÒµÌüÍ¼±ê
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1429,18 +1502,18 @@ namespace QueueClient
                 AreaInfo mode = (sender as PictureBox).Tag as AreaInfo;
                 Graphics g = e.Graphics;
                 g.DrawImage(Properties.Resources.area, new Point(5, ((sender as PictureBox).Height - Properties.Resources.area.Height)/2));
-                g.DrawString(mode.AreaName, new Font("å¾®è½¯é›…é»‘", 16), new SolidBrush(Color.White), new RectangleF(new PointF(Properties.Resources.area.Width + 20, 20), new SizeF(170, 50)));
-                g.DrawString("ç¼–å·ï¼š" + mode.AreaID, new Font("å¾®è½¯é›…é»‘", 12), new SolidBrush(Color.White), new RectangleF(new PointF(Properties.Resources.area.Width + 20, 75), new SizeF(170, 35)));
-                //g.DrawString(mode.AreaDescription, new Font("å¾®è½¯é›…é»‘", 12), new SolidBrush(Color.White), new RectangleF(new PointF(Properties.Resources.area.Width + 5, 85), new SizeF(170, 35)));
+                g.DrawString(mode.AreaName, new Font("Î¢ÈíÑÅºÚ", 16), new SolidBrush(Color.White), new RectangleF(new PointF(Properties.Resources.area.Width + 20, 20), new SizeF(170, 50)));
+                g.DrawString("±àºÅ£º" + mode.AreaID, new Font("Î¢ÈíÑÅºÚ", 12), new SolidBrush(Color.White), new RectangleF(new PointF(Properties.Resources.area.Width + 20, 75), new SizeF(170, 35)));
+                //g.DrawString(mode.AreaDescription, new Font("Î¢ÈíÑÅºÚ", 12), new SolidBrush(Color.White), new RectangleF(new PointF(Properties.Resources.area.Width + 5, 85), new SizeF(170, 35)));
             }
             catch (Exception ex)
             {
-                Log.SetLog("QueueClient.Hall.area_Paint       area_Paintï¼š" + ex.Message.ToString());
+                Log.SetLog("QueueClient.Hall.area_Paint       area_Paint£º" + ex.Message.ToString());
             }
         }
 
         /// <summary>
-        /// å•å‡»è¥ä¸šå…
+        /// µ¥»÷ÓªÒµÌü
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1448,7 +1521,7 @@ namespace QueueClient
         {
             try
             {
-                ShowWaitingMessage(Properties.Resources._15, "æ­£åœ¨è¿›å…¥è¥ä¸šå…ï¼Œè¯·ç¨å€™......");
+                ShowWaitingMessage(Properties.Resources._15, "ÕıÔÚ½øÈëÓªÒµÌü£¬ÇëÉÔºò......");
 
                 isEnterArea = true;
 
@@ -1458,30 +1531,30 @@ namespace QueueClient
 
                 queueList.Clear();
 
-                //è¿›å…¥è¥ä¸šå…
+                //½øÈëÓªÒµÌü
                 int retCode = AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AREA, tAreaID, AnyChatCoreSDK.ANYCHAT_AREA_CTRL_USERENTER, 0, 0, 0, 0, string.Empty);
 
                 selectedArea = mode;
             }
             catch (Exception exp)
             {
-                Log.SetLog("QueueClient.Hall.area_Click       area_Clickï¼š" + exp.Message.ToString());
+                Log.SetLog("QueueClient.Hall.area_Click       area_Click£º" + exp.Message.ToString());
 
             }
         }
 
         #endregion
 
-        #region é˜Ÿåˆ—æ•°æ®å¤„ç†
+        #region ¶ÓÁĞÊı¾İ´¦Àí
         /// <summary>
-        /// æ¯ä¸ªé˜Ÿåˆ—ä¹‹é—´çš„é—´éš”
+        /// Ã¿¸ö¶ÓÁĞÖ®¼äµÄ¼ä¸ô
         /// </summary>
         int queueInterval = 50;
         int intQueueLeft = 0;
         int intQueueTop = 30;
 
         /// <summary>
-        /// åˆå§‹åŒ–è£…è½½é˜Ÿåˆ—æ•°æ®çš„panel
+        /// ³õÊ¼»¯×°ÔØ¶ÓÁĞÊı¾İµÄpanel
         /// </summary>
         private void InitQueuePanel(string areaName)
         {
@@ -1494,13 +1567,13 @@ namespace QueueClient
             //panel_area.Hide();
             if (panel_area.Visible) panel_area.Hide();
 
-            lbl_tipMessage.Text = areaName +" é˜Ÿåˆ—åˆ—è¡¨";
+            lbl_tipMessage.Text = areaName +" ¶ÓÁĞÁĞ±í";
 
             panel_queue.Dock = DockStyle.Fill;
         }
 
         /// <summary>
-        /// æ·»åŠ é˜Ÿåˆ—åˆ°ç•Œé¢ä¸­
+        /// Ìí¼Ó¶ÓÁĞµ½½çÃæÖĞ
         /// </summary>
         /// <param name="mode"></param>
         private void AddQueueToForm(QueueInfo mode)
@@ -1508,7 +1581,7 @@ namespace QueueClient
             PictureBox queueBox = new PictureBox();
             queueBox.Name = "queue" + mode.QueueID;
             queueBox.Tag = mode;
-            //æ¯ä¸ªareaBoxçš„å®½åº¦ä¸º440ã€é«˜åº¦ä¸º150
+            //Ã¿¸öareaBoxµÄ¿í¶ÈÎª440¡¢¸ß¶ÈÎª150
             queueBox.Size = new Size(440, 150);
             if (intQueueLeft < queueBox.Width * 2 + queueInterval * 2)
                 intQueueLeft += queueInterval;
@@ -1535,7 +1608,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// é¼ æ ‡ç¦»å¼€é˜Ÿåˆ—
+        /// Êó±êÀë¿ª¶ÓÁĞ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1551,7 +1624,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// é¼ æ ‡è¿›å…¥é˜Ÿåˆ—
+        /// Êó±ê½øÈë¶ÓÁĞ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1572,7 +1645,7 @@ namespace QueueClient
 
 
         /// <summary>
-        /// ç»˜åˆ¶é˜Ÿåˆ—å›¾æ ‡
+        /// »æÖÆ¶ÓÁĞÍ¼±ê
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1588,17 +1661,17 @@ namespace QueueClient
                 //g.DrawImage(Properties.Resources.area, new Point(0, ((sender as PictureBox).Height - Properties.Resources.area.Height) / 2));
                 int queueXPoint = 10;
 
-                g.DrawString(mode.QueueName+"("+ "ç¼–å·ï¼š" + mode.QueueID +")", new Font("å¾®è½¯é›…é»‘", 16), new SolidBrush(Color.White), new RectangleF(new PointF(queueXPoint + 20, 20), new SizeF(350, 50)));                
-                g.DrawString(mode.QueueDescription + "(å½“å‰æ’é˜Ÿäººæ•°ï¼š" + mode.inQueueClientCount + "äºº)", new Font("å¾®è½¯é›…é»‘", 12), new SolidBrush(Color.White), new RectangleF(new PointF(queueXPoint + 50, 85), new SizeF(380, 40)));
+                g.DrawString(mode.QueueName+"("+ "±àºÅ£º" + mode.QueueID +")", new Font("Î¢ÈíÑÅºÚ", 16), new SolidBrush(Color.White), new RectangleF(new PointF(queueXPoint + 20, 20), new SizeF(350, 50)));                
+                g.DrawString(mode.QueueDescription + "(µ±Ç°ÅÅ¶ÓÈËÊı£º" + mode.inQueueClientCount + "ÈË)", new Font("Î¢ÈíÑÅºÚ", 12), new SolidBrush(Color.White), new RectangleF(new PointF(queueXPoint + 50, 85), new SizeF(380, 40)));
             }
             catch (Exception ex)
             {
-                Log.SetLog("QueueClient.Hall.area_Paint       area_Paintï¼š" + ex.Message.ToString());
+                Log.SetLog("QueueClient.Hall.area_Paint       area_Paint£º" + ex.Message.ToString());
             }
         }
 
         /// <summary>
-        /// å•å‡»é˜Ÿåˆ—
+        /// µ¥»÷¶ÓÁĞ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1615,7 +1688,7 @@ namespace QueueClient
             switch (m_userIdentity)
             {
                 case UserIdentityType.Client:
-                    //è¿›å…¥é˜Ÿåˆ—
+                    //½øÈë¶ÓÁĞ
 
                     EnterQueueWaitingProcess();
 
@@ -1623,7 +1696,7 @@ namespace QueueClient
                     break;
 
                 case UserIdentityType.Agent:
-                    //æ˜¾ç¤ºåå¸­è§†é¢‘å‘¼å«ç•Œé¢
+                    //ÏÔÊ¾×øÏ¯ÊÓÆµºô½Ğ½çÃæ
 
                     break;
             }
@@ -1631,7 +1704,7 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// ç”¨æˆ·è¿›å…¥é˜Ÿåˆ—åç­‰å¾…å¤„ç†
+        /// ÓÃ»§½øÈë¶ÓÁĞºóµÈ´ı´¦Àí
         /// </summary>
         private void EnterQueueWaitingProcess()
         {
@@ -1641,12 +1714,12 @@ namespace QueueClient
                 lbl_waitingMessage.Text = string.Empty;
 
                 //timer_call.Start();
-                //timer_call.Stop();//å…³é—­è®¡æ—¶å™¨ï¼Œç¡®è®¤çŠ¶æ€
+                //timer_call.Stop();//¹Ø±Õ¼ÆÊ±Æ÷£¬È·ÈÏ×´Ì¬
                 Button btnCancel = new Button();
-                btnCancel.Font = new Font("å¾®è½¯é›…é»‘", 20);
+                btnCancel.Font = new Font("Î¢ÈíÑÅºÚ", 20);
                 btnCancel.Size = new Size(140, 50);
                 btnCancel.Location = new Point(panel_waitingMessage.Width / 2 - btnCancel.Width / 2, picBox_waiting.Top + picBox_waiting.Height + 40);
-                btnCancel.Text = "å–æ¶ˆ";
+                btnCancel.Text = "È¡Ïû";
                 btnCancel.Tag = "btn";
                 btnCancel.BackColor = Color.Red;
                 btnCancel.ForeColor = Color.White;
@@ -1661,42 +1734,42 @@ namespace QueueClient
             {
                 timer_queueWaiting.Stop();
 
-                Log.SetLog("QueueClient.Hall.EnterQueueWaitingProcess       EnterQueueWaitingProcessï¼š" + ex.Message.ToString());
+                Log.SetLog("QueueClient.Hall.EnterQueueWaitingProcess       EnterQueueWaitingProcess£º" + ex.Message.ToString());
             }
         }
 
         /// <summary>
-        /// å•å‡»å–æ¶ˆæ’é˜Ÿ
+        /// µ¥»÷È¡ÏûÅÅ¶Ó
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         void btnCancel_Click(object sender, EventArgs e)
         {
 
-            //ç¦»å¼€é˜Ÿåˆ—
+            //Àë¿ª¶ÓÁĞ
             AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, selectedQueue.QueueID, AnyChatCoreSDK.ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
             
             
         }
 
-        //åˆ·æ–°ç”¨æˆ·è¿›å…¥é˜Ÿåˆ—åï¼Œæ’é˜Ÿç­‰å¾…æ—¶çš„æ˜¾ç¤ºä¿¡æ¯
+        //Ë¢ĞÂÓÃ»§½øÈë¶ÓÁĞºó£¬ÅÅ¶ÓµÈ´ıÊ±µÄÏÔÊ¾ĞÅÏ¢
         private void refreshUserWaitingInfo(int queueID) {
-            int queueUserNum = 0; //å½“å‰é˜Ÿåˆ—äººæ•°
-            int beforeUserNum = 0; //æ’åœ¨è‡ªå·±å‰é¢çš„é˜Ÿåˆ—äººæ•°
+            int queueUserNum = 0; //µ±Ç°¶ÓÁĞÈËÊı
+            int beforeUserNum = 0; //ÅÅÔÚ×Ô¼ºÇ°ÃæµÄ¶ÓÁĞÈËÊı
 
-            //è·å–å½“å‰é˜Ÿåˆ—äººæ•°
+            //»ñÈ¡µ±Ç°¶ÓÁĞÈËÊı
             AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_QUEUE_INFO_LENGTH, ref queueUserNum);
 
-            //è·å–æ’åœ¨è‡ªå·±å‰é¢çš„ç”¨æˆ·æ•°
+            //»ñÈ¡ÅÅÔÚ×Ô¼ºÇ°ÃæµÄÓÃ»§Êı
             AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID, AnyChatCoreSDK.ANYCHAT_QUEUE_INFO_BEFOREUSERNUM, ref beforeUserNum);
             beforeUserNum = beforeUserNum < 0 ? 0 : beforeUserNum;
             beforeUserNum++;
 
-            lbl_waitingMessage.Text = "å½“å‰æ’é˜Ÿäººæ•°å…±ï¼š" + queueUserNum.ToString() + " äººï¼Œæ‚¨ç°åœ¨æ’åœ¨ç¬¬ " + beforeUserNum.ToString() + " ä½";
+            lbl_waitingMessage.Text = "µ±Ç°ÅÅ¶ÓÈËÊı¹²£º" + queueUserNum.ToString() + " ÈË£¬ÄúÏÖÔÚÅÅÔÚµÚ " + beforeUserNum.ToString() + " Î»";
         }
 
         /// <summary>
-        /// æ’é˜Ÿç­‰å¾…æ—¶é—´è§¦å‘å¤„ç†
+        /// ÅÅ¶ÓµÈ´ıÊ±¼ä´¥·¢´¦Àí
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1707,7 +1780,7 @@ namespace QueueClient
             AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, selectedQueue.QueueID, AnyChatCoreSDK.ANYCHAT_QUEUE_INFO_WAITTIMESECOND, ref second);
             string strTime = formatSeconds(second);
 
-            lbl_waitingTime.Text = "å·²ç­‰å¾…æ—¶é—´ï¼š" + strTime;
+            lbl_waitingTime.Text = "ÒÑµÈ´ıÊ±¼ä£º" + strTime;
         }
 
 
@@ -1729,13 +1802,13 @@ namespace QueueClient
         }
 
         /// <summary>
-        /// åˆ·æ–°é˜Ÿåˆ—æ˜¾ç¤ºä¿¡æ¯ï¼ˆå¦‚é˜Ÿåˆ—äººæ•°ï¼‰
+        /// Ë¢ĞÂ¶ÓÁĞÏÔÊ¾ĞÅÏ¢£¨Èç¶ÓÁĞÈËÊı£©
         /// </summary>
         /// <param name="queueID"></param>
         private void refreshQueueInfoDisplay(QueueInfo queueID)
         {
             int queueUserNum = 0;
-            //è·å–å½“å‰é˜Ÿåˆ—äººæ•°
+            //»ñÈ¡µ±Ç°¶ÓÁĞÈËÊı
             AnyChatCoreSDK.BRAC_ObjectGetValue(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_QUEUE, queueID.QueueID, AnyChatCoreSDK.ANYCHAT_QUEUE_INFO_LENGTH, ref queueUserNum);
             queueID.inQueueClientCount = queueUserNum;
 
@@ -1745,6 +1818,43 @@ namespace QueueClient
         }
 
         #endregion
-        
+
+        private void comboBox_AgentStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (comboBox_AgentStatus.SelectedIndex){
+                case 0:
+                    AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_CTRL_SERVICESTATUS, AnyChatCoreSDK.ANYCHAT_AGENT_STATUS_WAITTING, 0, 0, 0, "");	
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_CTRL_SERVICESTATUS, AnyChatCoreSDK.ANYCHAT_AGENT_STATUS_PAUSED, 0, 0, 0, "");	
+                    break;
+                case 3:
+                    AnyChatCoreSDK.BRAC_ObjectControl(AnyChatCoreSDK.ANYCHAT_OBJECT_TYPE_AGENT, m_UserId, AnyChatCoreSDK.ANYCHAT_AGENT_CTRL_SERVICESTATUS, AnyChatCoreSDK.ANYCHAT_AGENT_STATUS_CLOSEED, 0, 0, 0, "");
+                    break;
+            }
+
+        }
+
+        /// <summary>
+        /// ×Ö½Ú×ª×Ö·û´®
+        /// </summary>
+        /// <param name="byteStr">×Ö½ÚÊı×é</param>
+        /// <returns>×ª»»ºóµÄ×Ö·û´®</returns>
+        public string byteToString(byte[] byteStr)
+        {
+            string retVal = "";
+            try
+            {
+                retVal = System.Text.Encoding.GetEncoding("GB18030").GetString(byteStr, 0, byteStr.Length);
+            }
+            catch(Exception exp)
+            {
+                Console.Write(exp.Message);
+            }
+            return retVal.TrimEnd('\0');
+        }
+
     }
 }

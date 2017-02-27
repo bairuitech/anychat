@@ -58,7 +58,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 	}
 
 	private void InitSDK() {
-		anychatSDK = new AnyChatCoreSDK();
+		anychatSDK = AnyChatCoreSDK.getInstance(this);
 		anychatSDK.SetBaseEvent(this);
 		anychatSDK.mSensorHelper.InitSensor(this);
 		AnyChatCoreSDK.mCameraHelper.SetContext(this);

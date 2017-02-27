@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_head"
+    android:orientation="vertical" >
+ 	
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip" 
+        android:layout_weight="1">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        
+        >
+
+	  <include
+	      android:layout_width="match_parent"
+	      android:layout_height="match_parent"
+	      layout="@layout/video_session"
+	      android:gravity="center_vertical" />
+	  <TextView 
+	      android:id="@+id/txt_time"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:textSize="16sp"
+	      android:textColor="#e64346"
+	      android:layout_gravity="right|top"
+	      android:layout_marginRight="25dp"
+	      android:layout_marginTop="25dp"/>
+
+	  </FrameLayout>
+	  </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_endsession"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"           
+            android:background="@drawable/end_session_bg"
+            android:gravity="center"
+            android:padding="10dip"
+            android:textColor="@color/dancen"
+            android:textSize="18sp"
+            android:text="结束服务" />
+
+        <!-- <ImageView
+            android:id="@+id/img_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dip"
+            android:layout_weight="1"
+            android:background="@drawable/btn_switchvideo_background"
+           
+            android:visibility="invisible" /> -->
+    </LinearLayout>
+
+</LinearLayout>

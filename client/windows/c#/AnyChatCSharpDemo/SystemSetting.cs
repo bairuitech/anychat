@@ -8,6 +8,7 @@ namespace ANYCHATAPI
 
     public delegate void TextReceivedHandler(int fromUID, int toUID, string Text, bool isserect);
     public delegate void TransBufferReceivedHandler(int userId, IntPtr buf, int len, int userValue);
+    public delegate void TransBufferExReceivedHandler(int userId, IntPtr buf, int len, int wParam, int lParam, int taskId, int userValue);
     public delegate void TransFileReceivedHandler(int userId, string fileName,string filePath, int fileLength, int wParam, int lParam,int taskId, int userValue);
     public delegate void SetRecordReceivedHandler(int userId, string filePath, int param, bool recordType, int userValue);
     public delegate void SetVolumeChange_CallBack(AnyChatCoreSDK.AudioDevice device, int currentVolume, int userValue);
@@ -53,12 +54,14 @@ namespace ANYCHATAPI
             AnyChatCoreSDK.SetTextMessageCallBack(text_Callback, hWnd.ToInt32());
             //透明通道
             AnyChatCoreSDK.SetTransBufferCallBack(transBuff_Callback, hWnd.ToInt32());
+            //透明通道扩展
+            AnyChatCoreSDK.SetTransBufferExCallBack(transBuffEx_Callback, hWnd.ToInt32());
             //p2p文件传输
             AnyChatCoreSDK.SetTransFileCallBack(transFile_callback, hWnd.ToInt32());
             ///与服务器端数据回调
             //AnyChatCoreSDK.SetSDKFilterDataCallBack(filterData_callback, hWnd.ToInt32());
             ///提供服务器端验证
-            AnyChatCoreSDK.SetServerAuthPass(new StringBuilder(""));
+            AnyChatCoreSDK.SetServerAuthPass("");
             //保存视频
             AnyChatCoreSDK.SetRecordCallBack(RecordCallBack_Callback, hWnd.ToInt32());
             //设置音量变化回调函数
@@ -82,8 +85,9 @@ namespace ANYCHATAPI
             AnyChatCoreSDK.Release();
         }
 
-        static AnyChatCoreSDK.TransBufferCallBack transBuff_Callback =
-            new AnyChatCoreSDK.TransBufferCallBack(TransBuffer_CallBack);
+        static AnyChatCoreSDK.TransBufferCallBack transBuff_Callback = new AnyChatCoreSDK.TransBufferCallBack(TransBuffer_CallBack);
+
+        static AnyChatCoreSDK.TransBufferExCallBack transBuffEx_Callback = new AnyChatCoreSDK.TransBufferExCallBack(TransBufferEx_CallBack);
 
         static AnyChatCoreSDK.VideoData_CallBack video_Callback = new AnyChatCoreSDK.VideoData_CallBack(VideoData_CallBack);
 
@@ -166,6 +170,19 @@ namespace ANYCHATAPI
                 TransBuffer_OnReceive(userId, buf, len, userValue);
         }
 
+        public static TransBufferExReceivedHandler TransBufferEx_OnReceive = null;
+        /// <summary>
+        /// 透明通道回调
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="buf"></param>
+        /// <param name="len"></param>
+        /// <param name="userValue"></param>
+        private static void TransBufferEx_CallBack(int userId, IntPtr buf, int len,int wParam,int lParam,int taskId, int userValue)
+        {
+            if (TransBufferEx_OnReceive != null)
+                TransBufferEx_OnReceive(userId, buf, len, wParam, lParam, taskId, userValue);
+        }
         public static SetVolumeChange_CallBack SetVolumeChange_OnReceive = null;
         /// <summary>
         /// 设置音量变化回调函数定义
@@ -283,13 +300,13 @@ namespace ANYCHATAPI
         /// <param name="dwParam4"></param>
         /// <param name="strParam"></param>
         /// <param name="lpUserValue"></param>
-        public delegate void AnyChatObjectEventCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam);
+        public delegate void AnyChatObjectEventCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue);
         public static AnyChatObjectEventCallBack AnyChatObjectEvent_Handler;
-        private static void ObjectEvent_CallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam)
+        private static void ObjectEvent_CallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue)
         {
             if (AnyChatObjectEvent_Handler != null)
             {
-                AnyChatObjectEvent_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam);
+                AnyChatObjectEvent_Handler(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, strParam, lpUserValue);
             }
         }
     }

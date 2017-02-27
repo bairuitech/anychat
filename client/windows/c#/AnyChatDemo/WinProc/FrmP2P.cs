@@ -64,9 +64,6 @@ namespace WinProc
                 {
                      Print("登录服务器成功，自己的用户编号为：" + userid.ToString());
                     m_myUserID = userid;
-                    StringBuilder userName = new StringBuilder(30);
-
-                    int ret = AnyChatCoreSDK.GetUserName(userid, userName, 30);
                    
                     AnyChatCoreSDK.EnterRoom(m_RoomID, "", 0);
                 }

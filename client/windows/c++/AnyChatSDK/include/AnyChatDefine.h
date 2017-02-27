@@ -102,6 +102,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_EXTVIDEOINPUT		26	///< 外部扩展视频输入控制（参数为int型， 0 关闭外部视频输入[默认]， 1 启用外部视频输入）
 #define BRAC_SO_CORESDK_EXTAUDIOINPUT		27	///< 外部扩展音频输入控制（参数为int型， 0 关闭外部音频输入[默认]， 1 启用外部音频输入）
 #define BRAC_SO_CORESDK_LOWDELAYCTRL		28	///< 低延迟模式控制（参数为int型，0 关闭低延迟模式[默认]， 1 启用低延迟模式）
+#define BRAC_SO_CORESDK_NEWGUID				29	///< 产生新的GUID字符串
 
 #define BRAC_SO_LOCALVIDEO_BITRATECTRL		30	///< 本地视频编码码率设置（参数为int型，单位bps，同服务器配置：VideoBitrate）
 #define BRAC_SO_LOCALVIDEO_QUALITYCTRL		31	///< 本地视频编码质量因子控制（参数为int型，同服务器配置：VideoQuality）
@@ -176,6 +177,9 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_REMOTEASSISTHWND	214	///< 远程协助窗口句柄
 #define BRAC_SO_CORESDK_REMOTEASSISTXPOS	215	///< 远程协助窗口滚动条位置（X）
 #define BRAC_SO_CORESDK_REMOTEASSISTYPOS	216	///< 远程协助窗口滚动条位置（Y）
+#define BRAC_SO_CORESDK_DISABLEDNSCONNECT	219	///< 屏蔽DNS寻址
+#define BRAC_SO_CORESDK_LOGFILEROOTPATH		220	///< 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
+#define BRAC_SO_CORESDK_KEEPALLLOGFILES		221	///< 保存客户端所有日志文件（不覆盖之前的日志文件）
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE

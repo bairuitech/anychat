@@ -374,15 +374,28 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     
     NSString *s_useNameStr;
 
-    if ([lpUserStr isEqual: @"StarLocolSelfRecord"])
+//    if ([lpUserStr isEqual: @"StarLocolSelfRecord"])
+//    {
+//        s_useNameStr = self.theMyUserName;
+//    }
+//    else if ([lpUserStr isEqual: @"StarLocolRemoteRecord"])
+//    {
+//        s_useNameStr = self.theTargetUserName;
+//    }
+//    else if ([lpUserStr isEqual: @"StarLocolMaxRecord"])
+//    {
+//        s_useNameStr = @"合成录制";
+//    }
+    
+    if ([lpUserStr isEqual: @"StarLocolSelfRecord"] || [lpUserStr isEqual: @"StarServerSelfRecord"] )
     {
         s_useNameStr = self.theMyUserName;
     }
-    else if ([lpUserStr isEqual: @"StarLocolRemoteRecord"])
+    else if ([lpUserStr isEqual: @"StarLocolRemoteRecord"] || [lpUserStr isEqual: @"StarServerRemoteRecord"] )
     {
         s_useNameStr = self.theTargetUserName;
     }
-    else if ([lpUserStr isEqual: @"StarLocolMaxRecord"])
+    else if ([lpUserStr isEqual: @"StarLocolMaxRecord"] || [lpUserStr isEqual: @"StarServerMaxRecord"] )
     {
         s_useNameStr = @"合成录制";
     }

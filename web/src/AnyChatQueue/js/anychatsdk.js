@@ -57,6 +57,7 @@ var BRAC_SO_CORESDK_ACTIVESTATE = 			25;	// ”¶”√≥Ã–ÚªÓ∂Ø◊¥Ã¨øÿ÷∆£®≤Œ ˝Œ™int–Õ£¨ 
 var BRAC_SO_CORESDK_EXTVIDEOINPUT = 		26;	// Õ‚≤ø¿©’π ”∆µ ‰»Îøÿ÷∆£®≤Œ ˝Œ™int–Õ£¨ 0 πÿ±’Õ‚≤ø ”∆µ ‰»Î[ƒ¨»œ]£¨ 1 ∆Ù”√Õ‚≤ø ”∆µ ‰»Î£©
 var BRAC_SO_CORESDK_EXTAUDIOINPUT = 		27;	// Õ‚≤ø¿©’π“Ù∆µ ‰»Îøÿ÷∆£®≤Œ ˝Œ™int–Õ£¨ 0 πÿ±’Õ‚≤ø“Ù∆µ ‰»Î[ƒ¨»œ]£¨ 1 ∆Ù”√Õ‚≤ø“Ù∆µ ‰»Î£©
 var BRAC_SO_CORESDK_LOWDELAYCTRL = 			28;	// µÕ—”≥Ÿƒ£ Ωøÿ÷∆£®≤Œ ˝Œ™int–Õ£¨0 πÿ±’µÕ—”≥Ÿƒ£ Ω[ƒ¨»œ]£¨ 1 ∆Ù”√µÕ—”≥Ÿƒ£ Ω£©
+var BRAC_SO_CORESDK_NEWGUID	=				29;	// ≤˙…˙–¬µƒGUID◊÷∑˚¥Æ
 
 var BRAC_SO_LOCALVIDEO_BITRATECTRL = 		30;	// ±æµÿ ”∆µ±‡¬Î¬Î¬ …Ë÷√£®≤Œ ˝Œ™int–Õ£¨µ•Œªbps£¨Õ¨∑˛ŒÒ∆˜≈‰÷√£∫VideoBitrate£©
 var BRAC_SO_LOCALVIDEO_QUALITYCTRL = 		31;	// ±æµÿ ”∆µ±‡¬Î÷ ¡ø“Ú◊”øÿ÷∆£®≤Œ ˝Œ™int–Õ£¨Õ¨∑˛ŒÒ∆˜≈‰÷√£∫VideoQuality£©
@@ -78,6 +79,9 @@ var BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA = 		96;	// –ﬁ’˝ ”∆µ≤…ºØ—’…´∆´…´£®≤Œ ˝Œ™int–
 var BRAC_SO_LOCALVIDEO_TVFORMAT	=			104;//  ”∆µ≤…ºØ÷∆ Ω…Ë÷√£®≤Œ ˝Œ™£∫int–Õ£¨∂®“ÂŒ™DirectShow::strmif.h::AnalogVideoStandard£¨ƒ¨»œŒ™£∫AnalogVideo_PAL_B£©
 var BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP	=	105;// µ¸º” ±º‰¥¡µΩ±æµÿ ”∆µ£®≤Œ ˝Œ™£∫int–Õ£¨ 0 ≤ªµ¸º”[ƒ¨»œ]£¨ 1 µ¸º”£©
 var BRAC_SO_LOCALVIDEO_DEVICENAME =			106;// ±æµÿ ”∆µ≤…ºØ…Ë±∏√˚≥∆£¨”√”⁄…Ë÷√¥Úø™÷∏∂®…„œÒÕ∑…Ë±∏£®≤Œ ˝Œ™◊÷∑˚¥Æ¿‡–Õ£©
+var BRAC_SO_LOCALVIDEO_CLIPMODE	=			107;// ±æµÿ ”∆µ≤√ºÙƒ£ Ω£®≤Œ ˝Œ™int–Õ£¨ 0 ◊‘∂Ø[ƒ¨»œ]£¨Ω˚÷π◊‘∂Ø–˝◊™ ±”––ß£©
+var BRAC_SO_LOCALVIDEO_SCREENHWND	=		108;// ∆¡ƒª≤…ºØ¥∞ø⁄æ‰±˙
+var BRAC_SO_LOCALVIDEO_SCREENFLAGS	=		109;// ∆¡ƒª≤…ºØ±Í÷æ£®≤Œ ˝Œ™int–Õ£©
 
 var BRAC_SO_NETWORK_P2PPOLITIC = 			40;	// ±æµÿÕ¯¬ÁP2P≤ﬂ¬‘øÿ÷∆£®≤Œ ˝Œ™£∫int–Õ£∫0 Ω˚÷π±æµÿP2P£¨1 ∑˛ŒÒ∆˜øÿ÷∆P2P[ƒ¨»œ]£¨2 …œ≤„”¶”√øÿ÷∆P2P¡¨Ω”£¨3 ∞¥–ËΩ®¡¢P2P¡¨Ω”£©
 var BRAC_SO_NETWORK_P2PCONNECT = 			41;	// ≥¢ ‘”Î÷∏∂®”√ªßΩ®¡¢P2P¡¨Ω”£®≤Œ ˝Œ™int–Õ£¨±Ì æƒø±Í”√ªßID£©£¨¡¨Ω”Ω®¡¢≥…π¶∫Û£¨ª·Õ®π˝œ˚œ¢∑¥¿°∏¯…œ≤„”¶”√£¨P2Pøÿ÷∆≤ﬂ¬‘=2 ±”––ß
@@ -107,6 +111,16 @@ var BRAC_SO_CORESDK_SCREENCAMERACTRL =		131;// ◊¿√Êπ≤œÌπ¶ƒ‹øÿ÷∆£®≤Œ ˝Œ™£∫int–Õ£¨
 var BRAC_SO_CORESDK_UPLOADLOGINFO =			134;// …œ¥´»’÷æ–≈œ¢µΩ∑˛ŒÒ∆˜£®≤Œ ˝Œ™£∫int–Õ£¨0 πÿ±’[ƒ¨»œ]£¨ 1 ø™∆Ù£©
 var BRAC_SO_CORESDK_WRITELOG	=			135;// –¥»Îµ˜ ‘–≈œ¢µΩ±æµÿ»’÷æŒƒº˛÷–
 var BRAC_SO_CORESDK_NEWLOGFILE	=			136;// ≤˙…˙–¬µƒ»’÷æŒƒº˛
+var BRAC_SO_CORESDK_SUPPORTVIDEOCODEC =		210;// …Ë÷√÷ß≥÷µƒ ”∆µ±‡¬Î∆˜
+var BRAC_SO_CORESDK_SUPPORTAUDIOCODEC =		211;// …Ë÷√÷ß≥÷µƒ“Ù∆µ±‡¬Î∆˜
+var BRAC_SO_CORESDK_DISABLEMEDIACONSUL =	212;// Ω˚÷π√ΩÃÂ–≠…Ã
+var BRAC_SO_CORESDK_QUERYTIMEOUTTIME =		213;// –≈œ¢≤È—Ø≥¨ ± ±º‰£®≤Œ ˝Œ™£∫int–Õ£¨µ•Œª£∫ms£¨ƒ¨»œ÷µ1000£©
+var BRAC_SO_CORESDK_REMOTEASSISTHWND =		214;// ‘∂≥Ã–≠÷˙¥∞ø⁄æ‰±˙
+var BRAC_SO_CORESDK_REMOTEASSISTXPOS =		215;// ‘∂≥Ã–≠÷˙¥∞ø⁄πˆ∂ØÃıŒª÷√£®X£©
+var BRAC_SO_CORESDK_REMOTEASSISTYPOS =		216;// ‘∂≥Ã–≠÷˙¥∞ø⁄πˆ∂ØÃıŒª÷√£®Y£©
+var BRAC_SO_CORESDK_DISABLEDNSCONNECT=		219;// ∆¡±ŒDNS—∞÷∑
+var BRAC_SO_CORESDK_LOGFILEROOTPATH	=		220;// »’÷æŒƒº˛±£¥Ê∏˘¬∑æ∂£®»’÷æ÷ÿ∂®œÚ£¨≤Œ ˝Œ™◊÷∑˚¥Æ£¨æ¯∂‘¬∑æ∂£©
+var BRAC_SO_CORESDK_LOGFILERULE	=			221;// øÕªß∂À»’÷æŒƒº˛±£¥ÊπÊ‘Ú£®≤Œ ˝Œ™int–Õ£¨0 ◊‘∂Ø∏≤∏«[ƒ¨»œ] 1 ∞¥»’∆⁄±£¥Ê£¨≤ª∏≤∏«£©
 
 var BRAC_SO_UDPTRACE_MODE		=			160;// UDP ˝æ›∞¸∏˙◊Ÿƒ£ Ω
 var BRAC_SO_UDPTRACE_PACKSIZE	=			161;// UDP ˝æ›∞¸∏˙◊Ÿµƒ¥Û–°£¨µ•Œª£∫BYTE
@@ -271,6 +285,7 @@ var BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;	// ±æµÿ ”∆µ≤…ºØ∑ΩœÚ–ﬁ’˝£¨wParamŒ™∑Ω
 var ANYCHAT_SERVERQUERY_USERIDBYNAME	=	1;	// ∏˘æ›”√ªßÍ«≥∆≤È—Ø”√ªßID
 var ANYCHAT_SERVERQUERY_USERIDBYSTRID	=	2;	// ∏˘æ›◊÷∑˚¥ÆID≤È—Ø”√ªßID
 var ANYCHAT_SERVERQUERY_STRIDBYUSERID	=	3;	// ∏˘æ›”√ªßID≤È—Ø◊÷∑˚¥ÆID
+var ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	=	100;// ≤È—Ø÷∏∂®∂”¡–µƒ◊¯œØ∑˛ŒÒ–≈œ¢
 
 //  ”∆µœ‘ æ≤Âº˛…Ë÷√≤Œ ˝
 var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// ‘⁄ ”∆µ…œµ¸º”Œƒ◊÷°¢Õº∆¨µ»ƒ⁄»›
@@ -393,7 +408,9 @@ function BRAC_InitSDK(apilevel) {
 			if(typeof(OnAnyChatRecordSnapShotEx2) == "function" && bSupportCluster)
 				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx2', OnAnyChatRecordSnapShotEx2);
 			if(typeof(OnAnyChatObjectEvent) == "function" && bSupportObjectBusiness)
-				BRAC_RegisterCallBack(anychat, 'OnObjectEvent', OnAnyChatObjectEvent);		
+				BRAC_RegisterCallBack(anychat, 'OnObjectEvent', OnAnyChatObjectEvent);
+			if(typeof(OnAnyChatObjectEvent) == "function" && CUR_ANYCHAT_PLUGIN_VAR >= "1.0.6.0")
+				BRAC_RegisterCallBack(anychat, 'OnAnyChatCoreSDKEvent', OnAnyChatCoreSDKEvent);	
 		} else {
 			document.body.removeChild(insertdiv);
 		}
@@ -451,29 +468,33 @@ function BRAC_AttachIE11Event(obj, _strEventId, _functionCallback) {
 
 // ¥¥Ω® ”∆µœ‘ æ≤Âº˛
 function BRAC_NativeCreateVideoPlugin(userid, parentobj, id, streamindex) {
-	var videoobj = BRAC_GetDmoObject(id);
-	if(videoobj != null) {
-		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
-		videoobj.SetUserId(userid);
-		if(bSupportMultiStream)
-			videoobj.SetStreamIndex(streamindex);
-	} else {
-		// ¥¥Ω® ”∆µœ‘ æ≤Âº˛
-		videoobj = document.createElement("object")
-		if (window.ActiveXObject || "ActiveXObject" in window)
-			videoobj.classid = "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7";
-		else
-			videoobj.type = "application/anychat-video";
-		videoobj.id = id;
-		parentobj.appendChild(videoobj);
-		videoobj.width = "100%";
-		videoobj.height = "100%";
-		// πÿ¡™µΩAnyChat SDK
-		videoobj.SetIPCGuid(BRAC_GetIPCGuid());
-		videoobj.SetUserId(userid);
-		if(bSupportMultiStream)
-			videoobj.SetStreamIndex(streamindex);
-	}	
+	try{
+		var videoobj = BRAC_GetDmoObject(id);
+		if(videoobj != null) {
+			videoobj.SetIPCGuid(BRAC_GetIPCGuid());
+			videoobj.SetUserId(userid);
+			if(bSupportMultiStream)
+				videoobj.SetStreamIndex(streamindex);
+		} else {
+			// ¥¥Ω® ”∆µœ‘ æ≤Âº˛
+			videoobj = document.createElement("object")
+			if (window.ActiveXObject || "ActiveXObject" in window)
+				videoobj.classid = "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7";
+			else
+				videoobj.type = "application/anychat-video";
+			videoobj.id = id;
+			parentobj.appendChild(videoobj);
+			videoobj.width = "100%";
+			videoobj.height = "100%";
+			// πÿ¡™µΩAnyChat SDK
+			videoobj.SetIPCGuid(BRAC_GetIPCGuid());
+			videoobj.SetUserId(userid);
+			if(bSupportMultiStream)
+				videoobj.SetStreamIndex(streamindex);
+		}			
+	}catch(e){
+		console.log("CreateVideoPlugin function has exception£∫" + e);
+	}
 }
 
 // …Ë÷√ ”∆µœ‘ æŒª÷√
@@ -920,10 +941,59 @@ function BRAC_GetUserStreamInfoString(dwUserId, dwStreamIndex, infoname) {
 }
 
 // œÚ∑˛ŒÒ∆˜∂ØÃ¨≤È—Øœ‡πÿ–≈œ¢
-function QueryInfoFromServer(dwInfoName, lpInParam) {
+function BRAC_QueryInfoFromServer(dwInfoName, lpInParam) {
 	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.5.0")
 		return "";
 	return anychat.QueryInfoFromServer(dwInfoName, lpInParam);
+}
+
+// Œƒº˛¥´ ‰¿©’πΩ”ø⁄
+function BRAC_TransFileEx(lpTaskGuid, dwUserId, lpLocalPathName, dwFlags, lpStrParam) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.TransFileEx(lpTaskGuid, dwUserId, lpLocalPathName, dwFlags, lpStrParam);
+}
+
+// ¥´ ‰»ŒŒÒ≤È—Ø¿©’πΩ”ø⁄
+function BRAC_QueryTransTaskInfoEx(lpTaskGuid, dwInfoName) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.QueryTransTaskInfoEx(lpTaskGuid, dwInfoName);
+}
+
+// »°œ˚¥´ ‰»ŒŒÒ¿©’πΩ”ø⁄
+function BRAC_CancelTransTaskEx(lpTaskGuid, dwFlags, dwErrorCode) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.CancelTransTaskEx(lpTaskGuid, dwFlags, dwErrorCode);
+}
+
+// ¡˜√ΩÃÂ≤•∑≈≥ı ºªØ
+function BRAC_StreamPlayInit(lpTaskGuid, lpStreamPath, dwFlags, lpStrParam) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.StreamPlayInit(lpTaskGuid, lpStreamPath, dwFlags, lpStrParam);
+}
+
+// ¡˜√ΩÃÂ≤•∑≈øÿ÷∆
+function BRAC_StreamPlayControl(lpTaskGuid, dwCtrlCode, dwParam, dwFlags, lpStrParam) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.StreamPlayControl(lpTaskGuid, dwCtrlCode, dwParam, dwFlags, lpStrParam);
+}
+
+// ¡˜√ΩÃÂ≤•∑≈ªÒ»°≤Œ ˝–≈œ¢
+function BRAC_StreamPlayGetInfo(lpTaskGuid, dwInfoName) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return "";
+	return anychat.StreamPlayGetInfo(lpTaskGuid, dwInfoName);
+}
+
+// ¡˜√ΩÃÂ≤•∑≈ Õ∑≈◊ ‘¥
+function BRAC_StreamPlayDestroy(lpTaskGuid, dwFlags) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
+		return 0;
+	return anychat.StreamPlayDestroy(lpTaskGuid, dwFlags);
 }
 
 // ªÒ»°µ±«∞‰Ø¿¿∆˜

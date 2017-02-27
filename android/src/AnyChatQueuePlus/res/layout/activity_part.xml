@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    tools:context="com.bairuitech.main.PartActivity$PlaceholderFragment" >
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="您可以办理以下业务:" 
+        android:textColor="@color/white"
+        android:textSize="18dp"/>
+    
+    <ListView android:id="@+id/yewu_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        
+    </ListView>
+
+</LinearLayout>

@@ -1,8 +1,9 @@
 本示例程序是对AnyChat的应用接入到SDK平台进行应用签名的服务器示例程序。该程序为命令行程序，运行后将提供HTTP服务，接受POST请求的参数生成应用签名。
 
-如何运行
-1. 双击“AnyChatSignServer.exe”程序或在命令行中运行“AnyChatSignServer.exe”；
-2. 通过http post工具或客户端，访问http://ip:port/，例如如下的ajax访问
+如何运行和使用
+1. 将应用（通过云平台或服务集群Web控制台创建的应用）的私钥文件复制到程序根目录，并重命名为：private_rsa.pem；
+2. 双击“AnyChatSignServer.exe”程序或在命令行中运行“AnyChatSignServer.exe”；
+3. 通过http post工具或客户端，访问http://ip:port/，例如如下的ajax访问
 
 $.ajax( {
     url : "http://127.0.0.1:8980/",
@@ -18,6 +19,7 @@ $.ajax( {
     success : function(data) { //若Ajax处理成功后返回的信息
     }
 });
+
 
 
 常见问题
