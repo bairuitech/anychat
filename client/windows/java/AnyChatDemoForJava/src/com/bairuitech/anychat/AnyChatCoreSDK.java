@@ -15,18 +15,9 @@ public class AnyChatCoreSDK
 	AnyChatDataEncDecEvent	encdecEvent;
 	AnyChatRecordEvent		recordEvent;
 	AnyChatObjectEvent		objectEvent;
+	AnyChatCoreSDKEvent		coresdkEvent;
 	
 	private static AnyChatCoreSDK mAnyChat = null;		// 单例模式对象
-	
-	private final int HANDLE_TYPE_NOTIFYMSG = 1;		// 消息通知
-	private final int HANDLE_TYPE_TEXTMSG 	= 2;		// 文字信息
-	private final int HANDLE_TYPE_TRANSFILE = 3;		// 文件传输
-	private final int HANDLE_TYPE_TRANSBUF	= 4;		// 缓冲区传输
-	private final int HANDLE_TYPE_TRANSBUFEX= 5;		// 扩展缓冲区传输
-	private final int HANDLE_TYPE_SDKFILTER	= 6;		// SDK Filter Data
-	private static int HANDLE_TYPE_VIDEOCALL= 7;		// 视频呼叫
-	private static int HANDLE_TYPE_RECORD	= 8;		// 录像、拍照
-	private static int HANDLE_TYPE_OBJECTEVENT= 9;		// 业务对象事件
 	
 	// 获取单例模式对象
 	public synchronized static AnyChatCoreSDK getInstance()
@@ -99,6 +90,12 @@ public class AnyChatCoreSDK
 	{
 		RegisterNotify();
 		this.objectEvent = e;
+	}
+	// 设置Core SDK事件通知接口
+	public void SetCoreSDKEvent(AnyChatCoreSDKEvent e)
+	{
+		RegisterNotify();
+		this.coresdkEvent = e;
 	}
 		
 	// 查询SDK主版本号
@@ -320,6 +317,16 @@ public class AnyChatCoreSDK
 	// 业务对象参数控制
 	public static native int ObjectControl(int dwObjectType, int dwObjectId, int dwCtrlCode, int dwParam1, int dwParam2, int dwParam3, int dwParam4, String lpStrValue);
 
+	// 流媒体播放初始化
+	public native int StreamPlayInit(String lpTaskGuid, String lpStreamPath, int dwFlags, String lpStrParam);
+	// 流媒体播放控制
+	public native int StreamPlayControl(String lpTaskGuid, int dwCtrlCode, int dwParam, int dwFlags, String lpStrParam);
+	// 流媒体播放设置视频显示位置
+	public native int StreamPlaySetVideoPos(String lpTaskGuid, Component s, int dwLeft, int dwTop, int dwRight, int dwBottom);
+	// 流媒体播放获取参数信息
+	public native String StreamPlayGetInfo(String lpTaskGuid, int dwInfoName);
+	// 流媒体播放释放资源
+	public native int StreamPlayDestroy(String lpTaskGuid, int dwFlags);
 	
     // 异步消息通知
     public void OnNotifyMsg(int dwNotifyMsg, int wParam, int lParam)
@@ -458,6 +465,13 @@ public class AnyChatCoreSDK
 	{
 		 if(AnyChatCoreSDK.this.objectEvent != null)
 			 AnyChatCoreSDK.this.objectEvent.OnAnyChatObjectEvent(dwObjectType, dwObjectId, dwEventType, dwParam1, dwParam2, dwParam3, dwParam4, lpStrParam);
+	}
+	
+	// Core SDK事件回调函数
+	private void OnAnyChatCoreSDKEventCallBack(int dwEventType, String lpJsonStr)
+	{
+		if(AnyChatCoreSDK.this.coresdkEvent != null)
+			AnyChatCoreSDK.this.coresdkEvent.OnAnyChatCoreSDKEvent(dwEventType, lpJsonStr);
 	}
     
     static {
