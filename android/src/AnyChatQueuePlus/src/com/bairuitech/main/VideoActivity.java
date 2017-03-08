@@ -124,7 +124,7 @@ import com.example.anychatqueueplusplus.R;
 	@Override
 	protected void onRestart() {
 		if (anychat == null){
-			anychat = new AnyChatCoreSDK();
+			anychat = AnyChatCoreSDK.getInstance(VideoActivity.this);
 		}
 		anychat.SetBaseEvent(this);
 		anychat.SetVideoCallEvent(this);
@@ -169,7 +169,7 @@ import com.example.anychatqueueplusplus.R;
 
 	private void initSdk() {
 		if (anychat == null)
-			anychat = new AnyChatCoreSDK();
+			anychat = AnyChatCoreSDK.getInstance(VideoActivity.this);
 		anychat.SetBaseEvent(this);
 		anychat.SetVideoCallEvent(this);
 		anychat.SetObjectEvent(this);

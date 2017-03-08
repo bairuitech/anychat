@@ -48,7 +48,7 @@ public class HallActivity extends Activity implements AnyChatBaseEvent{
     }
     private void InitialSDK()
     {
-        anychat = new AnyChatCoreSDK();
+        anychat = AnyChatCoreSDK.getInstance(HallActivity.this);
         anychat.SetBaseEvent(this);
         ApplyVideoConfig();
     }

@@ -29,7 +29,7 @@ public class CallingCenter {
 	}
 	
 	private void initParams(){
-		anyChatSDK = new AnyChatCoreSDK();
+		anyChatSDK = AnyChatCoreSDK.getInstance(mContext);
 	}
 	
 	public void onVideoCallRequest(int dwUserId, int dwFlags,
