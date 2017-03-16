@@ -16,7 +16,7 @@
 #define ANYCHAT_OBJECT_FLAGS_AUTOMODE	0x10	///< 自动服务模式
 #define ANYCHAT_OBJECT_FLAGS_GUESTLOGIN	0x20	///< 游客登录方式
 
-#define ANYCHAT_INVALID_OBJECT_ID	((DWORD)-1)	///< 无效的对象ID
+#define ANYCHAT_INVALID_OBJECT_ID           -1	///< 无效的对象ID
 
 // 坐席服务状态定义
 #define ANYCHAT_AGENT_STATUS_CLOSEED		0	///< 关闭，不对外提供服务（准备）
