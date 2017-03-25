@@ -68,21 +68,24 @@
     [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
     
     
-    TextModel *textModel = [TextModelTool textModel];
-    if (textModel.chatIp) {
-        self.theRoomNO.text = textModel.roomId;
-        self.theUserName.text = textModel.userName;
-        self.theServerIP.text = textModel.chatIp;
-        self.theServerPort.text = textModel.chatPort;
-    }else{
-        textModel.roomId = self.theRoomNO.text;
-        textModel.userName = self.theUserName.text;
-        textModel.chatIp = self.theServerIP.text;
-        textModel.chatPort = self.theServerPort.text;
-    }
-
+//    TextModel *textModel = [TextModelTool textModel];
+//    if (textModel.chatIp) {
+//        self.theRoomNO.text = textModel.roomId;
+//        self.theUserName.text = textModel.userName;
+//        self.theServerIP.text = textModel.chatIp;
+//        self.theServerPort.text = textModel.chatPort;
+//    }else{
+//        textModel.roomId = self.theRoomNO.text;
+//        textModel.userName = self.theUserName.text;
+//        textModel.chatIp = self.theServerIP.text;
+//        textModel.chatPort = self.theServerPort.text;
+//    }
+//
+//    
+//    [TextModelTool saveText:textModel];
     
-    [TextModelTool saveText:textModel];
+    
+    [self readSettings];
 }
 
 
@@ -304,6 +307,26 @@
     [[NSArray arrayWithObjects:theServerIP.text,theServerPort.text,theUserName.text,theRoomNO.text, nil] writeToFile:filePath atomically:YES];
 }
 
+-(void)readSettings
+{
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
+    NSArray* settingArray = [NSArray arrayWithContentsOfFile:filePath];
+    
+    if (settingArray.count >= 4) {
+        theServerIP.text = settingArray[0];
+        theServerPort.text = settingArray[1];
+        theUserName.text = settingArray[2];
+        theRoomNO.text = settingArray[3];
+    }
+    else
+    {
+        theUserName.text = kAnyChatUserName;
+        theServerIP.text = kAnyChatIP;
+        theServerPort.text = kAnyChatPort;
+        theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
+    }
+}
 
 #pragma mark - Instance Method
 
@@ -409,11 +432,11 @@
 {
     [self.navigationController setNavigationBarHidden:YES];
     
-    theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
+ //   theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
     theRoomNO.keyboardType = UIKeyboardTypePhonePad;
-    theUserName.text = kAnyChatUserName;
-    theServerIP.text = kAnyChatIP;
-    theServerPort.text = kAnyChatPort;
+//    theUserName.text = kAnyChatUserName;
+//    theServerIP.text = kAnyChatIP;
+//    theServerPort.text = kAnyChatPort;
     
     [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
