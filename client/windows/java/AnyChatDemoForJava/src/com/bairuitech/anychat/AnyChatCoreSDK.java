@@ -210,14 +210,20 @@ public class AnyChatCoreSDK
 	public native int SendTextMessage(int userid, int secret, String message);
 	// 传送文件
 	public native int TransFile(int userid, String filepath, int wparam, int lparam, int flags, AnyChatOutParam outParam);
+	// 传送文件（扩展）
+	public native int TransFileEx(String taskguid, int userid, String filepath, int flags, String userstr);
 	// 透明通道传送缓冲区
 	public native int TransBuffer(int userid, byte[] buf, int len);
 	// 透明通道传送缓冲区扩展
 	public native int TransBufferEx(int userid, byte[] buf, int len, int wparam, int lparam, int flags, AnyChatOutParam outParam);
 	// 终止传输任务
 	public native int CancelTransTask(int userid, int taskid);
+	// 取消传输任务（扩展）
+	public native int CancelTransTaskEx(String taskguid, int flags, int errorcode);
 	// 查询传输任务状态
 	public native int QueryTransTaskInfo(int userid, int taskid, int infoname, AnyChatOutParam outParam);
+	// 查询传输任务相关信息（扩展）
+	public native int QueryTransTaskInfoEx(String taskguid, int infoname, AnyChatOutParam outParam);
 	// 发送SDK Filter 通信数据
 	public native int SendSDKFilterData(byte[] buf, int len);
 	
