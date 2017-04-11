@@ -322,7 +322,9 @@ typedef struct tagWAVEFORMATEX{
 // 传送文件（扩展）
 + (int) TransFileEx: (NSString*) lpTaskGuid : (int) dwUserId : (NSString*) lpLocalPathName : (int) dwFlags : (NSString*) lpUserString;
 // 查询传输任务相关信息（扩展）
-+ (NSString*) QueryTransTaskInfoEx: (NSString*) lpTaskGuid : (int) infoname;
++ (NSString*) QueryTransTaskInfoExString: (NSString*) lpTaskGuid : (int) infoname;
+// 查询传输任务相关信息（扩展）
++ (int) QueryTransTaskInfoExInt: (NSString*) lpTaskGuid : (int) infoname;
 // 取消传输任务（扩展）
 + (int) CancelTransTaskEx: (NSString*) lpTaskGuid : (int) dwFlags : (int) dwErrorCode;
 
