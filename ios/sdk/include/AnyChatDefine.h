@@ -225,6 +225,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_TRANSTASK_STATUS				3	///< 传输任务当前状态（参数为：DWORD型）
 #define BRAC_TRANSTASK_SAVEASPATH			4	///< 文件传输任务另存为路径设置，含文件名（参数为字符串TCHAR类型）
 #define BRAC_TRANSTASK_SOURCEFILE			5	///< 源文件名（含路径，参数为字符串，TCHAR类型）
+#define BRAC_TRANSTASK_JSONSTATUS			6	///< 传输任务状态，Json字符串
 
 // 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
 #define BRAC_RECORD_FLAGS_VIDEO			0x00000001	///< 录制视频

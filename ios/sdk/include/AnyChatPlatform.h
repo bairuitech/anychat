@@ -319,6 +319,15 @@ typedef struct tagWAVEFORMATEX{
 // 发送SDK Filter 通信数据
 + (int) SendSDKFilterData: (NSData*) lpBuf;
 
+// 传送文件（扩展）
++ (int) TransFileEx: (NSString*) lpTaskGuid : (int) dwUserId : (NSString*) lpLocalPathName : (int) dwFlags : (NSString*) lpUserString;
+// 查询传输任务相关信息（扩展）
++ (NSString*) QueryTransTaskInfoExString: (NSString*) lpTaskGuid : (int) infoname;
+// 查询传输任务相关信息（扩展）
++ (int) QueryTransTaskInfoExInt: (NSString*) lpTaskGuid : (int) infoname;
+// 取消传输任务（扩展）
++ (int) CancelTransTaskEx: (NSString*) lpTaskGuid : (int) dwFlags : (int) dwErrorCode;
+
 // 更改当前的聊天模式
 + (int) ChangeChatMode: (int) dwChatMode;
 // 获取指定用户当前的聊天模式
