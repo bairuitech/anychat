@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		098DF24C1EA743C500FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF24B1EA743C500FB36FA /* VideoToolbox.framework */; };
 		FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD379719D82B4B000FF14E /* QuartzCore.framework */; };
 		FE04EB4D19F642B3006A5E5F /* FeaturesListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE04EB4B19F642B3006A5E5F /* FeaturesListVC.m */; };
 		FE04EB5019F643B9006A5E5F /* FeaturesListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE04EB4F19F643B9006A5E5F /* FeaturesListVC.xib */; };
@@ -159,6 +160,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		098DF24B1EA743C500FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		FBCD379719D82B4B000FF14E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FE04EB4A19F642B3006A5E5F /* FeaturesListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeaturesListVC.h; sourceTree = "<group>"; };
 		FE04EB4B19F642B3006A5E5F /* FeaturesListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeaturesListVC.m; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098DF24C1EA743C500FB36FA /* VideoToolbox.framework in Frameworks */,
 				FEA90E801A4D006F001CA696 /* libc++.dylib in Frameworks */,
 				FE94D0C71C65EFE400D199DE /* libanychatcore.a in Frameworks */,
 				FEB052821A1055A50044B495 /* QuickLook.framework in Frameworks */,
@@ -621,6 +624,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				098DF24B1EA743C500FB36FA /* VideoToolbox.framework */,
 				FEA90E7F1A4D006F001CA696 /* libc++.dylib */,
 				FEB052811A1055A50044B495 /* QuickLook.framework */,
 				FBCD379719D82B4B000FF14E /* QuartzCore.framework */,

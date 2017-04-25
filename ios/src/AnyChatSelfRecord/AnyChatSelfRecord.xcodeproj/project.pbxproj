@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		098DF2421EA7438000FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF2411EA7438000FB36FA /* VideoToolbox.framework */; };
 		FBB435AF1A4B3398000BFB8B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBB435AE1A4B3398000BFB8B /* MediaPlayer.framework */; };
 		FE1E887E1A4410C80093E935 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1E887D1A4410C80093E935 /* Foundation.framework */; };
 		FE1E88801A4410C80093E935 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1E887F1A4410C80093E935 /* CoreGraphics.framework */; };
@@ -118,6 +119,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		098DF2411EA7438000FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		FBB435AE1A4B3398000BFB8B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		FE1E887A1A4410C80093E935 /* AnyChatSelfRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnyChatSelfRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE1E887D1A4410C80093E935 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -253,6 +255,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098DF2421EA7438000FB36FA /* VideoToolbox.framework in Frameworks */,
 				FEB0F0F81A4C25AF00BE7324 /* libc++.dylib in Frameworks */,
 				FE94D0141C65EB2600D199DE /* libcommon_audio.a in Frameworks */,
 				FE94D0121C65EB2600D199DE /* libaudio_processing_neon.a in Frameworks */,
@@ -316,6 +319,7 @@
 		FE1E887C1A4410C80093E935 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				098DF2411EA7438000FB36FA /* VideoToolbox.framework */,
 				FEB0F0F71A4C25AF00BE7324 /* libc++.dylib */,
 				FBB435AE1A4B3398000BFB8B /* MediaPlayer.framework */,
 				FE1E88B81A442C710093E935 /* libstdc++.6.dylib */,
