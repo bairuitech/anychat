@@ -85,6 +85,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_RECORD_FILENAMERULE			143	///< 录制文件名命名规则（参数为：int型）
 #define BRAC_SO_RECORD_CLIPMODE				144	///< 录制视频裁剪模式（参数为：int型）
 #define BRAC_SO_RECORD_DISABLEDATEDIR		145	///< 录制文件不按日期分目录保存，全部生成在指定文件夹中（参数为：int型， 0禁止[默认] 1 开启）
+#define BRAC_SO_RECORD_INSERTIMAGE			146	///< 录制过程中插入图片，Json字符串参数
 
 #define BRAC_SO_CORESDK_TMPDIR				14	///< 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 #define BRAC_SO_CORESDK_MAGICADJUST			15	///< 内核调试参数
@@ -131,6 +132,10 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_LOCALVIDEO_TVFORMAT			104	///< 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
 #define BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP	105	///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
 #define BRAC_SO_LOCALVIDEO_DEVICENAME		106	///< 本地视频采集设备名称，用于设置打开指定摄像头设备（参数为字符串类型）
+#define BRAC_SO_LOCALVIDEO_CLIPMODE			107	///< 本地视频裁剪模式（参数为int型， 0 自动[默认]，禁止自动旋转时有效）
+#define BRAC_SO_LOCALVIDEO_SCREENHWND		108	///< 屏幕采集窗口句柄
+#define BRAC_SO_LOCALVIDEO_SCREENFLAGS		109	///< 屏幕采集标志（参数为int型）
+#define BRAC_SO_LOCALVIDEO_VIRTUALBK		111 ///< 本地视频迭加虚拟背景（字符串类型，JSON格式，包括虚拟背景路径以及其它参数项，为NULL表示取消虚拟背景）
 
 #define BRAC_SO_NETWORK_P2PPOLITIC			40	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 #define BRAC_SO_NETWORK_P2PCONNECT			41	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -347,6 +352,10 @@ enum BRAC_VideoShowDriver{
 #define BRAC_CBTYPE_VIDEODATAEX2			19	///< 视频数据扩展回调（支持多路流）
 #define BRAC_CBTYPE_AUDIODATAEX2			20	///< 音频数据扩展回调（支持多路流）
 #define BRAC_CBTYPE_STREAMRECORDEX2			21	///< 录像快照任务完成通知扩展回调（支持出错代码）
+#define BRAC_CBTYPE_TRANSFILEEX				22	///< 文件传输扩展回调（支持出错代码）
+#define BRAC_CBTYPE_CORESDKEVENT			23	///< Core SDK事件回调（Json格式）
+#define BRAC_CBTYPE_CORESDKDATA				24	///< Core SDK数据回调
+
 
 
 // 视频裁剪模式定义
@@ -362,6 +371,38 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SERVERQUERY_USERIDBYSTRID	2	///< 根据字符串ID查询用户ID
 #define ANYCHAT_SERVERQUERY_STRIDBYUSERID	3	///< 根据用户ID查询字符串ID
 
+// 媒体播放事件类型定义
+#define ANYCHAT_STREAMPLAY_EVENT_START		3	///< 播放开始事件
+#define ANYCHAT_STREAMPLAY_EVENT_FINISH		4	///< 播放结束事件
+
+// 媒体播放标志定义（API：BRAC_StreamPlayInit 传入参数）
+#define ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT	0x00000001	///< 播放音频流代替本地音频输入（Mic）
+#define ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT	0x00000002	///< 播放视频流代替本地视频输入（Camera）
+#define ANYCHAT_STREAMPLAY_FLAGS_CALLBACKDATA		0x00000010	///< 回调数据给上层
+
+// 媒体播放信息类型定义（API：BRAC_StreamPlayGetInfo 传入参数）
+#define ANYCHAT_STREAMPLAY_INFO_JSONVALUE	1	///< 包含所有播放信息的Json字符串
+
+// 媒体播放控制类型定义（API：BRAC_StreamPlayControl 传入参数）
+#define ANYCHAT_STREAMPLAY_CTRL_START		1	///< 开始播放
+#define ANYCHAT_STREAMPLAY_CTRL_PAUSE		2	///< 暂停播放
+#define ANYCHAT_STREAMPLAY_CTRL_STOP		3	///< 停止播放
+#define ANYCHAT_STREAMPLAY_CTRL_SEEK		4	///< 位置拖动
+#define ANYCHAT_STREAMPLAY_CTRL_SPEEDCTRL	5	///< 速度调整
+#define ANYCHAT_STREAMPLAY_CTRL_OPENLOOP	6	///< 打开循环播放
+#define ANYCHAT_STREAMPLAY_CTRL_CLOSELOOP	7	///< 关闭循环播放
+
+
+// CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
+#define ANYCHAT_CORESDKEVENT_CAMERASTATE	10	///< 摄像头状态事件
+#define ANYCHAT_CORESDKEVENT_MICSTATE		11	///< Mic状态事件
+#define ANYCHAT_CORESDKEVENT_STREAMPLAY		30	///< 媒体播放事件
+
+// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
+#define ANYCHAT_CORESDKDATA_AUDIO			1	///< 音频数据
+#define ANYCHAT_CORESDKDATA_VIDEO			2	///< 视频数据
+#define ANYCHAT_CORESDKDATA_MESSAGE			3	///< 文字数据
+#define ANYCHAT_CORESDKDATA_BUFFER			4	///< 缓冲区数据
 
 
 #endif //_ANYCHAT_DEFINE_H__INCLUDE_
