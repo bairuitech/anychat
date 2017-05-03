@@ -44,7 +44,7 @@ public class BussinessCenter{
 	}
 
 	private void initParams() {
-		anychat = new AnyChatCoreSDK();
+		anychat = AnyChatCoreSDK.getInstance(mContext);
 		mOnlineFriendItems = new ArrayList<UserItem>();
 		mOnlineFriendIds = new ArrayList<Integer>();
 	}

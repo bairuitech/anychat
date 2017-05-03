@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		098DF24A1EA743B500FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF2491EA743B500FB36FA /* VideoToolbox.framework */; };
 		FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD379719D82B4B000FF14E /* QuartzCore.framework */; };
 		FE0D8B0619FF9CC300D5FD3E /* bg_TestMsg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE0D8B0519FF9CC300D5FD3E /* bg_TestMsg.jpg */; };
 		FE1B2E7519C692F300773FE6 /* VideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B2E7319C692F300773FE6 /* VideoVC.m */; };
@@ -107,6 +108,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		098DF2491EA743B500FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		FBCD379719D82B4B000FF14E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FE0D8B0519FF9CC300D5FD3E /* bg_TestMsg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg_TestMsg.jpg; sourceTree = "<group>"; };
 		FE1B2E7219C692F300773FE6 /* VideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoVC.h; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098DF24A1EA743B500FB36FA /* VideoToolbox.framework in Frameworks */,
 				FEA90E801A4D006F001CA696 /* libc++.dylib in Frameworks */,
 				FE94D08D1C65EF2D00D199DE /* libanychatcore.a in Frameworks */,
 				FEB052821A1055A50044B495 /* QuickLook.framework in Frameworks */,
@@ -397,6 +400,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				098DF2491EA743B500FB36FA /* VideoToolbox.framework */,
 				FEA90E7F1A4D006F001CA696 /* libc++.dylib */,
 				FEB052811A1055A50044B495 /* QuickLook.framework */,
 				FBCD379719D82B4B000FF14E /* QuartzCore.framework */,

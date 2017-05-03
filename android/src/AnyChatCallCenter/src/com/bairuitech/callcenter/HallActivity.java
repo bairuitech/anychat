@@ -207,7 +207,7 @@ public class HallActivity extends Activity implements OnItemClickListener,
 
 	private void initSdk() {
 		if (anychat == null) {
-			anychat = new AnyChatCoreSDK();
+			anychat = AnyChatCoreSDK.getInstance(HallActivity.this);
 		}
 		anychat.SetBaseEvent(this);
 		anychat.SetVideoCallEvent(this);

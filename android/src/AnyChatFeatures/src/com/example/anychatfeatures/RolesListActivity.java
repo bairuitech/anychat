@@ -74,7 +74,7 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 
 	private void initSdk() {
 		if (anyChatSDK == null) {
-			anyChatSDK = new AnyChatCoreSDK();
+			anyChatSDK = AnyChatCoreSDK.getInstance(RolesListActivity.this);
 		}
 
 		anyChatSDK.SetBaseEvent(this);

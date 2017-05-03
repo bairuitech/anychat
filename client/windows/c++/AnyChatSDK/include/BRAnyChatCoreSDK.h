@@ -38,6 +38,8 @@ typedef void (CALLBACK * BRAC_TransBuffer_CallBack)(DWORD dwUserid, LPBYTE lpBuf
 typedef void (CALLBACK * BRAC_TransBufferEx_CallBack)(DWORD dwUserid, LPBYTE lpBuf, DWORD dwLen, DWORD wParam, DWORD lParam, DWORD dwTaskId, LPVOID lpUserValue);
 // 文件传输回调函数定义
 typedef void (CALLBACK * BRAC_TransFile_CallBack)(DWORD dwUserid, LPCTSTR lpFileName, LPCTSTR lpTempFilePath, DWORD dwFileLength, DWORD wParam, DWORD lParam, DWORD dwTaskId, LPVOID lpUserValue);
+// 文件传输回调函数定义（扩展）
+typedef void (CALLBACK * BRAC_TransFileEx_CallBack)(DWORD dwUserid, DWORD dwErrorCode, LPCTSTR lpFileName, LPCTSTR lpTempFilePath, DWORD dwFileLength, DWORD dwFlags, CHAR* lpTaskGuid, LPCTSTR lpUserStr, LPVOID lpUserValue);
 // 音量变化回调函数定义
 typedef void (CALLBACK * BRAC_VolumeChange_CallBack)(BRAC_AudioDevice device, DWORD dwCurrentVolume, LPVOID lpUserValue);
 // SDK Filter 通信数据回调函数定义
@@ -60,6 +62,10 @@ typedef DWORD (CALLBACK * BRAC_DataEncDec_CallBack)(DWORD dwUserId, DWORD dwFlag
 typedef DWORD (CALLBACK * BRAC_NetworkDataSend_CallBack)(DWORD hSocket, DWORD dwFlags, CHAR* lpBuf, DWORD dwSize, DWORD dwTargetAddr, DWORD dwTargetPort, LPVOID lpUserValue);
 // 业务对象事件通知回调函数定义
 typedef void (CALLBACK * BRAC_ObjectEventNotify_CallBack)(DWORD dwObjectType, DWORD dwObjectId, DWORD dwEventType, DWORD dwParam1, DWORD dwParam2, DWORD dwParam3, DWORD dwParam4, LPCTSTR lpStrParam, LPVOID lpUserValue);
+// Core SDK事件通知（Json格式）
+typedef void (CALLBACK * BRAC_CoreSDKEvent_CallBack)(DWORD dwEventType, LPCTSTR lpEventJsonStr, LPVOID lpUserValue);
+// Core SDK数据流回调
+typedef void (CALLBACK * BRAC_CoreSDKData_CallBack)(DWORD dwDataType, LPVOID lpBuf, DWORD dwLen, LPCTSTR lpJsonStr, LPVOID lpUserValue);
 
 /**
  *	API方法定义
@@ -209,6 +215,14 @@ BRAC_API DWORD BRAC_TransFile(DWORD dwUserid, LPCTSTR lpLocalPathName, DWORD wPa
 BRAC_API DWORD BRAC_QueryTransTaskInfo(DWORD dwUserid, DWORD dwTaskId, int infoname, char FAR* infoval, int infolen);
 // 取消传输任务
 BRAC_API DWORD BRAC_CancelTransTask(DWORD dwUserid, DWORD dwTaskId);
+
+// 传送文件（扩展）
+BRAC_API DWORD BRAC_TransFileEx(CHAR* lpTaskGuid, DWORD dwUserId, LPCTSTR lpLocalPathName, DWORD dwFlags, CHAR* lpUserString);
+// 查询传输任务相关信息（扩展）
+BRAC_API DWORD BRAC_QueryTransTaskInfoEx(CHAR* lpTaskGuid, int infoname, char FAR* infoval, int infolen);
+// 取消传输任务（扩展）
+BRAC_API DWORD BRAC_CancelTransTaskEx(CHAR* lpTaskGuid, DWORD dwFlags, DWORD dwErrorCode);
+
 // 传送文本消息
 BRAC_API DWORD BRAC_SendTextMessage(DWORD dwUserid, BOOL bSecret, LPCTSTR lpMsgBuf, DWORD dwLen);
 // 发送SDK Filter 通信数据
@@ -285,6 +299,17 @@ BRAC_API DWORD BRAC_ObjectGetValue(DWORD dwObjectType, DWORD dwObjectId, DWORD d
 BRAC_API DWORD BRAC_ObjectSetValue(DWORD dwObjectType, DWORD dwObjectId, DWORD dwInfoName, TCHAR* lpInfoValue, DWORD dwLen);
 // 对象参数控制
 BRAC_API DWORD BRAC_ObjectControl(DWORD dwObjectType, DWORD dwObjectId, DWORD dwCtrlCode, DWORD dwParam1=0, DWORD dwParam2=0, DWORD dwParam3=0, DWORD dwParam4=0, LPCTSTR lpStrValue=NULL);
+
+// 流媒体播放初始化
+BRAC_API DWORD BRAC_StreamPlayInit(CHAR* lpTaskGuid, CHAR* lpStreamPath, DWORD dwFlags=0, CHAR* lpStrParam=NULL);
+// 流媒体播放控制
+BRAC_API DWORD BRAC_StreamPlayControl(CHAR* lpTaskGuid, DWORD dwCtrlCode, DWORD dwParam=0, DWORD dwFlags=0, CHAR* lpStrParam=NULL);
+// 流媒体播放设置视频显示位置
+BRAC_API DWORD BRAC_StreamPlaySetVideoPos(CHAR* lpTaskGuid, HWND hWnd, DWORD dwLeft=0, DWORD dwTop=0, DWORD dwRight=0, DWORD dwBottom=0);
+// 流媒体播放获取参数信息
+BRAC_API DWORD BRAC_StreamPlayGetInfo(CHAR* lpTaskGuid, DWORD dwInfoName, CHAR* infoValue, DWORD dwSize);
+// 流媒体播放释放资源
+BRAC_API DWORD BRAC_StreamPlayDestroy(CHAR* lpTaskGuid, DWORD dwFlags=0);
 
 
 

@@ -56,7 +56,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 
 	private void InitialSDK() {
 		if (anychat == null) {
-			anychat = new AnyChatCoreSDK();
+			anychat = AnyChatCoreSDK.getInstance(LoginActivity.this);
 			anychat.SetBaseEvent(this);
 			if (configEntity.useARMv6Lib != 0)
 				AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_CORESDK_USEARMV6LIB, 1);

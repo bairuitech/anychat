@@ -61,7 +61,7 @@ public class RoomActivity extends Activity implements AnyChatBaseEvent,AnyChatTe
     
     private void InitialSDK()
     {
-        anychat = new AnyChatCoreSDK();
+        anychat = AnyChatCoreSDK.getInstance(RoomActivity.this);
         anychat.SetBaseEvent(this);
         anychat.SetTextMessageEvent(this);
     }

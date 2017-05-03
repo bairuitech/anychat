@@ -177,7 +177,7 @@ public class AgentServiceActivity extends Activity implements
 
 	private void initSdk() {
 		if (anychat == null) {
-			anychat = new AnyChatCoreSDK();
+			anychat = AnyChatCoreSDK.getInstance(AgentServiceActivity.this);
 		}
 		anychat.SetBaseEvent(this);
 		anychat.SetVideoCallEvent(this);

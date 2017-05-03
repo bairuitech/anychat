@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		04B1259A1CEDC8050008E358 /* TextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B125971CEDC8050008E358 /* TextModel.m */; };
 		04B1259B1CEDC8050008E358 /* TextModelTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B125991CEDC8050008E358 /* TextModelTool.m */; };
+		098DF2451EA7438F00FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF2441EA7438F00FB36FA /* VideoToolbox.framework */; };
 		226B21591B3B17A200712478 /* ServerQueueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 226B21571B3B17A200712478 /* ServerQueueViewController.m */; };
 		226B215A1B3B17A200712478 /* ServerQueueViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 226B21581B3B17A200712478 /* ServerQueueViewController.xib */; };
 		22D560051B2B2B2100FE5DC2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D560041B2B2B2100FE5DC2 /* main.m */; };
@@ -77,6 +78,7 @@
 		04B125971CEDC8050008E358 /* TextModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextModel.m; sourceTree = "<group>"; };
 		04B125981CEDC8050008E358 /* TextModelTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextModelTool.h; sourceTree = "<group>"; };
 		04B125991CEDC8050008E358 /* TextModelTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextModelTool.m; sourceTree = "<group>"; };
+		098DF2441EA7438F00FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		226B21561B3B17A200712478 /* ServerQueueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerQueueViewController.h; sourceTree = "<group>"; };
 		226B21571B3B17A200712478 /* ServerQueueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerQueueViewController.m; sourceTree = "<group>"; };
 		226B21581B3B17A200712478 /* ServerQueueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServerQueueViewController.xib; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098DF2451EA7438F00FB36FA /* VideoToolbox.framework in Frameworks */,
 				FE16D6211B2C11110054FBD5 /* libc++.dylib in Frameworks */,
 				FE94D04B1C65EDBE00D199DE /* libaudio_processing.a in Frameworks */,
 				FE94D05E1C65EDBE00D199DE /* libswscale.a in Frameworks */,
@@ -218,6 +221,14 @@
 			path = textModel;
 			sourceTree = "<group>";
 		};
+		098DF2431EA7438F00FB36FA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				098DF2441EA7438F00FB36FA /* VideoToolbox.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		22D55FF61B2B2B2100FE5DC2 = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +244,7 @@
 				22D560011B2B2B2100FE5DC2 /* AnyChatQueuePlus */,
 				22D5601B1B2B2B2100FE5DC2 /* AnyChatQueueTests */,
 				22D560001B2B2B2100FE5DC2 /* Products */,
+				098DF2431EA7438F00FB36FA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -257,7 +269,6 @@
 				FE16D5CA1B2BFCF50054FBD5 /* Other */,
 				22D560021B2B2B2100FE5DC2 /* Supporting Files */,
 			);
-			name = AnyChatQueuePlus;
 			path = AnyChatQueuePlus;
 			sourceTree = "<group>";
 		};

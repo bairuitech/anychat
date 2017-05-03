@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		098DF2401EA7436C00FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF23F1EA7436C00FB36FA /* VideoToolbox.framework */; };
 		FB3679A819D8453E008D9C5E /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB3679A719D8453E008D9C5E /* VideoViewController.xib */; };
 		FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD379719D82B4B000FF14E /* QuartzCore.framework */; };
 		FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B2E7319C692F300773FE6 /* VideoViewController.m */; };
@@ -103,6 +104,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		098DF23F1EA7436C00FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		FB3679A719D8453E008D9C5E /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
 		FBCD379719D82B4B000FF14E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FE1B2E7219C692F300773FE6 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098DF2401EA7436C00FB36FA /* VideoToolbox.framework in Frameworks */,
 				FEA90F8F1A4D0F5B001CA696 /* libc++.dylib in Frameworks */,
 				FE94CFDA1C65EA6200D199DE /* libcommon_audio.a in Frameworks */,
 				FE94CFD81C65EA6200D199DE /* libaudio_processing_neon.a in Frameworks */,
@@ -432,6 +435,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				098DF23F1EA7436C00FB36FA /* VideoToolbox.framework */,
 				FEA90F8E1A4D0F5B001CA696 /* libc++.dylib */,
 				FBCD379719D82B4B000FF14E /* QuartzCore.framework */,
 				FEBBA2B519C2CE36009EE02C /* CoreMedia.framework */,

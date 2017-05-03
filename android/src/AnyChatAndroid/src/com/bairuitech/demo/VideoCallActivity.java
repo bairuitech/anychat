@@ -47,7 +47,7 @@ public class VideoCallActivity extends Activity implements AnyChatBaseEvent{
     }
     private void InitialSDK()
     {
-        anychat = new AnyChatCoreSDK();
+        anychat = AnyChatCoreSDK.getInstance(VideoCallActivity.this);
         anychat.SetBaseEvent(this);
     }
     

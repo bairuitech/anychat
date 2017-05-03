@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		098DF24E1EA743D400FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF24D1EA743D400FB36FA /* VideoToolbox.framework */; };
 		FE673EC01A1ED9E300C18ACD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FE673EBF1A1ED9E300C18ACD /* Settings.bundle */; };
 		FE673EC31A1EE70E00C18ACD /* bg_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673EC11A1EE70E00C18ACD /* bg_video@2x.png */; };
 		FE673EC41A1EE70E00C18ACD /* bg_video-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673EC21A1EE70E00C18ACD /* bg_video-568h@2x.png */; };
@@ -90,6 +91,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		098DF24D1EA743D400FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		FE673EBF1A1ED9E300C18ACD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FE673EC11A1EE70E00C18ACD /* bg_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_video@2x.png"; path = "AnyChatCallCenter/bk/bg_video@2x.png"; sourceTree = "<group>"; };
 		FE673EC21A1EE70E00C18ACD /* bg_video-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_video-568h@2x.png"; path = "AnyChatCallCenter/bk/bg_video-568h@2x.png"; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098DF24E1EA743D400FB36FA /* VideoToolbox.framework in Frameworks */,
 				FEA90E821A4D03DF001CA696 /* libc++.dylib in Frameworks */,
 				FE94D0FF1C65F09E00D199DE /* librtc_base_approved.a in Frameworks */,
 				FE94D0F91C65F09E00D199DE /* libaudio_processing.a in Frameworks */,
@@ -365,6 +368,7 @@
 		FEB337C619B8555200D2C2F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				098DF24D1EA743D400FB36FA /* VideoToolbox.framework */,
 				FEA90E811A4D03DF001CA696 /* libc++.dylib */,
 				FEB3382C19B858AD00D2C2F3 /* libstdc++.6.dylib */,
 				FEB3382A19B858A200D2C2F3 /* libstdc++.dylib */,

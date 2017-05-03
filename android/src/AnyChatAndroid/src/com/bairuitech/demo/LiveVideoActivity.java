@@ -146,7 +146,7 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
     
     private void InitialSDK()
     {
-        anychat = new AnyChatCoreSDK();
+        anychat = AnyChatCoreSDK.getInstance(LiveVideoActivity.this);
         anychat.SetBaseEvent(this);
         
         // 启动AnyChat传感器监听

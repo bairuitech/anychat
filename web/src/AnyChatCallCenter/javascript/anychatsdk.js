@@ -82,6 +82,7 @@ var BRAC_SO_LOCALVIDEO_DEVICENAME =			106;// ±æµÿ ”∆µ≤…ºØ…Ë±∏√˚≥∆£¨”√”⁄…Ë÷√¥Úø™÷
 var BRAC_SO_LOCALVIDEO_CLIPMODE	=			107;// ±æµÿ ”∆µ≤√ºÙƒ£ Ω£®≤Œ ˝Œ™int–Õ£¨ 0 ◊‘∂Ø[ƒ¨»œ]£¨Ω˚÷π◊‘∂Ø–˝◊™ ±”––ß£©
 var BRAC_SO_LOCALVIDEO_SCREENHWND	=		108;// ∆¡ƒª≤…ºØ¥∞ø⁄æ‰±˙
 var BRAC_SO_LOCALVIDEO_SCREENFLAGS	=		109;// ∆¡ƒª≤…ºØ±Í÷æ£®≤Œ ˝Œ™int–Õ£©
+var BRAC_SO_LOCALVIDEO_VIRTUALBK	=		111;// ±æµÿ ”∆µµ¸º”–Èƒ‚±≥æ∞£®◊÷∑˚¥Æ¿‡–Õ£¨JSON∏Ò Ω£¨∞¸¿®–Èƒ‚±≥æ∞¬∑æ∂°¢ «∑Òø™∆Ù“‘º∞∆‰À¸≤Œ ˝œÓ£©
 
 var BRAC_SO_NETWORK_P2PPOLITIC = 			40;	// ±æµÿÕ¯¬ÁP2P≤ﬂ¬‘øÿ÷∆£®≤Œ ˝Œ™£∫int–Õ£∫0 Ω˚÷π±æµÿP2P£¨1 ∑˛ŒÒ∆˜øÿ÷∆P2P[ƒ¨»œ]£¨2 …œ≤„”¶”√øÿ÷∆P2P¡¨Ω”£¨3 ∞¥–ËΩ®¡¢P2P¡¨Ω”£©
 var BRAC_SO_NETWORK_P2PCONNECT = 			41;	// ≥¢ ‘”Î÷∏∂®”√ªßΩ®¡¢P2P¡¨Ω”£®≤Œ ˝Œ™int–Õ£¨±Ì æƒø±Í”√ªßID£©£¨¡¨Ω”Ω®¡¢≥…π¶∫Û£¨ª·Õ®π˝œ˚œ¢∑¥¿°∏¯…œ≤„”¶”√£¨P2Pøÿ÷∆≤ﬂ¬‘=2 ±”––ß
@@ -287,12 +288,37 @@ var ANYCHAT_SERVERQUERY_USERIDBYSTRID	=	2;	// ∏˘æ›◊÷∑˚¥ÆID≤È—Ø”√ªßID
 var ANYCHAT_SERVERQUERY_STRIDBYUSERID	=	3;	// ∏˘æ›”√ªßID≤È—Ø◊÷∑˚¥ÆID
 var ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	=	100;// ≤È—Ø÷∏∂®∂”¡–µƒ◊¯œØ∑˛ŒÒ–≈œ¢
 
+// √ΩÃÂ≤•∑≈ ¬º˛¿‡–Õ∂®“Â
+var ANYCHAT_STREAMPLAY_EVENT_START		=	3;	// ≤•∑≈ø™ º ¬º˛
+var ANYCHAT_STREAMPLAY_EVENT_FINISH		=	4;	// ≤•∑≈Ω· ¯ ¬º˛
+
+// √ΩÃÂ≤•∑≈±Í÷æ∂®“Â£®API£∫BRAC_StreamPlayInit ¥´»Î≤Œ ˝£©
+var ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT = 1;	// ≤•∑≈“Ù∆µ¡˜¥˙ÃÊ±æµÿ“Ù∆µ ‰»Î£®Mic£©
+var ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT = 2;	// ≤•∑≈ ”∆µ¡˜¥˙ÃÊ±æµÿ ”∆µ ‰»Î£®Camera£©
+
+// √ΩÃÂ≤•∑≈–≈œ¢¿‡–Õ∂®“Â£®API£∫BRAC_StreamPlayGetInfo ¥´»Î≤Œ ˝£©
+var ANYCHAT_STREAMPLAY_INFO_JSONVALUE	=	1;	// ∞¸∫¨À˘”–≤•∑≈–≈œ¢µƒJson◊÷∑˚¥Æ
+
+// √ΩÃÂ≤•∑≈øÿ÷∆¿‡–Õ∂®“Â£®API£∫BRAC_StreamPlayControl ¥´»Î≤Œ ˝£©
+var ANYCHAT_STREAMPLAY_CTRL_START		=	1;	// ø™ º≤•∑≈
+var ANYCHAT_STREAMPLAY_CTRL_PAUSE		=	2;	// ‘›Õ£≤•∑≈
+var ANYCHAT_STREAMPLAY_CTRL_STOP		=	3;	// Õ£÷π≤•∑≈
+var ANYCHAT_STREAMPLAY_CTRL_SEEK		=	4;	// Œª÷√Õœ∂Ø
+var ANYCHAT_STREAMPLAY_CTRL_SPEEDCTRL	=	5;	// ÀŸ∂»µ˜’˚
+var ANYCHAT_STREAMPLAY_CTRL_OPENLOOP	=	6;	// ¥Úø™—≠ª∑≤•∑≈
+var ANYCHAT_STREAMPLAY_CTRL_CLOSELOOP	=	7;	// πÿ±’—≠ª∑≤•∑≈
+
+
+// CoreSDK ¬º˛¿‡–Õ∂®“Â£®ªÿµ˜∫Ø ˝£∫BRAC_CoreSDKEvent_CallBack≤Œ ˝£©
+var ANYCHAT_CORESDKEVENT_STREAMPLAY		=	30;	// √ΩÃÂ≤•∑≈ ¬º˛
+
 //  ”∆µœ‘ æ≤Âº˛…Ë÷√≤Œ ˝
 var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// ‘⁄ ”∆µ…œµ¸º”Œƒ◊÷°¢Õº∆¨µ»ƒ⁄»›
 var ANYCHATWEB_VIDEO_SO_DISABLEFULLSCREEN = 9;	// Ω˚÷πÀ´ª˜ ”∆µ»´∆¡œ‘ æ
 var ANYCHATWEB_VIDEO_SO_EXTENDEDSCREEN	=	10;	// ¿©’π∆¡œ‘ æ ”∆µ
 var ANYCHATWEB_VIDEO_SO_VIDEODISPMODE	=	11;	//  ”∆µœ‘ æƒ£ Ω
 var ANYCHATWEB_VIDEO_SO_REMOTEASSIST	=	12;	// ‘∂≥Ã–≠÷˙¥∞ø⁄
+var ANYCHATWEB_VIDEO_SO_PLAYTASKGUID	=	20;	// ≤•∑≈»ŒŒÒID
 
 // ≤Âº˛◊ÓµÕ–Ë«Û∞Ê±æ∫≈
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
@@ -409,7 +435,7 @@ function BRAC_InitSDK(apilevel) {
 				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx2', OnAnyChatRecordSnapShotEx2);
 			if(typeof(OnAnyChatObjectEvent) == "function" && bSupportObjectBusiness)
 				BRAC_RegisterCallBack(anychat, 'OnObjectEvent', OnAnyChatObjectEvent);
-			if(typeof(OnAnyChatObjectEvent) == "function" && CUR_ANYCHAT_PLUGIN_VAR >= "1.0.6.0")
+			if(typeof(OnAnyChatCoreSDKEvent) == "function" && CUR_ANYCHAT_PLUGIN_VAR >= "1.0.6.0")
 				BRAC_RegisterCallBack(anychat, 'OnAnyChatCoreSDKEvent', OnAnyChatCoreSDKEvent);	
 		} else {
 			document.body.removeChild(insertdiv);
@@ -437,6 +463,11 @@ function BRAC_RegisterCallBack(obj, name, proc) {
 	} else {
 		obj[name] = proc;
 	}
+}
+
+// …˙≥…GUID
+function BRAC_NewGuid() {
+	return BRAC_GetSDKOptionString(BRAC_SO_CORESDK_NEWGUID);
 }
 
 // ªÒ»°Web DMO∂‘œÛ
@@ -980,6 +1011,16 @@ function BRAC_StreamPlayControl(lpTaskGuid, dwCtrlCode, dwParam, dwFlags, lpStrP
 	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.6.0")
 		return 0;
 	return anychat.StreamPlayControl(lpTaskGuid, dwCtrlCode, dwParam, dwFlags, lpStrParam);
+}
+
+// …Ë÷√¡˜√ΩÃÂ≤•∑≈ ”∆µœ‘ æŒª÷√
+function BRAC_StreamPlaySetVideoPos(lpTaskGuid, parentobj, id) {
+	try {
+		BRAC_NativeCreateVideoPlugin(0, parentobj, id, 0);
+		BRAC_GetDmoObject(id).SetSDKOptionString(ANYCHATWEB_VIDEO_SO_PLAYTASKGUID, lpTaskGuid);
+	} catch(ex) {
+		
+	}
 }
 
 // ¡˜√ΩÃÂ≤•∑≈ªÒ»°≤Œ ˝–≈œ¢

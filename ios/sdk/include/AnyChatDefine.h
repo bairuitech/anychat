@@ -1,46 +1,9 @@
-//
-//  AnyChatDefine.h
-//  AnyChat Platform Core SDK for iPhone
-//
-//  Created by bairuitech on 11-8-2.
-//  Copyright 2011 BaiRuiTech. All rights reserved.
-//
-
-#if !defined(_ANYCHAT_DEFINE_H_INCLUDEDED_)
-#define _ANYCHAT_DEFINE_H_INCLUDEDED_
-
+#if !defined(_ANYCHAT_DEFINE_H__INCLUDE_)
+#define _ANYCHAT_DEFINE_H__INCLUDE_
 
 /**
- *	异步消息常量定义
+ *	AnyChat SDK Client Const Define Include File
  */
-#define	WM_GV	0x0400 + 200
-
-#define WM_GV_CONNECT				WM_GV + 1		///< 客户端连接服务器，wParam（BOOL）表示是否连接成功
-#define WM_GV_LOGINSYSTEM			WM_GV + 2		///< 客户端登录系统，wParam（INT）表示自己的用户ID号，lParam（INT）表示登录结果：0 成功，否则为出错代码，参考出错代码定义
-#define WM_GV_ENTERROOM				WM_GV + 3		///< 客户端进入房间，wParam（INT）表示所进入房间的ID号，lParam（INT）表示是否进入房间：0成功进入，否则为出错代码
-#define WM_GV_MICSTATECHANGE		WM_GV + 4		///< 用户的音频设备状态变化消息，wParam（INT）表示用户ID号，lParam（BOOL）表示该用户是否已打开音频采集设备
-#define WM_GV_USERATROOM			WM_GV + 5		///< 用户进入（离开）房间，wParam（INT）表示用户ID号，lParam（BOOL）表示该用户是进入（TRUE）或离开（FALSE）房间
-#define WM_GV_LINKCLOSE				WM_GV + 6		///< 网络连接已关闭，该消息只有在客户端连接服务器成功之后，网络异常中断之时触发，wParam（INT）表示连接断开的原因
-#define WM_GV_ONLINEUSER			WM_GV + 7		///< 收到当前房间的在线用户信息，进入房间后触发一次，wParam（INT）表示在线用户数（包含自己），lParam（INT）表示房间ID
-#define WM_GV_FORTUNEMENU			WM_GV + 8		///< 用户选择了一项财富菜单项，wParam（INT）表示用户ID号，lParam（INT）表示财富菜单标记，指示是选择了哪一项菜单
-#define WM_GV_ROOMWAITQUEUE			WM_GV + 9		///< 用户收到当前房间等待队列消息，wParam（INT）表示用户前面的队列长度，lParam（INT）表示当前房间总的等待队列长度
-#define WM_GV_ENTERREQUEST			WM_GV + 10		///< 用户申请进入房间消息，wParam（INT）表示用户ID号，lParam（BOOL）表示该用户是申请进入（TRUE）房间或离开（FALSE）房间等待队列
-
-#define WM_GV_CAMERASTATE			WM_GV + 11		///< 用户摄像头状态发生变化，wParam（INT）表示用户ID号，lParam（INT）表示摄像头的当前状态，定义为：GV_CAMERA_STATE_XXXX
-#define WM_GV_CHATMODECHG			WM_GV + 12		///< 用户聊天模式发生变化，wParam（INT）表示用户ID号，lParam（INT）表示用户的当前聊天模式
-#define WM_GV_ACTIVESTATE			WM_GV + 13		///< 用户活动状态发生变化，wParam（INT）表示用户ID号，lParam（INT）表示用户的当前活动状态
-#define WM_GV_P2PCONNECTSTATE		WM_GV + 14		///< 本地用户与其它用户的P2P网络连接状态发生变化，wParam（INT）表示其它用户ID号，lParam（INT）表示本地用户与其它用户的当前P2P网络连接状态
-#define WM_GV_VIDEOSIZECHG			WM_GV + 15		///< 用户视频分辩率发生变化，wParam（INT）表示用户ID号，lParam（INT）表示用户的视频分辨率组合值（低16位表示宽度，高16位表示高度）
-#define WM_GV_USERINFOUPDATE		WM_GV + 16		///< 用户信息更新通知，wParam（INT）表示用户ID号，lParam（INT）表示更新类别
-#define WM_GV_FRIENDSTATUS			WM_GV + 17		///< 好友在线状态变化，wParam（INT）表示好友用户ID号，lParam（INT）表示用户的当前活动状态：0 离线， 1 上线
-
-#define WM_GV_PRIVATEREQUEST		WM_GV + 21		///< 用户发起私聊请求，wParam（INT）表示发起者的用户ID号，lParam（INT）表示私聊请求编号，标识该请求
-#define WM_GV_PRIVATEECHO			WM_GV + 22		///< 用户回复私聊请求，wParam（INT）表示回复者的用户ID号，lParam（INT）为出错代码
-#define WM_GV_PRIVATEEXIT			WM_GV + 23		///< 用户退出私聊，wParam（INT）表示退出者的用户ID号，lParam（INT）为出错代码
-
-#define WM_GV_EXTENDBTNPRESS		WM_GV + 31		///< 用户按下扩展按钮，wParam（INT）表示按钮所对应的用户ID号，lParam（DWORD）指示按钮（左下角）所在屏幕位置(x,y)，用户可以利用该参数显示菜单等
-
-#define WM_GV_SDKWARNING			WM_GV + 41		///< SDK警告信息，当SDK在运行过程中自检发现异常状态时，将向上层发送该消息，wParam（INT）表示警告代码，定义为：GV_ERR_WARNING_XXXX
 
 
 // 视频图像格式定义
@@ -60,21 +23,41 @@ enum BRAC_PixelFormat{
 	BRAC_PIX_FMT_H264,
 };
 
-// 功能模式定义
-#define BRAC_FUNC_VIDEO_CBDATA		0x00000001L	///< 通过回调函数输出视频数据
-#define BRAC_FUNC_VIDEO_AUTODISP	0x00000002L	///< 由SDK包处理视频，将视频显示在指定的窗口上
-#define BRAC_FUNC_AUDIO_CBDATA		0x00000004L	///< 通过回调函数输出音频数据
-#define BRAC_FUNC_AUDIO_AUTOPLAY	0x00000008L	///< 由SDK包处理音频，直接播放
-#define BRAC_FUNC_CONFIG_LOCALINI	0x00000010L	///< 生成本地配置文件（AnyChatSDK.ini）
-#define BRAC_FUNC_FIREWALL_OPEN		0x00000020L	///< 允许SDK操作Windows防火墙，将当前应用程序加入防火墙访问列表（避免Windows提示用户是否阻止当前应用程序）
-#define BRAC_FUNC_CHKDEPENDMODULE	0x00000040L	///< 自动检查SDK所依赖的组件，并自动注册
-#define BRAC_FUNC_AUDIO_VOLUMECALC	0x00000080L	///< 由SDK自动计算语音的音量
-#define BRAC_FUNC_AUDIO_AUTOVOLUME	0x00000100L	///< 允许SDK自动控制Mic录音音量
-#define BRAC_FUNC_NET_SUPPORTUPNP	0x00000200L	///< 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
-#define BRAC_FUNC_DISABLEDECODE		0x00000400L	///< 禁止对收到的数据进行解码和播放，为了提高代理客户端的数据转发性能，可设置该标志，否则不能设置该标志
+// 音频设备定义
+enum BRAC_AudioDevice{
+	BRAC_AD_WAVEIN = 0,							///< 输入设备：Mic
+	BRAC_AD_WAVEOUT,							///< 输出设备：Wave
+};
+
+// 视频显示驱动定义
+enum BRAC_VideoShowDriver{
+	BRAC_VSD_DEFAULT = 0,						///< 默认显示驱动
+	BRAC_VSD_DIRECTSHOW,						///< DirectShow显示驱动
+	BRAC_VSD_WINDOWSGDI,						///< Windows GDI驱动
+};
 
 
-// 内核参数定义
+// 功能模式定义（API：BRAC_InitSDK 传入参数）
+#define BRAC_FUNC_VIDEO_CBDATA		0x00000001	///< 通过回调函数输出视频数据
+#define BRAC_FUNC_VIDEO_AUTODISP	0x00000002	///< 由SDK包处理视频，将视频显示在指定的窗口上
+#define BRAC_FUNC_AUDIO_CBDATA		0x00000004	///< 通过回调函数输出音频数据
+#define BRAC_FUNC_AUDIO_AUTOPLAY	0x00000008	///< 由SDK包处理音频，直接播放
+#define BRAC_FUNC_CONFIG_LOCALINI	0x00000010	///< 生成本地配置文件（AnyChatSDK.ini）
+#define BRAC_FUNC_FIREWALL_OPEN		0x00000020	///< 允许SDK操作Windows防火墙，将当前应用程序加入防火墙访问列表（避免Windows提示用户是否阻止当前应用程序）
+#define BRAC_FUNC_CHKDEPENDMODULE	0x00000040	///< 自动检查SDK所依赖的组件，并自动注册
+#define BRAC_FUNC_AUDIO_VOLUMECALC	0x00000080	///< 由SDK自动计算语音的音量
+#define BRAC_FUNC_AUDIO_AUTOVOLUME	0x00000100	///< 允许SDK自动控制Mic录音音量
+#define BRAC_FUNC_NET_SUPPORTUPNP	0x00000200	///< 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
+#define BRAC_FUNC_DISABLEDECODE		0x00000400	///< 禁止对收到的数据进行解码和播放，为了提高代理客户端的数据转发性能，可设置该标志，否则不能设置该标志
+#define BRAC_FUNC_MAINTHREADCB		0x00000800	///< 主线程进行回调操作，默认是多线程环境下的数据回调
+#define BRAC_FUNC_AUDIO_FORBIDCFGHW	0x00001000	///< 禁止修改音频硬件配置
+#define BRAC_FUNC_CORE_FORBIDWINMSG	0x00002000	///< 禁止使用windows消息循环
+#define BRAC_FUNC_AUDIO_LARGEBUFFER	0x00004000	///< 音频大缓冲区模式，适合音乐播放类应用
+#define BRAC_FUNC_WEBMODE			0x00008000	///< Web工作模式
+#define BRAC_FUNC_NET_LARGEDELAY	0x00010000	///< 网络高延迟模式，适用于卫星网络环境
+
+
+// 内核参数定义（API：BRAC_SetSDKOption、BRAC_GetSDKOption 传入参数）
 #define BRAC_SO_AUDIO_VADCTRL				1	///< 音频静音检测控制（参数为：int型：1打开，0关闭）
 #define BRAC_SO_AUDIO_NSCTRL				2	///< 音频噪音抑制控制（参数为：int型：1打开，0关闭）
 #define BRAC_SO_AUDIO_ECHOCTRL				3	///< 音频回音消除控制（参数为：int型：1打开，0关闭）
@@ -120,6 +103,7 @@ enum BRAC_PixelFormat{
 #define BRAC_SO_CORESDK_EXTVIDEOINPUT		26	///< 外部扩展视频输入控制（参数为int型， 0 关闭外部视频输入[默认]， 1 启用外部视频输入）
 #define BRAC_SO_CORESDK_EXTAUDIOINPUT		27	///< 外部扩展音频输入控制（参数为int型， 0 关闭外部音频输入[默认]， 1 启用外部音频输入）
 #define BRAC_SO_CORESDK_LOWDELAYCTRL		28	///< 低延迟模式控制（参数为int型，0 关闭低延迟模式[默认]， 1 启用低延迟模式）
+#define BRAC_SO_CORESDK_NEWGUID				29	///< 产生新的GUID字符串
 
 #define BRAC_SO_LOCALVIDEO_BITRATECTRL		30	///< 本地视频编码码率设置（参数为int型，单位bps，同服务器配置：VideoBitrate）
 #define BRAC_SO_LOCALVIDEO_QUALITYCTRL		31	///< 本地视频编码质量因子控制（参数为int型，同服务器配置：VideoQuality）
@@ -148,6 +132,10 @@ enum BRAC_PixelFormat{
 #define BRAC_SO_LOCALVIDEO_TVFORMAT			104	///< 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
 #define BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP	105	///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
 #define BRAC_SO_LOCALVIDEO_DEVICENAME		106	///< 本地视频采集设备名称，用于设置打开指定摄像头设备（参数为字符串类型）
+#define BRAC_SO_LOCALVIDEO_CLIPMODE			107	///< 本地视频裁剪模式（参数为int型， 0 自动[默认]，禁止自动旋转时有效）
+#define BRAC_SO_LOCALVIDEO_SCREENHWND		108	///< 屏幕采集窗口句柄
+#define BRAC_SO_LOCALVIDEO_SCREENFLAGS		109	///< 屏幕采集标志（参数为int型）
+#define BRAC_SO_LOCALVIDEO_VIRTUALBK		111 ///< 本地视频迭加虚拟背景（字符串类型，JSON格式，包括虚拟背景路径、是否开启以及其它参数项）
 
 #define BRAC_SO_NETWORK_P2PPOLITIC			40	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 #define BRAC_SO_NETWORK_P2PCONNECT			41	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -159,6 +147,7 @@ enum BRAC_PixelFormat{
 #define BRAC_SO_NETWORK_AUTORECONNECT		47	///< 网络掉线自动重连功能控制（参数为int型，0 关闭， 1 开启[默认]）
 #define BRAC_SO_NETWORK_MTUSIZE				48	///< 设置网络层MTU大小（参数为int型）
 #define BRAC_SO_NETWORK_UDPSTATUS			49	///< UDP网络通信状态查询（参数为int型）
+#define BRAC_SO_NETWORK_LARGEDELAY			53	///< 网络高延迟模式，适用于卫星网络环境（参数为int型）
 
 #define BRAC_SO_PROXY_FUNCTIONCTRL			50	///< 本地用户代理功能控制，（参数为：int型，1启动代理，0关闭代理[默认]）
 #define BRAC_SO_PROXY_VIDEOCTRL				51	///< 本地用户代理视频控制，将本地视频变为指定用户的视频对外发布（参数为int型，表示其它用户的userid）
@@ -191,6 +180,14 @@ enum BRAC_PixelFormat{
 #define BRAC_SO_CORESDK_SUPPORTAUDIOCODEC	211	///< 设置支持的音频编码器
 #define BRAC_SO_CORESDK_DISABLEMEDIACONSUL	212	///< 禁止媒体协商
 #define BRAC_SO_CORESDK_QUERYTIMEOUTTIME	213	///< 信息查询超时时间（参数为：int型，单位：ms，默认值1000）
+#define BRAC_SO_CORESDK_REMOTEASSISTHWND	214	///< 远程协助窗口句柄
+#define BRAC_SO_CORESDK_REMOTEASSISTXPOS	215	///< 远程协助窗口滚动条位置（X）
+#define BRAC_SO_CORESDK_REMOTEASSISTYPOS	216	///< 远程协助窗口滚动条位置（Y）
+#define BRAC_SO_CORESDK_FITTENCENTLIVE		217	///< 兼容腾讯视频直播SDK
+#define BRAC_SO_CORESDK_DFCFLIVE			218
+#define BRAC_SO_CORESDK_DISABLEDNSCONNECT	219	///< 屏蔽DNS寻址
+#define BRAC_SO_CORESDK_LOGFILEROOTPATH		220	///< 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
+#define BRAC_SO_CORESDK_LOGFILERULE			221	///< 客户端日志文件保存规则（参数为int型，0 自动覆盖[默认] 1 按日期保存，不覆盖）
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -228,6 +225,7 @@ enum BRAC_PixelFormat{
 #define BRAC_TRANSTASK_STATUS				3	///< 传输任务当前状态（参数为：DWORD型）
 #define BRAC_TRANSTASK_SAVEASPATH			4	///< 文件传输任务另存为路径设置，含文件名（参数为字符串TCHAR类型）
 #define BRAC_TRANSTASK_SOURCEFILE			5	///< 源文件名（含路径，参数为字符串，TCHAR类型）
+#define BRAC_TRANSTASK_JSONSTATUS			6	///< 传输任务状态，Json字符串
 
 // 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
 #define BRAC_RECORD_FLAGS_VIDEO			0x00000001	///< 录制视频
@@ -257,6 +255,7 @@ enum BRAC_PixelFormat{
 #define ANYCHAT_RECORD_FLAGS_STREAM			BRAC_RECORD_FLAGS_STREAM
 #define ANYCHAT_RECORD_FLAGS_USERFILENAME	BRAC_RECORD_FLAGS_USERFILENAME
 #define ANYCHAT_RECORD_FLAGS_ERRORCODE		0x00004000	///< 支持出错代码
+#define ANYCHAT_RECORD_FLAGS_MULTISTREAM	0x00008000	///< 支持多路流的录制（拍照）
 #endif
 
 
@@ -308,12 +307,14 @@ enum BRAC_PixelFormat{
 #define BRAC_VIDEOCALL_EVENT_FINISH			4	///< 挂断（结束）呼叫会话
 
 // 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
-#define BRAC_VIDEOCALL_FLAGS_AUDIO		0x01	///< 语音通话
-#define BRAC_VIDEOCALL_FLAGS_VIDEO		0x02	///< 视频通话
-#define BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	0x10	///< 禁止源（呼叫端）音频
-#define BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	0x20	///< 禁止源（呼叫端）视频
-#define BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	0x40	///< 禁止目标（被呼叫端）音频
-#define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x80	///< 禁止目标（被呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_AUDIO		0x0001	///< 语音通话
+#define BRAC_VIDEOCALL_FLAGS_VIDEO		0x0002	///< 视频通话
+#define BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	0x0010	///< 禁止源（呼叫端）音频
+#define BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	0x0020	///< 禁止源（呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	0x0040	///< 禁止目标（被呼叫端）音频
+#define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x0080	///< 禁止目标（被呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_ASSISTREQ	0x0100	///< 请求目标用户远程协助
+#define BRAC_VIDEOCALL_FLAGS_CONTROLREQ	0x0200	///< 请求控制目标用户
 
 // 远程视频方向修正标志定义
 #define BRAC_ROTATION_FLAGS_MIRRORED	0x1000	///< 图像需要镜像翻转
@@ -334,8 +335,35 @@ enum BRAC_PixelFormat{
 #define BRAC_DATAENCDEC_FLAGS_BUFFER	0x40	///< 透明通道数据
 #define BRAC_DATAENCDEC_FLAGS_TXTMSG	0x80	///< 文字聊天数据
 
+// 回调函数类型定义（API：BRAC_SetCallBack 传入参数）
+#define BRAC_CBTYPE_NOTIFYMESSAGE			1	///< 异步消息通知回调
+#define BRAC_CBTYPE_VIDEODATA				2	///< 视频数据回调
+#define BRAC_CBTYPE_VIDEODATAEX				3	///< 视频数据扩展回调
+#define BRAC_CBTYPE_AUDIODATA				4	///< 音频数据回调
+#define BRAC_CBTYPE_AUDIODATAEX				5	///< 音频数据扩展回调
+#define BRAC_CBTYPE_TEXTMESSAGE				6	///< 文字消息回调
+#define BRAC_CBTYPE_TRANSBUFFER				7	///< 透明通道数据回调
+#define BRAC_CBTYPE_TRANSBUFFEREX			8	///< 透明通道数据扩展回调
+#define BRAC_CBTYPE_TRANSFILE				9	///< 文件传输回调
+#define BRAC_CBTYPE_VOLUMECHANGE			10	///< 音量变化回调
+#define BRAC_CBTYPE_SDKFILTERDATA			11	///< SDK Filter通信数据回调
+#define BRAC_CBTYPE_STREAMRECORD			12	///< 录像快照任务完成通知回调
+#define BRAC_CBTYPE_STREAMRECORDEX			13	///< 录像快照任务完成通知扩展回调
+#define BRAC_CBTYPE_VIDEOCALLEVENT			14	///< 视频通话消息通知回调
+#define BRAC_CBTYPE_DATAENCDEC				15	///< 数据加密、解密回调
+#define BRAC_CBTYPE_SCREENEVENT				16	///< 屏幕事件回调
+#define BRAC_CBTYPE_NETWORKDATASEND			17	///< 网络数据回调
+#define BRAC_CBTYPE_OBJECTEVENT				18	///< 业务对象事件通知
+#define BRAC_CBTYPE_VIDEODATAEX2			19	///< 视频数据扩展回调（支持多路流）
+#define BRAC_CBTYPE_AUDIODATAEX2			20	///< 音频数据扩展回调（支持多路流）
+#define BRAC_CBTYPE_STREAMRECORDEX2			21	///< 录像快照任务完成通知扩展回调（支持出错代码）
+#define BRAC_CBTYPE_TRANSFILEEX				22	///< 文件传输扩展回调（支持出错代码）
+#define BRAC_CBTYPE_CORESDKEVENT			23	///< Core SDK事件回调（Json格式）
+#define BRAC_CBTYPE_CORESDKDATA				24	///< Core SDK数据回调
+
 
 // 视频裁剪模式定义
+#define ANYCHAT_VIDEOCLIPMODE_UNKNOW		-1	///< 未知模式，不需要做裁剪时使用
 #define ANYCHAT_VIDEOCLIPMODE_AUTO			0	///< 默认模式，以最大比例进行裁剪，然后再整体拉伸，画面保持比例，但被裁剪画面较大
 #define ANYCHAT_VIDEOCLIPMODE_OVERLAP		1	///< 重叠模式，只取最大有效部分，对边缘进行裁剪
 #define ANYCHAT_VIDEOCLIPMODE_SHRINK		2	///< 缩小模式，缩小到合适的比例，不进行裁剪
@@ -347,8 +375,39 @@ enum BRAC_PixelFormat{
 #define ANYCHAT_SERVERQUERY_USERIDBYNAME	1	///< 根据用户昵称查询用户ID
 #define ANYCHAT_SERVERQUERY_USERIDBYSTRID	2	///< 根据字符串ID查询用户ID
 #define ANYCHAT_SERVERQUERY_STRIDBYUSERID	3	///< 根据用户ID查询字符串ID
+#define ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	100	///< 查询指定队列的坐席服务信息
 
+
+// 媒体播放事件类型定义
+#define ANYCHAT_STREAMPLAY_EVENT_START		3	///< 播放开始事件
+#define ANYCHAT_STREAMPLAY_EVENT_FINISH		4	///< 播放结束事件
+
+// 媒体播放标志定义（API：BRAC_StreamPlayInit 传入参数）
+#define ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT	0x00000001	///< 播放音频流代替本地音频输入（Mic）
+#define ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT	0x00000002	///< 播放视频流代替本地视频输入（Camera）
+#define ANYCHAT_STREAMPLAY_FLAGS_CALLBACKDATA		0x00000010	///< 回调数据给上层
+
+// 媒体播放信息类型定义（API：BRAC_StreamPlayGetInfo 传入参数）
+#define ANYCHAT_STREAMPLAY_INFO_JSONVALUE	1	///< 包含所有播放信息的Json字符串
+
+// 媒体播放控制类型定义（API：BRAC_StreamPlayControl 传入参数）
+#define ANYCHAT_STREAMPLAY_CTRL_START		1	///< 开始播放
+#define ANYCHAT_STREAMPLAY_CTRL_PAUSE		2	///< 暂停播放
+#define ANYCHAT_STREAMPLAY_CTRL_STOP		3	///< 停止播放
+#define ANYCHAT_STREAMPLAY_CTRL_SEEK		4	///< 位置拖动
+#define ANYCHAT_STREAMPLAY_CTRL_SPEEDCTRL	5	///< 速度调整
+#define ANYCHAT_STREAMPLAY_CTRL_OPENLOOP	6	///< 打开循环播放
+#define ANYCHAT_STREAMPLAY_CTRL_CLOSELOOP	7	///< 关闭循环播放
+
+
+// CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
+#define ANYCHAT_CORESDKEVENT_STREAMPLAY		30	///< 媒体播放事件
+
+// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
+#define ANYCHAT_CORESDKDATA_AUDIO			1	///< 音频数据
+#define ANYCHAT_CORESDKDATA_VIDEO			2	///< 视频数据
+#define ANYCHAT_CORESDKDATA_MESSAGE			3	///< 文字数据
+#define ANYCHAT_CORESDKDATA_BUFFER			4	///< 缓冲区数据
 
 
 #endif //_ANYCHAT_DEFINE_H__INCLUDE_
-

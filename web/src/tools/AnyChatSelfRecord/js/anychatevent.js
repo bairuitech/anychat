@@ -98,6 +98,10 @@ function OnAnyChatRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse,
 	// 关闭本地语音
 	BRAC_UserSpeakControl(mSelfUserId, 0); 
 	clearVideoOverlayEffect();
+	
+	var bRecordType = 1;
+	if(dwFlags & BRAC_RECORD_FLAGS_SNAPSHOT)
+		bRecordType = 0;
 	if (bRecordType == 0) {
 		clearInterval(videoOverlayEffectTimer);
 		displayList("AnyChatLocalVideoDiv,advanceset_iframe,ScreenShot", "none");

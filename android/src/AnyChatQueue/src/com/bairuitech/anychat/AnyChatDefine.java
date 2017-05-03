@@ -71,6 +71,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_RECORD_FILENAMERULE		=	143;///< 录制文件名命名规则（参数为：int型）
 	public static final int BRAC_SO_RECORD_CLIPMODE			=	144;///< 录制视频裁剪模式（参数为：int型）
 	public static final int BRAC_SO_RECORD_DISABLEDATEDIR	=	145;///< 录制文件不按日期分目录保存，全部生成在指定文件夹中（参数为：int型， 0禁止[默认] 1 开启）
+	public static final int BRAC_SO_RECORD_INSERTIMAGE		=	146;///< 录制过程中插入图片，Json字符串参数
 	
 	public static final int BRAC_SO_CORESDK_TMPDIR			=	14;	///< 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 	public static final int BRAC_SO_CORESDK_LOADCODEC		=	16;	///< 加载外部编解码器（参数为字符串TCHAR类型，必须是完整的绝对路径，包含文件名，或包含文件名的绝对路径）
@@ -114,6 +115,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_LOCALVIDEO_CLIPMODE		=	107;///< 本地视频裁剪模式（参数为int型， 0 自动[默认]，禁止自动旋转时有效）
 	public static final int BRAC_SO_LOCALVIDEO_SCREENHWND	=	108;///< 屏幕采集窗口句柄
 	public static final int BRAC_SO_LOCALVIDEO_SCREENFLAGS	=	109;///< 屏幕采集标志（参数为int型）
+	public static final int BRAC_SO_LOCALVIDEO_VIRTUALBK	=	111;///< 本地视频迭加虚拟背景（字符串类型，JSON格式，包括虚拟背景路径、是否开启以及其它参数项）
 	
 	public static final int BRAC_SO_NETWORK_P2PPOLITIC		=	40;	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 	public static final int BRAC_SO_NETWORK_P2PCONNECT		=	41;	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -123,6 +125,10 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_NETWORK_MULTICASTPOLITIC=	45;	///< 组播策略控制（参数为int型：0 执行服务器路由策略，禁止组播发送[默认]， 1 忽略服务器路由策略，只向组播组广播媒体流， 2 执行服务器路由策略，同时组播）
 	public static final int BRAC_SO_NETWORK_TRANSBUFMAXBITRATE=	46;	///< 传输缓冲区、文件最大码率控制（参数为int型，0 不限制，以最快速率传输[默认]， 否则表示限制码率，单位为：bps）
 	public static final int BRAC_SO_NETWORK_AUTORECONNECT	=	47;	///< 网络掉线自动重连功能控制（参数为int型，0 关闭， 1 开启[默认]）
+	public static final int BRAC_SO_NETWORK_MTUSIZE			=	48;	///< 设置网络层MTU大小（参数为int型）
+	public static final int BRAC_SO_NETWORK_UDPSTATUS		=	49;	///< UDP网络通信状态查询（参数为int型）
+	public static final int BRAC_SO_NETWORK_LARGEDELAY		=	53;	///< 网络高延迟模式，适用于卫星网络环境（参数为int型）
+	public static final int BRAC_SO_NETWORK_IPV6DNS			=	54;	///< IPv6域名解析控制（参数为int型，0 关闭， 1开启[默认]），传统网络（IPv4）下，禁用IPv6可提高域名解析速度
 
 	public static final int BRAC_SO_PROXY_FUNCTIONCTRL		=	50;	///< 本地用户代理功能控制，（参数为：int型，1启动代理，0关闭代理[默认]）
 	public static final int BRAC_SO_PROXY_VIDEOCTRL			=	51;	///< 本地用户代理视频控制，将本地视频变为指定用户的视频对外发布（参数为int型，表示其它用户的userid）
@@ -268,6 +274,35 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_RECORD_FLAGS_ERRORCODE	= 0x00004000;	///< 支持出错代码
 	public static final int ANYCHAT_RECORD_FLAGS_MULTISTREAM= 0x00008000;	///< 支持多路流的录制（拍照）
 
+	// 媒体播放事件类型定义
+	public static final int ANYCHAT_STREAMPLAY_EVENT_START	=	3;	///< 播放开始事件
+	public static final int ANYCHAT_STREAMPLAY_EVENT_FINISH	=	4;	///< 播放结束事件
+
+	// 媒体播放标志定义（API：BRAC_StreamPlayInit 传入参数）
+	public static final int ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT=	0x00000001;	///< 播放音频流代替本地音频输入（Mic）
+	public static final int ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT=	0x00000002;	///< 播放视频流代替本地视频输入（Camera）
+	public static final int ANYCHAT_STREAMPLAY_FLAGS_CALLBACKDATA	  =	0x00000010;	///< 回调数据给上层
+
+	// 媒体播放信息类型定义（API：BRAC_StreamPlayGetInfo 传入参数）
+	public static final int ANYCHAT_STREAMPLAY_INFO_JSONVALUE=	1;	///< 包含所有播放信息的Json字符串
+
+	// 媒体播放控制类型定义（API：BRAC_StreamPlayControl 传入参数）
+	public static final int ANYCHAT_STREAMPLAY_CTRL_START	=	1;	///< 开始播放
+	public static final int ANYCHAT_STREAMPLAY_CTRL_PAUSE	=	2;	///< 暂停播放
+	public static final int ANYCHAT_STREAMPLAY_CTRL_STOP	=	3;	///< 停止播放
+	public static final int ANYCHAT_STREAMPLAY_CTRL_SEEK	=	4;	///< 位置拖动
+	public static final int ANYCHAT_STREAMPLAY_CTRL_SPEEDCTRL=	5;	///< 速度调整
+	public static final int ANYCHAT_STREAMPLAY_CTRL_OPENLOOP=	6;	///< 打开循环播放
+	public static final int ANYCHAT_STREAMPLAY_CTRL_CLOSELOOP=	7;	///< 关闭循环播放
+
+	// CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
+	public static final int ANYCHAT_CORESDKEVENT_STREAMPLAY	=	30;	///< 媒体播放事件
+
+	// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
+	public static final int ANYCHAT_CORESDKDATA_AUDIO		=	1;	///< 音频数据
+	public static final int ANYCHAT_CORESDKDATA_VIDEO		=	2;	///< 视频数据
+	public static final int ANYCHAT_CORESDKDATA_MESSAGE		=	3;	///< 文字数据
+	public static final int ANYCHAT_CORESDKDATA_BUFFER		=	4;	///< 缓冲区数据
 	
 	
 	

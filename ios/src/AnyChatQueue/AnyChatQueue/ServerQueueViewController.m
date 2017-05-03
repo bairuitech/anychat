@@ -186,7 +186,7 @@
     Business *business = self.businesses[indexPath.row];
     cell.textLabel.text =  business.title;
     int queueId = [self.businessListIdArray[indexPath.row] intValue];
-    int queuePeopleCount = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_LENGTH];
+    int queuePeopleCount = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_QUEUELENGTH];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"有%d人在排队",queuePeopleCount];
     return cell;
 }

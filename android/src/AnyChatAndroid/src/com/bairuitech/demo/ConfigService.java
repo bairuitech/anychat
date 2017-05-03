@@ -13,13 +13,13 @@ public class ConfigService {
 	public static ConfigEntity LoadConfig(Context context)
 	{
 		ConfigEntity configEntity = new ConfigEntity();
-    		SharedPreferences sharedPreferences;
+    		SharedPreferences share;
 		int currentapiVersion=android.os.Build.VERSION.SDK_INT;
 		if(currentapiVersion>=24){
-			sharedPreferences = context.getSharedPreferences(
+            share = context.getSharedPreferences(
 					"featuresConfig", Context.MODE_PRIVATE);
 		}else{
-			sharedPreferences = context.getSharedPreferences(
+            share = context.getSharedPreferences(
 					"featuresConfig", Context.MODE_WORLD_WRITEABLE);
 		} 
 

@@ -45,7 +45,7 @@
     self.queueUserSite = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_INFO_BEFOREUSERNUM] + 1;
     self.queuUserSiteLabel.text = [NSString stringWithFormat:@"你现在排在第%d位",self.queueUserSite];
     
-    self.queueUserCount = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_INFO_LENGTH];
+    self.queueUserCount = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_INFO_QUEUELENGTH];
     self.queueUserCountLabel.text = [NSString stringWithFormat:@"当前排队人数共:%d人",self.queueUserCount];
     
     // 防止锁屏
