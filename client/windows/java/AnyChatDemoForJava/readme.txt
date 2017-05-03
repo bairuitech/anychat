@@ -16,3 +16,5 @@ http://www.anychat.cn/faq/index.php?action=artikel&cat=7&id=242&artlang=zh
 |            |--------brMediaCore.dll
 |            |--------brMediaShow.dll
 |            ……
+
+注：jdk必须是32位的
