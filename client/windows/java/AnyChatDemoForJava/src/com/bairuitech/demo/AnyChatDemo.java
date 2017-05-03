@@ -28,6 +28,7 @@ public class AnyChatDemo implements AnyChatBaseEvent, AnyChatTextMsgEvent,
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.out.println("java.library.path is " + System.getProperty("java.library.path"));
 		// TODO Auto-generated method stub
 		mInstance = new AnyChatDemo();
 		initSdk();
