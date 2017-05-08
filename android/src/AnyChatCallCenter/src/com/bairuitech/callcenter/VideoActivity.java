@@ -143,7 +143,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		if (dialog != null && dialog.isShowing())
 			dialog.dismiss();
 		anychat.LeaveRoom(-1);
-		
+		anychat.removeEvent(this);
 
 	}
 
@@ -153,9 +153,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		anychat.SetBaseEvent(this);
 		anychat.SetVideoCallEvent(this);
 		anychat.SetUserInfoEvent(this);
-		anychat.mSensorHelper.InitSensor(this);
+		anychat.mSensorHelper.InitSensor(getApplicationContext());
 		// 初始化Camera上下文句柄
-		AnyChatCoreSDK.mCameraHelper.SetContext(this);
+		AnyChatCoreSDK.mCameraHelper.SetContext(getApplicationContext());
 
 	}
 

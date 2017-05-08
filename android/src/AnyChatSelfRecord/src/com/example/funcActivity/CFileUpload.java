@@ -160,6 +160,13 @@ public class CFileUpload extends Activity implements AnyChatBaseEvent,
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		if (mAnyChatSDK != null) {
+			mAnyChatSDK.removeEvent(this);
+		}
+		if (mBroadcastReceiver != null) {
+			unregisterReceiver(mBroadcastReceiver);
+			unregisterReceiver = null;
+		}
 	}
 
 	@Override

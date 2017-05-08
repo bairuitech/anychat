@@ -232,7 +232,9 @@ public class CLogin extends Activity implements AnyChatBaseEvent {
 		super.onDestroy();
 		mAnyChatSDK.LeaveRoom(-1);
 		mAnyChatSDK.Logout();
+		mAnyChatSDK.removeEvent(this);
 		mAnyChatSDK.Release();
+		unregisterReceiver(mBroadcastReceiver);
 	}
 	
 	@Override

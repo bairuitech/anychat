@@ -109,8 +109,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		anyChatSDK.SetBaseEvent(this);
 		anyChatSDK.SetVideoCallEvent(this);
 		anyChatSDK.SetRecordSnapShotEvent(this);
-		anyChatSDK.mSensorHelper.InitSensor(this);
-		AnyChatCoreSDK.mCameraHelper.SetContext(this);
+		anyChatSDK.mSensorHelper.InitSensor(getApplicationContext());
+		AnyChatCoreSDK.mCameraHelper.SetContext(getApplicationContext());
 
 		// 拍照存储路径
 		anyChatSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_SNAPSHOT_TMPDIR,
@@ -474,7 +474,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent,
 		anyChatSDK.UserCameraControl(userID, 0);
 		anyChatSDK.UserSpeakControl(userID, 0);
 		anyChatSDK.UserCameraControl(-1, 0);
-		anyChatSDK.UserSpeakControl(-1, 0);	
+		anyChatSDK.UserSpeakControl(-1, 0);
+		anyChatSDK.removeEvent(this);
 		anyChatSDK.mSensorHelper.DestroySensor();
 		
 		finish();

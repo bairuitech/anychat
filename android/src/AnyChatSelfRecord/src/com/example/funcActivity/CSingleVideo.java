@@ -82,8 +82,8 @@ public class CSingleVideo extends Activity implements AnyChatBaseEvent,
 		
 		mAnyChatSDK.SetBaseEvent(this);
 		mAnyChatSDK.SetRecordSnapShotEvent(this);
-		mAnyChatSDK.mSensorHelper.InitSensor(this);
-		mAnyChatSDK.mCameraHelper.SetContext(this);
+		mAnyChatSDK.mSensorHelper.InitSensor(getApplicationContext());
+		mAnyChatSDK.mCameraHelper.SetContext(getApplicationContext());
 
 		// 拍照存储路径
 		mAnyChatSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_SNAPSHOT_TMPDIR,
@@ -281,6 +281,10 @@ public class CSingleVideo extends Activity implements AnyChatBaseEvent,
 			mVideoRecordTimer.cancel();
 			mVideoRecordTimer = null;
 		}
+		if(mAnyChatSDK != null){
+			mAnyChatSDK.removeEvent(this);
+		}
+		unregisterReceiver(mBroadcastReceiver);
 	}
 	
 	@Override

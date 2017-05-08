@@ -228,6 +228,9 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		if(anychat != null){
+			anychat.removeEvent(this);
+		}
 	}
 
 	@Override

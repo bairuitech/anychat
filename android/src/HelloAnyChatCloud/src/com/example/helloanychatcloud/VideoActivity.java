@@ -60,8 +60,8 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 	private void InitSDK() {
 		anychatSDK = AnyChatCoreSDK.getInstance(VideoActivity.this);
 		anychatSDK.SetBaseEvent(this);
-		anychatSDK.mSensorHelper.InitSensor(this);
-		AnyChatCoreSDK.mCameraHelper.SetContext(this);
+		anychatSDK.mSensorHelper.InitSensor(getApplicationContext());
+		AnyChatCoreSDK.mCameraHelper.SetContext(getApplicationContext());
 	}
 
 	private void InitLayout() {
@@ -306,6 +306,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 	protected void onDestroy() {
 		super.onDestroy();
 		handler.removeCallbacks(runnable);
+		anychatSDK.removeEvent(this);
 		anychatSDK.mSensorHelper.DestroySensor();
 		finish();
 	}

@@ -172,6 +172,7 @@ public class VideoCallActivity extends Activity implements AnyChatBaseEvent{
     protected void onDestroy(){
 
  	   anychat.LeaveRoom(-1);
+ 	   anychat.removeEvent(this);
     	super.onDestroy();
     }
     

@@ -71,8 +71,11 @@ public class CCheckStage extends Activity implements AnyChatBaseEvent{
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		if (mAnyChatSDK != null) {
+			mAnyChatSDK.removeEvent(this);
+		}
 	}
-	
+
 	@Override
 	protected void onRestart() {
 		super.onRestart();

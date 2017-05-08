@@ -298,6 +298,9 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent {
 		if (bNeedRelease) {
 			anychat.Release(); // 关闭SDK
 		}
+		if(anychat != null){
+			anychat.removeEvent(this);
+		}
 		super.onDestroy();
 	}
 

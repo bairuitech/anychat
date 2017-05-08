@@ -176,6 +176,7 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 	@Override
 	protected void onDestroy() {
 		anyChatSDK.LeaveRoom(-1);
+		anyChatSDK.removeEvent(this);
 		super.onDestroy();
 		finish();
 	}

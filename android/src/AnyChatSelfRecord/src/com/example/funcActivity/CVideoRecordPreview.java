@@ -206,6 +206,9 @@ public class CVideoRecordPreview extends Activity implements AnyChatBaseEvent{
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		if(mAnyChatSDK != null){
+			mAnyChatSDK.removeEvent(this);
+		}
 	}
 	
 	@Override
@@ -223,6 +226,7 @@ public class CVideoRecordPreview extends Activity implements AnyChatBaseEvent{
 	}
 
 	private void destroyCurActivity() {
+		unregisterReceiver(mBroadcastReceiver);
 		onDestroy();
 		finish();
 		BaseMethod.removeActivityFromList(this);

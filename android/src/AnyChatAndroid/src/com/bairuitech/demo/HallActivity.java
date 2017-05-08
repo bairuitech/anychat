@@ -195,6 +195,7 @@ public class HallActivity extends Activity implements AnyChatBaseEvent{
     protected void onDestroy() {
     	anychat.LeaveRoom(-1);
     	anychat.Logout();
+    	anychat.removeEvent(this);
     	anychat.Release();	// 关闭SDK，不再返回登录界面
 
     	if(!IsDisConnect)

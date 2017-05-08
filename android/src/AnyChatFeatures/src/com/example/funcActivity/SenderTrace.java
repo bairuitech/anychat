@@ -237,6 +237,8 @@ public class SenderTrace extends Activity implements AnyChatBaseEvent{
 		if (mTimer != null) {
 			mTimer.cancel();
 			mTimer = null;
+			if (anyChatSDK != null)
+				anyChatSDK.removeEvent(this);
 			AnyChatCoreSDK.SetSDKOptionInt(163, 0);
 		}
 	}

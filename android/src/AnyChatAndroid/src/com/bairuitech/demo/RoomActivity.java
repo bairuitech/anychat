@@ -234,6 +234,7 @@ public class RoomActivity extends Activity implements AnyChatBaseEvent,AnyChatTe
     protected void onDestroy(){
 		Log.e("******RoomActivity***********", "RoomActivity  onDestroy");	
  	   anychat.LeaveRoom(-1);
+		anychat.removeEvent(this);
     	super.onDestroy();
     }
     
