@@ -165,7 +165,6 @@ public class CFileUpload extends Activity implements AnyChatBaseEvent,
 		}
 		if (mBroadcastReceiver != null) {
 			unregisterReceiver(mBroadcastReceiver);
-			unregisterReceiver = null;
 		}
 	}
 
