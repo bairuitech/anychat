@@ -86,6 +86,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_RECORD_FILENAMERULE			143	///< 录制文件名命名规则（参数为：int型）
 #define BRAC_SO_RECORD_CLIPMODE				144	///< 录制视频裁剪模式（参数为：int型）
 #define BRAC_SO_RECORD_DISABLEDATEDIR		145	///< 录制文件不按日期分目录保存，全部生成在指定文件夹中（参数为：int型， 0禁止[默认] 1 开启）
+#define BRAC_SO_RECORD_INSERTIMAGE			146	///< 录制过程中插入图片，Json字符串参数
 
 #define BRAC_SO_CORESDK_TMPDIR				14	///< 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 #define BRAC_SO_CORESDK_MAGICADJUST			15	///< 内核调试参数
@@ -401,6 +402,10 @@ enum BRAC_VideoShowDriver{
 
 
 // CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
+#define ANYCHAT_CORESDKEVENT_BASEEVENT		1	///< SDK基础事件
+#define ANYCHAT_CORESDKEVENT_CAMERASTATE	10	///< 摄像头状态事件
+#define ANYCHAT_CORESDKEVENT_MICSTATE		11	///< Mic状态事件
+#define ANYCHAT_CORESDKEVENT_TRANSFILE		12	///< 文件传输事件
 #define ANYCHAT_CORESDKEVENT_STREAMPLAY		30	///< 媒体播放事件
 
 // CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）

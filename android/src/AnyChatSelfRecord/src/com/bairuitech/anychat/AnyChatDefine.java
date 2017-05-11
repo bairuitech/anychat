@@ -296,6 +296,10 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_STREAMPLAY_CTRL_CLOSELOOP=	7;	///< 关闭循环播放
 
 	// CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
+	public static final int ANYCHAT_CORESDKEVENT_BASEEVENT	=	1;	///< SDK基础事件
+	public static final int ANYCHAT_CORESDKEVENT_CAMERASTATE=	10;	///< 摄像头状态事件
+	public static final int ANYCHAT_CORESDKEVENT_MICSTATE	=	11;	///< Mic状态事件
+	public static final int ANYCHAT_CORESDKEVENT_TRANSFILE	=	12;	///< 文件传输事件
 	public static final int ANYCHAT_CORESDKEVENT_STREAMPLAY	=	30;	///< 媒体播放事件
 
 	// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
