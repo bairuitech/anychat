@@ -147,6 +147,8 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_NETWORK_AUTORECONNECT		47	///< 网络掉线自动重连功能控制（参数为int型，0 关闭， 1 开启[默认]）
 #define BRAC_SO_NETWORK_MTUSIZE				48	///< 设置网络层MTU大小（参数为int型）
 #define BRAC_SO_NETWORK_UDPSTATUS			49	///< UDP网络通信状态查询（参数为int型）
+#define BRAC_SO_NETWORK_LARGEDELAY			53	///< 网络高延迟模式，适用于卫星网络环境（参数为int型）
+#define BRAC_SO_NETWORK_IPV6DNS				54	///< IPv6域名解析控制（参数为int型，0 关闭， 1开启[默认]），传统网络（IPv4）下，禁用IPv6可提高域名解析速度
 
 #define BRAC_SO_PROXY_FUNCTIONCTRL			50	///< 本地用户代理功能控制，（参数为：int型，1启动代理，0关闭代理[默认]）
 #define BRAC_SO_PROXY_VIDEOCTRL				51	///< 本地用户代理视频控制，将本地视频变为指定用户的视频对外发布（参数为int型，表示其它用户的userid）
@@ -182,9 +184,14 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_REMOTEASSISTHWND	214	///< 远程协助窗口句柄
 #define BRAC_SO_CORESDK_REMOTEASSISTXPOS	215	///< 远程协助窗口滚动条位置（X）
 #define BRAC_SO_CORESDK_REMOTEASSISTYPOS	216	///< 远程协助窗口滚动条位置（Y）
+#define BRAC_SO_CORESDK_FITTENCENTLIVE		217	///< 兼容腾讯视频直播SDK
+#define BRAC_SO_CORESDK_DFCFLIVE			218
 #define BRAC_SO_CORESDK_DISABLEDNSCONNECT	219	///< 屏蔽DNS寻址
 #define BRAC_SO_CORESDK_LOGFILEROOTPATH		220	///< 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
-#define BRAC_SO_CORESDK_KEEPALLLOGFILES		221	///< 保存客户端所有日志文件（不覆盖之前的日志文件）
+#define BRAC_SO_CORESDK_LOGFILERULE			221	///< 客户端日志文件保存规则（参数为int型，0 自动覆盖[默认] 1 按日期保存，不覆盖）
+#define BRAC_SO_CORESDK_FILEENCANDDEC		222	///< 文件加解密控制（参数为字符串类型，JSON格式）
+#define BRAC_SO_CORESDK_PPTHELPERINIT		223	///< PPT播报环境初始化
+#define BRAC_SO_CORESDK_PPTFILECTRL			224	///< PPT文件控制
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -222,6 +229,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_TRANSTASK_STATUS				3	///< 传输任务当前状态（参数为：DWORD型）
 #define BRAC_TRANSTASK_SAVEASPATH			4	///< 文件传输任务另存为路径设置，含文件名（参数为字符串TCHAR类型）
 #define BRAC_TRANSTASK_SOURCEFILE			5	///< 源文件名（含路径，参数为字符串，TCHAR类型）
+#define BRAC_TRANSTASK_JSONSTATUS			6	///< 传输任务状态，Json字符串
 
 // 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
 #define BRAC_RECORD_FLAGS_VIDEO			0x00000001	///< 录制视频
@@ -251,6 +259,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_RECORD_FLAGS_STREAM			BRAC_RECORD_FLAGS_STREAM
 #define ANYCHAT_RECORD_FLAGS_USERFILENAME	BRAC_RECORD_FLAGS_USERFILENAME
 #define ANYCHAT_RECORD_FLAGS_ERRORCODE		0x00004000	///< 支持出错代码
+#define ANYCHAT_RECORD_FLAGS_MULTISTREAM	0x00008000	///< 支持多路流的录制（拍照）
 #endif
 
 
@@ -357,8 +366,8 @@ enum BRAC_VideoShowDriver{
 #define BRAC_CBTYPE_CORESDKDATA				24	///< Core SDK数据回调
 
 
-
 // 视频裁剪模式定义
+#define ANYCHAT_VIDEOCLIPMODE_UNKNOW		-1	///< 未知模式，不需要做裁剪时使用
 #define ANYCHAT_VIDEOCLIPMODE_AUTO			0	///< 默认模式，以最大比例进行裁剪，然后再整体拉伸，画面保持比例，但被裁剪画面较大
 #define ANYCHAT_VIDEOCLIPMODE_OVERLAP		1	///< 重叠模式，只取最大有效部分，对边缘进行裁剪
 #define ANYCHAT_VIDEOCLIPMODE_SHRINK		2	///< 缩小模式，缩小到合适的比例，不进行裁剪
@@ -370,6 +379,11 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SERVERQUERY_USERIDBYNAME	1	///< 根据用户昵称查询用户ID
 #define ANYCHAT_SERVERQUERY_USERIDBYSTRID	2	///< 根据字符串ID查询用户ID
 #define ANYCHAT_SERVERQUERY_STRIDBYUSERID	3	///< 根据用户ID查询字符串ID
+#define ANYCHAT_SERVERQUERY_PPTFILEINFO		10	///< PPT文件信息
+#define ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	100	///< 查询指定队列的坐席服务信息
+#define ANYCHAT_SERVERQUERY_RUNNINGSTATUS	200	///< 查询服务器运行状态
+#define ANYCHAT_SERVERQUERY_ONLINEUSERS		201	///< 查询服务器在线用户数
+
 
 // 媒体播放事件类型定义
 #define ANYCHAT_STREAMPLAY_EVENT_START		3	///< 播放开始事件
@@ -394,9 +408,12 @@ enum BRAC_VideoShowDriver{
 
 
 // CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
+#define ANYCHAT_CORESDKEVENT_BASEEVENT		1	///< SDK基础事件
 #define ANYCHAT_CORESDKEVENT_CAMERASTATE	10	///< 摄像头状态事件
 #define ANYCHAT_CORESDKEVENT_MICSTATE		11	///< Mic状态事件
+#define ANYCHAT_CORESDKEVENT_TRANSFILE		12	///< 文件传输事件
 #define ANYCHAT_CORESDKEVENT_STREAMPLAY		30	///< 媒体播放事件
+#define ANYCHAT_CORESDKEVENT_PPTHELPER		31	///< PPTHelper事件
 
 // CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
 #define ANYCHAT_CORESDKDATA_AUDIO			1	///< 音频数据
