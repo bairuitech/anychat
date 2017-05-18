@@ -415,6 +415,8 @@ type
 
   function SetVideoPosEx(userId: DWORD; hWnd: THandle; left, top, right, bottom, streamIndex, flags: DWORD): DWORD; cdecl;
 
+  function BRAC_StreamPlaySetVideoPos(lpTaskGuid: LPCTSTR; hWnd: THandle; dwLeft: DWORD = 0; dwTop: DWORD = 0; dwRight: DWORD = 0; dwBottom: DWORD = 0): DWORD; cdecl;
+
   function UserCameraControlEx(userId: DWORD; Open: Boolean; streamIndex: DWORD; flags: DWORD; strParam: LPCTSTR): DWORD; cdecl;
 
   function StreamRecordCtrlEx(userId: DWORD; startRecord: Integer; flags, param: DWORD; userstr: LPCTSTR): DWORD; cdecl;
@@ -425,7 +427,7 @@ type
 
   function BRAC_StreamPlayControl(taskGuid: LPCTSTR; ctrlCode, param, flags: DWORD; strParam: LPCTSTR): DWORD; cdecl;
 
-  function BRAC_StreamPlayGetInfo(lpTaskGuid: LPCTSTR; infoName: DWORD; infoValue: LPSTR; dwSize: DWORD): DWORD; cdecl;
+  function BRAC_StreamPlayGetInfo(lpTaskGuid: LPCTSTR; infoName: DWORD; infoValue: Pointer; dwSize: DWORD): DWORD; cdecl;
 
   function BRAC_StreamPlayDestroy(taskGuid: LPCTSTR; flags: DWORD): DWORD; cdecl;
 
@@ -661,6 +663,9 @@ implementation
   function SetVideoPosEx(userId: DWORD; hWnd: THandle; left, top, right, bottom, streamIndex, flags: DWORD): DWORD; cdecl;
       external C_BRAnyChatCoreLibName name 'BRAC_SetVideoPosEx';
 
+function BRAC_StreamPlaySetVideoPos(lpTaskGuid: LPCTSTR; hWnd: THandle; dwLeft: DWORD = 0; dwTop: DWORD = 0; dwRight: DWORD = 0; dwBottom: DWORD = 0): DWORD;  cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_StreamPlaySetVideoPos';
+
   function StreamRecordCtrlEx(userId: DWORD; startRecord: Integer; flags, param: DWORD; userstr: LPCTSTR): DWORD; cdecl;
       external C_BRAnyChatCoreLibName name 'BRAC_StreamRecordCtrlEx';
 
@@ -673,7 +678,7 @@ implementation
   function BRAC_StreamPlayControl(taskGuid: LPCTSTR; ctrlCode, param, flags: DWORD; strParam: LPCTSTR): DWORD; cdecl;
       external C_BRAnyChatCoreLibName name 'BRAC_StreamPlayControl';
 
-  function BRAC_StreamPlayGetInfo(lpTaskGuid: LPCTSTR; infoName: DWORD; infoValue: LPSTR; dwSize: DWORD): DWORD; cdecl;
+  function BRAC_StreamPlayGetInfo(lpTaskGuid: LPCTSTR; infoName: DWORD; infoValue: Pointer; dwSize: DWORD): DWORD; cdecl;
       external C_BRAnyChatCoreLibName name 'BRAC_StreamPlayGetInfo';
 
   function BRAC_StreamPlayDestroy(taskGuid: LPCTSTR; flags: DWORD): DWORD; cdecl;
