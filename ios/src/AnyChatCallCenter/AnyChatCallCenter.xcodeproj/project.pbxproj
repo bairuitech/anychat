@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		09558A921ECDB95300D966CE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09558A911ECDB95300D966CE /* libz.tbd */; };
 		098DF24E1EA743D400FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF24D1EA743D400FB36FA /* VideoToolbox.framework */; };
+		09B589771ECED90E009BF992 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09B589761ECED90E009BF992 /* libstdc++.6.tbd */; };
 		09CF431F1ECE9D8E0099739C /* libanychatcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09CF43101ECE9D8E0099739C /* libanychatcore.a */; };
 		09CF43201ECE9D8E0099739C /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09CF43111ECE9D8E0099739C /* libavcodec.a */; };
 		09CF43211ECE9D8E0099739C /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09CF43121ECE9D8E0099739C /* libavfilter.a */; };
@@ -50,7 +51,6 @@
 		FE95ECA619B944AC000798CF /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FE95EC9819B944AC000798CF /* UserInfo.m */; };
 		FE95ECA719B944AC000798CF /* HallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE95EC9A19B944AC000798CF /* HallViewController.m */; };
 		FE95ECA819B944AC000798CF /* HallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE95EC9B19B944AC000798CF /* HallViewController.xib */; };
-		FEA90E821A4D03DF001CA696 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FEA90E811A4D03DF001CA696 /* libc++.dylib */; };
 		FEB337C819B8555200D2C2F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB337C719B8555200D2C2F3 /* Foundation.framework */; };
 		FEB337CA19B8555200D2C2F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB337C919B8555200D2C2F3 /* CoreGraphics.framework */; };
 		FEB337CC19B8555200D2C2F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB337CB19B8555200D2C2F3 /* UIKit.framework */; };
@@ -62,8 +62,6 @@
 		FEB3382519B857E400D2C2F3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB3382419B857E400D2C2F3 /* AudioToolbox.framework */; };
 		FEB3382719B857EC00D2C2F3 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB3382619B857EC00D2C2F3 /* CoreVideo.framework */; };
 		FEB3382919B857F800D2C2F3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB3382819B857F800D2C2F3 /* CoreAudio.framework */; };
-		FEB3382B19B858A200D2C2F3 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB3382A19B858A200D2C2F3 /* libstdc++.dylib */; };
-		FEB3382D19B858AD00D2C2F3 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB3382C19B858AD00D2C2F3 /* libstdc++.6.dylib */; };
 		FEB3386B19B85FFE00D2C2F3 /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB3386919B85FFE00D2C2F3 /* Toast+UIView.m */; };
 		FEB3387819B8608300D2C2F3 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB3386D19B8608300D2C2F3 /* 1.png */; };
 		FEB3387A19B8608300D2C2F3 /* 120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB3386F19B8608300D2C2F3 /* 120x120.png */; };
@@ -84,6 +82,7 @@
 /* Begin PBXFileReference section */
 		09558A911ECDB95300D966CE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		098DF24D1EA743D400FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		09B589761ECED90E009BF992 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
 		09CF43101ECE9D8E0099739C /* libanychatcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libanychatcore.a; sourceTree = "<group>"; };
 		09CF43111ECE9D8E0099739C /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavcodec.a; sourceTree = "<group>"; };
 		09CF43121ECE9D8E0099739C /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavfilter.a; sourceTree = "<group>"; };
@@ -136,7 +135,6 @@
 		FE95EC9919B944AC000798CF /* HallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HallViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FE95EC9A19B944AC000798CF /* HallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HallViewController.m; sourceTree = "<group>"; };
 		FE95EC9B19B944AC000798CF /* HallViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HallViewController.xib; sourceTree = "<group>"; };
-		FEA90E811A4D03DF001CA696 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		FEB337C419B8555200D2C2F3 /* AnyChatCallCenter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnyChatCallCenter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEB337C719B8555200D2C2F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FEB337C919B8555200D2C2F3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -147,14 +145,11 @@
 		FEB337D519B8555200D2C2F3 /* AnyChatCallCenter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AnyChatCallCenter-Prefix.pch"; sourceTree = "<group>"; };
 		FEB337D619B8555200D2C2F3 /* AnyChatAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyChatAppDelegate.h; sourceTree = "<group>"; };
 		FEB337D719B8555200D2C2F3 /* AnyChatAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnyChatAppDelegate.m; sourceTree = "<group>"; };
-		FEB337E019B8555200D2C2F3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		FEB3382019B857D500D2C2F3 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		FEB3382219B857DB00D2C2F3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FEB3382419B857E400D2C2F3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FEB3382619B857EC00D2C2F3 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		FEB3382819B857F800D2C2F3 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		FEB3382A19B858A200D2C2F3 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
-		FEB3382C19B858AD00D2C2F3 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		FEB3386919B85FFE00D2C2F3 /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Toast+UIView.m"; path = "AnyChatCallCenter/Toast/Toast+UIView.m"; sourceTree = SOURCE_ROOT; };
 		FEB3386A19B85FFE00D2C2F3 /* Toast+UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Toast+UIView.h"; path = "AnyChatCallCenter/Toast/Toast+UIView.h"; sourceTree = SOURCE_ROOT; };
 		FEB3386D19B8608300D2C2F3 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
@@ -179,6 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09B589771ECED90E009BF992 /* libstdc++.6.tbd in Frameworks */,
 				09CF43231ECE9D8E0099739C /* libavutil.a in Frameworks */,
 				09CF43261ECE9D8E0099739C /* libmediautil.a in Frameworks */,
 				09CF43211ECE9D8E0099739C /* libavfilter.a in Frameworks */,
@@ -188,11 +184,8 @@
 				09CF432D1ECE9D8E0099739C /* libyuv.a in Frameworks */,
 				09CF43221ECE9D8E0099739C /* libavformat.a in Frameworks */,
 				09CF43201ECE9D8E0099739C /* libavcodec.a in Frameworks */,
-				FEA90E821A4D03DF001CA696 /* libc++.dylib in Frameworks */,
-				FEB3382D19B858AD00D2C2F3 /* libstdc++.6.dylib in Frameworks */,
 				09CF43241ECE9D8E0099739C /* libmediacore.a in Frameworks */,
 				09CF43251ECE9D8E0099739C /* libmediashow.a in Frameworks */,
-				FEB3382B19B858A200D2C2F3 /* libstdc++.dylib in Frameworks */,
 				09CF43291ECE9D8E0099739C /* libswscale.a in Frameworks */,
 				FEB3382919B857F800D2C2F3 /* CoreAudio.framework in Frameworks */,
 				09CF43281ECE9D8E0099739C /* libswresample.a in Frameworks */,
@@ -323,11 +316,9 @@
 		FEB337C619B8555200D2C2F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				09B589761ECED90E009BF992 /* libstdc++.6.tbd */,
 				09558A911ECDB95300D966CE /* libz.tbd */,
 				098DF24D1EA743D400FB36FA /* VideoToolbox.framework */,
-				FEA90E811A4D03DF001CA696 /* libc++.dylib */,
-				FEB3382C19B858AD00D2C2F3 /* libstdc++.6.dylib */,
-				FEB3382A19B858A200D2C2F3 /* libstdc++.dylib */,
 				FEB3382819B857F800D2C2F3 /* CoreAudio.framework */,
 				FEB3382619B857EC00D2C2F3 /* CoreVideo.framework */,
 				FEB3382419B857E400D2C2F3 /* AudioToolbox.framework */,
@@ -336,7 +327,6 @@
 				FEB337C719B8555200D2C2F3 /* Foundation.framework */,
 				FEB337C919B8555200D2C2F3 /* CoreGraphics.framework */,
 				FEB337CB19B8555200D2C2F3 /* UIKit.framework */,
-				FEB337E019B8555200D2C2F3 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -647,7 +637,7 @@
 				);
 				INFOPLIST_FILE = "AnyChatCallCenter/AnyChatCallCenter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LD_NO_PIE = YES;
+				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
@@ -680,7 +670,7 @@
 				);
 				INFOPLIST_FILE = "AnyChatCallCenter/AnyChatCallCenter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LD_NO_PIE = YES;
+				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,

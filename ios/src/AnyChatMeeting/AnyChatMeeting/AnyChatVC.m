@@ -205,7 +205,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
         videoVC.aiBlock(((int)userIDIndexOfInt+1),videoVC);
     }
     
-    NSMutableArray *OnLineWaitingChatUserIDMArray = [self getOnLineWaitingChatUserIDMArray];
+    //NSMutableArray *OnLineWaitingChatUserIDMArray = [self getOnLineWaitingChatUserIDMArray];
     
 }
 
