@@ -669,7 +669,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
-					../../sdk/libs/audioprocess,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
@@ -713,7 +712,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
-					../../sdk/libs/audioprocess,
 				);
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -743,9 +741,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
-					../../sdk/libs/audioprocess,
-					"$(PROJECT_DIR)/AnyChatMeeting/sdk/libs/audioprocess",
-					"$(PROJECT_DIR)/AnyChatMeeting/sdk/libs",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatMeeting;
@@ -779,9 +774,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
-					../../sdk/libs/audioprocess,
-					"$(PROJECT_DIR)/AnyChatMeeting/sdk/libs/audioprocess",
-					"$(PROJECT_DIR)/AnyChatMeeting/sdk/libs",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatMeeting;
 				PRODUCT_NAME = AnyChatMeeting;

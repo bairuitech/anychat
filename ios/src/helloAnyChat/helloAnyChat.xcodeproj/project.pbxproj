@@ -651,7 +651,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
-					../../sdk/libs/audioprocess,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -693,7 +692,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../sdk/libs,
-					../../sdk/libs/audioprocess,
 				);
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -722,8 +720,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
 					../../sdk/libs,
+					"$(inherited)",
 				);
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
@@ -759,8 +757,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
 					../../sdk/libs,
+					"$(inherited)",
 				);
 				MACH_O_TYPE = mh_execute;
 				OTHER_LDFLAGS = "";

@@ -637,10 +637,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../../sdk/libs/audioprocess,
 					../../sdk/libs,
-					"$(PROJECT_DIR)/AnyChatQueuePlus/sdk/libs/audioprocess",
-					"$(PROJECT_DIR)/AnyChatQueuePlus/sdk/libs",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueuePlus1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -661,10 +658,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../../sdk/libs/audioprocess,
 					../../sdk/libs,
-					"$(PROJECT_DIR)/AnyChatQueuePlus/sdk/libs/audioprocess",
-					"$(PROJECT_DIR)/AnyChatQueuePlus/sdk/libs",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueuePlus1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
