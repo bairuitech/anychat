@@ -157,8 +157,8 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     
     /*We display the result on the image view (We need to change the orientation of the image so that the video is displayed correctly).
      Same thing as for the CALayer we are not in the main thread so ...UIImageOrientationRight */
-    UIImageOrientation imageOrientation = UIImageOrientationUp;
-    UIImage *image= [UIImage imageWithCGImage:newImage scale:1.0 orientation:imageOrientation];
+    //UIImageOrientation imageOrientation = UIImageOrientationUp;
+    //UIImage *image= [UIImage imageWithCGImage:newImage scale:1.0 orientation:imageOrientation];
     
     /*We relase the CGImageRef*/
     CGImageRelease(newImage);

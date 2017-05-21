@@ -6,19 +6,12 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "bg_video@2x.png"
+      "filename" : "bg_video@2x.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
       "scale" : "3x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "bg_video-568h@2x.png",
-      "unassigned" : true,
-      "subtype" : "retina4",
-      "scale" : "2x"
     }
   ],
   "info" : {

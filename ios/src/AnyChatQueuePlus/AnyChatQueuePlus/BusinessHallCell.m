@@ -18,6 +18,7 @@
 @implementation BusinessHallCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     self.iconView.layer.cornerRadius = 7;
     self.iconView.clipsToBounds = YES;
 }
