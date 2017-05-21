@@ -346,6 +346,8 @@ public class AnyChatCoreSDK
 	public native int MultiCastControl(String lpMultiCastAddr, int dwPort, String lpNicAddr, int dwTTL, int dwFlags);
 	// 向服务器动态查询相关信息
 	public native String QueryInfoFromServer(int dwInfoName, String strInParam, int dwFlags);
+	// SDK控制
+	public native String SDKControl(int dwCtrlCode, String strInParam);
 	
 	// 获取业务对象列表
 	public static native int[] ObjectGetIdList(int dwObjectType);
