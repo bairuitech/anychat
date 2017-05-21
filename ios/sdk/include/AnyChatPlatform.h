@@ -366,6 +366,8 @@ typedef struct tagWAVEFORMATEX{
 + (int) VideoCallControl: (int) dwEventType : (int) dwUserId : (int) dwErrorCode : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr;
 // 向服务器动态查询相关信息
 + (NSString*) QueryInfoFromServer: (int) dwInfoName : (NSString*) lpInParam : (int) dwFlags;
+// SDK控制
++ (NSString*) SDKControl: (int) dwCtrlCode : (NSString*) lpInParam;
 
 // 获取用户好友ID列表
 + (NSMutableArray*) GetUserFriends;
