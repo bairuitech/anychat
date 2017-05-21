@@ -294,6 +294,22 @@ var ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	=	100;// 查询指定队列的坐席服务信息
 var ANYCHAT_SERVERQUERY_RUNNINGSTATUS	=	200;// 查询服务器运行状态
 var ANYCHAT_SERVERQUERY_ONLINEUSERS		=	201;// 查询服务器在线用户数
 
+// SDK控制常量定义（API：BRAC_SDKControl 传入参数）
+var ANYCHAT_SDKCTRL_BASE				=	1;	// 基本功能控制
+var ANYCHAT_SDKCTRL_OBJECT				=	20;	// 对象操作
+var ANYCHAT_SDKCTRL_VIDEOCALL			=	30;	// 呼叫控制
+var ANYCHAT_SDKCTRL_USERINFO			=	40;	// 用户信息控制
+var ANYCHAT_SDKCTRL_STREAMPLAY			=	50;	// 流媒体播放
+var ANYCHAT_SDKCTRL_NETWORK				=	60;	// 网络控制
+var ANYCHAT_SDKCTRL_MEDIA				=	70;	// 媒体控制
+var ANYCHAT_SDKCTRL_FILEDELETE			=	80;	// 删除文件
+var ANYCHAT_SDKCTRL_FILEINFO			=	81;	// 获取文件信息
+var ANYCHAT_SDKCTRL_DISKSIZE			=	82;	// 获取磁盘容量
+var ANYCHAT_SDKCTRL_FILEENCRYPT			=	83;	// 文件加解密控制
+var ANYCHAT_SDKCTRL_PPTHELPERINIT		=	90;	// PPT播报环境初始化
+var ANYCHAT_SDKCTRL_PPTFILECTRL			=	91;	// PPT文件控制
+var ANYCHAT_SDKCTRL_PPTFILEINFO			=	92;	// PPT文件信息
+
 // 媒体播放事件类型定义
 var ANYCHAT_STREAMPLAY_EVENT_START		=	3;	// 播放开始事件
 var ANYCHAT_STREAMPLAY_EVENT_FINISH		=	4;	// 播放结束事件
@@ -987,6 +1003,13 @@ function BRAC_QueryInfoFromServer(dwInfoName, lpInParam) {
 	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.5.0")
 		return "";
 	return anychat.QueryInfoFromServer(dwInfoName, lpInParam);
+}
+
+// SDK控制
+function BRAC_SDKControl(dwCtrlCode, lpInParam) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.7.0")
+		return JSON.stringify({"errorcode":32});
+	return anychat.SDKControl(dwCtrlCode, lpInParam);
 }
 
 // 文件传输扩展接口
