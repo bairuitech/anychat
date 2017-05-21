@@ -271,7 +271,8 @@ BRAC_API DWORD BRAC_FetchAudioPlayBuffer(LPBYTE lpSamples, DWORD dwSize, DWORD w
 
 // 向服务器动态查询相关信息
 BRAC_API DWORD BRAC_QueryInfoFromServer(DWORD dwInfoName, TCHAR* lpInParam, DWORD dwInSize, TCHAR* lpResult, DWORD& dwOutSize, DWORD dwFlags=0);
-
+// SDK控制
+BRAC_API DWORD BRAC_SDKControl(DWORD dwCtrlCode, CHAR* lpInParam, CHAR* lpResult, DWORD dwBufSize);
 
 // 视频呼叫事件控制（请求、回复、挂断等）
 BRAC_API DWORD BRAC_VideoCallControl(DWORD dwEventType, DWORD dwUserId, DWORD dwErrorCode, DWORD dwFlags=0, DWORD dwParam=0, LPCTSTR lpUserStr=NULL);
@@ -310,8 +311,6 @@ BRAC_API DWORD BRAC_StreamPlaySetVideoPos(CHAR* lpTaskGuid, HWND hWnd, DWORD dwL
 BRAC_API DWORD BRAC_StreamPlayGetInfo(CHAR* lpTaskGuid, DWORD dwInfoName, CHAR* infoValue, DWORD dwSize);
 // 流媒体播放释放资源
 BRAC_API DWORD BRAC_StreamPlayDestroy(CHAR* lpTaskGuid, DWORD dwFlags=0);
-
-
 
 
 #endif //BR_ANYCHAT_CORE_SDK_H__INCLUDED_

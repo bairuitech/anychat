@@ -385,6 +385,23 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SERVERQUERY_ONLINEUSERS		201	///< 查询服务器在线用户数
 
 
+// SDK控制常量定义（API：BRAC_SDKControl 传入参数）
+#define ANYCHAT_SDKCTRL_BASE				1	///< 基本功能控制
+#define ANYCHAT_SDKCTRL_OBJECT				20	///< 对象操作
+#define ANYCHAT_SDKCTRL_VIDEOCALL			30	///< 呼叫控制
+#define ANYCHAT_SDKCTRL_USERINFO			40	///< 用户信息控制
+#define ANYCHAT_SDKCTRL_STREAMPLAY			50	///< 流媒体播放
+#define ANYCHAT_SDKCTRL_NETWORK				60	///< 网络控制
+#define ANYCHAT_SDKCTRL_MEDIA				70	///< 媒体控制
+#define ANYCHAT_SDKCTRL_FILEDELETE			80	///< 删除文件
+#define ANYCHAT_SDKCTRL_FILEINFO			81	///< 获取文件信息
+#define ANYCHAT_SDKCTRL_DISKSIZE			82	///< 获取磁盘容量
+#define ANYCHAT_SDKCTRL_FILEENCRYPT			83	///< 文件加解密控制
+#define ANYCHAT_SDKCTRL_PPTHELPERINIT		90	///< PPT播报环境初始化
+#define ANYCHAT_SDKCTRL_PPTFILECTRL			91	///< PPT文件控制
+#define ANYCHAT_SDKCTRL_PPTFILEINFO			92	///< PPT文件信息
+
+
 // 媒体播放事件类型定义
 #define ANYCHAT_STREAMPLAY_EVENT_START		3	///< 播放开始事件
 #define ANYCHAT_STREAMPLAY_EVENT_FINISH		4	///< 播放结束事件

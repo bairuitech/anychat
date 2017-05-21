@@ -97,7 +97,33 @@ public class AnyChatCoreSDK
 		RegisterNotify();
 		this.coresdkEvent = e;
 	}
-		
+	// 移除所有事件
+	public void removeEvent(Object e) 
+	{
+		if (this.baseEvent == e) 
+			this.baseEvent = null;
+		if (this.stateChgEvent == e) 
+			this.stateChgEvent = null;
+		if (this.privateChatEvent == e)
+			this.privateChatEvent = null;
+		if (this.textMsgEvent == e) 
+			this.textMsgEvent = null;
+		if (this.transDataEvent == e)
+			this.transDataEvent = null;
+		if (this.videoCallEvent == e)
+			this.videoCallEvent = null;
+		if (this.userInfoEvent == e)
+			this.userInfoEvent = null;
+		if (this.encdecEvent == e)
+			this.encdecEvent = null;
+		if (this.recordEvent == e)
+			this.recordEvent = null;
+		if (this.objectEvent == e)
+			this.objectEvent = null;
+		if (this.coresdkEvent == e)
+			this.coresdkEvent = null;
+	}
+	
 	// 查询SDK主版本号
 	public int GetSDKMainVersion()
 	{
@@ -277,7 +303,7 @@ public class AnyChatCoreSDK
 	public native int PrivateChatEchoEx(int userid, int requestid, int errorcode);
 	// 退出与某用户的私聊，或者将某用户从自己的私聊列表中清除
 	public native int PrivateChatExit(int userid);
-    
+	
 	// 设置外部输入视频格式
 	public static native int SetInputVideoFormat(int pixFmt, int dwWidth, int dwHeight, int dwFps, int dwFlags);
 	// 外部视频数据输入
@@ -309,6 +335,8 @@ public class AnyChatCoreSDK
 	public native int MultiCastControl(String lpMultiCastAddr, int dwPort, String lpNicAddr, int dwTTL, int dwFlags);
 	// 向服务器动态查询相关信息
 	public native String QueryInfoFromServer(int dwInfoName, String strInParam, int dwFlags);
+	// SDK控制
+	public native String SDKControl(int dwCtrlCode, String strInParam);
 	
 	// 获取业务对象列表
 	public static native int[] ObjectGetIdList(int dwObjectType);
