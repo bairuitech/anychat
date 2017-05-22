@@ -6,15 +6,15 @@
  */
 
 
-// ��Ƶͼ���ʽ����
+// 视频图像格式定义
 enum BRAC_PixelFormat{
-	BRAC_PIX_FMT_RGB24 = 0,						///< Packed RGB 8:8:8, 24bpp, RGBRGB...��MEDIASUBTYPE_RGB24��
-	BRAC_PIX_FMT_RGB32,							///< ��Ӧ�ڣ�MEDIASUBTYPE_RGB32��Packed RGB 8:8:8, 32bpp, (msb)8A 8R 8G 8B(lsb), in cpu endianness
-	BRAC_PIX_FMT_YV12,							///< ��Ӧ�ڣ�MEDIASUBTYPE_YV12��Planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
-	BRAC_PIX_FMT_YUY2,							///< ��Ӧ�ڣ�MEDIASUBTYPE_YUY2��Packed YUV 4:2:2, 16bpp, Y0 Cb Y1 Cr
+	BRAC_PIX_FMT_RGB24 = 0,						///< Packed RGB 8:8:8, 24bpp, RGBRGB...（MEDIASUBTYPE_RGB24）
+	BRAC_PIX_FMT_RGB32,							///< 对应于：MEDIASUBTYPE_RGB32，Packed RGB 8:8:8, 32bpp, (msb)8A 8R 8G 8B(lsb), in cpu endianness
+	BRAC_PIX_FMT_YV12,							///< 对应于：MEDIASUBTYPE_YV12，Planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
+	BRAC_PIX_FMT_YUY2,							///< 对应于：MEDIASUBTYPE_YUY2，Packed YUV 4:2:2, 16bpp, Y0 Cb Y1 Cr
 	BRAC_PIX_FMT_YUV420P,						///< Planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
-	BRAC_PIX_FMT_RGB565,						///< ��Ӧ�ڣ�MEDIASUBTYPE_RGB565
-	BRAC_PIX_FMT_RGB555,						///< ��Ӧ�ڣ�MEDIASUBTYPE_RGB555
+	BRAC_PIX_FMT_RGB565,						///< 对应于：MEDIASUBTYPE_RGB565
+	BRAC_PIX_FMT_RGB555,						///< 对应于：MEDIASUBTYPE_RGB555
 	BRAC_PIX_FMT_NV12,							///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is U and V
 	BRAC_PIX_FMT_NV21,							///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is V and U
 	BRAC_PIX_FMT_NV16,							///< YUV422SP
@@ -23,230 +23,226 @@ enum BRAC_PixelFormat{
 	BRAC_PIX_FMT_H264,
 };
 
-// ��Ƶ�豸����
+// 音频设备定义
 enum BRAC_AudioDevice{
-	BRAC_AD_WAVEIN = 0,							///< �����豸��Mic
-	BRAC_AD_WAVEOUT,							///< ����豸��Wave
+	BRAC_AD_WAVEIN = 0,							///< 输入设备：Mic
+	BRAC_AD_WAVEOUT,							///< 输出设备：Wave
 };
 
-// ��Ƶ��ʾ��������
+// 视频显示驱动定义
 enum BRAC_VideoShowDriver{
-	BRAC_VSD_DEFAULT = 0,						///< Ĭ����ʾ����
-	BRAC_VSD_DIRECTSHOW,						///< DirectShow��ʾ����
-	BRAC_VSD_WINDOWSGDI,						///< Windows GDI����
+	BRAC_VSD_DEFAULT = 0,						///< 默认显示驱动
+	BRAC_VSD_DIRECTSHOW,						///< DirectShow显示驱动
+	BRAC_VSD_WINDOWSGDI,						///< Windows GDI驱动
 };
 
 
-// ����ģʽ���壨API��BRAC_InitSDK ���������
-#define BRAC_FUNC_VIDEO_CBDATA		0x00000001	///< ͨ���ص����������Ƶ����
-#define BRAC_FUNC_VIDEO_AUTODISP	0x00000002	///< ��SDK��������Ƶ������Ƶ��ʾ��ָ���Ĵ�����
-#define BRAC_FUNC_AUDIO_CBDATA		0x00000004	///< ͨ���ص����������Ƶ����
-#define BRAC_FUNC_AUDIO_AUTOPLAY	0x00000008	///< ��SDK��������Ƶ��ֱ�Ӳ���
-#define BRAC_FUNC_CONFIG_LOCALINI	0x00000010	///< ���ɱ��������ļ���AnyChatSDK.ini��
-#define BRAC_FUNC_FIREWALL_OPEN		0x00000020	///< ����SDK����Windows����ǽ������ǰӦ�ó���������ǽ�����б�������Windows��ʾ�û��Ƿ���ֹ��ǰӦ�ó���
-#define BRAC_FUNC_CHKDEPENDMODULE	0x00000040	///< �Զ����SDK����������������Զ�ע��
-#define BRAC_FUNC_AUDIO_VOLUMECALC	0x00000080	///< ��SDK�Զ���������������
-#define BRAC_FUNC_AUDIO_AUTOVOLUME	0x00000100	///< ����SDK�Զ�����Mic¼������
-#define BRAC_FUNC_NET_SUPPORTUPNP	0x00000200	///< ����SDK���û������е�UPNP�豸������û���·�������Ƿ���ǽ֧��UPNPЭ�飬������P2P�򶴵ĳɹ���
-#define BRAC_FUNC_DISABLEDECODE		0x00000400	///< ��ֹ���յ������ݽ��н���Ͳ��ţ�Ϊ����ߴ����ͻ��˵�����ת�����ܣ������øñ�־�����������øñ�־
-#define BRAC_FUNC_MAINTHREADCB		0x00000800	///< ���߳̽��лص�������Ĭ���Ƕ��̻߳����µ����ݻص�
-#define BRAC_FUNC_AUDIO_FORBIDCFGHW	0x00001000	///< ��ֹ�޸���ƵӲ������
-#define BRAC_FUNC_CORE_FORBIDWINMSG	0x00002000	///< ��ֹʹ��windows��Ϣѭ��
-#define BRAC_FUNC_AUDIO_LARGEBUFFER	0x00004000	///< ��Ƶ�󻺳���ģʽ���ʺ����ֲ�����Ӧ��
-#define BRAC_FUNC_WEBMODE			0x00008000	///< Web����ģʽ
-#define BRAC_FUNC_NET_LARGEDELAY	0x00010000	///< ������ӳ�ģʽ���������������绷��
+// 功能模式定义（API：BRAC_InitSDK 传入参数）
+#define BRAC_FUNC_VIDEO_CBDATA		0x00000001	///< 通过回调函数输出视频数据
+#define BRAC_FUNC_VIDEO_AUTODISP	0x00000002	///< 由SDK包处理视频，将视频显示在指定的窗口上
+#define BRAC_FUNC_AUDIO_CBDATA		0x00000004	///< 通过回调函数输出音频数据
+#define BRAC_FUNC_AUDIO_AUTOPLAY	0x00000008	///< 由SDK包处理音频，直接播放
+#define BRAC_FUNC_CONFIG_LOCALINI	0x00000010	///< 生成本地配置文件（AnyChatSDK.ini）
+#define BRAC_FUNC_FIREWALL_OPEN		0x00000020	///< 允许SDK操作Windows防火墙，将当前应用程序加入防火墙访问列表（避免Windows提示用户是否阻止当前应用程序）
+#define BRAC_FUNC_CHKDEPENDMODULE	0x00000040	///< 自动检查SDK所依赖的组件，并自动注册
+#define BRAC_FUNC_AUDIO_VOLUMECALC	0x00000080	///< 由SDK自动计算语音的音量
+#define BRAC_FUNC_AUDIO_AUTOVOLUME	0x00000100	///< 允许SDK自动控制Mic录音音量
+#define BRAC_FUNC_NET_SUPPORTUPNP	0x00000200	///< 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
+#define BRAC_FUNC_DISABLEDECODE		0x00000400	///< 禁止对收到的数据进行解码和播放，为了提高代理客户端的数据转发性能，可设置该标志，否则不能设置该标志
+#define BRAC_FUNC_MAINTHREADCB		0x00000800	///< 主线程进行回调操作，默认是多线程环境下的数据回调
+#define BRAC_FUNC_AUDIO_FORBIDCFGHW	0x00001000	///< 禁止修改音频硬件配置
+#define BRAC_FUNC_CORE_FORBIDWINMSG	0x00002000	///< 禁止使用windows消息循环
+#define BRAC_FUNC_AUDIO_LARGEBUFFER	0x00004000	///< 音频大缓冲区模式，适合音乐播放类应用
+#define BRAC_FUNC_WEBMODE			0x00008000	///< Web工作模式
+#define BRAC_FUNC_NET_LARGEDELAY	0x00010000	///< 网络高延迟模式，适用于卫星网络环境
 
 
-// �ں˲������壨API��BRAC_SetSDKOption��BRAC_GetSDKOption ���������
-#define BRAC_SO_AUDIO_VADCTRL				1	///< ��Ƶ���������ƣ�����Ϊ��int�ͣ�1�򿪣�0�رգ�
-#define BRAC_SO_AUDIO_NSCTRL				2	///< ��Ƶ�������ƿ��ƣ�����Ϊ��int�ͣ�1�򿪣�0�رգ�
-#define BRAC_SO_AUDIO_ECHOCTRL				3	///< ��Ƶ�����������ƣ�����Ϊ��int�ͣ�1�򿪣�0�رգ�
-#define BRAC_SO_AUDIO_AGCCTRL				4	///< ��Ƶ�Զ�������ƣ�����Ϊ��int�ͣ�1�򿪣�0�رգ�
-#define BRAC_SO_AUDIO_CAPTUREMODE			5	///< ��Ƶ�ɼ�ģʽ���ã�����Ϊ��int�ͣ�0 ����ģʽ��1 �Ÿ�ģʽ��2 ����OKģʽ��3 ��·����ģʽ��
-#define BRAC_SO_AUDIO_MICBOOST				6	///< ��Ƶ�ɼ�Mic��ǿ���ƣ�����Ϊ��int�ͣ�0 ȡ����1 ѡ�У�2 �豸������[��ѯʱ����ֵ]��
-#define BRAC_SO_AUDIO_AUTOPARAM				7	///< ������Ƶ�ɼ�ģʽ���Զ�ѡ����ʵ���ز������������������������������ʲ����ȣ�����Ϊint�ͣ�1 ���ã�0 �ر�[Ĭ��]��
-#define BRAC_SO_AUDIO_MONOBITRATE			8	///< ���õ�����ģʽ����Ƶ����Ŀ�����ʣ�����Ϊ��int�ͣ���λ��bps��
-#define BRAC_SO_AUDIO_STEREOBITRATE			9	///< ����˫����ģʽ����Ƶ����Ŀ�����ʣ�����Ϊ��int�ͣ���λ��bps��
-#define BRAC_SO_AUDIO_PLAYDRVCTRL			70	///< ��Ƶ��������ѡ�񣨲���Ϊ��int�ͣ�0Ĭ�������� 1 DSound������ 2 WaveOut������ 3 Java����[Androidƽ̨ʹ��]��
-#define BRAC_SO_AUDIO_CNGCTRL				71	///< �����������ɿ��ƣ�����Ϊ��int�ͣ�1�򿪣�0�رգ�
-#define BRAC_SO_AUDIO_CODECID				72	///< ������Ƶ������ID���ã�����Ϊint�ͣ�-1��ʾĬ�ϣ�������õı�����ID�����ڣ����ں˻����Ĭ�ϵı�������
-#define BRAC_SO_AUDIO_SOFTVOLMODE			73	///< ������������ģʽ���ƣ�����Ϊint�ͣ�1��[Ĭ��]��0�رգ���ʹ����������ģʽ��������ı�ϵͳ����������
-#define BRAC_SO_AUDIO_RECORDDRVCTRL			74	///< ��Ƶ�ɼ��������ƣ�����Ϊint�ͣ�0Ĭ�������� 1 DSound������ 2 WaveIn������ 3 Java�ɼ�[Androidƽ̨ʹ��]��
-#define BRAC_SO_AUDIO_ECHODELAY				75	///< ��Ƶ���������ӳٲ������ã�����Ϊint�ͣ���λ��ms��
-#define BRAC_SO_AUDIO_NSLEVEL				76	///< ��Ƶ��������ˮƽ�������ã�����Ϊint�ͣ�0 - 3��Ĭ��Ϊ2��ֵԽ������ˮƽԽ�ߣ���������������Խǿ��
-#define BRAC_SO_AUDIO_CBCODEC				77	///< ��Ƶ���ݻص����������ͣ�����Ϊint�ͣ�
+// 内核参数定义（API：BRAC_SetSDKOption、BRAC_GetSDKOption 传入参数）
+#define BRAC_SO_AUDIO_VADCTRL				1	///< 音频静音检测控制（参数为：int型：1打开，0关闭）
+#define BRAC_SO_AUDIO_NSCTRL				2	///< 音频噪音抑制控制（参数为：int型：1打开，0关闭）
+#define BRAC_SO_AUDIO_ECHOCTRL				3	///< 音频回音消除控制（参数为：int型：1打开，0关闭）
+#define BRAC_SO_AUDIO_AGCCTRL				4	///< 音频自动增益控制（参数为：int型：1打开，0关闭）
+#define BRAC_SO_AUDIO_CAPTUREMODE			5	///< 音频采集模式设置（参数为：int型：0 发言模式，1 放歌模式，2 卡拉OK模式，3 线路输入模式）
+#define BRAC_SO_AUDIO_MICBOOST				6	///< 音频采集Mic增强控制（参数为：int型：0 取消，1 选中，2 设备不存在[查询时返回值]）
+#define BRAC_SO_AUDIO_AUTOPARAM				7	///< 根据音频采集模式，自动选择合适的相关参数，包括编码器、采样参数、码率参数等（参数为int型：1 启用，0 关闭[默认]）
+#define BRAC_SO_AUDIO_MONOBITRATE			8	///< 设置单声道模式下音频编码目标码率（参数为：int型，单位：bps）
+#define BRAC_SO_AUDIO_STEREOBITRATE			9	///< 设置双声道模式下音频编码目标码率（参数为：int型，单位：bps）
+#define BRAC_SO_AUDIO_PLAYDRVCTRL			70	///< 音频播放驱动选择（参数为：int型，0默认驱动， 1 DSound驱动， 2 WaveOut驱动， 3 Java播放[Android平台使用]）
+#define BRAC_SO_AUDIO_CNGCTRL				71	///< 舒适噪音生成控制（参数为：int型：1打开，0关闭）
+#define BRAC_SO_AUDIO_CODECID				72	///< 本地音频编码器ID设置（参数为int型，-1表示默认，如果设置的编码器ID不存在，则内核会采用默认的编码器）
+#define BRAC_SO_AUDIO_SOFTVOLMODE			73	///< 设置软件音量模式控制（参数为int型，1打开[默认]，0关闭），使用软件音量模式，将不会改变系统的音量设置
+#define BRAC_SO_AUDIO_RECORDDRVCTRL			74	///< 音频采集驱动控制（参数为int型，0默认驱动， 1 DSound驱动， 2 WaveIn驱动， 3 Java采集[Android平台使用]）
+#define BRAC_SO_AUDIO_ECHODELAY				75	///< 音频回声消除延迟参数设置（参数为int型，单位：ms）
+#define BRAC_SO_AUDIO_NSLEVEL				76	///< 音频噪音抑制水平参数设置（参数为int型，0 - 3，默认为2，值越大抑制水平越高，抑制噪音的能力越强）
+#define BRAC_SO_AUDIO_CBCODEC				77	///< 音频数据回调编码器类型（参数为int型）
 
-#define BRAC_SO_RECORD_VIDEOBR				10	///< ¼����Ƶ�������ã�����Ϊ��int�ͣ���λ��bps��
-#define BRAC_SO_RECORD_AUDIOBR				11	///< ¼����Ƶ�������ã�����Ϊ��int�ͣ���λ��bps��
-#define BRAC_SO_RECORD_TMPDIR				12	///< ¼���ļ���ʱĿ¼���ã�����Ϊ�ַ���TCHAR���ͣ������������ľ���·����
-#define BRAC_SO_SNAPSHOT_TMPDIR				13	///< �����ļ���ʱĿ¼���ã�����Ϊ�ַ���TCHAR���ͣ������������ľ���·����
-#define BRAC_SO_RECORD_FILETYPE				140	///< ¼���ļ��������ã�����Ϊ��int�ͣ� 0 MP4[Ĭ��], 1 WMV, 2 FLV, 3 MP3��
-#define BRAC_SO_RECORD_WIDTH				141	///< ¼����Ƶ�������ã�����Ϊ��int�ͣ��磺320��
-#define BRAC_SO_RECORD_HEIGHT				142	///< ¼���ļ��߶����ã�����Ϊ��int�ͣ��磺240��
-#define BRAC_SO_RECORD_FILENAMERULE			143	///< ¼���ļ����������򣨲���Ϊ��int�ͣ�
-#define BRAC_SO_RECORD_CLIPMODE				144	///< ¼����Ƶ�ü�ģʽ������Ϊ��int�ͣ�
-#define BRAC_SO_RECORD_DISABLEDATEDIR		145	///< ¼���ļ��������ڷ�Ŀ¼���棬ȫ��������ָ���ļ����У�����Ϊ��int�ͣ� 0��ֹ[Ĭ��] 1 ������
-#define BRAC_SO_RECORD_INSERTIMAGE			146	///< ¼�ƹ����в���ͼƬ��Json�ַ�������
+#define BRAC_SO_RECORD_VIDEOBR				10	///< 录像视频码率设置（参数为：int型，单位：bps）
+#define BRAC_SO_RECORD_AUDIOBR				11	///< 录像音频码率设置（参数为：int型，单位：bps）
+#define BRAC_SO_RECORD_TMPDIR				12	///< 录像文件临时目录设置（参数为字符串TCHAR类型，必须是完整的绝对路径）
+#define BRAC_SO_SNAPSHOT_TMPDIR				13	///< 快照文件临时目录设置（参数为字符串TCHAR类型，必须是完整的绝对路径）
+#define BRAC_SO_RECORD_FILETYPE				140	///< 录制文件类型设置（参数为：int型， 0 MP4[默认], 1 WMV, 2 FLV, 3 MP3）
+#define BRAC_SO_RECORD_WIDTH				141	///< 录制视频宽度设置（参数为：int型，如：320）
+#define BRAC_SO_RECORD_HEIGHT				142	///< 录制文件高度设置（参数为：int型，如：240）
+#define BRAC_SO_RECORD_FILENAMERULE			143	///< 录制文件名命名规则（参数为：int型）
+#define BRAC_SO_RECORD_CLIPMODE				144	///< 录制视频裁剪模式（参数为：int型）
+#define BRAC_SO_RECORD_DISABLEDATEDIR		145	///< 录制文件不按日期分目录保存，全部生成在指定文件夹中（参数为：int型， 0禁止[默认] 1 开启）
+#define BRAC_SO_RECORD_INSERTIMAGE			146	///< 录制过程中插入图片，Json字符串参数
 
-#define BRAC_SO_CORESDK_TMPDIR				14	///< ����AnyChat Core SDK��ʱĿ¼������Ϊ�ַ���TCHAR���ͣ������������ľ���·����
-#define BRAC_SO_CORESDK_MAGICADJUST			15	///< �ں˵��Բ���
-#define BRAC_SO_CORESDK_LOADCODEC			16	///< �����ⲿ�������������Ϊ�ַ���TCHAR���ͣ������������ľ���·���������ļ�����������ļ����ľ���·����
-#define BRAC_SO_CORESDK_USEARMV6LIB			17	///< ǿ��ʹ��ARMv6ָ��Ŀ⣬androidƽ̨ʹ�ã�����Ϊ��int�ͣ�1ʹ��ARMv6ָ��� 0�ں��Զ��ж�[Ĭ��]��
-#define BRAC_SO_CORESDK_USEHWCODEC			18	///< ʹ��ƽ̨����Ӳ���������������Ϊint�ͣ�0 ��ʹ��Ӳ���������[Ĭ��]  1 ʹ������Ӳ�����������
-#define BRAC_SO_CORESDK_REMOTEDEBUG			19	///< Զ�̵��ԣ�����Ϊint�ͣ���ʾĿ���û�ID�����ò�������Ϊ�������Ͳ�����
+#define BRAC_SO_CORESDK_TMPDIR				14	///< 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
+#define BRAC_SO_CORESDK_MAGICADJUST			15	///< 内核调试参数
+#define BRAC_SO_CORESDK_LOADCODEC			16	///< 加载外部编解码器（参数为字符串TCHAR类型，必须是完整的绝对路径，包含文件名，或包含文件名的绝对路径）
+#define BRAC_SO_CORESDK_USEARMV6LIB			17	///< 强制使用ARMv6指令集的库，android平台使用（参数为：int型，1使用ARMv6指令集， 0内核自动判断[默认]）
+#define BRAC_SO_CORESDK_USEHWCODEC			18	///< 使用平台内置硬件编解码器（参数为int型，0 不使用硬件编解码器[默认]  1 使用内置硬件编解码器）
+#define BRAC_SO_CORESDK_REMOTEDEBUG			19	///< 远程调试（参数为int型，表示目标用户ID，复用参数长度为调试类型参数）
 
-#define BRAC_SO_CORESDK_PATH				20	///< ����AnyChat Core SDK������·��������Ϊ�ַ���TCHAR���ͣ������������ľ���·����
-#define BRAC_SO_CORESDK_DUMPCOREINFO		21	///< ����ں���Ϣ����־�ļ��У����ڷ�������ԭ�򣨲���Ϊ��int�ͣ�1 �����
-#define BRAC_SO_CORESDK_MAINVERSION			22	///< ��ѯSDK���汾�źţ�����Ϊint�ͣ�
-#define BRAC_SO_CORESDK_SUBVERSION			23	///< ��ѯSDK�Ӱ汾�ţ�����Ϊint�ͣ�
-#define BRAC_SO_CORESDK_BUILDTIME			24	///< ��ѯSDK����ʱ�䣨����Ϊ�ַ���TCHAR���ͣ�
-#define BRAC_SO_CORESDK_ACTIVESTATE			25	///< Ӧ�ó���״̬���ƣ�����Ϊint�ͣ� 1 Ӧ�ó����ڻ״̬�� 0 Ӧ�ó����ڷǻ״̬����������iPhone���豸����ɺ�̨���еĳ���
-#define BRAC_SO_CORESDK_EXTVIDEOINPUT		26	///< �ⲿ��չ��Ƶ������ƣ�����Ϊint�ͣ� 0 �ر��ⲿ��Ƶ����[Ĭ��]�� 1 �����ⲿ��Ƶ���룩
-#define BRAC_SO_CORESDK_EXTAUDIOINPUT		27	///< �ⲿ��չ��Ƶ������ƣ�����Ϊint�ͣ� 0 �ر��ⲿ��Ƶ����[Ĭ��]�� 1 �����ⲿ��Ƶ���룩
-#define BRAC_SO_CORESDK_LOWDELAYCTRL		28	///< ���ӳ�ģʽ���ƣ�����Ϊint�ͣ�0 �رյ��ӳ�ģʽ[Ĭ��]�� 1 ���õ��ӳ�ģʽ��
-#define BRAC_SO_CORESDK_NEWGUID				29	///< �����µ�GUID�ַ���
+#define BRAC_SO_CORESDK_PATH				20	///< 设置AnyChat Core SDK相关组件路径（参数为字符串TCHAR类型，必须是完整的绝对路径）
+#define BRAC_SO_CORESDK_DUMPCOREINFO		21	///< 输出内核信息到日志文件中，便于分析故障原因（参数为：int型：1 输出）
+#define BRAC_SO_CORESDK_MAINVERSION			22	///< 查询SDK主版本号号（参数为int型）
+#define BRAC_SO_CORESDK_SUBVERSION			23	///< 查询SDK从版本号（参数为int型）
+#define BRAC_SO_CORESDK_BUILDTIME			24	///< 查询SDK编译时间（参数为字符串TCHAR类型）
+#define BRAC_SO_CORESDK_ACTIVESTATE			25	///< 应用程序活动状态控制（参数为int型， 1 应用程序处于活动状态， 0 应用程序处于非活动状态），适用于iPhone等设备程序可后台运行的场合
+#define BRAC_SO_CORESDK_EXTVIDEOINPUT		26	///< 外部扩展视频输入控制（参数为int型， 0 关闭外部视频输入[默认]， 1 启用外部视频输入）
+#define BRAC_SO_CORESDK_EXTAUDIOINPUT		27	///< 外部扩展音频输入控制（参数为int型， 0 关闭外部音频输入[默认]， 1 启用外部音频输入）
+#define BRAC_SO_CORESDK_LOWDELAYCTRL		28	///< 低延迟模式控制（参数为int型，0 关闭低延迟模式[默认]， 1 启用低延迟模式）
+#define BRAC_SO_CORESDK_NEWGUID				29	///< 产生新的GUID字符串
 
-#define BRAC_SO_LOCALVIDEO_BITRATECTRL		30	///< ������Ƶ�����������ã�����Ϊint�ͣ���λbps��ͬ���������ã�VideoBitrate��
-#define BRAC_SO_LOCALVIDEO_QUALITYCTRL		31	///< ������Ƶ�����������ӿ��ƣ�����Ϊint�ͣ�ͬ���������ã�VideoQuality��
-#define BRAC_SO_LOCALVIDEO_GOPCTRL			32	///< ������Ƶ����ؼ�֡������ƣ�����Ϊint�ͣ�ͬ���������ã�VideoGOPSize��
-#define BRAC_SO_LOCALVIDEO_FPSCTRL			33	///< ������Ƶ����֡�ʿ��ƣ�����Ϊint�ͣ�ͬ���������ã�VideoFps��
-#define BRAC_SO_LOCALVIDEO_PRESETCTRL		34	///< ������Ƶ����Ԥ��������ƣ�����Ϊint�ͣ�1-5��
-#define BRAC_SO_LOCALVIDEO_APPLYPARAM		35	///< Ӧ�ñ�����Ƶ���������ʹ��ǰ���޸ļ�ʱ��Ч������Ϊint�ͣ�1 ʹ���²�����0 ʹ��Ĭ�ϲ�����
-#define BRAC_SO_LOCALVIDEO_VIDEOSIZEPOLITIC	36	///< ������Ƶ�ɼ��ֱ��ʿ��Ʋ��ԣ�����Ϊint�ͣ�0 �Զ�������ƥ��[Ĭ��]��1 ʹ�òɼ��豸Ĭ�Ϸֱ��ʣ��������õķֱ��ʲ����ɼ��豸֧��ʱ��Ч
-#define BRAC_SO_LOCALVIDEO_DEINTERLACE		37	///< ������Ƶ����֯�������ƣ�����Ϊint�ͣ� 0 �����з���֯����[Ĭ��]��1 ����֯����������������ƵԴ�Ǹ���ɨ��Դ��������źţ�ʱͨ������֯����������߻�������
-#define BRAC_SO_LOCALVIDEO_WIDTHCTRL		38	///< ������Ƶ�ɼ��ֱ��ʿ��ȿ��ƣ�����Ϊint�ͣ�ͬ���������ã�VideoWidth��
-#define BRAC_SO_LOCALVIDEO_HEIGHTCTRL		39	///< ������Ƶ�ɼ��ֱ��ʸ߶ȿ��ƣ�����Ϊint�ͣ�ͬ���������ã�VideoHeight��
-#define BRAC_SO_LOCALVIDEO_FOCUSCTRL		90	///< ������Ƶ����ͷ�Խ����ƣ�����Ϊint�ͣ�1��ʾ�Զ��Խ��� 0��ʾ�ֶ��Խ���
-#define BRAC_SO_LOCALVIDEO_PIXFMTCTRL		91	///< ������Ƶ�ɼ����ȸ�ʽ���ƣ�����Ϊint�ͣ�-1��ʾ����ƥ�䣬�������Ȳ���ָ����ʽ���ο���BRAC_PixelFormat��
-#define BRAC_SO_LOCALVIDEO_OVERLAY			92	///< ������Ƶ����Overlayģʽ������Ϊint�ͣ�1��ʾ����Overlayģʽ�� 0��ʾ��ͨģʽ[Ĭ��]��
-#define BRAC_SO_LOCALVIDEO_CODECID			93	///< ������Ƶ������ID���ã�����Ϊint�ͣ�-1��ʾĬ�ϣ�������õı�����ID�����ڣ����ں˻����Ĭ�ϵı�������
-#define BRAC_SO_LOCALVIDEO_ROTATECTRL		94	///< ������Ƶ��ת���ƣ���ʧЧ��ʹ�ã�BRAC_SO_LOCALVIDEO_CAMERAROTATION�����
-#define BRAC_SO_LOCALVIDEO_CAPDRIVER		95	///< ������Ƶ�ɼ��������ã�����Ϊint�ͣ�0��ʾ�Զ�ѡ��[Ĭ��]�� 1 Video4Linux, 2 DirectShow, 3 Java�ɼ�[Androidƽ̨ʹ��]��
-#define BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA	96	///< ������Ƶ�ɼ���ɫƫɫ������Ϊint�ͣ�0��ʾ�ر�[Ĭ��]��1 ������
-#define BRAC_SO_LOCALVIDEO_ORIENTATION		97	///< ������Ƶ�豸���򣨲���Ϊ��int�ͣ�����Ϊ������ANYCHAT_DEVICEORIENTATION_XXXX��
-#define BRAC_SO_LOCALVIDEO_AUTOROTATION		98	///< ������Ƶ�Զ���ת���ƣ�����Ϊint�ͣ� 0��ʾ�رգ� 1 ����[Ĭ��]����Ƶ��תʱ��Ҫ�ο�������Ƶ�豸���������
-#define BRAC_SO_LOCALVIDEO_SURFACEROTATION	99	///< ���ñ�����ƵԤ����ʾ��ת�Ƕȣ�����Ϊint�ͣ��Ƕȣ�
-#define BRAC_SO_LOCALVIDEO_CAMERAFACE		100	///< ��������ͷ����ǰ�á����ã�
-#define BRAC_SO_LOCALVIDEO_CAMERAROTATION	101	///< ��������ͷ��ת�Ƕ�
-#define BRAC_SO_LOCALVIDEO_DEVICEROTATION	102	///< �豸��ת�Ƕ�
-#define BRAC_SO_LOCALVIDEO_DEVICEMODE		103	///< �豸����
-#define BRAC_SO_LOCALVIDEO_TVFORMAT			104	///< ��Ƶ�ɼ���ʽ���ã�����Ϊ��int�ͣ�����ΪDirectShow::strmif.h::AnalogVideoStandard��Ĭ��Ϊ��AnalogVideo_PAL_B��
-#define BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP	105	///< ����ʱ�����������Ƶ������Ϊ��int�ͣ� 0 ������[Ĭ��]�� 1 ���ӣ�
-#define BRAC_SO_LOCALVIDEO_DEVICENAME		106	///< ������Ƶ�ɼ��豸���ƣ��������ô�ָ������ͷ�豸������Ϊ�ַ������ͣ�
-#define BRAC_SO_LOCALVIDEO_CLIPMODE			107	///< ������Ƶ�ü�ģʽ������Ϊint�ͣ� 0 �Զ�[Ĭ��]����ֹ�Զ���תʱ��Ч��
-#define BRAC_SO_LOCALVIDEO_SCREENHWND		108	///< ��Ļ�ɼ����ھ��
-#define BRAC_SO_LOCALVIDEO_SCREENFLAGS		109	///< ��Ļ�ɼ���־������Ϊint�ͣ�
-#define BRAC_SO_LOCALVIDEO_VIRTUALBK		111 ///< ������Ƶ�������ⱳ�����ַ������ͣ�JSON��ʽ���������ⱳ��·���Լ����������ΪNULL��ʾȡ�����ⱳ����
+#define BRAC_SO_LOCALVIDEO_BITRATECTRL		30	///< 本地视频编码码率设置（参数为int型，单位bps，同服务器配置：VideoBitrate）
+#define BRAC_SO_LOCALVIDEO_QUALITYCTRL		31	///< 本地视频编码质量因子控制（参数为int型，同服务器配置：VideoQuality）
+#define BRAC_SO_LOCALVIDEO_GOPCTRL			32	///< 本地视频编码关键帧间隔控制（参数为int型，同服务器配置：VideoGOPSize）
+#define BRAC_SO_LOCALVIDEO_FPSCTRL			33	///< 本地视频编码帧率控制（参数为int型，同服务器配置：VideoFps）
+#define BRAC_SO_LOCALVIDEO_PRESETCTRL		34	///< 本地视频编码预设参数控制（参数为int型，1-5）
+#define BRAC_SO_LOCALVIDEO_APPLYPARAM		35	///< 应用本地视频编码参数，使得前述修改即时生效（参数为int型：1 使用新参数，0 使用默认参数）
+#define BRAC_SO_LOCALVIDEO_VIDEOSIZEPOLITIC	36	///< 本地视频采集分辩率控制策略（参数为int型，0 自动向下逐级匹配[默认]；1 使用采集设备默认分辩率），当配置的分辩率不被采集设备支持时有效
+#define BRAC_SO_LOCALVIDEO_DEINTERLACE		37	///< 本地视频反交织参数控制（参数为int型： 0 不进行反交织处理[默认]；1 反交织处理），当输入视频源是隔行扫描源（如电视信号）时通过反交织处理可以提高画面质量
+#define BRAC_SO_LOCALVIDEO_WIDTHCTRL		38	///< 本地视频采集分辨率宽度控制（参数为int型，同服务器配置：VideoWidth）
+#define BRAC_SO_LOCALVIDEO_HEIGHTCTRL		39	///< 本地视频采集分辨率高度控制（参数为int型，同服务器配置：VideoHeight）
+#define BRAC_SO_LOCALVIDEO_FOCUSCTRL		90	///< 本地视频摄像头对焦控制（参数为int型，1表示自动对焦， 0表示手动对焦）
+#define BRAC_SO_LOCALVIDEO_PIXFMTCTRL		91	///< 本地视频采集优先格式控制（参数为int型，-1表示智能匹配，否则优先采用指定格式，参考：BRAC_PixelFormat）
+#define BRAC_SO_LOCALVIDEO_OVERLAY			92	///< 本地视频采用Overlay模式（参数为int型，1表示采用Overlay模式， 0表示普通模式[默认]）
+#define BRAC_SO_LOCALVIDEO_CODECID			93	///< 本地视频编码器ID设置（参数为int型，-1表示默认，如果设置的编码器ID不存在，则内核会采用默认的编码器）
+#define BRAC_SO_LOCALVIDEO_ROTATECTRL		94	///< 本地视频旋转控制（已失效，使用：BRAC_SO_LOCALVIDEO_CAMERAROTATION替代）
+#define BRAC_SO_LOCALVIDEO_CAPDRIVER		95	///< 本地视频采集驱动设置（参数为int型，0表示自动选择[默认]， 1 Video4Linux, 2 DirectShow, 3 Java采集[Android平台使用]）
+#define BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA	96	///< 修正视频采集颜色偏色（参数为int型，0表示关闭[默认]，1 开启）
+#define BRAC_SO_LOCALVIDEO_ORIENTATION		97	///< 本地视频设备方向（参数为：int型，定义为常量：ANYCHAT_DEVICEORIENTATION_XXXX）
+#define BRAC_SO_LOCALVIDEO_AUTOROTATION		98	///< 本地视频自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
+#define BRAC_SO_LOCALVIDEO_SURFACEROTATION	99	///< 设置本地视频预览显示旋转角度（参数为int型，角度）
+#define BRAC_SO_LOCALVIDEO_CAMERAFACE		100	///< 本地摄像头方向（前置、后置）
+#define BRAC_SO_LOCALVIDEO_CAMERAROTATION	101	///< 本地摄像头旋转角度
+#define BRAC_SO_LOCALVIDEO_DEVICEROTATION	102	///< 设备旋转角度
+#define BRAC_SO_LOCALVIDEO_DEVICEMODE		103	///< 设备类型
+#define BRAC_SO_LOCALVIDEO_TVFORMAT			104	///< 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
+#define BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP	105	///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
+#define BRAC_SO_LOCALVIDEO_DEVICENAME		106	///< 本地视频采集设备名称，用于设置打开指定摄像头设备（参数为字符串类型）
+#define BRAC_SO_LOCALVIDEO_CLIPMODE			107	///< 本地视频裁剪模式（参数为int型， 0 自动[默认]，禁止自动旋转时有效）
+#define BRAC_SO_LOCALVIDEO_SCREENHWND		108	///< 屏幕采集窗口句柄
+#define BRAC_SO_LOCALVIDEO_SCREENFLAGS		109	///< 屏幕采集标志（参数为int型）
+#define BRAC_SO_LOCALVIDEO_VIRTUALBK		111 ///< 本地视频迭加虚拟背景（字符串类型，JSON格式，包括虚拟背景路径、是否开启以及其它参数项）
 
-#define BRAC_SO_NETWORK_P2PPOLITIC			40	///< ��������P2P���Կ��ƣ�����Ϊ��int�ͣ�0 ��ֹ����P2P��1 ����������P2P[Ĭ��]��2 �ϲ�Ӧ�ÿ���P2P���ӣ�3 ���轨��P2P���ӣ�
-#define BRAC_SO_NETWORK_P2PCONNECT			41	///< ������ָ���û�����P2P���ӣ�����Ϊint�ͣ���ʾĿ���û�ID�������ӽ����ɹ��󣬻�ͨ����Ϣ�������ϲ�Ӧ�ã�P2P���Ʋ���=2ʱ��Ч
-#define BRAC_SO_NETWORK_P2PBREAK			42	///< �Ͽ���ָ���û���P2P���ӣ�����Ϊint�ͣ���ʾĿ���û�ID��[�ݲ�֧�֣�����]
-#define BRAC_SO_NETWORK_TCPSERVICEPORT		43	///< ���ñ���TCP����˿ڣ�����Ϊint�ͣ������ӷ�����֮ǰ������Ч
-#define BRAC_SO_NETWORK_UDPSERVICEPORT		44	///< ���ñ���UDP����˿ڣ�����Ϊint�ͣ������ӷ�����֮ǰ������Ч
-#define BRAC_SO_NETWORK_MULTICASTPOLITIC	45	///< �鲥���Կ��ƣ�����Ϊint�ͣ�����Ϊ������BRAC_MCPOLITIC_XXXX��
-#define BRAC_SO_NETWORK_TRANSBUFMAXBITRATE	46	///< ���仺�������ļ�������ʿ��ƣ�����Ϊint�ͣ�0 �����ƣ���������ʴ���[Ĭ��]�� �����ʾ�������ʣ���λΪ��bps��
-#define BRAC_SO_NETWORK_AUTORECONNECT		47	///< ��������Զ��������ܿ��ƣ�����Ϊint�ͣ�0 �رգ� 1 ����[Ĭ��]��
-#define BRAC_SO_NETWORK_MTUSIZE				48	///< ���������MTU��С������Ϊint�ͣ�
-#define BRAC_SO_NETWORK_UDPSTATUS			49	///< UDP����ͨ��״̬��ѯ������Ϊint�ͣ�
-#define BRAC_SO_NETWORK_LARGEDELAY			53	///< ������ӳ�ģʽ���������������绷��������Ϊint�ͣ�
-#define BRAC_SO_NETWORK_IPV6DNS				54	///< IPv6�����������ƣ�����Ϊint�ͣ�0 �رգ� 1����[Ĭ��]������ͳ���磨IPv4���£�����IPv6��������������ٶ�
+#define BRAC_SO_NETWORK_P2PPOLITIC			40	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
+#define BRAC_SO_NETWORK_P2PCONNECT			41	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
+#define BRAC_SO_NETWORK_P2PBREAK			42	///< 断开与指定用户的P2P连接（参数为int型，表示目标用户ID）[暂不支持，保留]
+#define BRAC_SO_NETWORK_TCPSERVICEPORT		43	///< 设置本地TCP服务端口（参数为int型），连接服务器之前设置有效
+#define BRAC_SO_NETWORK_UDPSERVICEPORT		44	///< 设置本地UDP服务端口（参数为int型），连接服务器之前设置有效
+#define BRAC_SO_NETWORK_MULTICASTPOLITIC	45	///< 组播策略控制（参数为int型，定义为常量：BRAC_MCPOLITIC_XXXX）
+#define BRAC_SO_NETWORK_TRANSBUFMAXBITRATE	46	///< 传输缓冲区、文件最大码率控制（参数为int型，0 不限制，以最快速率传输[默认]， 否则表示限制码率，单位为：bps）
+#define BRAC_SO_NETWORK_AUTORECONNECT		47	///< 网络掉线自动重连功能控制（参数为int型，0 关闭， 1 开启[默认]）
+#define BRAC_SO_NETWORK_MTUSIZE				48	///< 设置网络层MTU大小（参数为int型）
+#define BRAC_SO_NETWORK_UDPSTATUS			49	///< UDP网络通信状态查询（参数为int型）
+#define BRAC_SO_NETWORK_LARGEDELAY			53	///< 网络高延迟模式，适用于卫星网络环境（参数为int型）
 
-#define BRAC_SO_PROXY_FUNCTIONCTRL			50	///< �����û��������ܿ��ƣ�������Ϊ��int�ͣ�1����������0�رմ���[Ĭ��]��
-#define BRAC_SO_PROXY_VIDEOCTRL				51	///< �����û�������Ƶ���ƣ���������Ƶ��Ϊָ���û�����Ƶ���ⷢ��������Ϊint�ͣ���ʾ�����û���userid��
-#define BRAC_SO_PROXY_AUDIOCTRL				52	///< �����û�������Ƶ���ƣ���������Ƶ��Ϊָ���û�����Ƶ���ⷢ��������ͬBRAC_SO_PROXY_VIDEOCTRL��
+#define BRAC_SO_PROXY_FUNCTIONCTRL			50	///< 本地用户代理功能控制，（参数为：int型，1启动代理，0关闭代理[默认]）
+#define BRAC_SO_PROXY_VIDEOCTRL				51	///< 本地用户代理视频控制，将本地视频变为指定用户的视频对外发布（参数为int型，表示其它用户的userid）
+#define BRAC_SO_PROXY_AUDIOCTRL				52	///< 本地用户代理音频控制，将本地音频变为指定用户的音频对外发布（参数同BRAC_SO_PROXY_VIDEOCTRL）
 
-#define BRAC_SO_STREAM_MAXBUFFERTIME		60	///< ���������ʱ�䣨����Ϊint�ͣ���λ�����룬ȡֵ��Χ��500 ~ 5000��Ĭ�ϣ�800��������ģʽ����ֵ������ģʽ���Զ�����һ��
-#define BRAC_SO_STREAM_SMOOTHPLAYMODE		61	///< ƽ������ģʽ������Ϊint�ͣ�0 �ر�[Ĭ��], 1 �򿪣�����״̬��������Ƶ��֡ʱ��������ţ����ܳ��������ˣ������Ῠס
+#define BRAC_SO_STREAM_MAXBUFFERTIME		60	///< 最大流缓冲时间（参数为int型，单位：毫秒，取值范围：500 ~ 5000，默认：800），发言模式设置值，歌曲模式会自动增加一倍
+#define BRAC_SO_STREAM_SMOOTHPLAYMODE		61	///< 平滑播放模式（参数为int型，0 关闭[默认], 1 打开），打开状态下遇到视频丢帧时会继续播放（可能出现马赛克），不会卡住
 
-#define BRAC_SO_VIDEOSHOW_MODECTRL			80	///< ��Ƶ��ʾģʽ���ƣ�����Ϊ��int�ͣ�0 ��������ʾ��1 ��Ƶ������ʾ��
-#define BRAC_SO_VIDEOSHOW_SETPRIMARYUSER	81	///< ��������ʾ�û���ţ�����Ϊ��int�ͣ��û�ID�ţ�
-#define BRAC_SO_VIDEOSHOW_SETOVERLAYUSER	82	///< ���õ�����ʾ�û���ţ�����Ϊ��int�ͣ��û�ID�ţ�
-#define BRAC_SO_VIDEOSHOW_DRIVERCTRL		83	///< ��Ƶ��ʾ�������ƣ�����Ϊ��int�ͣ�0 Ĭ�������� 1 Windows DirectShow��2 Windows GDI��3 SDL, 4 Android2X, 5 Android Java��
-#define BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER	84	///< ��Ƶ���ݾ���GPUֱ����Ⱦ������������Ƶ����ֱ�Ӵ��䵽GPU��������ַ������Ϊ��int�ͣ� 0 �ر�[Ĭ��]�� 1 �򿪣�����Ӳ��ƽ̨���
-#define BRAC_SO_VIDEOSHOW_AUTOROTATION		85	///< Զ����Ƶ��ʾ�Զ���ת���ƣ�����Ϊint�ͣ� 0��ʾ�رգ� 1 ����[Ĭ��]����Ƶ��תʱ��Ҫ�ο�������Ƶ�豸���������
-#define BRAC_SO_VIDEOSHOW_CLIPMODE			86	///< Զ����Ƶ��ʾ��ת�ü�ģʽ������Ϊint�ͣ� 0 �Զ�[Ĭ��]��
-#define BRAC_SO_VIDEOSHOW_CBPIXFMT			87	///< ��Ƶ���ݻص���ʽ������Ϊint�ͣ�
+#define BRAC_SO_VIDEOSHOW_MODECTRL			80	///< 视频显示模式控制（参数为：int型，0 单画面显示，1 视频迭加显示）
+#define BRAC_SO_VIDEOSHOW_SETPRIMARYUSER	81	///< 设置主显示用户编号（参数为：int型，用户ID号）
+#define BRAC_SO_VIDEOSHOW_SETOVERLAYUSER	82	///< 设置迭加显示用户编号（参数为：int型，用户ID号）
+#define BRAC_SO_VIDEOSHOW_DRIVERCTRL		83	///< 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL, 4 Android2X, 5 Android Java）
+#define BRAC_SO_VIDEOSHOW_GPUDIRECTRENDER	84	///< 视频数据经过GPU直接渲染，将解码后的视频数据直接传输到GPU的物理地址（参数为：int型， 0 关闭[默认]， 1 打开），与硬件平台相关
+#define BRAC_SO_VIDEOSHOW_AUTOROTATION		85	///< 远程视频显示自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
+#define BRAC_SO_VIDEOSHOW_CLIPMODE			86	///< 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
+#define BRAC_SO_VIDEOSHOW_CBPIXFMT			87	///< 视频数据回调格式（参数为int型）
 
-#define BRAC_SO_CORESDK_TICKOUTUSER			110	///< �ӷ��������ߵ�ָ���û�������Ϊint�ͣ���ʾĿ���û�ID��
+#define BRAC_SO_CORESDK_TICKOUTUSER			110	///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
 
-#define BRAC_SO_CORESDK_DEVICEMODE			130	///< �豸ģʽ���ƣ��������豸֮����Ի���ͨ�ţ�������������������Ϊint�ͣ�0 �ر�[Ĭ��]��1 ������
-#define BRAC_SO_CORESDK_SCREENCAMERACTRL	131	///< ���湲�����ܿ��ƣ�����Ϊ��int�ͣ� 0 �ر�[Ĭ��]�� 1 ������
-#define BRAC_SO_CORESDK_DATAENCRYPTION		132	///< ���ݼ��ܿ��ƣ�����Ϊ��int�ͣ� 0 �ر�[Ĭ��]�� 1 ������
-#define BRAC_SO_CORESDK_MEDIAUTILLIB		133	///< ��ȡbrMediaUtil.dll�Ŀ���ؾ��
-#define BRAC_SO_CORESDK_UPLOADLOGINFO		134	///< �ϴ���־��Ϣ��������������Ϊ��int�ͣ�0 �ر�[Ĭ��]�� 1 ������
-#define BRAC_SO_CORESDK_WRITELOG			135	///< д�������Ϣ���ͻ�����־�ļ���
-#define BRAC_SO_CORESDK_NEWLOGFILE			136	///< �����µ���־�ļ�
-#define BRAC_SO_CORESDK_SUPPORTSIP			137	///< �жϵ�ǰ�Ƿ�֧��SIPͨ��
-#define BRAC_SO_CORESDK_SUPPORTHTML5		138	///< �жϵ�ǰ�Ƿ�֧��HTML5
-#define BRAC_SO_CORESDK_SUPPORTVIDEOCODEC	210	///< ����֧�ֵ���Ƶ������
-#define BRAC_SO_CORESDK_SUPPORTAUDIOCODEC	211	///< ����֧�ֵ���Ƶ������
-#define BRAC_SO_CORESDK_DISABLEMEDIACONSUL	212	///< ��ֹý��Э��
-#define BRAC_SO_CORESDK_QUERYTIMEOUTTIME	213	///< ��Ϣ��ѯ��ʱʱ�䣨����Ϊ��int�ͣ���λ��ms��Ĭ��ֵ1000��
-#define BRAC_SO_CORESDK_REMOTEASSISTHWND	214	///< Զ��Э�����ھ��
-#define BRAC_SO_CORESDK_REMOTEASSISTXPOS	215	///< Զ��Э�����ڹ�����λ�ã�X��
-#define BRAC_SO_CORESDK_REMOTEASSISTYPOS	216	///< Զ��Э�����ڹ�����λ�ã�Y��
-#define BRAC_SO_CORESDK_FITTENCENTLIVE		217	///< ������Ѷ��Ƶֱ��SDK
+#define BRAC_SO_CORESDK_DEVICEMODE			130	///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+#define BRAC_SO_CORESDK_SCREENCAMERACTRL	131	///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
+#define BRAC_SO_CORESDK_DATAENCRYPTION		132	///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
+#define BRAC_SO_CORESDK_MEDIAUTILLIB		133	///< 获取brMediaUtil.dll的库加载句柄
+#define BRAC_SO_CORESDK_UPLOADLOGINFO		134	///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
+#define BRAC_SO_CORESDK_WRITELOG			135	///< 写入调试信息到客户端日志文件中
+#define BRAC_SO_CORESDK_NEWLOGFILE			136	///< 产生新的日志文件
+#define BRAC_SO_CORESDK_SUPPORTSIP			137	///< 判断当前是否支持SIP通信
+#define BRAC_SO_CORESDK_SUPPORTHTML5		138	///< 判断当前是否支持HTML5
+#define BRAC_SO_CORESDK_SUPPORTVIDEOCODEC	210	///< 设置支持的视频编码器
+#define BRAC_SO_CORESDK_SUPPORTAUDIOCODEC	211	///< 设置支持的音频编码器
+#define BRAC_SO_CORESDK_DISABLEMEDIACONSUL	212	///< 禁止媒体协商
+#define BRAC_SO_CORESDK_QUERYTIMEOUTTIME	213	///< 信息查询超时时间（参数为：int型，单位：ms，默认值1000）
+#define BRAC_SO_CORESDK_REMOTEASSISTHWND	214	///< 远程协助窗口句柄
+#define BRAC_SO_CORESDK_REMOTEASSISTXPOS	215	///< 远程协助窗口滚动条位置（X）
+#define BRAC_SO_CORESDK_REMOTEASSISTYPOS	216	///< 远程协助窗口滚动条位置（Y）
+#define BRAC_SO_CORESDK_FITTENCENTLIVE		217	///< 兼容腾讯视频直播SDK
 #define BRAC_SO_CORESDK_DFCFLIVE			218
-#define BRAC_SO_CORESDK_DISABLEDNSCONNECT	219	///< ����DNSѰַ
-#define BRAC_SO_CORESDK_LOGFILEROOTPATH		220	///< ��־�ļ������·������־�ض��򣬲���Ϊ�ַ���������·����
-#define BRAC_SO_CORESDK_LOGFILERULE			221	///< �ͻ�����־�ļ�������򣨲���Ϊint�ͣ�0 �Զ�����[Ĭ��] 1 �����ڱ��棬�����ǣ�
-#define BRAC_SO_CORESDK_FILEENCANDDEC		222	///< �ļ��ӽ��ܿ��ƣ�����Ϊ�ַ������ͣ�JSON��ʽ��
-#define BRAC_SO_CORESDK_PPTHELPERINIT		223	///< PPT����������ʼ��
-#define BRAC_SO_CORESDK_PPTFILECTRL			224	///< PPT�ļ�����
+#define BRAC_SO_CORESDK_DISABLEDNSCONNECT	219	///< 屏蔽DNS寻址
+#define BRAC_SO_CORESDK_LOGFILEROOTPATH		220	///< 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
+#define BRAC_SO_CORESDK_LOGFILERULE			221	///< 客户端日志文件保存规则（参数为int型，0 自动覆盖[默认] 1 按日期保存，不覆盖）
 
-#define BRAC_SO_UDPTRACE_MODE				160 ///< UDP���ݰ�����ģʽ
-#define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP���ݰ����ٵĴ�С����λ��BYTE
-#define BRAC_SO_UDPTRACE_BITRATE			162	///< UDP���ݰ����ٵİ����ʣ���λ��bps
-#define BRAC_SO_UDPTRACE_START				163	///< UDP���ݰ����ٿ��ƣ�����Ϊint�ͣ�1 ������ 0 ֹͣ��
-#define BRAC_SO_UDPTRACE_LOCALRECVNUM		164 ///< UDP���ݰ����ٱ��ؽ��հ�����
-#define BRAC_SO_UDPTRACE_SERVERRECVNUM		165	///< UDP���ݰ����ٷ��������հ�����
-#define BRAC_SO_UDPTRACE_SOURCESENDNUM		166	///< UDP���ݰ�����Դ��������
-#define BRAC_SO_UDPTRACE_SENDUSERID			167	///< UDP���ݰ�����Դ�û�ID
+#define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
+#define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
+#define BRAC_SO_UDPTRACE_BITRATE			162	///< UDP数据包跟踪的包速率，单位：bps
+#define BRAC_SO_UDPTRACE_START				163	///< UDP数据包跟踪控制（参数为int型，1 启动， 0 停止）
+#define BRAC_SO_UDPTRACE_LOCALRECVNUM		164 ///< UDP数据包跟踪本地接收包数量
+#define BRAC_SO_UDPTRACE_SERVERRECVNUM		165	///< UDP数据包跟踪服务器接收包数量
+#define BRAC_SO_UDPTRACE_SOURCESENDNUM		166	///< UDP数据包跟踪源发包数量
+#define BRAC_SO_UDPTRACE_SENDUSERID			167	///< UDP数据包跟踪源用户ID
 
-// �û���ý�����������壨API��BRAC_GetUserStreamInfo ���������
-#define BRAC_STREAMINFO_VIDEOWIDTH			180 ///< ��Ƶ������
-#define BRAC_STREAMINFO_VIDEOHEIGHT			181	///< ��Ƶ���߶�
-#define BRAC_STREAMINFO_VIDEOFPS			182	///< ��Ƶ��֡��
-#define BRAC_STREAMINFO_VIDEOBITRATE		183	///< ��Ƶ�����ʣ���λ��bps
-#define BRAC_STREAMINFO_VIDEOCODECID		184	///< ��Ƶ��������ID
-#define BRAC_STREAMINFO_VIDEOPACKLOSSRATE	185	///< ��Ƶ��������
-#define BRAC_STREAMINFO_ADUIOCHANNELS		190	///< ��Ƶ��ͨ����
-#define BRAC_STREAMINFO_AUDIOSAMPLERATE		191	///< ��Ƶ��������
-#define BRAC_STREAMINFO_AUDIOBITRATE		192	///< ��Ƶ�����ʣ���λ��bps
-#define BRAC_STREAMINFO_AUDIOCODECID		193	///< ��Ƶ��������ID
-#define BRAC_STREAMINFO_AUDIOPACKLOSSRATE	194	///< ��Ƶ��������
+// 用户多媒体流参数定义（API：BRAC_GetUserStreamInfo 传入参数）
+#define BRAC_STREAMINFO_VIDEOWIDTH			180 ///< 视频流宽度
+#define BRAC_STREAMINFO_VIDEOHEIGHT			181	///< 视频流高度
+#define BRAC_STREAMINFO_VIDEOFPS			182	///< 视频流帧率
+#define BRAC_STREAMINFO_VIDEOBITRATE		183	///< 视频流码率，单位：bps
+#define BRAC_STREAMINFO_VIDEOCODECID		184	///< 视频流编码器ID
+#define BRAC_STREAMINFO_VIDEOPACKLOSSRATE	185	///< 视频流丢包率
+#define BRAC_STREAMINFO_ADUIOCHANNELS		190	///< 音频流通道数
+#define BRAC_STREAMINFO_AUDIOSAMPLERATE		191	///< 音频流采样率
+#define BRAC_STREAMINFO_AUDIOBITRATE		192	///< 音频流码率，单位：bps
+#define BRAC_STREAMINFO_AUDIOCODECID		193	///< 音频流编码器ID
+#define BRAC_STREAMINFO_AUDIOPACKLOSSRATE	194	///< 音频流丢包率
 
 
-#define BRAC_SO_OBJECT_INITFLAGS			200	///< ҵ��������ݳ�ʼ��
+#define BRAC_SO_OBJECT_INITFLAGS			200	///< 业务对象身份初始化
 
-#define BRAC_SO_CLOUD_APPGUID				300	///< ��ƽ̨Ӧ��GUID������Ϊ���ַ������ͣ����ӷ�����֮ǰ���ã�
-#define BRAC_SO_CLOUD_ACCTYPE				301	///< ��ƽ̨Ӧ�ü����˺�����
-#define BRAC_SO_CLOUD_APPID3RD				302	///< ��ƽ̨Ӧ�ü���ʱ������ƽ̨��Ӧ��GUID
-
-
-// ����������Ϣ�������壨API��BRAC_QueryTransTaskInfo ���������
-#define BRAC_TRANSTASK_PROGRESS				1	///< ����������Ȳ�ѯ������Ϊ��DWORD�ͣ�����ֵ0 ~ 100��
-#define BRAC_TRANSTASK_BITRATE				2	///< ��������ǰ�������ʣ�����Ϊ��DWORD�ͣ���λ��bps��
-#define BRAC_TRANSTASK_STATUS				3	///< ��������ǰ״̬������Ϊ��DWORD�ͣ�
-#define BRAC_TRANSTASK_SAVEASPATH			4	///< �ļ�������������Ϊ·�����ã����ļ���������Ϊ�ַ���TCHAR���ͣ�
-#define BRAC_TRANSTASK_SOURCEFILE			5	///< Դ�ļ�������·��������Ϊ�ַ�����TCHAR���ͣ�
-#define BRAC_TRANSTASK_JSONSTATUS			6	///< ��������״̬��Json�ַ���
-
-// ¼���ܱ�־���壨API��BRAC_StreamRecordCtrl ���������
-#define BRAC_RECORD_FLAGS_VIDEO			0x00000001	///< ¼����Ƶ
-#define BRAC_RECORD_FLAGS_AUDIO			0x00000002	///< ¼����Ƶ
-#define BRAC_RECORD_FLAGS_SERVER		0x00000004	///< ��������¼��
-#define BRAC_RECORD_FLAGS_MIXAUDIO		0x00000010	///< ¼����Ƶʱ���������˵�����������¼��
-#define BRAC_RECORD_FLAGS_MIXVIDEO		0x00000020	///< ¼����Ƶʱ���������˵���Ƶ���Ӻ�¼��
-#define BRAC_RECORD_FLAGS_ABREAST		0x00000100	///< ¼����Ƶʱ���������˵���Ƶ����¼��
-#define BRAC_RECORD_FLAGS_STEREO		0x00000200	///< ¼����Ƶʱ���������˵��������Ϊ��������¼��
-#define BRAC_RECORD_FLAGS_SNAPSHOT		0x00000400	///< ����
-#define BRAC_RECORD_FLAGS_LOCALCB		0x00000800	///< �������ػص�
-#define BRAC_RECORD_FLAGS_STREAM		0x00001000	///< ����Ƶ������¼�ƣ�Ч�ʸߣ�
-#define BRAC_RECORD_FLAGS_USERFILENAME	0x00002000	///< �û��Զ����ļ���
+#define BRAC_SO_CLOUD_APPGUID				300	///< 云平台应用GUID（参数为：字符串类型，连接服务器之前设置）
+#define BRAC_SO_CLOUD_ACCTYPE				301	///< 云平台应用集成账号类型
+#define BRAC_SO_CLOUD_APPID3RD				302	///< 云平台应用集成时第三方平台的应用GUID
 
 
-// �ͻ��ˡ���������¼�Ʊ�־���屣��ͳһ
+// 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
+#define BRAC_TRANSTASK_PROGRESS				1	///< 传输任务进度查询（参数为：DWORD型，返回值0 ~ 100）
+#define BRAC_TRANSTASK_BITRATE				2	///< 传输任务当前传输码率（参数为：DWORD型，单位：bps）
+#define BRAC_TRANSTASK_STATUS				3	///< 传输任务当前状态（参数为：DWORD型）
+#define BRAC_TRANSTASK_SAVEASPATH			4	///< 文件传输任务另存为路径设置，含文件名（参数为字符串TCHAR类型）
+#define BRAC_TRANSTASK_SOURCEFILE			5	///< 源文件名（含路径，参数为字符串，TCHAR类型）
+#define BRAC_TRANSTASK_JSONSTATUS			6	///< 传输任务状态，Json字符串
+
+// 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
+#define BRAC_RECORD_FLAGS_VIDEO			0x00000001	///< 录制视频
+#define BRAC_RECORD_FLAGS_AUDIO			0x00000002	///< 录制音频
+#define BRAC_RECORD_FLAGS_SERVER		0x00000004	///< 服务器端录制
+#define BRAC_RECORD_FLAGS_MIXAUDIO		0x00000010	///< 录制音频时，将其它人的声音混音后录制
+#define BRAC_RECORD_FLAGS_MIXVIDEO		0x00000020	///< 录制视频时，将其它人的视频迭加后录制
+#define BRAC_RECORD_FLAGS_ABREAST		0x00000100	///< 录制视频时，将其它人的视频并列录制
+#define BRAC_RECORD_FLAGS_STEREO		0x00000200	///< 录制音频时，将其它人的声音混合为立体声后录制
+#define BRAC_RECORD_FLAGS_SNAPSHOT		0x00000400	///< 拍照
+#define BRAC_RECORD_FLAGS_LOCALCB		0x00000800	///< 触发本地回调
+#define BRAC_RECORD_FLAGS_STREAM		0x00001000	///< 对视频流进行录制（效率高）
+#define BRAC_RECORD_FLAGS_USERFILENAME	0x00002000	///< 用户自定义文件名
+
+
+// 客户端、服务器端录制标志定义保持统一
 #if !defined(ANYCHAT_RECORD_FLAGS_VIDEO)
 #define ANYCHAT_RECORD_FLAGS_VIDEO			BRAC_RECORD_FLAGS_VIDEO
 #define ANYCHAT_RECORD_FLAGS_AUDIO			BRAC_RECORD_FLAGS_AUDIO
@@ -259,185 +255,164 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_RECORD_FLAGS_LOCALCB		BRAC_RECORD_FLAGS_LOCALCB
 #define ANYCHAT_RECORD_FLAGS_STREAM			BRAC_RECORD_FLAGS_STREAM
 #define ANYCHAT_RECORD_FLAGS_USERFILENAME	BRAC_RECORD_FLAGS_USERFILENAME
-#define ANYCHAT_RECORD_FLAGS_ERRORCODE		0x00004000	///< ֧�ֳ�������
-#define ANYCHAT_RECORD_FLAGS_MULTISTREAM	0x00008000	///< ֧�ֶ�·����¼�ƣ����գ�
+#define ANYCHAT_RECORD_FLAGS_ERRORCODE		0x00004000	///< 支持出错代码
+#define ANYCHAT_RECORD_FLAGS_MULTISTREAM	0x00008000	///< 支持多路流的录制（拍照）
 #endif
 
 
-// �鲥���Զ���
-#define BRAC_MCPOLITIC_DISABLE				0	///< ִ�з�����·�ɲ��ԣ���ֹ�����鲥����[Ĭ��]
-#define BRAC_MCPOLITIC_ONLYLOCALMC			1	///< ���Է�����·�ɲ��ԣ�ֻ��ͻ��˱����鲥��㲥ý����
-#define BRAC_MCPOLITIC_SERVERANDLOCALMC		2	///< ִ�з�����·�ɲ��ԣ�ͬʱ�ڿͻ��˱��ط����鲥����
-#define BRAC_MCPOLITIC_ONLYSERVERMC			3	///< ���Է�����·�ɲ��ԣ�ֻ������������鲥��㲥ý����
-#define BRAC_MCPOLITIC_SERVERANDSERVERMC	4	///< ִ�з�����·�ɲ��ԣ�ͬʱ�ڷ������˷����鲥����
+// 组播策略定义
+#define BRAC_MCPOLITIC_DISABLE				0	///< 执行服务器路由策略，禁止所有组播发送[默认]
+#define BRAC_MCPOLITIC_ONLYLOCALMC			1	///< 忽略服务器路由策略，只向客户端本地组播组广播媒体流
+#define BRAC_MCPOLITIC_SERVERANDLOCALMC		2	///< 执行服务器路由策略，同时在客户端本地发送组播数据
+#define BRAC_MCPOLITIC_ONLYSERVERMC			3	///< 忽略服务器路由策略，只向服务器本地组播组广播媒体流
+#define BRAC_MCPOLITIC_SERVERANDSERVERMC	4	///< 执行服务器路由策略，同时在服务器端发送组播数据
 
-// �鲥���ܱ�־����
-#define BRAC_MCFLAGS_JOINGROUP		0x00000001	///< ����ಥ��
-#define BRAC_MCFLAGS_LEAVEGROUP		0x00000002	///< �뿪�ಥ��
-#define BRAC_MCFLAGS_SENDDATA		0x00000010	///< ���ݷ��ͱ�־��ָʾ�öಥ�����ڷ�������
-#define BRAC_MCFLAGS_RECVDATA		0x00000020	///< ���ݽ��ձ�־��ָʾ�öಥ�����ڽ�������
-
-
-// �û�״̬��־���壨API��BRAC_QueryUserState ���������
-#define BRAC_USERSTATE_CAMERA				1	///< �û�����ͷ״̬������ΪDWORD�ͣ�
-#define BRAC_USERSTATE_HOLDMIC				2	///< �û���Ƶ�豸״̬������ΪDWORD�ͣ�����ֵ��0 ��Ƶ�ɼ��رգ� 1 ��Ƶ�ɼ�������
-#define BRAC_USERSTATE_SPEAKVOLUME			3	///< �û���ǰ˵������������ΪDWORD���ͣ�0 ~ 100����
-#define BRAC_USERSTATE_RECORDING			4	///< �û�¼������״̬������ΪDWORD�ͣ�
-#define	BRAC_USERSTATE_LEVEL				5	///< �û����𣨲���ΪDWORD�ͣ�
-#define BRAC_USERSTATE_NICKNAME				6	///< �û��ǳƣ�����Ϊ�ַ���TCHAR���ͣ�
-#define BRAC_USERSTATE_LOCALIP				7	///< �û�����IP��ַ������������Ϊ�ַ���TCHAR���ͣ�
-#define BRAC_USERSTATE_INTERNETIP			8	///< �û�������IP��ַ������Ϊ�ַ���TCHAR���ͣ�
-#define BRAC_USERSTATE_VIDEOBITRATE			9	///< �û���ǰ����Ƶ���ʣ�����ΪDWORD���ͣ�Bps��
-#define BRAC_USERSTATE_AUDIOBITRATE			10	///< �û���ǰ����Ƶ���ʣ�����ΪDWORD���ͣ�Bps��
-#define BRAC_USERSTATE_P2PCONNECT			11	///< ��ѯ�����û���ָ���û��ĵ�ǰP2P����״̬������ΪDWORD���ͣ�����ֵ��0 P2P��ͨ�� 1 P2P���ӳɹ�[TCP]��2 P2P���ӳɹ�[UDP]��3 P2P���ӳɹ�[TCP��UDP]��
-#define BRAC_USERSTATE_NETWORKSTATUS		12	///< ��ѯָ���û�������״̬������ΪDWORD���ͣ�����ֵ��0 ������1 �Ϻã�2 һ�㣬3 �ϲ4 �ǳ��
-#define BRAC_USERSTATE_VIDEOSIZE			13	///< ��ѯָ���û�����Ƶ�ֱ��ʣ�����ΪDWORD���ͣ�����ֵ����16λ��ʾ���ȣ���16λ��ʾ�߶ȣ�
-#define BRAC_USERSTATE_PACKLOSSRATE			14	///< ��ѯָ���û���������ý�����ݶ����ʣ�����ΪDWORD���ͣ�����ֵ��0 - 100���磺����ֵΪ5����ʾ������Ϊ5%��
-#define BRAC_USERSTATE_DEVICETYPE			15	///< ��ѯָ���û����ն����ͣ�����ΪDWORD���ͣ�����ֵ��0 Unknow��1 Windows��2 Android��3 iOS��4 Web��5 Linux��6 Mac��7 Win Phone��8 WinCE��
-#define BRAC_USERSTATE_SELFUSERSTATUS		16	///< ��ѯ�����û��ĵ�ǰ״̬������ΪDWORD���ͣ�����ֵ��0 Unknow��1 Connected��2 Logined��3 In Room��4 Logouted��5 Link Closed��
-#define BRAC_USERSTATE_SELFUSERID			17	///< ��ѯ�����û���ID������ΪDWORD���ͣ����û���¼�ɹ��������û�ʵ�ʵ�userid�����򷵻�-1��
-#define BRAC_USERSTATE_VIDEOROTATION		18	///< ��ѯָ���û��ĵ�ǰ��Ƶ��ת�Ƕȣ�����ΪDWORD���ͣ����ؽǶ�ֵ��
-#define BRAC_USERSTATE_VIDEOMIRRORED		19	///< ��ѯָ���û�����Ƶ�Ƿ���Ҫ����ת
-#define BRAC_USERSTATE_AUDIOCODECID			20	///< ��ѯָ���û�����Ƶ������ID
-#define BRAC_USERSTATE_VIDEOCODECID			21	///< ��ѯָ���û�����Ƶ������ID
-
-// ����״̬��־���壨API��BRAC_QueryRoomState ���������
-#define BRAC_ROOMSTATE_ROOMNAME				1	///< �������ƣ�����Ϊ�ַ���TCHAR���ͣ�
-#define BRAC_ROOMSTATE_ONLINEUSERS			2	///< ���������û���������ΪDWORD�ͣ��������Լ���
-
-// ��Ƶ�����¼����Ͷ��壨API��BRAC_VideoCallControl ���������VideoCallEvent�ص�������
-#define BRAC_VIDEOCALL_EVENT_REQUEST		1	///< ��������
-#define BRAC_VIDEOCALL_EVENT_REPLY			2	///< ��������ظ�
-#define BRAC_VIDEOCALL_EVENT_START			3	///< ��Ƶ���лỰ��ʼ�¼�
-#define BRAC_VIDEOCALL_EVENT_FINISH			4	///< �Ҷϣ����������лỰ
-
-// ��Ƶ���б�־���壨API��BRAC_VideoCallControl ���������
-#define BRAC_VIDEOCALL_FLAGS_AUDIO		0x0001	///< ����ͨ��
-#define BRAC_VIDEOCALL_FLAGS_VIDEO		0x0002	///< ��Ƶͨ��
-#define BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	0x0010	///< ��ֹԴ�����жˣ���Ƶ
-#define BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	0x0020	///< ��ֹԴ�����жˣ���Ƶ
-#define BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	0x0040	///< ��ֹĿ�꣨�����жˣ���Ƶ
-#define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x0080	///< ��ֹĿ�꣨�����жˣ���Ƶ
-#define BRAC_VIDEOCALL_FLAGS_ASSISTREQ	0x0100	///< ����Ŀ���û�Զ��Э��
-#define BRAC_VIDEOCALL_FLAGS_CONTROLREQ	0x0200	///< �������Ŀ���û�
-
-// Զ����Ƶ����������־����
-#define BRAC_ROTATION_FLAGS_MIRRORED	0x1000	///< ͼ����Ҫ����ת
-#define BRAC_ROTATION_FLAGS_ROTATION90	0x2000	///< ˳ʱ����ת90��
-#define BRAC_ROTATION_FLAGS_ROTATION180	0x4000	///< ˳ʱ����ת180��
-#define BRAC_ROTATION_FLAGS_ROTATION270	0x8000	///< ˳ʱ����ת270��
-
-// �û���Ϣ�������Ͷ��壨API��BRAC_UserInfoControl ���������
-#define BRAC_USERINFO_CTRLCODE_ROTATION		8	///< ��ָ�����û���Ƶ����ʾʱ��ת��wParamΪ��ת�ǶȲ���
-#define BRAC_USERINFO_CTRLCODE_DEBUGLOG		9	///< ��������û��ĵ�����־��wParamΪ������־���ͣ�lParamΪ�Ƿ���
-#define BRAC_USERINFO_CTRLCODE_LVORIENTFIX	10	///< ������Ƶ�ɼ�����������wParamΪ���������lParamΪ�����Ƕ�
-
-// ���ݼӣ��⣩�ܱ�־���壨DataEncDec�ص�������
-#define BRAC_DATAENCDEC_FLAGS_ENCMODE	0x01	///< ����ģʽ
-#define BRAC_DATAENCDEC_FLAGS_DECMODE	0x02	///< ����ģʽ
-#define BRAC_DATAENCDEC_FLAGS_AUDIO		0x10	///< ��Ƶ��������
-#define BRAC_DATAENCDEC_FLAGS_VIDEO		0x20	///< ��Ƶ��������
-#define BRAC_DATAENCDEC_FLAGS_BUFFER	0x40	///< ͸��ͨ������
-#define BRAC_DATAENCDEC_FLAGS_TXTMSG	0x80	///< ������������
-
-// �ص��������Ͷ��壨API��BRAC_SetCallBack ���������
-#define BRAC_CBTYPE_NOTIFYMESSAGE			1	///< �첽��Ϣ֪ͨ�ص�
-#define BRAC_CBTYPE_VIDEODATA				2	///< ��Ƶ���ݻص�
-#define BRAC_CBTYPE_VIDEODATAEX				3	///< ��Ƶ������չ�ص�
-#define BRAC_CBTYPE_AUDIODATA				4	///< ��Ƶ���ݻص�
-#define BRAC_CBTYPE_AUDIODATAEX				5	///< ��Ƶ������չ�ص�
-#define BRAC_CBTYPE_TEXTMESSAGE				6	///< ������Ϣ�ص�
-#define BRAC_CBTYPE_TRANSBUFFER				7	///< ͸��ͨ�����ݻص�
-#define BRAC_CBTYPE_TRANSBUFFEREX			8	///< ͸��ͨ��������չ�ص�
-#define BRAC_CBTYPE_TRANSFILE				9	///< �ļ�����ص�
-#define BRAC_CBTYPE_VOLUMECHANGE			10	///< �����仯�ص�
-#define BRAC_CBTYPE_SDKFILTERDATA			11	///< SDK Filterͨ�����ݻص�
-#define BRAC_CBTYPE_STREAMRECORD			12	///< ¼������������֪ͨ�ص�
-#define BRAC_CBTYPE_STREAMRECORDEX			13	///< ¼������������֪ͨ��չ�ص�
-#define BRAC_CBTYPE_VIDEOCALLEVENT			14	///< ��Ƶͨ����Ϣ֪ͨ�ص�
-#define BRAC_CBTYPE_DATAENCDEC				15	///< ���ݼ��ܡ����ܻص�
-#define BRAC_CBTYPE_SCREENEVENT				16	///< ��Ļ�¼��ص�
-#define BRAC_CBTYPE_NETWORKDATASEND			17	///< �������ݻص�
-#define BRAC_CBTYPE_OBJECTEVENT				18	///< ҵ������¼�֪ͨ
-#define BRAC_CBTYPE_VIDEODATAEX2			19	///< ��Ƶ������չ�ص���֧�ֶ�·����
-#define BRAC_CBTYPE_AUDIODATAEX2			20	///< ��Ƶ������չ�ص���֧�ֶ�·����
-#define BRAC_CBTYPE_STREAMRECORDEX2			21	///< ¼������������֪ͨ��չ�ص���֧�ֳ������룩
-#define BRAC_CBTYPE_TRANSFILEEX				22	///< �ļ�������չ�ص���֧�ֳ������룩
-#define BRAC_CBTYPE_CORESDKEVENT			23	///< Core SDK�¼��ص���Json��ʽ��
-#define BRAC_CBTYPE_CORESDKDATA				24	///< Core SDK���ݻص�
+// 组播功能标志定义
+#define BRAC_MCFLAGS_JOINGROUP		0x00000001	///< 加入多播组
+#define BRAC_MCFLAGS_LEAVEGROUP		0x00000002	///< 离开多播组
+#define BRAC_MCFLAGS_SENDDATA		0x00000010	///< 数据发送标志，指示该多播组用于发送数据
+#define BRAC_MCFLAGS_RECVDATA		0x00000020	///< 数据接收标志，指示该多播组用于接收数据
 
 
-// ��Ƶ�ü�ģʽ����
-#define ANYCHAT_VIDEOCLIPMODE_UNKNOW		-1	///< δ֪ģʽ������Ҫ���ü�ʱʹ��
-#define ANYCHAT_VIDEOCLIPMODE_AUTO			0	///< Ĭ��ģʽ�������������вü���Ȼ�����������죬���汣�ֱ����������ü�����ϴ�
-#define ANYCHAT_VIDEOCLIPMODE_OVERLAP		1	///< �ص�ģʽ��ֻȡ�����Ч���֣��Ա�Ե���вü�
-#define ANYCHAT_VIDEOCLIPMODE_SHRINK		2	///< ��Сģʽ����С�����ʵı����������вü�
-#define ANYCHAT_VIDEOCLIPMODE_STRETCH		3	///< ƽ��ģʽ�������вü��������ܵ��»��治�ɱ���
-#define ANYCHAT_VIDEOCLIPMODE_DYNAMIC		4	///< ��̬ģʽ�����ϲ�Ӧ�ø��ݷֱ�����������ʾ���棬���ֻ��治����
+// 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
+#define BRAC_USERSTATE_CAMERA				1	///< 用户摄像头状态（参数为DWORD型）
+#define BRAC_USERSTATE_HOLDMIC				2	///< 用户音频设备状态（参数为DWORD型，返回值：0 音频采集关闭， 1 音频采集开启）
+#define BRAC_USERSTATE_SPEAKVOLUME			3	///< 用户当前说话音量（参数为DWORD类型（0 ~ 100））
+#define BRAC_USERSTATE_RECORDING			4	///< 用户录像（音）状态（参数为DWORD型）
+#define	BRAC_USERSTATE_LEVEL				5	///< 用户级别（参数为DWORD型）
+#define BRAC_USERSTATE_NICKNAME				6	///< 用户昵称（参数为字符串TCHAR类型）
+#define BRAC_USERSTATE_LOCALIP				7	///< 用户本地IP地址（内网，参数为字符串TCHAR类型）
+#define BRAC_USERSTATE_INTERNETIP			8	///< 用户互联网IP地址（参数为字符串TCHAR类型）
+#define BRAC_USERSTATE_VIDEOBITRATE			9	///< 用户当前的视频码率（参数为DWORD类型，Bps）
+#define BRAC_USERSTATE_AUDIOBITRATE			10	///< 用户当前的音频码率（参数为DWORD类型，Bps）
+#define BRAC_USERSTATE_P2PCONNECT			11	///< 查询本地用户与指定用户的当前P2P连接状态（参数为DWORD类型，返回值：0 P2P不通， 1 P2P连接成功[TCP]，2 P2P连接成功[UDP]，3 P2P连接成功[TCP、UDP]）
+#define BRAC_USERSTATE_NETWORKSTATUS		12	///< 查询指定用户的网络状态（参数为DWORD类型，返回值：0 优良，1 较好，2 一般，3 较差，4 非常差）
+#define BRAC_USERSTATE_VIDEOSIZE			13	///< 查询指定用户的视频分辨率（参数为DWORD类型，返回值：低16位表示宽度，高16位表示高度）
+#define BRAC_USERSTATE_PACKLOSSRATE			14	///< 查询指定用户的网络流媒体数据丢包率（参数为DWORD类型，返回值：0 - 100，如：返回值为5，表示丢包率为5%）
+#define BRAC_USERSTATE_DEVICETYPE			15	///< 查询指定用户的终端类型（参数为DWORD类型，返回值：0 Unknow，1 Windows，2 Android，3 iOS，4 Web，5 Linux，6 Mac，7 Win Phone，8 WinCE）
+#define BRAC_USERSTATE_SELFUSERSTATUS		16	///< 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
+#define BRAC_USERSTATE_SELFUSERID			17	///< 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
+#define BRAC_USERSTATE_VIDEOROTATION		18	///< 查询指定用户的当前视频旋转角度（参数为DWORD类型，返回角度值）
+#define BRAC_USERSTATE_VIDEOMIRRORED		19	///< 查询指定用户的视频是否需要镜像翻转
+#define BRAC_USERSTATE_AUDIOCODECID			20	///< 查询指定用户的音频编码器ID
+#define BRAC_USERSTATE_VIDEOCODECID			21	///< 查询指定用户的视频编码器ID
+
+// 房间状态标志定义（API：BRAC_QueryRoomState 传入参数）
+#define BRAC_ROOMSTATE_ROOMNAME				1	///< 房间名称（参数为字符串TCHAR类型）
+#define BRAC_ROOMSTATE_ONLINEUSERS			2	///< 房间在线用户数（参数为DWORD型，不包含自己）
+
+// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
+#define BRAC_VIDEOCALL_EVENT_REQUEST		1	///< 呼叫请求
+#define BRAC_VIDEOCALL_EVENT_REPLY			2	///< 呼叫请求回复
+#define BRAC_VIDEOCALL_EVENT_START			3	///< 视频呼叫会话开始事件
+#define BRAC_VIDEOCALL_EVENT_FINISH			4	///< 挂断（结束）呼叫会话
+
+// 视频呼叫标志定义（API：BRAC_VideoCallControl 传入参数）
+#define BRAC_VIDEOCALL_FLAGS_AUDIO		0x0001	///< 语音通话
+#define BRAC_VIDEOCALL_FLAGS_VIDEO		0x0002	///< 视频通话
+#define BRAC_VIDEOCALL_FLAGS_FBSRCAUDIO	0x0010	///< 禁止源（呼叫端）音频
+#define BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO	0x0020	///< 禁止源（呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_FBTARAUDIO	0x0040	///< 禁止目标（被呼叫端）音频
+#define BRAC_VIDEOCALL_FLAGS_FBTARVIDEO	0x0080	///< 禁止目标（被呼叫端）视频
+#define BRAC_VIDEOCALL_FLAGS_ASSISTREQ	0x0100	///< 请求目标用户远程协助
+#define BRAC_VIDEOCALL_FLAGS_CONTROLREQ	0x0200	///< 请求控制目标用户
+
+// 远程视频方向修正标志定义
+#define BRAC_ROTATION_FLAGS_MIRRORED	0x1000	///< 图像需要镜像翻转
+#define BRAC_ROTATION_FLAGS_ROTATION90	0x2000	///< 顺时针旋转90度
+#define BRAC_ROTATION_FLAGS_ROTATION180	0x4000	///< 顺时针旋转180度
+#define BRAC_ROTATION_FLAGS_ROTATION270	0x8000	///< 顺时针旋转270度
+
+// 用户信息控制类型定义（API：BRAC_UserInfoControl 传入参数）
+#define BRAC_USERINFO_CTRLCODE_ROTATION		8	///< 让指定的用户视频在显示时旋转，wParam为旋转角度参数
+#define BRAC_USERINFO_CTRLCODE_DEBUGLOG		9	///< 输出本地用户的调试日志，wParam为调试日志类型，lParam为是否开启
+#define BRAC_USERINFO_CTRLCODE_LVORIENTFIX	10	///< 本地视频采集方向修正，wParam为方向参数，lParam为修正角度
+
+// 数据加（解）密标志定义（DataEncDec回调参数）
+#define BRAC_DATAENCDEC_FLAGS_ENCMODE	0x01	///< 加密模式
+#define BRAC_DATAENCDEC_FLAGS_DECMODE	0x02	///< 解密模式
+#define BRAC_DATAENCDEC_FLAGS_AUDIO		0x10	///< 音频编码数据
+#define BRAC_DATAENCDEC_FLAGS_VIDEO		0x20	///< 视频编码数据
+#define BRAC_DATAENCDEC_FLAGS_BUFFER	0x40	///< 透明通道数据
+#define BRAC_DATAENCDEC_FLAGS_TXTMSG	0x80	///< 文字聊天数据
+
+// 回调函数类型定义（API：BRAC_SetCallBack 传入参数）
+#define BRAC_CBTYPE_NOTIFYMESSAGE			1	///< 异步消息通知回调
+#define BRAC_CBTYPE_VIDEODATA				2	///< 视频数据回调
+#define BRAC_CBTYPE_VIDEODATAEX				3	///< 视频数据扩展回调
+#define BRAC_CBTYPE_AUDIODATA				4	///< 音频数据回调
+#define BRAC_CBTYPE_AUDIODATAEX				5	///< 音频数据扩展回调
+#define BRAC_CBTYPE_TEXTMESSAGE				6	///< 文字消息回调
+#define BRAC_CBTYPE_TRANSBUFFER				7	///< 透明通道数据回调
+#define BRAC_CBTYPE_TRANSBUFFEREX			8	///< 透明通道数据扩展回调
+#define BRAC_CBTYPE_TRANSFILE				9	///< 文件传输回调
+#define BRAC_CBTYPE_VOLUMECHANGE			10	///< 音量变化回调
+#define BRAC_CBTYPE_SDKFILTERDATA			11	///< SDK Filter通信数据回调
+#define BRAC_CBTYPE_STREAMRECORD			12	///< 录像快照任务完成通知回调
+#define BRAC_CBTYPE_STREAMRECORDEX			13	///< 录像快照任务完成通知扩展回调
+#define BRAC_CBTYPE_VIDEOCALLEVENT			14	///< 视频通话消息通知回调
+#define BRAC_CBTYPE_DATAENCDEC				15	///< 数据加密、解密回调
+#define BRAC_CBTYPE_SCREENEVENT				16	///< 屏幕事件回调
+#define BRAC_CBTYPE_NETWORKDATASEND			17	///< 网络数据回调
+#define BRAC_CBTYPE_OBJECTEVENT				18	///< 业务对象事件通知
+#define BRAC_CBTYPE_VIDEODATAEX2			19	///< 视频数据扩展回调（支持多路流）
+#define BRAC_CBTYPE_AUDIODATAEX2			20	///< 音频数据扩展回调（支持多路流）
+#define BRAC_CBTYPE_STREAMRECORDEX2			21	///< 录像快照任务完成通知扩展回调（支持出错代码）
+#define BRAC_CBTYPE_TRANSFILEEX				22	///< 文件传输扩展回调（支持出错代码）
+#define BRAC_CBTYPE_CORESDKEVENT			23	///< Core SDK事件回调（Json格式）
+#define BRAC_CBTYPE_CORESDKDATA				24	///< Core SDK数据回调
 
 
-// ��������Ϣ��ѯ�������壨API��BRAC_QueryInfoFromServer ���������
-#define ANYCHAT_SERVERQUERY_USERIDBYNAME	1	///< �����û��ǳƲ�ѯ�û�ID
-#define ANYCHAT_SERVERQUERY_USERIDBYSTRID	2	///< �����ַ���ID��ѯ�û�ID
-#define ANYCHAT_SERVERQUERY_STRIDBYUSERID	3	///< �����û�ID��ѯ�ַ���ID
-#define ANYCHAT_SERVERQUERY_PPTFILEINFO		10	///< PPT�ļ���Ϣ
-#define ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	100	///< ��ѯָ�����е���ϯ������Ϣ
-#define ANYCHAT_SERVERQUERY_RUNNINGSTATUS	200	///< ��ѯ����������״̬
-#define ANYCHAT_SERVERQUERY_ONLINEUSERS		201	///< ��ѯ�����������û���
+// 视频裁剪模式定义
+#define ANYCHAT_VIDEOCLIPMODE_UNKNOW		-1	///< 未知模式，不需要做裁剪时使用
+#define ANYCHAT_VIDEOCLIPMODE_AUTO			0	///< 默认模式，以最大比例进行裁剪，然后再整体拉伸，画面保持比例，但被裁剪画面较大
+#define ANYCHAT_VIDEOCLIPMODE_OVERLAP		1	///< 重叠模式，只取最大有效部分，对边缘进行裁剪
+#define ANYCHAT_VIDEOCLIPMODE_SHRINK		2	///< 缩小模式，缩小到合适的比例，不进行裁剪
+#define ANYCHAT_VIDEOCLIPMODE_STRETCH		3	///< 平铺模式，不进行裁剪，但可能导致画面不成比例
+#define ANYCHAT_VIDEOCLIPMODE_DYNAMIC		4	///< 动态模式，由上层应用根据分辩率来调整显示表面，保持画面不变形
 
 
-// SDK���Ƴ������壨API��BRAC_SDKControl ���������
-#define ANYCHAT_SDKCTRL_BASE				1	///< �������ܿ���
-#define ANYCHAT_SDKCTRL_OBJECT				20	///< �������
-#define ANYCHAT_SDKCTRL_VIDEOCALL			30	///< ���п���
-#define ANYCHAT_SDKCTRL_USERINFO			40	///< �û���Ϣ����
-#define ANYCHAT_SDKCTRL_STREAMPLAY			50	///< ��ý�岥��
-#define ANYCHAT_SDKCTRL_NETWORK				60	///< �������
-#define ANYCHAT_SDKCTRL_MEDIA				70	///< ý�����
-#define ANYCHAT_SDKCTRL_FILEDELETE			80	///< ɾ���ļ�
-#define ANYCHAT_SDKCTRL_FILEINFO			81	///< ��ȡ�ļ���Ϣ
-#define ANYCHAT_SDKCTRL_DISKSIZE			82	///< ��ȡ��������
-#define ANYCHAT_SDKCTRL_FILEENCRYPT			83	///< �ļ��ӽ��ܿ���
-#define ANYCHAT_SDKCTRL_PPTHELPERINIT		90	///< PPT����������ʼ��
-#define ANYCHAT_SDKCTRL_PPTFILECTRL			91	///< PPT�ļ�����
-#define ANYCHAT_SDKCTRL_PPTFILEINFO			92	///< PPT�ļ���Ϣ
+// 服务器信息查询常量定义（API：BRAC_QueryInfoFromServer 传入参数）
+#define ANYCHAT_SERVERQUERY_USERIDBYNAME	1	///< 根据用户昵称查询用户ID
+#define ANYCHAT_SERVERQUERY_USERIDBYSTRID	2	///< 根据字符串ID查询用户ID
+#define ANYCHAT_SERVERQUERY_STRIDBYUSERID	3	///< 根据用户ID查询字符串ID
+#define ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	100	///< 查询指定队列的坐席服务信息
 
 
-// ý�岥���¼����Ͷ���
-#define ANYCHAT_STREAMPLAY_EVENT_START		3	///< ���ſ�ʼ�¼�
-#define ANYCHAT_STREAMPLAY_EVENT_FINISH		4	///< ���Ž����¼�
+// 媒体播放事件类型定义
+#define ANYCHAT_STREAMPLAY_EVENT_START		3	///< 播放开始事件
+#define ANYCHAT_STREAMPLAY_EVENT_FINISH		4	///< 播放结束事件
 
-// ý�岥�ű�־���壨API��BRAC_StreamPlayInit ���������
-#define ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT	0x00000001	///< ������Ƶ�����汾����Ƶ���루Mic��
-#define ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT	0x00000002	///< ������Ƶ�����汾����Ƶ���루Camera��
-#define ANYCHAT_STREAMPLAY_FLAGS_CALLBACKDATA		0x00000010	///< �ص����ݸ��ϲ�
+// 媒体播放标志定义（API：BRAC_StreamPlayInit 传入参数）
+#define ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT	0x00000001	///< 播放音频流代替本地音频输入（Mic）
+#define ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT	0x00000002	///< 播放视频流代替本地视频输入（Camera）
+#define ANYCHAT_STREAMPLAY_FLAGS_CALLBACKDATA		0x00000010	///< 回调数据给上层
 
-// ý�岥����Ϣ���Ͷ��壨API��BRAC_StreamPlayGetInfo ���������
-#define ANYCHAT_STREAMPLAY_INFO_JSONVALUE	1	///< �������в�����Ϣ��Json�ַ���
+// 媒体播放信息类型定义（API：BRAC_StreamPlayGetInfo 传入参数）
+#define ANYCHAT_STREAMPLAY_INFO_JSONVALUE	1	///< 包含所有播放信息的Json字符串
 
-// ý�岥�ſ������Ͷ��壨API��BRAC_StreamPlayControl ���������
-#define ANYCHAT_STREAMPLAY_CTRL_START		1	///< ��ʼ����
-#define ANYCHAT_STREAMPLAY_CTRL_PAUSE		2	///< ��ͣ����
-#define ANYCHAT_STREAMPLAY_CTRL_STOP		3	///< ֹͣ����
-#define ANYCHAT_STREAMPLAY_CTRL_SEEK		4	///< λ���϶�
-#define ANYCHAT_STREAMPLAY_CTRL_SPEEDCTRL	5	///< �ٶȵ���
-#define ANYCHAT_STREAMPLAY_CTRL_OPENLOOP	6	///< ��ѭ������
-#define ANYCHAT_STREAMPLAY_CTRL_CLOSELOOP	7	///< �ر�ѭ������
+// 媒体播放控制类型定义（API：BRAC_StreamPlayControl 传入参数）
+#define ANYCHAT_STREAMPLAY_CTRL_START		1	///< 开始播放
+#define ANYCHAT_STREAMPLAY_CTRL_PAUSE		2	///< 暂停播放
+#define ANYCHAT_STREAMPLAY_CTRL_STOP		3	///< 停止播放
+#define ANYCHAT_STREAMPLAY_CTRL_SEEK		4	///< 位置拖动
+#define ANYCHAT_STREAMPLAY_CTRL_SPEEDCTRL	5	///< 速度调整
+#define ANYCHAT_STREAMPLAY_CTRL_OPENLOOP	6	///< 打开循环播放
+#define ANYCHAT_STREAMPLAY_CTRL_CLOSELOOP	7	///< 关闭循环播放
 
 
-// CoreSDK�¼����Ͷ��壨�ص�������BRAC_CoreSDKEvent_CallBack������
-#define ANYCHAT_CORESDKEVENT_BASEEVENT		1	///< SDK�����¼�
-#define ANYCHAT_CORESDKEVENT_CAMERASTATE	10	///< ����ͷ״̬�¼�
-#define ANYCHAT_CORESDKEVENT_MICSTATE		11	///< Mic״̬�¼�
-#define ANYCHAT_CORESDKEVENT_TRANSFILE		12	///< �ļ������¼�
-#define ANYCHAT_CORESDKEVENT_STREAMPLAY		30	///< ý�岥���¼�
-#define ANYCHAT_CORESDKEVENT_PPTHELPER		31	///< PPTHelper�¼�
+// CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
+#define ANYCHAT_CORESDKEVENT_BASEEVENT		1	///< SDK基础事件
+#define ANYCHAT_CORESDKEVENT_CAMERASTATE	10	///< 摄像头状态事件
+#define ANYCHAT_CORESDKEVENT_MICSTATE		11	///< Mic状态事件
+#define ANYCHAT_CORESDKEVENT_TRANSFILE		12	///< 文件传输事件
+#define ANYCHAT_CORESDKEVENT_STREAMPLAY		30	///< 媒体播放事件
 
-// CoreSDK�ص��������Ͷ��壨�ص�������BRAC_CoreSDKData_CallBack������
-#define ANYCHAT_CORESDKDATA_AUDIO			1	///< ��Ƶ����
-#define ANYCHAT_CORESDKDATA_VIDEO			2	///< ��Ƶ����
-#define ANYCHAT_CORESDKDATA_MESSAGE			3	///< ��������
-#define ANYCHAT_CORESDKDATA_BUFFER			4	///< ����������
+// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
+#define ANYCHAT_CORESDKDATA_AUDIO			1	///< 音频数据
+#define ANYCHAT_CORESDKDATA_VIDEO			2	///< 视频数据
+#define ANYCHAT_CORESDKDATA_MESSAGE			3	///< 文字数据
+#define ANYCHAT_CORESDKDATA_BUFFER			4	///< 缓冲区数据
 
 
 #endif //_ANYCHAT_DEFINE_H__INCLUDE_
