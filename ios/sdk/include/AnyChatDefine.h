@@ -136,7 +136,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_LOCALVIDEO_CLIPMODE			107	///< 本地视频裁剪模式（参数为int型， 0 自动[默认]，禁止自动旋转时有效）
 #define BRAC_SO_LOCALVIDEO_SCREENHWND		108	///< 屏幕采集窗口句柄
 #define BRAC_SO_LOCALVIDEO_SCREENFLAGS		109	///< 屏幕采集标志（参数为int型）
-#define BRAC_SO_LOCALVIDEO_VIRTUALBK		111 ///< 本地视频迭加虚拟背景（字符串类型，JSON格式，包括虚拟背景路径、是否开启以及其它参数项）
+#define BRAC_SO_LOCALVIDEO_VIRTUALBK		111 ///< 本地视频迭加虚拟背景（字符串类型，JSON格式，包括虚拟背景路径以及其它参数项，为NULL表示取消虚拟背景）
 
 #define BRAC_SO_NETWORK_P2PPOLITIC			40	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 #define BRAC_SO_NETWORK_P2PCONNECT			41	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -149,6 +149,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_NETWORK_MTUSIZE				48	///< 设置网络层MTU大小（参数为int型）
 #define BRAC_SO_NETWORK_UDPSTATUS			49	///< UDP网络通信状态查询（参数为int型）
 #define BRAC_SO_NETWORK_LARGEDELAY			53	///< 网络高延迟模式，适用于卫星网络环境（参数为int型）
+#define BRAC_SO_NETWORK_IPV6DNS				54	///< IPv6域名解析控制（参数为int型，0 关闭， 1开启[默认]），传统网络（IPv4）下，禁用IPv6可提高域名解析速度
 
 #define BRAC_SO_PROXY_FUNCTIONCTRL			50	///< 本地用户代理功能控制，（参数为：int型，1启动代理，0关闭代理[默认]）
 #define BRAC_SO_PROXY_VIDEOCTRL				51	///< 本地用户代理视频控制，将本地视频变为指定用户的视频对外发布（参数为int型，表示其它用户的userid）
@@ -189,6 +190,9 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_DISABLEDNSCONNECT	219	///< 屏蔽DNS寻址
 #define BRAC_SO_CORESDK_LOGFILEROOTPATH		220	///< 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
 #define BRAC_SO_CORESDK_LOGFILERULE			221	///< 客户端日志文件保存规则（参数为int型，0 自动覆盖[默认] 1 按日期保存，不覆盖）
+#define BRAC_SO_CORESDK_FILEENCANDDEC		222	///< 文件加解密控制（参数为字符串类型，JSON格式）
+#define BRAC_SO_CORESDK_PPTHELPERINIT		223	///< PPT播报环境初始化
+#define BRAC_SO_CORESDK_PPTFILECTRL			224	///< PPT文件控制
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -376,7 +380,27 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SERVERQUERY_USERIDBYNAME	1	///< 根据用户昵称查询用户ID
 #define ANYCHAT_SERVERQUERY_USERIDBYSTRID	2	///< 根据字符串ID查询用户ID
 #define ANYCHAT_SERVERQUERY_STRIDBYUSERID	3	///< 根据用户ID查询字符串ID
+#define ANYCHAT_SERVERQUERY_PPTFILEINFO		10	///< PPT文件信息
 #define ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	100	///< 查询指定队列的坐席服务信息
+#define ANYCHAT_SERVERQUERY_RUNNINGSTATUS	200	///< 查询服务器运行状态
+#define ANYCHAT_SERVERQUERY_ONLINEUSERS		201	///< 查询服务器在线用户数
+
+
+// SDK控制常量定义（API：BRAC_SDKControl 传入参数）
+#define ANYCHAT_SDKCTRL_BASE				1	///< 基本功能控制
+#define ANYCHAT_SDKCTRL_OBJECT				20	///< 对象操作
+#define ANYCHAT_SDKCTRL_VIDEOCALL			30	///< 呼叫控制
+#define ANYCHAT_SDKCTRL_USERINFO			40	///< 用户信息控制
+#define ANYCHAT_SDKCTRL_STREAMPLAY			50	///< 流媒体播放
+#define ANYCHAT_SDKCTRL_NETWORK				60	///< 网络控制
+#define ANYCHAT_SDKCTRL_MEDIA				70	///< 媒体控制
+#define ANYCHAT_SDKCTRL_FILEDELETE			80	///< 删除文件
+#define ANYCHAT_SDKCTRL_FILEINFO			81	///< 获取文件信息
+#define ANYCHAT_SDKCTRL_DISKSIZE			82	///< 获取磁盘容量
+#define ANYCHAT_SDKCTRL_FILEENCRYPT			83	///< 文件加解密控制
+#define ANYCHAT_SDKCTRL_PPTHELPERINIT		90	///< PPT播报环境初始化
+#define ANYCHAT_SDKCTRL_PPTFILECTRL			91	///< PPT文件控制
+#define ANYCHAT_SDKCTRL_PPTFILEINFO			92	///< PPT文件信息
 
 
 // 媒体播放事件类型定义
@@ -407,6 +431,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_CORESDKEVENT_MICSTATE		11	///< Mic状态事件
 #define ANYCHAT_CORESDKEVENT_TRANSFILE		12	///< 文件传输事件
 #define ANYCHAT_CORESDKEVENT_STREAMPLAY		30	///< 媒体播放事件
+#define ANYCHAT_CORESDKEVENT_PPTHELPER		31	///< PPTHelper事件
 
 // CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
 #define ANYCHAT_CORESDKDATA_AUDIO			1	///< 音频数据

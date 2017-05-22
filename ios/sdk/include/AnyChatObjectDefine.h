@@ -69,7 +69,7 @@
 #define ANYCHAT_AGENT_INFO_SERVICETOTALNUM	605	///< 累计服务的用户数，整型
 #define ANYCHAT_AGENT_INFO_SERVICEUSERINFO	606	///< 当前服务用户信息，字符串
 #define ANYCHAT_AGENT_INFO_RELATEQUEUES		607	///< 关联队列List，字符串
-
+#define ANYCHAT_AGENT_INFO_SERVICEFAILNUM	608	///< 服务失败用户数
 
 
 
@@ -131,6 +131,7 @@
 #define ANYCHAT_AGENT_EVENT_STATUSCHANGE	601	///< 坐席状态变化
 #define ANYCHAT_AGENT_EVENT_SERVICENOTIFY	602	///< 坐席服务通知（哪个用户到哪个客服办理业务）
 #define ANYCHAT_AGENT_EVENT_WAITINGUSER		603	///< 暂时没有客户，请等待
+#define ANYCHAT_AGENT_EVENT_ISREADY			604	///< 坐席准备好，可以发起呼叫
 
 
 
