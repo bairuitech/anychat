@@ -40,6 +40,7 @@ var BRAC_SO_RECORD_HEIGHT	=				142;// 录制文件高度设置（参数为：int型，如：240）
 var BRAC_SO_RECORD_FILENAMERULE	=			143;// 录制文件名命名规则（参数为：int型）
 var BRAC_SO_RECORD_CLIPMODE	=				144;// 录制视频裁剪模式（参数为：int型）
 var BRAC_SO_RECORD_DISABLEDATEDIR =			145;// 录制文件不按日期分目录保存，全部生成在指定文件夹中（参数为：int型， 0禁止[默认] 1 开启）
+var BRAC_SO_RECORD_INSERTIMAGE	=			146;// 录制过程中插入图片，Json字符串参数
 
 var BRAC_SO_CORESDK_TMPDIR = 				14;	// 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 var BRAC_SO_CORESDK_MAGICADJUST = 			15;	// 内核调试参数
