@@ -264,6 +264,7 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_SDKCTRL_PPTHELPERINIT	=	90;	///< PPT环境初始化
 	public static final int ANYCHAT_SDKCTRL_PPTFILECTRL		=	91;	///< PPT文件控制
 	public static final int ANYCHAT_SDKCTRL_PPTFILEINFO		=	92;	///< PPT文件信息
+	public static final int ANYCHAT_SDKCTRL_BUSINESS		=	95;	///< 业务控制
 	
 	// 常见出错代码定义
     public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< 没有错误
@@ -317,6 +318,7 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_CORESDKEVENT_MICSTATE	=	11;	///< Mic状态事件
 	public static final int ANYCHAT_CORESDKEVENT_TRANSFILE	=	12;	///< 文件传输事件
 	public static final int ANYCHAT_CORESDKEVENT_STREAMPLAY	=	30;	///< 媒体播放事件
+	public static final int ANYCHAT_CORESDKEVENT_BUSINESS	=	32;	///< 业务事件
 
 	// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
 	public static final int ANYCHAT_CORESDKDATA_AUDIO		=	1;	///< 音频数据

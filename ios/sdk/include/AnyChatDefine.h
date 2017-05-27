@@ -401,6 +401,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SDKCTRL_PPTHELPERINIT		90	///< PPT播报环境初始化
 #define ANYCHAT_SDKCTRL_PPTFILECTRL			91	///< PPT文件控制
 #define ANYCHAT_SDKCTRL_PPTFILEINFO			92	///< PPT文件信息
+#define ANYCHAT_SDKCTRL_BUSINESS			95	///< 业务控制
 
 
 // 媒体播放事件类型定义
@@ -432,6 +433,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_CORESDKEVENT_TRANSFILE		12	///< 文件传输事件
 #define ANYCHAT_CORESDKEVENT_STREAMPLAY		30	///< 媒体播放事件
 #define ANYCHAT_CORESDKEVENT_PPTHELPER		31	///< PPTHelper事件
+#define ANYCHAT_CORESDKEVENT_BUSINESS		32	///< 业务事件
 
 // CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
 #define ANYCHAT_CORESDKDATA_AUDIO			1	///< 音频数据
