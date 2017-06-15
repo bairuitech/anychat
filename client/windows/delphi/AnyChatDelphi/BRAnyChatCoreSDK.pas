@@ -40,6 +40,34 @@ const
   BRAC_FUNC_NET_SUPPORTUPNP   	=$00000200;		///< 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
   BRAC_FUNC_DISABLEDECODE		=$00000400;		///< 禁止对收到的数据进行解码和播放，为了提高代理客户端的数据转发性能，可设置该标志，否则不能设置该标志
 
+  ANYCHAT_STREAMPLAY_CTRL_START = 1;			///< 开始播放
+  ANYCHAT_STREAMPLAY_CTRL_PAUSE = 2;			///< 暂停播放
+  ANYCHAT_STREAMPLAY_CTRL_STOP = 3;				///< 停止播放
+  ANYCHAT_STREAMPLAY_CTRL_SEEK = 4;				///< 位置拖动
+  ANYCHAT_STREAMPLAY_CTRL_SPEEDCTRL = 5;		///< 速度调整
+  BRAC_SO_CORESDK_NEWGUID = 29;
+  ANYCHAT_STREAMPLAY_INFO_JSONVALUE = 1;  
+
+  BRAC_CBTYPE_NOTIFYMESSAGE = 1;				///< 异步消息通知回调
+  BRAC_CBTYPE_VIDEODATA = 2;					///< 视频数据回调
+  BRAC_CBTYPE_VIDEODATAEX = 3;					///< 视频数据扩展回调
+  BRAC_CBTYPE_AUDIODATA = 4;					///< 音频数据回调
+  BRAC_CBTYPE_AUDIODATAEX = 5;					///< 音频数据回调扩展回调
+  BRAC_CBTYPE_TEXTMESSAGE = 6;					///< 文字消息回调
+  BRAC_CBTYPE_TRANSBUFFER = 7;					///< 透明通道数据回调
+  BRAC_CBTYPE_TRANSBUFFEREX = 8;				///< 透明通道数据扩展回调
+  BRAC_CBTYPE_TRANSFILE = 9;					///< 文件传输回调
+  BRAC_CBTYPE_VOLUMECHANGE = 10;				///< 音量变化回调
+  BRAC_CBTYPE_SDKFILTERDATA = 11;				///< SDK Filter通信数据回调
+  BRAC_CBTYPE_STREAMRECORD = 12;				///< 录像快照任务完成通知回调
+  BRAC_CBTYPE_STREAMRECORDEX = 13;				///< 录像快照任务完成通知扩展回调
+  BRAC_CBTYPE_VIDEOCALLEVENT = 14;				///< 视频通话消息通知回调
+  BRAC_CBTYPE_DATAENCDEC = 15;					///< 数据加密、解密回调
+  BRAC_CBTYPE_SCREENEVENT = 16;					///< 屏幕事件回调
+  BRAC_CBTYPE_OBJECTEVENT = 18;					///< 业务对象事件通知
+  BRAC_CBTYPE_VIDEODATAEX2 = 19;				///< 视频数据扩展回调（支持多路流）
+  BRAC_CBTYPE_AUDIODATAEX2 = 20;				
+
   //内核参数定义
   BRAC_SO_AUDIO_VADCTRL			=1;	  		    ///< 音频静音检测控制（参数为：int型：1打开，0关闭）
   BRAC_SO_AUDIO_NSCTRL			=2;	    		///< 音频噪音抑制控制（参数为：int型：1打开，0关闭）
@@ -81,6 +109,9 @@ const
   BRAC_SO_LOCALVIDEO_WIDTHCTRL		=38;		///< 本地视频采集分辨率宽度控制（参数为int型，同服务器配置：VideoWidth）
   BRAC_SO_LOCALVIDEO_HEIGHTCTRL		=39;		///< 本地视频采集分辨率高度控制（参数为int型，同服务器配置：VideoHeight）
   BRAC_SO_LOCALVIDEO_TVFORMAT		=104;		///< 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
+  BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP =105; 	///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）  
+  BRAC_SO_LOCALVIDEO_DEVICENAME = 106;
+  
 
   BRAC_SO_NETWORK_P2PPOLITIC		=40;		///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
   BRAC_SO_NETWORK_P2PCONNECT		=41;		///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -101,7 +132,20 @@ const
   BRAC_SO_CORESDK_DEVICEMODE		=130;		///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
   BRAC_SO_CORESDK_SCREENCAMERACTRL	=131;		///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
   BRAC_SO_CORESDK_DATAENCRYPTION	=132;		///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
-  
+  BRAC_SO_RECORD_INSERTIMAGE 		=146;		///< 录像图片
+  BRAC_SO_CORESDK_PPTHELPERINIT = 223;// PPT播报环境初始化
+  BRAC_SO_CORESDK_PPTFILECTRL		=		224;// PPT文件控制
+  BRPPT_FILECTRL_DOWNLOAD	=	$00000001;		///< 下载文件
+  BRPPT_FILECTRL_CANCEL	=	$00000002;		///< 取消下载
+  BRPPT_FILECTRL_DELETE	=	$00000004;		///< 删除文件
+
+//文件信息查询定义常量：
+ BRPPT_FILEINFO_DOWNLOAD_STATUS =	$00000001;	///< 下载状态
+ BRPPT_FILEINFO_PPTDETAILS	=	$00000002;	///< PPT详情
+ ANYCHAT_SERVERQUERY_PPTFILEINFO	  =	10;	// PPT文件信息
+ ANYCHAT_CORESDKEVENT_PPTHELPER    = 31; //< PPTHelper事件
+
+
   // 传输任务信息参数定义
   BRAC_TRANSTASK_PROGRESS		=1;	   			///< 传输任务进度查询（参数为：DOUBLE型（0.0 ~ 100.0））
   BRAC_TRANSTASK_BITRATE		=2;				///< 传输任务当前传输码率（参数为：int型，单位：bps）
@@ -115,9 +159,12 @@ const
   BRAC_RECORD_FLAGS_MIXAUDIO		=$00000010;		///< 录制音频时，将其它人的声音混音后录制
   BRAC_RECORD_FLAGS_MIXVIDEO		=$00000020;		///< 录制视频时，将其它人的视频迭加后录制
   BRAC_RECORD_FLAGS_ABREAST		=$00000100;		///< 录制视频时，将其它人的视频并列录制
-  BRAC_RECORD_FLAGS_SNAPSHOT		=$0x00000400;		///< 拍照
-  BRAC_RECORD_FLAGS_LOCALCB		=$0x00000800;		///< 触发本地回调
-  BRAC_RECORD_FLAGS_STREAM		=$0x00001000;		///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+  BRAC_RECORD_FLAGS_STEREO    = $00000200;
+  BRAC_RECORD_FLAGS_SNAPSHOT 	=$00000400;		///< 拍照
+  BRAC_RECORD_FLAGS_LOCALCB		=$00000800;		///< 触发本地回调
+  BRAC_RECORD_FLAGS_STREAM		=$00001000;		///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
+  BRAC_RECORD_FLAGS_USERFILENAME = $02000;	// 用户自定义文件名
+  BRAC_RECORD_FLAGS_MULTISTREAM = $08000;	// 支持多路流的录制（拍照）
 
 
   // 用户状态标志定义
@@ -132,6 +179,7 @@ const
   BRAC_USERSTATE_VIDEOBITRATE	=9;				///< 用户当前的视频码率（参数为DWORD类型，Bps）
   BRAC_USERSTATE_AUDIOBITRATE	=10;			///< 用户当前的音频码率（参数为DWORD类型，Bps）
   BRAC_USERSTATE_P2PCONNECT		=11;			///< 查询本地用户与指定用户的当前P2P连接状态（参数为DWORD类型，返回值：0 P2P不通， 1 P2P连接成功[TCP]，2 P2P连接成功[UDP]，3 P2P连接成功[TCP、UDP]）
+  BRAC_USERSTATE_NETWORKSTATUS = 12;
   BRAC_USERSTATE_PACKLOSSRATE	=14;			///< 查询指定用户的网络流媒体数据丢包率（参数为DWORD类型，返回值：0 - 100，如：返回值为5，表示丢包率为5%）
   BRAC_USERSTATE_DEVICETYPE		=15;			///< 查询指定用户的终端类型（参数为DWORD类型，返回值：0 Unknow， 1 Windows，2 Android，3 iOS，4 Web，5 Linux，6 Mac，7 Win Phone，8 WinCE）
   BRAC_USERSTATE_SELFUSERSTATUS	=16;			///< 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
@@ -170,7 +218,12 @@ const
   BRAC_DATAENCDEC_FLAGS_BUFFER		=	$40;	///< 透明通道数据
   BRAC_DATAENCDEC_FLAGS_TXTMSG		=	$80;	///< 文字聊天数据
 
-
+  ANYCHAT_VIDEOCLIPMODE_AUTO = 0;   //< 默认模式，以最大比例进行裁剪，然后再整体拉伸，画面保持比例，但被裁剪画面较大
+  ANYCHAT_VIDEOCLIPMODE_OVERLAP = 1;   //< 重叠模式，只取最大有效部分，对边缘进行裁剪
+  ANYCHAT_VIDEOCLIPMODE_SHRINK = 2;   //< 缩小模式，缩小到合适的比例，不进行裁剪
+  ANYCHAT_VIDEOCLIPMODE_STRETCH = 3;   //< 平铺模式，不进行裁剪，但可能导致画面不成比例
+  ANYCHAT_VIDEOCLIPMODE_DYNAMIC = 4;   //< 动态模式，由上层应用根据分辩率来调整显示表面，保持画面不变形
+  BRAC_SO_RECORD_CLIPMODE = 144;  // 录制视频裁剪模式（参数为：int型）
 type
   // 视频数据回调函数定义
   BRAC_VideoData_CallBack=procedure(dwUserid:DWORD;lpBuf:Pointer;dwLen:DWORD; bmiHeader:BITMAPINFOHEADER;lpUserValue:Pointer);stdcall;
@@ -198,7 +251,10 @@ type
   
   // 录像、快照任务完成回调函数定义
   BRAC_RecordSnapShot_CallBack=procedure(dwUserid:DWORD;lpFileName:LPCTSTR; dwParam:DWORD;bRecordType:BOOL;lpUserValue:Pointer);stdcall;
-    
+
+  // 录像、快照任务完成回调函数定义
+  BRAC_RecordSnapShotEx_CallBack = procedure( dwUserid: DWORD; lpFileName: LPCTSTR; elapse, flags, dwParam: DWORD; userStr: LPCTSTR; userValue: DWORD);stdcall;
+
   // 异步消息通知回调函数定义
   BRAC_NotifyMessage_CallBack=procedure(dwNotifyMsg:DWORD;wParam:DWORD;lParam:DWORD; lpUserValue:Pointer);stdcall;
 	
@@ -206,7 +262,7 @@ type
   BRAC_VideoCallEvent_CallBack=procedure(dwEventType:DWORD; dwUserId:DWORD; dwErrorCode:DWORD; dwFlags:DWORD; dwParam:DWORD; lpUserStr:LPCTSTR; lpUserValue:Pointer);stdcall;
   
   // 数据加密、解密回调函数定义
-  BRAC_DataEncDec_CallBack=procedure(dwUserId:DWORD; dwFlags:DWORD; lpInBuf:PByte; dwInSize:DWORD; lpOutBuf:PByte; lpOutSize:Pointer; lpUserValue:Pointer);stdcall;
+  BRAC_DataEncDec_CallBack = procedure(dwUserId:DWORD; dwFlags:DWORD; lpInBuf:PByte; dwInSize:DWORD; lpOutBuf:PByte; lpOutSize:Pointer; lpUserValue:Pointer);stdcall;
 
 (**
  *	API方法定义
@@ -247,8 +303,8 @@ type
   function BRAC_SetNotifyMessageCallBack(lpFunction:BRAC_NotifyMessage_CallBack;lpUserValue:Pointer=nil):DWORD;cdecl;
   // 设置视频通话消息通知回调函数
   function BRAC_SetVideoCallEventCallBack(lpFunction:BRAC_VideoCallEvent_CallBack; lpUserValue:Pointer=nil):DWORD;cdecl;
-  // 设置数据加密、解密回调函数
-  function BRAC_SetDataEncDecCallBack(lpFunction:BRAC_DataEncDec_CallBack; lpUserValue:Pointer=nil):DWORD;cdecl;
+//  // 设置数据加密、解密回调函数
+//  function BRAC_SetDataEncDecCallBack(lpFunction:BRAC_DataEncDec_CallBack; lpUserValue:Pointer=nil):DWORD;cdecl;
 
 
   // 连接服务器
@@ -354,6 +410,28 @@ type
   
   // 视频呼叫事件控制（请求、回复、挂断等）
   function BRAC_VideoCallControl(dwEventType:DWORD; dwUserId:DWORD; dwErrorCode:DWORD; dwFlags:DWORD; dwParam:DWORD; lpUserStr:LPCTSTR):DWORD;cdecl;
+
+  function SetUserStreamInfo(userId: DWORD; streamIndex: DWORD; infoname: DWORD; infoval: Pointer; infolen: DWORD): DWORD; cdecl;
+
+  function SetVideoPosEx(userId: DWORD; hWnd: THandle; left, top, right, bottom, streamIndex, flags: DWORD): DWORD; cdecl;
+
+  function BRAC_StreamPlaySetVideoPos(lpTaskGuid: LPCTSTR; hWnd: THandle; dwLeft: DWORD = 0; dwTop: DWORD = 0; dwRight: DWORD = 0; dwBottom: DWORD = 0): DWORD; cdecl;
+
+  function UserCameraControlEx(userId: DWORD; Open: Boolean; streamIndex: DWORD; flags: DWORD; strParam: LPCTSTR): DWORD; cdecl;
+
+  function StreamRecordCtrlEx(userId: DWORD; startRecord: Integer; flags, param: DWORD; userstr: LPCTSTR): DWORD; cdecl;
+
+  function BRAC_SetCallBack(dwCBType: DWORD; lpFunction: Pointer; lpUserValue: Pointer): DWORD; cdecl;
+
+  function BRAC_StreamPlayInit(taskGuid, streamPath: LPCTSTR; flags: DWORD; strParam: LPCTSTR): DWORD; cdecl;
+
+  function BRAC_StreamPlayControl(taskGuid: LPCTSTR; ctrlCode, param, flags: DWORD; strParam: LPCTSTR): DWORD; cdecl;
+
+  function BRAC_StreamPlayGetInfo(lpTaskGuid: LPCTSTR; infoName: DWORD; infoValue: Pointer; dwSize: DWORD): DWORD; cdecl;
+
+  function BRAC_StreamPlayDestroy(taskGuid: LPCTSTR; flags: DWORD): DWORD; cdecl;
+
+  function BRAC_QueryInfoFromServer(dwInfoName: DWORD; lpInParam: LPSTR; dwInSize: DWORD; lpResult: LPSTR; var dwOutSize: DWORD; dwFlags: DWORD = 0):DWORD; cdecl;
 
 implementation
 
@@ -464,7 +542,7 @@ implementation
            external C_BRAnyChatCoreLibName name 'BRAC_QueryUserState';             
 
   // 枚举本地视频采集设备
-  function BRAC_EnumVideoCapture(lpDeviceName:PPChar;var dwDeviceNum:DWORD):DWORD;cdecl;
+  function BRAC_EnumVideoCapture(lpDeviceName: PPChar; var dwDeviceNum:DWORD):DWORD;cdecl;
            external C_BRAnyChatCoreLibName name 'BRAC_EnumVideoCapture';
   // 选择指定的视频采集设备
   function BRAC_SelectVideoCapture(szCaptureName:LPCTSTR):DWORD;cdecl;
@@ -559,16 +637,53 @@ implementation
            external C_BRAnyChatCoreLibName name 'BRAC_PrivateChatExit';
 
   // SDK内核参数设置
-  function  BRAC_SetSDKOption(optname:Integer;optval:Pointer;optlen:Integer):DWORD;cdecl;
+  function  BRAC_SetSDKOption(optname:Integer; optval:Pointer; optlen:Integer):DWORD;cdecl;
            external C_BRAnyChatCoreLibName name 'BRAC_SetSDKOption';
 
   // SDK内核参数状态查询
   function BRAC_GetSDKOption(optname:Integer;optval:Pointer;optlen:Integer):DWORD;cdecl;
-           external C_BRAnyChatCoreLibName name 'BRAC_GetSDKOption';                          
-            
+           external C_BRAnyChatCoreLibName name 'BRAC_GetSDKOption';
+
   // 视频呼叫事件控制（请求、回复、挂断等）
   function BRAC_VideoCallControl(dwEventType:DWORD; dwUserId:DWORD; dwErrorCode:DWORD; dwFlags:DWORD; dwParam:DWORD; lpUserStr:LPCTSTR):DWORD;cdecl;
-			external C_BRAnyChatCoreLibName name 'BRAC_VideoCallControl';     
+			external C_BRAnyChatCoreLibName name 'BRAC_VideoCallControl';
 
+  function GetUserStreamInfo(userId: DWORD; streamIndex: DWORD; infoname: DWORD; infoval: Pointer; infolen: DWORD): DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_GetUserStreamInfo';
 
+  function SetUserStreamInfo(userId: DWORD; streamIndex: DWORD; infoname: DWORD; infoval: Pointer; infolen: DWORD): DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_SetUserStreamInfo';
+
+  function UserCameraControlEx(userId: DWORD; Open: Boolean; streamIndex: DWORD; flags: DWORD; strParam: LPCTSTR): DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_UserCameraControlEx';
+
+  function UserSpeakControlEx(userId: DWORD; Open: Boolean; streamIndex: DWORD; flags: DWORD; strParam: LPCTSTR): DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_UserSpeakControlEx';
+
+  function SetVideoPosEx(userId: DWORD; hWnd: THandle; left, top, right, bottom, streamIndex, flags: DWORD): DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_SetVideoPosEx';
+
+function BRAC_StreamPlaySetVideoPos(lpTaskGuid: LPCTSTR; hWnd: THandle; dwLeft: DWORD = 0; dwTop: DWORD = 0; dwRight: DWORD = 0; dwBottom: DWORD = 0): DWORD;  cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_StreamPlaySetVideoPos';
+
+  function StreamRecordCtrlEx(userId: DWORD; startRecord: Integer; flags, param: DWORD; userstr: LPCTSTR): DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_StreamRecordCtrlEx';
+
+  function BRAC_SetCallBack(dwCBType: DWORD; lpFunction: Pointer; lpUserValue: Pointer): DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_SetCallBack';
+
+  function BRAC_StreamPlayInit(taskGuid, streamPath: LPCTSTR; flags: DWORD; strParam: LPCTSTR): DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_StreamPlayInit';
+
+  function BRAC_StreamPlayControl(taskGuid: LPCTSTR; ctrlCode, param, flags: DWORD; strParam: LPCTSTR): DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_StreamPlayControl';
+
+  function BRAC_StreamPlayGetInfo(lpTaskGuid: LPCTSTR; infoName: DWORD; infoValue: Pointer; dwSize: DWORD): DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_StreamPlayGetInfo';
+
+  function BRAC_StreamPlayDestroy(taskGuid: LPCTSTR; flags: DWORD): DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_StreamPlayDestroy';       
+
+  function BRAC_QueryInfoFromServer(dwInfoName: DWORD; lpInParam: LPSTR; dwInSize: DWORD; lpResult: LPSTR; var dwOutSize: DWORD; dwFlags: DWORD = 0):DWORD; cdecl;
+      external C_BRAnyChatCoreLibName name 'BRAC_QueryInfoFromServer';
 end.

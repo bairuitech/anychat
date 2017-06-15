@@ -59,7 +59,8 @@ public class AnyChatCoreSDK
 	// 设置AnyChat基本事件通知接口
 	public void SetBaseEvent(AnyChatBaseEvent e)
 	{
-		mHandler = new MainHandler(this);
+		if (mHandler == null)
+			mHandler = new MainHandler(this);
 		RegisterNotify();
 		this.baseEvent = e;
 	}
@@ -122,6 +123,32 @@ public class AnyChatCoreSDK
 	{
 		RegisterNotify();
 		this.coresdkEvent = e;
+	}
+	// 移除所有事件
+	public void removeEvent(Object e) 
+	{
+		if (this.baseEvent == e) 
+			this.baseEvent = null;
+		if (this.stateChgEvent == e) 
+			this.stateChgEvent = null;
+		if (this.privateChatEvent == e)
+			this.privateChatEvent = null;
+		if (this.textMsgEvent == e) 
+			this.textMsgEvent = null;
+		if (this.transDataEvent == e)
+			this.transDataEvent = null;
+		if (this.videoCallEvent == e)
+			this.videoCallEvent = null;
+		if (this.userInfoEvent == e)
+			this.userInfoEvent = null;
+		if (this.encdecEvent == e)
+			this.encdecEvent = null;
+		if (this.recordEvent == e)
+			this.recordEvent = null;
+		if (this.objectEvent == e)
+			this.objectEvent = null;
+		if (this.coresdkEvent == e)
+			this.coresdkEvent = null;
 	}
 	
 	// 查询SDK主版本号
@@ -319,6 +346,8 @@ public class AnyChatCoreSDK
 	public native int MultiCastControl(String lpMultiCastAddr, int dwPort, String lpNicAddr, int dwTTL, int dwFlags);
 	// 向服务器动态查询相关信息
 	public native String QueryInfoFromServer(int dwInfoName, String strInParam, int dwFlags);
+	// SDK控制
+	public native String SDKControl(int dwCtrlCode, String strInParam);
 	
 	// 获取业务对象列表
 	public static native int[] ObjectGetIdList(int dwObjectType);

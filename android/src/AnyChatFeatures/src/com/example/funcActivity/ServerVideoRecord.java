@@ -98,8 +98,8 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 		anyChatSDK = AnyChatCoreSDK.getInstance(this);
 		anyChatSDK.SetBaseEvent(this);
 		anyChatSDK.SetRecordSnapShotEvent(this);
-		anyChatSDK.mSensorHelper.InitSensor(this);
-		AnyChatCoreSDK.mCameraHelper.SetContext(this);
+		anyChatSDK.mSensorHelper.InitSensor(getApplicationContext());
+		AnyChatCoreSDK.mCameraHelper.SetContext(getApplicationContext());
 
 		// 设置录像格式（0表示mp4）
 		AnyChatCoreSDK
@@ -466,6 +466,7 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 		anyChatSDK.UserSpeakControl(mUserID, 0);
 		anyChatSDK.UserCameraControl(-1, 0);
 		anyChatSDK.UserSpeakControl(-1, 0);
+		anyChatSDK.removeEvent(this);
 
 		mServerRecordState = 0;
 		mServerRecordTimeTV.setVisibility(View.GONE);

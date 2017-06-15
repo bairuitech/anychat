@@ -40,6 +40,7 @@ var BRAC_SO_RECORD_HEIGHT	=				142;// 录制文件高度设置（参数为：int型，如：240）
 var BRAC_SO_RECORD_FILENAMERULE	=			143;// 录制文件名命名规则（参数为：int型）
 var BRAC_SO_RECORD_CLIPMODE	=				144;// 录制视频裁剪模式（参数为：int型）
 var BRAC_SO_RECORD_DISABLEDATEDIR =			145;// 录制文件不按日期分目录保存，全部生成在指定文件夹中（参数为：int型， 0禁止[默认] 1 开启）
+var BRAC_SO_RECORD_INSERTIMAGE	=			146;// 录制过程中插入图片，Json字符串参数
 
 var BRAC_SO_CORESDK_TMPDIR = 				14;	// 设置AnyChat Core SDK临时目录（参数为字符串TCHAR类型，必须是完整的绝对路径）
 var BRAC_SO_CORESDK_MAGICADJUST = 			15;	// 内核调试参数
@@ -122,6 +123,9 @@ var BRAC_SO_CORESDK_REMOTEASSISTYPOS =		216;// 远程协助窗口滚动条位置（Y）
 var BRAC_SO_CORESDK_DISABLEDNSCONNECT=		219;// 屏蔽DNS寻址
 var BRAC_SO_CORESDK_LOGFILEROOTPATH	=		220;// 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
 var BRAC_SO_CORESDK_LOGFILERULE	=			221;// 客户端日志文件保存规则（参数为int型，0 自动覆盖[默认] 1 按日期保存，不覆盖）
+var BRAC_SO_CORESDK_FILEENCANDDEC	=		222;// 文件加解密控制（参数为字符串类型，JSON格式）
+var BRAC_SO_CORESDK_PPTHELPERINIT	=		223;// PPT播报环境初始化
+var BRAC_SO_CORESDK_PPTFILECTRL		=		224;// PPT文件控制
 
 var BRAC_SO_UDPTRACE_MODE		=			160;// UDP数据包跟踪模式
 var BRAC_SO_UDPTRACE_PACKSIZE	=			161;// UDP数据包跟踪的大小，单位：BYTE
@@ -286,7 +290,27 @@ var BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;	// 本地视频采集方向修正，wParam为方
 var ANYCHAT_SERVERQUERY_USERIDBYNAME	=	1;	// 根据用户昵称查询用户ID
 var ANYCHAT_SERVERQUERY_USERIDBYSTRID	=	2;	// 根据字符串ID查询用户ID
 var ANYCHAT_SERVERQUERY_STRIDBYUSERID	=	3;	// 根据用户ID查询字符串ID
+var ANYCHAT_SERVERQUERY_PPTFILEINFO		=	10;	// PPT文件信息
 var ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	=	100;// 查询指定队列的坐席服务信息
+var ANYCHAT_SERVERQUERY_RUNNINGSTATUS	=	200;// 查询服务器运行状态
+var ANYCHAT_SERVERQUERY_ONLINEUSERS		=	201;// 查询服务器在线用户数
+
+// SDK控制常量定义（API：BRAC_SDKControl 传入参数）
+var ANYCHAT_SDKCTRL_BASE				=	1;	// 基本功能控制
+var ANYCHAT_SDKCTRL_OBJECT				=	20;	// 对象操作
+var ANYCHAT_SDKCTRL_VIDEOCALL			=	30;	// 呼叫控制
+var ANYCHAT_SDKCTRL_USERINFO			=	40;	// 用户信息控制
+var ANYCHAT_SDKCTRL_STREAMPLAY			=	50;	// 流媒体播放
+var ANYCHAT_SDKCTRL_NETWORK				=	60;	// 网络控制
+var ANYCHAT_SDKCTRL_MEDIA				=	70;	// 媒体控制
+var ANYCHAT_SDKCTRL_FILEDELETE			=	80;	// 删除文件
+var ANYCHAT_SDKCTRL_FILEINFO			=	81;	// 获取文件信息
+var ANYCHAT_SDKCTRL_DISKSIZE			=	82;	// 获取磁盘容量
+var ANYCHAT_SDKCTRL_FILEENCRYPT			=	83;	// 文件加解密控制
+var ANYCHAT_SDKCTRL_PPTHELPERINIT		=	90;	// PPT播报环境初始化
+var ANYCHAT_SDKCTRL_PPTFILECTRL			=	91;	// PPT文件控制
+var ANYCHAT_SDKCTRL_PPTFILEINFO			=	92;	// PPT文件信息
+var ANYCHAT_SDKCTRL_BUSINESS			=	95;	// 业务控制
 
 // 媒体播放事件类型定义
 var ANYCHAT_STREAMPLAY_EVENT_START		=	3;	// 播放开始事件
@@ -310,7 +334,13 @@ var ANYCHAT_STREAMPLAY_CTRL_CLOSELOOP	=	7;	// 关闭循环播放
 
 
 // CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
+var ANYCHAT_CORESDKEVENT_BASEEVENT		=	1;	// SDK基础事件
+var ANYCHAT_CORESDKEVENT_CAMERASTATE	=	10;	// 摄像头状态事件
+var ANYCHAT_CORESDKEVENT_MICSTATE		=	11;	// Mic状态事件
+var ANYCHAT_CORESDKEVENT_TRANSFILE		=	12;	// 文件传输事件
 var ANYCHAT_CORESDKEVENT_STREAMPLAY		=	30;	// 媒体播放事件
+var ANYCHAT_CORESDKEVENT_PPTHELPER		=	31;	// PPTHelper事件
+var ANYCHAT_CORESDKEVENT_BUSINESS		=	32;	// 业务事件
 
 // 视频显示插件设置参数
 var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// 在视频上迭加文字、图片等内容
@@ -976,6 +1006,13 @@ function BRAC_QueryInfoFromServer(dwInfoName, lpInParam) {
 	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.5.0")
 		return "";
 	return anychat.QueryInfoFromServer(dwInfoName, lpInParam);
+}
+
+// SDK控制
+function BRAC_SDKControl(dwCtrlCode, lpInParam) {
+	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.7.0")
+		return JSON.stringify({"errorcode":32});
+	return anychat.SDKControl(dwCtrlCode, lpInParam);
 }
 
 // 文件传输扩展接口

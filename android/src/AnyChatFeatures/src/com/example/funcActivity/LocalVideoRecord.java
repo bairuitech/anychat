@@ -112,8 +112,8 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 		anyChatSDK = AnyChatCoreSDK.getInstance(this);
 		anyChatSDK.SetBaseEvent(this);
 		anyChatSDK.SetRecordSnapShotEvent(this);
-		anyChatSDK.mSensorHelper.InitSensor(this);
-		AnyChatCoreSDK.mCameraHelper.SetContext(this);
+		anyChatSDK.mSensorHelper.InitSensor(getApplicationContext());
+		AnyChatCoreSDK.mCameraHelper.SetContext(getApplicationContext());
 
 		// 设置录像存储路径
 		anyChatSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_RECORD_TMPDIR,
@@ -523,6 +523,7 @@ public class LocalVideoRecord extends Activity implements AnyChatBaseEvent,
 		anyChatSDK.UserSpeakControl(mUserID, 0);
 		anyChatSDK.UserCameraControl(-1, 0);
 		anyChatSDK.UserSpeakControl(-1, 0);
+		anyChatSDK.removeEvent(this);
 
 		mLocalRecordState = 0;
 		mLocalRecordTimeTV.setVisibility(View.GONE);

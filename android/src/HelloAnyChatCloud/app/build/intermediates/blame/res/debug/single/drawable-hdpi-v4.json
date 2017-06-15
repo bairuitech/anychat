@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\button_background.xml",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\drawable-hdpi\\button_background.xml"
+    },
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\videoremote_bg.jpg",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\drawable-hdpi\\videoremote_bg.jpg"
+    }
+]

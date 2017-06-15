@@ -90,8 +90,8 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 		anyChatSDK = AnyChatCoreSDK.getInstance(this);
 		anyChatSDK.SetBaseEvent(this);
 		anyChatSDK.SetRecordSnapShotEvent(this);
-		anyChatSDK.mSensorHelper.InitSensor(this);
-		AnyChatCoreSDK.mCameraHelper.SetContext(this);
+		anyChatSDK.mSensorHelper.InitSensor(getApplicationContext());
+		AnyChatCoreSDK.mCameraHelper.SetContext(getApplicationContext());
 
 		// 设置录像存储路径
 		anyChatSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_RECORD_TMPDIR,
@@ -308,7 +308,7 @@ public class SingleSelfVideo extends Activity implements AnyChatBaseEvent,
 			mVideoRecordTimer.cancel();
 			mVideoRecordTimer = null;
 		}
-
+		anyChatSDK.removeEvent(this);
 		anyChatSDK.mSensorHelper.DestroySensor();
 
 		finish();

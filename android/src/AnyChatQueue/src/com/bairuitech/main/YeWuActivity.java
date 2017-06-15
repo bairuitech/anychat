@@ -234,4 +234,12 @@ public class YeWuActivity extends Activity implements AnyChatBaseEvent,AnyChatOb
 				break;
 			}
 	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (anychat != null)
+			anychat.removeEvent(this);
+	}
 }

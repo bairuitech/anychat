@@ -1,0 +1,97 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:1:1-47:12
+	package
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:2:5-44
+		INJECTED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml
+		INJECTED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:4:5-30
+		INJECTED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml
+		INJECTED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml
+	android:versionCode
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:3:5-28
+		INJECTED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml
+		INJECTED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:1:11-69
+uses-sdk
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:6:5-8:40
+	android:targetSdkVersion
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:8:9-37
+		INJECTED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml
+		INJECTED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:7:9-34
+		INJECTED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml
+		INJECTED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml
+application
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:10:5-38:19
+	android:label
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:13:9-41
+	android:allowBackup
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:11:9-35
+	android:icon
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:12:9-45
+	android:theme
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:14:9-40
+activity#com.example.helloanychatcloud.MainActivity
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:15:9-23:20
+	android:label
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:18:13-45
+	android:configChanges
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:17:13-74
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:16:13-41
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:19:13-22:29
+action#android.intent.action.MAIN
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:20:17-69
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:20:25-66
+category#android.intent.category.LAUNCHER
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:21:17-77
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:21:27-74
+activity#com.example.helloanychatcloud.VideoActivity
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:24:9-30:20
+	android:configChanges
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:26:13-74
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:25:13-42
+intent-filter#android.intent.category.DEFAULT
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:27:13-29:29
+category#android.intent.category.DEFAULT
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:28:17-76
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:28:27-73
+activity#com.example.helloanychatcloud.VideoConfig
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:31:9-37:20
+	android:configChanges
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:33:13-74
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:32:13-40
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:40:5-81
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:40:22-78
+uses-permission#android.permission.CAMERA
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:41:5-65
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:41:22-62
+uses-permission#android.permission.INTERNET
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:42:5-67
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:42:22-64
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:43:5-71
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:43:22-68
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:44:5-80
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:44:22-77
+uses-permission#android.permission.RESTART_PACKAGES
+ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:45:5-75
+	android:name
+		ADDED from E:\AsWork\HelloAnyChatCloud\app\src\main\AndroidManifest.xml:45:22-72

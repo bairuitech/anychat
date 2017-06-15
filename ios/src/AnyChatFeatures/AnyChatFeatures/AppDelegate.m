@@ -76,7 +76,7 @@
 
 #pragma mark - supported Orientation
 
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     if (self.navController.topViewController.shouldAutorotate == YES)
     {

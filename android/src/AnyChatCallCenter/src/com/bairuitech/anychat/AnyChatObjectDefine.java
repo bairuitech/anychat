@@ -16,11 +16,12 @@ public class AnyChatObjectDefine {
 
 	public static final int ANYCHAT_INVALID_OBJECT_ID		=	-1;		///< 无效的对象ID
 
-	// 坐席服务状态定义
-	public static final int ANYCHAT_AGENT_STATUS_CLOSEED	=	0;		///< 关闭，不对外提供服务
-	public static final int ANYCHAT_AGENT_STATUS_WAITTING	=	1;		///< 等待中，可随时接受用户服务
-	public static final int ANYCHAT_AGENT_STATUS_WORKING	=	2;		///< 工作中，正在为用户服务
-	public static final int ANYCHAT_AGENT_STATUS_PAUSED		=	3;		///< 暂停服务
+	// 坐席服务状态定义	
+	public static final int ANYCHAT_AGENT_STATUS_CLOSEED	=	0;	///< 关闭，不对外提供服务（准备）
+	public static final int ANYCHAT_AGENT_STATUS_WAITTING	=	1;	///< 等待中，可随时接受用户服务（示闲）
+	public static final int ANYCHAT_AGENT_STATUS_WORKING	=	2;	///< 工作中，正在为用户服务
+	public static final int ANYCHAT_AGENT_STATUS_PAUSED		=	3;	///< 暂停服务（示忙）
+	public static final int ANYCHAT_AGENT_STATUS_OFFLINE	=	10;	///< 离线
 
 
 	/**
@@ -119,7 +120,7 @@ public class AnyChatObjectDefine {
 	public static final int ANYCHAT_AGENT_EVENT_STATUSCHANGE=	601;	///< 坐席状态变化
 	public static final int ANYCHAT_AGENT_EVENT_SERVICENOTIFY=	602;	///< 坐席服务通知（哪个用户到哪个客服办理业务）
 	public static final int ANYCHAT_AGENT_EVENT_WAITINGUSER	=	603;	///< 暂时没有客户，请等待
-
+	public static final int ANYCHAT_AGENT_EVENT_ISREADY		=	604;	///< 坐席准备好，可以发起呼叫
 	
 	 
 }

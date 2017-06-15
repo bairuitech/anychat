@@ -150,7 +150,7 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
         anychat.SetBaseEvent(this);
         
         // 启动AnyChat传感器监听
-		anychat.mSensorHelper.InitSensor(this);
+		anychat.mSensorHelper.InitSensor(getApplicationContext());
         
         int RoomID = getIntent().getIntExtra("RoomID",0);
         anychat.EnterRoom(RoomID, "");
@@ -275,6 +275,7 @@ public class LiveVideoActivity extends Activity implements AnyChatBaseEvent{
     protected void onDestroy(){
     	mTimer.cancel();
 		anychat.LeaveRoom(-1);
+		anychat.removeEvent(this);
 		anychat.mSensorHelper.DestroySensor();
 		super.onDestroy();
     	finish();

@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_switchvideo_bg.xml",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\drawable\\btn_switchvideo_bg.xml"
+    },
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\background.xml",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\drawable\\background.xml"
+    },
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\et_border.xml",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\drawable\\et_border.xml"
+    },
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\video_bg.xml",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\drawable\\video_bg.xml"
+    }
+]

@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\layout\\video_frame.xml",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\layout\\video_frame.xml"
+    },
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\layout\\videoconfig.xml",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\layout\\videoconfig.xml"
+    },
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\layout\\video_session.xml",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\layout\\video_session.xml"
+    },
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_main.xml",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\layout\\role_list.xml",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\layout\\role_list.xml"
+    },
+    {
+        "merged": "E:\\AsWork\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\layout\\titlebar.xml",
+        "source": "E:\\AsWork\\HelloAnyChatCloud\\app\\src\\main\\res\\layout\\titlebar.xml"
+    }
+]

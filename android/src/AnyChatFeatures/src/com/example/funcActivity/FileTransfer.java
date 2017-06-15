@@ -317,6 +317,8 @@ public class FileTransfer extends Activity implements AnyChatBaseEvent,
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		if(anyChatSDK != null)
+			anyChatSDK.removeEvent(this);
 	}
 
 	@Override

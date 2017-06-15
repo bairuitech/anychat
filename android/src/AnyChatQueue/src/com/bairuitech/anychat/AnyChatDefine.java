@@ -249,6 +249,23 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_SERVERQUERY_USERIDBYSTRID=	2;	///< 根据字符串ID查询用户ID
 	public static final int ANYCHAT_SERVERQUERY_STRIDBYUSERID=	3;	///< 根据用户ID查询字符串ID
 	
+	// SDK控制常量定义（API：BRAC_SDKControl 传入参数）
+	public static final int ANYCHAT_SDKCTRL_BASE			=	1;	///< 基本功能控制
+	public static final int ANYCHAT_SDKCTRL_OBJECT			=	20;	///< 对象操作
+	public static final int ANYCHAT_SDKCTRL_VIDEOCALL		=	30;	///< 呼叫控制
+	public static final int ANYCHAT_SDKCTRL_USERINFO		=	40;	///< 用户信息控制
+	public static final int ANYCHAT_SDKCTRL_STREAMPLAY		=	50;	///< 流媒体播放
+	public static final int ANYCHAT_SDKCTRL_NETWORK			=	60;	///< 网络控制
+	public static final int ANYCHAT_SDKCTRL_MEDIA			=	70;	///< 媒体控制
+	public static final int ANYCHAT_SDKCTRL_FILEDELETE		=	80;	///< 删除文件
+	public static final int ANYCHAT_SDKCTRL_FILEINFO		=	81;	///< 获取文件信息
+	public static final int ANYCHAT_SDKCTRL_DISKSIZE		=	82;	///< 获取磁盘容量
+	public static final int ANYCHAT_SDKCTRL_FILEENCRYPT		=	83;	///< 文件加解密控制
+	public static final int ANYCHAT_SDKCTRL_PPTHELPERINIT	=	90;	///< PPT环境初始化
+	public static final int ANYCHAT_SDKCTRL_PPTFILECTRL		=	91;	///< PPT文件控制
+	public static final int ANYCHAT_SDKCTRL_PPTFILEINFO		=	92;	///< PPT文件信息
+	public static final int ANYCHAT_SDKCTRL_BUSINESS		=	95;	///< 业务控制
+	
 	// 常见出错代码定义
     public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< 没有错误
     public static final int BRAC_ERRORCODE_SESSION_QUIT		= 100101;///< 源用户主动放弃会话
@@ -296,7 +313,12 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_STREAMPLAY_CTRL_CLOSELOOP=	7;	///< 关闭循环播放
 
 	// CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
+	public static final int ANYCHAT_CORESDKEVENT_BASEEVENT	=	1;	///< SDK基础事件
+	public static final int ANYCHAT_CORESDKEVENT_CAMERASTATE=	10;	///< 摄像头状态事件
+	public static final int ANYCHAT_CORESDKEVENT_MICSTATE	=	11;	///< Mic状态事件
+	public static final int ANYCHAT_CORESDKEVENT_TRANSFILE	=	12;	///< 文件传输事件
 	public static final int ANYCHAT_CORESDKEVENT_STREAMPLAY	=	30;	///< 媒体播放事件
+	public static final int ANYCHAT_CORESDKEVENT_BUSINESS	=	32;	///< 业务事件
 
 	// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
 	public static final int ANYCHAT_CORESDKDATA_AUDIO		=	1;	///< 音频数据

@@ -16,7 +16,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 
-@interface QueueViewController ()<UIAlertViewDelegate,UIActionSheetDelegate,AnyChatVideoCallDelegate,AVAudioPlayerDelegate,AnyChatTransDataDelegate>
+@interface QueueViewController ()<UIAlertViewDelegate,UIActionSheetDelegate,AnyChatVideoCallDelegate,AVAudioPlayerDelegate>
 @property(strong, nonatomic) AnyChatPlatform *anyChat;                  //anyChat对象
 @property(weak, nonatomic) LoginViewController *loginVC;
 @property(nonatomic, assign)int remoteUserId;                           //客服人员id号
@@ -37,7 +37,7 @@
     self.loginVC = [self.navigationController.viewControllers objectAtIndex:0];
     self.anyChat = [AnyChatPlatform getInstance];
     self.anyChat.videoCallDelegate = self;
-    self.anyChat.transDataDelegate = self;
+    //self.anyChat.transDataDelegate = self;
     
     NSString *businessName = [AnyChatPlatform ObjectGetStringValue:ANYCHAT_OBJECT_TYPE_QUEUE :(int)self.businessId :ANYCHAT_OBJECT_INFO_NAME];
     self.title = [NSString stringWithFormat:@"%@-排队等待中",businessName];

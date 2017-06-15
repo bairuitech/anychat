@@ -131,6 +131,7 @@
 #define ANYCHAT_AGENT_EVENT_STATUSCHANGE	601	///< 坐席状态变化
 #define ANYCHAT_AGENT_EVENT_SERVICENOTIFY	602	///< 坐席服务通知（哪个用户到哪个客服办理业务）
 #define ANYCHAT_AGENT_EVENT_WAITINGUSER		603	///< 暂时没有客户，请等待
+#define ANYCHAT_AGENT_EVENT_ISREADY			604	///< 坐席准备好，可以发起呼叫
 
 
 

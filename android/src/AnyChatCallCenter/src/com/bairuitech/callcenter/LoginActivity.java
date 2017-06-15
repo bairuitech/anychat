@@ -171,6 +171,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent,
 		super.onDestroy();
 		if (bNeedRelease) {
 			anychat.Logout();
+			anychat.removeEvent(this);
 			anychat.Release();
 			android.os.Process.killProcess(android.os.Process.myPid());
 		}

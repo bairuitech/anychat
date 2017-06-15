@@ -152,6 +152,8 @@ public class QueueActivity extends Activity implements AnyChatBaseEvent,AnyChatV
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+	     if(anychat != null)
+	        	anychat.removeEvent(this);
 		BussinessCenter.getBussinessCenter().realse();
 	}
 	

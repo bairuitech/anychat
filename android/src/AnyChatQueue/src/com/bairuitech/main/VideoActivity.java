@@ -158,6 +158,7 @@ import com.example.anychatqueue.R;
 		anychat.UserSpeakControl(-1, 0);
 		anychat.UserSpeakControl(dwTargetUserId, 0);
 		anychat.UserCameraControl(dwTargetUserId, 0);
+		anychat.removeEvent(this);
 		mTimerCheckAv.cancel();
 		mTimerShowVideoTime.cancel();
 		if (dialog != null && dialog.isShowing())
@@ -173,8 +174,8 @@ import com.example.anychatqueue.R;
 		anychat.SetBaseEvent(this);
 		anychat.SetVideoCallEvent(this);
 		anychat.SetObjectEvent(this);
-		anychat.mSensorHelper.InitSensor(this); 
-		AnyChatCoreSDK.mCameraHelper.SetContext(this);
+		anychat.mSensorHelper.InitSensor(getApplicationContext());
+		AnyChatCoreSDK.mCameraHelper.SetContext(getApplicationContext());
 	}
  
 	private void initTimerShowTime() {

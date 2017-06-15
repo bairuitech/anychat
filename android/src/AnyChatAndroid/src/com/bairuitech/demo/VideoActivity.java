@@ -125,9 +125,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 		anychat = AnyChatCoreSDK.getInstance(VideoActivity.this);
 		anychat.SetBaseEvent(this);
 		// 启动AnyChat传感器监听
-		anychat.mSensorHelper.InitSensor(this);
+		anychat.mSensorHelper.InitSensor(getApplicationContext());
 		// 初始化Camera上下文句柄
-		AnyChatCoreSDK.mCameraHelper.SetContext(this);
+		AnyChatCoreSDK.mCameraHelper.SetContext(getApplicationContext());
 	}
 
 	private void adjuestVideoSize(int width, int height) {
@@ -261,6 +261,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent, OnClick
 	protected void onDestroy() {
 		super.onDestroy();
 		mTimer.cancel();
+		anychat.removeEvent(this);
 		anychat.mSensorHelper.DestroySensor();
 		finish();
 	}

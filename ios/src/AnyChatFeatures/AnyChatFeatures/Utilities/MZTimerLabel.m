@@ -198,7 +198,7 @@
                 [_delegate timerLabel:self countingTo:timeLeft timertype:_timerType];
             }
                         
-            if(abs(timeDiff) >= timeUserValue){
+            if(fabs(timeDiff) >= timeUserValue){
                 [self pause];
                 timeToShow = [date1970 dateByAddingTimeInterval:0];
                 pausedTime = nil;

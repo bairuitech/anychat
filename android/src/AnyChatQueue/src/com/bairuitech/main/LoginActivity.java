@@ -316,13 +316,14 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent, AnyChat
         super.onPause();
     }
 
-    protected void onDestroy() {
-        super.onDestroy();
-        anyChatSDK.LeaveRoom(-1);
-        anyChatSDK.Logout();
-        anyChatSDK.Release();
-        unregisterReceiver(mBroadcastReceiver);
-    }
+	protected void onDestroy() {
+		super.onDestroy();
+		anyChatSDK.LeaveRoom(-1);
+		anyChatSDK.Logout();
+		anyChatSDK.removeEvent(this);
+		anyChatSDK.Release();
+		unregisterReceiver(mBroadcastReceiver);
+	}
 
     protected void onResume() {
         super.onResume();
