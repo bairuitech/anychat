@@ -195,7 +195,7 @@ class VideoRenderer implements Callback {
     }
 
     public void DrawByteBuffer(byte [] mPixel, int rotation, int mirror) {
-        if(bitmap == null)
+        if(bitmap == null || surfaceHolder == null)
             return;
         ByteBuffer byteBuffer = ByteBuffer.wrap(mPixel); // 将 byte 数组包装到缓冲区中
 		byteBuffer.rewind();
