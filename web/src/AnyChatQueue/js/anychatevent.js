@@ -83,9 +83,19 @@ function OnAnyChatSDKFilterData(lpBuf, dwLen) {
 
 }
 
-// 收到录像或拍照完成事件（扩展：增加errorcode）
-function OnAnyChatRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr) {
+// 收到录像或拍照完成事件
+function OnAnyChatRecordSnapShot(dwUserId, lpFileName, dwParam, dwFlags) {
+	
+}
 
+// 收到录像或拍照完成事件（扩展）
+function OnAnyChatRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr) {
+
+}
+
+// 收到录像或拍照完成事件（扩展2：增加errorcode）
+function OnAnyChatRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr) {
+	
 }
 
 // AnyChatCoreSDK异步事件
