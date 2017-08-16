@@ -634,11 +634,15 @@ namespace QueueClient
             {               
                 pnl_AutoRouter.Show();
                 pnl_selectSkill.Show();
+
+                btnSetting.Enabled = true;
             }
             else
             {
                 pnl_AutoRouter.Hide();
                 pnl_selectSkill.Hide();
+
+                btnSetting.Enabled = false;
             }
         }
 
