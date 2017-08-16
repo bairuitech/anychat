@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRoom2));
             this.panel_Center_Top = new System.Windows.Forms.Panel();
             this.groupBox_RemoteVideo = new System.Windows.Forms.GroupBox();
@@ -42,11 +42,14 @@
             this.panel_Center_Bottom_Log = new System.Windows.Forms.Panel();
             this.txt_OutputMessage = new System.Windows.Forms.RichTextBox();
             this.panel_Center_Bottom_OptZone = new System.Windows.Forms.Panel();
+            this.cmbBoxSelectVideo = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.label_radio4 = new System.Windows.Forms.Label();
             this.label_radio3 = new System.Windows.Forms.Label();
             this.label_radio2 = new System.Windows.Forms.Label();
             this.label_radio1 = new System.Windows.Forms.Label();
             this.btnSetting = new System.Windows.Forms.Button();
+            this.btnSnapshot = new System.Windows.Forms.Button();
             this.btnRecord = new System.Windows.Forms.Button();
             this.btnLeaveRoom = new System.Windows.Forms.Button();
             this.panel_Left = new System.Windows.Forms.Panel();
@@ -57,9 +60,6 @@
             this.gvc_audio = new System.Windows.Forms.DataGridViewImageColumn();
             this.gvc_video = new System.Windows.Forms.DataGridViewImageColumn();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.btnSnapshot = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cmbBoxSelectVideo = new System.Windows.Forms.ComboBox();
             this.panel_Center_Top.SuspendLayout();
             this.groupBox_RemoteVideo.SuspendLayout();
             this.panel_Center.SuspendLayout();
@@ -157,7 +157,6 @@
             this.txt_OutputMessage.Name = "txt_OutputMessage";
             this.txt_OutputMessage.Size = new System.Drawing.Size(609, 133);
             this.txt_OutputMessage.TabIndex = 1;
-            this.txt_OutputMessage.Text = "";
             // 
             // panel_Center_Bottom_OptZone
             // 
@@ -177,10 +176,33 @@
             this.panel_Center_Bottom_OptZone.Size = new System.Drawing.Size(148, 448);
             this.panel_Center_Bottom_OptZone.TabIndex = 0;
             // 
+            // cmbBoxSelectVideo
+            // 
+            this.cmbBoxSelectVideo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxSelectVideo.FormattingEnabled = true;
+            this.cmbBoxSelectVideo.Items.AddRange(new object[] {
+            "1号视频",
+            "2号视频",
+            "3号视频",
+            "4号视频"});
+            this.cmbBoxSelectVideo.Location = new System.Drawing.Point(61, 164);
+            this.cmbBoxSelectVideo.Name = "cmbBoxSelectVideo";
+            this.cmbBoxSelectVideo.Size = new System.Drawing.Size(75, 20);
+            this.cmbBoxSelectVideo.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(14, 167);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "选择：";
+            // 
             // label_radio4
             // 
             this.label_radio4.AutoSize = true;
-            this.label_radio4.Location = new System.Drawing.Point(8, 334);
+            this.label_radio4.Location = new System.Drawing.Point(8, 342);
             this.label_radio4.Name = "label_radio4";
             this.label_radio4.Size = new System.Drawing.Size(77, 12);
             this.label_radio4.TabIndex = 3;
@@ -190,7 +212,7 @@
             // label_radio3
             // 
             this.label_radio3.AutoSize = true;
-            this.label_radio3.Location = new System.Drawing.Point(8, 308);
+            this.label_radio3.Location = new System.Drawing.Point(8, 316);
             this.label_radio3.Name = "label_radio3";
             this.label_radio3.Size = new System.Drawing.Size(77, 12);
             this.label_radio3.TabIndex = 3;
@@ -200,7 +222,7 @@
             // label_radio2
             // 
             this.label_radio2.AutoSize = true;
-            this.label_radio2.Location = new System.Drawing.Point(8, 283);
+            this.label_radio2.Location = new System.Drawing.Point(8, 291);
             this.label_radio2.Name = "label_radio2";
             this.label_radio2.Size = new System.Drawing.Size(77, 12);
             this.label_radio2.TabIndex = 2;
@@ -210,7 +232,7 @@
             // label_radio1
             // 
             this.label_radio1.AutoSize = true;
-            this.label_radio1.Location = new System.Drawing.Point(8, 254);
+            this.label_radio1.Location = new System.Drawing.Point(8, 262);
             this.label_radio1.Name = "label_radio1";
             this.label_radio1.Size = new System.Drawing.Size(77, 12);
             this.label_radio1.TabIndex = 1;
@@ -226,6 +248,16 @@
             this.btnSetting.Text = "高级设置";
             this.btnSetting.UseVisualStyleBackColor = true;
             this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
+            // 
+            // btnSnapshot
+            // 
+            this.btnSnapshot.Location = new System.Drawing.Point(16, 203);
+            this.btnSnapshot.Name = "btnSnapshot";
+            this.btnSnapshot.Size = new System.Drawing.Size(120, 36);
+            this.btnSnapshot.TabIndex = 0;
+            this.btnSnapshot.Text = "拍照";
+            this.btnSnapshot.UseVisualStyleBackColor = true;
+            this.btnSnapshot.Click += new System.EventHandler(this.btnSnapshot_Click);
             // 
             // btnRecord
             // 
@@ -264,14 +296,14 @@
             this.dgv_onlineuser.AllowUserToResizeRows = false;
             this.dgv_onlineuser.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgv_onlineuser.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSeaGreen;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_onlineuser.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.LightSeaGreen;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_onlineuser.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgv_onlineuser.ColumnHeadersHeight = 30;
             this.dgv_onlineuser.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gvc_character,
@@ -297,7 +329,6 @@
             // gvc_character
             // 
             this.gvc_character.FillWeight = 20F;
-            this.gvc_character.HeaderText = "";
             this.gvc_character.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
             this.gvc_character.Name = "gvc_character";
             this.gvc_character.ReadOnly = true;
@@ -315,8 +346,8 @@
             // gvc_username
             // 
             this.gvc_username.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gvc_username.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gvc_username.DefaultCellStyle = dataGridViewCellStyle4;
             this.gvc_username.HeaderText = "账号";
             this.gvc_username.Name = "gvc_username";
             this.gvc_username.ReadOnly = true;
@@ -343,39 +374,6 @@
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // btnSnapshot
-            // 
-            this.btnSnapshot.Location = new System.Drawing.Point(16, 195);
-            this.btnSnapshot.Name = "btnSnapshot";
-            this.btnSnapshot.Size = new System.Drawing.Size(120, 36);
-            this.btnSnapshot.TabIndex = 0;
-            this.btnSnapshot.Text = "拍照";
-            this.btnSnapshot.UseVisualStyleBackColor = true;
-            this.btnSnapshot.Click += new System.EventHandler(this.btnSnapshot_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 159);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "选择：";
-            // 
-            // cmbBoxSelectVideo
-            // 
-            this.cmbBoxSelectVideo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBoxSelectVideo.FormattingEnabled = true;
-            this.cmbBoxSelectVideo.Items.AddRange(new object[] {
-            "1号视频",
-            "2号视频",
-            "3号视频",
-            "4号视频"});
-            this.cmbBoxSelectVideo.Location = new System.Drawing.Point(61, 156);
-            this.cmbBoxSelectVideo.Name = "cmbBoxSelectVideo";
-            this.cmbBoxSelectVideo.Size = new System.Drawing.Size(75, 20);
-            this.cmbBoxSelectVideo.TabIndex = 5;
             // 
             // frmRoom2
             // 

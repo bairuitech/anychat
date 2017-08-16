@@ -40,6 +40,12 @@ namespace ANYCHATAPI
             int useHWCodec = 1;
             AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_CORESDK_USEHWCODEC, ref useHWCodec, sizeof(int));
 
+            int overLayTimeStamp = 1;
+            AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP, ref overLayTimeStamp, sizeof(int));
+
+            string recordDir = "D:\\KingDom\\VideoCapture\\Bin";
+            AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_RECORD_TMPDIR, recordDir, recordDir.ToCharArray().Length);
+
             ///注册回调
             ///视频
             AnyChatCoreSDK.SetVideoDataCallBack(AnyChatCoreSDK.PixelFormat.BRAC_PIX_FMT_RGB24, video_Callback, hWnd.ToInt32());
@@ -60,7 +66,7 @@ namespace ANYCHATAPI
             ///提供服务器端验证
             AnyChatCoreSDK.SetServerAuthPass("");
             //保存视频
-            AnyChatCoreSDK.SetRecordCallBack(RecordCallBack_Callback, hWnd.ToInt32());
+            //AnyChatCoreSDK.SetRecordCallBack(RecordCallBack_Callback, hWnd.ToInt32());
             //设置音量变化回调函数
             AnyChatCoreSDK.SetVolumeChangeCallBack(VolumeChange_callBack, hWnd.ToInt32());
             //设置视频呼叫事件回调函数
@@ -74,6 +80,9 @@ namespace ANYCHATAPI
             AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_STREAMRECORDEX, Marshal.GetFunctionPointerForDelegate(RecordSnapShotEx_callBack), hWnd);
 
             AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_SCREENEVENT, Marshal.GetFunctionPointerForDelegate(VideoScreenEvent_callBack), hWnd);
+
+            //Core SDK事件回调（Json格式）
+            AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_CORESDKEVENT, Marshal.GetFunctionPointerForDelegate(CoreSDKEvent_callBack), hWnd);
 
             return isok;
         }
@@ -100,7 +109,7 @@ namespace ANYCHATAPI
 
         static AnyChatCoreSDK.TextMessage_CallBack text_Callback = new AnyChatCoreSDK.TextMessage_CallBack(TextMessage_CallBack);
 
-        static AnyChatCoreSDK.RecordCallBack RecordCallBack_Callback = new AnyChatCoreSDK.RecordCallBack(SetRecordCallBack_CallBack);
+        //static AnyChatCoreSDK.RecordCallBack RecordCallBack_Callback = new AnyChatCoreSDK.RecordCallBack(SetRecordCallBack_CallBack);
 
         static AnyChatCoreSDK.TransFileCallBack transFile_callback = new AnyChatCoreSDK.TransFileCallBack(TransFile_CallBack);
 
@@ -110,12 +119,14 @@ namespace ANYCHATAPI
 
         static AnyChatCoreSDK.OnObjectEventNotifyCallBack ObjectEvent_callBack = new AnyChatCoreSDK.OnObjectEventNotifyCallBack(ObjectEvent_CallBack);
 
-        static AnyChatCoreSDK.RecordSnapShot_CallBack RecordSnapShot_callBack = new AnyChatCoreSDK.RecordSnapShot_CallBack(RecordCallBack_Callback);
+        static AnyChatCoreSDK.RecordSnapShot_CallBack RecordSnapShot_callBack = new AnyChatCoreSDK.RecordSnapShot_CallBack(RecordSnapShot_CallBack);
 
         static AnyChatCoreSDK.RecordSnapShotEx_CallBack RecordSnapShotEx_callBack = new AnyChatCoreSDK.RecordSnapShotEx_CallBack(RecordSnapShotEx_CallBack);
 
         static AnyChatCoreSDK.VideoScreenEvent_CallBack VideoScreenEvent_callBack = new AnyChatCoreSDK.VideoScreenEvent_CallBack(VideoScreenEvent_CallBack);
-       
+
+        static AnyChatCoreSDK.OnCoreSDKEventCallBack CoreSDKEvent_callBack = new AnyChatCoreSDK.OnCoreSDKEventCallBack(CoreSDKEvent_CallBack);
+
         public static SetRecordReceivedHandler SetRecordReceivedCallBack = null;
         /// <summary>
         /// 音视频录制回调函数
@@ -305,6 +316,22 @@ namespace ANYCHATAPI
         }
 
         /// <summary>
+        /// AnyChatCoreSDK异步事件回调
+        /// </summary>
+        /// <param name="dwEventType"></param>
+        /// <param name="lpEventJsonStr"></param>
+        /// <param name="lpUserValue"></param>
+        public delegate void AnyChatCoreSDKEventCallBack(int dwEventType, string lpEventJsonStr, int lpUserValue);
+        public static AnyChatCoreSDKEventCallBack AnyChatCoreSDKEvent_Handler;
+        private static void CoreSDKEvent_CallBack(int dwEventType, string lpEventJsonStr, int lpUserValue)
+        {
+            if (AnyChatCoreSDKEvent_Handler != null)
+            {
+                AnyChatCoreSDKEvent_Handler(dwEventType, lpEventJsonStr, lpUserValue);
+            }
+        }
+
+        /// <summary>
         /// 录像、快照任务完成回调
         /// </summary>
         /// <param name="userId"></param>
@@ -312,9 +339,9 @@ namespace ANYCHATAPI
         /// <param name="param"></param>
         /// <param name="recordType"></param>
         /// <param name="userValue"></param>
-        public delegate void AnyChatRecordSnapShotCallBack(int userId, string fileName, int param, bool recordType, int userValue);
+        public delegate void AnyChatRecordSnapShotCallBack(int userId, string fileName, int param, int recordType, int userValue);
         public static AnyChatRecordSnapShotCallBack AnyChatRecordSnapShot_Handler;
-        private static void RecordSnapShot_CallBack(int userId, string fileName, int param, bool recordType, int userValue)
+        private static void RecordSnapShot_CallBack(int userId, string fileName, int param, int recordType, int userValue)
         {
             if (AnyChatRecordSnapShot_Handler != null)
             {
