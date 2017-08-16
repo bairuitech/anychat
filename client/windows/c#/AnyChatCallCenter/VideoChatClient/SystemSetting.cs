@@ -9,7 +9,7 @@ namespace ANYCHATAPI
     public delegate void TextReceivedHandler(int fromUID, int toUID, string Text, bool isserect);
     public delegate void TransBufferReceivedHandler(int userId, IntPtr buf, int len, int userValue);
     public delegate void TransFileReceivedHandler(int userId, string fileName,string filePath, int fileLength, int wParam, int lParam,int taskId, int userValue);
-    public delegate void SetRecordReceivedHandler(int userId, string filePath, int param, bool recordType, int userValue);
+    public delegate void SetRecordReceivedHandler(int userId, string filePath, int param, int recordType, int userValue);
     public delegate void SetVolumeChange_CallBack(AnyChatCoreSDK.AudioDevice device, int currentVolume, int userValue);
 
 
@@ -101,7 +101,7 @@ namespace ANYCHATAPI
 
         static AnyChatCoreSDK.TextMessage_CallBack text_Callback = new AnyChatCoreSDK.TextMessage_CallBack(TextMessage_CallBack);
 
-        static AnyChatCoreSDK.RecordCallBack RecordCallBack_Callback = new AnyChatCoreSDK.RecordCallBack(SetRecordCallBack_CallBack);
+        static AnyChatCoreSDK.RecordSnapShot_CallBack RecordCallBack_Callback = new AnyChatCoreSDK.RecordSnapShot_CallBack(SetRecordCallBack_CallBack);
 
         static AnyChatCoreSDK.TransFileCallBack transFile_callback = new AnyChatCoreSDK.TransFileCallBack(TransFile_CallBack);
 
@@ -120,7 +120,7 @@ namespace ANYCHATAPI
         /// <param name="param"></param>
         /// <param name="recordType"></param>
         /// <param name="userValue"></param>
-        private static void SetRecordCallBack_CallBack(int userId, string filePath, int param, bool recordType, int userValue)
+        private static void SetRecordCallBack_CallBack(int userId, string filePath, int param, int recordType, int userValue)
         {
             if (SetRecordReceivedCallBack != null)
                 SetRecordReceivedCallBack(userId, filePath, param, recordType, userValue);

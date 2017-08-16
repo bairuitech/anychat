@@ -10,7 +10,7 @@ namespace ANYCHATAPI
     public delegate void TransBufferReceivedHandler(int userId, IntPtr buf, int len, int userValue);
     public delegate void TransBufferExReceivedHandler(int userId, IntPtr buf, int len, int wParam, int lParam, int taskId, int userValue);
     public delegate void TransFileReceivedHandler(int userId, string fileName,string filePath, int fileLength, int wParam, int lParam,int taskId, int userValue);
-    public delegate void SetRecordReceivedHandler(int userId, string filePath, int param, bool recordType, int userValue);
+    public delegate void SetRecordReceivedHandler(int userId, string filePath, int param, int recordType, int userValue);
     public delegate void SetVolumeChange_CallBack(AnyChatCoreSDK.AudioDevice device, int currentVolume, int userValue);
 
 
@@ -63,7 +63,7 @@ namespace ANYCHATAPI
             ///提供服务器端验证
             AnyChatCoreSDK.SetServerAuthPass("");
             //保存视频
-            AnyChatCoreSDK.SetRecordCallBack(RecordCallBack_Callback, hWnd.ToInt32());
+            //AnyChatCoreSDK.SetRecordCallBack(RecordCallBack_Callback, hWnd.ToInt32());
             //设置音量变化回调函数
             AnyChatCoreSDK.SetVolumeChangeCallBack(VolumeChange_callBack, hWnd.ToInt32());
             //设置视频呼叫事件回调函数
@@ -72,6 +72,8 @@ namespace ANYCHATAPI
             //设置业务对象事件通知回调函数
             //AnyChatCoreSDK.BRAC_SetObjectEventNotifyCallBack(ObjectEvent_callBack, hWnd.ToInt32());
             AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_OBJECTEVENT, Marshal.GetFunctionPointerForDelegate(ObjectEvent_callBack), hWnd);
+
+            AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_STREAMRECORDEX, Marshal.GetFunctionPointerForDelegate(RecordExCallBack_Callback), hWnd);
 
             return isok;
         }
@@ -99,7 +101,7 @@ namespace ANYCHATAPI
 
         static AnyChatCoreSDK.TextMessage_CallBack text_Callback = new AnyChatCoreSDK.TextMessage_CallBack(TextMessage_CallBack);
 
-        static AnyChatCoreSDK.RecordCallBack RecordCallBack_Callback = new AnyChatCoreSDK.RecordCallBack(SetRecordCallBack_CallBack);
+        static AnyChatCoreSDK.RecordSnapShot_CallBack RecordCallBack_Callback = new AnyChatCoreSDK.RecordSnapShot_CallBack(SetRecordCallBack_CallBack);
 
         static AnyChatCoreSDK.TransFileCallBack transFile_callback = new AnyChatCoreSDK.TransFileCallBack(TransFile_CallBack);
 
@@ -108,6 +110,8 @@ namespace ANYCHATAPI
         static AnyChatCoreSDK.VideoCallEvent_CallBack VideoCallEvent_callBack = new AnyChatCoreSDK.VideoCallEvent_CallBack(VideoCallEvent_CallBack);
 
         static AnyChatCoreSDK.OnObjectEventNotifyCallBack ObjectEvent_callBack = new AnyChatCoreSDK.OnObjectEventNotifyCallBack(ObjectEvent_CallBack);
+
+        static AnyChatCoreSDK.RecordCallBackEx RecordExCallBack_Callback = new AnyChatCoreSDK.RecordCallBackEx(RecordExCallBack_CallBack);
        
         public static SetRecordReceivedHandler SetRecordReceivedCallBack = null;
         /// <summary>
@@ -118,10 +122,25 @@ namespace ANYCHATAPI
         /// <param name="param"></param>
         /// <param name="recordType"></param>
         /// <param name="userValue"></param>
-        private static void SetRecordCallBack_CallBack(int userId, string filePath, int param, bool recordType, int userValue)
+        private static void SetRecordCallBack_CallBack(int userId, string filePath, int param, int recordType, int userValue)
         {
             if (SetRecordReceivedCallBack != null)
                 SetRecordReceivedCallBack(userId, filePath, param, recordType, userValue);
+        }
+
+        public static AnyChatCoreSDK.RecordCallBackEx RecordExHandler = null;
+        /// <summary>
+        /// 音视频录制回调函数
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="filePath"></param>
+        /// <param name="param"></param>
+        /// <param name="recordType"></param>
+        /// <param name="userValue"></param>
+        private static void RecordExCallBack_CallBack(int userId, string fileName, int elapse, int flags, int param, string userStr, int userValue)
+        {
+            if (RecordExHandler != null)
+                RecordExHandler(userId, fileName, elapse, flags, param, userStr, userValue);
         }
 
         /// <summary>
