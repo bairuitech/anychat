@@ -4,7 +4,7 @@ object LoginForm: TLoginForm
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = #30331#38470#31383#21475
-  ClientHeight = 188
+  ClientHeight = 174
   ClientWidth = 349
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -95,7 +95,7 @@ object LoginForm: TLoginForm
     Width = 121
     Height = 21
     TabOrder = 4
-    Text = '211.155.25.89'
+    Text = 'demo.anychat.cn'
   end
   object Port: TEdit
     Left = 248
