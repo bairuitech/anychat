@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <deployment version="1808" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -146,7 +146,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AppID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cZc-pe-VLI">
-                    <rect key="frame" x="30" y="315" width="34.666666666666671" height="21"/>
+                    <rect key="frame" x="30" y="315" width="35" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="EW6-WS-x00"/>
                     </constraints>
@@ -267,7 +267,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="CustomButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OFK-os-j20" customClass="CustomButton">
-                                    <rect key="frame" x="15" y="59.999999999999943" width="81.333333333333329" height="30"/>
+                                    <rect key="frame" x="15" y="59.999999999999943" width="81.666666666666671" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="Imu-WB-sSD"/>
                                     </constraints>
@@ -280,7 +280,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yeZ-VL-vzl" customClass="CustomButton">
-                                    <rect key="frame" x="116.33333333333334" y="63.666666666666686" width="81.333333333333343" height="24"/>
+                                    <rect key="frame" x="116.66666666666666" y="62.999999999999943" width="80.999999999999972" height="24"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                     <state key="normal">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -290,7 +290,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eu-Gv-jHE" customClass="CustomButton">
-                                    <rect key="frame" x="217.66666666666669" y="63.666666666666686" width="81.000000000000057" height="24"/>
+                                    <rect key="frame" x="217.66666666666669" y="62.999999999999943" width="81.000000000000057" height="24"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                     <state key="normal">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
