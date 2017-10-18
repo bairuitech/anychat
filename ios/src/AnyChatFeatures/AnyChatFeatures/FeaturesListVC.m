@@ -46,6 +46,17 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //防止同时点击多个按钮
+    self.videoFUNBtn.exclusiveTouch = YES;
+    self.textMsgFUNBtn.exclusiveTouch = YES;
+    self.transBufferFUNBtn.exclusiveTouch = YES;
+    self.transFileFUNBtn.exclusiveTouch = YES;
+    self.recordLocalFUNBtn.exclusiveTouch = YES;
+    self.recordServerFUNBtn.exclusiveTouch = YES;
+    self.snapShotFUNBtn.exclusiveTouch = YES;
+    self.callCenterFUNBtn.exclusiveTouch = YES;
+    self.theUDPTraceFUNBtn.exclusiveTouch = YES;
+    self.videoSettingFUNBtn.exclusiveTouch = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated

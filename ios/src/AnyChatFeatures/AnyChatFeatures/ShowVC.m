@@ -7,9 +7,9 @@
 //
 
 #import "ShowVC.h"
-
+#import <MediaPlayer/MediaPlayer.h>
 @interface ShowVC ()
-
+@property (strong, nonatomic) MPMoviePlayerViewController *moviePlayerVC;
 @end
 
 @implementation ShowVC
@@ -124,29 +124,19 @@
     NSDictionary *selectCellDataMDict = [self.theVideoRecordList objectAtIndex:[indexPath row]];
     self.theSelectContentPath = [selectCellDataMDict objectForKey:@"contentPathStr"];
     // init
-    QLPreviewController *previewController = [[QLPreviewController alloc] init];
-    previewController.dataSource = self;
-    previewController.delegate = self;
-    // start previewing the document at the current section index
-    previewController.currentPreviewItemIndex = indexPath.row;
-    [self presentViewController:previewController animated:YES completion:nil];
+    if (self.theSelectContentPath) {
+        NSURL *url =  [NSURL fileURLWithPath:self.theSelectContentPath];
+        
+        // 实例化
+        _moviePlayerVC = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
+        
+        // 弹出控制器
+        [self presentViewController:_moviePlayerVC animated:YES completion:nil];
+        
+    }
+
 }
 
-#pragma mark - QLPreviewControllerDataSource
-
-- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)previewController
-{
-    return 1;
-}
-
-- (id)previewController:(QLPreviewController *)previewController previewItemAtIndex:(NSInteger)idx
-{
-    NSURL *fileURL = [NSURL fileURLWithPath:self.theSelectContentPath];
-    return fileURL;
-}
-
-
-#pragma mark -
 #pragma mark - Instance Method
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
