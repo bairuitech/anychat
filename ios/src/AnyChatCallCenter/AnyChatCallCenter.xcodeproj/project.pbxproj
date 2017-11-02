@@ -453,6 +453,11 @@
 					FEB337C319B8555200D2C2F3 = {
 						DevelopmentTeam = 6TZ958XNMU;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
