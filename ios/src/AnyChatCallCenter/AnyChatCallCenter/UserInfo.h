@@ -10,8 +10,8 @@
 
 @interface UserInfo : NSObject
 
-@property (nonatomic, strong) NSString *theUserInfoID;
-@property (nonatomic, strong) NSString *theUserInfoName;
-@property (nonatomic, strong) NSString *theUserInfoIcon;
+@property (nonatomic, copy) NSString *theUserInfoID;
+@property (nonatomic, copy) NSString *theUserInfoName;
+@property (nonatomic, copy) NSString *theUserInfoIcon;
 
 @end

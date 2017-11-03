@@ -14,16 +14,6 @@
 
 @implementation VideoViewController
 
-@synthesize theUIImageView;
-@synthesize theUserEntity;
-@synthesize iRemoteUserId;
-@synthesize localVideoSurface;
-@synthesize theLocalView;
-@synthesize endCallBtn;
-@synthesize switchCameraBtn;
-@synthesize voiceBtn;
-@synthesize cameraBtn;
-
 
 #pragma mark - Life Cycle
 
@@ -31,7 +21,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        
     }
     return self;
 }
@@ -39,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self StartVideoChat:theUserEntity.theEntityRemoteID];
+    [self StartVideoChat:self.theUserEntity.theEntityRemoteID];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -60,7 +50,7 @@
 {
     if (buttonIndex == 0)
     {
-       [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_FINISH :iRemoteUserId :0 :0 :0 :nil];
+        [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_FINISH :self.iRemoteUserId :0 :0 :0 :nil];
         
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]
                                               animated:YES];
@@ -127,15 +117,15 @@
 
 - (IBAction)OnCloseVoiceBtnClicked:(id)sender
 {
-    if (voiceBtn.selected == NO)
+    if (self.voiceBtn.selected == NO)
     {
         [AnyChatPlatform UserSpeakControl:-1 :NO];
-        voiceBtn.selected = YES;
+        self.voiceBtn.selected = YES;
     }
     else
     {
         [AnyChatPlatform UserSpeakControl: -1:YES];
-        voiceBtn.selected = NO;
+        self.voiceBtn.selected = NO;
     }
 }
 
@@ -146,14 +136,14 @@
         [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
         [AnyChatPlatform UserCameraControl:-1 : YES];
         self.theLocalView.hidden = NO;
-        cameraBtn.selected = NO;
+        self.cameraBtn.selected = NO;
     }
     
     if ([AnyChatPlatform GetCameraState:-1] == 2)
     {   //close local Camera
         [AnyChatPlatform UserCameraControl:-1 :NO];
         self.theLocalView.hidden = YES;
-        cameraBtn.selected = YES;
+        self.cameraBtn.selected = YES;
     }
 }
 
@@ -185,7 +175,7 @@
         [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
     }
     
-    [self btnSelectedOnClicked:switchCameraBtn];
+    [self btnSelectedOnClicked:self.switchCameraBtn];
 }
 
 - (void) OnLocalVideoRelease:(id)sender
@@ -210,15 +200,18 @@
 
 - (void)setUIControls
 {
-    [switchCameraBtn setBackgroundImage:[UIImage imageNamed:@"Icon_camera_w_b"] forState:UIControlStateSelected];
+    [self.switchCameraBtn setBackgroundImage:[UIImage imageNamed:@"Icon_camera_w_b"] forState:UIControlStateSelected];
     
     //Local View line
-    theLocalView.layer.borderColor = [[UIColor whiteColor] CGColor];
-    theLocalView.layer.borderWidth = 1.0f;
+    self.theLocalView.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.theLocalView.layer.borderWidth = 1.0f;
     //Rounded corners
-    theLocalView.layer.cornerRadius = 4;
-    theLocalView.layer.masksToBounds = YES;
+    self.theLocalView.layer.cornerRadius = 4;
+    self.theLocalView.layer.masksToBounds = YES;
 }
 
-
+-(void)dealloc {
+    NSLog(@"销毁了");
+    [self FinishVideoChat];
+}
 @end

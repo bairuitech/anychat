@@ -23,17 +23,7 @@ NSString* const kVideoQuality = @"videoquality";
 
 @implementation HallViewController
 
-@synthesize theUserNameHall;
-@synthesize theUserPasswordHall;
-@synthesize theUserEntity;
-@synthesize theUInfo;
-@synthesize onlineUserTable;
-@synthesize onlineUserMArray;
-@synthesize theWaitingAlertView;
-@synthesize theReplyAlertView;
-@synthesize theRejectAlertView;
-@synthesize theStateMsg;
-@synthesize videoVC;
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -58,7 +48,7 @@ NSString* const kVideoQuality = @"videoquality";
     theAnyChat.notifyMsgDelegate = self;
     
     [self createTableView];
-    theUserEntity = [UserEntity new];
+    self.theUserEntity = [UserEntity new];
 }
 
 
@@ -80,12 +70,12 @@ NSString* const kVideoQuality = @"videoquality";
     UserInfo *tempUserInfo = [self.onlineUserMArray objectAtIndex:[indexPath row]];
     
     Cell.textLabel.text = tempUserInfo.theUserInfoName;
-	Cell.textLabel.font = [UIFont systemFontOfSize:19];
-	Cell.textLabel.numberOfLines = 1;
+    Cell.textLabel.font = [UIFont systemFontOfSize:19];
+    Cell.textLabel.numberOfLines = 1;
     
     Cell.detailTextLabel.text = tempUserInfo.theUserInfoID;
-	Cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
-	Cell.detailTextLabel.numberOfLines = 1;
+    Cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
+    Cell.detailTextLabel.numberOfLines = 1;
     
     UIImage *icon = [UIImage imageNamed:tempUserInfo.theUserInfoIcon];
     
@@ -102,7 +92,7 @@ NSString* const kVideoQuality = @"videoquality";
 
 
 - (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 54.0f;
+    return 54.0f;
 }
 
 #pragma mark - Table view delegate
@@ -113,8 +103,8 @@ NSString* const kVideoQuality = @"videoquality";
     
     [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REQUEST :selectID :0 :0 :0 :nil];
     
-    theWaitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫等待..." message:@"Call waiting" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
-    [theWaitingAlertView show];
+    self.theWaitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫等待..." message:@"Call waiting" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+    [self.theWaitingAlertView show];
 }
 
 
@@ -122,7 +112,7 @@ NSString* const kVideoQuality = @"videoquality";
 
 - (void) OnAnyChatVideoCallEventCallBack:(int) dwEventType : (int) dwUserId : (int) dwErrorCode : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr{
     
-    theUserEntity.theEntityRemoteID = dwUserId;
+    self.theUserEntity.theEntityRemoteID = dwUserId;
     
     switch (dwEventType) {
             
@@ -139,7 +129,7 @@ NSString* const kVideoQuality = @"videoquality";
             {
                 case GV_ERR_VIDEOCALL_CANCEL:
                 {
-                    [self dimissAlertView:theReplyAlertView];
+                    [self dimissAlertView:self.theReplyAlertView];
                     [self showInfoAlertView:@"用户取消会话" :@"CANCEL"];
                     
                     break;
@@ -148,9 +138,9 @@ NSString* const kVideoQuality = @"videoquality";
                     
                 case GV_ERR_VIDEOCALL_REJECT:
                 {
-                    if (theWaitingAlertView != nil)
+                    if (self.theWaitingAlertView != nil)
                     {
-                        [self dimissAlertView:theWaitingAlertView];
+                        [self dimissAlertView:self.theWaitingAlertView];
                     }
                     
                     [self showInfoAlertView:@"用户拒绝会话" :@"REJECT"];
@@ -161,9 +151,9 @@ NSString* const kVideoQuality = @"videoquality";
                     
                 case GV_ERR_VIDEOCALL_OFFLINE:
                 {
-                    if (theWaitingAlertView != nil)
+                    if (self.theWaitingAlertView != nil)
                     {
-                        [self dimissAlertView:theWaitingAlertView];
+                        [self dimissAlertView:self.theWaitingAlertView];
                     }
                     [self showInfoAlertView:@"对方不在线" :@"OFFLINE"];
                     
@@ -173,9 +163,9 @@ NSString* const kVideoQuality = @"videoquality";
                     
                 case GV_ERR_VIDEOCALL_BUSY:
                 {
-                    if (theWaitingAlertView != nil)
+                    if (self.theWaitingAlertView != nil)
                     {
-                        [self dimissAlertView:theWaitingAlertView];
+                        [self dimissAlertView:self.theWaitingAlertView];
                     }
                     [self showInfoAlertView:@"用户在忙" :@"BUSY"];
                     
@@ -185,9 +175,9 @@ NSString* const kVideoQuality = @"videoquality";
                     
                 case GV_ERR_VIDEOCALL_TIMEOUT:
                 {
-                    if (theWaitingAlertView != nil)
+                    if (self.theWaitingAlertView != nil)
                     {
-                        [self dimissAlertView:theWaitingAlertView];
+                        [self dimissAlertView:self.theWaitingAlertView];
                     }
                     [self showInfoAlertView:@"会话请求超时" :@"TIMEOUT"];
                     
@@ -197,9 +187,9 @@ NSString* const kVideoQuality = @"videoquality";
                     
                 case GV_ERR_VIDEOCALL_DISCONNECT:
                 {
-                    if (theWaitingAlertView != nil)
+                    if (self.theWaitingAlertView != nil)
                     {
-                        [self dimissAlertView:theWaitingAlertView];
+                        [self dimissAlertView:self.theWaitingAlertView];
                     }
                     [self showInfoAlertView:@"网络断线" :@"DISCONNECT"];
                     
@@ -209,9 +199,9 @@ NSString* const kVideoQuality = @"videoquality";
                     
                 case GV_ERR_VIDEOCALL_NOTINCALL:
                 {
-                    if (theWaitingAlertView != nil)
+                    if (self.theWaitingAlertView != nil)
                     {
-                        [self dimissAlertView:theWaitingAlertView];
+                        [self dimissAlertView:self.theWaitingAlertView];
                     }
                     [self showInfoAlertView:@"用户不在呼叫状态" :@"NOTINCALL"];
                     
@@ -225,8 +215,8 @@ NSString* const kVideoQuality = @"videoquality";
             
         case BRAC_VIDEOCALL_EVENT_START:
         {
-            if (theWaitingAlertView != nil) {
-                [self dimissAlertView:theWaitingAlertView];
+            if (self.theWaitingAlertView != nil) {
+                [self dimissAlertView:self.theWaitingAlertView];
             }
             
             [AnyChatPlatform EnterRoom:dwParam :@""];
@@ -237,7 +227,7 @@ NSString* const kVideoQuality = @"videoquality";
             
         case BRAC_VIDEOCALL_EVENT_FINISH:
         {
-            [videoVC FinishVideoChat];
+            
             [AnyChatPlatform LeaveRoom:-1];
             [self showInfoAlertView:@"会话结束!" :@"Finish"];
             
@@ -257,14 +247,14 @@ NSString* const kVideoQuality = @"videoquality";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     
-    if (alertView == theReplyAlertView) {
+    if (alertView == self.theReplyAlertView) {
         
         switch (buttonIndex) {
                 
             case 0:
             {
                 [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY
-                                                 :theUserEntity.theEntityRemoteID
+                                                 :self.theUserEntity.theEntityRemoteID
                                                  :GV_ERR_VIDEOCALL_REJECT
                                                  :0
                                                  :0
@@ -276,7 +266,7 @@ NSString* const kVideoQuality = @"videoquality";
             case 1:
             {
                 [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY
-                                                 :theUserEntity.theEntityRemoteID
+                                                 :self.theUserEntity.theEntityRemoteID
                                                  :0
                                                  :0
                                                  :0
@@ -289,18 +279,18 @@ NSString* const kVideoQuality = @"videoquality";
     }
     
     
-    if (alertView == theWaitingAlertView) {
+    if (alertView == self.theWaitingAlertView) {
         
         if (buttonIndex == 0 ) {
             
             [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REPLY
-                                             :theUserEntity.theEntityRemoteID
+                                             :self.theUserEntity.theEntityRemoteID
                                              :GV_ERR_VIDEOCALL_CANCEL
                                              :0
                                              :0
                                              :nil];
             
-            [self dimissAlertView:theWaitingAlertView];
+            [self dimissAlertView:self.theWaitingAlertView];
             
         }
     }
@@ -310,7 +300,6 @@ NSString* const kVideoQuality = @"videoquality";
 
 
 #pragma mark - AnyChatNotifyMessageDelegate
-
 // 连接服务器消息
 - (void) OnAnyChatConnect:(BOOL) bSuccess
 {
@@ -324,50 +313,50 @@ NSString* const kVideoQuality = @"videoquality";
     
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
-        [self updateLocalSettings];
+        //        [self updateLocalSettings];
         
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 54.0f)];
         UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 54.0f)];
         [self setUserInfoFromHeaderView:headerView :dwUserId];
-        onlineUserTable.tableHeaderView = headerView;
-        onlineUserTable.tableFooterView = footerView;
+        self.onlineUserTable.tableHeaderView = headerView;
+        self.onlineUserTable.tableFooterView = footerView;
     }
 }
 
 // 用户进入房间消息
 - (void) OnAnyChatEnterRoom:(int) dwRoomId : (int) dwErrorCode
 {
-    
+    VideoViewController *videoVC = [[VideoViewController alloc]init];
+    videoVC.theUserEntity = self.theUserEntity;
+    [self.navigationController pushViewController:videoVC animated:YES];
 }
 
 // 房间在线用户消息
 - (void) OnAnyChatOnlineUser:(int) dwUserNum : (int) dwRoomId
 {
-    videoVC = [VideoViewController new];
-    videoVC.theUserEntity = theUserEntity;
-    [self.navigationController pushViewController:videoVC animated:YES];
+    
 }
 
 // 用户进入房间消息
 - (void) OnAnyChatUserEnterRoom:(int) dwUserId
 {
-    if (theUserEntity.theEntityRemoteID == dwUserId ) {
-        [videoVC StartVideoChat:dwUserId];
+    if (self.theUserEntity.theEntityRemoteID == dwUserId ) {
+        
     }
 }
 
 // 用户退出房间消息
 - (void) OnAnyChatUserLeaveRoom:(int) dwUserId
 {
-    if (theUserEntity.theEntityRemoteID == dwUserId ) {
-        [videoVC FinishVideoChat];
+    if (self.theUserEntity.theEntityRemoteID == dwUserId ) {
+        
     }
 }
 
 // 网络断开消息
 - (void) OnAnyChatLinkClose:(int) dwErrorCode
 {
-    [videoVC FinishVideoChat];
+    
     [AnyChatPlatform Logout];
     [self.navigationController popToRootViewControllerAnimated:YES];
     UIAlertView *networkAlertView = [[UIAlertView alloc] initWithTitle:@"网络断开,请重新登录."
@@ -376,7 +365,7 @@ NSString* const kVideoQuality = @"videoquality";
                                                      cancelButtonTitle:nil
                                                      otherButtonTitles:@"确定",nil];
     [networkAlertView show];
-
+    
 }
 
 
@@ -428,18 +417,18 @@ NSString* const kVideoQuality = @"videoquality";
 
 
 - (void) showReplyAlertView{
-    theReplyAlertView = [[UIAlertView alloc] initWithTitle:@"用户请求会话"
-                                                   message:@"Video Call"
-                                                  delegate:self
-                                         cancelButtonTitle:@"拒绝"
-                                         otherButtonTitles:@"同意", nil];
-    [theReplyAlertView show];
+    self.theReplyAlertView = [[UIAlertView alloc] initWithTitle:@"用户请求会话"
+                                                        message:@"Video Call"
+                                                       delegate:self
+                                              cancelButtonTitle:@"拒绝"
+                                              otherButtonTitles:@"同意", nil];
+    [self.theReplyAlertView show];
 }
 
 
 - (NSString *)showInfoAlertView:(NSString *)titleCN : (NSString *)titleEN{
     
-    theStateMsg = titleEN;
+    self.theStateMsg = titleEN;
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:titleCN
                                                         message:titleEN
@@ -450,7 +439,7 @@ NSString* const kVideoQuality = @"videoquality";
     
     [self performSelector:@selector(dimissAlertView:) withObject:alertView afterDelay:1.5];
     
-    return theStateMsg;
+    return self.theStateMsg;
     
 }
 
@@ -464,13 +453,13 @@ NSString* const kVideoQuality = @"videoquality";
 }
 
 - (void)createTableView
-{    
-    onlineUserTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, self.view.frame.size.width, self.view.frame.size.height)];
+{
+    self.onlineUserTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, self.view.frame.size.width, self.view.frame.size.height)];
     
     self.onlineUserTable.delegate = self;
     self.onlineUserTable.dataSource = self;
     
-    [self.view addSubview:onlineUserTable];
+    [self.view addSubview:self.onlineUserTable];
 }
 
 - (void) refreshTableView
@@ -490,17 +479,17 @@ NSString* const kVideoQuality = @"videoquality";
     NSMutableArray *allUserList = [[NSMutableArray alloc] initWithArray:[AnyChatPlatform GetUserFriends]];
     
     for (NSString *userID in allUserList) {
-
+        
         if ([AnyChatPlatform GetFriendStatus:[userID intValue]] == 1) {
             
-            theUInfo = [UserInfo new];
+            self.theUInfo = [UserInfo new];
             
-            theUInfo.theUserInfoName = [AnyChatPlatform GetUserName:[userID intValue]];
-            theUInfo.theUserInfoID = [[NSString alloc] initWithFormat:@"%@",userID];
-            theUInfo.theUserInfoIcon = [[NSString alloc] initWithFormat:@"%i",[self getRandomNumber:1 to:9]];
+            self.theUInfo.theUserInfoName = [AnyChatPlatform GetUserName:[userID intValue]];
+            self.theUInfo.theUserInfoID = [[NSString alloc] initWithFormat:@"%@",userID];
+            self.theUInfo.theUserInfoIcon = [[NSString alloc] initWithFormat:@"%i",[self getRandomNumber:1 to:9]];
             
-            if ([onLineUserList containsObject:theUInfo.theUserInfoID] == NO) {
-                [onLineUserList addObject:theUInfo];
+            if ([onLineUserList containsObject:self.theUInfo.theUserInfoID] == NO) {
+                [onLineUserList addObject:self.theUInfo];
             }
         }
     }
@@ -557,7 +546,7 @@ NSString* const kVideoQuality = @"videoquality";
 - (void) updateLocalSettings
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults synchronize];
+    
     
     BOOL bUseP2P = [[defaults objectForKey:kUseP2P] boolValue];
     BOOL bUseServerVideoParam = [[defaults objectForKey:kUseServerParam] boolValue];

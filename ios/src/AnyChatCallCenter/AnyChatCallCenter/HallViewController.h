@@ -33,7 +33,7 @@
 
 @property (nonatomic, strong) UserEntity            *theUserEntity;
 @property (nonatomic, strong) UserInfo              *theUInfo;
-@property (nonatomic, strong) VideoViewController   *videoVC;
+
 
 
 - (IBAction) leaveLoginBtnClicked:(id)sender;

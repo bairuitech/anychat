@@ -10,9 +10,5 @@
 
 @implementation UserEntity
 
-@synthesize theEntityName;
-@synthesize theEntityPassword;
-@synthesize theEntityID;
-@synthesize theEntityRemoteID;
 
 @end

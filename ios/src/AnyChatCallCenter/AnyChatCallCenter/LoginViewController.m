@@ -19,14 +19,6 @@
 
 @implementation LoginViewController
 
-@synthesize theIP;
-@synthesize thePort;
-@synthesize theUserName;
-@synthesize theLoginBtn;
-@synthesize theVersion;
-@synthesize theHideKeyboardBtn;
-@synthesize LoginVC;
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,24 +42,24 @@
     
     [self prefersStatusBarHidden];
     [self.navigationController setNavigationBarHidden:YES];
-  
-    theUserName.text = kAnyChatUserName;
-    theIP.text = kAnyChatIP;
-    thePort.text = kAnyChatPort;
+    
+    self.theUserName.text = kAnyChatUserName;
+    self.theIP.text = kAnyChatIP;
+    self.thePort.text = kAnyChatPort;
     
     float sysVersion = [[UIDevice currentDevice].systemVersion floatValue];
     if (sysVersion <= 7.0) {
-
-        theLoginBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
-        theLoginBtn.titleLabel.textColor = [UIColor grayColor];
-
+        
+        self.theLoginBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
+        self.theLoginBtn.titleLabel.textColor = [UIColor grayColor];
+        
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
     
-    [theHideKeyboardBtn setTitle:@"" forState:UIControlStateNormal];
-    [theHideKeyboardBtn setTitle:@"" forState:UIControlStateSelected];
+    [self.theHideKeyboardBtn setTitle:@"" forState:UIControlStateNormal];
+    [self.theHideKeyboardBtn setTitle:@"" forState:UIControlStateSelected];
     
-    [theVersion setText:[AnyChatPlatform GetSDKVersion]];
+    [self.theVersion setText:[AnyChatPlatform GetSDKVersion]];
 }
 
 #pragma mark - Action Method
@@ -78,28 +70,28 @@
     
     HallViewController *hallVC = [[HallViewController alloc] init];
     
-    if([theUserName.text length] == 0) {
-        theUserName.text = kAnyChatUserName;
+    if([self.theUserName.text length] == 0) {
+        self.theUserName.text = kAnyChatUserName;
     }
-    if([theIP.text length] == 0) {
-        theIP.text = kAnyChatIP;
+    if([self.theIP.text length] == 0) {
+        self.theIP.text = kAnyChatIP;
     }
-    if([thePort.text length] == 0) {
-        thePort.text = kAnyChatPort;
+    if([self.thePort.text length] == 0) {
+        self.thePort.text = kAnyChatPort;
     }
-
+    
     /*
      * AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
      * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
      * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
      */
-    [AnyChatPlatform Connect:theIP.text : [thePort.text intValue]];
+    [AnyChatPlatform Connect:self.theIP.text : [self.thePort.text intValue]];
     
     
     /*
      * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
      */
-    [AnyChatPlatform Login:theUserName.text :nil];
+    [AnyChatPlatform Login:self.theUserName.text :nil];
     
     
     
@@ -109,9 +101,9 @@
 
 - (IBAction) hideKeyBoard:(id)sender
 {
-    [theIP resignFirstResponder];
-    [thePort resignFirstResponder];
-    [theUserName resignFirstResponder];
+    [self.theIP resignFirstResponder];
+    [self.thePort resignFirstResponder];
+    [self.theUserName resignFirstResponder];
 }
 
 
