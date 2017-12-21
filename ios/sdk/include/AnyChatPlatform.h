@@ -355,12 +355,20 @@ typedef struct tagWAVEFORMATEX{
 
 // 设置外部输入视频格式
 + (int) SetInputVideoFormat: (int) pixFmt : (int) dwWidth : (int) dwHeight : (int) dwFps : (int) dwFlags;
+// 设置外部输入视频格式（扩展）
++ (int) SetInputVideoFormatEx: (int) dwStreamIndex : (int) dwCodecId : (int) pixFmt : (int) dwWidth : (int) dwHeight : (int) dwFps : (int) dwFlags;
 // 外部视频数据输入
 + (int) InputVideoData: (NSData*) lpVideoFrame : (int) dwTimeStamp;
+// 外部视频数据输入（扩展）
++ (int) InputVideoDataEx: (int) dwStreamIndex : (NSData*) lpVideoFrame : (int) dwTimeStamp : (int) dwFlags;
 // 设置外部输入音频格式
 + (int) SetInputAudioFormat: (int) dwChannels : (int) dwSamplesPerSec : (int) dwBitsPerSample : (int) dwFlags;
+// 设置外部输入音频格式（扩展）
++ (int) SetInputAudioFormatEx: (int) dwStreamIndex : (int) dwCodecId : (int) dwChannels : (int) dwSamplesPerSec : (int) dwBitsPerSample : (int) dwFlags;
 // 外部音频数据输入
 + (int) InputAudioData: (NSData*) lpSamples : (int) dwTimeStamp;
+// 外部音频数据输入（扩展）
++ (int) InputAudioDataEx: (int) dwStreamIndex : (NSData*) lpSamples : (int) dwTimeStamp : (int) dwFlags;
 
 // 视频呼叫事件控制（请求、回复、挂断等）
 + (int) VideoCallControl: (int) dwEventType : (int) dwUserId : (int) dwErrorCode : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr;
