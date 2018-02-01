@@ -367,34 +367,6 @@ var bSupportCluster = false;					// 是否支持集群系统
 
 // 初始化SDK，返回出错代码
 function BRAC_InitSDK(apilevel) {	
-	//是否支持Html5
-	var isSurportH5 = window.applicationCache;
-	var browser = getBrowser();
-	
-	if(isSurportH5 && !(browser == "IE" || browser == "Safari" || browser == "unknown browser")) {
-		anychat = null;
-		anychat = AnyChatSDK();
-		anychat.InitSDK(0);
-	
-		if(typeof(OnAnyChatNotifyMessage) == "function")
-			anychat.on("OnNotifyMessage", OnAnyChatNotifyMessage);
-		if(typeof(OnAnyChatVideoCallEvent) == "function")
-			anychat.on("OnVideoCallEvent", OnAnyChatVideoCallEvent);
-		if(typeof(OnAnyChatTransBuffer) == "function")
-			anychat.on("OnTransBuffer", OnAnyChatTransBuffer);
-		if(typeof(OnAnyChatTextMessage) == "function")
-			anychat.on("OnTextMessage", OnAnyChatTextMessage);
-		if(typeof(OnAnyChatObjectEvent) == "function")
-			anychat.on("OnObjectEvent", OnAnyChatObjectEvent);
-
-		bSupportStreamRecordCtrlEx = true;
-		bSupportScriptObject = true;
-		bSupportObjectBusiness = true;
-		bSupportCluster = true;
-		
-		return GV_ERR_SUCCESS;
-	}
-	
 	var anychatsdkdiv = "AnyChatSDKPluginDiv";
 	try {
 		// 创建AnyChat SDK插件
