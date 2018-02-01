@@ -59,7 +59,7 @@
 		<div><input type="checkbox" id="ScreenCtrl" onclick="checkScreenCtrl()"  >打开屏幕共享</input></div>        
         <div id="Btn_div">
             <div id="setting" class="Btn" onmouseout="Mouseout('setting')" onmousemove="Mouseover('setting')" style=" float:left;">设置</div>
-            <div id="loginbtn" class="Btn" onmouseout="Mouseout('loginbtn')" onmousemove="Mouseover('loginbtn')" " style=" float:right;">登录</div>
+            <div id="loginbtn" class="Btn" onmouseout="Mouseout('loginbtn')" onmousemove="Mouseover('loginbtn')"  style="float:right;">登录</div>
 
         </div>
 		
@@ -188,7 +188,7 @@
                             <td class="td_input"><a>帧率：</a></td>
                             <td><select id="frame_rate" onchange="GetTheValue('frame_rate')" disabled="disabled" style=" width:80px;"></select></td>
                             <td></td>
-                            <td class="td_input"">(当前分辨率：</td>
+                            <td class="td_input">(当前分辨率：</td>
                             <td id="current_resolution"></td>
                         </tr>
                         <tr>
@@ -217,5 +217,11 @@
 	</div>
 	
 </div>
+<script>
+    window.onbeforeunload = function () {
+        // 刷新或关闭页面时释放插件
+        BRAC_Release();
+    };
+</script>
 </body>
 </html>

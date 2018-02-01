@@ -35,7 +35,7 @@
 <div id="LOADING_GREY_DIV"></div>
 
 <!--所有界面与浏览器顶部距离层 -->
-<div id="margintop""></div>
+<div id="margintop"></div>
 	<div id="VideoShowDiv"></div>
  	<div id="Shade_Div"></div>
 	<div id="MAIN_DIV">
@@ -144,7 +144,7 @@
                             <td class="td_input"><a>帧率：</a></td>
                             <td><select id="frame_rate" onchange="GetTheValue('frame_rate')" disabled="disabled" style=" width:80px;"></select></td>
                             <td></td>
-                            <td class="td_input"">(当前分辨率：</td>
+                            <td class="td_input">(当前分辨率：</td>
                             <td id="current_resolution"></td>
                         </tr>
                         <tr>
@@ -170,7 +170,12 @@
             </div>
         </div>
     </div>
-
 </div>
+<script>
+	window.onbeforeunload = function () {
+		// 刷新或关闭页面时释放插件
+		BRAC_Release();
+	};
+</script>
 </body>
 </html>

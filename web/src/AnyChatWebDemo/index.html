@@ -139,7 +139,7 @@
                 <div id="room_div_msgimg">
                     <div id="ReceiveMsgDiv"></div>
                     <div style=" width:464px; height:55px;">
-                        <div id="room_div_right_MsgTxt"">发言:<input type="text" id="MessageInput" style="width:280px;" /></div>
+                        <div id="room_div_right_MsgTxt">发言:<input type="text" id="MessageInput" style="width:280px;" /></div>
                         <div id="SendMsg" class="Btn" onmouseout="Mouseout('SendMsg')" onmousemove="Mouseover('SendMsg')" style="float:left;">发送信息</div>
                     </div>
                 </div>
@@ -184,7 +184,7 @@
                             <td class="td_input"><a>帧率：</a></td>
                             <td><select id="frame_rate" onchange="GetTheValue('frame_rate')" disabled="disabled" style=" width:80px;"></select></td>
                             <td></td>
-                            <td class="td_input"">(当前分辨率：</td>
+                            <td class="td_input">(当前分辨率：</td>
                             <td id="current_resolution"></td>
                         </tr>
                         <tr>
@@ -210,5 +210,11 @@
         </div>
     </div>
 </div>
+<script>
+    window.onbeforeunload = function(){
+        // 刷新或关闭页面时释放插件
+        BRAC_Release();
+    }
+</script>
 </body>
 </html>
