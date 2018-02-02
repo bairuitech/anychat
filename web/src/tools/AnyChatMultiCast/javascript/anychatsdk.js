@@ -367,34 +367,6 @@ var bSupportCluster = false;					// 是否支持集群系统
 
 // 初始化SDK，返回出错代码
 function BRAC_InitSDK(apilevel) {	
-	//是否支持Html5
-	var isSurportH5 = window.applicationCache;
-	var browser = getBrowser();
-	
-	if(isSurportH5 && !(browser == "IE" || browser == "Safari" || browser == "unknown browser")) {
-		anychat = null;
-		anychat = AnyChatSDK();
-		anychat.InitSDK(0);
-	
-		if(typeof(OnAnyChatNotifyMessage) == "function")
-			anychat.on("OnNotifyMessage", OnAnyChatNotifyMessage);
-		if(typeof(OnAnyChatVideoCallEvent) == "function")
-			anychat.on("OnVideoCallEvent", OnAnyChatVideoCallEvent);
-		if(typeof(OnAnyChatTransBuffer) == "function")
-			anychat.on("OnTransBuffer", OnAnyChatTransBuffer);
-		if(typeof(OnAnyChatTextMessage) == "function")
-			anychat.on("OnTextMessage", OnAnyChatTextMessage);
-		if(typeof(OnAnyChatObjectEvent) == "function")
-			anychat.on("OnObjectEvent", OnAnyChatObjectEvent);
-
-		bSupportStreamRecordCtrlEx = true;
-		bSupportScriptObject = true;
-		bSupportObjectBusiness = true;
-		bSupportCluster = true;
-		
-		return GV_ERR_SUCCESS;
-	}
-	
 	var anychatsdkdiv = "AnyChatSDKPluginDiv";
 	try {
 		// 创建AnyChat SDK插件
@@ -1076,22 +1048,22 @@ function BRAC_StreamPlayDestroy(lpTaskGuid, dwFlags) {
 
 // 释放插件
 function BRAC_Release() {
-    var _anychatSDKDiv = BRAC_GetDmoObject("AnyChatSDKPluginDiv");
-    if (_anychatSDKDiv) {
-        if (getBrowser() == "IE") {
-            anychat = null;
-            delete _anychatSDKDiv.parentNode.removeChild(_anychatSDKDiv);
-            _anychatSDKDiv = null;
-            var objectPlugins = document.getElementsByTagName("object");
-            while (objectPlugins.length > 0 &&
-                objectPlugins[0].classid == "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7") {
-                delete objectPlugins[0].parentNode.removeChild(objectPlugins[0]);
-            }
-            setTimeout(CollectGarbage, 1);
-            return;
-        }
-        document.body.removeChild(_anychatSDKDiv);
-    }
+	var _anychatSDKDiv = BRAC_GetDmoObject("AnyChatSDKPluginDiv");
+	if (_anychatSDKDiv) {
+		if (getBrowser() == "IE") {
+			anychat = null;
+			delete _anychatSDKDiv.parentNode.removeChild(_anychatSDKDiv);
+			_anychatSDKDiv = null;
+			var objectPlugins = document.getElementsByTagName("object");
+			while (objectPlugins.length > 0 &&
+				objectPlugins[0].classid == "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7") {
+				delete objectPlugins[0].parentNode.removeChild(objectPlugins[0]);
+			}
+			setTimeout(CollectGarbage, 1);
+			return;
+		}
+		document.body.removeChild(_anychatSDKDiv);
+	}
 }
 
 // 获取当前浏览器
