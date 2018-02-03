@@ -215,5 +215,11 @@
         </div>
     </div>
 </div>
+<script>
+    window.onbeforeunload = function(){
+        // 刷新或关闭页面时释放插件
+        BRAC_Release();
+    }
+</script>
 </body>
 </html>
