@@ -34,6 +34,7 @@
 #define WM_GV_USERINFOUPDATE		WM_GV + 16		///< 用户信息更新通知，wParam（INT）表示用户ID号，lParam（INT）表示更新类别
 #define WM_GV_FRIENDSTATUS			WM_GV + 17		///< 好友在线状态变化，wParam（INT）表示好友用户ID号，lParam（INT）表示用户的当前活动状态：0 离线， 1 上线
 #define WM_GV_OBJECTEVENT			WM_GV + 18		///< 对象事件通知，wParam（INT）表示对象类型，lParam（INT）表示对象ID
+#define WM_GV_SESSIONKEEP			WM_GV + 19		///< 会话保持事件，wParam（INT）表示会话保持状态：0 会话保持开始， 1 会话保持结束，lParam（INT）表示出错代码
 
 #define WM_GV_PRIVATEREQUEST		WM_GV + 21		///< 用户发起私聊请求，wParam（INT）表示发起者的用户ID号，lParam（INT）表示私聊请求编号，标识该请求
 #define WM_GV_PRIVATEECHO			WM_GV + 22		///< 用户回复私聊请求，wParam（INT）表示回复者的用户ID号，lParam（INT）为出错代码
