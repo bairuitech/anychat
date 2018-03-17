@@ -52,7 +52,7 @@ public class AnyChatVideoHelper {
 		render[index].SetUserId(userid);
 	}
 	
-	public int SetVideoFmt(int userid, int width, int height) {
+	public int SetVideoFmt(int userid, int streamindex, int width, int height) {
 		VideoRenderer r = GetRenderByUserId(userid);
 		if(r == null)
 			return -1;
@@ -77,7 +77,7 @@ public class AnyChatVideoHelper {
 		r.setMaxCutScale(scale);
 	}
 	
-	public void ShowVideo(int userid, byte [] mPixel, int rotation, int mirror) {
+	public void ShowVideo(int userid, int streamindex, byte [] mPixel, int rotation, int mirror) {
 		VideoRenderer r = GetRenderByUserId(userid);
 		if(r == null)
 			return;
