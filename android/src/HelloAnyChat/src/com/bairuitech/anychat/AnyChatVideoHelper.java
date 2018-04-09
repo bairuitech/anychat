@@ -41,19 +41,40 @@ public class AnyChatVideoHelper {
 	}
 	
 	public void UnBindVideo(int index) {
-		SetVideoUser(index, -1);
+		SetVideoUserEx(index, -1, -1);
 	}
 	
+	/**
+	 * 设置视频对应的用户信息
+	 * @param index 视频显示序号
+	 * @param userid 用户ID
+	 */
 	public void SetVideoUser(int index, int userid) {
 		if(index < 0 || index >= MAX_VIDEO_NUM)
 			return;
 		if(render[index] == null)
 			return;
 		render[index].SetUserId(userid);
+		render[index].SetStreamIndex(0);
+	}
+	
+	/**
+	 * 设置视频对应的用户信息扩展方法，支持多路流
+	 * @param index 视频显示序号
+	 * @param userid 用户ID
+	 * @param streamindex 视频流ID
+	 */
+	public void SetVideoUserEx(int index, int userid, int streamindex) {
+		if(index < 0 || index >= MAX_VIDEO_NUM)
+			return;
+		if(render[index] == null)
+			return;
+		render[index].SetUserId(userid);
+		render[index].SetStreamIndex(streamindex);
 	}
 	
 	public int SetVideoFmt(int userid, int streamindex, int width, int height) {
-		VideoRenderer r = GetRenderByUserId(userid);
+		VideoRenderer r = GetRenderByUserId(userid, streamindex);
 		if(r == null)
 			return -1;
 		try
@@ -71,23 +92,32 @@ public class AnyChatVideoHelper {
 	 * 设置最大裁剪图片的比例。比例越大，当需要裁剪的时候丢失的数据越多，surfaceview占的屏幕也更满
 	 * @param scale 比例
 	 */
-	public void setMaxCutScale(int userId,float scale)
+	public void setMaxCutScale(int userId, float scale)
 	{
-		VideoRenderer r = GetRenderByUserId(userId);
+		VideoRenderer r = GetRenderByUserId(userId, 0);
+		r.setMaxCutScale(scale);
+	}
+	
+	/***
+	 * 设置最大裁剪图片的比例扩展方法，支持多路视频流
+	 */
+	public void setMaxCutScaleEx(int userId, int streamindex, float scale)
+	{
+		VideoRenderer r = GetRenderByUserId(userId, streamindex);
 		r.setMaxCutScale(scale);
 	}
 	
 	public void ShowVideo(int userid, int streamindex, byte [] mPixel, int rotation, int mirror) {
-		VideoRenderer r = GetRenderByUserId(userid);
+		VideoRenderer r = GetRenderByUserId(userid, streamindex);
 		if(r == null)
 			return;
 		r.DrawByteBuffer(mPixel, rotation, mirror);
 	}
 	
-	private VideoRenderer GetRenderByUserId(int userid) {
+	private VideoRenderer GetRenderByUserId(int userid, int streamindex) {
 		for(int i=0; i<MAX_VIDEO_NUM; i++) {
 			if(render[i] != null) {
-				if(render[i].GetUserId() == userid) {
+				if(render[i].GetUserId() == userid && render[i].GetStreamIndex() == streamindex) {
 					return render[i];
 				}
 			}	
@@ -115,6 +145,7 @@ class VideoRenderer implements Callback {
     private float max_cut_imgscale = 1.0f/3;		//最大能裁剪视频的比例
     
     private int mUserid = -1;
+    private int mStreamIndex = -1;
 	
 	
     public VideoRenderer(SurfaceHolder holder) {
@@ -127,8 +158,13 @@ class VideoRenderer implements Callback {
     
     // 获取当前视频显示单元绑定的用户ID
     public int GetUserId() 				{		return mUserid;			}
+    // 获取当前视频显示单元绑定的流ID
+    public int GetStreamIndex()			{		return mStreamIndex;	}
     // 设置用户ID
     public void SetUserId(int userid)	{		mUserid = userid;   	}
+    // 设置视频流ID
+    public void SetStreamIndex(int index){		mStreamIndex = index;	}
+    
     // 设置最大裁剪图片的比例
 	public void setMaxCutScale(float scale) {
 		if(scale>1.0)
