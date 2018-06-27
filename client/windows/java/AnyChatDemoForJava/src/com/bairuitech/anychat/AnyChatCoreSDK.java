@@ -16,6 +16,7 @@ public class AnyChatCoreSDK
 	AnyChatRecordEvent		recordEvent;
 	AnyChatObjectEvent		objectEvent;
 	AnyChatCoreSDKEvent		coresdkEvent;
+	AnyChatStreamCallBack	streamcbEvent;
 	
 	private static AnyChatCoreSDK mAnyChat = null;		// 单例模式对象
 	
@@ -97,6 +98,12 @@ public class AnyChatCoreSDK
 		RegisterNotify();
 		this.coresdkEvent = e;
 	}
+	// 设置媒体数据回调事件接口
+	public void SetMediaCallBackEvent(AnyChatStreamCallBack e)
+	{
+		RegisterNotify();
+		this.streamcbEvent = e;
+	}
 	// 移除所有事件
 	public void removeEvent(Object e) 
 	{
@@ -122,6 +129,8 @@ public class AnyChatCoreSDK
 			this.objectEvent = null;
 		if (this.coresdkEvent == e)
 			this.coresdkEvent = null;
+		if (this.streamcbEvent == e)
+			this.streamcbEvent = null;
 	}
 	
 	// 查询SDK主版本号
@@ -466,6 +475,27 @@ public class AnyChatCoreSDK
 		if(AnyChatCoreSDK.this.transDataEvent != null)
 			AnyChatCoreSDK.this.transDataEvent.OnAnyChatSDKFilterData(buf, len);
     }
+	
+	// 视频数据回调函数
+	private void OnVideoDataCallBack(int userid, byte[] buf, int len, int width, int height)
+	{
+		if(AnyChatCoreSDK.this.streamcbEvent != null)
+			AnyChatCoreSDK.this.streamcbEvent.OnAnyChatVideoDataCallBack(userid, 0, buf, len, width, height);
+	}
+	
+	// 视频数据回调函数（扩展）
+	private void OnVideoDataCallBackEx(int userid, int streamindex, byte[] buf, int len, int width, int height)
+	{
+		if(AnyChatCoreSDK.this.streamcbEvent != null)
+			AnyChatCoreSDK.this.streamcbEvent.OnAnyChatVideoDataCallBack(userid, streamindex, buf, len, width, height);
+	}
+	
+	// 音频数据回调函数（扩展）
+	private void OnAudioDataCallBack(int userid, int streamindex, byte[] buf, int len, int timestamp, int channels, int samplespersecond, int bitspersample)
+	{
+		if(AnyChatCoreSDK.this.streamcbEvent != null)
+			AnyChatCoreSDK.this.streamcbEvent.OnAnyChatAudioDataCallBack(userid, streamindex, buf, len, timestamp, channels, samplespersecond, bitspersample);
+	}
 	
 	// 视频呼叫事件回调函数
 	private void OnVideoCallEventCallBack(int eventtype, int userid, int errorcode, int flags, int param, String userStr)
