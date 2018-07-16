@@ -315,12 +315,20 @@ public class AnyChatCoreSDK
 	
 	// 设置外部输入视频格式
 	public static native int SetInputVideoFormat(int pixFmt, int dwWidth, int dwHeight, int dwFps, int dwFlags);
+	// 设置外部输入视频格式（扩展）
+	public static native int SetInputVideoFormatEx(int dwStreamIndex, int dwCodecId, int pixFmt, int dwWidth, int dwHeight, int dwFps, int dwFlags);
 	// 外部视频数据输入
 	public static native int InputVideoData(byte[] lpVideoFrame, int dwSize, int dwTimeStamp);
+	// 外部视频数据输入（扩展）
+	public static native int InputVideoDataEx(int dwStreamIndex, byte[] lpVideoFrame, int dwSize, int dwTimeStamp, int dwFlags);
 	// 设置外部输入音频格式
 	public static native int SetInputAudioFormat(int dwChannels, int dwSamplesPerSec, int dwBitsPerSample, int dwFlags);
+	// 设置外部输入音频格式（扩展）
+	public static native int SetInputAudioFormatEx(int dwStreamIndex, int dwCodecId, int dwChannels, int dwSamplesPerSec, int dwBitsPerSample, int dwFlags);
 	// 外部音频数据输入
 	public static native int InputAudioData(byte[] lpSamples, int dwSize, int dwTimeStamp);
+	// 外部音频数据输入（扩展）
+	public static native int InputAudioDataEx(int dwStreamIndex, byte[] lpSamples, int dwSize, int dwTimeStamp, int dwFlags);
 	
 	// 视频呼叫事件控制（请求、回复、挂断等）
 	public native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String szUserStr);
