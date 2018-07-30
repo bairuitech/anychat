@@ -18,6 +18,8 @@
 #define ANYCHAT_OBJECT_FLAGS_GLOBAL			0x0040	///< 全局服务
 #define ANYCHAT_OBJECT_FLAGS_CONNECT		0x0080	///< 网络连接对象
 #define ANYCHAT_OBJECT_FLAGS_MULTICHANNEL	0x0100	///< 多通道模式
+#define ANYCHAT_OBJECT_FLAGS_QUEUEUSERLIST	0x0200	///< 通知队列用户列表
+#define ANYCHAT_OBJECT_FLAGS_AREAUSERINFO	0x0400	///< 营业厅用户详细信息
 
 #define ANYCHAT_INVALID_OBJECT_ID	((DWORD)-1)	///< 无效的对象ID
 #define ANYCHAT_MAX_OBJECT_CHANNELS			36	///< 最大对象服务通道数
@@ -69,6 +71,7 @@
 #define ANYCHAT_QUEUE_INFO_AGENTINFO		509	///< 服务当前队列的坐席信息，返回Json数据
 #define ANYCHAT_QUEUE_INFO_USERIDLIST		510	///< 队列用户ID列表
 #define ANYCHAT_QUEUE_INFO_WAITINGTIMELIST	511	///< 队列用户等待时间列表(单位：秒)
+#define ANYCHAT_QUEUE_INFO_USERINFOLIST		512	///< 队列用户信息列表
 
 
 // 客服状态信息类型定义
@@ -106,6 +109,7 @@
 // 客服参数控制常量定义
 #define ANYCHAT_AGENT_CTRL_SERVICESTATUS	601	///< 坐席服务状态控制（暂停服务、工作中、关闭）
 #define ANYCHAT_AGENT_CTRL_SERVICEREQUEST	602	///< 服务请求
+#define ANYCHAT_AGENT_CTRL_STARTSERVICE		603	///< 开始服务，wParam为用户userid
 #define ANYCHAT_AGENT_CTRL_FINISHSERVICE	604	///< 结束服务
 #define ANYCHAT_AGENT_CTRL_EVALUATION		605	///< 服务评价，wParam为客服userid，lParam为评分，lpStrValue为留言
 
@@ -138,6 +142,7 @@
 #define ANYCHAT_QUEUE_EVENT_USERLEAVE		504	///< 用户离开队列
 #define ANYCHAT_QUEUE_EVENT_LEAVERESULT		505	///< 离开队列结果
 #define ANYCHAT_QUEUE_EVENT_STARTSERVICE	506	///< 用户开始被服务
+#define ANYCHAT_QUEUE_EVENT_USERINFOLISTCHG	507	///< 队列用户列表更新
 
 
 // 坐席事件常量定义
