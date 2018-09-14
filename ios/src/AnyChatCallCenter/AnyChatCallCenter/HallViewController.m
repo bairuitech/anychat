@@ -19,6 +19,8 @@ NSString* const kVideoQuality = @"videoquality";
 
 @interface HallViewController ()
 
+@property (nonatomic, weak) VideoViewController *videoViewController;
+
 @end
 
 @implementation HallViewController
@@ -329,6 +331,7 @@ NSString* const kVideoQuality = @"videoquality";
     VideoViewController *videoVC = [[VideoViewController alloc]init];
     videoVC.theUserEntity = self.theUserEntity;
     [self.navigationController pushViewController:videoVC animated:YES];
+    _videoViewController = videoVC;
 }
 
 // 房间在线用户消息
@@ -341,7 +344,7 @@ NSString* const kVideoQuality = @"videoquality";
 - (void) OnAnyChatUserEnterRoom:(int) dwUserId
 {
     if (self.theUserEntity.theEntityRemoteID == dwUserId ) {
-        
+        [self.videoViewController StartVideoChat:dwUserId];
     }
 }
 
