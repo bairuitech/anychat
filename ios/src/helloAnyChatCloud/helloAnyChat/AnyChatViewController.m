@@ -16,7 +16,7 @@
 #define kAnyChatIP @"demo.anychat.cn"
 #define kAnyChatPort @"8906"
 #define kAnyChatUserName @"AnyChat"
-#define kAnyChatGuid @"bb9ca6ec-e611-4208-ab8f-44b5881c41e8"
+#define kAnyChatGuid @""
 
 typedef enum {
     AnyChatVCLoginModeGeneralLogin,

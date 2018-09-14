@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09558B761ECDBCA900D966CE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09558B751ECDBCA900D966CE /* libz.tbd */; };
 		096D5BE51EDE9B71001100ED /* libanychatcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5BD51EDE9B71001100ED /* libanychatcore.a */; };
 		096D5BE61EDE9B71001100ED /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5BD61EDE9B71001100ED /* libavcodec.a */; };
 		096D5BE71EDE9B71001100ED /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5BD71EDE9B71001100ED /* libavfilter.a */; };
@@ -25,7 +24,8 @@
 		096D5BF31EDE9B71001100ED /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5BE31EDE9B71001100ED /* libyuv_neon.a */; };
 		096D5BF41EDE9B71001100ED /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5BE41EDE9B71001100ED /* libyuv.a */; };
 		098DF2401EA7436C00FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF23F1EA7436C00FB36FA /* VideoToolbox.framework */; };
-		09B589731ECED547009BF992 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09B589721ECED547009BF992 /* libstdc++.6.tbd */; };
+		F854CEFD21474DC4002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CEFC21474DC4002FC106 /* libc++.tbd */; };
+		F854CF5A214758F9002FC106 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09558B751ECDBCA900D966CE /* libz.tbd */; };
 		FB3679A819D8453E008D9C5E /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB3679A719D8453E008D9C5E /* VideoViewController.xib */; };
 		FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD379719D82B4B000FF14E /* QuartzCore.framework */; };
 		FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B2E7319C692F300773FE6 /* VideoViewController.m */; };
@@ -113,6 +113,7 @@
 		096D5BE41EDE9B71001100ED /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
 		098DF23F1EA7436C00FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		09B589721ECED547009BF992 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
+		F854CEFC21474DC4002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FB3679A719D8453E008D9C5E /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
 		FBCD379719D82B4B000FF14E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FE1B2E7219C692F300773FE6 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
@@ -206,9 +207,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F854CF5A214758F9002FC106 /* libz.tbd in Frameworks */,
+				F854CEFD21474DC4002FC106 /* libc++.tbd in Frameworks */,
 				096D5BEE1EDE9B71001100ED /* libppthelper.a in Frameworks */,
-				09B589731ECED547009BF992 /* libstdc++.6.tbd in Frameworks */,
-				09558B761ECDBCA900D966CE /* libz.tbd in Frameworks */,
 				098DF2401EA7436C00FB36FA /* VideoToolbox.framework in Frameworks */,
 				096D5BF11EDE9B71001100ED /* libvo-amrwbenc.a in Frameworks */,
 				096D5BE81EDE9B71001100ED /* libavformat.a in Frameworks */,
@@ -387,6 +388,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F854CEFC21474DC4002FC106 /* libc++.tbd */,
 				09B589721ECED547009BF992 /* libstdc++.6.tbd */,
 				09558B751ECDBCA900D966CE /* libz.tbd */,
 				098DF23F1EA7436C00FB36FA /* VideoToolbox.framework */,
@@ -737,7 +739,7 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "helloAnyChat/helloAnyChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -773,7 +775,7 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "helloAnyChat/helloAnyChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

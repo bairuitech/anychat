@@ -25,7 +25,7 @@
 		096D5C331EDE9BE7001100ED /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5C231EDE9BE7001100ED /* libyuv_neon.a */; };
 		096D5C341EDE9BE7001100ED /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5C241EDE9BE7001100ED /* libyuv.a */; };
 		098DF24C1EA743C500FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF24B1EA743C500FB36FA /* VideoToolbox.framework */; };
-		09B589791ECED9EF009BF992 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09B589781ECED9EF009BF992 /* libstdc++.6.tbd */; };
+		F854CF0921475100002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CF0821475100002FC106 /* libc++.tbd */; };
 		FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD379719D82B4B000FF14E /* QuartzCore.framework */; };
 		FE04EB4D19F642B3006A5E5F /* FeaturesListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE04EB4B19F642B3006A5E5F /* FeaturesListVC.m */; };
 		FE04EB5019F643B9006A5E5F /* FeaturesListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE04EB4F19F643B9006A5E5F /* FeaturesListVC.xib */; };
@@ -169,6 +169,7 @@
 		096D5C241EDE9BE7001100ED /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
 		098DF24B1EA743C500FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		09B589781ECED9EF009BF992 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
+		F854CF0821475100002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FBCD379719D82B4B000FF14E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FE04EB4A19F642B3006A5E5F /* FeaturesListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeaturesListVC.h; sourceTree = "<group>"; };
 		FE04EB4B19F642B3006A5E5F /* FeaturesListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeaturesListVC.m; sourceTree = "<group>"; };
@@ -322,11 +323,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F854CF0921475100002FC106 /* libc++.tbd in Frameworks */,
 				096D5C291EDE9BE7001100ED /* libavutil.a in Frameworks */,
 				096D5C311EDE9BE7001100ED /* libvo-amrwbenc.a in Frameworks */,
 				096D5C2C1EDE9BE7001100ED /* libmediautil.a in Frameworks */,
 				096D5C271EDE9BE7001100ED /* libavfilter.a in Frameworks */,
-				09B589791ECED9EF009BF992 /* libstdc++.6.tbd in Frameworks */,
 				09558AB81ECDB9D300D966CE /* libz.tbd in Frameworks */,
 				096D5C331EDE9BE7001100ED /* libyuv_neon.a in Frameworks */,
 				096D5C281EDE9BE7001100ED /* libavformat.a in Frameworks */,
@@ -576,6 +577,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F854CF0821475100002FC106 /* libc++.tbd */,
 				09B589781ECED9EF009BF992 /* libstdc++.6.tbd */,
 				09558AB71ECDB9D300D966CE /* libz.tbd */,
 				098DF24B1EA743C500FB36FA /* VideoToolbox.framework */,
@@ -972,7 +974,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
 			};
@@ -1006,7 +1007,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
@@ -1038,8 +1038,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatFeatures;
 				PRODUCT_NAME = AnyChatFeatures;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
 				WRAPPER_EXTENSION = app;
@@ -1070,8 +1068,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatFeatures;
 				PRODUCT_NAME = AnyChatFeatures;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
 				WRAPPER_EXTENSION = app;

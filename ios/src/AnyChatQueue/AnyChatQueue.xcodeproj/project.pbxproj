@@ -27,7 +27,6 @@
 		096D5C731EDE9C45001100ED /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5C631EDE9C45001100ED /* libyuv_neon.a */; };
 		096D5C741EDE9C45001100ED /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5C641EDE9C45001100ED /* libyuv.a */; };
 		098DF2481EA743A700FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF2471EA743A700FB36FA /* VideoToolbox.framework */; };
-		09B5897D1ECEDF35009BF992 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09B5897C1ECEDF35009BF992 /* libstdc++.6.tbd */; };
 		09F6856B1DD2B38400D3C366 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F685691DD2B38400D3C366 /* LoginViewController.m */; };
 		09F6856C1DD2B38400D3C366 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09F6856A1DD2B38400D3C366 /* LoginViewController.xib */; };
 		09F6856F1DD2B3E900D3C366 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F6856E1DD2B3E900D3C366 /* CustomButton.m */; };
@@ -44,6 +43,7 @@
 		22D5603D1B2B4B2400FE5DC2 /* BusinessHallCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22D5603C1B2B4B2400FE5DC2 /* BusinessHallCell.xib */; };
 		22D5603F1B2B4F9600FE5DC2 /* businessHalls.json in Resources */ = {isa = PBXBuildFile; fileRef = 22D5603E1B2B4F9600FE5DC2 /* businessHalls.json */; };
 		53F2043E1CCCC5ED002E6260 /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2043D1CCCC5ED002E6260 /* MZTimerLabel.m */; };
+		F854CF052147505F002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CF042147505F002FC106 /* libc++.tbd */; };
 		FE16D5BA1B2BC1FB0054FBD5 /* BusinessListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE16D5B91B2BC1FB0054FBD5 /* BusinessListController.m */; };
 		FE16D5BC1B2BC2450054FBD5 /* business.json in Resources */ = {isa = PBXBuildFile; fileRef = FE16D5BB1B2BC2450054FBD5 /* business.json */; };
 		FE16D5BF1B2BC2D30054FBD5 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = FE16D5BE1B2BC2D30054FBD5 /* Business.m */; };
@@ -115,6 +115,7 @@
 		22D5603E1B2B4F9600FE5DC2 /* businessHalls.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = businessHalls.json; sourceTree = "<group>"; };
 		53F2043C1CCCC5ED002E6260 /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MZTimerLabel.h; path = AnyChatQueue/MZTimerLabel.h; sourceTree = SOURCE_ROOT; };
 		53F2043D1CCCC5ED002E6260 /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MZTimerLabel.m; path = AnyChatQueue/MZTimerLabel.m; sourceTree = SOURCE_ROOT; };
+		F854CF042147505F002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FE16D5B81B2BC1FB0054FBD5 /* BusinessListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessListController.h; sourceTree = "<group>"; };
 		FE16D5B91B2BC1FB0054FBD5 /* BusinessListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessListController.m; sourceTree = "<group>"; };
 		FE16D5BB1B2BC2450054FBD5 /* business.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = business.json; sourceTree = "<group>"; };
@@ -149,8 +150,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F854CF052147505F002FC106 /* libc++.tbd in Frameworks */,
 				096D5C671EDE9C45001100ED /* libavfilter.a in Frameworks */,
-				09B5897D1ECEDF35009BF992 /* libstdc++.6.tbd in Frameworks */,
 				096D5C741EDE9C45001100ED /* libyuv.a in Frameworks */,
 				09558B041ECDBB0900D966CE /* libz.tbd in Frameworks */,
 				098DF2481EA743A700FB36FA /* VideoToolbox.framework in Frameworks */,
@@ -194,6 +195,7 @@
 		098DF2461EA743A700FB36FA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F854CF042147505F002FC106 /* libc++.tbd */,
 				09B5897C1ECEDF35009BF992 /* libstdc++.6.tbd */,
 				09558B031ECDBB0900D966CE /* libz.tbd */,
 				098DF2471EA743A700FB36FA /* VideoToolbox.framework */,
@@ -618,8 +620,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -641,8 +641,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

@@ -25,7 +25,7 @@
 		096D5C531EDE9C15001100ED /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5C431EDE9C15001100ED /* libyuv_neon.a */; };
 		096D5C541EDE9C15001100ED /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5C441EDE9C15001100ED /* libyuv.a */; };
 		098DF24A1EA743B500FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF2491EA743B500FB36FA /* VideoToolbox.framework */; };
-		09B5897B1ECEDDB7009BF992 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09B5897A1ECEDDB7009BF992 /* libstdc++.6.tbd */; };
+		F854CF072147509B002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CF062147509B002FC106 /* libc++.tbd */; };
 		FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD379719D82B4B000FF14E /* QuartzCore.framework */; };
 		FE0D8B0619FF9CC300D5FD3E /* bg_TestMsg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE0D8B0519FF9CC300D5FD3E /* bg_TestMsg.jpg */; };
 		FE1B2E7519C692F300773FE6 /* VideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B2E7319C692F300773FE6 /* VideoVC.m */; };
@@ -117,6 +117,7 @@
 		096D5C441EDE9C15001100ED /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
 		098DF2491EA743B500FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		09B5897A1ECEDDB7009BF992 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
+		F854CF062147509B002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FBCD379719D82B4B000FF14E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FE0D8B0519FF9CC300D5FD3E /* bg_TestMsg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg_TestMsg.jpg; sourceTree = "<group>"; };
 		FE1B2E7219C692F300773FE6 /* VideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoVC.h; sourceTree = "<group>"; };
@@ -207,11 +208,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F854CF072147509B002FC106 /* libc++.tbd in Frameworks */,
 				096D5C491EDE9C15001100ED /* libavutil.a in Frameworks */,
 				096D5C511EDE9C15001100ED /* libvo-amrwbenc.a in Frameworks */,
 				096D5C4C1EDE9C15001100ED /* libmediautil.a in Frameworks */,
 				096D5C471EDE9C15001100ED /* libavfilter.a in Frameworks */,
-				09B5897B1ECEDDB7009BF992 /* libstdc++.6.tbd in Frameworks */,
 				09558ADE1ECDBA6D00D966CE /* libz.tbd in Frameworks */,
 				096D5C531EDE9C15001100ED /* libyuv_neon.a in Frameworks */,
 				096D5C481EDE9C15001100ED /* libavformat.a in Frameworks */,
@@ -352,6 +353,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F854CF062147509B002FC106 /* libc++.tbd */,
 				09B5897A1ECEDDB7009BF992 /* libstdc++.6.tbd */,
 				09558ADD1ECDBA6D00D966CE /* libz.tbd */,
 				098DF2491EA743B500FB36FA /* VideoToolbox.framework */,

@@ -27,7 +27,7 @@
 		096D5BD41EDE9B3D001100ED /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5BC41EDE9B3D001100ED /* libyuv.a */; };
 		098DF23E1EA7435800FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF23D1EA7435800FB36FA /* VideoToolbox.framework */; };
 		464E84AE1ECCA17900A8BC2D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 464E84AD1ECCA17900A8BC2D /* libz.tbd */; };
-		46F8D4321ECD2B7900B72129 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F8D4311ECD2B7900B72129 /* libstdc++.6.tbd */; };
+		F854CEFF21474F84002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CEFE21474F84002FC106 /* libc++.tbd */; };
 		FB3679A819D8453E008D9C5E /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB3679A719D8453E008D9C5E /* VideoViewController.xib */; };
 		FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD379719D82B4B000FF14E /* QuartzCore.framework */; };
 		FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1B2E7319C692F300773FE6 /* VideoViewController.m */; };
@@ -113,6 +113,7 @@
 		464E84AB1ECCA14A00A8BC2D /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../../sdk/libs/libavfilter.a; sourceTree = "<group>"; };
 		464E84AD1ECCA17900A8BC2D /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		46F8D4311ECD2B7900B72129 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
+		F854CEFE21474F84002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FB3679A719D8453E008D9C5E /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
 		FBCD379719D82B4B000FF14E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FE1B2E7219C692F300773FE6 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
@@ -191,8 +192,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F854CEFF21474F84002FC106 /* libc++.tbd in Frameworks */,
 				096D5BCE1EDE9B3D001100ED /* libppthelper.a in Frameworks */,
-				46F8D4321ECD2B7900B72129 /* libstdc++.6.tbd in Frameworks */,
 				464E84AE1ECCA17900A8BC2D /* libz.tbd in Frameworks */,
 				098DF23E1EA7435800FB36FA /* VideoToolbox.framework in Frameworks */,
 				096D5BD11EDE9B3D001100ED /* libvo-amrwbenc.a in Frameworks */,
@@ -352,6 +353,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F854CEFE21474F84002FC106 /* libc++.tbd */,
 				46F8D4311ECD2B7900B72129 /* libstdc++.6.tbd */,
 				464E84AD1ECCA17900A8BC2D /* libz.tbd */,
 				464E84AB1ECCA14A00A8BC2D /* libavfilter.a */,
@@ -488,7 +490,7 @@
 				ORGANIZATIONNAME = "GuangZhou BaiRui NetWork Technology Co.,Ltd.";
 				TargetAttributes = {
 					FEBBA24C19C2CC0B009EE02C = {
-						DevelopmentTeam = 7448PDV238;
+						DevelopmentTeam = 6TZ958XNMU;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -700,7 +702,7 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7448PDV238;
+				DEVELOPMENT_TEAM = 6TZ958XNMU;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "helloAnyChat/helloAnyChat-Prefix.pch";
@@ -720,8 +722,6 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.helloAnyChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
 				WRAPPER_EXTENSION = app;
@@ -736,7 +736,7 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7448PDV238;
+				DEVELOPMENT_TEAM = 6TZ958XNMU;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "helloAnyChat/helloAnyChat-Prefix.pch";
@@ -755,8 +755,6 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.helloAnyChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
 				WRAPPER_EXTENSION = app;
