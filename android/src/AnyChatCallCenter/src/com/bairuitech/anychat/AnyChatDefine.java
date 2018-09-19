@@ -35,6 +35,7 @@ public class AnyChatDefine {
 	public static final int BRAC_PIX_FMT_NV12		=	7;	///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is U and V
 	public static final int BRAC_PIX_FMT_NV21		=	8;	///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is V and U
 	public static final int BRAC_PIX_FMT_NV16		=	9;	///< YUV422SP
+	public static final int BRAC_PIX_FMT_BGR32		=	10;
 	
 	// 视频采集驱动
 	public static final int VIDEOCAP_DRIVER_JAVA	=	3;	///< Java视频采集驱动
@@ -60,6 +61,9 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_AUDIO_RECORDDRVCTRL		=	74;	///< 音频采集驱动控制（参数为int型，0默认驱动， 1 DSound驱动， 2 WaveIn驱动， 3 Java采集[Android平台使用]）
 	public static final int BRAC_SO_AUDIO_ECHODELAY			=	75;	///< 音频回声消除延迟参数设置（参数为int型，单位：ms）
 	public static final int BRAC_SO_AUDIO_NSLEVEL			=	76;	///< 音频噪音抑制水平参数设置（参数为int型，0 - 3，默认为2，值越大抑制水平越高，抑制噪音的能力越强）
+	public static final int BRAC_SO_AUDIO_CBCODEC			=	77;	///< 音频数据回调编码器类型（参数为int型）
+	public static final int BRAC_SO_AUDIO_ECHOLEVEL			=	78;	///< 音频回声消除水平参数设置（参数为int型，0 - 4，默认为4，值越大回声消除能力越强）
+	public static final int BRAC_SO_AUDIO_PLAYCAPTURE		=	79;	///< 音频播放采集参数设置（参数为int型，0 关闭[默认]，1 开启）
 	
 	public static final int BRAC_SO_RECORD_VIDEOBR			=	10;	///< 录像视频码率设置（参数为：int型，单位：bps）
 	public static final int BRAC_SO_RECORD_AUDIOBR			=	11;	///< 录像音频码率设置（参数为：int型，单位：bps）
@@ -163,6 +167,17 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_CORESDK_DISABLEDNSCONNECT =	219; ///< 屏蔽DNS寻址
 	public static final int BRAC_SO_CORESDK_LOGFILEROOTPATH	=	220; ///< 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
 	public static final int BRAC_SO_CORESDK_LOGFILERULE		=	221; ///< 客户端日志文件保存规则（参数为int型，0 自动覆盖[默认] 1 按日期保存，不覆盖）
+	public static final int BRAC_SO_CORESDK_FILEENCANDDEC	=	222; ///< 文件加解密控制（参数为字符串类型，JSON格式）
+	public static final int BRAC_SO_CORESDK_PPTHELPERINIT	=	223; ///< PPT播报环境初始化
+	public static final int BRAC_SO_CORESDK_PPTFILECTRL		=	224; ///< PPT文件控制
+	public static final int BRAC_SO_CORESDK_CBMEDIASTREAM	=	225; ///< 回调原始音视频流
+	public static final int BRAC_SO_CORESDK_CBVIDEOSTREAM	=	226; ///< 回调原始视频流
+	public static final int BRAC_SO_CORESDK_CBAUDIOSTREAM	=	227; ///< 回调原始音频流
+	public static final int BRAC_SO_CORESDK_STREAMADAPTIVE	=	228; ///< 流媒体自适应控制（参数为int型，0 关闭 1 开启[默认]）
+	public static final int BRAC_SO_CORESDK_MAXTRANSFILESIZE=	229; ///< 允许传输的最大文件大小（参数为int型，单位：MByte）
+	public static final int BRAC_SO_CORESDK_USESERVERTIME	=	230; ///< 使用服务器时间戳（参数为int型，0 关闭[默认] 1 开启）
+	public static final int BRAC_SO_CORESDK_APPMONITORLIST	=	231; ///< 应用程序列表，应用程序共享模块使用（参数为字符串）
+	public static final int BRAC_SO_CORESDK_USERRSAPUBKEY	=	232; ///< 用户RSA公钥
 	
 	public static final int BRAC_SO_UDPTRACE_MODE			=	160; ///< UDP数据包跟踪模式
 	public static final int BRAC_SO_UDPTRACE_PACKSIZE		=	161; ///< UDP数据包跟踪的大小，单位：BYTE
@@ -192,6 +207,10 @@ public class AnyChatDefine {
 	public static final int BRAC_RECORD_FLAGS_STEREO		=	0x00000200;	///< 录制音频时，将其它人的声音混合为立体声后录制
 	public static final int BRAC_RECORD_FLAGS_STREAM	    =   0x00001000;	///< 对视频流进行录制（效率高，但可能存在视频方向旋转的问题）
 	public static final int BRAC_RECORD_FLAGS_USERFILENAME	=	0x00002000; ///< 用户自定义文件名
+	public static final int BRAC_RECORD_FLAGS_ERRORCODE		=	0x00004000;	///< 支持出错代码
+	public static final int BRAC_RECORD_FLAGS_MULTISTREAM	=	0x00008000;	///< 支持多路流的录制（拍照）
+	public static final int BRAC_RECORD_FLAGS_CANCEL		=	0x00010000;	///< 取消录像，删除录像文件
+	public static final int BRAC_RECORD_FLAGS_BUFFERCB		=	0x00020000;	///< 缓冲区数据回调
 
 
 	// 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
@@ -251,21 +270,33 @@ public class AnyChatDefine {
 	
 	// SDK控制常量定义（API：BRAC_SDKControl 传入参数）
 	public static final int ANYCHAT_SDKCTRL_BASE			=	1;	///< 基本功能控制
+	public static final int ANYCHAT_SDKCTRL_USERBUFFER		=	3;	///< 用户缓冲区传输控制
+	public static final int ANYCHAT_SDKCTRL_INVOKEEVENT		=	4;	///< 触发异步事件
+	public static final int ANYCHAT_SDKCTRL_RECORD			=	5;	///< 音视频录制
 	public static final int ANYCHAT_SDKCTRL_OBJECT			=	20;	///< 对象操作
 	public static final int ANYCHAT_SDKCTRL_VIDEOCALL		=	30;	///< 呼叫控制
 	public static final int ANYCHAT_SDKCTRL_USERINFO		=	40;	///< 用户信息控制
 	public static final int ANYCHAT_SDKCTRL_STREAMPLAY		=	50;	///< 流媒体播放
 	public static final int ANYCHAT_SDKCTRL_NETWORK			=	60;	///< 网络控制
 	public static final int ANYCHAT_SDKCTRL_MEDIA			=	70;	///< 媒体控制
+	public static final int ANYCHAT_SDKCTRL_RECORDTAG		=	71;	///< 录像标签
 	public static final int ANYCHAT_SDKCTRL_FILEDELETE		=	80;	///< 删除文件
 	public static final int ANYCHAT_SDKCTRL_FILEINFO		=	81;	///< 获取文件信息
 	public static final int ANYCHAT_SDKCTRL_DISKSIZE		=	82;	///< 获取磁盘容量
 	public static final int ANYCHAT_SDKCTRL_FILEENCRYPT		=	83;	///< 文件加解密控制
+	public static final int ANYCHAT_SDKCTRL_DELETEDIR		=	84;	///< 删除目录
+	public static final int ANYCHAT_SDKCTRL_CREATEDIR		=	85;	///< 创建目录
+	public static final int ANYCHAT_SDKCTRL_DIRCLEAN		=	86;	///< 目录清理
+	public static final int ANYCHAT_SDKCTRL_FINDFILE		=	87;	///< 查找文件
 	public static final int ANYCHAT_SDKCTRL_PPTHELPERINIT	=	90;	///< PPT环境初始化
 	public static final int ANYCHAT_SDKCTRL_PPTFILECTRL		=	91;	///< PPT文件控制
 	public static final int ANYCHAT_SDKCTRL_PPTFILEINFO		=	92;	///< PPT文件信息
 	public static final int ANYCHAT_SDKCTRL_BUSINESS		=	95;	///< 业务控制
-	
+	public static final int ANYCHAT_SDKCTRL_MEDIAFILTERINIT	=	96;	///< 媒体过滤器初始化
+	public static final int ANYCHAT_SDKCTRL_VIDEODEVICEINFO	=	97;	///< 获取视频采集设备信息
+	public static final int ANYCHAT_SDKCTRL_UPDATERECUSERSTR=	98;	///< 更新录像用户参数
+	public static final int ANYCHAT_SDKCTRL_SYNCRECORD		=	99;	///< 同步录像参数设置
+
 	// 常见出错代码定义
     public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< 没有错误
     public static final int BRAC_ERRORCODE_SESSION_QUIT		= 100101;///< 源用户主动放弃会话
@@ -314,11 +345,17 @@ public class AnyChatDefine {
 
 	// CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
 	public static final int ANYCHAT_CORESDKEVENT_BASEEVENT	=	1;	///< SDK基础事件
+	public static final int ANYCHAT_CORESDKEVENT_CONNECTHOLD=	2;	///< 连接保持事件
 	public static final int ANYCHAT_CORESDKEVENT_CAMERASTATE=	10;	///< 摄像头状态事件
 	public static final int ANYCHAT_CORESDKEVENT_MICSTATE	=	11;	///< Mic状态事件
 	public static final int ANYCHAT_CORESDKEVENT_TRANSFILE	=	12;	///< 文件传输事件
 	public static final int ANYCHAT_CORESDKEVENT_STREAMPLAY	=	30;	///< 媒体播放事件
 	public static final int ANYCHAT_CORESDKEVENT_BUSINESS	=	32;	///< 业务事件
+	public static final int ANYCHAT_CORESDKEVENT_PPTHELPER	=	31;	///< PPTHelper事件
+	public static final int ANYCHAT_CORESDKEVENT_DEVICEFAIL	=	33;	///< 设备失败事件
+	public static final int ANYCHAT_CORESDKEVENT_MEDIABUFFER=	34;	///< 媒体缓冲区事件
+	public static final int ANYCHAT_CORESDKEVENT_USERBUFFER	=	35;	///< 用户缓冲区事件
+	public static final int ANYCHAT_CORESDKEVENT_USERDEFINE	=	800;///< 用户自定义事件起始序号
 
 	// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
 	public static final int ANYCHAT_CORESDKDATA_AUDIO		=	1;	///< 音频数据

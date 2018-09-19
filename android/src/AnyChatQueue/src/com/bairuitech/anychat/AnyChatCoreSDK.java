@@ -1,8 +1,6 @@
 package com.bairuitech.anychat;		// 不能修改包的名称
 
 import java.lang.ref.WeakReference;
-
-import android.util.Log;
 import android.view.Surface;
 import android.content.Context;
 import android.os.Bundle;
