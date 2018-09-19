@@ -34,10 +34,12 @@
 #define WM_GV_USERINFOUPDATE		WM_GV + 16		///< 用户信息更新通知，wParam（INT）表示用户ID号，lParam（INT）表示更新类别
 #define WM_GV_FRIENDSTATUS			WM_GV + 17		///< 好友在线状态变化，wParam（INT）表示好友用户ID号，lParam（INT）表示用户的当前活动状态：0 离线， 1 上线
 #define WM_GV_OBJECTEVENT			WM_GV + 18		///< 对象事件通知，wParam（INT）表示对象类型，lParam（INT）表示对象ID
+#define WM_GV_SESSIONKEEP			WM_GV + 19		///< 会话保持事件，wParam（INT）表示会话保持状态：0 会话保持开始， 1 会话保持结束，lParam（INT）表示出错代码
 
 #define WM_GV_PRIVATEREQUEST		WM_GV + 21		///< 用户发起私聊请求，wParam（INT）表示发起者的用户ID号，lParam（INT）表示私聊请求编号，标识该请求
 #define WM_GV_PRIVATEECHO			WM_GV + 22		///< 用户回复私聊请求，wParam（INT）表示回复者的用户ID号，lParam（INT）为出错代码
 #define WM_GV_PRIVATEEXIT			WM_GV + 23		///< 用户退出私聊，wParam（INT）表示退出者的用户ID号，lParam（INT）为出错代码
+#define WM_GV_SERVERCFGUPDATE		WM_GV + 24		///< 服务器配置参数更新
 
 #define WM_GV_EXTENDBTNPRESS		WM_GV + 31		///< 用户按下扩展按钮，wParam（INT）表示按钮所对应的用户ID号，lParam（DWORD）指示按钮（左下角）所在屏幕位置(x,y)，用户可以利用该参数显示菜单等
 #define WM_GV_VIDEOFULLSCREEN		WM_GV + 32		///< 用户视频全屏通知，wParam（INT）表示用户ID，lParam(DWORD)表示当前视频是否全屏显示
