@@ -233,6 +233,8 @@ public class AnyChatDefine {
 	public static final int BRAC_USERSTATE_SELFUSERID		=	17;	///< 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
 	public static final int BRAC_USERSTATE_VIDEOROTATION	=	18;	///< 查询指定用户的当前视频旋转角度（参数为DWORD类型，返回角度值）
 	public static final int BRAC_USERSTATE_VIDEOMIRRORED	=	19;	///< 查询指定用户的视频是否需要镜像翻转
+	public static final int BRAC_USERSTATE_RESENDLOSSRATE	=	22;	///< 丢包补偿后的丢包率（参数为DWORD类型，返回值：0 - 100，如：返回值为5，表示丢包率为5%）
+
 	
 	// 房间状态标志定义（API：BRAC_QueryRoomState 传入参数）
 	public static final int BRAC_ROOMSTATE_ROOMNAME			=	1;	///< 房间名称（参数为字符串TCHAR类型）

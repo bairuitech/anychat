@@ -18,6 +18,7 @@ enum BRAC_PixelFormat{
 	BRAC_PIX_FMT_NV12,							///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is U and V
 	BRAC_PIX_FMT_NV21,							///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is V and U
 	BRAC_PIX_FMT_NV16,							///< YUV422SP
+	BRAC_PIX_FMT_BGR32,
 	
 	BRAC_PIX_FMT_MJPEG = 200,
 	BRAC_PIX_FMT_H264,
@@ -204,6 +205,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_MAXTRANSFILESIZE	229	///< 允许传输的最大文件大小（参数为int型，单位：MByte）
 #define BRAC_SO_CORESDK_USESERVERTIME		230	///< 使用服务器时间戳（参数为int型，0 关闭[默认] 1 开启）
 #define BRAC_SO_CORESDK_APPMONITORLIST		231	///< 应用程序列表，应用程序共享模块使用（参数为字符串）
+#define BRAC_SO_CORESDK_USERRSAPUBKEY		232	///< 用户RSA公钥
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -316,6 +318,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_USERSTATE_VIDEOMIRRORED		19	///< 查询指定用户的视频是否需要镜像翻转
 #define BRAC_USERSTATE_AUDIOCODECID			20	///< 查询指定用户的音频编码器ID
 #define BRAC_USERSTATE_VIDEOCODECID			21	///< 查询指定用户的视频编码器ID
+#define BRAC_USERSTATE_RESENDLOSSRATE		22	///< 丢包补偿后的丢包率（参数为DWORD类型，返回值：0 - 100，如：返回值为5，表示丢包率为5%）
 
 // 房间状态标志定义（API：BRAC_QueryRoomState 传入参数）
 #define BRAC_ROOMSTATE_ROOMNAME				1	///< 房间名称（参数为字符串TCHAR类型）
@@ -415,6 +418,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SDKCTRL_SERVER				2	///< 服务器通信
 #define ANYCHAT_SDKCTRL_USERBUFFER			3	///< 用户缓冲区传输控制
 #define ANYCHAT_SDKCTRL_INVOKEEVENT			4	///< 触发异步事件
+#define ANYCHAT_SDKCTRL_RECORD				5	///< 音视频录制
 #define ANYCHAT_SDKCTRL_OBJECT				20	///< 对象操作
 #define ANYCHAT_SDKCTRL_VIDEOCALL			30	///< 呼叫控制
 #define ANYCHAT_SDKCTRL_USERINFO			40	///< 用户信息控制
