@@ -1,36 +1,26 @@
 package com.example.helloanychat;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import android.app.Activity;
+import android.content.*;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.*;
+import android.widget.AdapterView.OnItemClickListener;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
 import com.example.config.ConfigEntity;
 import com.example.config.ConfigService;
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends Activity implements AnyChatBaseEvent {
 	// 视频配置界面标识
@@ -107,7 +97,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mWaitingLayout = (LinearLayout) this.findViewById(R.id.waitingLayout);
 
 		mRoleList.setDivider(null);
-		mBottomConnMsg.setText("No content to the server");
+		mBottomConnMsg.setText("Failed to connect to the Server");
 		// 初始化bottom_tips信息
 		mBottomBuildMsg.setText(" V" + anyChatSDK.GetSDKMainVersion() + "."
 				+ anyChatSDK.GetSDKSubVersion() + "  Build time: "
@@ -503,7 +493,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 						.show();
 				setBtnVisible(SHOWLOGINSTATEFLAG);
 				mRoleList.setAdapter(null);
-				mBottomConnMsg.setText("No content to the server");
+				mBottomConnMsg.setText("Failed to connect to the Server");
 				anyChatSDK.LeaveRoom(-1);
 				anyChatSDK.Logout();
 			}
