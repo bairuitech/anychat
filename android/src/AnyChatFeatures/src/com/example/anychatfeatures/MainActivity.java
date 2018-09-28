@@ -100,7 +100,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 		mBtnWaiting = (Button) this.findViewById(R.id.mainUIWaitingBtn);
 		mWaitingLayout = (LinearLayout) this.findViewById(R.id.waitingLayout);
 
-		mBottomConnMsg.setText("No content to the server");
+		mBottomConnMsg.setText("Failed to connect to the Server");
 		// 初始化bottom_tips信息
 		mBottomBuildMsg.setText(" V" + anyChatSDK.GetSDKMainVersion() + "."
 				+ anyChatSDK.GetSDKSubVersion() + "  Build time: "
@@ -320,7 +320,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			anyChatSDK.LeaveRoom(-1);
 			anyChatSDK.Logout();
 			setBtnVisible(SHOWLOGINSTATEFLAG);
-			mBottomConnMsg.setText("No content to the server");
+			mBottomConnMsg.setText("Failed to connect to the Server");
 		}
 	}
 
@@ -333,7 +333,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 				anyChatSDK.LeaveRoom(-1);
 				anyChatSDK.Logout();
 				setBtnVisible(SHOWLOGINSTATEFLAG);
-				mBottomConnMsg.setText("No content to the server");
+				mBottomConnMsg.setText("Failed to connect to the Server");
 
 				if (mToast == null) {
 					mToast = Toast.makeText(MainActivity.this, "网络已断开!",
