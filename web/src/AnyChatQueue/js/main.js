@@ -322,7 +322,10 @@ $(function () {
                 /**离开队列*/
                 var errorcode = BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_QUEUE, queueid, ANYCHAT_QUEUE_CTRL_USERLEAVE, 0, 0, 0, 0, "");
                 AddLog("BRAC_ObjectControl(" + ANYCHAT_OBJECT_TYPE_QUEUE + "," + queueid + "," + ANYCHAT_QUEUE_CTRL_USERLEAVE + ",0,0,0,0,''" + ")=" + errorcode, LOG_TYPE_API);
-
+				if(errorcode == 0){
+					 $("#LOADING_GREY_DIV").hide();
+				}
+					
                 isShowReturnBtn(true);
 
                 $("#roomOut").off().click(function () {
