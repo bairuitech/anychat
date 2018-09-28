@@ -2,11 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -26,25 +21,24 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>7.2.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>20180927</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-    
-    
-    <key>NSCameraUsageDescription</key>
-    <string>cameraDesciption</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>microphoneDesciption</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>photoDesciption</string>
-
-    
-    
-    
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>cameraDesciption</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>microphoneDesciption</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>photoDesciption</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
