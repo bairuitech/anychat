@@ -307,8 +307,8 @@ var WM_GV_AUDIORECCTRL		=	WM_GV + 101;	// ÒôÆµÂ¼ÒôÉè±¸¿ØÖÆ£¬wParam:1 ´ò¿ªÒôÆµ²É¼
 var WM_GV_VIDEOCAPCTRL		=	WM_GV + 102;	// ÊÓÆµ²É¼¯¿ØÖÆ£¬wParam: 1 ¿ªÊ¼²É¼¯£¬ 0 ¹Ø±Õ²É¼¯
 
 // ·¿¼ä×´Ì¬±êÖ¾¶¨Òå£¨API£ºBRAC_QueryRoomState ´«Èë²ÎÊý£©
-var BRAC_ROOMSTATE_ROOMNAME	=			1	// ·¿¼äÃû³Æ£¨²ÎÊýÎª×Ö·û´®TCHARÀàÐÍ£©
-var BRAC_ROOMSTATE_ONLINEUSERS	=		2	// ·¿¼äÔÚÏßÓÃ»§Êý£¨²ÎÊýÎªDWORDÐÍ£¬²»°üº¬×Ô¼º
+var BRAC_ROOMSTATE_ROOMNAME		=			1;	// ·¿¼äÃû³Æ£¨²ÎÊýÎª×Ö·û´®TCHARÀàÐÍ£©
+var BRAC_ROOMSTATE_ONLINEUSERS	=			2;	// ·¿¼äÔÚÏßÓÃ»§Êý£¨²ÎÊýÎªDWORDÐÍ£¬²»°üº¬×Ô¼º
 
 // ÊÓÆµºô½ÐÊÂ¼þÀàÐÍ¶¨Òå£¨API£ºBRAC_VideoCallControl ´«Èë²ÎÊý¡¢VideoCallEvent»Øµ÷²ÎÊý£©
 var BRAC_VIDEOCALL_EVENT_REQUEST=			1;	// ºô½ÐÇëÇó
