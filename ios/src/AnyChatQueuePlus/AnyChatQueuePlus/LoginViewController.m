@@ -500,6 +500,7 @@
             videoVC.remoteUserId = self.customerId;
         }
         [self.navigationController pushViewController:videoVC animated:YES];
+        _videoViewController = videoVC;
     }
 }
 

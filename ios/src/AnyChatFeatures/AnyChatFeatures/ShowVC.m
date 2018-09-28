@@ -125,6 +125,7 @@
     self.theSelectContentPath = [selectCellDataMDict objectForKey:@"contentPathStr"];
     // init
     if (self.theSelectContentPath) {
+        
         NSURL *url =  [NSURL fileURLWithPath:self.theSelectContentPath];
         
         // 实例化

@@ -804,6 +804,7 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "AnyChatSelfRecord/AnyChatSelfRecord-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -835,6 +836,7 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "AnyChatSelfRecord/AnyChatSelfRecord-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -216,12 +216,17 @@
         // 刷新或关闭页面时释放插件
         BRAC_Release();
     }
-	var agent = navigator.userAgent.toLowerCase();
-    var prompt_div_btn_load = document.getElementById('prompt_div_btn_load');
-    if (agent.indexOf("win64") >= 0 || agent.indexOf("wow64") >= 0) {
-        prompt_div_btn_load.onclick = function(){
-            window.location.href = 'http://anychat.oss-cn-hangzhou.aliyuncs.com/AnyChatWebSetup_x64.exe';
-        }
+	
+	// AnyChat Web插件下载路径
+	var anychat_plugin_url = 'http://anychat.oss-cn-hangzhou.aliyuncs.com/AnyChatWebSetup.exe';
+	var anychat_plugin_x64_url = 'http://anychat.oss-cn-hangzhou.aliyuncs.com/AnyChatWebSetup_x64.exe';
+    var agent = navigator.userAgent.toLowerCase();
+    var prompt_div_btn_load = document.getElementById('prompt_div_btn_load');  //< 下载安装按钮
+	prompt_div_btn_load.onclick = function(){
+		if (agent.indexOf("win64") >= 0) 
+            window.location.href = anychat_plugin_x64_url;
+		else
+			window.location.href = anychat_plugin_url;
     }
 </script>
 </body>
