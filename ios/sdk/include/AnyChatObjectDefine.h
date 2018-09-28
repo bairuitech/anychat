@@ -22,7 +22,7 @@
 #define ANYCHAT_OBJECT_FLAGS_AREAUSERINFO	0x0400	///< 营业厅用户详细信息
 #define ANYCHAT_OBJECT_FLAGS_MANUALSYNCAREA	0x0800	///< 手工同步营业厅数据（禁止自动）
 
-#define ANYCHAT_INVALID_OBJECT_ID	((DWORD)-1)	///< 无效的对象ID
+#define ANYCHAT_INVALID_OBJECT_ID			-1	///< 无效的对象ID
 #define ANYCHAT_MAX_OBJECT_CHANNELS			36	///< 最大对象服务通道数
 
 // 坐席服务状态定义
