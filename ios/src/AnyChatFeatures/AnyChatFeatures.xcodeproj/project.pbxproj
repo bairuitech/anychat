@@ -1030,6 +1030,7 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "AnyChatFeatures/AnyChatFeatures-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1061,6 +1062,7 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "AnyChatFeatures/AnyChatFeatures-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

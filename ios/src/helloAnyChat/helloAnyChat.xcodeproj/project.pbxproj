@@ -711,7 +711,7 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "helloAnyChat/helloAnyChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					../../sdk/libs,
@@ -745,7 +745,7 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "helloAnyChat/helloAnyChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					../../sdk/libs,
