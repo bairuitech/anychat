@@ -30,7 +30,7 @@ class UserViewController: UITableViewController, UIAlertViewDelegate, DZNEmptyDa
     }
 
     // MARK: - Table view data source
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if allUserIDs == nil {
             return 0
         }else {
@@ -38,8 +38,8 @@ class UserViewController: UITableViewController, UIAlertViewDelegate, DZNEmptyDa
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("UserList", forIndexPath: indexPath) as UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserList", for: indexPath) as UITableViewCell
         
         let user = allUser[indexPath.row] as User
         cell.textLabel?.text = user.name                // 用户名
@@ -49,59 +49,59 @@ class UserViewController: UITableViewController, UIAlertViewDelegate, DZNEmptyDa
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectUser = self.allUser[indexPath.row]
         self.remoteUserId = selectUser.uid
         
-        self.performSegueWithIdentifier("Video", sender: self)
+        self.performSegue(withIdentifier: "Video", sender: self)
         
         // 取消选中状态
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        self.tableView.deselectRow(at: indexPath, animated: false)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Video" {
-            let videoVC = segue.destinationViewController as! VideoViewController;
+            let videoVC = segue.destination as! VideoViewController;
             videoVC.remoteUserId = self.remoteUserId
         }
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         if buttonIndex == 1 {
             // 离开本房间
-            AnyChatPlatform.LeaveRoom(-1)
+            AnyChatPlatform.leaveRoom(-1)
             // 注销
-            AnyChatPlatform.Logout()
-            self.navigationController?.popViewControllerAnimated(true)
+            AnyChatPlatform.logout()
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
     // MARK: - EmptyData
-    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
         return UIImage(named: "empty_bg")
     }
-    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let attrs = [NSFontAttributeName: UIFont.boldSystemFontOfSize(14), NSForegroundColorAttributeName:UIColor.lightGrayColor()]
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let attrs = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName:UIColor.lightGray]
         return NSAttributedString(string:"用户列表为空", attributes: attrs)
     }
-    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let paragraph = NSMutableParagraphStyle()
-        paragraph.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        paragraph.alignment = NSTextAlignment.Center
+        paragraph.lineBreakMode = NSLineBreakMode.byWordWrapping
+        paragraph.alignment = NSTextAlignment.center
         
-        let attrs = [NSFontAttributeName: UIFont.boldSystemFontOfSize(12), NSForegroundColorAttributeName:UIColor.lightGrayColor(),NSParagraphStyleAttributeName: paragraph]
+        let attrs = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 12), NSForegroundColorAttributeName:UIColor.lightGray,NSParagraphStyleAttributeName: paragraph]
         
         return NSAttributedString(string: "此用户列表自动刷新，请稍后", attributes: attrs)
     }
     
     // MARK: - Custom
-    func getAllUser(uids: [Int32]?) {
+    func getAllUser(_ uids: [Int32]?) {
         allUser.removeAll()
         
         if uids != nil {
             for uid in uids! {
-                let userName = AnyChatPlatform.GetUserName(uid)
-                allUser.append(User(name: userName, uid: uid))
+                let userName = AnyChatPlatform.getUserName(uid)
+                allUser.append(User(name: userName!, uid: uid))
             }
         }
         

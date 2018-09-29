@@ -30,14 +30,14 @@ class VideoViewController: UIViewController, UIActionSheetDelegate {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.hidden = true
+        self.navigationController?.navigationBar.isHidden = true
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.hidden = false
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     func setup() {
@@ -47,21 +47,21 @@ class VideoViewController: UIViewController, UIActionSheetDelegate {
     
     func setupTimerLabel() {
         let timerLabel = MZTimerLabel(label: self.timerLabel)
-        timerLabel.timeFormat = "▷ HH:mm:ss"
-        timerLabel.start()
+        timerLabel?.timeFormat = "▷ HH:mm:ss"
+        timerLabel?.start()
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
     func setupVideoView() {
         
         // 防锁屏
-        UIApplication.sharedApplication().idleTimerDisabled = true
+        UIApplication.shared.isIdleTimerDisabled = true
         
         // 设置本地视频窗口的layer属性
-        self.localVideoView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.localVideoView.layer.borderColor = UIColor.white.cgColor
         self.localVideoView.layer.borderWidth = 1.0
         self.localVideoView.layer.cornerRadius = 4.0
         self.localVideoView.layer.masksToBounds = true
@@ -71,54 +71,54 @@ class VideoViewController: UIViewController, UIActionSheetDelegate {
     func startVideoChat() {
         
         // 枚举本地视频采集设备
-        let videoDeviceArr = AnyChatPlatform.EnumVideoCapture()
+        let videoDeviceArr = AnyChatPlatform.enumVideoCapture()
         // 选择指定的视频采集设备
-        if videoDeviceArr.count > 1 {
+        if (videoDeviceArr?.count)! > 1 {
             // 前置摄像头
-            AnyChatPlatform.SelectVideoCapture(videoDeviceArr.objectAtIndex(1) as! String)
+            AnyChatPlatform.selectVideoCapture(videoDeviceArr?.object(at: 1) as! String)
         }
         
         // 本地设置
-        AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_OVERLAY, 1) // 采用 Overlay 模式
-        AnyChatPlatform.UserCameraControl(-1, true)
-        AnyChatPlatform.UserSpeakControl(-1, true)
-        AnyChatPlatform.SetVideoPos(-1, self, 0, 0, 0, 0)
+        AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_OVERLAY, 1) // 采用 Overlay 模式
+        AnyChatPlatform.userCameraControl(-1, true)
+        AnyChatPlatform.userSpeakControl(-1, true)
+        AnyChatPlatform.setVideoPos(-1, self, 0, 0, 0, 0)
         
         // 远程方设置
-        AnyChatPlatform.UserSpeakControl(self.remoteUserId, true)
-        AnyChatPlatform.UserCameraControl(self.remoteUserId, true)
-        AnyChatPlatform.SetVideoPos(self.remoteUserId, self.remoteVideoView, 0, 0, 0, 0)
+        AnyChatPlatform.userSpeakControl(self.remoteUserId, true)
+        AnyChatPlatform.userCameraControl(self.remoteUserId, true)
+        AnyChatPlatform.setVideoPos(self.remoteUserId, self.remoteVideoView, 0, 0, 0, 0)
     }
     
     //创建和初始化 AVCaptureVideoPreviewLayer 对象,实现本地视频的显示
-    func OnLocalVideoInit(session: AVCaptureSession) {
+    func OnLocalVideoInit(_ session: AVCaptureSession) {
         self.localCaptureLayer = AVCaptureVideoPreviewLayer(session: session)
-        self.localCaptureLayer!.frame = CGRectMake(0, 0, 100, 130)
+        self.localCaptureLayer!.frame = CGRect(x: 0, y: 0, width: 100, height: 130)
         self.localCaptureLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
         self.localVideoView.layer.addSublayer(self.localCaptureLayer!)
     }
     
-    func OnLocalVideoRelease(sender: AnyObject) {
+    func OnLocalVideoRelease(_ sender: AnyObject) {
         self.localCaptureLayer = nil
     }
     
-    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+    func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int) {
         if buttonIndex == 0 {
             self.finishVideoChat()
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
     func finishVideoChat() {
         // 关闭摄像头/麦克风
-        AnyChatPlatform.UserSpeakControl(-1, false)
-        AnyChatPlatform.UserCameraControl(-1, false)
-        AnyChatPlatform.UserSpeakControl(self.remoteUserId, false)
-        AnyChatPlatform.UserCameraControl(self.remoteUserId, false)
+        AnyChatPlatform.userSpeakControl(-1, false)
+        AnyChatPlatform.userCameraControl(-1, false)
+        AnyChatPlatform.userSpeakControl(self.remoteUserId, false)
+        AnyChatPlatform.userCameraControl(self.remoteUserId, false)
     }
     
     @IBAction func endCallAction() {
         let actionSheet = UIActionSheet(title: "确定结束会话?", delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: "确定")
-        actionSheet.showInView(self.view)
+        actionSheet.show(in: self.view)
     }
 }
