@@ -127,7 +127,6 @@
 		096D5CA31EDE9CAF001100ED /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
 		096D5CA41EDE9CAF001100ED /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
 		098DF2411EA7438000FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		09B589741ECED857009BF992 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
 		F854CF0021474FC4002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FBB435AE1A4B3398000BFB8B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		FE1E887A1A4410C80093E935 /* AnyChatSelfRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnyChatSelfRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -290,7 +289,6 @@
 			isa = PBXGroup;
 			children = (
 				F854CF0021474FC4002FC106 /* libc++.tbd */,
-				09B589741ECED857009BF992 /* libstdc++.6.tbd */,
 				09558B4F1ECDBBEA00D966CE /* libz.tbd */,
 				098DF2411EA7438000FB36FA /* VideoToolbox.framework */,
 				FBB435AE1A4B3398000BFB8B /* MediaPlayer.framework */,

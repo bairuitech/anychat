@@ -86,7 +86,6 @@
 		096D5C831EDE9C84001100ED /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
 		096D5C841EDE9C84001100ED /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
 		098DF2441EA7438F00FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		09B5897E1ECEDFDB009BF992 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
 		226B21561B3B17A200712478 /* ServerQueueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerQueueViewController.h; sourceTree = "<group>"; };
 		226B21571B3B17A200712478 /* ServerQueueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerQueueViewController.m; sourceTree = "<group>"; };
 		226B21581B3B17A200712478 /* ServerQueueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServerQueueViewController.xib; sourceTree = "<group>"; };
@@ -98,8 +97,6 @@
 		22D5600D1B2B2B2100FE5DC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		22D5600F1B2B2B2100FE5DC2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		22D560121B2B2B2100FE5DC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		22D5601D1B2B2B2100FE5DC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		22D5601E1B2B2B2100FE5DC2 /* AnyChatQueueTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnyChatQueueTests.m; sourceTree = "<group>"; };
 		22D5602D1B2B3ECB00FE5DC2 /* BusinessHallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessHallViewController.h; sourceTree = "<group>"; };
 		22D5602E1B2B3ECB00FE5DC2 /* BusinessHallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessHallViewController.m; sourceTree = "<group>"; };
 		22D560331B2B488000FE5DC2 /* BusinessHall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessHall.h; sourceTree = "<group>"; };
@@ -196,7 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				F854CF0221475012002FC106 /* libc++.tbd */,
-				09B5897E1ECEDFDB009BF992 /* libstdc++.6.tbd */,
 				09558B291ECDBB9600D966CE /* libz.tbd */,
 				098DF2441EA7438F00FB36FA /* VideoToolbox.framework */,
 			);
@@ -213,7 +209,6 @@
 				FE16D6121B2C10C90054FBD5 /* AudioToolbox.framework */,
 				FE16D6101B2C10C00054FBD5 /* AVFoundation.framework */,
 				22D560011B2B2B2100FE5DC2 /* AnyChatQueuePlus */,
-				22D5601B1B2B2B2100FE5DC2 /* AnyChatQueueTests */,
 				22D560001B2B2B2100FE5DC2 /* Products */,
 				098DF2431EA7438F00FB36FA /* Frameworks */,
 			);
@@ -253,23 +248,6 @@
 				22D5600F1B2B2B2100FE5DC2 /* Images.xcassets */,
 				22D560031B2B2B2100FE5DC2 /* Info.plist */,
 				22D560041B2B2B2100FE5DC2 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		22D5601B1B2B2B2100FE5DC2 /* AnyChatQueueTests */ = {
-			isa = PBXGroup;
-			children = (
-				22D5601E1B2B2B2100FE5DC2 /* AnyChatQueueTests.m */,
-				22D5601C1B2B2B2100FE5DC2 /* Supporting Files */,
-			);
-			path = AnyChatQueueTests;
-			sourceTree = "<group>";
-		};
-		22D5601C1B2B2B2100FE5DC2 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				22D5601D1B2B2B2100FE5DC2 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

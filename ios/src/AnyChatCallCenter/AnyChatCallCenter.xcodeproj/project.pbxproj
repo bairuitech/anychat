@@ -99,7 +99,6 @@
 		096D5C031EDE9BAC001100ED /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
 		096D5C041EDE9BAC001100ED /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
 		098DF24D1EA743D400FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		09B589761ECED90E009BF992 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
 		F854CF0A21475157002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FE673EBF1A1ED9E300C18ACD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FE673EC11A1EE70E00C18ACD /* bg_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_video@2x.png"; path = "AnyChatCallCenter/bk/bg_video@2x.png"; sourceTree = "<group>"; };
@@ -322,7 +321,6 @@
 			isa = PBXGroup;
 			children = (
 				F854CF0A21475157002FC106 /* libc++.tbd */,
-				09B589761ECED90E009BF992 /* libstdc++.6.tbd */,
 				09558A911ECDB95300D966CE /* libz.tbd */,
 				098DF24D1EA743D400FB36FA /* VideoToolbox.framework */,
 				FEB3382819B857F800D2C2F3 /* CoreAudio.framework */,
