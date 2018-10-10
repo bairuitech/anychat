@@ -1,156 +1,156 @@
 #if !defined(_ANYCHAT_OBJECTDEFINE_H_INCLUDED_)
 #define _ANYCHAT_OBJECTDEFINE_H_INCLUDED_
 
-// ∂‘œÛ¿‡–Õ∂®“Â
-#define ANYCHAT_OBJECT_TYPE_AREA			4	///< ∑˛ŒÒ«¯”Ú
-#define ANYCHAT_OBJECT_TYPE_QUEUE			5	///< ∂”¡–∂‘œÛ
-#define ANYCHAT_OBJECT_TYPE_AGENT			6	///< øÕ∑˛∂‘œÛ
-#define ANYCHAT_OBJECT_TYPE_CLIENTUSER		8	///< øÕªß∂À”√ªß∂‘œÛ£¨”√”⁄”Î∑˛ŒÒ∆˜Ωªªª ˝æ›
-#define ANYCHAT_OBJECT_TYPE_SKILL			9	///< “µŒÒººƒ‹∂‘œÛ
-#define ANYCHAT_OBJECT_TYPE_QUEUEGROUP		10	///< ∂”¡–∑÷◊È∂‘œÛ
+// ÂØπË±°Á±ªÂûãÂÆö‰πâ
+#define ANYCHAT_OBJECT_TYPE_AREA			4	///< ÊúçÂä°Âå∫Âüü
+#define ANYCHAT_OBJECT_TYPE_QUEUE			5	///< ÈòüÂàóÂØπË±°
+#define ANYCHAT_OBJECT_TYPE_AGENT			6	///< ÂÆ¢ÊúçÂØπË±°
+#define ANYCHAT_OBJECT_TYPE_CLIENTUSER		8	///< ÂÆ¢Êà∑Á´ØÁî®Êà∑ÂØπË±°ÔºåÁî®‰∫é‰∏éÊúçÂä°Âô®‰∫§Êç¢Êï∞ÊçÆ
+#define ANYCHAT_OBJECT_TYPE_SKILL			9	///< ‰∏öÂä°ÊäÄËÉΩÂØπË±°
+#define ANYCHAT_OBJECT_TYPE_QUEUEGROUP		10	///< ÈòüÂàóÂàÜÁªÑÂØπË±°
 
-// Õ®”√±Í ∂∂®“Â
-#define ANYCHAT_OBJECT_FLAGS_CLIENT			0x0000	///< ∆’Õ®øÕªß
-#define ANYCHAT_OBJECT_FLAGS_AGENT			0x0002	///< ◊¯œØ”√ªß
-#define ANYCHAT_OBJECT_FLAGS_MANANGER		0x0004	///< π‹¿Ì”√ªß
-#define ANYCHAT_OBJECT_FLAGS_AUTOMODE		0x0010	///< ◊‘∂Ø∑˛ŒÒƒ£ Ω
-#define ANYCHAT_OBJECT_FLAGS_GUESTLOGIN		0x0020	///< ”ŒøÕµ«¬º∑Ω Ω
-#define ANYCHAT_OBJECT_FLAGS_GLOBAL			0x0040	///< »´æ÷∑˛ŒÒ
-#define ANYCHAT_OBJECT_FLAGS_CONNECT		0x0080	///< Õ¯¬Á¡¨Ω”∂‘œÛ
-#define ANYCHAT_OBJECT_FLAGS_MULTICHANNEL	0x0100	///< ∂‡Õ®µ¿ƒ£ Ω
-#define ANYCHAT_OBJECT_FLAGS_QUEUEUSERLIST	0x0200	///< Õ®÷™∂”¡–”√ªß¡–±Ì
-#define ANYCHAT_OBJECT_FLAGS_AREAUSERINFO	0x0400	///< ”™“µÃ¸”√ªßœÍœ∏–≈œ¢
-#define ANYCHAT_OBJECT_FLAGS_MANUALSYNCAREA	0x0800	///<  ÷π§Õ¨≤Ω”™“µÃ¸ ˝æ›£®Ω˚÷π◊‘∂Ø£©
+// ÈÄöÁî®Ê†áËØÜÂÆö‰πâ
+#define ANYCHAT_OBJECT_FLAGS_CLIENT			0x0000	///< ÊôÆÈÄöÂÆ¢Êà∑
+#define ANYCHAT_OBJECT_FLAGS_AGENT			0x0002	///< ÂùêÂ∏≠Áî®Êà∑
+#define ANYCHAT_OBJECT_FLAGS_MANANGER		0x0004	///< ÁÆ°ÁêÜÁî®Êà∑
+#define ANYCHAT_OBJECT_FLAGS_AUTOMODE		0x0010	///< Ëá™Âä®ÊúçÂä°Ê®°Âºè
+#define ANYCHAT_OBJECT_FLAGS_GUESTLOGIN		0x0020	///< Ê∏∏ÂÆ¢ÁôªÂΩïÊñπÂºè
+#define ANYCHAT_OBJECT_FLAGS_GLOBAL			0x0040	///< ÂÖ®Â±ÄÊúçÂä°
+#define ANYCHAT_OBJECT_FLAGS_CONNECT		0x0080	///< ÁΩëÁªúËøûÊé•ÂØπË±°
+#define ANYCHAT_OBJECT_FLAGS_MULTICHANNEL	0x0100	///< Â§öÈÄöÈÅìÊ®°Âºè
+#define ANYCHAT_OBJECT_FLAGS_QUEUEUSERLIST	0x0200	///< ÈÄöÁü•ÈòüÂàóÁî®Êà∑ÂàóË°®
+#define ANYCHAT_OBJECT_FLAGS_AREAUSERINFO	0x0400	///< Ëê•‰∏öÂéÖÁî®Êà∑ËØ¶ÁªÜ‰ø°ÊÅØ
+#define ANYCHAT_OBJECT_FLAGS_MANUALSYNCAREA	0x0800	///< ÊâãÂ∑•ÂêåÊ≠•Ëê•‰∏öÂéÖÊï∞ÊçÆÔºàÁ¶ÅÊ≠¢Ëá™Âä®Ôºâ
 
-#define ANYCHAT_INVALID_OBJECT_ID			-1	///< Œﬁ–ßµƒ∂‘œÛID
-#define ANYCHAT_MAX_OBJECT_CHANNELS			36	///< ◊Ó¥Û∂‘œÛ∑˛ŒÒÕ®µ¿ ˝
+#define ANYCHAT_INVALID_OBJECT_ID			-1	///< Êó†ÊïàÁöÑÂØπË±°ID
+#define ANYCHAT_MAX_OBJECT_CHANNELS			36	///< ÊúÄÂ§ßÂØπË±°ÊúçÂä°ÈÄöÈÅìÊï∞
 
-// ◊¯œØ∑˛ŒÒ◊¥Ã¨∂®“Â
-#define ANYCHAT_AGENT_STATUS_CLOSEED		0	///< πÿ±’£¨≤ª∂‘Õ‚Ã·π©∑˛ŒÒ£®◊º±∏£©
-#define ANYCHAT_AGENT_STATUS_WAITTING		1	///< µ»¥˝÷–£¨ø…ÀÊ ±Ω” ‹”√ªß∑˛ŒÒ£® æœ–£©
-#define ANYCHAT_AGENT_STATUS_WORKING		2	///< π§◊˜÷–£¨’˝‘⁄Œ™”√ªß∑˛ŒÒ
-#define ANYCHAT_AGENT_STATUS_PAUSED			3	///< ‘›Õ£∑˛ŒÒ£® æ√¶£©
-#define ANYCHAT_AGENT_STATUS_OFFLINE		10	///< ¿Îœﬂ
-
-
-/**
- *	∂‘œÛ Ù–‘∂®“Â
- */
-
-// ∂‘œÛπ´π≤–≈œ¢¿‡–Õ∂®“Â
-#define ANYCHAT_OBJECT_INFO_FLAGS			7	///< ∂‘œÛ Ù–‘±Í÷æ
-#define ANYCHAT_OBJECT_INFO_NAME			8	///< ∂‘œÛ√˚≥∆
-#define ANYCHAT_OBJECT_INFO_PRIORITY		9	///< ∂‘œÛ”≈œ»º∂
-#define ANYCHAT_OBJECT_INFO_ATTRIBUTE		10	///< ∂‘œÛ“µŒÒ Ù–‘
-#define ANYCHAT_OBJECT_INFO_DESCRIPTION		11	///< ∂‘œÛ√Ë ˆ
-#define ANYCHAT_OBJECT_INFO_INTTAG			12	///< ∂‘œÛ±Í«©£¨’˚–Õ£¨…œ≤„”¶”√◊‘∂®“Â
-#define ANYCHAT_OBJECT_INFO_STRINGTAG		13	///< ∂‘œÛ±Í«©£¨◊÷∑˚¥Æ£¨…œ≤„”¶”√◊‘∂®“Â
-#define ANYCHAT_OBJECT_INFO_GUID			14	///< ∂‘œÛGUID
-#define ANYCHAT_OBJECT_INFO_STATUSJSON		15	///< ∂‘œÛ◊¥Ã¨ Ù–‘ºØ∫œ
-#define ANYCHAT_OBJECT_INFO_STRINGID		16	///< ∂‘œÛ◊÷∑˚¥ÆID
-#define ANYCHAT_OBJECT_INFO_STATISTICS		17	///< ∂‘œÛÕ≥º∆ ˝æ›
-
-
-// ∑˛ŒÒ«¯”Ú–≈œ¢¿‡–Õ∂®“Â
-#define ANYCHAT_AREA_INFO_AGENTCOUNT		401	///< ∑˛ŒÒ«¯”ÚøÕ∑˛”√ªß ˝
-#define ANYCHAT_AREA_INFO_GUESTCOUNT		402	///< ∑˛ŒÒ«¯”Úƒ⁄∑√øÕµƒ”√ªß ˝£®√ª”–≈≈»Î∂”¡–µƒ”√ªß£©
-#define ANYCHAT_AREA_INFO_QUEUEUSERCOUNT	403	///< ∑˛ŒÒ«¯”Úƒ⁄≈≈∂”µƒ”√ªß ˝
-#define ANYCHAT_AREA_INFO_QUEUECOUNT		404	///< ∑˛ŒÒ«¯”Úƒ⁄∂”¡–µƒ ˝¡ø
-#define ANYCHAT_AREA_INFO_AGENTIDLIST		405	///< ∑˛ŒÒ«¯”ÚøÕ∑˛ID¡–±Ì
-#define ANYCHAT_AREA_INFO_IDLEAGENTCOUNT	406	///< ∑˛ŒÒ«¯”Úø’œ–◊¯œØ ˝¡ø
-#define ANYCHAT_AREA_INFO_STATUSJSON		407	///< ∑˛ŒÒ«¯”Ú◊¥Ã¨–≈œ¢£¨∑µªÿJson ˝æ›
-#define ANYCHAT_AREA_INFO_WAITINGCOUNT		408	///< ∑˛ŒÒ«¯”Úƒ⁄µ»∫Ú∑˛ŒÒ”√ªß ˝£®≥ˆ¡À∂”¡–£¨µ´√ª”–◊¯œØ∑˛ŒÒµƒ”√ªß£©
-#define ANYCHAT_AREA_INFO_WORKAGENTCOUNT	409	///< ∑˛ŒÒ«¯”Úπ§◊˜◊¯œØ ˝¡ø
-#define ANYCHAT_AREA_INFO_BUSYAGENTCOUNT	410	///< ∑˛ŒÒ«¯”Ú æ√¶◊¯œØ ˝¡ø
-
-// ∂”¡–◊¥Ã¨–≈œ¢¿‡–Õ∂®“Â
-#define ANYCHAT_QUEUE_INFO_MYSEQUENCENO		501	///< ◊‘º∫‘⁄∏√∂”¡–÷–µƒ–Ú∫≈
-#define ANYCHAT_QUEUE_INFO_BEFOREUSERNUM	502	///< ≈≈‘⁄◊‘º∫«∞	√Êµƒ”√ªß ˝
-#define ANYCHAT_QUEUE_INFO_MYENTERQUEUETIME	503	///< Ω¯»Î∂”¡–µƒ ±º‰
-#define ANYCHAT_QUEUE_INFO_QUEUELENGTH		504	///< ∂”¡–≥§∂»£®”–∂‡…Ÿ»À‘⁄≈≈∂”£©£¨’˚–Õ
-#define ANYCHAT_QUEUE_INFO_WAITTIMESECOND	508	///< ◊‘º∫‘⁄∂”¡–÷–µƒµ»¥˝ ±º‰£®≈≈∂” ±≥§£©£¨µ•Œª£∫√Î
-#define ANYCHAT_QUEUE_INFO_AGENTINFO		509	///< ∑˛ŒÒµ±«∞∂”¡–µƒ◊¯œØ–≈œ¢£¨∑µªÿJson ˝æ›
-#define ANYCHAT_QUEUE_INFO_USERIDLIST		510	///< ∂”¡–”√ªßID¡–±Ì
-#define ANYCHAT_QUEUE_INFO_WAITINGTIMELIST	511	///< ∂”¡–”√ªßµ»¥˝ ±º‰¡–±Ì(µ•Œª£∫√Î)
-#define ANYCHAT_QUEUE_INFO_USERINFOLIST		512	///< ∂”¡–”√ªß–≈œ¢¡–±Ì
-
-
-// øÕ∑˛◊¥Ã¨–≈œ¢¿‡–Õ∂®“Â
-#define ANYCHAT_AGENT_INFO_SERVICESTATUS	601	///< ∑˛ŒÒ◊¥Ã¨£¨’˚–Õ
-#define ANYCHAT_AGENT_INFO_SERVICEUSERID	602	///< µ±«∞∑˛ŒÒµƒ”√ªßID£¨’˚–Õ
-#define ANYCHAT_AGENT_INFO_SERVICEBEGINTIME	603	///< µ±«∞∑˛ŒÒµƒø™ º ±º‰£¨’˚–Õ
-#define ANYCHAT_AGENT_INFO_SERVICETOTALTIME	604	///< ¿€º∆∑˛ŒÒ ±º‰£¨’˚–Õ£¨µ•Œª£∫√Î
-#define ANYCHAT_AGENT_INFO_SERVICETOTALNUM	605	///< ¿€º∆∑˛ŒÒµƒ”√ªß ˝£¨’˚–Õ
-#define ANYCHAT_AGENT_INFO_SERVICEUSERINFO	606	///< µ±«∞∑˛ŒÒ”√ªß–≈œ¢£¨◊÷∑˚¥Æ
-#define ANYCHAT_AGENT_INFO_RELATEQUEUES		607	///< πÿ¡™∂”¡–List£¨◊÷∑˚¥Æ
-#define ANYCHAT_AGENT_INFO_SERVICEFAILNUM	608	///< ∑˛ŒÒ ß∞‹”√ªß ˝
-#define ANYCHAT_AGENT_INFO_MAXCHANNELNUM	609	///< ◊Ó¥Û∑˛ŒÒÕ®µ¿ ˝£¨’˚–Õ
-
+// ÂùêÂ∏≠ÊúçÂä°Áä∂ÊÄÅÂÆö‰πâ
+#define ANYCHAT_AGENT_STATUS_CLOSEED		0	///< ÂÖ≥Èó≠Ôºå‰∏çÂØπÂ§ñÊèê‰æõÊúçÂä°ÔºàÂáÜÂ§áÔºâ
+#define ANYCHAT_AGENT_STATUS_WAITTING		1	///< Á≠âÂæÖ‰∏≠ÔºåÂèØÈöèÊó∂Êé•ÂèóÁî®Êà∑ÊúçÂä°ÔºàÁ§∫Èó≤Ôºâ
+#define ANYCHAT_AGENT_STATUS_WORKING		2	///< Â∑•‰Ωú‰∏≠ÔºåÊ≠£Âú®‰∏∫Áî®Êà∑ÊúçÂä°
+#define ANYCHAT_AGENT_STATUS_PAUSED			3	///< ÊöÇÂÅúÊúçÂä°ÔºàÁ§∫ÂøôÔºâ
+#define ANYCHAT_AGENT_STATUS_OFFLINE		10	///< Á¶ªÁ∫ø
 
 
 /**
- *	∂‘œÛ∑Ω∑®∂®“Â
+ *	ÂØπË±°Â±ûÊÄßÂÆö‰πâ
  */
 
-// ∂‘œÛπ´π≤≤Œ ˝øÿ÷∆≥£¡ø∂®“Â
-#define ANYCHAT_OBJECT_CTRL_CREATE			2	///< ¥¥Ω®“ª∏ˆ∂‘œÛ
-#define ANYCHAT_OBJECT_CTRL_SYNCDATA		3	///< Õ¨≤Ω∂‘œÛ ˝æ›∏¯÷∏∂®”√ªß£¨dwObjectId=-1£¨±Ì æÕ¨≤Ω∏√¿‡–ÕµƒÀ˘”–∂‘œÛ
-#define ANYCHAT_OBJECT_CTRL_DEBUGOUTPUT		4	///< ∂‘œÛµ˜ ‘–≈œ¢ ‰≥ˆ
-#define ANYCHAT_OBJECT_CTRL_DELETE			5	///< …æ≥˝∂‘œÛ
-#define ANYCHAT_OBJECT_CTRL_MODIFY			6	///< –ﬁ∏ƒ∂‘œÛ–≈œ¢
-
-// ∑˛ŒÒ«¯”Úøÿ÷∆≥£¡ø∂®“Â
-#define ANYCHAT_AREA_CTRL_USERENTER			401	///< Ω¯»Î∑˛ŒÒ«¯”Ú
-#define ANYCHAT_AREA_CTRL_USERLEAVE			402	///< ¿Îø™∑˛ŒÒ«¯”Ú
-
-// ∂”¡–≤Œ ˝øÿ÷∆≥£¡ø∂®“Â
-#define ANYCHAT_QUEUE_CTRL_USERENTER		501	///< Ω¯»Î∂”¡–
-#define ANYCHAT_QUEUE_CTRL_USERLEAVE		502	///< ¿Îø™∂”¡–
-
-// øÕ∑˛≤Œ ˝øÿ÷∆≥£¡ø∂®“Â
-#define ANYCHAT_AGENT_CTRL_SERVICESTATUS	601	///< ◊¯œØ∑˛ŒÒ◊¥Ã¨øÿ÷∆£®‘›Õ£∑˛ŒÒ°¢π§◊˜÷–°¢πÿ±’£©
-#define ANYCHAT_AGENT_CTRL_SERVICEREQUEST	602	///< ∑˛ŒÒ«Î«Û
-#define ANYCHAT_AGENT_CTRL_STARTSERVICE		603	///< ø™ º∑˛ŒÒ£¨wParamŒ™”√ªßuserid
-#define ANYCHAT_AGENT_CTRL_FINISHSERVICE	604	///< Ω· ¯∑˛ŒÒ
-#define ANYCHAT_AGENT_CTRL_EVALUATION		605	///< ∑˛ŒÒ∆¿º€£¨wParamŒ™øÕ∑˛userid£¨lParamŒ™∆¿∑÷£¨lpStrValueŒ™¡Ù—‘
+// ÂØπË±°ÂÖ¨ÂÖ±‰ø°ÊÅØÁ±ªÂûãÂÆö‰πâ
+#define ANYCHAT_OBJECT_INFO_FLAGS			7	///< ÂØπË±°Â±ûÊÄßÊ†áÂøó
+#define ANYCHAT_OBJECT_INFO_NAME			8	///< ÂØπË±°ÂêçÁß∞
+#define ANYCHAT_OBJECT_INFO_PRIORITY		9	///< ÂØπË±°‰ºòÂÖàÁ∫ß
+#define ANYCHAT_OBJECT_INFO_ATTRIBUTE		10	///< ÂØπË±°‰∏öÂä°Â±ûÊÄß
+#define ANYCHAT_OBJECT_INFO_DESCRIPTION		11	///< ÂØπË±°ÊèèËø∞
+#define ANYCHAT_OBJECT_INFO_INTTAG			12	///< ÂØπË±°Ê†áÁ≠æÔºåÊï¥ÂûãÔºå‰∏äÂ±ÇÂ∫îÁî®Ëá™ÂÆö‰πâ
+#define ANYCHAT_OBJECT_INFO_STRINGTAG		13	///< ÂØπË±°Ê†áÁ≠æÔºåÂ≠óÁ¨¶‰∏≤Ôºå‰∏äÂ±ÇÂ∫îÁî®Ëá™ÂÆö‰πâ
+#define ANYCHAT_OBJECT_INFO_GUID			14	///< ÂØπË±°GUID
+#define ANYCHAT_OBJECT_INFO_STATUSJSON		15	///< ÂØπË±°Áä∂ÊÄÅÂ±ûÊÄßÈõÜÂêà
+#define ANYCHAT_OBJECT_INFO_STRINGID		16	///< ÂØπË±°Â≠óÁ¨¶‰∏≤ID
+#define ANYCHAT_OBJECT_INFO_STATISTICS		17	///< ÂØπË±°ÁªüËÆ°Êï∞ÊçÆ
 
 
+// ÊúçÂä°Âå∫Âüü‰ø°ÊÅØÁ±ªÂûãÂÆö‰πâ
+#define ANYCHAT_AREA_INFO_AGENTCOUNT		401	///< ÊúçÂä°Âå∫ÂüüÂÆ¢ÊúçÁî®Êà∑Êï∞
+#define ANYCHAT_AREA_INFO_GUESTCOUNT		402	///< ÊúçÂä°Âå∫ÂüüÂÜÖËÆøÂÆ¢ÁöÑÁî®Êà∑Êï∞ÔºàÊ≤°ÊúâÊéíÂÖ•ÈòüÂàóÁöÑÁî®Êà∑Ôºâ
+#define ANYCHAT_AREA_INFO_QUEUEUSERCOUNT	403	///< ÊúçÂä°Âå∫ÂüüÂÜÖÊéíÈòüÁöÑÁî®Êà∑Êï∞
+#define ANYCHAT_AREA_INFO_QUEUECOUNT		404	///< ÊúçÂä°Âå∫ÂüüÂÜÖÈòüÂàóÁöÑÊï∞Èáè
+#define ANYCHAT_AREA_INFO_AGENTIDLIST		405	///< ÊúçÂä°Âå∫ÂüüÂÆ¢ÊúçIDÂàóË°®
+#define ANYCHAT_AREA_INFO_IDLEAGENTCOUNT	406	///< ÊúçÂä°Âå∫ÂüüÁ©∫Èó≤ÂùêÂ∏≠Êï∞Èáè
+#define ANYCHAT_AREA_INFO_STATUSJSON		407	///< ÊúçÂä°Âå∫ÂüüÁä∂ÊÄÅ‰ø°ÊÅØÔºåËøîÂõûJsonÊï∞ÊçÆ
+#define ANYCHAT_AREA_INFO_WAITINGCOUNT		408	///< ÊúçÂä°Âå∫ÂüüÂÜÖÁ≠âÂÄôÊúçÂä°Áî®Êà∑Êï∞ÔºàÂá∫‰∫ÜÈòüÂàóÔºå‰ΩÜÊ≤°ÊúâÂùêÂ∏≠ÊúçÂä°ÁöÑÁî®Êà∑Ôºâ
+#define ANYCHAT_AREA_INFO_WORKAGENTCOUNT	409	///< ÊúçÂä°Âå∫ÂüüÂ∑•‰ΩúÂùêÂ∏≠Êï∞Èáè
+#define ANYCHAT_AREA_INFO_BUSYAGENTCOUNT	410	///< ÊúçÂä°Âå∫ÂüüÁ§∫ÂøôÂùêÂ∏≠Êï∞Èáè
 
+// ÈòüÂàóÁä∂ÊÄÅ‰ø°ÊÅØÁ±ªÂûãÂÆö‰πâ
+#define ANYCHAT_QUEUE_INFO_MYSEQUENCENO		501	///< Ëá™Â∑±Âú®ËØ•ÈòüÂàó‰∏≠ÁöÑÂ∫èÂè∑
+#define ANYCHAT_QUEUE_INFO_BEFOREUSERNUM	502	///< ÊéíÂú®Ëá™Â∑±Ââç	Èù¢ÁöÑÁî®Êà∑Êï∞
+#define ANYCHAT_QUEUE_INFO_MYENTERQUEUETIME	503	///< ËøõÂÖ•ÈòüÂàóÁöÑÊó∂Èó¥
+#define ANYCHAT_QUEUE_INFO_QUEUELENGTH		504	///< ÈòüÂàóÈïøÂ∫¶ÔºàÊúâÂ§öÂ∞ë‰∫∫Âú®ÊéíÈòüÔºâÔºåÊï¥Âûã
+#define ANYCHAT_QUEUE_INFO_WAITTIMESECOND	508	///< Ëá™Â∑±Âú®ÈòüÂàó‰∏≠ÁöÑÁ≠âÂæÖÊó∂Èó¥ÔºàÊéíÈòüÊó∂ÈïøÔºâÔºåÂçï‰ΩçÔºöÁßí
+#define ANYCHAT_QUEUE_INFO_AGENTINFO		509	///< ÊúçÂä°ÂΩìÂâçÈòüÂàóÁöÑÂùêÂ∏≠‰ø°ÊÅØÔºåËøîÂõûJsonÊï∞ÊçÆ
+#define ANYCHAT_QUEUE_INFO_USERIDLIST		510	///< ÈòüÂàóÁî®Êà∑IDÂàóË°®
+#define ANYCHAT_QUEUE_INFO_WAITINGTIMELIST	511	///< ÈòüÂàóÁî®Êà∑Á≠âÂæÖÊó∂Èó¥ÂàóË°®(Âçï‰ΩçÔºöÁßí)
+#define ANYCHAT_QUEUE_INFO_USERINFOLIST		512	///< ÈòüÂàóÁî®Êà∑‰ø°ÊÅØÂàóË°®
+
+
+// ÂÆ¢ÊúçÁä∂ÊÄÅ‰ø°ÊÅØÁ±ªÂûãÂÆö‰πâ
+#define ANYCHAT_AGENT_INFO_SERVICESTATUS	601	///< ÊúçÂä°Áä∂ÊÄÅÔºåÊï¥Âûã
+#define ANYCHAT_AGENT_INFO_SERVICEUSERID	602	///< ÂΩìÂâçÊúçÂä°ÁöÑÁî®Êà∑IDÔºåÊï¥Âûã
+#define ANYCHAT_AGENT_INFO_SERVICEBEGINTIME	603	///< ÂΩìÂâçÊúçÂä°ÁöÑÂºÄÂßãÊó∂Èó¥ÔºåÊï¥Âûã
+#define ANYCHAT_AGENT_INFO_SERVICETOTALTIME	604	///< Á¥ØËÆ°ÊúçÂä°Êó∂Èó¥ÔºåÊï¥ÂûãÔºåÂçï‰ΩçÔºöÁßí
+#define ANYCHAT_AGENT_INFO_SERVICETOTALNUM	605	///< Á¥ØËÆ°ÊúçÂä°ÁöÑÁî®Êà∑Êï∞ÔºåÊï¥Âûã
+#define ANYCHAT_AGENT_INFO_SERVICEUSERINFO	606	///< ÂΩìÂâçÊúçÂä°Áî®Êà∑‰ø°ÊÅØÔºåÂ≠óÁ¨¶‰∏≤
+#define ANYCHAT_AGENT_INFO_RELATEQUEUES		607	///< ÂÖ≥ËÅîÈòüÂàóListÔºåÂ≠óÁ¨¶‰∏≤
+#define ANYCHAT_AGENT_INFO_SERVICEFAILNUM	608	///< ÊúçÂä°Â§±Ë¥•Áî®Êà∑Êï∞
+#define ANYCHAT_AGENT_INFO_MAXCHANNELNUM	609	///< ÊúÄÂ§ßÊúçÂä°ÈÄöÈÅìÊï∞ÔºåÊï¥Âûã
 
 
 
 /**
- *	∂‘œÛ“Ï≤Ω ¬º˛∂®“Â
+ *	ÂØπË±°ÊñπÊ≥ïÂÆö‰πâ
  */
 
-// ∂‘œÛπ´π≤ ¬º˛≥£¡ø∂®“Â
-#define ANYCHAT_OBJECT_EVENT_UPDATE			1	///< ∂‘œÛ ˝æ›∏¸–¬
-#define ANYCHAT_OBJECT_EVENT_SYNCDATAFINISH	2	///< ∂‘œÛ ˝æ›Õ¨≤ΩΩ· ¯
-#define ANYCHAT_OBJECT_EVENT_STATISTICS		3	///< ∂‘œÛÕ≥º∆ ˝æ›∏¸–¬
+// ÂØπË±°ÂÖ¨ÂÖ±ÂèÇÊï∞ÊéßÂà∂Â∏∏ÈáèÂÆö‰πâ
+#define ANYCHAT_OBJECT_CTRL_CREATE			2	///< ÂàõÂª∫‰∏Ä‰∏™ÂØπË±°
+#define ANYCHAT_OBJECT_CTRL_SYNCDATA		3	///< ÂêåÊ≠•ÂØπË±°Êï∞ÊçÆÁªôÊåáÂÆöÁî®Êà∑ÔºådwObjectId=-1ÔºåË°®Á§∫ÂêåÊ≠•ËØ•Á±ªÂûãÁöÑÊâÄÊúâÂØπË±°
+#define ANYCHAT_OBJECT_CTRL_DEBUGOUTPUT		4	///< ÂØπË±°Ë∞ÉËØï‰ø°ÊÅØËæìÂá∫
+#define ANYCHAT_OBJECT_CTRL_DELETE			5	///< Âà†Èô§ÂØπË±°
+#define ANYCHAT_OBJECT_CTRL_MODIFY			6	///< ‰øÆÊîπÂØπË±°‰ø°ÊÅØ
 
-// ∑˛ŒÒ«¯”Ú ¬º˛≥£¡ø∂®“Â
-#define ANYCHAT_AREA_EVENT_STATUSCHANGE		401	///< ∑˛ŒÒ«¯”Ú◊¥Ã¨±‰ªØ
-#define ANYCHAT_AREA_EVENT_ENTERRESULT		402	///< Ω¯»Î∑˛ŒÒ«¯”ÚΩ·π˚
-#define ANYCHAT_AREA_EVENT_USERENTER		403	///< ”√ªßΩ¯»Î∑˛ŒÒ«¯”Ú
-#define ANYCHAT_AREA_EVENT_USERLEAVE		404	///< ”√ªß¿Îø™∑˛ŒÒ«¯”Ú
-#define ANYCHAT_AREA_EVENT_LEAVERESULT		405	///< ¿Îø™∑˛ŒÒ«¯”ÚΩ·π˚
+// ÊúçÂä°Âå∫ÂüüÊéßÂà∂Â∏∏ÈáèÂÆö‰πâ
+#define ANYCHAT_AREA_CTRL_USERENTER			401	///< ËøõÂÖ•ÊúçÂä°Âå∫Âüü
+#define ANYCHAT_AREA_CTRL_USERLEAVE			402	///< Á¶ªÂºÄÊúçÂä°Âå∫Âüü
+
+// ÈòüÂàóÂèÇÊï∞ÊéßÂà∂Â∏∏ÈáèÂÆö‰πâ
+#define ANYCHAT_QUEUE_CTRL_USERENTER		501	///< ËøõÂÖ•ÈòüÂàó
+#define ANYCHAT_QUEUE_CTRL_USERLEAVE		502	///< Á¶ªÂºÄÈòüÂàó
+
+// ÂÆ¢ÊúçÂèÇÊï∞ÊéßÂà∂Â∏∏ÈáèÂÆö‰πâ
+#define ANYCHAT_AGENT_CTRL_SERVICESTATUS	601	///< ÂùêÂ∏≠ÊúçÂä°Áä∂ÊÄÅÊéßÂà∂ÔºàÊöÇÂÅúÊúçÂä°„ÄÅÂ∑•‰Ωú‰∏≠„ÄÅÂÖ≥Èó≠Ôºâ
+#define ANYCHAT_AGENT_CTRL_SERVICEREQUEST	602	///< ÊúçÂä°ËØ∑Ê±Ç
+#define ANYCHAT_AGENT_CTRL_STARTSERVICE		603	///< ÂºÄÂßãÊúçÂä°ÔºåwParam‰∏∫Áî®Êà∑userid
+#define ANYCHAT_AGENT_CTRL_FINISHSERVICE	604	///< ÁªìÊùüÊúçÂä°
+#define ANYCHAT_AGENT_CTRL_EVALUATION		605	///< ÊúçÂä°ËØÑ‰ª∑ÔºåwParam‰∏∫ÂÆ¢ÊúçuseridÔºålParam‰∏∫ËØÑÂàÜÔºålpStrValue‰∏∫ÁïôË®Ä
 
 
-// ∂”¡– ¬º˛≥£¡ø∂®“Â
-#define ANYCHAT_QUEUE_EVENT_STATUSCHANGE	501	///< ∂”¡–◊¥Ã¨±‰ªØ
-#define ANYCHAT_QUEUE_EVENT_ENTERRESULT		502	///< Ω¯»Î∂”¡–Ω·π˚
-#define ANYCHAT_QUEUE_EVENT_USERENTER		503	///< ”√ªßΩ¯»Î∂”¡–
-#define ANYCHAT_QUEUE_EVENT_USERLEAVE		504	///< ”√ªß¿Îø™∂”¡–
-#define ANYCHAT_QUEUE_EVENT_LEAVERESULT		505	///< ¿Îø™∂”¡–Ω·π˚
-#define ANYCHAT_QUEUE_EVENT_STARTSERVICE	506	///< ”√ªßø™ º±ª∑˛ŒÒ
-#define ANYCHAT_QUEUE_EVENT_USERINFOLISTCHG	507	///< ∂”¡–”√ªß¡–±Ì∏¸–¬
 
 
-// ◊¯œØ ¬º˛≥£¡ø∂®“Â
-#define ANYCHAT_AGENT_EVENT_STATUSCHANGE	601	///< ◊¯œØ◊¥Ã¨±‰ªØ
-#define ANYCHAT_AGENT_EVENT_SERVICENOTIFY	602	///< ◊¯œØ∑˛ŒÒÕ®÷™£®ƒƒ∏ˆ”√ªßµΩƒƒ∏ˆøÕ∑˛∞Ï¿Ì“µŒÒ£©
-#define ANYCHAT_AGENT_EVENT_WAITINGUSER		603	///< ‘› ±√ª”–øÕªß£¨«Îµ»¥˝
-#define ANYCHAT_AGENT_EVENT_ISREADY			604	///< ◊¯œØ◊º±∏∫√£¨ø…“‘∑¢∆∫ÙΩ–
+
+
+/**
+ *	ÂØπË±°ÂºÇÊ≠•‰∫ã‰ª∂ÂÆö‰πâ
+ */
+
+// ÂØπË±°ÂÖ¨ÂÖ±‰∫ã‰ª∂Â∏∏ÈáèÂÆö‰πâ
+#define ANYCHAT_OBJECT_EVENT_UPDATE			1	///< ÂØπË±°Êï∞ÊçÆÊõ¥Êñ∞
+#define ANYCHAT_OBJECT_EVENT_SYNCDATAFINISH	2	///< ÂØπË±°Êï∞ÊçÆÂêåÊ≠•ÁªìÊùü
+#define ANYCHAT_OBJECT_EVENT_STATISTICS		3	///< ÂØπË±°ÁªüËÆ°Êï∞ÊçÆÊõ¥Êñ∞
+
+// ÊúçÂä°Âå∫Âüü‰∫ã‰ª∂Â∏∏ÈáèÂÆö‰πâ
+#define ANYCHAT_AREA_EVENT_STATUSCHANGE		401	///< ÊúçÂä°Âå∫ÂüüÁä∂ÊÄÅÂèòÂåñ
+#define ANYCHAT_AREA_EVENT_ENTERRESULT		402	///< ËøõÂÖ•ÊúçÂä°Âå∫ÂüüÁªìÊûú
+#define ANYCHAT_AREA_EVENT_USERENTER		403	///< Áî®Êà∑ËøõÂÖ•ÊúçÂä°Âå∫Âüü
+#define ANYCHAT_AREA_EVENT_USERLEAVE		404	///< Áî®Êà∑Á¶ªÂºÄÊúçÂä°Âå∫Âüü
+#define ANYCHAT_AREA_EVENT_LEAVERESULT		405	///< Á¶ªÂºÄÊúçÂä°Âå∫ÂüüÁªìÊûú
+
+
+// ÈòüÂàó‰∫ã‰ª∂Â∏∏ÈáèÂÆö‰πâ
+#define ANYCHAT_QUEUE_EVENT_STATUSCHANGE	501	///< ÈòüÂàóÁä∂ÊÄÅÂèòÂåñ
+#define ANYCHAT_QUEUE_EVENT_ENTERRESULT		502	///< ËøõÂÖ•ÈòüÂàóÁªìÊûú
+#define ANYCHAT_QUEUE_EVENT_USERENTER		503	///< Áî®Êà∑ËøõÂÖ•ÈòüÂàó
+#define ANYCHAT_QUEUE_EVENT_USERLEAVE		504	///< Áî®Êà∑Á¶ªÂºÄÈòüÂàó
+#define ANYCHAT_QUEUE_EVENT_LEAVERESULT		505	///< Á¶ªÂºÄÈòüÂàóÁªìÊûú
+#define ANYCHAT_QUEUE_EVENT_STARTSERVICE	506	///< Áî®Êà∑ÂºÄÂßãË¢´ÊúçÂä°
+#define ANYCHAT_QUEUE_EVENT_USERINFOLISTCHG	507	///< ÈòüÂàóÁî®Êà∑ÂàóË°®Êõ¥Êñ∞
+
+
+// ÂùêÂ∏≠‰∫ã‰ª∂Â∏∏ÈáèÂÆö‰πâ
+#define ANYCHAT_AGENT_EVENT_STATUSCHANGE	601	///< ÂùêÂ∏≠Áä∂ÊÄÅÂèòÂåñ
+#define ANYCHAT_AGENT_EVENT_SERVICENOTIFY	602	///< ÂùêÂ∏≠ÊúçÂä°ÈÄöÁü•ÔºàÂì™‰∏™Áî®Êà∑Âà∞Âì™‰∏™ÂÆ¢ÊúçÂäûÁêÜ‰∏öÂä°Ôºâ
+#define ANYCHAT_AGENT_EVENT_WAITINGUSER		603	///< ÊöÇÊó∂Ê≤°ÊúâÂÆ¢Êà∑ÔºåËØ∑Á≠âÂæÖ
+#define ANYCHAT_AGENT_EVENT_ISREADY			604	///< ÂùêÂ∏≠ÂáÜÂ§áÂ•ΩÔºåÂèØ‰ª•ÂèëËµ∑ÂëºÂè´
 
 
 
