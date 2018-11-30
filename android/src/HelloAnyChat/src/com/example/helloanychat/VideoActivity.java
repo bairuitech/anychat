@@ -263,7 +263,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 	}
 
 	private void destroyCurActivity() {
-		onPause();
+		//onPause();
 		onDestroy();
 	}
 
@@ -389,11 +389,10 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		if (!bEnter) {
 			if (dwUserId == userID) {
 				Toast.makeText(VideoActivity.this, "对方已离开！", Toast.LENGTH_SHORT).show();
-				userID = 0;
+				//userID = 0;
 				anychatSDK.UserCameraControl(dwUserId, 0);
 				anychatSDK.UserSpeakControl(dwUserId, 0);
 				bOtherVideoOpened = false;
-				
 			}
 
 		} else {
