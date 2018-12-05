@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,6 +18,7 @@
                 <outlet property="theRoomNO" destination="eZ2-p6-zct" id="HAg-Vd-Cdx"/>
                 <outlet property="theServerIP" destination="3tK-w0-pgW" id="JAZ-wR-8dv"/>
                 <outlet property="theServerPort" destination="KW0-TX-ntw" id="6U5-hA-398"/>
+                <outlet property="theSignServer" destination="OwX-P4-det" id="X5Y-sm-886"/>
                 <outlet property="theStateInfo" destination="cWB-jg-End" id="iN8-Jn-RMU"/>
                 <outlet property="theUserName" destination="8jW-Tb-7Ru" id="7iV-M1-8Nf"/>
                 <outlet property="theVersion" destination="ZIY-gO-7ai" id="eNP-XX-m5Q"/>
@@ -39,8 +40,8 @@
                         <action selector="hideKeyBoard" destination="-1" eventType="touchUpInside" id="M9q-jA-MrU"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" id="4RE-IZ-K8S" userLabel="View - header">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="271"/>
+                <view contentMode="scaleToFill" misplaced="YES" id="4RE-IZ-K8S" userLabel="View - header">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="339"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello AnyChat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Qw-eg-H4l" userLabel="Label - title">
@@ -135,8 +136,8 @@
                                 <outlet property="delegate" destination="-1" id="BuU-3X-jTJ"/>
                             </connections>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cMS-kL-Zte" customClass="RadioButton">
-                            <rect key="frame" x="68" y="193" width="84" height="24"/>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cMS-kL-Zte" customClass="RadioButton">
+                            <rect key="frame" x="68" y="240" width="84" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <inset key="titleEdgeInsets" minX="2" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -147,8 +148,8 @@
                                 <outletCollection property="groupButtons" destination="jqq-Fk-PF3" id="G6K-af-Hdx"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jqq-Fk-PF3" customClass="RadioButton">
-                            <rect key="frame" x="185" y="193" width="84" height="24"/>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jqq-Fk-PF3" customClass="RadioButton">
+                            <rect key="frame" x="185" y="240" width="84" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <inset key="titleEdgeInsets" minX="2" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -158,14 +159,33 @@
                                 <action selector="onRadioBtn:" destination="-1" eventType="touchUpInside" id="Ftz-wz-WYO"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Na6-1Z-fa2" userLabel="Button - Login">
-                            <rect key="frame" x="95" y="231" width="130" height="40"/>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Na6-1Z-fa2" userLabel="Button - Login">
+                            <rect key="frame" x="95" y="277" width="130" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" backgroundImage="btn_login_01.png"/>
                             <connections>
                                 <action selector="OnLoginBtnClicked:" destination="-1" eventType="touchUpInside" id="jFF-Su-SXb"/>
                             </connections>
                         </button>
+                        <view contentMode="scaleToFill" misplaced="YES" id="H1o-2X-rw9" userLabel="View - line - down">
+                            <rect key="frame" x="41" y="225" width="238" height="1"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </view>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="签名服务器" minimumFontSize="17" clearButtonMode="whileEditing" id="OwX-P4-det" userLabel="Text Field - name">
+                            <rect key="frame" x="68" y="193" width="211" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="MgV-ad-gZ8"/>
+                            </connections>
+                        </textField>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon_signserver.png" id="iKr-75-eKF">
+                            <rect key="frame" x="43" y="196" width="18" height="18"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
@@ -203,8 +223,8 @@
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Dzq-SL-6LL">
-                    <rect key="frame" x="0.0" y="279" width="320" height="260"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Dzq-SL-6LL">
+                    <rect key="frame" x="0.0" y="331" width="320" height="208"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="sectionIndexBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -230,6 +250,7 @@
         <image name="bg.png" width="640" height="1136"/>
         <image name="btn_login_01.png" width="350" height="106"/>
         <image name="checked.png" width="24" height="24"/>
+        <image name="icon_signserver.png" width="40" height="40"/>
         <image name="unchecked.png" width="24" height="24"/>
     </resources>
 </document>

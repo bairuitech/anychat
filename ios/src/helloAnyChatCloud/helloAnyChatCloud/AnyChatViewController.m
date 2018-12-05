@@ -11,19 +11,21 @@
 #import "AFNetworking.h"
 
 #define kAnyChatRoomID 1
-#define kUserID 1001
-#define kSignServerURL @"http://192.168.6.102:8980/"
+//#define kUserID 1001
+#define kAnyChatSignServerURL @"http://demo.anychat.cn:8930/"
 #define kAnyChatIP @"demo.anychat.cn"
 #define kAnyChatPort @"8906"
 #define kAnyChatUserName @"AnyChat"
-#define kAnyChatGuid @""
+#define kAnyChatGuid @"fbe957d1-c25a-4992-9e75-d993294a5d56"
 
 typedef enum {
     AnyChatVCLoginModeGeneralLogin,
     AnyChatVCLoginModeSignLogin
 } AnyChatVCLoginMode;
 
-@interface AnyChatViewController ()
+@interface AnyChatViewController () {
+    BOOL _connectSuccess;
+}
 @property (nonatomic, assign) AnyChatVCLoginMode loginMode; // 登录方式
 @end
 
@@ -41,6 +43,7 @@ typedef enum {
 @synthesize theServerIP;
 @synthesize theServerPort;
 @synthesize theGuid;
+@synthesize theSignServer;
 @synthesize theLoginBtn;
 @synthesize theLoginAlertView;
 @synthesize theHideKeyboardBtn;
@@ -189,6 +192,7 @@ typedef enum {
 // 连接服务器消息
 - (void) OnAnyChatConnect:(BOOL) bSuccess
 {
+    _connectSuccess = bSuccess;
     if (bSuccess)
     {
         theStateInfo.text = @"• Success connected to server";
@@ -314,6 +318,7 @@ typedef enum {
     [theUserName resignFirstResponder];
     [theRoomNO resignFirstResponder];
     [theGuid resignFirstResponder];
+    [theSignServer resignFirstResponder];
 }
 
 - (IBAction)OnLoginBtnClicked:(id)sender
@@ -340,10 +345,20 @@ typedef enum {
     if([theServerPort.text length] == 0) {
         theServerPort.text = kAnyChatPort;
     }
+
     if (self.loginMode == AnyChatVCLoginModeSignLogin) {
         if (theGuid.text.length == 0) {
             MBProgressHUD *mbHUD= [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             mbHUD.labelText = @"应用ID不能为空";
+            mbHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"error"]];
+            mbHUD.mode = MBProgressHUDModeCustomView;
+            mbHUD.removeFromSuperViewOnHide = YES;
+            [mbHUD hide:YES afterDelay:0.7];
+            
+            return;
+        } else if (theSignServer.text.length == 0) {
+            MBProgressHUD *mbHUD= [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            mbHUD.labelText = @"签名服务器不能为空";
             mbHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"error"]];
             mbHUD.mode = MBProgressHUDModeCustomView;
             mbHUD.removeFromSuperViewOnHide = YES;
@@ -363,22 +378,34 @@ typedef enum {
      * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
      * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
      */
-    [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
     
-    if (self.loginMode == AnyChatVCLoginModeSignLogin && theGuid.text.length != 0) {
+    if (self.loginMode == AnyChatVCLoginModeSignLogin && theGuid.text.length != 0 && theSignServer.text.length != 0) {
+        
+        
         [self getSignSuccess:^(id json) {
+            NSLog(@"sign json:%@",json);
+
             if ([[json objectForKey:@"errorcode"] intValue] ==0) {
                 int timestamp = [[json objectForKey:@"timestamp"] intValue];
                 NSString *signStr = [json objectForKey:@"sigStr"];
-                [AnyChatPlatform LoginEx:theUserName.text :kUserID :nil :theGuid.text :timestamp :signStr :nil];
+                // dwUserId 如果应用没有此参数，则传入-1(请参考iOS开发手册)
+                NSLog(@"===username:%@,guid:%@,timestamp:%d,signStr:%@",theUserName.text,theGuid.text,timestamp,signStr);
+                
+                [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
+
+                [AnyChatPlatform LoginEx:theUserName.text :-1 :theUserName.text :theGuid.text :timestamp :signStr :nil];
+                
             }else {
                 NSLog(@"Json Error,Error Num:%@",[json objectForKey:@"errorcode"]);
+                [self showSignError];
             }
         } failure:^(NSError *error) {
             NSLog(@"Request Error:%@",error);
+            [self showSignError];
         }];
     }else if(self.loginMode == AnyChatVCLoginModeGeneralLogin){
-        
+        [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
+
         /*
          * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
          */
@@ -389,16 +416,30 @@ typedef enum {
     [self hideKeyBoard];
 }
 
+- (void)showSignError
+{
+    [HUD hide:YES];
+    MBProgressHUD *mbHUD= [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    mbHUD.labelText = @"获取签名失败";
+    mbHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"error"]];
+    mbHUD.mode = MBProgressHUDModeCustomView;
+    mbHUD.removeFromSuperViewOnHide = YES;
+    [mbHUD hide:YES afterDelay:0.7];
+}
+
 - (void)getSignSuccess:(void (^)(id))success failure:(void (^)(NSError *))failure{
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
+    //参数请参考签名服务器文档
+    // dwUserId 如果应用没有此参数，则传入-1(请参考iOS开发手册)
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"userid"] = [NSNumber numberWithInt:kUserID];
-    params[@"strUserid"] = @"";
+//    params[@"userid"] = [NSNumber numberWithInt:kUserID];
+//    params[@"strUserid"] = @"";
+    params[@"userid"] = [NSNumber numberWithInt:-1];
+    params[@"struserid"] = theUserName.text;
     params[@"appid"] = theGuid.text;
     
-    [manager POST:kSignServerURL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager POST:theSignServer.text parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (success) success(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) failure(error);
@@ -449,13 +490,14 @@ typedef enum {
     theUserName.text = kAnyChatUserName;
     theServerIP.text = kAnyChatIP;
     theServerPort.text = kAnyChatPort;
-    theGuid.text = kAnyChatGuid;
     
     [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theUserName addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theRoomNO addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    
+    [theGuid addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [theSignServer addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
+
     if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0)
     {
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
@@ -467,6 +509,7 @@ typedef enum {
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 70.0f)];
     onLineUserTableView.tableFooterView = footerView;
     
+    [self updateSignUI];
 }
 
 -(IBAction)onRadioBtn:(RadioButton*)sender
@@ -475,6 +518,20 @@ typedef enum {
         self.loginMode = AnyChatVCLoginModeSignLogin;
     }else {
         self.loginMode = AnyChatVCLoginModeGeneralLogin;
+    }
+    [self updateSignUI];
+}
+
+- (void)updateSignUI
+{
+    if(self.loginMode == AnyChatVCLoginModeSignLogin) {
+        theServerIP.text = @"cloud.anychat.cn";
+        theGuid.text = kAnyChatGuid;
+        theSignServer.text = kAnyChatSignServerURL;
+    } else {
+        theServerIP.text = kAnyChatIP;
+        theGuid.text = @"";
+        theSignServer.text = @"";
     }
 }
 

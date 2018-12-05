@@ -29,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
 @property (weak, nonatomic) IBOutlet UITextField            *theGuid;
+@property (weak, nonatomic) IBOutlet UITextField *theSignServer;
+
 @property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
 @property (weak, nonatomic) IBOutlet UIButton               *theHideKeyboardBtn;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersion;
