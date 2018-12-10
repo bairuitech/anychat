@@ -12,11 +12,15 @@
 
 #define kAnyChatRoomID 1
 //#define kUserID 1001
-#define kAnyChatSignServerURL @"http://demo.anychat.cn:8930/"
-#define kAnyChatIP @"demo.anychat.cn"
+
+#define kAnyChatIP @"demo.anychat.cn" //普通登录服务器IP
 #define kAnyChatPort @"8906"
 #define kAnyChatUserName @"AnyChat"
-#define kAnyChatGuid @"fbe957d1-c25a-4992-9e75-d993294a5d56"
+
+#define kAnyChatSignServerURL @"http://demo.anychat.cn:8930/" //签名服务器
+#define kAnyChatSignIP @"cloud.anychat.cn" //签名登录服务器IP
+#define kAnyChatSignGuid @"fbe957d1-c25a-4992-9e75-d993294a5d56" //签名登录应用ID
+
 
 typedef enum {
     AnyChatVCLoginModeGeneralLogin,
@@ -525,8 +529,8 @@ typedef enum {
 - (void)updateSignUI
 {
     if(self.loginMode == AnyChatVCLoginModeSignLogin) {
-        theServerIP.text = @"cloud.anychat.cn";
-        theGuid.text = kAnyChatGuid;
+        theServerIP.text = kAnyChatSignIP;
+        theGuid.text = kAnyChatSignGuid;
         theSignServer.text = kAnyChatSignServerURL;
     } else {
         theServerIP.text = kAnyChatIP;
