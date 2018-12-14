@@ -1150,12 +1150,12 @@ function BRAC_Release() {
 	if (_anychatSDKDiv) {
 		if (getBrowser() == "IE") {
 			anychat = null;
-			delete _anychatSDKDiv.parentNode.removeChild(_anychatSDKDiv);
+			_anychatSDKDiv.parentNode.removeChild(_anychatSDKDiv);
 			_anychatSDKDiv = null;
 			var objectPlugins = document.getElementsByTagName("object");
 			while (objectPlugins.length > 0 &&
 				objectPlugins[0].classid == "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7") {
-				delete objectPlugins[0].parentNode.removeChild(objectPlugins[0]);
+				objectPlugins[0].parentNode.removeChild(objectPlugins[0]);
 			}
 			setTimeout(CollectGarbage, 1);
 			return;
