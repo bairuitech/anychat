@@ -25,7 +25,8 @@
 #define AC_ERROR_OBJECTDELETE		15		///< 对象被删除
 #define AC_ERROR_SESSIONEXIST		16		///< 会话已存在
 #define AC_ERROR_SESSIONNOTINIT		17		///< 会话没有初始化
-
+#define AC_ERROR_DATANOTPREPARE		18		///< 数据没有准备好
+#define AC_ERROR_SIGTERM			19		///< 收到SIGTERM信号（kill指令）
 #define AC_ERROR_FUNCNOTALLOW		20		///< 函数功能不允许
 #define AC_ERROR_FUNCOPTERROR       21      ///< function parameters error
 #define AC_ERROR_DEVICEOPENFAIL     22      ///< device open failed or device no install
@@ -65,6 +66,25 @@
 #define AC_ERROR_PIPELINEUSERFAIL	56		///< PipeLine通信用户ID出错
 #define AC_ERROR_PIPELINESESSFAIL	57		///< PipeLine通信会话出错
 #define AC_ERROR_SERVICECLOSED		58		///< 服务被关闭
+#define AC_ERROR_FILEENCRYPTED		59		///< 文件已被加密过
+#define AC_ERROR_FILEHEADINVAILD	60		///< 解密无效（文件校验不通过）
+#define AC_ERROR_FILEDECODE_PASSERR	61		///< 解密失败，可能密码错误
+#define AC_ERROR_OVERFLOW			62		///< 缓冲区太长
+#define AC_ERROR_OLDSERVER			63		///< 服务器版本太旧
+#define AC_ERROR_UNSUPPORTFILETYPE	64		///< 不支持的文件类型
+#define AC_ERROR_FILECONTENTFAIL	65		///< 文件内容出错
+#define AC_ERROR_KEYVERIFYFAILED	66		///< 密钥校验失败
+#define AC_ERROR_NOCERTCHAIN		67		///< 缺少证书链
+#define AC_ERROR_CERTVERIFYFAIL		68		///< 证书校验失败
+#define AC_ERROR_CERTDATEFAIL		69		///< 证书日期校验失败
+#define AC_ERROR_CERTURLFAIL		70		///< 证书URL地址校验失败
+#define AC_ERROR_CERTPUBLICKEYFAIL	71		///< 缺少公钥
+#define AC_ERROR_CERTPRIVATEKEYFAIL	72		///< 服务器没有配置SSL证书所对应的私钥
+#define AC_ERROR_CERTFILENOTCONFIG	73		///< 服务器没有配置SSL证书
+#define AC_ERROR_CERTHIGHSECURITY	74		///< 安全级别限制，不允许连接
+#define AC_ERROR_SECURITYBREAK		75		///< 安全协商失败
+#define AC_ERROR_CERTALGORITHMFAIL	76		///< 算法协商失败
+#define AC_ERROR_LOSSCERTHELPER		77		///< 缺少CertHelper库文件
 
 //连接部分
 #define AC_ERROR_CONNECT_TIMEOUT	100		///< 连接服务器超时
@@ -124,6 +144,7 @@
 #define AC_ERROR_SIGALREADYUSED		226		///< 签名已经被使用
 #define AC_ERROR_USERROLE_FAIL		227		///< 获取用户角色失败
 #define AC_ERROR_INVALID_AGENT		228		///< 坐席无效(不存在)
+#define AC_ERROR_SERVERSIGFAIL		229		///< 客户端校验服务器签名失败
 
 //进入房间
 #define AC_ERROR_ROOM_LOCK			300		///< 房间已被锁住，禁止进入
