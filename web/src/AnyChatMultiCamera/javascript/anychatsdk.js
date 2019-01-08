@@ -149,7 +149,8 @@ var BRAC_SO_CORESDK_STREAMADAPTIVE	=		228;// 流媒体自适应控制（参数为int型，0 关
 var BRAC_SO_CORESDK_MAXTRANSFILESIZE=		229;// 允许传输的最大文件大小（参数为int型，单位：MByte）
 var BRAC_SO_CORESDK_USESERVERTIME	=		230;// 使用服务器时间戳（参数为int型，0 关闭[默认] 1 开启）
 var BRAC_SO_CORESDK_APPMONITORLIST	=		231;// 应用程序列表，应用程序共享模块使用（参数为字符串）
-var BRAC_SO_CORESDK_USERRSAPUBKEY	=		232;// 用户RSA公钥
+var BRAC_SO_CORESDK_SSLCERTCHAIN	=		232;// SSL证书链
+var BRAC_SO_CORESDK_SUPPORTMEDIACODEC=		233;// 本地支持的编码器信息，用于编码协商
 
 
 
@@ -361,7 +362,6 @@ var ANYCHAT_SERVERQUERY_ONLINEUSERS		=	201;// 查询服务器在线用户数
 
 // SDK控制常量定义（API：BRAC_SDKControl 传入参数）
 var ANYCHAT_SDKCTRL_BASE				=	1;	// 基本功能控制
-var ANYCHAT_SDKCTRL_SERVER				=	2;	// 服务器通信
 var ANYCHAT_SDKCTRL_USERBUFFER			=	3;	// 用户缓冲区传输控制
 var ANYCHAT_SDKCTRL_INVOKEEVENT			=	4;	// 触发异步事件
 var ANYCHAT_SDKCTRL_RECORD				=	5;	// 音视频录制
@@ -369,9 +369,11 @@ var ANYCHAT_SDKCTRL_OBJECT				=	20;	// 对象操作
 var ANYCHAT_SDKCTRL_VIDEOCALL			=	30;	// 呼叫控制
 var ANYCHAT_SDKCTRL_USERINFO			=	40;	// 用户信息控制
 var ANYCHAT_SDKCTRL_STREAMPLAY			=	50;	// 流媒体播放
+var ANYCHAT_SDKCTRL_MEDIAPROCESS		=	51;	// 流媒体处理控制
 var ANYCHAT_SDKCTRL_NETWORK				=	60;	// 网络控制
 var ANYCHAT_SDKCTRL_MEDIA				=	70;	// 媒体控制
 var ANYCHAT_SDKCTRL_RECORDTAG			=	71;	// 录像标签
+var ANYCHAT_SDKCTRL_SCREENCAPPARAM		=	72;	// 屏幕采集参数设置
 var ANYCHAT_SDKCTRL_FILEDELETE			=	80;	// 删除文件
 var ANYCHAT_SDKCTRL_FILEINFO			=	81;	// 获取文件信息
 var ANYCHAT_SDKCTRL_DISKSIZE			=	82;	// 获取磁盘容量
@@ -388,6 +390,7 @@ var ANYCHAT_SDKCTRL_MEDIAFILTERINIT		=	96;	// 媒体过滤器初始化
 var ANYCHAT_SDKCTRL_VIDEODEVICEINFO		=	97;	// 获取视频采集设备信息
 var ANYCHAT_SDKCTRL_UPDATERECUSERSTR	=	98;	// 更新录像用户参数
 var ANYCHAT_SDKCTRL_SYNCRECORD			=	99;	// 同步录像参数设置
+var ANYCHAT_SDKCTRL_BUSINESSBUFFER		=	100;// 业务缓冲区控制
 
 
 // 媒体播放事件类型定义
@@ -423,6 +426,8 @@ var ANYCHAT_CORESDKEVENT_BUSINESS		=	32;	// 业务事件
 var ANYCHAT_CORESDKEVENT_DEVICEFAIL		=	33;	// 设备失败事件
 var ANYCHAT_CORESDKEVENT_MEDIABUFFER	=	34;	// 媒体缓冲区事件
 var ANYCHAT_CORESDKEVENT_USERBUFFER		=	35;	// 用户缓冲区事件
+var ANYCHAT_CORESDKEVENT_MEDIAPROCESS	=	36;	// 媒体处理事件
+var ANYCHAT_CORESDKEVENT_BUSINESSBUFFER	=	100;// 业务缓冲区事件
 var ANYCHAT_CORESDKEVENT_USERDEFINE		=   800;// 用户自定义事件起始序号
 
 // 视频显示插件设置参数
@@ -433,15 +438,17 @@ var ANYCHATWEB_VIDEO_SO_VIDEODISPMODE	=	11;	// 视频显示模式
 var ANYCHATWEB_VIDEO_SO_REMOTEASSIST	=	12;	// 远程协助窗口
 var ANYCHATWEB_VIDEO_SO_PLAYTASKGUID	=	20;	// 播放任务ID
 
+// 业务缓冲区标志定义
+var ANYCHAT_BUSINESSBUF_FLAGS_SYNC		=	0x01;// 同步操作
 
 //文件控制命令定义常量：
-var BRPPT_FILECTRL_DOWNLOAD = 0x01; ///< 下载文件
-var BRPPT_FILECTRL_CANCEL = 0x02; ///< 取消下载
-var BRPPT_FILECTRL_DELETE = 0x04; ///< 删除文件
+var BRPPT_FILECTRL_DOWNLOAD = 0x01; 			// 下载文件
+var BRPPT_FILECTRL_CANCEL = 0x02;				// 取消下载
+var BRPPT_FILECTRL_DELETE = 0x04;				// 删除文件
 
 //文件信息查询定义常量：
-var BRPPT_FILEINFO_DOWNLOAD_STATUS = 0x01; ///< 下载状态
-var BRPPT_FILEINFO_PPTDETAILS = 0x02; ///< PPT详情
+var BRPPT_FILEINFO_DOWNLOAD_STATUS = 0x01;		// 下载状态
+var BRPPT_FILEINFO_PPTDETAILS = 0x02;			// PPT详情
 
 // 远程桌面控制参数定义
 var ANYCHAT_SCREENSOURCE_FLAGS_DISABLECURSOR  =   0x01;                // 禁止采集鼠标光标
