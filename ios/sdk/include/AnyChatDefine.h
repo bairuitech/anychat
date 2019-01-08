@@ -203,7 +203,8 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_MAXTRANSFILESIZE	229	///< 允许传输的最大文件大小（参数为int型，单位：MByte）
 #define BRAC_SO_CORESDK_USESERVERTIME		230	///< 使用服务器时间戳（参数为int型，0 关闭[默认] 1 开启）
 #define BRAC_SO_CORESDK_APPMONITORLIST		231	///< 应用程序列表，应用程序共享模块使用（参数为字符串）
-#define BRAC_SO_CORESDK_USERRSAPUBKEY		232	///< 用户RSA公钥
+#define BRAC_SO_CORESDK_SSLCERTCHAIN		232	///< SSL证书链
+#define BRAC_SO_CORESDK_SUPPORTMEDIACODEC	233	///< 本地支持的编码器信息，用于编码协商
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -420,9 +421,11 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SDKCTRL_VIDEOCALL			30	///< 呼叫控制
 #define ANYCHAT_SDKCTRL_USERINFO			40	///< 用户信息控制
 #define ANYCHAT_SDKCTRL_STREAMPLAY			50	///< 流媒体播放
+#define ANYCHAT_SDKCTRL_MEDIAPROCESS		51	///< 流媒体处理控制
 #define ANYCHAT_SDKCTRL_NETWORK				60	///< 网络控制
 #define ANYCHAT_SDKCTRL_MEDIA				70	///< 媒体控制
 #define ANYCHAT_SDKCTRL_RECORDTAG			71	///< 录像标签
+#define ANYCHAT_SDKCTRL_SCREENCAPPARAM		72	///< 屏幕采集参数设置
 #define ANYCHAT_SDKCTRL_FILEDELETE			80	///< 删除文件
 #define ANYCHAT_SDKCTRL_FILEINFO			81	///< 获取文件信息
 #define ANYCHAT_SDKCTRL_DISKSIZE			82	///< 获取磁盘容量
@@ -439,6 +442,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SDKCTRL_VIDEODEVICEINFO		97	///< 获取视频采集设备信息
 #define ANYCHAT_SDKCTRL_UPDATERECUSERSTR	98	///< 更新录像用户参数
 #define ANYCHAT_SDKCTRL_SYNCRECORD			99	///< 同步录像参数设置
+#define ANYCHAT_SDKCTRL_BUSINESSBUFFER		100	///< 业务缓冲区控制
 
 
 // 媒体播放事件类型定义
@@ -475,6 +479,8 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_CORESDKEVENT_DEVICEFAIL		33	///< 设备失败事件
 #define ANYCHAT_CORESDKEVENT_MEDIABUFFER	34	///< 媒体缓冲区事件
 #define ANYCHAT_CORESDKEVENT_USERBUFFER		35	///< 用户缓冲区事件
+#define ANYCHAT_CORESDKEVENT_MEDIAPROCESS	36	///< 媒体处理事件
+#define ANYCHAT_CORESDKEVENT_BUSINESSBUFFER	100	///< 业务缓冲区事件
 #define ANYCHAT_CORESDKEVENT_USERDEFINE		800	///< 用户自定义事件起始序号
 
 // CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
@@ -483,5 +489,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_CORESDKDATA_MESSAGE			3	///< 文字数据
 #define ANYCHAT_CORESDKDATA_BUFFER			4	///< 缓冲区数据
 
+// 业务缓冲区标志定义
+#define ANYCHAT_BUSINESSBUF_FLAGS_SYNC		0x01 ///< 同步操作
 
 #endif //_ANYCHAT_DEFINE_H__INCLUDE_

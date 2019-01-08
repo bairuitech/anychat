@@ -176,8 +176,9 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_CORESDK_STREAMADAPTIVE	=	228; ///< 流媒体自适应控制（参数为int型，0 关闭 1 开启[默认]）
 	public static final int BRAC_SO_CORESDK_MAXTRANSFILESIZE=	229; ///< 允许传输的最大文件大小（参数为int型，单位：MByte）
 	public static final int BRAC_SO_CORESDK_USESERVERTIME	=	230; ///< 使用服务器时间戳（参数为int型，0 关闭[默认] 1 开启）
-	public static final int BRAC_SO_CORESDK_APPMONITORLIST	=	231; ///< 应用程序列表，应用程序共享模块使用（参数为字符串）
-	public static final int BRAC_SO_CORESDK_USERRSAPUBKEY	=	232; ///< 用户RSA公钥
+	public static final int BRAC_SO_CORESDK_APPMONITORLIST	=	231; ///< 应用程序列表，应用程序共享模块使用（参数为字符串）	
+	public static final int BRAC_SO_CORESDK_SSLCERTCHAIN	=	232; ///< SSL证书链
+	public static final int BRAC_SO_CORESDK_SUPPORTMEDIACODEC =	233; ///< 本地支持的编码器信息，用于编码协商
 	
 	public static final int BRAC_SO_UDPTRACE_MODE			=	160; ///< UDP数据包跟踪模式
 	public static final int BRAC_SO_UDPTRACE_PACKSIZE		=	161; ///< UDP数据包跟踪的大小，单位：BYTE
@@ -279,9 +280,11 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_SDKCTRL_VIDEOCALL		=	30;	///< 呼叫控制
 	public static final int ANYCHAT_SDKCTRL_USERINFO		=	40;	///< 用户信息控制
 	public static final int ANYCHAT_SDKCTRL_STREAMPLAY		=	50;	///< 流媒体播放
+	public static final int ANYCHAT_SDKCTRL_MEDIAPROCESS	=	51;	///< 流媒体处理控制
 	public static final int ANYCHAT_SDKCTRL_NETWORK			=	60;	///< 网络控制
 	public static final int ANYCHAT_SDKCTRL_MEDIA			=	70;	///< 媒体控制
 	public static final int ANYCHAT_SDKCTRL_RECORDTAG		=	71;	///< 录像标签
+	public static final int ANYCHAT_SDKCTRL_SCREENCAPPARAM	=	72;	///< 屏幕采集参数设置
 	public static final int ANYCHAT_SDKCTRL_FILEDELETE		=	80;	///< 删除文件
 	public static final int ANYCHAT_SDKCTRL_FILEINFO		=	81;	///< 获取文件信息
 	public static final int ANYCHAT_SDKCTRL_DISKSIZE		=	82;	///< 获取磁盘容量
@@ -290,7 +293,7 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_SDKCTRL_CREATEDIR		=	85;	///< 创建目录
 	public static final int ANYCHAT_SDKCTRL_DIRCLEAN		=	86;	///< 目录清理
 	public static final int ANYCHAT_SDKCTRL_FINDFILE		=	87;	///< 查找文件
-	public static final int ANYCHAT_SDKCTRL_PPTHELPERINIT	=	90;	///< PPT环境初始化
+	public static final int ANYCHAT_SDKCTRL_PPTHELPERINIT	=	90;	///< PPT播报环境初始化
 	public static final int ANYCHAT_SDKCTRL_PPTFILECTRL		=	91;	///< PPT文件控制
 	public static final int ANYCHAT_SDKCTRL_PPTFILEINFO		=	92;	///< PPT文件信息
 	public static final int ANYCHAT_SDKCTRL_BUSINESS		=	95;	///< 业务控制
@@ -298,6 +301,8 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_SDKCTRL_VIDEODEVICEINFO	=	97;	///< 获取视频采集设备信息
 	public static final int ANYCHAT_SDKCTRL_UPDATERECUSERSTR=	98;	///< 更新录像用户参数
 	public static final int ANYCHAT_SDKCTRL_SYNCRECORD		=	99;	///< 同步录像参数设置
+	public static final int ANYCHAT_SDKCTRL_BUSINESSBUFFER	=	100;///< 业务缓冲区控制
+
 
 	// 常见出错代码定义
     public static final int BRAC_ERRORCODE_SUCCESS			= 0;	 ///< 没有错误
@@ -332,6 +337,7 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT=	0x00000001;	///< 播放音频流代替本地音频输入（Mic）
 	public static final int ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT=	0x00000002;	///< 播放视频流代替本地视频输入（Camera）
 	public static final int ANYCHAT_STREAMPLAY_FLAGS_CALLBACKDATA	  =	0x00000010;	///< 回调数据给上层
+	public static final int ANYCHAT_STREAMPLAY_FLAGS_PPTPLAY		  = 0x00000080;	///< 双录风险揭示PPT播放
 
 	// 媒体播放信息类型定义（API：BRAC_StreamPlayGetInfo 传入参数）
 	public static final int ANYCHAT_STREAMPLAY_INFO_JSONVALUE=	1;	///< 包含所有播放信息的Json字符串
@@ -352,11 +358,13 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_CORESDKEVENT_MICSTATE	=	11;	///< Mic状态事件
 	public static final int ANYCHAT_CORESDKEVENT_TRANSFILE	=	12;	///< 文件传输事件
 	public static final int ANYCHAT_CORESDKEVENT_STREAMPLAY	=	30;	///< 媒体播放事件
-	public static final int ANYCHAT_CORESDKEVENT_BUSINESS	=	32;	///< 业务事件
 	public static final int ANYCHAT_CORESDKEVENT_PPTHELPER	=	31;	///< PPTHelper事件
+	public static final int ANYCHAT_CORESDKEVENT_BUSINESS	=	32;	///< 业务事件
 	public static final int ANYCHAT_CORESDKEVENT_DEVICEFAIL	=	33;	///< 设备失败事件
 	public static final int ANYCHAT_CORESDKEVENT_MEDIABUFFER=	34;	///< 媒体缓冲区事件
 	public static final int ANYCHAT_CORESDKEVENT_USERBUFFER	=	35;	///< 用户缓冲区事件
+	public static final int ANYCHAT_CORESDKEVENT_MEDIAPROCESS=	36;	///< 媒体处理事件
+	public static final int ANYCHAT_CORESDKEVENT_BUSINESSBUFFER=100;///< 业务缓冲区事件
 	public static final int ANYCHAT_CORESDKEVENT_USERDEFINE	=	800;///< 用户自定义事件起始序号
 
 	// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
@@ -365,6 +373,8 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_CORESDKDATA_MESSAGE		=	3;	///< 文字数据
 	public static final int ANYCHAT_CORESDKDATA_BUFFER		=	4;	///< 缓冲区数据
 	
+	// 业务缓冲区标志定义
+	public static final int ANYCHAT_BUSINESSBUF_FLAGS_SYNC	=0x01;	///< 同步操作
 	
 	
 }
