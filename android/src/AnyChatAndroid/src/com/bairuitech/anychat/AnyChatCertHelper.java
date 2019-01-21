@@ -6,11 +6,17 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyFactory;
 import java.security.Principal;
 import java.security.PublicKey;
+import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPrivateKey;
@@ -31,7 +37,6 @@ import javax.crypto.Cipher;
 public class AnyChatCertHelper {
     public static final String ECB_PKCS1_PADDING = "RSA/ECB/PKCS1Padding";//加密填充方式
     public static final String RSA = "RSA";// 非对称加密密钥算法
-
     /**
      * @param certBytes，数字证书crt传入的byte数组
      * @return
@@ -62,7 +67,6 @@ public class AnyChatCertHelper {
             certificateInfo.put("OwnerUrl", domain);
             key = Base64.encodeToString(pk.getEncoded(), Base64.NO_WRAP);
             certificateInfo.put("PubKey", key);
-
             return certificateInfo.toString();
         } catch (Exception e) {
             Log.e("AnyChatCertHelper", "GetX509CertInfo failure", e.fillInStackTrace());
@@ -72,6 +76,7 @@ public class AnyChatCertHelper {
 
     /**
      * 使用正则获取特定的字符串
+     *
      * @param s
      * @return
      */
@@ -87,6 +92,7 @@ public class AnyChatCertHelper {
 
     /**
      * 证书有效性验证
+     *
      * @param certChain
      * @param cert2Verify
      * @return
@@ -111,9 +117,17 @@ public class AnyChatCertHelper {
                     certs.add(cert);
                 }
                 List<X509Certificate> certOrder = order(certs);
-                if (certOrder.size() != certs.size()) {
-                    result = -1;
+                if (certOrder.size()<=0){
                     break;
+                }
+                X509Certificate lastCert=certOrder.get(certOrder.size()-1);
+                if (!lastCert.getIssuerDN().equals(lastCert.getSubjectDN())) {
+                    X509Certificate rootCert = getRootCert(lastCert);
+                    if (rootCert == null) {
+                        result = -1;
+                        break;
+                    }
+                    certOrder.add(rootCert);
                 }
                 verifyCerts(certOrder);
             } catch (Exception e) {
@@ -129,6 +143,7 @@ public class AnyChatCertHelper {
 
     /**
      * 将证书链拆分
+     *
      * @param certChain
      * @return
      */
@@ -140,6 +155,7 @@ public class AnyChatCertHelper {
 
     /**
      * 找到证书父节点
+     *
      * @param parents
      * @param child
      * @return
@@ -147,13 +163,14 @@ public class AnyChatCertHelper {
     private static X509Certificate findParent(List<X509Certificate> parents, X509Certificate child) {
         Principal issuerDN = child.getIssuerDN();
         Principal subjectDN = child.getSubjectDN();
-
         if (issuerDN.equals(subjectDN)) {
             return null;
         }
-
         for (int i = 0; i < parents.size(); i++) {
             X509Certificate parent = parents.get(i);
+            if (parent==null){
+                break;
+            }
             if (issuerDN.equals(parent.getSubjectDN())) {
                 return parent;
             }
@@ -163,6 +180,7 @@ public class AnyChatCertHelper {
 
     /**
      * 排序
+     *
      * @param certss
      * @return
      */
@@ -184,6 +202,7 @@ public class AnyChatCertHelper {
 
     /**
      * 证书有效性验证
+     *
      * @param certs
      * @throws Exception
      */
@@ -222,14 +241,15 @@ public class AnyChatCertHelper {
 
     /**
      * 私钥加密
-     * @param data 待加密数据
+     * @param data       待加密数据
      * @param privateKey 密钥
      * @return byte[] 加密数据
      */
     @SuppressLint("TrulyRandom")
     public static byte[] RSA_PrivateEncrypt(byte[] data, byte[] privateKey) {
         try {
-            byte[] decodePrivateKey = Base64.decode(privateKey, Base64.NO_WRAP);
+            byte[] key = getKey(privateKey);
+            byte[] decodePrivateKey = Base64.decode(key, Base64.NO_WRAP);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decodePrivateKey);
             KeyFactory kf = KeyFactory.getInstance(RSA);
             RSAPrivateKey keyPrivate = (RSAPrivateKey) kf.generatePrivate(keySpec);
@@ -245,7 +265,7 @@ public class AnyChatCertHelper {
 
     /**
      * 公钥解密
-     * @param data 待解密数据
+     * @param data      待解密数据
      * @param publicKey 密钥
      * @return byte[] 解密数据
      */
@@ -272,7 +292,8 @@ public class AnyChatCertHelper {
     @SuppressLint("TrulyRandom")
     public static byte[] RSA_PrivateDecrypt(byte[] data, byte[] privateKey) {
         try {
-            byte[] decodePrivateKey = Base64.decode(privateKey, Base64.NO_WRAP);
+            byte[] key = getKey(privateKey);
+            byte[] decodePrivateKey = Base64.decode(key, Base64.NO_WRAP);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decodePrivateKey);
             KeyFactory kf = KeyFactory.getInstance(RSA);
             RSAPrivateKey keyPrivate = (RSAPrivateKey) kf.generatePrivate(keySpec);
@@ -283,7 +304,6 @@ public class AnyChatCertHelper {
         } catch (Exception e) {
             Log.e("AnyChatCertHelper", "RSA_PrivateDecrypt failure", e.fillInStackTrace());
         }
-
         return null;
     }
 
@@ -327,6 +347,61 @@ public class AnyChatCertHelper {
             }
         }
         return bytes;
+    }
+    /**
+     * 获取特定的字符串
+     * @param s
+     * @return
+     */
+    private static byte[] getKey(byte[] s) {
+        String keyContent = new String(s);
+        String key=keyContent.substring(keyContent.indexOf("Y-----")+7,keyContent.lastIndexOf("-----E"));
+        return key.getBytes();
+    }
+    /**
+     * 获取系统根证书
+     * @param selfCert
+     * @return
+     */
+    public static X509Certificate getRootCert(X509Certificate selfCert) {
+        try {
+            File mDir = new File(System.getenv("ANDROID_ROOT") + "/etc/security/cacerts");
+            X509Certificate mCertificates = null;
+            if (mDir != null && mDir.isDirectory()) {
+                for (String caFile : mDir.list()) {
+                    X509Certificate cert = readCertificate(mDir, caFile);
+                    if (cert == null) {
+                        break;
+                    }
+                    String issuerDN = cropString(selfCert.getIssuerDN().getName());
+                    String subjectDN = cropString(cert.getSubjectDN().getName());
+                    if (subjectDN.equals(issuerDN)) {
+                        mCertificates = cert;
+                        break;
+                    }
+                }
+            }
+            return mCertificates;
+        }catch (Exception e) {
+            Log.e("AnyChatCertHelper", "Get RootCert failure", e.fillInStackTrace());
+        }
+        return null;
+    }
+
+    private static X509Certificate readCertificate(File mDir,String file) {
+        CertificateFactory mCertFactory = null;
+        InputStream is = null;
+        X509Certificate x509Certificate = null;
+        try {
+            is = new BufferedInputStream(new FileInputStream(new File(mDir,file)));
+            mCertFactory = CertificateFactory.getInstance("X.509");
+            x509Certificate = (X509Certificate) mCertFactory.generateCertificate(is);
+            is.close();
+            return x509Certificate;
+        } catch (Exception e) {
+            Log.e("AnyChatCertHelper", "Read Certificate failure", e.fillInStackTrace());
+        }
+        return null;
     }
 
 }
