@@ -346,16 +346,26 @@ kGCD_SINGLETON_FOR_CLASS(TransFileVC);
     
     if (theTransTaskStatus == kTransStatus_Success)
     {
-        [self.theTableViewDataMArray addObject:self.theTableViewRowDataMDict];
-        [self TableViewReload];
-
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"成功发送！"
-                                                            message:@"Send a success."
-                                                           delegate:self
-                                                  cancelButtonTitle:nil
-                                                  otherButtonTitles:@"确定",nil];
-        [alertView show];
+        if ([NSThread isMainThread]) {
+            [self transFileSuccessDone];
+        } else {
+            [self performSelectorOnMainThread:@selector(transFileSuccessDone) withObject:nil waitUntilDone:NO];
+        }
     }
+}
+
+- (void)transFileSuccessDone
+{
+    [self.theTableViewDataMArray addObject:self.theTableViewRowDataMDict];
+    [self TableViewReload];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"成功发送！"
+                                                        message:@"Send a success."
+                                                       delegate:self
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"确定",nil];
+    [alertView show];
+
 }
 
 
