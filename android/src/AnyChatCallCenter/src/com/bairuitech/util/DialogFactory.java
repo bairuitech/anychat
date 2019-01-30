@@ -250,7 +250,10 @@ public class DialogFactory {
 				Intent intent;
 				switch (dwTag) {
 				case DIALOG_AGAINLOGIN:
-					mContext.stopService(new Intent(BaseConst.ACTION_BACK_SERVICE));
+                        intent = new Intent();
+                        intent.setAction(BaseConst.ACTION_BACK_SERVICE);
+                        intent.setPackage(mContext.getPackageName());
+                        mContext.stopService(intent);
 					intent = new Intent();
 					intent.putExtra("INTENT", BaseConst.APP_EXIT);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -258,7 +261,10 @@ public class DialogFactory {
 					mContext.startActivity(intent);
 					break;
 				case DIALOG_SERCLOSE:
-					mContext.stopService(new Intent(BaseConst.ACTION_BACK_SERVICE));
+                        intent = new Intent();
+                        intent.setAction(BaseConst.ACTION_BACK_SERVICE);
+                        intent.setPackage(mContext.getPackageName());
+                        mContext.stopService(intent);
 					intent = new Intent();
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					intent.setClass(mContext, LoginActivity.class);
@@ -351,18 +357,19 @@ public class DialogFactory {
 		buttonCancel.setText(mContext.getString(R.string.str_cancel));
 		buttonQuit.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generate)d method stub
-				Intent intent = new Intent();
-				intent.setAction(BaseConst.ACTION_BACK_SERVICE);
-				mContext.stopService(intent);
-				intent = new Intent();
-				intent.putExtra("INTENT", BaseConst.APP_EXIT);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				intent.setClass(mContext, LoginActivity.class);
-				mContext.startActivity(intent);
-				dialog.dismiss();
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generate)d method stub
+                Intent intent = new Intent();
+                intent.setAction(BaseConst.ACTION_BACK_SERVICE);
+                intent.setPackage(mContext.getPackageName());
+                mContext.stopService(intent);
+                intent = new Intent();
+                intent.putExtra("INTENT", BaseConst.APP_EXIT);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setClass(mContext, LoginActivity.class);
+                mContext.startActivity(intent);
+                dialog.dismiss();
 
 			}
 		});
