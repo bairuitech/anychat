@@ -128,7 +128,7 @@
 		FE3EAB5F19E5233A00030ECA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		FE56F0001C21348200576F27 /* Icon_box@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_box@2x.png"; sourceTree = "<group>"; };
 		FE56F0011C21348200576F27 /* Icon_box@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_box@3x.png"; sourceTree = "<group>"; };
-		FE56F0041C21356800576F27 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AnyChatMeeting/Images.xcassets; sourceTree = "<group>"; };
+		FE56F0041C21356800576F27 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FE6CD55419FA3C07008BC6E4 /* bg_menu.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg_menu.jpg; sourceTree = "<group>"; };
 		FE9361D31A0C626000A1A597 /* Icon_onRecordVideo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_onRecordVideo.png; path = AnyChatMeeting/Resources/video_footer/Icon_onRecordVideo.png; sourceTree = SOURCE_ROOT; };
 		FE9361D41A0C626000A1A597 /* Icon_offRecordVideo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_offRecordVideo.png; path = AnyChatMeeting/Resources/video_footer/Icon_offRecordVideo.png; sourceTree = SOURCE_ROOT; };
@@ -332,7 +332,6 @@
 		FEBBA24419C2CC0B009EE02C = {
 			isa = PBXGroup;
 			children = (
-				FE56F0041C21356800576F27 /* Images.xcassets */,
 				FEBBA25619C2CC0B009EE02C /* AnyChat */,
 				FEBBA25719C2CC0B009EE02C /* Supporting Files */,
 				FE9EC5EE1A26EF3000FE2E5D /* Utilities */,
@@ -387,6 +386,7 @@
 			isa = PBXGroup;
 			children = (
 				FECF538119EFBB3A00338859 /* images */,
+				FE56F0041C21356800576F27 /* Images.xcassets */,
 				FEBBA25819C2CC0B009EE02C /* AnyChatMeeting-Info.plist */,
 				FEBBA25919C2CC0B009EE02C /* InfoPlist.strings */,
 				FEBBA25C19C2CC0B009EE02C /* main.m */,

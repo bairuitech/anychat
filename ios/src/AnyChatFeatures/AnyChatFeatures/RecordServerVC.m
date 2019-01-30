@@ -316,6 +316,12 @@
     [self btnSelectedOnClicked:switchCameraBtn];
 }
 
+- (IBAction)speakerBtnClicked:(UIButton *)sender {
+    sender.selected = !sender.isSelected;
+    //开关本地声源
+    [AnyChatPlatform UserSpeakControl:-1 :!sender.isSelected];
+}
+
 - (void) OnLocalVideoRelease:(id)sender
 {
     if(self.localVideoSurface)

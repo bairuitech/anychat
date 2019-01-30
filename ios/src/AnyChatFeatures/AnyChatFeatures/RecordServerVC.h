@@ -35,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem       *theVideoNItem;
 @property (weak, nonatomic) IBOutlet UIButton               *switchCameraBtn;
 @property (weak, nonatomic) IBOutlet UIButton               *endCallBtn;
+@property (weak, nonatomic) IBOutlet UIButton               *speakerBtn;
 @property (weak, nonatomic) IBOutlet UIButton               *theServerFunBtn;
 @property (weak, nonatomic) IBOutlet UIView                 *leftLineView;
 @property (weak, nonatomic) IBOutlet UILabel                *theVideoTimeLab;

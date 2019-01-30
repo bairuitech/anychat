@@ -44,6 +44,7 @@
 @property (weak, nonatomic) IBOutlet UIView                 *leftLineView;
 @property (weak, nonatomic) IBOutlet UILabel                *theVideoTimeLab;
 @property (weak, nonatomic) IBOutlet UILabel                *theLocalRecordTimeLab;
+@property (weak, nonatomic) IBOutlet UIButton               *speakerBtn;
 @property (strong, nonatomic) NSString                      *theFeaturesName;
 @property (strong, nonatomic) NSString                      *theTakePhotoPath;
 @property (strong, nonatomic) NSString                      *theCurrentRotation;
