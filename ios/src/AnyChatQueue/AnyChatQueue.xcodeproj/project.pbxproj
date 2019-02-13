@@ -142,10 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F854CF052147505F002FC106 /* libc++.tbd in Frameworks */,
+				09558B041ECDBB0900D966CE /* libz.tbd in Frameworks */,
 				096D5C671EDE9C45001100ED /* libavfilter.a in Frameworks */,
 				096D5C741EDE9C45001100ED /* libyuv.a in Frameworks */,
-				09558B041ECDBB0900D966CE /* libz.tbd in Frameworks */,
-				098DF2481EA743A700FB36FA /* VideoToolbox.framework in Frameworks */,
 				096D5C6C1EDE9C45001100ED /* libmediautil.a in Frameworks */,
 				096D5C6A1EDE9C45001100ED /* libmediacore.a in Frameworks */,
 				096D5C731EDE9C45001100ED /* libyuv_neon.a in Frameworks */,
@@ -160,6 +159,7 @@
 				096D5C6D1EDE9C45001100ED /* libmp3lame.a in Frameworks */,
 				096D5C6F1EDE9C45001100ED /* libswresample.a in Frameworks */,
 				096D5C6E1EDE9C45001100ED /* libppthelper.a in Frameworks */,
+				098DF2481EA743A700FB36FA /* VideoToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,10 +213,10 @@
 		22D560011B2B2B2100FE5DC2 /* AnyChatQueue */ = {
 			isa = PBXGroup;
 			children = (
-				04B125951CEDC8050008E358 /* textModel */,
-				FE94D02A1C65EDBE00D199DE /* sdk */,
 				22D560061B2B2B2100FE5DC2 /* AppDelegate.h */,
 				22D560071B2B2B2100FE5DC2 /* AppDelegate.m */,
+				FE94D02A1C65EDBE00D199DE /* sdk */,
+				04B125951CEDC8050008E358 /* textModel */,
 				22D560321B2B483D00FE5DC2 /* Controller */,
 				22D560311B2B483600FE5DC2 /* Model */,
 				22D560301B2B482D00FE5DC2 /* View */,

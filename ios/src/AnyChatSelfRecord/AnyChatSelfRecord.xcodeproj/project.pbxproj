@@ -235,33 +235,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				F854CF0121474FC4002FC106 /* libc++.tbd in Frameworks */,
-				096D5CAE1EDE9CAF001100ED /* libppthelper.a in Frameworks */,
 				09558B501ECDBBEA00D966CE /* libz.tbd in Frameworks */,
-				098DF2421EA7438000FB36FA /* VideoToolbox.framework in Frameworks */,
+				096D5CAE1EDE9CAF001100ED /* libppthelper.a in Frameworks */,
 				096D5CB11EDE9CAF001100ED /* libvo-amrwbenc.a in Frameworks */,
 				096D5CA81EDE9CAF001100ED /* libavformat.a in Frameworks */,
 				096D5CB41EDE9CAF001100ED /* libyuv.a in Frameworks */,
-				FE1E88AF1A442C230093E935 /* AudioToolbox.framework in Frameworks */,
-				FBB435AF1A4B3398000BFB8B /* MediaPlayer.framework in Frameworks */,
 				096D5CAD1EDE9CAF001100ED /* libmp3lame.a in Frameworks */,
 				096D5CA61EDE9CAF001100ED /* libavcodec.a in Frameworks */,
 				096D5CA71EDE9CAF001100ED /* libavfilter.a in Frameworks */,
 				096D5CA51EDE9CAF001100ED /* libanychatcore.a in Frameworks */,
-				FE1E88B51A442C400093E935 /* CoreAudio.framework in Frameworks */,
 				096D5CB01EDE9CAF001100ED /* libswscale.a in Frameworks */,
 				096D5CAB1EDE9CAF001100ED /* libmediashow.a in Frameworks */,
 				096D5CAF1EDE9CAF001100ED /* libswresample.a in Frameworks */,
-				FE1E88B31A442C390093E935 /* CoreVideo.framework in Frameworks */,
-				FE1E88B11A442C2F0093E935 /* CoreMedia.framework in Frameworks */,
 				096D5CB31EDE9CAF001100ED /* libyuv_neon.a in Frameworks */,
-				FE1E88AD1A442C1C0093E935 /* AVFoundation.framework in Frameworks */,
 				096D5CB21EDE9CAF001100ED /* libx264.a in Frameworks */,
 				096D5CAC1EDE9CAF001100ED /* libmediautil.a in Frameworks */,
 				096D5CAA1EDE9CAF001100ED /* libmediacore.a in Frameworks */,
+				096D5CA91EDE9CAF001100ED /* libavutil.a in Frameworks */,
+				098DF2421EA7438000FB36FA /* VideoToolbox.framework in Frameworks */,
+				FE1E88AF1A442C230093E935 /* AudioToolbox.framework in Frameworks */,
+				FBB435AF1A4B3398000BFB8B /* MediaPlayer.framework in Frameworks */,
+				FE1E88B51A442C400093E935 /* CoreAudio.framework in Frameworks */,
+				FE1E88B31A442C390093E935 /* CoreVideo.framework in Frameworks */,
+				FE1E88B11A442C2F0093E935 /* CoreMedia.framework in Frameworks */,
+				FE1E88AD1A442C1C0093E935 /* AVFoundation.framework in Frameworks */,
 				FE1E88801A4410C80093E935 /* CoreGraphics.framework in Frameworks */,
 				FE1E88821A4410C80093E935 /* UIKit.framework in Frameworks */,
 				FE1E887E1A4410C80093E935 /* Foundation.framework in Frameworks */,
-				096D5CA91EDE9CAF001100ED /* libavutil.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,9 +307,9 @@
 		FE1E88831A4410C80093E935 /* AnyChatSelfRecord */ = {
 			isa = PBXGroup;
 			children = (
-				FE94CFF01C65EB2600D199DE /* sdk */,
 				FE1E888C1A4410C80093E935 /* AppDelegate.h */,
 				FE1E888D1A4410C80093E935 /* AppDelegate.m */,
+				FE94CFF01C65EB2600D199DE /* sdk */,
 				FE4356F41A47AF3300D5EE1B /* Login */,
 				FE43576F1A47C6F400D5EE1B /* TakePhoto */,
 				FE43578C1A47CC8A00D5EE1B /* RecordLocal */,
@@ -317,7 +317,6 @@
 				FEB0EE6B1A4BA1E100BE7324 /* EndVC */,
 				FE4357701A47C84900D5EE1B /* Setting */,
 				FE4356F51A47AF9D00D5EE1B /* Resources */,
-				FECFA0091C2115A7002777D9 /* Images.xcassets */,
 				FE1E88841A4410C80093E935 /* Supporting Files */,
 			);
 			path = AnyChatSelfRecord;
@@ -326,6 +325,7 @@
 		FE1E88841A4410C80093E935 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FECFA0091C2115A7002777D9 /* Images.xcassets */,
 				FE1E88851A4410C80093E935 /* AnyChatSelfRecord-Info.plist */,
 				FE1E88861A4410C80093E935 /* InfoPlist.strings */,
 				FE1E88891A4410C80093E935 /* main.m */,

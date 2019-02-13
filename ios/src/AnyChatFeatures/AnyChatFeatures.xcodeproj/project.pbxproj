@@ -25,6 +25,7 @@
 		096D5C331EDE9BE7001100ED /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5C231EDE9BE7001100ED /* libyuv_neon.a */; };
 		096D5C341EDE9BE7001100ED /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5C241EDE9BE7001100ED /* libyuv.a */; };
 		098DF24C1EA743C500FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF24B1EA743C500FB36FA /* VideoToolbox.framework */; };
+		CF71FBCF21FAA9E000CEC573 /* RecordLocalVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF71FBCE21FAA9E000CEC573 /* RecordLocalVC.xib */; };
 		F854CF0921475100002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CF0821475100002FC106 /* libc++.tbd */; };
 		FBCD379819D82B4B000FF14E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD379719D82B4B000FF14E /* QuartzCore.framework */; };
 		FE04EB4D19F642B3006A5E5F /* FeaturesListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE04EB4B19F642B3006A5E5F /* FeaturesListVC.m */; };
@@ -56,7 +57,6 @@
 		FE9361D81A0CA05B00A1A597 /* Icon_SnapShot.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9361D71A0CA05B00A1A597 /* Icon_SnapShot.png */; };
 		FE9AFD471A6E63F900B445CF /* UserVideoSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE9AFD461A6E63F900B445CF /* UserVideoSettings.plist */; };
 		FE9B1CB01A315A12006638F6 /* RecordLocalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9B1CAE1A315A12006638F6 /* RecordLocalVC.m */; };
-		FE9B1CB11A315A12006638F6 /* RecordLocalVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE9B1CAF1A315A12006638F6 /* RecordLocalVC.xib */; };
 		FE9B1CB51A315B0C006638F6 /* RecordServerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9B1CB31A315B0C006638F6 /* RecordServerVC.m */; };
 		FE9B1CB61A315B0C006638F6 /* RecordServerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE9B1CB41A315B0C006638F6 /* RecordServerVC.xib */; };
 		FE9DD09C19DA4F92008889EC /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DD09219DA4F92008889EC /* 1.png */; };
@@ -168,6 +168,7 @@
 		096D5C231EDE9BE7001100ED /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
 		096D5C241EDE9BE7001100ED /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
 		098DF24B1EA743C500FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		CF71FBCE21FAA9E000CEC573 /* RecordLocalVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordLocalVC.xib; sourceTree = "<group>"; };
 		F854CF0821475100002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FBCD379719D82B4B000FF14E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FE04EB4A19F642B3006A5E5F /* FeaturesListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeaturesListVC.h; sourceTree = "<group>"; };
@@ -208,7 +209,6 @@
 		FE9AFD461A6E63F900B445CF /* UserVideoSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserVideoSettings.plist; sourceTree = "<group>"; };
 		FE9B1CAD1A315A12006638F6 /* RecordLocalVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordLocalVC.h; sourceTree = "<group>"; };
 		FE9B1CAE1A315A12006638F6 /* RecordLocalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordLocalVC.m; sourceTree = "<group>"; };
-		FE9B1CAF1A315A12006638F6 /* RecordLocalVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordLocalVC.xib; sourceTree = "<group>"; };
 		FE9B1CB21A315B0C006638F6 /* RecordServerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordServerVC.h; sourceTree = "<group>"; };
 		FE9B1CB31A315B0C006638F6 /* RecordServerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordServerVC.m; sourceTree = "<group>"; };
 		FE9B1CB41A315B0C006638F6 /* RecordServerVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordServerVC.xib; sourceTree = "<group>"; };
@@ -271,7 +271,7 @@
 		FECF536C19EF721A00338859 /* bg_video-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_video-568h@2x.png"; sourceTree = "<group>"; };
 		FED5E3531C213EA70097A980 /* Icon_box@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_box@2x.png"; sourceTree = "<group>"; };
 		FED5E3541C213EA70097A980 /* Icon_box@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_box@3x.png"; sourceTree = "<group>"; };
-		FED5E3571C213FC90097A980 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AnyChatFeatures/Images.xcassets; sourceTree = "<group>"; };
+		FED5E3571C213FC90097A980 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FED686BA1AB97B0400F8E211 /* SendDataVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendDataVC.xib; sourceTree = "<group>"; };
 		FED686BB1AB97B0400F8E211 /* SendDataVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendDataVC.m; sourceTree = "<group>"; };
 		FED686BC1AB97B0400F8E211 /* SendDataVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendDataVC.h; sourceTree = "<group>"; };
@@ -475,7 +475,7 @@
 			children = (
 				FE9B1CAD1A315A12006638F6 /* RecordLocalVC.h */,
 				FE9B1CAE1A315A12006638F6 /* RecordLocalVC.m */,
-				FE9B1CAF1A315A12006638F6 /* RecordLocalVC.xib */,
+				CF71FBCE21FAA9E000CEC573 /* RecordLocalVC.xib */,
 				FEEFD3311A721BB60099EAC9 /* RecordSelfVC.h */,
 				FEEFD3321A721BB60099EAC9 /* RecordSelfVC.m */,
 				FEEFD3331A721BB60099EAC9 /* RecordSelfVC.xib */,
@@ -556,7 +556,6 @@
 		FEBBA24419C2CC0B009EE02C = {
 			isa = PBXGroup;
 			children = (
-				FED5E3571C213FC90097A980 /* Images.xcassets */,
 				FEBBA25619C2CC0B009EE02C /* AnyChat */,
 				FEBBA25719C2CC0B009EE02C /* Supporting Files */,
 				FE9EC5EE1A26EF3000FE2E5D /* Utilities */,
@@ -617,6 +616,7 @@
 		FEBBA25719C2CC0B009EE02C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FED5E3571C213FC90097A980 /* Images.xcassets */,
 				FE9E5D211A1AF7CF00F48575 /* audio */,
 				FECF538119EFBB3A00338859 /* images */,
 				FEBBA25819C2CC0B009EE02C /* AnyChatFeatures-Info.plist */,
@@ -666,8 +666,7 @@
 				FEE6C84219F628A300477365 /* Icon_camera_off.png */,
 				FEE6C84319F628A300477365 /* bg_video_footer.png */,
 			);
-			name = video_footer;
-			path = Resources/video_footer;
+			path = video_footer;
 			sourceTree = "<group>";
 		};
 		FECF538119EFBB3A00338859 /* images */ = {
@@ -828,7 +827,6 @@
 				FEA9264A19E4EEB300FC42AC /* Icon_name.png in Resources */,
 				FE20E49B19D968A800189A8A /* bg.png in Resources */,
 				FE3EAB6019E5233A00030ECA /* Default-568h@2x.png in Resources */,
-				FE9B1CB11A315A12006638F6 /* RecordLocalVC.xib in Resources */,
 				FEBC7CD81A2FF58A00F81D3B /* DetailVC.xib in Resources */,
 				FE20E49819D960C200189A8A /* btn_login_01.png in Resources */,
 				FEDEE6911A15F124006FB454 /* Icon_takePhoto_Server.png in Resources */,
@@ -850,6 +848,7 @@
 				FEDEE68C1A15EA74006FB454 /* Icon_onRecordVideo_Local.png in Resources */,
 				FE5EFB621C5754CF0006BE11 /* unchecked.png in Resources */,
 				FE9361D81A0CA05B00A1A597 /* Icon_SnapShot.png in Resources */,
+				CF71FBCF21FAA9E000CEC573 /* RecordLocalVC.xib in Resources */,
 				FEB863E019F0E6BE00594BF5 /* bg_video@2x.png in Resources */,
 				FEAD38371A1353010036F8B6 /* Icon_featuresBtn_4.png in Resources */,
 				FEA910811A0231E300798D1D /* theTransFileCell.xib in Resources */,

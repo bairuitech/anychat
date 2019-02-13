@@ -416,9 +416,12 @@
     self.port.delegate = self;
     self.username.delegate = self;
     
-    self.server.text = kAnyChatIP;
-    self.port.text = kAnyChatPort;
-    self.username.text = kAnyChatUserName;
+    NSString *username = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatUserName"];
+    NSString *server = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatServer"];
+    NSString *port = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatPort"];
+    self.server.text = server ? server : kAnyChatIP;
+    self.port.text = port ? port : kAnyChatPort;
+    self.username.text = username ? username : kAnyChatUserName;
     
     //设置底部Label文本SDK的版本信息
     //self.version.text = [AnyChatPlatform GetSDKVersion];
@@ -482,6 +485,7 @@
                 [self InitClientObjectInfo:dwUserId :ANYCHAT_OBJECT_FLAGS_AGENT];
             }
         }
+        [self storeLoginInfo];
     }else {
         [MBProgressHUD hideHUD];
         [MBProgressHUD showError:@"登录失败"];
@@ -828,7 +832,12 @@
     self.view.frame =CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 }
 
-
+-(void)storeLoginInfo{
+    [[NSUserDefaults standardUserDefaults] setValue:self.username.text forKey:@"AnyChatUserName"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.server.text forKey:@"AnyChatSerVer"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.port.text forKey:@"AnyChatPort"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.AppId.text forKey:@"AnyChatAppId"];
+}
 #pragma mark - NSNotification Method
 //消息观察者方法
 - (void)AnyChatNotifyHandler:(NSNotification*)notify

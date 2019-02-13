@@ -325,7 +325,13 @@
     theShowVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self.navigationController presentViewController:theShowVC animated:YES completion:nil];
 }
-
+    
+- (IBAction)speakerBtnClicked:(UIButton *)sender {
+    sender.selected = !sender.isSelected;
+    //开关本地声源
+    [AnyChatPlatform UserSpeakControl:-1 :!sender.isSelected];
+}
+    
 - (void) OnLocalVideoRelease:(id)sender
 {
     if(self.localVideoSurface)

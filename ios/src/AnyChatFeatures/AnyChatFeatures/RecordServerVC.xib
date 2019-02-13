@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +14,8 @@
                 <outlet property="endCallBtn" destination="VyI-bD-2ZE" id="aWx-Wo-eJc"/>
                 <outlet property="leftLineView" destination="1X1-W2-73G" id="eyK-IZ-ffd"/>
                 <outlet property="remoteVideoSurface" destination="pUF-sz-JNk" id="v3c-eT-Td3"/>
-                <outlet property="switchCameraBtn" destination="nk4-MQ-EOy" id="qQC-z2-tfy"/>
+                <outlet property="speakerBtn" destination="cSZ-VL-qfH" id="1Yz-8i-xZ9"/>
+                <outlet property="switchCameraBtn" destination="Kwf-Oz-t7q" id="KAt-gk-WG9"/>
                 <outlet property="theLocalView" destination="cck-Gt-e7F" id="O4l-d9-IRh"/>
                 <outlet property="theServerFunBtn" destination="DgR-Gd-WCw" id="2AZ-jI-pPg"/>
                 <outlet property="theServerRecordTimeLab" destination="gbi-VF-y6p" id="b2c-fq-yTP"/>
@@ -55,25 +56,6 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VyI-bD-2ZE" userLabel="endCallBtn">
-                            <rect key="frame" x="68" y="0.0" width="227" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" image="Icon_EndCall.png">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <state key="selected" image="Icon_EndCall.png">
-                                <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <state key="highlighted">
-                                <color key="titleColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="FinishVideoChatBtnClicked:" destination="-1" eventType="touchUpInside" id="1Pt-WD-nDu"/>
-                            </connections>
-                        </button>
                         <view contentMode="scaleToFill" id="7Ti-w6-ouQ" userLabel="View - 填充空隙">
                             <rect key="frame" x="270" y="0.0" width="50" height="30"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -91,6 +73,39 @@
                                 <action selector="theServerFunBtn_OnClicked:" destination="-1" eventType="touchUpInside" id="Pts-Os-Vco"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cSZ-VL-qfH">
+                            <rect key="frame" x="285" y="0.0" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="Icon_speak_on.png"/>
+                            <state key="selected" image="Icon_speak_off.png"/>
+                            <connections>
+                                <action selector="speakerBtnClicked:" destination="-1" eventType="touchUpInside" id="UP4-Q3-39f"/>
+                            </connections>
+                        </button>
+                        <view alpha="0.30000001192092896" contentMode="scaleToFill" id="0DQ-qx-Q8S" userLabel="rightLineView">
+                            <rect key="frame" x="280" y="0.0" width="1" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VyI-bD-2ZE" userLabel="endCallBtn">
+                            <rect key="frame" x="47" y="0.0" width="227" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" image="Icon_EndCall.png">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <state key="selected" image="Icon_EndCall.png">
+                                <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="FinishVideoChatBtnClicked:" destination="-1" eventType="touchUpInside" id="1Pt-WD-nDu"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
@@ -98,23 +113,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <items>
-                        <navigationItem title="Title" id="hpf-Jv-vro">
-                            <barButtonItem key="rightBarButtonItem" id="fdJ-C4-CBd" userLabel="Bar Button Item - Right">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nk4-MQ-EOy" userLabel="switchCamera">
-                                    <rect key="frame" x="211" y="0.0" width="22" height="20"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <state key="normal" image="Icon_switchCamera_w_102.png" backgroundImage="Icon_switchCamera_w_102.png">
-                                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </state>
-                                    <state key="selected" image="Icon_switchCamera_b_102.png" backgroundImage="Icon_switchCamera_b_102.png"/>
-                                    <state key="highlighted" image="Icon_switchCamera_b_102.png" backgroundImage="Icon_switchCamera_b_102.png"/>
-                                    <connections>
-                                        <action selector="switchCameraBtn_OnClicked:" destination="-1" eventType="touchUpInside" id="qfP-gl-VvQ"/>
-                                    </connections>
-                                </button>
-                            </barButtonItem>
-                        </navigationItem>
+                        <navigationItem title="Title" id="hpf-Jv-vro"/>
                     </items>
                 </navigationBar>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="M36-A3-701" userLabel="theVideoTimeLab">
@@ -132,6 +131,19 @@
                     <color key="textColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Kwf-Oz-t7q" userLabel="switchCamera">
+                    <rect key="frame" x="288" y="13" width="22" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <state key="normal" image="Icon_switchCamera_w_102.png" backgroundImage="Icon_switchCamera_w_102.png">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <state key="selected" image="Icon_switchCamera_b_102.png" backgroundImage="Icon_switchCamera_b_102.png"/>
+                    <state key="highlighted" image="Icon_switchCamera_b_102.png" backgroundImage="Icon_switchCamera_b_102.png"/>
+                    <connections>
+                        <action selector="switchCameraBtn_OnClicked:" destination="-1" eventType="touchUpInside" id="hrz-OQ-LeX"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <nil key="simulatedStatusBarMetrics"/>
@@ -148,14 +160,11 @@
         <image name="Icon_EndCall.png" width="454" height="60"/>
         <image name="Icon_offRecordVideo_Local.png" width="70" height="72"/>
         <image name="Icon_onRecordVideo_Local.png" width="70" height="72"/>
+        <image name="Icon_speak_off.png" width="48" height="48"/>
+        <image name="Icon_speak_on.png" width="48" height="48"/>
         <image name="Icon_switchCamera_b_102.png" width="102" height="102"/>
         <image name="Icon_switchCamera_w_102.png" width="102" height="102"/>
         <image name="bg_video.png" width="320" height="568"/>
         <image name="bg_video_footer.png" width="640" height="60"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>

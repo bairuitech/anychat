@@ -58,7 +58,8 @@
 #pragma mark - Life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [self setUI];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
     
     [AnyChatPlatform InitSDK:0];
@@ -101,7 +102,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self setUI];
 }
 
 #pragma mark - Memory Warning Method
@@ -128,6 +128,10 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+
 }
 
 
@@ -204,6 +208,8 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
         FeaturesListVC *featuresListVC = [[FeaturesListVC alloc] init];
         [self.navigationController pushViewController:featuresListVC animated:YES];
         [HUD hide:YES];
+        
+        [self storeLoginInfo];
     }
     else
     {
@@ -750,10 +756,12 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 - (void)setUI
 {
     [self.navigationController setNavigationBarHidden:YES];
-    
-    theUserName.text = kAnyChatUserName;
-    theServerIP.text = kAnyChatIP;
-    theServerPort.text = kAnyChatPort;
+    NSString *username = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatUserName"];
+    NSString *serverIP = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatServerIP"];
+    NSString *serverPort = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatServerPort"];
+    theUserName.text = username ? username : kAnyChatUserName;
+    theServerIP.text = serverIP ? serverIP : kAnyChatIP;
+    theServerPort.text = serverPort ? serverPort : kAnyChatPort;
     
     [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -770,5 +778,10 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     
 }
 
+-(void)storeLoginInfo{
+    [[NSUserDefaults standardUserDefaults] setValue:theUserName.text forKey:@"AnyChatUserName"];
+    [[NSUserDefaults standardUserDefaults] setValue:theServerIP.text forKey:@"AnyChatServerIP"];
+    [[NSUserDefaults standardUserDefaults] setValue:theServerPort.text forKey:@"AnyChatServerPort"];
+}
 
 @end

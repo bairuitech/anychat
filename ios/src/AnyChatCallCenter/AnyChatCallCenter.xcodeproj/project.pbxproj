@@ -177,10 +177,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F854CF0B21475157002FC106 /* libc++.tbd in Frameworks */,
-				096D5C141EDE9BAC001100ED /* libyuv.a in Frameworks */,
 				09558A921ECDB95300D966CE /* libz.tbd in Frameworks */,
+				096D5C141EDE9BAC001100ED /* libyuv.a in Frameworks */,
 				096D5C121EDE9BAC001100ED /* libx264.a in Frameworks */,
-				098DF24E1EA743D400FB36FA /* VideoToolbox.framework in Frameworks */,
 				096D5C0B1EDE9BAC001100ED /* libmediashow.a in Frameworks */,
 				096D5C081EDE9BAC001100ED /* libavformat.a in Frameworks */,
 				096D5C0D1EDE9BAC001100ED /* libmp3lame.a in Frameworks */,
@@ -190,19 +189,20 @@
 				096D5C061EDE9BAC001100ED /* libavcodec.a in Frameworks */,
 				096D5C0E1EDE9BAC001100ED /* libppthelper.a in Frameworks */,
 				096D5C131EDE9BAC001100ED /* libyuv_neon.a in Frameworks */,
-				FEB3382919B857F800D2C2F3 /* CoreAudio.framework in Frameworks */,
 				096D5C091EDE9BAC001100ED /* libavutil.a in Frameworks */,
 				096D5C0C1EDE9BAC001100ED /* libmediautil.a in Frameworks */,
+				096D5C071EDE9BAC001100ED /* libavfilter.a in Frameworks */,
+				096D5C0F1EDE9BAC001100ED /* libswresample.a in Frameworks */,
+				096D5C051EDE9BAC001100ED /* libanychatcore.a in Frameworks */,
+				098DF24E1EA743D400FB36FA /* VideoToolbox.framework in Frameworks */,
+				FEB3382919B857F800D2C2F3 /* CoreAudio.framework in Frameworks */,
 				FEB3382719B857EC00D2C2F3 /* CoreVideo.framework in Frameworks */,
 				FEB3382519B857E400D2C2F3 /* AudioToolbox.framework in Frameworks */,
 				FEB3382319B857DB00D2C2F3 /* AVFoundation.framework in Frameworks */,
 				FEB3382119B857D500D2C2F3 /* CoreMedia.framework in Frameworks */,
 				FEB337CA19B8555200D2C2F3 /* CoreGraphics.framework in Frameworks */,
-				096D5C071EDE9BAC001100ED /* libavfilter.a in Frameworks */,
 				FEB337CC19B8555200D2C2F3 /* UIKit.framework in Frameworks */,
 				FEB337C819B8555200D2C2F3 /* Foundation.framework in Frameworks */,
-				096D5C0F1EDE9BAC001100ED /* libswresample.a in Frameworks */,
-				096D5C051EDE9BAC001100ED /* libanychatcore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,8 +382,7 @@
 				FEB3386919B85FFE00D2C2F3 /* Toast+UIView.m */,
 				FEB3386A19B85FFE00D2C2F3 /* Toast+UIView.h */,
 			);
-			name = Toast;
-			path = ../Toast;
+			path = Toast;
 			sourceTree = "<group>";
 		};
 		FEB3386C19B8608300D2C2F3 /* HeadPortrait */ = {

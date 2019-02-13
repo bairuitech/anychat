@@ -43,6 +43,12 @@
 		C051AB0E1DCD929B00227049 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C051AB0C1DCD929B00227049 /* LoginViewController.m */; };
 		C051AB0F1DCD929B00227049 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C051AB0D1DCD929B00227049 /* LoginViewController.xib */; };
 		C051AB121DCDB3F900227049 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C051AB111DCDB3F900227049 /* CustomButton.m */; };
+		CF71FBDD21FADCAB00CEC573 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF71FBD221FADC4700CEC573 /* CoreAudio.framework */; };
+		CF71FBDE21FADCAB00CEC573 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF71FBD521FADC4800CEC573 /* CoreVideo.framework */; };
+		CF71FBDF21FADCAB00CEC573 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF71FBD421FADC4800CEC573 /* CoreMedia.framework */; };
+		CF71FBE021FADCAB00CEC573 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF71FBD321FADC4700CEC573 /* QuartzCore.framework */; };
+		CF71FBE121FADCAB00CEC573 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF71FBD021FADC4700CEC573 /* AudioToolbox.framework */; };
+		CF71FBE221FADCAB00CEC573 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF71FBD121FADC4700CEC573 /* AVFoundation.framework */; };
 		F854CF0321475012002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CF0221475012002FC106 /* libc++.tbd */; };
 		FE16D5BA1B2BC1FB0054FBD5 /* BusinessListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE16D5B91B2BC1FB0054FBD5 /* BusinessListController.m */; };
 		FE16D5BC1B2BC2450054FBD5 /* business.json in Resources */ = {isa = PBXBuildFile; fileRef = FE16D5BB1B2BC2450054FBD5 /* business.json */; };
@@ -51,12 +57,6 @@
 		FE16D5C41B2BD6570054FBD5 /* QueueViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE16D5C21B2BD6570054FBD5 /* QueueViewController.xib */; };
 		FE16D5C81B2BD6CD0054FBD5 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE16D5C61B2BD6CD0054FBD5 /* VideoViewController.m */; };
 		FE16D5C91B2BD6CD0054FBD5 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE16D5C71B2BD6CD0054FBD5 /* VideoViewController.xib */; };
-		FE16D6111B2C10C00054FBD5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D6101B2C10C00054FBD5 /* AVFoundation.framework */; };
-		FE16D6131B2C10C90054FBD5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D6121B2C10C90054FBD5 /* AudioToolbox.framework */; };
-		FE16D6151B2C10D10054FBD5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D6141B2C10D10054FBD5 /* QuartzCore.framework */; };
-		FE16D6171B2C10DB0054FBD5 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D6161B2C10DB0054FBD5 /* CoreMedia.framework */; };
-		FE16D6191B2C10E40054FBD5 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D6181B2C10E40054FBD5 /* CoreVideo.framework */; };
-		FE16D61B1B2C10EC0054FBD5 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE16D61A1B2C10EC0054FBD5 /* CoreAudio.framework */; };
 		FE175A311B5DF02100F4D2C8 /* sound_phoneCall.wav in Resources */ = {isa = PBXBuildFile; fileRef = FE175A301B5DF02100F4D2C8 /* sound_phoneCall.wav */; };
 		FE94CECC1C64777A00D199DE /* MBProgressHUD+JT.m in Sources */ = {isa = PBXBuildFile; fileRef = FE94CEBC1C64777A00D199DE /* MBProgressHUD+JT.m */; };
 		FE94CECD1C64777A00D199DE /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FE94CEBD1C64777A00D199DE /* MBProgressHUD.bundle */; };
@@ -112,6 +112,12 @@
 		C051AB0D1DCD929B00227049 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		C051AB101DCDB3F900227049 /* CustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
 		C051AB111DCDB3F900227049 /* CustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
+		CF71FBD021FADC4700CEC573 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		CF71FBD121FADC4700CEC573 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		CF71FBD221FADC4700CEC573 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		CF71FBD321FADC4700CEC573 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CF71FBD421FADC4800CEC573 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		CF71FBD521FADC4800CEC573 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		F854CF0221475012002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FE16D5B81B2BC1FB0054FBD5 /* BusinessListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessListController.h; sourceTree = "<group>"; };
 		FE16D5B91B2BC1FB0054FBD5 /* BusinessListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessListController.m; sourceTree = "<group>"; };
@@ -124,12 +130,6 @@
 		FE16D5C51B2BD6CD0054FBD5 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		FE16D5C61B2BD6CD0054FBD5 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		FE16D5C71B2BD6CD0054FBD5 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
-		FE16D6101B2C10C00054FBD5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		FE16D6121B2C10C90054FBD5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		FE16D6141B2C10D10054FBD5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		FE16D6161B2C10DB0054FBD5 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		FE16D6181B2C10E40054FBD5 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		FE16D61A1B2C10EC0054FBD5 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		FE175A301B5DF02100F4D2C8 /* sound_phoneCall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_phoneCall.wav; sourceTree = "<group>"; };
 		FE94CEBB1C64777A00D199DE /* MBProgressHUD+JT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+JT.h"; sourceTree = "<group>"; };
 		FE94CEBC1C64777A00D199DE /* MBProgressHUD+JT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+JT.m"; sourceTree = "<group>"; };
@@ -148,30 +148,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				F854CF0321475012002FC106 /* libc++.tbd in Frameworks */,
+				09558B2A1ECDBB9600D966CE /* libz.tbd in Frameworks */,
 				096D5C871EDE9C84001100ED /* libavfilter.a in Frameworks */,
 				096D5C941EDE9C84001100ED /* libyuv.a in Frameworks */,
-				09558B2A1ECDBB9600D966CE /* libz.tbd in Frameworks */,
-				098DF2451EA7438F00FB36FA /* VideoToolbox.framework in Frameworks */,
 				096D5C8C1EDE9C84001100ED /* libmediautil.a in Frameworks */,
 				096D5C8A1EDE9C84001100ED /* libmediacore.a in Frameworks */,
 				096D5C931EDE9C84001100ED /* libyuv_neon.a in Frameworks */,
 				096D5C8B1EDE9C84001100ED /* libmediashow.a in Frameworks */,
 				096D5C891EDE9C84001100ED /* libavutil.a in Frameworks */,
-				FE16D61B1B2C10EC0054FBD5 /* CoreAudio.framework in Frameworks */,
-				FE16D6191B2C10E40054FBD5 /* CoreVideo.framework in Frameworks */,
 				096D5C851EDE9C84001100ED /* libanychatcore.a in Frameworks */,
 				096D5C881EDE9C84001100ED /* libavformat.a in Frameworks */,
-				FE16D6171B2C10DB0054FBD5 /* CoreMedia.framework in Frameworks */,
 				096D5C911EDE9C84001100ED /* libvo-amrwbenc.a in Frameworks */,
-				FE16D6151B2C10D10054FBD5 /* QuartzCore.framework in Frameworks */,
 				096D5C861EDE9C84001100ED /* libavcodec.a in Frameworks */,
 				096D5C921EDE9C84001100ED /* libx264.a in Frameworks */,
 				096D5C901EDE9C84001100ED /* libswscale.a in Frameworks */,
 				096D5C8D1EDE9C84001100ED /* libmp3lame.a in Frameworks */,
 				096D5C8F1EDE9C84001100ED /* libswresample.a in Frameworks */,
-				FE16D6131B2C10C90054FBD5 /* AudioToolbox.framework in Frameworks */,
-				FE16D6111B2C10C00054FBD5 /* AVFoundation.framework in Frameworks */,
 				096D5C8E1EDE9C84001100ED /* libppthelper.a in Frameworks */,
+				CF71FBDD21FADCAB00CEC573 /* CoreAudio.framework in Frameworks */,
+				CF71FBDE21FADCAB00CEC573 /* CoreVideo.framework in Frameworks */,
+				CF71FBDF21FADCAB00CEC573 /* CoreMedia.framework in Frameworks */,
+				CF71FBE021FADCAB00CEC573 /* QuartzCore.framework in Frameworks */,
+				CF71FBE221FADCAB00CEC573 /* AVFoundation.framework in Frameworks */,
+				CF71FBE121FADCAB00CEC573 /* AudioToolbox.framework in Frameworks */,
+				098DF2451EA7438F00FB36FA /* VideoToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +194,12 @@
 			children = (
 				F854CF0221475012002FC106 /* libc++.tbd */,
 				09558B291ECDBB9600D966CE /* libz.tbd */,
+				CF71FBD221FADC4700CEC573 /* CoreAudio.framework */,
+				CF71FBD521FADC4800CEC573 /* CoreVideo.framework */,
+				CF71FBD421FADC4800CEC573 /* CoreMedia.framework */,
+				CF71FBD321FADC4700CEC573 /* QuartzCore.framework */,
+				CF71FBD121FADC4700CEC573 /* AVFoundation.framework */,
+				CF71FBD021FADC4700CEC573 /* AudioToolbox.framework */,
 				098DF2441EA7438F00FB36FA /* VideoToolbox.framework */,
 			);
 			name = Frameworks;
@@ -202,12 +208,6 @@
 		22D55FF61B2B2B2100FE5DC2 = {
 			isa = PBXGroup;
 			children = (
-				FE16D61A1B2C10EC0054FBD5 /* CoreAudio.framework */,
-				FE16D6181B2C10E40054FBD5 /* CoreVideo.framework */,
-				FE16D6161B2C10DB0054FBD5 /* CoreMedia.framework */,
-				FE16D6141B2C10D10054FBD5 /* QuartzCore.framework */,
-				FE16D6121B2C10C90054FBD5 /* AudioToolbox.framework */,
-				FE16D6101B2C10C00054FBD5 /* AVFoundation.framework */,
 				22D560011B2B2B2100FE5DC2 /* AnyChatQueuePlus */,
 				22D560001B2B2B2100FE5DC2 /* Products */,
 				098DF2431EA7438F00FB36FA /* Frameworks */,
@@ -225,10 +225,10 @@
 		22D560011B2B2B2100FE5DC2 /* AnyChatQueuePlus */ = {
 			isa = PBXGroup;
 			children = (
-				04B125951CEDC8050008E358 /* textModel */,
-				FE94D02A1C65EDBE00D199DE /* sdk */,
 				22D560061B2B2B2100FE5DC2 /* AppDelegate.h */,
 				22D560071B2B2B2100FE5DC2 /* AppDelegate.m */,
+				FE94D02A1C65EDBE00D199DE /* sdk */,
+				04B125951CEDC8050008E358 /* textModel */,
 				22D560321B2B483D00FE5DC2 /* Controller */,
 				22D560311B2B483600FE5DC2 /* Model */,
 				22D560301B2B482D00FE5DC2 /* View */,
@@ -241,8 +241,8 @@
 		22D560021B2B2B2100FE5DC2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FE175A301B5DF02100F4D2C8 /* sound_phoneCall.wav */,
 				22D560401B2B4FA100FE5DC2 /* Data */,
+				FE175A301B5DF02100F4D2C8 /* sound_phoneCall.wav */,
 				22D5600C1B2B2B2100FE5DC2 /* Main.storyboard */,
 				22D560111B2B2B2100FE5DC2 /* LaunchScreen.xib */,
 				22D5600F1B2B2B2100FE5DC2 /* Images.xcassets */,

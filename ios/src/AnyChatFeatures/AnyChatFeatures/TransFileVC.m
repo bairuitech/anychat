@@ -365,9 +365,8 @@ kGCD_SINGLETON_FOR_CLASS(TransFileVC);
                                               cancelButtonTitle:nil
                                               otherButtonTitles:@"确定",nil];
     [alertView show];
-
+    
 }
-
 
 #pragma mark - UI Controls
 
