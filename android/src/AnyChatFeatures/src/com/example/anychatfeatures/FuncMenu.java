@@ -58,6 +58,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	private TraceSelectDialog mTraceSelectDialog;		// 网络检测二次选择确认框
 	
 	AnyChatCoreSDK anyChatSDK;
+	private boolean mReceiverTag = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -282,16 +283,18 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 
 	// 注册广播
 	public void registerBoradcastReceiver() {
-		IntentFilter myIntentFilter = new IntentFilter();
-		myIntentFilter.addAction("NetworkDiscon");
-		// 注册广播
-		registerReceiver(mBroadcastReceiver, myIntentFilter);
+		if (!mReceiverTag){
+			IntentFilter myIntentFilter = new IntentFilter();
+			myIntentFilter.addAction("NetworkDiscon");
+			// 注册广播
+			this.registerReceiver(mBroadcastReceiver, myIntentFilter);
+			mReceiverTag = true;
+		}
 	}
 
 	private void destroyCurActivity() {
 		this.setResult(RESULT_OK);
-		
-		onPause();
+		//onPause();
 		onDestroy();
 		finish();
 	}
@@ -299,6 +302,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		unRegisterReceiver();
 		if(anyChatSDK != null)
 		anyChatSDK.removeEvent(this);
 	}
@@ -362,4 +366,14 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 		// 发送广播
 		sendBroadcast(mIntent);
 	}
+
+	private void unRegisterReceiver(){
+		if (mReceiverTag) {
+			mReceiverTag = false;
+			if(mBroadcastReceiver!=null){
+				this.unregisterReceiver(mBroadcastReceiver);
+			}
+		}
+	}
+
 }
