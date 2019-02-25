@@ -385,7 +385,7 @@ function OnAnyChatObjectEvent(dwObjectType, dwObjectId, dwEventType, dwParam1, d
 //业务对象数据更新事件
 function OnAnyChatObjectUpdate(dwObjectType, dwObjectId) {
     var str = null;
-    AddLog('OnAnyChatObjectUpdate(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
+    // AddLog('OnAnyChatObjectUpdate(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
 
 	if(dwObjectType == ANYCHAT_OBJECT_TYPE_AREA) {
 	    areaIdArray[areaArrayIdx] = dwObjectId;
