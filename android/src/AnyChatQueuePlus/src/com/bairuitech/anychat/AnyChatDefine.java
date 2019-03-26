@@ -375,6 +375,13 @@ public class AnyChatDefine {
 	
 	// 业务缓冲区标志定义
 	public static final int ANYCHAT_BUSINESSBUF_FLAGS_SYNC	=0x01;	///< 同步操作
-	
+
+	//直播业务和AI定义
+	public static final int ANYCHAT_SDKCTRL_LIVESTREAM	=	101;///< 直播业务控制
+	public static final int ANYCHAT_SDKCTRL_AIABILITY	=	102;///< AI能力
+	public static final int ANYCHAT_SDKCTRL_APPBUFFER	=	103;///< APP自定义缓冲区
+	public static final int ANYCHAT_CORESDKEVENT_LIVESTREAM= 101;	///< 直播业务事件
+	public static final int ANYCHAT_CORESDKEVENT_AIABILITY=102;///< AI能力事件
+	public static final int ANYCHAT_CORESDKEVENT_APPBUFFER=103;///< APP自定义缓冲区事件
 	
 }
