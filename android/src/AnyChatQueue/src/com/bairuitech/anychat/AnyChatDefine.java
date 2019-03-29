@@ -302,6 +302,9 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_SDKCTRL_UPDATERECUSERSTR=	98;	///< 更新录像用户参数
 	public static final int ANYCHAT_SDKCTRL_SYNCRECORD		=	99;	///< 同步录像参数设置
 	public static final int ANYCHAT_SDKCTRL_BUSINESSBUFFER	=	100;///< 业务缓冲区控制
+	public static final int ANYCHAT_SDKCTRL_LIVESTREAM	=	101;///< 直播业务控制
+	public static final int ANYCHAT_SDKCTRL_AIABILITY	=	102;///< AI能力
+	public static final int ANYCHAT_SDKCTRL_APPBUFFER	=	103;///< APP自定义缓冲区
 
 
 	// 常见出错代码定义
@@ -366,6 +369,9 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_CORESDKEVENT_MEDIAPROCESS=	36;	///< 媒体处理事件
 	public static final int ANYCHAT_CORESDKEVENT_BUSINESSBUFFER=100;///< 业务缓冲区事件
 	public static final int ANYCHAT_CORESDKEVENT_USERDEFINE	=	800;///< 用户自定义事件起始序号
+	public static final int ANYCHAT_CORESDKEVENT_LIVESTREAM= 101;	///< 直播业务事件
+	public static final int ANYCHAT_CORESDKEVENT_AIABILITY=102;///< AI能力事件
+	public static final int ANYCHAT_CORESDKEVENT_APPBUFFER=103;///< APP自定义缓冲区事件
 
 	// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
 	public static final int ANYCHAT_CORESDKDATA_AUDIO		=	1;	///< 音频数据
@@ -376,12 +382,4 @@ public class AnyChatDefine {
 	// 业务缓冲区标志定义
 	public static final int ANYCHAT_BUSINESSBUF_FLAGS_SYNC	=0x01;	///< 同步操作
 
-	//直播业务和AI定义
-	public static final int ANYCHAT_SDKCTRL_LIVESTREAM	=	101;///< 直播业务控制
-	public static final int ANYCHAT_SDKCTRL_AIABILITY	=	102;///< AI能力
-	public static final int ANYCHAT_SDKCTRL_APPBUFFER	=	103;///< APP自定义缓冲区
-	public static final int ANYCHAT_CORESDKEVENT_LIVESTREAM= 101;	///< 直播业务事件
-	public static final int ANYCHAT_CORESDKEVENT_AIABILITY=102;///< AI能力事件
-	public static final int ANYCHAT_CORESDKEVENT_APPBUFFER=103;///< APP自定义缓冲区事件
-	
 }
