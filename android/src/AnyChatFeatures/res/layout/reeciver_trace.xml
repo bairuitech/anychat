@@ -30,19 +30,29 @@
                 android:textSize="18dp" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:orientation="vertical" >
+            android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/rSenderIPAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="IP地址："
-                android:textSize="17dp" />
+                android:textSize="17dp"
+            />
+
+            <TextView
+                    android:id="@+id/IPAddress_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_toRightOf="@+id/rSenderIPAddress"
+                    android:layout_alignTop="@+id/rSenderIPAddress"
+                    android:textSize="17dp" />
 
             <TextView
                 android:id="@+id/senderPacket"
@@ -51,7 +61,7 @@
                 android:layout_marginTop="20dp"
                 android:text="发送数据包：0"
                 android:textSize="17dp" />
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout

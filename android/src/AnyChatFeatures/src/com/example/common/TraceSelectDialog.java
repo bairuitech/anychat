@@ -1,5 +1,7 @@
 package com.example.common;
 
+import android.text.TextUtils;
+import android.widget.EditText;
 import com.example.anychatfeatures.R;
 
 import android.app.Activity;
@@ -22,7 +24,7 @@ public class TraceSelectDialog extends PopupWindow {
 	private Button mTraceConfimBtn;
 	private Button mTraceCancelBtn;
 	private View mLayoutView;
-	
+	private EditText roomIdView;
 	public  TraceSelectDialog(Activity content, OnClickListener onListener) {
 		super(content);
 		LayoutInflater inflater = (LayoutInflater)content.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -32,7 +34,7 @@ public class TraceSelectDialog extends PopupWindow {
 		mTraceReceiverBtn = (RadioButton)mLayoutView.findViewById(R.id.traceReceiver);
 		mTraceConfimBtn = (Button)mLayoutView.findViewById(R.id.udpTraceConfirm);
 		mTraceCancelBtn = (Button)mLayoutView.findViewById(R.id.udpTraceCancel);
-		
+		roomIdView = (EditText)mLayoutView.findViewById(R.id.roomIdView);
 		mTraceConfimBtn.setOnClickListener(onListener);
 		mTraceCancelBtn.setOnClickListener(onListener);
 		
@@ -61,7 +63,12 @@ public class TraceSelectDialog extends PopupWindow {
 			}
 		});
 	}
-	
+	public int getRoomId(){
+		if(TextUtils.isEmpty(roomIdView.getText())){
+			return -1;
+		}
+		return Integer.valueOf(roomIdView.getText().toString().trim());
+	}
 	public short getCurSelectTraceRole(){
 		if (mTraceSenderBtn.isChecked()) {
 			return 0;	// 0表示发送者

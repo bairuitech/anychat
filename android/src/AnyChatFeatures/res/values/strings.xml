@@ -12,7 +12,7 @@
     <string name ="serverVideoRecord">服务器录像</string>
     <string name ="photograph">视频抓拍</string>
     <string name ="videoCall">呼叫中心</string>
-    <string name ="udpTrace">网络检测评估</string>
+    <string name ="udpTrace">网络质量评估工具</string>
     <string name ="config">设置</string>
     <string name ="dialog_read_from_dir">Open from dir</string>
     <string name="str_dialog_title_protip">提示</string>
@@ -34,5 +34,5 @@
     <string name="str_returncode_requestrefuse">用户拒绝被呼叫</string>
     <string name="str_returncode_disconnect">对方网络异常</string>
     <string name="str_returncode_timeout">呼叫超时</string>
-    
+    <string name="udpTraceTool">网络质量评估工具</string>
 </resources>

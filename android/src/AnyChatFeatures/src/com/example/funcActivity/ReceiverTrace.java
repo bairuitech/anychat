@@ -1,27 +1,26 @@
 package com.example.funcActivity;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import com.bairuitech.anychat.AnyChatBaseEvent;
-import com.bairuitech.anychat.AnyChatCoreSDK;
-import com.bairuitech.anychat.AnyChatDefine;
-import com.example.anychatfeatures.R;
-import com.example.common.ValueUtils;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.bairuitech.anychat.AnyChatBaseEvent;
+import com.bairuitech.anychat.AnyChatCoreSDK;
+import com.bairuitech.anychat.AnyChatDefine;
+import com.example.anychatfeatures.R;
+import com.example.common.ValueUtils;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 	private final int MSG_UPDATETRACE = 1;
@@ -30,6 +29,7 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 	private int msServerReceiverPacket;			// 服务器接受到的数据包
 	
 	private TextView mRSenderIPAddress;
+	private TextView ipAddressContent;
 	private TextView mRSenderPacket;
 	
 	private TextView mRServerIPAddress;
@@ -50,13 +50,13 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 	private ImageView []mRSendUp = new ImageView[3];
 	private ImageView []mReceiverDown = new ImageView[3];
 	private int mPacketIconTransfeIndex = 1;
-	
-	
 	private Handler mHandler;
 	private TimerTask mTimerTask;
 	private Timer mTimer = null;
 	
 	private AnyChatCoreSDK anyChatSDK;
+	private String roomId="";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,6 +70,7 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 		initLayout();
 		updateTime();
 		initUpdateTraceTimer();
+		roomId = getIntent().getStringExtra("roomId");
 	}
 
 	private void initLayout(){
@@ -77,6 +78,8 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 		String strIP = preferences.getString("UserIP", "demo.anychat.cn");
 		
 		mRSenderIPAddress = (TextView)findViewById(R.id.rSenderIPAddress);
+
+		ipAddressContent = (TextView) findViewById(R.id.IPAddress_content);
 		mRSenderPacket = (TextView)findViewById(R.id.senderPacket);
 		
 		mRServerIPAddress = (TextView)findViewById(R.id.rServerIPAddress);
@@ -104,7 +107,8 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 		
 		mImgBtnReturn.setOnClickListener(onClickListener);
 		
-		mRSenderIPAddress.setText("IP地址：" + getSenderIP());
+		//mRSenderIPAddress.setText("IP地址：" + getSenderIP());
+		ipAddressContent.setText(getSenderIP());
 		mRSenderPacket.setText("发送数据包：0");
 		
 		mRServerIPAddress.setText("IP地址：" + strIP);
@@ -121,6 +125,9 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 		public void onClick(View arg0) {
 			switch (arg0.getId()) {
 			case R.id.returnImgBtn:
+				if (anyChatSDK != null){
+					anyChatSDK.LeaveRoom(Integer.valueOf(roomId));
+				}
 				finish();
 				break;
 			default:
@@ -138,9 +145,9 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 				switch (msg.what) {
 				case MSG_UPDATETRACE:
 					// 如果发送者是后进来的，会造成发送者的ip为空，再从新获取一下
-					if(ValueUtils.isStrEmpty(mRSenderIPAddress.getText().toString().trim()))
-						mRSenderIPAddress.setText(getSenderIP());
-					
+					if(ValueUtils.isStrEmpty(ipAddressContent.getText().toString().trim())){
+						ipAddressContent.setText(getSenderIP());
+					}
 					msClientSenderPacket = AnyChatCoreSDK.GetSDKOptionInt(166);
 					msReceiverGetPacket = AnyChatCoreSDK.GetSDKOptionInt(164);
 					msServerReceiverPacket = AnyChatCoreSDK.GetSDKOptionInt(165);
@@ -250,8 +257,7 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 
 	@Override
 	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -274,4 +280,16 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 		destroyCurActivity();		
 		finish();
 	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK){
+			if (anyChatSDK != null){
+				anyChatSDK.LeaveRoom(Integer.valueOf(roomId));
+			}
+			finish();
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
 }

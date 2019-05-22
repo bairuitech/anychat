@@ -1,29 +1,22 @@
 package com.example.funcActivity;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import com.bairuitech.anychat.AnyChatBaseEvent;
-import com.bairuitech.anychat.AnyChatCoreSDK;
-import com.bairuitech.anychat.AnyChatDefine;
-import com.example.anychatfeatures.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract.CommonDataKinds.Im;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
+import com.bairuitech.anychat.AnyChatBaseEvent;
+import com.bairuitech.anychat.AnyChatCoreSDK;
+import com.example.anychatfeatures.R;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SenderTrace extends Activity implements AnyChatBaseEvent{
 	private String TAG = "AnyChatx";
@@ -59,6 +52,7 @@ public class SenderTrace extends Activity implements AnyChatBaseEvent{
 	private TimerTask mTimerTask;
 	private Timer mTimer = null;
 	private AnyChatCoreSDK anyChatSDK;
+	private String roomId="";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +107,8 @@ public class SenderTrace extends Activity implements AnyChatBaseEvent{
 		
 		mServerIPAddress.setText("IP地址：" + strIP);
 		mServerReceiverPacket.setText("收到数据包：0");
-		mControlSpeed.setText("100");		
+		mControlSpeed.setText("100");
+		roomId = getIntent().getStringExtra("roomId");
 	}
 	
 	OnClickListener onClickListener = new OnClickListener() {
@@ -146,6 +141,9 @@ public class SenderTrace extends Activity implements AnyChatBaseEvent{
 				}
 				break;
 			case R.id.returnImgBtn:
+				if (anyChatSDK != null){
+					anyChatSDK.LeaveRoom(Integer.valueOf(roomId));
+				}
 				finish();
 				break;
 			default:
@@ -237,8 +235,9 @@ public class SenderTrace extends Activity implements AnyChatBaseEvent{
 		if (mTimer != null) {
 			mTimer.cancel();
 			mTimer = null;
-			if (anyChatSDK != null)
+			if (anyChatSDK != null){
 				anyChatSDK.removeEvent(this);
+			}
 			AnyChatCoreSDK.SetSDKOptionInt(163, 0);
 		}
 	}
@@ -285,5 +284,16 @@ public class SenderTrace extends Activity implements AnyChatBaseEvent{
 		sendBroadcast(mIntent);
 		destroyCurActivity();
 		finish();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK){
+			if (anyChatSDK != null){
+				anyChatSDK.LeaveRoom(Integer.valueOf(roomId));
+			}
+			finish();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }
