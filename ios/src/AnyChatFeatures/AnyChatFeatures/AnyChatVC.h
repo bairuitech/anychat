@@ -59,6 +59,7 @@ typedef enum {
 @property int   theShowVCType;
 @property BOOL  theOnLineLoginState;
 @property (nonatomic, assign) AnyChatVCLoginMode loginMode; // 登录方式
+@property (strong, nonatomic) NSString* theMyServerAddr;
 
 kGCD_SINGLETON_FOR_HEADER(AnyChatVC);
 

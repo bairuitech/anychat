@@ -79,15 +79,19 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
     if (alertView == theUDPTraceAlertView)
     {
 
+        if (buttonIndex == 0) {
+            //取消
+            return;
+        }
         int roomNo = [theUDPTraceTextField.text intValue];
         [self sharedFeaturesInfo:self.theUDPTraceFUNBtn.titleLabel.text FeaturesNO:roomNo];
         [AnyChatPlatform EnterRoom:roomNo :@""];
         
-        if (buttonIndex == 0)//发送方
+        if (buttonIndex == 1)//发送方
         {
             [self.navigationController pushViewController:[SendDataVC new] animated:NO];
         }
-        else if (buttonIndex == 1)//接收方
+        else if (buttonIndex == 2)//接收方
         {
             [self.navigationController pushViewController:[ReceiveDataVC new] animated:NO];
         }
@@ -104,7 +108,7 @@ kGCD_SINGLETON_FOR_CLASS(FeaturesListVC);
     self.theUDPTraceAlertView = [[UIAlertView alloc] initWithTitle:@"请输入房间号"
                                                          message:nil
                                                         delegate:self
-                                               cancelButtonTitle:nil
+                                               cancelButtonTitle:@"取消"
                                                otherButtonTitles:@"发送方",@"接收方", nil];
     
     self.theUDPTraceAlertView.alertViewStyle = UIAlertViewStylePlainTextInput ;

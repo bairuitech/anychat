@@ -4,6 +4,7 @@
 //
 
 #import "ReceiveDataVC.h"
+#import "AppDelegate.h"
 
 @interface ReceiveDataVC ()
 
@@ -59,7 +60,8 @@
     self.theSendViewIPLable.text = [AnyChatPlatform QueryUserStateString:[AnyChatPlatform GetSDKOptionInt:167] :BRAC_USERSTATE_INTERNETIP];
     self.theRecvViewIPLable.text = [AnyChatPlatform QueryUserStateString:-1 :BRAC_USERSTATE_INTERNETIP];
     
-    self.theServerViewIPLable.text = kAnyChatIP;
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    self.theServerViewIPLable.text = appDelegate.anychatVC.theMyServerAddr;
 
 }
 
@@ -135,6 +137,7 @@
     self.theSendData = [AnyChatPlatform GetSDKOptionInt:166];
     self.theRecvData = [AnyChatPlatform GetSDKOptionInt:164];
     self.theServerGetData = [AnyChatPlatform GetSDKOptionInt:165];
+//    NSLog(@"---BRAC_SO_UDPTRACE_LOCALRECVNUM theRecvData:%i",self.theRecvData);
     
     self.theSendViewSendLable.text = [[NSString alloc] initWithFormat:@"%i",self.theSendData];
     self.theRecvViewRecvLable.text = [[NSString alloc] initWithFormat:@"%i",self.theRecvData];
@@ -154,7 +157,10 @@
 - (NSString *)DownloadFrameLossRate:(int)send :(int)serverGet :(int)recv
 {
     
-    float theLossRate = ((send-recv)/(float)serverGet)*100;
+    float theLossRate = 0.0f;
+    if (serverGet > 0) {
+        theLossRate = ((send-recv)/(float)serverGet)*100;
+    }
     if (theLossRate<0.0f)
     {
         theLossRate = 0.00;

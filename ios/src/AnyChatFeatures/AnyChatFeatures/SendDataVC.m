@@ -5,6 +5,7 @@
 
 #import "SendDataVC.h"
 #import "AnyChatVC.h"
+#import "AppDelegate.h"
 
 @interface SendDataVC ()
 
@@ -62,8 +63,9 @@
     
     self.theSendViewIPLable.text = [AnyChatPlatform QueryUserStateString:-1 :BRAC_USERSTATE_INTERNETIP];
     
-    self.theServerViewIPLable.text = kAnyChatIP;
-    
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    self.theServerViewIPLable.text = appDelegate.anychatVC.theMyServerAddr;
+
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -129,6 +131,10 @@
                                                      repeats:YES];
         [theNSTimer fire];
     }
+    self.theSendViewSendLable.text = @"0";
+    self.theSendViewRecvLable.text = @"0";
+    self.theSendViewLossLable.text = @"0.00%";
+    self.theServerViewRecvLable.text = @"0";
 
 }
 
@@ -148,10 +154,10 @@
         }
     }
     
-    self.theSendViewSendLable.text = @"0";
-    self.theSendViewRecvLable.text = @"0";
-    self.theSendViewLossLable.text = @"0.00%";
-    self.theServerViewRecvLable.text = @"0";
+//    self.theSendViewSendLable.text = @"0";
+//    self.theSendViewRecvLable.text = @"0";
+//    self.theSendViewLossLable.text = @"0.00%";
+//    self.theServerViewRecvLable.text = @"0";
 
 }
 
@@ -170,7 +176,10 @@
 
 - (NSString *)UploadFrameLossRate:(int)send :(int)serverGet
 {
-    float theLossRate = ((send-serverGet)/(float)send)*100;
+    float theLossRate = 0.0f;
+    if (send > 0) {
+        theLossRate = ((send-serverGet)/(float)send)*100;
+    }
     if (theLossRate<0.0f)
     {
         theLossRate = 0.00;

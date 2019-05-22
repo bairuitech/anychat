@@ -201,6 +201,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
         theOnLineLoginState = YES;
         self.theMyUserID = dwUserId;
         self.theMyUserName = self.theUserName.text;
+        self.theMyServerAddr = self.theServerIP.text;
         [self saveSettings];  //登陆信息归档
         theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
         [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_logout_01"] forState:UIControlStateNormal];
