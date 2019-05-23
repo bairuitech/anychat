@@ -21,6 +21,7 @@ import com.example.common.ValueUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import android.util.Log;
 
 public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 	private final int MSG_UPDATETRACE = 1;
@@ -29,7 +30,7 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 	private int msServerReceiverPacket;			// 服务器接受到的数据包
 	
 	private TextView mRSenderIPAddress;
-	private TextView ipAddressContent;
+	//private TextView ipAddressContent;
 	private TextView mRSenderPacket;
 	
 	private TextView mRServerIPAddress;
@@ -79,7 +80,7 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 		
 		mRSenderIPAddress = (TextView)findViewById(R.id.rSenderIPAddress);
 
-		ipAddressContent = (TextView) findViewById(R.id.IPAddress_content);
+		//ipAddressContent = (TextView) findViewById(R.id.IPAddress_content);
 		mRSenderPacket = (TextView)findViewById(R.id.senderPacket);
 		
 		mRServerIPAddress = (TextView)findViewById(R.id.rServerIPAddress);
@@ -107,8 +108,8 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 		
 		mImgBtnReturn.setOnClickListener(onClickListener);
 		
-		//mRSenderIPAddress.setText("IP地址：" + getSenderIP());
-		ipAddressContent.setText(getSenderIP());
+		mRSenderIPAddress.setText("IP地址：" + getSenderIP());
+		//ipAddressContent.setText(getSenderIP());
 		mRSenderPacket.setText("发送数据包：0");
 		
 		mRServerIPAddress.setText("IP地址：" + strIP);
@@ -145,8 +146,8 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 				switch (msg.what) {
 				case MSG_UPDATETRACE:
 					// 如果发送者是后进来的，会造成发送者的ip为空，再从新获取一下
-					if(ValueUtils.isStrEmpty(ipAddressContent.getText().toString().trim())){
-						ipAddressContent.setText(getSenderIP());
+					if(getSenderIP()!=null){
+						mRSenderIPAddress.setText("IP地址：" + getSenderIP());
 					}
 					msClientSenderPacket = AnyChatCoreSDK.GetSDKOptionInt(166);
 					msReceiverGetPacket = AnyChatCoreSDK.GetSDKOptionInt(164);
