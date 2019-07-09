@@ -1,0 +1,218 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/main_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#FFFFFF"
+                android:orientation="vertical" >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/view_pic"
+         android:background="@drawable/background_login_new"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_pic"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp" >
+
+            <LinearLayout
+                android:layout_width="308dp"
+                android:layout_height="48dp"
+                android:background="#F3F3F3"
+                android:gravity="center|center_vertical"
+                android:layout_marginTop="30dp" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/login_ip" />
+
+                <EditText
+                    android:id="@+id/mainUIEditIP"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="demo.anychat.cn"
+                    android:textColorHint="#333333"
+                    android:textColor="#333333"
+                    android:textSize="16sp" />
+                
+            </LinearLayout>
+
+            <View
+                android:layout_width="273dp"
+                android:layout_height="1dip"
+                android:layout_marginBottom="22dip"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="308dp"
+                android:layout_height="48dp"
+                android:background="#F3F3F3"
+                android:gravity="center|center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/login_port" />
+
+                <EditText
+                    android:id="@+id/mainUIEditPort"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="8906"
+                    android:textColorHint="#333333"
+                    android:textColor="#333333"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="273dp"
+                android:layout_height="1dip"
+                android:layout_marginBottom="22dip"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="308dp"
+                android:layout_height="48dp"
+                android:background="#F3F3F3"
+                android:gravity="center|center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/login_account" />
+
+                <EditText
+                    android:id="@+id/main_et_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="name"
+                    android:textColorHint="#333333"
+                    android:textColor="#333333"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="22dip" >
+
+            <Button
+                android:id="@+id/mainUIStartBtn"
+                android:layout_width="308dip"
+                android:layout_height="48dip"
+                android:layout_gravity="center"
+                android:background="#008BE3"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:text="登录"
+                android:gravity="center"/>
+
+
+            <Button
+                    android:id="@+id/mainUIWaitingBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_warting_01"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/waitingLayout"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal" >
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/mainUIbottomBuildMsg"
+        android:layout_width="fill_parent"
+        android:layout_height="20dip"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="Not connect to 192.168.1.1"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/mainUIbottomConnMsg"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:layout_above="@id/mainUIbottomBuildMsg"
+        android:gravity="center"
+        android:text="Not connect to the server"
+        android:textColor="#000000" />
+
+    <ImageView
+            android:src="@drawable/login_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dip"
+            android:id="@+id/imageView"/>
+    <TextView
+            android:text="features"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imageView"
+            android:layout_marginTop="10dp"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:id="@+id/textView"/>
+
+    <TextView
+            android:text="世界一流的音视频解决方案"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textView"
+            android:layout_marginTop="10dp"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:id="@+id/textView1"/>
+
+</RelativeLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/video_session"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <SurfaceView
+        android:id="@+id/surface_remote"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        /> 
+     <!--    android:background="@drawable/videoremote_bg" -->
+    
+
+    <ProgressBar
+        android:id="@+id/progress_remote"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dip"
+        android:layout_gravity="bottom"
+        android:max="100" />
+
+    <LinearLayout
+        android:id="@+id/frame_local_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|right"     
+        android:orientation="vertical"
+        android:padding="3dip" >
+
+        <SurfaceView
+            android:id="@+id/surface_local"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_gravity="center"  
+            android:layout_weight="1" />
+    <!--      android:background="@drawable/video_bg" -->
+
+        <ProgressBar
+            android:id="@+id/progress_local"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dip"
+            android:max="100" />
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/txt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#e64346"
+            android:layout_marginBottom="105dp"
+            android:layout_gravity="bottom|center_horizontal"/>
+
+    <Button
+            android:id="@+id/btn_endsession"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/call_end"/>
+
+</FrameLayout>

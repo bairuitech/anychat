@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#565151"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_vertical"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/guideProcess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/guideprocess_3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center|center_vertical"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/uploadMsgTVPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="照片文件上传进度"
+            android:textSize="18sp" />
+
+        <ProgressBar
+            android:id="@+id/picProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip" />
+
+        <TextView
+            android:id="@+id/uploadMsgTVFile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dip"
+            android:textColor="#FFFFFF"
+            android:text="视频文件上传进度"
+            android:textSize="18sp" />
+
+        <ProgressBar
+            android:id="@+id/videoProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="#565151"
+        android:gravity="center|center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/fileUploadBtn"
+            android:layout_width="115dp"
+            android:layout_height="40dp"
+            android:text="上传"
+            android:textColor="#FFFFFF"
+            android:background="#017EFF"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="#008BE3" >
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/btn_back"/>
+
+    <TextView
+        android:id="@+id/txt_nickname"
+      style="@style/common_txt_style"
+      android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/image_head"
+       />
+
+    <TextView
+        android:id="@+id/txt_account"
+          style="@style/common_txt_style"
+        android:layout_alignBottom="@+id/image_head"
+        android:layout_toRightOf="@+id/image_head"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/titleName"
+        android:textSize="19sp"
+        android:textColor="#FFFFFF"
+        android:layout_centerInParent="true" />
+
+    <ImageView
+        android:id="@+id/btn_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/pic_set"/>
+
+</RelativeLayout>

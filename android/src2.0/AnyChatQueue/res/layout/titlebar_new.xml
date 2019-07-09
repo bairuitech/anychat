@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#008BE3"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/returnView"
+        android:layout_width="50dp"
+        android:layout_height="match_parent" >
+
+        <ImageButton
+            android:id="@+id/returnImgBtn"
+            android:layout_width="9dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@null"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_pic" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/titleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="标题栏"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+</RelativeLayout>

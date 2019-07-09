@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="230dip"
+    android:id="@+id/views"
+    android:background="@drawable/menu_bgm_logo"/>
+
+    <include layout="@layout/titlebar_new"/>
+
+    <ImageView
+            android:src="@drawable/login_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="71dip"
+            android:id="@+id/imageView"/>
+    <TextView
+            android:text="features"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imageView"
+            android:layout_marginTop="15dip"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:id="@+id/textView"/>
+
+
+    <GridView
+            android:id="@+id/funcmenuGridView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/views"
+            android:numColumns="3"
+            android:layout_marginTop="30dip"
+            android:verticalSpacing="20dip"
+            android:horizontalSpacing="20dip"
+            android:stretchMode="columnWidth"
+            android:gravity="center_horizontal"/>
+    
+
+</RelativeLayout>

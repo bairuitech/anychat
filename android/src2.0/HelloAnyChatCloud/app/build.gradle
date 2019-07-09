@@ -1,0 +1,23 @@
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 19
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        applicationId "com.example.helloanychatcloud"
+        minSdkVersion 14
+        targetSdkVersion 25
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    //compile files('src/main/jniLibs/anychat-sdk-android.jar')
+    implementation files('src/main/jniLibs/anychat-sdk.jar')
+}

@@ -1,0 +1,62 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\android studio workspace\\HelloAnyChatCloud\\app\\build\\intermediates\\res\\merged\\debug\\values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "D:\\android studio workspace\\HelloAnyChatCloud\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "3,2,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "75,19,131",
+                        "endColumns": "54,54,45",
+                        "endOffsets": "125,69,172"
+                    },
+                    "to": {
+                        "startLines": "9,10,11",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "361,416,471",
+                        "endColumns": "54,54,45",
+                        "endOffsets": "411,466,512"
+                    }
+                },
+                {
+                    "source": "D:\\android studio workspace\\HelloAnyChatCloud\\app\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "6,15",
+                        "startColumns": "4,4",
+                        "startOffsets": "192,525",
+                        "endLines": "12,18",
+                        "endColumns": "12,12",
+                        "endOffsets": "484,740"
+                    },
+                    "to": {
+                        "startLines": "12,19",
+                        "startColumns": "4,4",
+                        "startOffsets": "517,808",
+                        "endLines": "18,22",
+                        "endColumns": "12,12",
+                        "endOffsets": "803,1020"
+                    }
+                },
+                {
+                    "source": "D:\\android studio workspace\\HelloAnyChatCloud\\app\\src\\main\\res\\values\\colors.xml",
+                    "from": {
+                        "startLines": "9,4,3,8,5,7,6",
+                        "startColumns": "4,4,2,4,4,4,4",
+                        "startOffsets": "332,101,61,289,146,240,199",
+                        "endColumns": "40,43,36,41,51,47,39",
+                        "endOffsets": "368,140,95,326,193,283,234"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,96,140,179,221,273,321",
+                        "endColumns": "40,43,38,41,51,47,39",
+                        "endOffsets": "91,135,174,216,268,316,356"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        layout="@layout/video_session"
+        android:gravity="center_vertical" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="75dp"
+        android:layout_gravity="bottom|right"
+        android:background="#7f7f7f"
+        android:visibility="gone"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/takephoto_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center|center_vertical"
+            android:visibility="gone" >
+
+            <Button
+                android:id="@+id/takephotoBtn"
+         		android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:text="拍照"
+                android:textColor="#017EFF"
+                android:background="@drawable/tack_pic"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/videoRecording_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center|center_vertical"
+            android:visibility="gone" >
+
+            <Button
+                android:id="@+id/VideorecordingBtn"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

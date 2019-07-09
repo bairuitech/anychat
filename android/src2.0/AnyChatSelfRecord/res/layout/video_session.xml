@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/video_bg" >
+
+    <SurfaceView
+        android:id="@+id/surface_local"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/surfaceview_shade"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_vertical"
+        android:orientation="vertical" >
+
+
+        <ImageView
+            android:id="@+id/guideProcess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/guideprocess_4" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center|center_vertical"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/guideMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:textSize="20dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/videoRecordTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:paddingBottom="95dp"
+        android:textColor="@color/shollow_red"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+
+    <Button
+            android:id="@+id/takephotoBtn"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="bottom|center"
+            android:text="拍照"
+            android:layout_marginBottom="15dp"
+            android:textColor="#017EFF"
+            android:background="@drawable/tack_pic"
+            android:textSize="15sp" />
+
+    <Button
+            android:id="@+id/VideorecordingBtn"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="15dp"
+            android:textColor="#017EFF"
+            android:background="@drawable/tack_record"
+            android:visibility="gone"
+            android:textSize="15sp" />
+
+
+</FrameLayout>

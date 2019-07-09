@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/localvideorecord_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        layout="@layout/localvideorecord_session"
+        android:gravity="center_vertical" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:background="#7f7f7f"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/btn_LocalRecording"
+            android:layout_width="52dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/button_background"
+            android:src="@drawable/local_recording_off" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/trans_white" />
+
+        <Button
+            android:id="@+id/localRecordEndCall"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_background"
+            android:onClick="onEndCall"
+            android:text="@string/str_endCall"
+            android:textColor="@color/shollow_red"
+            android:textSize="23sp" />
+    </LinearLayout>
+
+</LinearLayout>

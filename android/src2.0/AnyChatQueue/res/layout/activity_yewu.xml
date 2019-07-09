@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F8F8"
+    android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView1"
+            style="@style/tv_style1"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:text="您可以办理以下业务：" />
+        <ListView
+            android:id="@+id/yewu_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+        </ListView>
+
+</LinearLayout>
