@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/dialog_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txt_dialog_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp"
+            android:layout_marginBottom="25dip"
+            android:layout_marginTop="25dip" />
+
+    
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#f2f2f2"
+            android:orientation="horizontal" 
+            android:weightSum="2"
+            >
+            
+            <TextView
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="#e64346"
+                android:textSize="16sp"
+                android:clickable="true"
+                android:background="@drawable/dialogstyle" />
+			
+            <View 
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+            <TextView
+                android:id="@+id/btn_resume"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                 android:textSize="16sp"
+                 android:gravity="center"
+                android:text="确定"
+                android:clickable="true"
+                android:background="@drawable/dialogstyle"
+                 />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
