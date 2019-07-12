@@ -183,6 +183,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_NEWLOGFILE			136	///< 产生新的日志文件
 #define BRAC_SO_CORESDK_SUPPORTSIP			137	///< 判断当前是否支持SIP通信
 #define BRAC_SO_CORESDK_SUPPORTHTML5		138	///< 判断当前是否支持HTML5
+#define BRAC_SO_CORESDK_DISABLELOGFILE		139	///< 禁止生成本地日志文件
 #define BRAC_SO_CORESDK_SUPPORTVIDEOCODEC	210	///< 设置支持的视频编码器
 #define BRAC_SO_CORESDK_SUPPORTAUDIOCODEC	211	///< 设置支持的音频编码器
 #define BRAC_SO_CORESDK_DISABLEMEDIACONSUL	212	///< 禁止媒体协商
@@ -205,7 +206,9 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_MAXTRANSFILESIZE	229	///< 允许传输的最大文件大小（参数为int型，单位：MByte）
 #define BRAC_SO_CORESDK_USESERVERTIME		230	///< 使用服务器时间戳（参数为int型，0 关闭[默认] 1 开启）
 #define BRAC_SO_CORESDK_APPMONITORLIST		231	///< 应用程序列表，应用程序共享模块使用（参数为字符串）
-#define BRAC_SO_CORESDK_USERRSAPUBKEY		232	///< 用户RSA公钥
+#define BRAC_SO_CORESDK_SSLCERTCHAIN		232	///< SSL证书链
+#define BRAC_SO_CORESDK_SETUSERAPPINFO		236	///< 设置用户APP信息
+#define BRAC_SO_CORESDK_LASTERRORCODE		237	///< 获取最后的出错代码
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -279,6 +282,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_RECORD_FLAGS_MULTISTREAM	0x00008000	///< 支持多路流的录制（拍照）
 #define ANYCHAT_RECORD_FLAGS_CANCEL			0x00010000	///< 取消录像，删除录像文件
 #define ANYCHAT_RECORD_FLAGS_BUFFERCB		0x00020000	///< 缓冲区数据回调
+#define ANYCHAT_RECORD_FLAGS_FILEMD5		0x00040000	///< 计算录像文件的MD5值
 #endif
 
 
@@ -401,6 +405,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SERVERQUERY_STRIDBYUSERID	3	///< 根据用户ID查询字符串ID
 #define ANYCHAT_SERVERQUERY_NAMEBYUSERID	4	///< 根据用户ID查询用户名
 #define ANYCHAT_SERVERQUERY_NAMEBYSTRID		5	///< 根据字符串ID查询用户名
+#define ANYCHAT_SERVERQUERY_USERINFOBYID	6	///< 根据用户ID查询用户信息
 #define ANYCHAT_SERVERQUERY_PPTFILEINFO		10	///< PPT文件信息
 #define ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	100	///< 查询指定队列的坐席服务信息
 #define ANYCHAT_SERVERQUERY_RUNNINGSTATUS	200	///< 查询服务器运行状态
@@ -423,9 +428,11 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SDKCTRL_VIDEOCALL			30	///< 呼叫控制
 #define ANYCHAT_SDKCTRL_USERINFO			40	///< 用户信息控制
 #define ANYCHAT_SDKCTRL_STREAMPLAY			50	///< 流媒体播放
+#define ANYCHAT_SDKCTRL_MEDIAPROCESS		51	///< 流媒体处理控制
 #define ANYCHAT_SDKCTRL_NETWORK				60	///< 网络控制
 #define ANYCHAT_SDKCTRL_MEDIA				70	///< 媒体控制
 #define ANYCHAT_SDKCTRL_RECORDTAG			71	///< 录像标签
+#define ANYCHAT_SDKCTRL_SCREENCAPPARAM		72	///< 屏幕采集参数设置
 #define ANYCHAT_SDKCTRL_FILEDELETE			80	///< 删除文件
 #define ANYCHAT_SDKCTRL_FILEINFO			81	///< 获取文件信息
 #define ANYCHAT_SDKCTRL_DISKSIZE			82	///< 获取磁盘容量
@@ -442,6 +449,11 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SDKCTRL_VIDEODEVICEINFO		97	///< 获取视频采集设备信息
 #define ANYCHAT_SDKCTRL_UPDATERECUSERSTR	98	///< 更新录像用户参数
 #define ANYCHAT_SDKCTRL_SYNCRECORD			99	///< 同步录像参数设置
+#define ANYCHAT_SDKCTRL_BUSINESSBUFFER		100	///< 业务缓冲区控制
+#define ANYCHAT_SDKCTRL_LIVESTREAM			101	///< 直播业务控制
+#define ANYCHAT_SDKCTRL_AIABILITY			102	///< AI能力
+#define ANYCHAT_SDKCTRL_APPBUFFER			103	///< APP自定义缓冲区
+#define ANYCHAT_SDKCTRL_FACEEMOTIONCTRL		300	///< 微表情控制
 
 
 // 媒体播放事件类型定义
@@ -452,6 +464,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT	0x00000001	///< 播放音频流代替本地音频输入（Mic）
 #define ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT	0x00000002	///< 播放视频流代替本地视频输入（Camera）
 #define ANYCHAT_STREAMPLAY_FLAGS_CALLBACKDATA		0x00000010	///< 回调数据给上层
+#define ANYCHAT_STREAMPLAY_FLAGS_PPTPLAY			0x00000080	///< 双录风险揭示PPT播放
 
 // 媒体播放信息类型定义（API：BRAC_StreamPlayGetInfo 传入参数）
 #define ANYCHAT_STREAMPLAY_INFO_JSONVALUE	1	///< 包含所有播放信息的Json字符串
@@ -472,12 +485,21 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_CORESDKEVENT_CAMERASTATE	10	///< 摄像头状态事件
 #define ANYCHAT_CORESDKEVENT_MICSTATE		11	///< Mic状态事件
 #define ANYCHAT_CORESDKEVENT_TRANSFILE		12	///< 文件传输事件
+#define ANYCHAT_CORESDKEVENT_RECORDSTATUS	13	///< 录像状态事件
 #define ANYCHAT_CORESDKEVENT_STREAMPLAY		30	///< 媒体播放事件
 #define ANYCHAT_CORESDKEVENT_PPTHELPER		31	///< PPTHelper事件
 #define ANYCHAT_CORESDKEVENT_BUSINESS		32	///< 业务事件
 #define ANYCHAT_CORESDKEVENT_DEVICEFAIL		33	///< 设备失败事件
 #define ANYCHAT_CORESDKEVENT_MEDIABUFFER	34	///< 媒体缓冲区事件
 #define ANYCHAT_CORESDKEVENT_USERBUFFER		35	///< 用户缓冲区事件
+#define ANYCHAT_CORESDKEVENT_MEDIAPROCESS	36	///< 媒体处理事件
+#define ANYCHAT_CORESDKEVENT_FACEEMOTION	40	///< 微表情检测结果
+#define ANYCHAT_CORESDKEVENT_REGEDITDATA	41	///< 数据接口返回数据
+#define ANYCHAT_CORESDKEVENT_REQUESTEX		42	///< 扩展请求返回数据
+#define ANYCHAT_CORESDKEVENT_BUSINESSBUFFER	100	///< 业务缓冲区事件
+#define ANYCHAT_CORESDKEVENT_LIVESTREAM		101	///< 直播业务事件
+#define ANYCHAT_CORESDKEVENT_AIABILITY		102	///< AI能力事件
+#define ANYCHAT_CORESDKEVENT_APPBUFFER		103	///< APP自定义缓冲区事件
 #define ANYCHAT_CORESDKEVENT_USERDEFINE		800	///< 用户自定义事件起始序号
 
 // CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
