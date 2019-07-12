@@ -10,7 +10,7 @@
 
 @interface BusinessHall : NSObject
 
-@property(nonatomic, assign)long long hallId;       //营业厅id号
+@property(nonatomic, assign)int hallId;       //营业厅id号
 @property(nonatomic, copy)NSString *title;          //标题
 @property(nonatomic, copy)NSString *icon;           //图标
 

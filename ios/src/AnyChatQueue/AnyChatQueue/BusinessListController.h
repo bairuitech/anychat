@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface BusinessListController : UITableViewController
-@property(nonatomic, strong)NSArray *businessListIdArray;   //队列id数组
-@property(nonatomic, assign)int businessHallId;                 //营业厅id
+//@property(nonatomic, strong)NSArray *businessListIdArray;   //队列id数组
+//@property(nonatomic, assign)int businessHallId;                 //营业厅id
+@property(nonatomic, strong)NSArray *businesses;
+
 @end

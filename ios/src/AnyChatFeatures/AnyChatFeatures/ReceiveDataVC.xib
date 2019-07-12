@@ -29,22 +29,9 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <navigationBar contentMode="scaleToFill" id="0u3-gV-fCL">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <items>
-                        <navigationItem title="网络质量评估工具" id="Qw8-Yd-2Er">
-                            <barButtonItem key="leftBarButtonItem" systemItem="reply" id="6nB-QZ-wpo" userLabel="return">
-                                <connections>
-                                    <action selector="LeaveRoomBtn_OnClick" destination="-1" id="qe3-4C-X4m"/>
-                                </connections>
-                            </barButtonItem>
-                        </navigationItem>
-                    </items>
-                </navigationBar>
                 <view contentMode="scaleToFill" id="bZX-q0-UkJ" userLabel="send">
-                    <rect key="frame" x="0.0" y="51" width="320" height="132"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="0.0" y="16" width="320" height="132"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="9yl-3A-xUS" userLabel="sendView">
                             <rect key="frame" x="5" y="12" width="310" height="112"/>
@@ -69,14 +56,14 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发送数据包:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rBy-Xt-JYx">
-                                    <rect key="frame" x="143" y="62" width="84" height="15"/>
+                                    <rect key="frame" x="143" y="62" width="69" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Val-s9-LXT">
-                                    <rect key="frame" x="222" y="62" width="86" height="15"/>
+                                    <rect key="frame" x="212" y="62" width="79" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -85,8 +72,8 @@
                             </subviews>
                             <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发送方" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vJf-wN-I9c">
-                            <rect key="frame" x="13" y="5" width="100" height="16"/>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发送方" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vJf-wN-I9c">
+                            <rect key="frame" x="13" y="5" width="49" height="16"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -97,8 +84,8 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" id="fHh-H9-UIf" userLabel="server">
-                    <rect key="frame" x="0.0" y="198" width="320" height="124"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="0.0" y="163" width="320" height="124"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="Shx-Lu-EQ8" userLabel="serverView">
                             <rect key="frame" x="5" y="12" width="310" height="102"/>
@@ -116,7 +103,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="收到数据包:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iMM-Vk-kih">
-                                    <rect key="frame" x="142" y="60" width="84" height="15"/>
+                                    <rect key="frame" x="142" y="60" width="69" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -130,7 +117,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yod-Gb-AFt">
-                                    <rect key="frame" x="222" y="60" width="86" height="15"/>
+                                    <rect key="frame" x="214" y="60" width="64" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -140,7 +127,7 @@
                             <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务器" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Dex-de-3aA">
-                            <rect key="frame" x="13" y="5" width="100" height="16"/>
+                            <rect key="frame" x="13" y="5" width="46" height="16"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -151,8 +138,8 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" id="hhq-7S-h2J" userLabel="recv">
-                    <rect key="frame" x="0.0" y="343" width="320" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="0.0" y="308" width="320" height="128"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="SgI-Dw-Boi" userLabel="recvView">
                             <rect key="frame" x="5" y="10" width="310" height="106"/>
@@ -177,28 +164,28 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="丢包率:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FHO-EI-9wx">
-                                    <rect key="frame" x="141" y="67" width="84" height="15"/>
+                                    <rect key="frame" x="141" y="67" width="46" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2E2-11-ovn">
-                                    <rect key="frame" x="222" y="67" width="86" height="15"/>
+                                    <rect key="frame" x="187" y="67" width="96" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NJD-Za-hTl">
-                                    <rect key="frame" x="222" y="52" width="86" height="15"/>
+                                    <rect key="frame" x="210" y="52" width="86" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="收到数据包:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1du-9I-3Fb">
-                                    <rect key="frame" x="141" y="52" width="84" height="15"/>
+                                    <rect key="frame" x="141" y="52" width="67" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -208,7 +195,7 @@
                             <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="接收方" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qsf-Yg-K3J" userLabel="控制器">
-                            <rect key="frame" x="13" y="3" width="100" height="16"/>
+                            <rect key="frame" x="13" y="3" width="46" height="16"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -221,7 +208,7 @@
             </subviews>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="132.80000000000001" y="154.72263868065968"/>
+            <point key="canvasLocation" x="132.80000000000001" y="140.32983508245877"/>
         </view>
     </objects>
     <resources>

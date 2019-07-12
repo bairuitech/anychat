@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ACFeaturesListVC">
+            <connections>
+                <outlet property="collectionView" destination="kNr-oH-wMe" id="2eX-tl-ifN"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="list_bg" translatesAutoresizingMaskIntoConstraints="NO" id="LBI-jc-O6L">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="280"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="280" id="Oef-Db-ZDO"/>
+                    </constraints>
+                </imageView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="kNr-oH-wMe">
+                    <rect key="frame" x="30" y="324" width="315" height="279"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="16i-7u-PZE">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="list_logo" translatesAutoresizingMaskIntoConstraints="NO" id="CkY-z0-Pvs">
+                    <rect key="frame" x="91" y="124" width="193" height="46"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="46" id="18W-hk-vdA"/>
+                        <constraint firstAttribute="width" constant="193" id="yaD-Nr-xqp"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="features" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Srh-lW-BWD">
+                    <rect key="frame" x="152" y="185" width="71" height="24"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Srh-lW-BWD" firstAttribute="top" secondItem="CkY-z0-Pvs" secondAttribute="bottom" constant="15" id="0Bj-tD-7pr"/>
+                <constraint firstAttribute="trailing" secondItem="kNr-oH-wMe" secondAttribute="trailing" constant="30" id="Q12-kc-jeF"/>
+                <constraint firstItem="kNr-oH-wMe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="R47-eL-Mxm"/>
+                <constraint firstItem="Srh-lW-BWD" firstAttribute="centerX" secondItem="CkY-z0-Pvs" secondAttribute="centerX" id="Rug-Au-If7"/>
+                <constraint firstItem="LBI-jc-O6L" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="XYw-oz-xWC"/>
+                <constraint firstItem="LBI-jc-O6L" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZDq-5B-ExT"/>
+                <constraint firstItem="LBI-jc-O6L" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bQl-6w-Vs1"/>
+                <constraint firstAttribute="bottom" secondItem="kNr-oH-wMe" secondAttribute="bottom" id="mTE-ni-00q"/>
+                <constraint firstItem="CkY-z0-Pvs" firstAttribute="centerX" secondItem="LBI-jc-O6L" secondAttribute="centerX" id="oTu-Dz-UYw"/>
+                <constraint firstItem="kNr-oH-wMe" firstAttribute="top" secondItem="LBI-jc-O6L" secondAttribute="bottom" constant="44" id="wpg-99-ftH"/>
+                <constraint firstItem="CkY-z0-Pvs" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="124" id="xsO-jw-kgV"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <point key="canvasLocation" x="132" y="139.880059970015"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="list_bg" width="414" height="280.5"/>
+        <image name="list_logo" width="193.5" height="46.5"/>
+    </resources>
+</document>

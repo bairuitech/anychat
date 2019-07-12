@@ -11,20 +11,9 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-@interface SettingVC : UIViewController <UITableViewDelegate,UITableViewDataSource>
+@interface SettingVC : ACBaseViewController <UITableViewDelegate,UITableViewDataSource>
 
-@property (weak, nonatomic) IBOutlet UITableView    *theUserSettingTabelView;
-@property (strong,nonatomic) UISwitch               *theP2PSwitch;
-@property (strong,nonatomic) UISwitch               *theServerSwitch;
-@property (strong,nonatomic) NSMutableDictionary    *theMainUserSettingMDict;
-//user setting param - NSMutableDictionary
-@property (strong,nonatomic) NSMutableDictionary    *theVideop2pMDict;
-@property (strong,nonatomic) NSMutableDictionary    *theVideoServerParamMDict;
-@property (strong,nonatomic) NSMutableDictionary    *theVideoSolutionMDict;
-@property (strong,nonatomic) NSMutableDictionary    *theVideoBitrateMDict;
-@property (strong,nonatomic) NSMutableDictionary    *theVideoFramerateMDict;
-@property (strong,nonatomic) NSMutableDictionary    *theVideoPresetMDict;
-@property (strong,nonatomic) NSMutableDictionary    *theVideoQualityMDict;
+
 //user setting param - Values
 @property (strong,nonatomic) NSNumber               *theP2PNum;
 @property (strong,nonatomic) NSNumber               *theServerParamNum;
@@ -40,14 +29,11 @@
 @property (strong,nonatomic) NSString               *thePresetStr;
 @property (strong,nonatomic) NSString               *theQualityStr;
 
-
-- (IBAction)saveBtn_OnClick;
-
-- (NSMutableDictionary *)readPListToMDictionaryAtSandboxPList:(NSString *)thePListName;
-
-- (id)getValuesFromMDict:(NSMutableDictionary *)mainMDict firstMDictKey:(NSString *)firstKey secondValuesKey:(NSString *)secondKey;
+@property (strong,nonatomic) NSMutableDictionary    *tempDic;
 
 - (void)createObjPlistFileToDocumentsPath;
+
+- (void)readDataWithPList;
 
 //用户自定义视频参数设置
 - (void) updateUserVideoSettings;

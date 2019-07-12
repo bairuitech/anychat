@@ -10,26 +10,16 @@
 #import <MediaPlayer/MediaPlayer.h>
 @interface ShowVC ()
 @property (strong, nonatomic) MPMoviePlayerViewController *moviePlayerVC;
+
+@property (strong, nonatomic) NSMutableArray                *theVideoRecordList;
+@property (strong, nonatomic) NSString                      *theSelectContentPath;
 @end
 
 @implementation ShowVC
 
-@synthesize theShowVCNItem;
-@synthesize theVideoRecordTableView;
-@synthesize theVideoRecordList;
-@synthesize theSelectContentPath;
-@synthesize theObjType;
-
 
 #pragma mark - Life cycle
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -45,6 +35,8 @@
     {
         self.theVideoRecordList = [AnyChatVC sharedAnyChatVC].theVideoRecordMArray;
     }
+    [self p_configNavItem];
+    self.theVideoRecordTableView.tableFooterView = [UIView new];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -57,7 +49,16 @@
     [super didReceiveMemoryWarning];
 }
 
-
+- (void)p_configNavItem {
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(clearDatas_OnClick) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"icon_remove"] forState:UIControlStateNormal];
+    [button sizeToFit];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
 #pragma mark -
 #pragma mark - UITableView Datasource
 
@@ -68,23 +69,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//???:删除
-//    if (self.theObjType == -1)
-//    {
-//        self.theVideoRecordList = [AnyChatVC sharedAnyChatVC].theVideoRecordSelfMArray;
-//    }
-//    else
-//    {
-//        self.theVideoRecordList = [AnyChatVC sharedAnyChatVC].theVideoRecordMArray;
-//    }
 
     return self.theVideoRecordList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//???:删除
-//    self.theVideoRecordList = [AnyChatVC sharedAnyChatVC].theVideoRecordMArray;
+
     static NSString *cellIdentifier = @"Cell";
     
     UITableViewCell *s_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -111,7 +102,7 @@
         s_cell.textLabel.text = [[NSString alloc] initWithFormat:@"%@(%@)",s_useNameStr,s_targetUserID];
     }
 
-    s_cell.detailTextLabel.text = s_productTime;
+    s_cell.detailTextLabel.text = [NSString stringWithFormat:@"录制时间：%@",s_productTime];
     
     return s_cell;
 }
@@ -146,17 +137,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)LeaveBtn_OnClick
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
 #pragma mark - UITouch
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self LeaveBtn_OnClick];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)clearDatas_OnClick
@@ -164,15 +149,5 @@
     [self.theVideoRecordList removeAllObjects];
     [self.theVideoRecordTableView reloadData];
 }
-
-
-#pragma mark - UI Controls
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-
 
 @end

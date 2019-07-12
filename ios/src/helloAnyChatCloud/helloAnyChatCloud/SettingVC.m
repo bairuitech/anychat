@@ -5,37 +5,28 @@
 
 #import "SettingVC.h"
 
-@interface SettingVC ()
+@interface SettingVC ()<UIAlertViewDelegate>
 
+{
+    
+    BOOL _maybeChange; //是否修改了参数
+}
+@property (weak, nonatomic) IBOutlet UITableView    *theUserSettingTabelView;
+@property (strong,nonatomic) UISwitch               *theP2PSwitch;
+@property (strong,nonatomic) UISwitch               *theServerSwitch;
+@property (strong,nonatomic) NSMutableDictionary    *theMainUserSettingMDict;
+//user setting param - NSMutableDictionary
+@property (strong,nonatomic) NSMutableDictionary    *theVideop2pMDict;
+@property (strong,nonatomic) NSMutableDictionary    *theVideoServerParamMDict;
+@property (strong,nonatomic) NSMutableDictionary    *theVideoSolutionMDict;
+@property (strong,nonatomic) NSMutableDictionary    *theVideoBitrateMDict;
+@property (strong,nonatomic) NSMutableDictionary    *theVideoFramerateMDict;
+@property (strong,nonatomic) NSMutableDictionary    *theVideoPresetMDict;
+@property (strong,nonatomic) NSMutableDictionary    *theVideoQualityMDict;
 @end
 
 @implementation SettingVC
 
-@synthesize theP2PSwitch;
-@synthesize theServerSwitch;
-@synthesize theMainUserSettingMDict;
-//user setting param - NSMutableDictionary
-@synthesize theVideop2pMDict;
-@synthesize theVideoServerParamMDict;
-@synthesize theVideoSolutionMDict;
-@synthesize theVideoBitrateMDict;
-@synthesize theVideoFramerateMDict;
-@synthesize theVideoPresetMDict;
-@synthesize theVideoQualityMDict;
-//user setting param - Values
-@synthesize theP2PNum;
-@synthesize theServerParamNum;
-@synthesize theSolutionNum;
-@synthesize theBitrateNum;
-@synthesize theFrameRateNum;
-@synthesize thePresetNum;
-@synthesize theQualityNum;
-//user setting param - Titles
-@synthesize theSolutionStr;
-@synthesize theBitrateStr;
-@synthesize theFrameRateStr;
-@synthesize thePresetStr;
-@synthesize theQualityStr;
 
 
 #pragma mark -
@@ -45,16 +36,17 @@
 {
     [super viewDidLoad];
     
-    [self createObjPlistFileToDocumentsPath];
-    [self readDataWithPList];
+    _maybeChange = NO;
+    self.title = @"视频参数设置";
+    [self readDataWithPList];//读取plist数据
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     
-    [self prefersStatusBarHidden];
-    [self configParamData];
+    [self configParamData];//根据plist数据设置
     [self.theUserSettingTabelView reloadData];
 }
 
@@ -63,6 +55,33 @@
     [super didReceiveMemoryWarning];
 }
 
+-(void)navLeftClick {
+
+    if(_maybeChange) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否保存设置？" message:@"" delegate:self cancelButtonTitle:@"退出" otherButtonTitles:@"保存", nil];
+        [alertView show];
+    } else {
+        
+        [super navLeftClick];
+    }
+ 
+}
+
+
+#pragma mark - AlertViewDelegate -
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if(buttonIndex == 0) {
+        
+        _maybeChange = NO;
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        
+        [self saveBtn_OnClick];
+    }
+}
 
 #pragma mark -
 #pragma mark - Shared Instance
@@ -82,10 +101,14 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        cell.textLabel.font = [UIFont systemFontOfSize:AdaptW(16)];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:AdaptW(16)];
+        cell.detailTextLabel.textColor = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1];
     }
     
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
+    cell.detailTextLabel.text = @"";
     if (indexPath.section == 0)
     {
         cell.textLabel.text = @"优先P2P";
@@ -93,7 +116,9 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
         
         self.theP2PSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
         [self.theP2PSwitch addTarget:self action:@selector(switchBtnStatus:) forControlEvents:UIControlEventValueChanged];
+        self.theP2PSwitch.onTintColor = [UIColor colorWithRed:0 green:139 / 255.0 blue:227 / 255.0 alpha:1];
         self.theP2PSwitch.on = [self.theP2PNum boolValue];
+        
         cell.accessoryView = self.theP2PSwitch;
     }
     else if(indexPath.section == 1)
@@ -103,11 +128,14 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
         
         self.theServerSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
         [self.theServerSwitch addTarget:self action:@selector(switchBtnStatus:) forControlEvents:UIControlEventValueChanged];
+        self.theServerSwitch.onTintColor = [UIColor colorWithRed:0 green:139 / 255.0 blue:227 / 255.0 alpha:1];
         self.theServerSwitch.on = [self.theServerParamNum boolValue];
+        
         cell.accessoryView = self.theServerSwitch;
     }
     else if(indexPath.section == 2)
     {
+        cell.accessoryView = nil;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (indexPath.row == 0)
         {
@@ -171,7 +199,15 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
     return nil;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    
+    return 30;
+}
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 63;
+}
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -202,6 +238,7 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
         }
         
         [self.navigationController pushViewController:detailVC animated:YES];
+        _maybeChange = YES;
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -259,6 +296,8 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
 
 - (void)readDataWithPList
 {
+    
+    [self createObjPlistFileToDocumentsPath];
     //read userData
     self.theMainUserSettingMDict = [self readPListToMDictionaryAtSandboxPList:@"UserVideoSettings.plist"];
     if (self.theMainUserSettingMDict != nil)
@@ -275,45 +314,65 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
 
 - (void)configParamData
 {
-    if (self.theP2PNum == nil)
-    {
+    
+    if(!_maybeChange) { //数据没变，则读取原数据
+        
         self.theP2PNum = [self.theVideop2pMDict objectForKey:@"Values"];
-    }
-    
-    if (self.theServerParamNum == nil)
-    {
         self.theServerParamNum = [self.theVideoServerParamMDict objectForKey:@"Values"];
-    }
-    
-    if (self.theSolutionNum == nil)
-    {
         self.theSolutionStr = [self.theVideoSolutionMDict objectForKey:@"Titles"];
         self.theSolutionNum = [self.theVideoSolutionMDict objectForKey:@"Values"];
-    }
-    
-    if (self.theBitrateNum == nil)
-    {
         self.theBitrateStr = [self.theVideoBitrateMDict objectForKey:@"Titles"];
         self.theBitrateNum = [self.theVideoBitrateMDict objectForKey:@"Values"];
-    }
-    
-    if (self.theFrameRateNum == nil)
-    {
         self.theFrameRateStr = [self.theVideoFramerateMDict objectForKey:@"Titles"];
         self.theFrameRateNum = [self.theVideoFramerateMDict objectForKey:@"Values"];
-    }
-    
-    if (self.thePresetNum == nil)
-    {
         self.thePresetStr = [self.theVideoPresetMDict objectForKey:@"Titles"];
         self.thePresetNum = [self.theVideoPresetMDict objectForKey:@"Values"];
-    }
-    
-    if (self.theQualityNum == nil)
-    {
         self.theQualityStr = [self.theVideoQualityMDict objectForKey:@"Titles"];
         self.theQualityNum = [self.theVideoQualityMDict objectForKey:@"Values"];
+    } else {
+        
+        if (self.theP2PNum == nil)
+        {
+            self.theP2PNum = [self.theVideop2pMDict objectForKey:@"Values"];
+        }
+        
+        if (self.theServerParamNum == nil)
+        {
+            self.theServerParamNum = [self.theVideoServerParamMDict objectForKey:@"Values"];
+        }
+        
+        if (self.theSolutionNum == nil)
+        {
+            self.theSolutionStr = [self.theVideoSolutionMDict objectForKey:@"Titles"];
+            self.theSolutionNum = [self.theVideoSolutionMDict objectForKey:@"Values"];
+        }
+        
+        if (self.theBitrateNum == nil)
+        {
+            self.theBitrateStr = [self.theVideoBitrateMDict objectForKey:@"Titles"];
+            self.theBitrateNum = [self.theVideoBitrateMDict objectForKey:@"Values"];
+        }
+        
+        if (self.theFrameRateNum == nil)
+        {
+            self.theFrameRateStr = [self.theVideoFramerateMDict objectForKey:@"Titles"];
+            self.theFrameRateNum = [self.theVideoFramerateMDict objectForKey:@"Values"];
+        }
+        
+        if (self.thePresetNum == nil)
+        {
+            self.thePresetStr = [self.theVideoPresetMDict objectForKey:@"Titles"];
+            self.thePresetNum = [self.theVideoPresetMDict objectForKey:@"Values"];
+        }
+        
+        if (self.theQualityNum == nil)
+        {
+            self.theQualityStr = [self.theVideoQualityMDict objectForKey:@"Titles"];
+            self.theQualityNum = [self.theVideoQualityMDict objectForKey:@"Values"];
+        }
     }
+    
+
 }
 
 - (IBAction)saveBtn_OnClick
@@ -349,6 +408,7 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
         [self.theMainUserSettingMDict writeToFile:saveAtSandboxPath atomically:YES];
         
         [self.navigationController popViewControllerAnimated:YES];
+        _maybeChange = NO;
     }
     else
     {
@@ -388,11 +448,8 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
             self.theServerParamNum = [NSNumber numberWithBool:s_isOff];
         }
     }
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
+    
+    _maybeChange = YES;
 }
 
 - (BOOL)shouldAutorotate

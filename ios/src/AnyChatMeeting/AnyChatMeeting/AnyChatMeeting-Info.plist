@@ -39,15 +39,19 @@
 	<string>microphoneDesciption</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>photoDesciption</string>
+	<key>UILaunchStoryboardName</key>
+	<string>Launch Screen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
 	<key>UIStatusBarHidden</key>
-	<true/>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,135 +15,114 @@
                 <outlet property="thePhotoProgressView" destination="oy7-vc-fHr" id="C7f-v2-fkh"/>
                 <outlet property="theVideoProgressLab" destination="64W-FH-qA0" id="eK2-AR-kVm"/>
                 <outlet property="theVideoProgressView" destination="LN9-KQ-gE1" id="nNB-4Q-Q30"/>
+                <outlet property="uploadButton" destination="ied-Iz-Q3a" id="Oro-Z1-XTl"/>
                 <outlet property="view" destination="elz-x0-yLi" id="8Jw-mV-WLl"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="elz-x0-yLi">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.74999999999999978" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_TestMsg.jpg" id="06z-PB-tft" userLabel="Image View - bg">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <imageView userInteractionEnabled="NO" alpha="0.74999999999999978" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="step3" translatesAutoresizingMaskIntoConstraints="NO" id="06z-PB-tft" userLabel="Image View - bg">
+                    <rect key="frame" x="0.0" y="30" width="414" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="gcr-4z-8K2"/>
+                    </constraints>
                 </imageView>
-                <view contentMode="scaleToFill" id="Zex-hi-cZq" userLabel="View - footer">
-                    <rect key="frame" x="0.0" y="450" width="320" height="30"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <subviews>
-                        <imageView alpha="0.45000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video_footer.png" highlightedImage="bg_video_footer.png" id="VeO-Me-BkT">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        </imageView>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Lca-lO-obE">
-                            <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal" title="返回">
-                                <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <state key="highlighted">
-                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="returnBtn_OnClick" destination="-1" eventType="touchUpInside" id="REn-Hj-joQ"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ied-Iz-Q3a">
-                            <rect key="frame" x="110" y="0.0" width="100" height="30"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal" title="上传">
-                                <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <state key="highlighted">
-                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="theTransFileBtn_OnClick" destination="-1" eventType="touchUpInside" id="bKH-jn-3RB"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                </view>
-                <view clipsSubviews="YES" contentMode="scaleToFill" id="rPc-17-1AV" userLabel="View - info">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="38"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <view alpha="0.37999999523162842" contentMode="scaleToFill" id="brj-Vz-M2U" userLabel="View - bg">
-                            <rect key="frame" x="0.0" y="0.0" width="332" height="98"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </view>
-                        <view clipsSubviews="YES" contentMode="scaleToFill" id="nLw-SN-imF" userLabel="View - Process">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="18"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon_Obj_Process.png" id="A7F-L3-xRj" userLabel="Image View - Process.png">
-                                    <rect key="frame" x="-7" y="-33" width="332" height="70"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                </imageView>
-                            </subviews>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        </view>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="操作指南:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fOF-DB-WK9">
-                            <rect key="frame" x="5" y="20" width="52" height="15"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                            <color key="textColor" red="1" green="0.0" blue="0.054199093339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请点击上传按钮,上传文件。" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ygv-tN-9fo" userLabel="Label - 上传信息">
-                            <rect key="frame" x="55" y="21" width="231" height="14"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="图片文件上传进度：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3SN-ZA-eMS">
-                    <rect key="frame" x="57" y="137" width="117" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="图片文件上传进度：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3SN-ZA-eMS">
+                    <rect key="frame" x="30" y="270" width="165.5" height="21.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="视频文件上传进度：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NM9-hc-UQq">
-                    <rect key="frame" x="57" y="223" width="117" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="视频文件上传进度：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NM9-hc-UQq">
+                    <rect key="frame" x="30" y="381.5" width="165" height="21.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" id="oy7-vc-fHr" userLabel="Progress View - Photo">
-                    <rect key="frame" x="57" y="166" width="180" height="2"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oy7-vc-fHr" userLabel="Progress View - Photo">
+                    <rect key="frame" x="30" y="301.5" width="354" height="10"/>
+                    <color key="progressTintColor" red="0.0039215686274509803" green="0.49411764705882355" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="trackTintColor" red="0.24705882352941178" green="0.24705882352941178" blue="0.24705882352941178" alpha="1" colorSpace="calibratedRGB"/>
                 </progressView>
-                <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" id="LN9-KQ-gE1" userLabel="Progress View - Video">
-                    <rect key="frame" x="57" y="252" width="180" height="2"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LN9-KQ-gE1" userLabel="Progress View - Video">
+                    <rect key="frame" x="30" y="413" width="354" height="10"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="9oJ-xv-gR4"/>
+                    </constraints>
+                    <color key="progressTintColor" red="0.0039215686274509803" green="0.49411764705882355" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="trackTintColor" red="0.24705882352941178" green="0.24705882352941178" blue="0.24705882352941178" alpha="1" colorSpace="calibratedRGB"/>
                 </progressView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2fn-XM-H4A">
-                    <rect key="frame" x="175" y="134" width="69" height="21"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64W-FH-qA0">
+                    <rect key="frame" x="358" y="382" width="26" height="22"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="64W-FH-qA0">
-                    <rect key="frame" x="175" y="220" width="69" height="21"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请点击上传按钮上传文件" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9Z-JZ-0T1">
+                    <rect key="frame" x="36" y="84" width="180" height="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ied-Iz-Q3a">
+                    <rect key="frame" x="150" y="653" width="115" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="3kp-Ti-dgk"/>
+                        <constraint firstAttribute="width" constant="115" id="IV2-am-6cg"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                    <state key="normal" title="上传">
+                        <color key="titleColor" red="0.0" green="0.5450980392" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="theTransFileBtn_OnClick" destination="-1" eventType="touchUpInside" id="bKH-jn-3RB"/>
+                    </connections>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fn-XM-H4A">
+                    <rect key="frame" x="358" y="270" width="26" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="oy7-vc-fHr" firstAttribute="leading" secondItem="LN9-KQ-gE1" secondAttribute="leading" id="3lJ-N8-k6d"/>
+                <constraint firstItem="LN9-KQ-gE1" firstAttribute="leading" secondItem="elz-x0-yLi" secondAttribute="leading" constant="30" id="4PK-oq-2uL"/>
+                <constraint firstItem="oy7-vc-fHr" firstAttribute="trailing" secondItem="LN9-KQ-gE1" secondAttribute="trailing" id="4wM-cU-zFM"/>
+                <constraint firstItem="oy7-vc-fHr" firstAttribute="top" secondItem="3SN-ZA-eMS" secondAttribute="bottom" constant="10" id="7eo-5m-RXZ"/>
+                <constraint firstAttribute="trailing" secondItem="06z-PB-tft" secondAttribute="trailing" id="DD7-wS-nOt"/>
+                <constraint firstItem="2fn-XM-H4A" firstAttribute="trailing" secondItem="oy7-vc-fHr" secondAttribute="trailing" id="F3Y-V5-Kye"/>
+                <constraint firstItem="oy7-vc-fHr" firstAttribute="height" secondItem="LN9-KQ-gE1" secondAttribute="height" id="IBc-eB-qB1"/>
+                <constraint firstItem="LN9-KQ-gE1" firstAttribute="top" secondItem="NM9-hc-UQq" secondAttribute="bottom" constant="10" id="Mng-4l-ybm"/>
+                <constraint firstAttribute="trailing" secondItem="LN9-KQ-gE1" secondAttribute="trailing" constant="30" id="O4a-Rr-kyw"/>
+                <constraint firstAttribute="bottom" secondItem="ied-Iz-Q3a" secondAttribute="bottom" constant="43" id="Tg9-Ho-12I"/>
+                <constraint firstItem="NM9-hc-UQq" firstAttribute="top" secondItem="oy7-vc-fHr" secondAttribute="bottom" constant="70" id="X42-jv-ALS"/>
+                <constraint firstItem="ied-Iz-Q3a" firstAttribute="centerX" secondItem="elz-x0-yLi" secondAttribute="centerX" id="fBm-s7-5QX"/>
+                <constraint firstItem="2fn-XM-H4A" firstAttribute="centerY" secondItem="3SN-ZA-eMS" secondAttribute="centerY" id="g7S-pX-Jso"/>
+                <constraint firstItem="V9Z-JZ-0T1" firstAttribute="leading" secondItem="elz-x0-yLi" secondAttribute="leading" constant="36" id="m4d-7V-8Lo"/>
+                <constraint firstItem="06z-PB-tft" firstAttribute="top" secondItem="elz-x0-yLi" secondAttribute="top" constant="30" id="pzJ-0m-8go"/>
+                <constraint firstItem="64W-FH-qA0" firstAttribute="trailing" secondItem="LN9-KQ-gE1" secondAttribute="trailing" id="ruE-AI-eVK"/>
+                <constraint firstItem="ied-Iz-Q3a" firstAttribute="top" secondItem="LN9-KQ-gE1" secondAttribute="bottom" constant="230" id="t2z-Qs-13k"/>
+                <constraint firstItem="06z-PB-tft" firstAttribute="leading" secondItem="elz-x0-yLi" secondAttribute="leading" id="tCn-2F-4dU"/>
+                <constraint firstItem="NM9-hc-UQq" firstAttribute="leading" secondItem="LN9-KQ-gE1" secondAttribute="leading" id="vqp-l4-zgE"/>
+                <constraint firstItem="V9Z-JZ-0T1" firstAttribute="top" secondItem="06z-PB-tft" secondAttribute="bottom" constant="31" id="wtt-hq-iXI"/>
+                <constraint firstItem="64W-FH-qA0" firstAttribute="centerY" secondItem="NM9-hc-UQq" secondAttribute="centerY" id="yrp-x3-LqG"/>
+                <constraint firstItem="3SN-ZA-eMS" firstAttribute="leading" secondItem="oy7-vc-fHr" secondAttribute="leading" id="zZ8-1u-fhl"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="132.80000000000001" y="148.42578710644679"/>
         </view>
     </objects>
     <resources>
-        <image name="Icon_Obj_Process.png" width="909" height="200"/>
-        <image name="bg_TestMsg.jpg" width="640" height="1136"/>
-        <image name="bg_video_footer.png" width="640" height="60"/>
+        <image name="step3" width="414" height="26"/>
     </resources>
 </document>

@@ -25,36 +25,13 @@
 typedef void(^passValBlock)(int targerUserID,int imgViewTag,VideoVC *videoVC);
 typedef void(^addImgBlock)(int imgViewTag,VideoVC *videoVC);
 
-@interface VideoVC : UIViewController <UIActionSheetDelegate,UIAlertViewDelegate>
-{
-    AnyChatPlatform     *theAnyChat;
-}
+@interface VideoVC : ACBaseViewController <UIActionSheetDelegate,UIAlertViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UIImageView          *iRemoteVideoView1;
-@property (strong, nonatomic) IBOutlet UIImageView          *iRemoteVideoView2;
-@property (strong, nonatomic) IBOutlet UIImageView          *iRemoteVideoView3;
-@property (strong, nonatomic) IBOutlet UIView               *theLocalView;
-@property (strong, nonatomic) AVCaptureVideoPreviewLayer    *localVideoSurface;
-@property (strong, nonatomic) NSString                      *theCurrentRotation;
-@property (strong, nonatomic) NSMutableArray                *onRoomUserMArray;
-@property (strong, nonatomic) UIActionSheet                 *isFinishVideoActSheet;
-@property (strong, nonatomic) UIAlertView                   *theVideoBitrateAlertView;
 
-@property (weak, nonatomic) IBOutlet UINavigationItem       *theVideoNItem;
-@property (weak, nonatomic) IBOutlet UIButton               *switchCameraBtn;
-@property (weak, nonatomic) IBOutlet UILabel                *theLabel3001;
-@property (weak, nonatomic) IBOutlet UILabel                *theLabel3002;
-@property (weak, nonatomic) IBOutlet UILabel                *theLabel3003;
-@property (weak, nonatomic) IBOutlet UILabel                *theSelfIDLabel;
-
-@property (nonatomic,copy)passValBlock pvBlock;
+@property (nonatomic,copy)passValBlock pvBlock;//有用户加入的回调
 @property (nonatomic,copy)addImgBlock aiBlock;
 
 
-- (IBAction) FinishVideoChatBtnClicked:(id)sender;
-- (IBAction) switchCameraBtn_OnClicked:(id)sender;
 - (void) FinishVideoChat;
-- (void) StartLocalVideoChat;
-- (void) myEnterRoomChat;
 
 @end

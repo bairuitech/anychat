@@ -10,9 +10,6 @@
 
 @implementation AppDelegate
 
-@synthesize navController;
-@synthesize anychatVC;
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -24,6 +21,8 @@
     self.window.rootViewController = self.navController;
     
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    [self p_configNavBar];
     [self.window makeKeyAndVisible];
     return YES;
     
@@ -70,6 +69,18 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+}
+
+
+- (void)p_configNavBar {
+    
+    
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor whiteColor],NSForegroundColorAttributeName,
+                                               [UIFont boldSystemFontOfSize:18],NSFontAttributeName,
+                                               nil];
+    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+    
 }
 
 #pragma mark - supported Orientation

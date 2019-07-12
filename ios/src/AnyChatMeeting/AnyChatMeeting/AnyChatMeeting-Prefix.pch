@@ -47,8 +47,8 @@
 #define kDegreesToRadian(degrees)           (M_PI * (degrees) / 180.0)
 #define kLayer_Z_Axis_3DRotation(degrees)    CATransform3DMakeRotation(kDegreesToRadian(degrees), 0.0, 0.0, 1.0)
 
-#define kLocalVideo_Width                   (float)137.0f
-#define kLocalVideo_Height                  (float)205.0f
+#define kLocalVideo_Width                   200.0f
+#define kLocalVideo_Height                  315.0f
 #define kBar_Height                         (float)30.0f
 #define kUI_Spacing                         (float)2.0f
 
@@ -113,3 +113,6 @@ return shared##classname;   \
 #define k_sandboxPathsArray (NSArray *)NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 
 
+#import "IQKeyboardManager.h"
+#import "ACBaseViewController.h"
+#import "UIView+AdaptScreen.h"

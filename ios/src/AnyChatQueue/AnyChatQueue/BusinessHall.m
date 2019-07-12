@@ -13,9 +13,9 @@
 - (instancetype)initWithDic:(NSDictionary *)dic {
     self = [super init];
     if (self != nil) {
-        self.hallId = [[dic objectForKey:@"areaId"] longLongValue];
+        self.hallId = [[dic objectForKey:@"areaId"] intValue];
         self.title = [dic objectForKey:@"areaName"];
-        self.icon = [NSString stringWithFormat:@"stronghold_0%i",(arc4random()%4)+1];
+        self.icon = [NSString stringWithFormat:@"营业厅%i",(arc4random()%2)+1];
     }
     return self;
 }

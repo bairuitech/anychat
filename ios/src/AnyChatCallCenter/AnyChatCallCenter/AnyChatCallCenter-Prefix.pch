@@ -22,8 +22,8 @@
 #define kDegreesToRadian(degrees)           (M_PI * (degrees) / 180.0)
 #define kLayer_Z_Axis_3DRotation(degrees)    CATransform3DMakeRotation(kDegreesToRadian(degrees), 0.0, 0.0, 1.0)
 
-#define kLocalVideo_Width                   (float)100.0f
-#define kLocalVideo_Height                  (float)130.0f
+#define kLocalVideo_Width                   AdaptW(121.0f)
+#define kLocalVideo_Height                  AdaptW(162.0f)
 #define kBar_Height                         (float)30.0f
 #define kUI_Spacing                         (float)2.0f
 
@@ -41,3 +41,7 @@
 #define	 k_isRetina	 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
 #define	 k_iPhone5 	([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 #define	 k_isPad 	(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+
+#import "IQKeyboardManager.h"
+#import "ACBaseViewController.h"
+#import "UIView+AdaptScreen.h"

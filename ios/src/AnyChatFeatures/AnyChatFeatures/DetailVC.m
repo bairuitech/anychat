@@ -11,13 +11,6 @@
 
 @implementation DetailVC
 
-@synthesize theNavTitle;
-@synthesize theMainSettingMDict;
-@synthesize theTitlesParamMArray;
-@synthesize theValuesParamMArray;
-@synthesize theTitlesParamStr;
-@synthesize theValuesParamStr;
-
 
 #pragma mark -
 #pragma mark - Life cycle
@@ -26,12 +19,14 @@
 {
     [super viewDidLoad];
     [self readDataWithPList];
+    self.title = self.theNavTitle;
+    self.theDetailSettingTableView.tableFooterView = [UIView new];
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self setUI];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,9 +58,10 @@
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:AdaptW(16)];
+        cell.detailTextLabel.font = cell.textLabel.font;
+        
     }
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     cell.textLabel.text = [self.theTitlesParamMArray objectAtIndex:[indexPath row]];
     cell.detailTextLabel.text = [[self.theValuesParamMArray objectAtIndex:[indexPath row]] stringValue];
@@ -82,27 +78,27 @@
     int selectValuesInt = [[self.theValuesParamMArray objectAtIndex:[indexPath row]] intValue];
     NSNumber *selectValuesNum = [NSNumber numberWithInt:selectValuesInt];
     
-    if ([theNavTitle isEqualToString:@"视频分辨率"])
+    if ([self.theNavTitle isEqualToString:@"视频分辨率"])
     {
         [SettingVC sharedSettingVC].theSolutionStr = selectTitlesStr;
         [SettingVC sharedSettingVC].theSolutionNum = selectValuesNum;
     }
-    else if([theNavTitle isEqualToString:@"视频码率"])
+    else if([self.theNavTitle isEqualToString:@"视频码率"])
     {
         [SettingVC sharedSettingVC].theBitrateStr = selectTitlesStr;
         [SettingVC sharedSettingVC].theBitrateNum = selectValuesNum;
     }
-    else if([theNavTitle isEqualToString:@"视频帧率"])
+    else if([self.theNavTitle isEqualToString:@"视频帧率"])
     {
         [SettingVC sharedSettingVC].theFrameRateStr = selectTitlesStr;
         [SettingVC sharedSettingVC].theFrameRateNum = selectValuesNum;
     }
-    else if([theNavTitle isEqualToString:@"预设参数"])
+    else if([self.theNavTitle isEqualToString:@"预设参数"])
     {
         [SettingVC sharedSettingVC].thePresetStr = selectTitlesStr;
         [SettingVC sharedSettingVC].thePresetNum = selectValuesNum;
     }
-    else if([theNavTitle isEqualToString:@"视频质量"])
+    else if([self.theNavTitle isEqualToString:@"视频质量"])
     {
         [SettingVC sharedSettingVC].theQualityStr = selectTitlesStr;
         [SettingVC sharedSettingVC].theQualityNum = selectValuesNum;
@@ -138,7 +134,7 @@
     //read Main Setting PList
     self.theMainSettingMDict = [self readPListToMDictionaryWithPListName:@"VideoSettings"];
     
-    if ([theNavTitle isEqualToString:@"视频分辨率"])
+    if ([self.theNavTitle isEqualToString:@"视频分辨率"])
     {
         self.theTitlesParamMArray = [self getArrayFromMDict:self.theMainSettingMDict
                                               firstMDictKey:@"videosolution"
@@ -147,7 +143,7 @@
                                               firstMDictKey:@"videosolution"
                                             secondMArrayKey:@"Values"];
     }
-    else if ([theNavTitle isEqualToString:@"视频码率"])
+    else if ([self.theNavTitle isEqualToString:@"视频码率"])
     {
         self.theTitlesParamMArray = [self getArrayFromMDict:self.theMainSettingMDict
                                               firstMDictKey:@"videobitrate"
@@ -156,7 +152,7 @@
                                               firstMDictKey:@"videobitrate"
                                             secondMArrayKey:@"Values"];
     }
-    else if ([theNavTitle isEqualToString:@"视频帧率"])
+    else if ([self.theNavTitle isEqualToString:@"视频帧率"])
     {
         self.theTitlesParamMArray = [self getArrayFromMDict:self.theMainSettingMDict
                                               firstMDictKey:@"videoframerate"
@@ -165,7 +161,7 @@
                                               firstMDictKey:@"videoframerate"
                                             secondMArrayKey:@"Values"];
     }
-    else if ([theNavTitle isEqualToString:@"预设参数"])
+    else if ([self.theNavTitle isEqualToString:@"预设参数"])
     {
         self.theTitlesParamMArray = [self getArrayFromMDict:self.theMainSettingMDict
                                               firstMDictKey:@"videopreset"
@@ -174,7 +170,7 @@
                                               firstMDictKey:@"videopreset"
                                             secondMArrayKey:@"Values"];
     }
-    else if ([theNavTitle isEqualToString:@"视频质量"])
+    else if ([self.theNavTitle isEqualToString:@"视频质量"])
     {
         self.theTitlesParamMArray = [self getArrayFromMDict:self.theMainSettingMDict
                                               firstMDictKey:@"videoquality"
@@ -194,26 +190,14 @@
     return s_theMArray;
 }
 
-- (void)setUI
-{
-    [self prefersStatusBarHidden];
-    self.theDetailNItem.title = self.theNavTitle;
-}
 
 - (void)setType:(NSString *)theTypeName
 {
     self.theNavTitle = theTypeName;
 }
 
-- (IBAction)LeaveBtn_OnClick
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
+
 
 - (BOOL)shouldAutorotate
 {

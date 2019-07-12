@@ -15,18 +15,15 @@
 
 @interface LoginViewController ()
 
+@property (nonatomic, strong) IBOutlet UITextField   *theIP;
+@property (nonatomic, strong) IBOutlet UITextField   *thePort;
+@property (nonatomic, strong) IBOutlet UITextField   *theUserName;
+@property (nonatomic, strong) IBOutlet UIButton      *theLoginBtn;
+@property (nonatomic, strong) IBOutlet UILabel       *theVersion;
 @end
 
 @implementation LoginViewController
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -34,30 +31,16 @@
     
     [AnyChatPlatform InitSDK:0];
     [AnyChatPlatform SetSDKOptionInt:134 :1];
+    
+    self.theUserName.text = kAnyChatUserName;
+    self.theIP.text = kAnyChatIP;
+    self.thePort.text = kAnyChatPort;
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    
-    [self prefersStatusBarHidden];
-    [self.navigationController setNavigationBarHidden:YES];
-    
-    self.theUserName.text = kAnyChatUserName;
-    self.theIP.text = kAnyChatIP;
-    self.thePort.text = kAnyChatPort;
-    
-    float sysVersion = [[UIDevice currentDevice].systemVersion floatValue];
-    if (sysVersion <= 7.0) {
-        
-        self.theLoginBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
-        self.theLoginBtn.titleLabel.textColor = [UIColor grayColor];
-        
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    }
-    
-    [self.theHideKeyboardBtn setTitle:@"" forState:UIControlStateNormal];
-    [self.theHideKeyboardBtn setTitle:@"" forState:UIControlStateSelected];
     
     [self.theVersion setText:[AnyChatPlatform GetSDKVersion]];
 }
@@ -68,7 +51,6 @@
 - (IBAction)OnLoginBtnClicked:(id)sender
 {
     
-    HallViewController *hallVC = [[HallViewController alloc] init];
     
     if([self.theUserName.text length] == 0) {
         self.theUserName.text = kAnyChatUserName;
@@ -94,21 +76,18 @@
     [AnyChatPlatform Login:self.theUserName.text :nil];
     
     
-    
+    HallViewController *hallVC = [[HallViewController alloc] init];
     [self.navigationController pushViewController:hallVC animated:YES];
     
 }
 
 - (IBAction) hideKeyBoard:(id)sender
 {
-    [self.theIP resignFirstResponder];
-    [self.thePort resignFirstResponder];
-    [self.theUserName resignFirstResponder];
+    [self.view endEditing:YES];
 }
 
-
-- (BOOL)prefersStatusBarHidden{
+-(BOOL)navBarTranslucent {
+    
     return YES;
 }
-
 @end

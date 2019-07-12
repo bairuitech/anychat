@@ -29,64 +29,59 @@ typedef enum {
 
 @interface AnyChatViewController () {
     BOOL _connectSuccess;
+    MBProgressHUD *HUD;
+
 }
 @property (nonatomic, assign) AnyChatVCLoginMode loginMode; // 登录方式
+
+@property (weak, nonatomic) IBOutlet UITextField            *theUserName;
+@property (weak, nonatomic) IBOutlet UITextField            *theRoomNO;
+@property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
+@property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
+@property (weak, nonatomic) IBOutlet UITextField            *theGuid;
+@property (weak, nonatomic) IBOutlet UITextField            *theSignServer;
+@property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
+@property (weak, nonatomic) IBOutlet UILabel                *theVersion;
+@property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
+@property (strong, nonatomic) IBOutlet UITableView          *onLineUserTableView;
+
+
+@property (strong, nonatomic) VideoViewController           *videoVC;
+@property (strong, nonatomic) AnyChatPlatform               *anyChat;
+@property BOOL theOnLineLoginState;
+@property int theMyUserID;
+
 @end
 
 @implementation AnyChatViewController
-
-@synthesize anyChat;
-@synthesize videoVC;
-@synthesize onLineUserTableView;
-@synthesize onlineUserMArray;
-@synthesize theOnLineLoginState;
-@synthesize theVersion;
-@synthesize theStateInfo;
-@synthesize theRoomNO;
-@synthesize theUserName;
-@synthesize theServerIP;
-@synthesize theServerPort;
-@synthesize theGuid;
-@synthesize theSignServer;
-@synthesize theLoginBtn;
-@synthesize theLoginAlertView;
-@synthesize theHideKeyboardBtn;
-@synthesize theMyUserID;
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        
-    }
-    return self;
-}
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    [self setUIControls];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
-    
     [AnyChatPlatform InitSDK:0];
-    
-    anyChat = [AnyChatPlatform getInstance];
-    anyChat.notifyMsgDelegate = self;
+    self.anyChat = [AnyChatPlatform getInstance];
+    self.anyChat.notifyMsgDelegate = self;
     // 设置应用ID
 //    [AnyChatPlatform SetSDKOptionString:BRAC_SO_CLOUD_APPGUID :nil];
     
     //创建默认视频参数
     [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
+    self.onLineUserTableView.dataSource = self;
+    self.onLineUserTableView.delegate = self;
+   
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll
+                            exceptViews:nil];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self setUIControls];
 }
 
 #pragma mark - Memory Warning Method
@@ -110,7 +105,7 @@ typedef enum {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return onlineUserMArray.count;
+    return self.onlineUserMArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -125,14 +120,14 @@ typedef enum {
         Cell = [nibs objectAtIndex:0];
     }
     
-    int userID = [[onlineUserMArray objectAtIndex:[indexPath row]] intValue];
+    int userID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] intValue];
     NSString *name = [AnyChatPlatform GetUserName:userID];
     
     UILabel *userIDLabel = (UILabel *)[Cell.contentView viewWithTag:kUserIDValueTag];
     UILabel *nameLabel = (UILabel *)[Cell.contentView viewWithTag:kNameValueTag];
     UIImageView *bgView = (UIImageView *)[Cell viewWithTag:kBackgroundViewTag];
     
-    if (theMyUserID == userID)
+    if (self.theMyUserID == userID)
     {
         nameLabel.text = [name stringByAppendingString:@"(自己)[视频设置]"];
     }
@@ -156,39 +151,30 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int selectID = [[onlineUserMArray objectAtIndex:[indexPath row]] intValue];
+    int selectID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] intValue];
     
-    if (selectID != theMyUserID)
+    if (selectID != self.theMyUserID)
     {
         //更新用户自定义视频参数设置
         [[SettingVC sharedSettingVC] updateUserVideoSettings];
         
-        videoVC = [VideoViewController new];
-        videoVC.iRemoteUserId = selectID;
-        [self.navigationController pushViewController:videoVC animated:YES];
+        self.videoVC = [VideoViewController new];
+        self.videoVC.iRemoteUserId = selectID;
+        NSString *name = [AnyChatPlatform GetUserName:selectID];
+        self.videoVC.remoteUserName = name;
+        [self.navigationController pushViewController:self.videoVC animated:YES];
     }
     else
     {
         SettingVC *settingVC = [SettingVC new];
+        [settingVC readDataWithPList];
         [self.navigationController pushViewController:settingVC animated:YES];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-//- (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//	return 81.0f;
-//}
-
-
-#pragma mark - TextField Delegate
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    return YES;
+- (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 81.0f;
 }
 
 #pragma mark - AnyChatNotifyMessageDelegate
@@ -199,10 +185,10 @@ typedef enum {
     _connectSuccess = bSuccess;
     if (bSuccess)
     {
-        theStateInfo.text = @"• Success connected to server";
+        self.theStateInfo.text = @"• Success connected to server";
     }else {
         
-        theStateInfo.text = @"• Fail connected to server";
+        self.theStateInfo.text = @"• Fail connected to server";
         [HUD hide:YES];
     }
 }
@@ -211,25 +197,25 @@ typedef enum {
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
+    self.onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
-        theOnLineLoginState = YES;
-        theMyUserID = dwUserId;
+        self.theOnLineLoginState = YES;
+        self.theMyUserID = dwUserId;
         [self saveSettings];  //save correct configuration
-        theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
-        [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_logout_01"] forState:UIControlStateNormal];
+        self.theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
+        self.theLoginBtn.selected = YES;
         
-        if([theRoomNO.text length] == 0)
+        if([self.theRoomNO.text length] == 0)
         {
-            theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
+            self.theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
         }
-        [AnyChatPlatform EnterRoom:(int)[theRoomNO.text integerValue] :@""];
+        [AnyChatPlatform EnterRoom:(int)[self.theRoomNO.text integerValue] :@""];
     }
     else
     {
-        theOnLineLoginState = NO;
-        theStateInfo.text = [NSString stringWithFormat:@"• Login failed(ErrorCode:%i)",dwErrorCode];
+        self.theOnLineLoginState = NO;
+        self.theStateInfo.text = [NSString stringWithFormat:@"• Login failed(ErrorCode:%i)",dwErrorCode];
     }
     
 }
@@ -238,32 +224,32 @@ typedef enum {
 - (void) OnAnyChatEnterRoom:(int) dwRoomId : (int) dwErrorCode
 {
     if (dwErrorCode != 0) {
-        theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
+        self.theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
     }
     
-    [onLineUserTableView reloadData];
+    [self.onLineUserTableView reloadData];
 }
 
 // 房间在线用户消息
 - (void) OnAnyChatOnlineUser:(int) dwUserNum : (int) dwRoomId
 {
-    onlineUserMArray = [self getOnlineUserArray];
-    [onLineUserTableView reloadData];
+    self.onlineUserMArray = [self getOnlineUserArray];
+    [self.onLineUserTableView reloadData];
 }
 
 // 用户进入房间消息
 - (void) OnAnyChatUserEnterRoom:(int) dwUserId
 {
-    onlineUserMArray = [self getOnlineUserArray];
-    [onLineUserTableView reloadData];
+    self.onlineUserMArray = [self getOnlineUserArray];
+    [self.onLineUserTableView reloadData];
 }
 
 // 用户退出房间消息
 - (void) OnAnyChatUserLeaveRoom:(int) dwUserId
 {
-    if (videoVC.iRemoteUserId == dwUserId )
+    if (self.videoVC.iRemoteUserId == dwUserId )
     {
-        [videoVC FinishVideoChat];
+        [self.videoVC FinishVideoChat];
         NSString *name = [AnyChatPlatform GetUserName:dwUserId];
         NSString *theLeaveRoomName = [[NSString alloc] initWithFormat:@"\"%@\"已离开房间!",name];
         UIAlertView *leaveRoomAlertView = [[UIAlertView alloc] initWithTitle:theLeaveRoomName
@@ -272,23 +258,23 @@ typedef enum {
                                                          cancelButtonTitle:nil
                                                          otherButtonTitles:@"确定",nil];
         [leaveRoomAlertView show];
-        videoVC.iRemoteUserId = -1;
+        self.videoVC.iRemoteUserId = -1;
     }
-    onlineUserMArray = [self getOnlineUserArray];
-    [onLineUserTableView reloadData];
+    self.onlineUserMArray = [self getOnlineUserArray];
+    [self.onLineUserTableView reloadData];
 }
 
 // 网络断开消息
 - (void) OnAnyChatLinkClose:(int) dwErrorCode {
-    [videoVC FinishVideoChat];
+    [self.videoVC FinishVideoChat];
     [AnyChatPlatform LeaveRoom:-1];
     [AnyChatPlatform Logout];
-    theOnLineLoginState = NO;
-    [onlineUserMArray removeAllObjects];
-    [onLineUserTableView reloadData];
+    self.theOnLineLoginState = NO;
+    [self.onlineUserMArray removeAllObjects];
+    [self.onLineUserTableView reloadData];
     
-    theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
-    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
+    self.theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
+    self.theLoginBtn.selected = NO;
 }
 
 
@@ -297,7 +283,7 @@ typedef enum {
 {   // save settings to file
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    [[NSArray arrayWithObjects:theServerIP.text,theServerPort.text,theUserName.text,theRoomNO.text, nil] writeToFile:filePath atomically:YES];
+    [[NSArray arrayWithObjects:self.theServerIP.text,self.theServerPort.text,self.theUserName.text,self.theRoomNO.text, nil] writeToFile:filePath atomically:YES];
 }
 
 
@@ -306,7 +292,7 @@ typedef enum {
 - (void)AnyChatNotifyHandler:(NSNotification*)notify
 {
     NSDictionary* dict = notify.userInfo;
-    [anyChat OnRecvAnyChatNotify:dict];
+    [self.anyChat OnRecvAnyChatNotify:dict];
 }
 
 - (NSMutableArray *) getOnlineUserArray
@@ -316,18 +302,14 @@ typedef enum {
     return onLineUserList;
 }
 
-- (IBAction)hideKeyBoard {
-    [theServerIP resignFirstResponder];
-    [theServerPort resignFirstResponder];
-    [theUserName resignFirstResponder];
-    [theRoomNO resignFirstResponder];
-    [theGuid resignFirstResponder];
-    [theSignServer resignFirstResponder];
+- (void)hideKeyBoard {
+
+    [self.view endEditing:YES];
 }
 
 - (IBAction)OnLoginBtnClicked:(id)sender
 {
-    if (theOnLineLoginState == YES)
+    if (self.theOnLineLoginState == YES)
     {
         [self OnLogout];
     }
@@ -340,18 +322,19 @@ typedef enum {
 - (void) OnLogin
 {
     
-    if([theUserName.text length] == 0) {
-        theUserName.text = kAnyChatUserName;
+    if([self.theUserName.text length] == 0) {
+        self.theUserName.text = kAnyChatUserName;
     }
-    if([theServerIP.text length] == 0) {
-        theServerIP.text = kAnyChatIP;
+    if([self.theServerIP.text length] == 0) {
+        self.theServerIP.text = kAnyChatIP;
     }
-    if([theServerPort.text length] == 0) {
-        theServerPort.text = kAnyChatPort;
+    if([self.theServerPort.text length] == 0) {
+        self.theServerPort.text = kAnyChatPort;
     }
 
     if (self.loginMode == AnyChatVCLoginModeSignLogin) {
-        if (theGuid.text.length == 0) {
+        
+        if (self.theGuid.text.length == 0) {
             MBProgressHUD *mbHUD= [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             mbHUD.labelText = @"应用ID不能为空";
             mbHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"error"]];
@@ -360,7 +343,8 @@ typedef enum {
             [mbHUD hide:YES afterDelay:0.7];
             
             return;
-        } else if (theSignServer.text.length == 0) {
+        } else if (self.theSignServer.text.length == 0) {
+            
             MBProgressHUD *mbHUD= [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             mbHUD.labelText = @"签名服务器不能为空";
             mbHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"error"]];
@@ -374,8 +358,8 @@ typedef enum {
     
     [self showLoadingAnimated];
     
-    if (self.loginMode == AnyChatVCLoginModeGeneralLogin && theGuid.text.length != 0) {
-        [AnyChatPlatform SetSDKOptionString:BRAC_SO_CLOUD_APPGUID :theGuid.text];
+    if (self.loginMode == AnyChatVCLoginModeGeneralLogin && self.theGuid.text.length != 0) {
+        [AnyChatPlatform SetSDKOptionString:BRAC_SO_CLOUD_APPGUID :self.theGuid.text];
     }
     /*
      * AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
@@ -383,21 +367,22 @@ typedef enum {
      * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
      */
     
-    if (self.loginMode == AnyChatVCLoginModeSignLogin && theGuid.text.length != 0 && theSignServer.text.length != 0) {
+    if (self.loginMode == AnyChatVCLoginModeSignLogin && self.theGuid.text.length != 0 && self.theSignServer.text.length != 0) {
         
         
         [self getSignSuccess:^(id json) {
             NSLog(@"sign json:%@",json);
 
             if ([[json objectForKey:@"errorcode"] intValue] ==0) {
+                
                 int timestamp = [[json objectForKey:@"timestamp"] intValue];
                 NSString *signStr = [json objectForKey:@"sigStr"];
                 // dwUserId 如果应用没有此参数，则传入-1(请参考iOS开发手册)
-                NSLog(@"===username:%@,guid:%@,timestamp:%d,signStr:%@",theUserName.text,theGuid.text,timestamp,signStr);
+                NSLog(@"===username:%@,guid:%@,timestamp:%d,signStr:%@",self.theUserName.text,self.theGuid.text,timestamp,signStr);
                 
-                [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
+                [AnyChatPlatform Connect:self.theServerIP.text : [self.theServerPort.text intValue]];
 
-                [AnyChatPlatform LoginEx:theUserName.text :-1 :theUserName.text :theGuid.text :timestamp :signStr :nil];
+                [AnyChatPlatform LoginEx:self.theUserName.text :-1 :self.theUserName.text :self.theGuid.text :timestamp :signStr :nil];
                 
             }else {
                 NSLog(@"Json Error,Error Num:%@",[json objectForKey:@"errorcode"]);
@@ -408,12 +393,13 @@ typedef enum {
             [self showSignError];
         }];
     }else if(self.loginMode == AnyChatVCLoginModeGeneralLogin){
-        [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
+        
+        [AnyChatPlatform Connect:self.theServerIP.text : [self.theServerPort.text intValue]];
 
         /*
          * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
          */
-        [AnyChatPlatform Login:theUserName.text :nil];
+        [AnyChatPlatform Login:self.theUserName.text :nil];
     }
     
     
@@ -440,10 +426,10 @@ typedef enum {
 //    params[@"userid"] = [NSNumber numberWithInt:kUserID];
 //    params[@"strUserid"] = @"";
     params[@"userid"] = [NSNumber numberWithInt:-1];
-    params[@"struserid"] = theUserName.text;
-    params[@"appid"] = theGuid.text;
+    params[@"struserid"] = self.theUserName.text;
+    params[@"appid"] = self.theGuid.text;
     
-    [manager POST:theSignServer.text parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager POST:self.theSignServer.text parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (success) success(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) failure(error);
@@ -456,11 +442,11 @@ typedef enum {
     [AnyChatPlatform LeaveRoom:-1];
     [AnyChatPlatform Logout];
     
-    theOnLineLoginState = NO;
-    [onlineUserMArray removeAllObjects];
-    [onLineUserTableView reloadData];
-    theStateInfo.text = @"• Logout Server.";
-    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
+    self.theOnLineLoginState = NO;
+    [self.onlineUserMArray removeAllObjects];
+    [self.onLineUserTableView reloadData];
+    self.theStateInfo.text = @"• Logout Server.";
+    self.theLoginBtn.selected = NO;
 }
 
 - (int)getRandomNumber:(int)from to:(int)to
@@ -469,10 +455,7 @@ typedef enum {
     return (int)(from + (arc4random() % (to - from + 1)));
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
+
 
 #pragma mark - Animation Method
 
@@ -487,38 +470,23 @@ typedef enum {
 
 - (void)setUIControls
 {
-    [self.navigationController setNavigationBarHidden:YES];
-    
-    theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
-    theRoomNO.keyboardType = UIKeyboardTypePhonePad;
-    theUserName.text = kAnyChatUserName;
-    theServerIP.text = kAnyChatIP;
-    theServerPort.text = kAnyChatPort;
-    
-    [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theUserName addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theRoomNO addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theGuid addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theSignServer addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    self.theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
+    self.theRoomNO.keyboardType = UIKeyboardTypePhonePad;
+    self.theUserName.text = kAnyChatUserName;
+    self.theServerIP.text = kAnyChatIP;
+    self.theServerPort.text = kAnyChatPort;
 
-    if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0)
-    {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    }
-    
-    [theVersion setText:[AnyChatPlatform GetSDKVersion]];
-    [self prefersStatusBarHidden];
-    
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 70.0f)];
-    onLineUserTableView.tableFooterView = footerView;
-    
+    [self.theVersion setText:[AnyChatPlatform GetSDKVersion]];
     [self updateSignUI];
+
+//    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 70.0f)];
+//    onLineUserTableView.tableFooterView = footerView;
+    
 }
 
 -(IBAction)onRadioBtn:(RadioButton*)sender
 {
-    if ([sender.titleLabel.text isEqualToString:@"签名登录"]) {
+    if ([sender.titleLabel.text containsString:@"签名登录"]) {
         self.loginMode = AnyChatVCLoginModeSignLogin;
     }else {
         self.loginMode = AnyChatVCLoginModeGeneralLogin;
@@ -529,15 +497,19 @@ typedef enum {
 - (void)updateSignUI
 {
     if(self.loginMode == AnyChatVCLoginModeSignLogin) {
-        theServerIP.text = kAnyChatSignIP;
-        theGuid.text = kAnyChatSignGuid;
-        theSignServer.text = kAnyChatSignServerURL;
+        self.theServerIP.text = kAnyChatSignIP;
+        self.theGuid.text = kAnyChatSignGuid;
+        self.theSignServer.text = kAnyChatSignServerURL;
     } else {
-        theServerIP.text = kAnyChatIP;
-        theGuid.text = @"";
-        theSignServer.text = @"";
+        self.theServerIP.text = kAnyChatIP;
+        self.theGuid.text = @"";
+        self.theSignServer.text = @"";
     }
 }
 
 
+-(BOOL)navBarTranslucent {
+    
+    return YES;
+}
 @end

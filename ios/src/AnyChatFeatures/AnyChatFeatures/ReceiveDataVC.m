@@ -4,41 +4,33 @@
 //
 
 #import "ReceiveDataVC.h"
-#import "AppDelegate.h"
+#import "AnyChatVC.h"
 
 @interface ReceiveDataVC ()
 
+{
+    NSTimer *theTimers;
+}
+
+@property (strong, nonatomic) IBOutlet UIView               *theSendView;
+@property (strong, nonatomic) IBOutlet UIView               *theServerView;
+@property (strong, nonatomic) IBOutlet UIView               *theRecvView;
+
+@property (strong, nonatomic) IBOutlet UILabel          *theSendViewSendLable;
+@property (strong, nonatomic) IBOutlet UILabel          *theServerViewRecvLable;
+@property (strong, nonatomic) IBOutlet UILabel          *theRecvViewRecvLable;
+@property (strong, nonatomic) IBOutlet UILabel          *theRecvViewLossLable;
+
+@property (strong, nonatomic) IBOutlet UILabel          *theSendViewIPLable;
+@property (strong, nonatomic) IBOutlet UILabel          *theRecvViewIPLable;
+@property (strong, nonatomic) IBOutlet UILabel          *theServerViewIPLable;
+
+@property   int   theSendData;
+@property   int   theRecvData;
+@property   int   theServerGetData;
 @end
 
 @implementation ReceiveDataVC
-
-@synthesize theSendView;
-@synthesize theServerView;
-@synthesize theRecvView;
-
-@synthesize theSendViewSendLable;
-@synthesize theServerViewRecvLable;
-@synthesize theRecvViewRecvLable;
-@synthesize theRecvViewLossLable;
-
-@synthesize theSendData;
-@synthesize theRecvData;
-@synthesize theServerGetData;
-
-@synthesize theSendViewIPLable;
-@synthesize theRecvViewIPLable;
-@synthesize theServerViewIPLable;
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 
 #pragma mark - Life Cycle
 
@@ -47,8 +39,9 @@
     [super viewDidLoad];
     [self setUI];
     
-    //send
-    [AnyChatPlatform SetSDKOptionInt:163 :1];
+    //send ///< UDP数据包跟踪控制（参数为int型，1 启动， 0 停止）
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_UDPTRACE_START :1];
+    self.title = @"网络质量评估";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -57,11 +50,10 @@
     [self TheTimersActionStart];
     
     //IP
-    self.theSendViewIPLable.text = [AnyChatPlatform QueryUserStateString:[AnyChatPlatform GetSDKOptionInt:167] :BRAC_USERSTATE_INTERNETIP];
+    self.theSendViewIPLable.text = [AnyChatPlatform QueryUserStateString:[AnyChatPlatform GetSDKOptionInt:BRAC_SO_UDPTRACE_SENDUSERID] :BRAC_USERSTATE_INTERNETIP];
     self.theRecvViewIPLable.text = [AnyChatPlatform QueryUserStateString:-1 :BRAC_USERSTATE_INTERNETIP];
     
-    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    self.theServerViewIPLable.text = appDelegate.anychatVC.theMyServerAddr;
+    self.theServerViewIPLable.text = [AnyChatVC sharedAnyChatVC].theMyServerAddr;
 
 }
 
@@ -81,9 +73,7 @@
 }
 
 
-#pragma mark - IBAction Method
-
-- (IBAction)LeaveRoomBtn_OnClick
+- (void)navLeftClick
 {
     //stop
     [self TheTimersActionStop];
@@ -93,7 +83,7 @@
 }
 
 
-#pragma mark - Instance Method
+#pragma mark ----- 业务核心代码 ----
 
 - (void)TheTimersActionStart
 {
@@ -137,7 +127,6 @@
     self.theSendData = [AnyChatPlatform GetSDKOptionInt:166];
     self.theRecvData = [AnyChatPlatform GetSDKOptionInt:164];
     self.theServerGetData = [AnyChatPlatform GetSDKOptionInt:165];
-//    NSLog(@"---BRAC_SO_UDPTRACE_LOCALRECVNUM theRecvData:%i",self.theRecvData);
     
     self.theSendViewSendLable.text = [[NSString alloc] initWithFormat:@"%i",self.theSendData];
     self.theRecvViewRecvLable.text = [[NSString alloc] initWithFormat:@"%i",self.theRecvData];
@@ -148,9 +137,6 @@
     {
         self.theSendViewIPLable.text = [AnyChatPlatform QueryUserStateString:[AnyChatPlatform GetSDKOptionInt:167] :BRAC_USERSTATE_INTERNETIP];
     }
-    
-//    NSLog(@"\n\n ip:%d \n\n",[AnyChatPlatform GetSDKOptionInt:167]);
-//    NSLog(@"\n\n 地址STR:%@ \n\n",[AnyChatPlatform QueryUserStateString:[AnyChatPlatform GetSDKOptionInt:167] :BRAC_USERSTATE_INTERNETIP]);
     
 }
 
@@ -165,8 +151,6 @@
     {
         theLossRate = 0.00;
     }
-//        NSLog(@"\n\n send :%i \n server:%i \n DownloadFrameLossRate： %f \n\n",send,serverGet,theLossRate);
-    
     return [[self newFloat:theLossRate withNumber:2] stringByAppendingString:@"%"];
 }
 
@@ -178,11 +162,6 @@
     formatStr = [NSString stringWithFormat:formatStr, value];
     
     return formatStr;
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
 }
 
 
@@ -198,11 +177,7 @@
 
 - (void)setUI
 {
-    if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0)
-    {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    }
-    [self prefersStatusBarHidden];
+
     
     
     [self setUIwithLayer:self.theSendView.layer:[UIColor colorWithWhite:0.800 alpha:1.000]];

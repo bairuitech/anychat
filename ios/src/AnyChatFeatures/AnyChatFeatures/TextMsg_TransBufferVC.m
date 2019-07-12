@@ -9,16 +9,16 @@
 #import "TextMsg_TransBufferVC.h"
 
 @interface TextMsg_TransBufferVC ()
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolBarBottomConstr;
 
+@property (weak, nonatomic) IBOutlet UITextField        *theTextMsgTextField;
+@property (weak, nonatomic) IBOutlet UITableView        *theTextMsgTableView;
+@property (weak, nonatomic) IBOutlet UIToolbar          *theToolbar;
 @end
 
 @implementation TextMsg_TransBufferVC
 
-@synthesize theTextMsgNItem;
-@synthesize theTextMsgTableView;
-@synthesize theTextMsgTextField;
-@synthesize theMsgMArray;
-@synthesize theToolbar;
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,18 +33,28 @@
 
 #pragma mark - Life Cycle
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self theNotificationCenter];
+    
     self.theMsgMArray = [[NSMutableArray alloc] initWithCapacity:5];
+    [self p_configNavItem];
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeConstraint exceptViews:nil];
+    
+   
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     [self setUI];
+    
+    IQKeyboardManager *keyboardManager =  [IQKeyboardManager sharedManager];
+    keyboardManager.enable = NO;
+    [self theNotificationCenter];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,104 +62,30 @@
     [super didReceiveMemoryWarning];
 }
 
+-(void)viewDidDisappear:(BOOL)animated {
+    
+    [super viewDidDisappear:animated];
+    
+    IQKeyboardManager *keyboardManager =  [IQKeyboardManager sharedManager];
+    keyboardManager.enable = YES;
+    [self removeNotification];
+}
 
+- (void)p_configNavItem {
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(clearDatas_OnClick) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"icon_remove"] forState:UIControlStateNormal];
+    [button sizeToFit];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
 #pragma mark - Shared Instance
 
 kGCD_SINGLETON_FOR_CLASS(TextMsg_TransBufferVC);
 
-
-#pragma mark - TableView DataSource
-
--(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.theMsgMArray.count;
-}
-
--(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (Cell == nil)
-    {
-        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"theMsgCell" owner:self options:nil];
-        Cell = [nibs objectAtIndex:0];
-    }
-    
-    // Config
-    UILabel *theTitleLabel = (UILabel *)[Cell.contentView viewWithTag:kTitleCell_LableTag];
-    UILabel *theContentLabel = (UILabel *)[Cell.contentView viewWithTag:kContentCell_LableTag];
-    NSDictionary *textMsgDict = [self.theMsgMArray objectAtIndex:[indexPath row]];
-    NSString *actionStatus = [textMsgDict objectForKey:@"ACTStatus"];
-    
-    // actionStatus
-    if ([actionStatus isEqualToString:@"send"])
-    {
-        theTitleLabel.textColor = [UIColor blackColor];
-        theContentLabel.textColor = [UIColor blackColor];
-        
-        // Send Content
-        if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"文字聊天"])
-        {
-            theTitleLabel.text = [[NSString alloc] initWithFormat:@"我说："];
-            theContentLabel.text = [textMsgDict objectForKey:@"contentStr"];
-        }
-        else if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"透明通道"])
-        {
-            theTitleLabel.text = [[NSString alloc] initWithFormat:@"我发送指令："];
-            theContentLabel.text = [textMsgDict objectForKey:@"contentStr"];
-        }
-    }
-    else if ([actionStatus isEqualToString:@"receive"])
-    {
-        theTitleLabel.textColor = [UIColor blueColor];
-        theContentLabel.textColor = [UIColor blueColor];
-        
-        // Receive Content
-        if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"文字聊天"])
-        {
-            theTitleLabel.text = [[NSString alloc] initWithFormat:@"“%@”说：",[textMsgDict objectForKey:@"targetUserNameStr"]];
-            theContentLabel.text = [textMsgDict objectForKey:@"contentStr"];
-        }
-        else if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"透明通道"])
-        {
-            theTitleLabel.text = [[NSString alloc] initWithFormat:@"“%@”发送指令：",[textMsgDict objectForKey:@"targetUserNameStr"]];
-            theContentLabel.text = [textMsgDict objectForKey:@"contentStr"];
-        }
-    }
-    
-    return Cell;
-}
-
-
-#pragma mark - TableView Delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.theTextMsgTextField resignFirstResponder];
-}
-
-- (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 45.0f;
-}
-
-
-#pragma mark - TextField Delegate Methods
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    return YES;
-}
-
-
-#pragma mark - Instance Method
+#pragma mark ---- Instance Method （业务核心代码） -------
 
 - (IBAction)theSendMsg_OnClick:(id)sender
 {   //The string filter
@@ -233,7 +169,7 @@ kGCD_SINGLETON_FOR_CLASS(TextMsg_TransBufferVC);
                                             animated:YES];
 }
 
-- (IBAction)LeaveBtn_Onclick
+- (void)navLeftClick
 {
     [self clearDatas_OnClick];
     [self.navigationController popViewControllerAnimated:YES];
@@ -246,6 +182,103 @@ kGCD_SINGLETON_FOR_CLASS(TextMsg_TransBufferVC);
 }
 
 
+
+
+#pragma mark - TableView DataSource
+
+-(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.theMsgMArray.count;
+}
+
+-(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (Cell == nil)
+    {
+        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"theMsgCell" owner:self options:nil];
+        Cell = [nibs objectAtIndex:0];
+        Cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
+    // Config
+    UILabel *theTitleLabel = (UILabel *)[Cell.contentView viewWithTag:kTitleCell_LableTag];
+    UILabel *theContentLabel = (UILabel *)[Cell.contentView viewWithTag:kContentCell_LableTag];
+    NSDictionary *textMsgDict = [self.theMsgMArray objectAtIndex:[indexPath row]];
+    NSString *actionStatus = [textMsgDict objectForKey:@"ACTStatus"];
+    
+    // actionStatus
+    if ([actionStatus isEqualToString:@"send"])
+    {
+        theTitleLabel.textColor = [UIColor blackColor];
+        theContentLabel.textColor = [UIColor blackColor];
+        
+        // Send Content
+        if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"文字聊天"])
+        {
+            theTitleLabel.text = [[NSString alloc] initWithFormat:@"我说："];
+            theContentLabel.text = [textMsgDict objectForKey:@"contentStr"];
+        }
+        else if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"透明通道"])
+        {
+            theTitleLabel.text = [[NSString alloc] initWithFormat:@"我发送指令："];
+            theContentLabel.text = [textMsgDict objectForKey:@"contentStr"];
+        }
+    }
+    else if ([actionStatus isEqualToString:@"receive"])
+    {
+        theTitleLabel.textColor = [UIColor blueColor];
+        theContentLabel.textColor = [UIColor blueColor];
+        
+        // Receive Content
+        if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"文字聊天"])
+        {
+            theTitleLabel.text = [[NSString alloc] initWithFormat:@"“%@”说：",[textMsgDict objectForKey:@"targetUserNameStr"]];
+            theContentLabel.text = [textMsgDict objectForKey:@"contentStr"];
+        }
+        else if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"透明通道"])
+        {
+            theTitleLabel.text = [[NSString alloc] initWithFormat:@"“%@”发送指令：",[textMsgDict objectForKey:@"targetUserNameStr"]];
+            theContentLabel.text = [textMsgDict objectForKey:@"contentStr"];
+        }
+    }
+    
+    return Cell;
+}
+
+
+#pragma mark - TableView Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.theTextMsgTextField resignFirstResponder];
+}
+
+- (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+
+#pragma mark - TextField Delegate Methods
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+
+
+
+
 #pragma mark - NSNotification Center
 
 - (void)theNotificationCenter
@@ -253,6 +286,13 @@ kGCD_SINGLETON_FOR_CLASS(TextMsg_TransBufferVC);
     //Listening to the keyboard height transformation
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+
+- (void)removeNotification {
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 
@@ -264,28 +304,28 @@ kGCD_SINGLETON_FOR_CLASS(TextMsg_TransBufferVC);
 
     NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [aValue CGRectValue];
-    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&animationDuration];
+    NSTimeInterval t = [userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
 
-    [self autoMovekeyBoard:keyboardRect.size.height];
+
+    [self autoMovekeyBoard:keyboardRect.size.height duration:t];
 }
 
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     NSDictionary* userInfo = [notification userInfo];
-    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&animationDuration];
-    
-    [self autoMovekeyBoard:0];
+    NSTimeInterval t = [userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    [self autoMovekeyBoard:0 duration:t];
 }
 
--(void) autoMovekeyBoard: (float) high
+-(void) autoMovekeyBoard: (float) high duration:(NSTimeInterval)duration
 {
-    self.theToolbar.frame = CGRectMake(0.0f, (float)(kSelfView_Height - high - self.theToolbar.frame.size.height), kSelfView_Width, self.theToolbar.frame.size.height);
-    self.theTextMsgTableView.frame = CGRectMake(0.0f, 0.0f, kSelfView_Width,(float)(kSelfView_Height - high - self.theToolbar.frame.size.height));
+    
+    self.toolBarBottomConstr.constant = -high;
+    
+    [UIView animateWithDuration:duration animations:^{
+        [self.theToolbar layoutIfNeeded];
+    }];
 }
 
 
@@ -299,40 +339,25 @@ kGCD_SINGLETON_FOR_CLASS(TextMsg_TransBufferVC);
 
 #pragma mark - UI Controls
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
 - (void)setUI
 {
     //Title
     NSString *targetUserName = [AnyChatVC sharedAnyChatVC].theTargetUserName;
     if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"文字聊天"])
     {
-        self.theTextMsgNItem.title = [[NSString alloc] initWithFormat:@"与“%@”聊天中",targetUserName];
+        self.title = [[NSString alloc] initWithFormat:@"与“%@”聊天中",targetUserName];
     }
     else if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"透明通道"])
     {
-        self.theTextMsgNItem.title = [[NSString alloc] initWithFormat:@"与“%@”发送指令中",targetUserName];
+        self.title = [[NSString alloc] initWithFormat:@"与“%@”发送指令中",targetUserName];
     }
     
     self.theTextMsgTextField.text = @"";
     [self.theTextMsgTableView reloadData];
     
-    [self.navigationController setNavigationBarHidden:YES];
     
-    if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0)
-    {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    }
-    
-    [self prefersStatusBarHidden];
-    
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 70.0f)];
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 70.0f)];
-    self.theTextMsgTableView.tableFooterView = headerView;
-    self.theTextMsgTableView.tableHeaderView = footerView;
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 10.0f)];
+    self.theTextMsgTableView.tableHeaderView = headerView;
 }
 
 

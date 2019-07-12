@@ -7,32 +7,34 @@
 //
 
 #import "VideoVC.h"
-
+#import "ACVideoAlertView.h"
 @interface VideoVC ()
+{
+    
+    AVAudioPlayer       *theAudioPlayer;
+}
+
+
+
+@property (strong, nonatomic) AVCaptureVideoPreviewLayer    *localVideoSurface;
+@property (strong, nonatomic) IBOutlet UIImageView          *remoteVideoSurface;
+@property (strong, nonatomic) IBOutlet UIView               *theLocalView;
+@property (weak, nonatomic) IBOutlet UIButton               *theLocolFunBtn;
+@property (weak, nonatomic) IBOutlet UIButton               *theServerFunBtn;
+
+@property (weak, nonatomic) IBOutlet UILabel                *theVideoTimeLab;
+@property (strong, nonatomic) MZTimerLabel                  *theVideoMZTimer;
+
+@property (strong, nonatomic) NSString                      *theFeaturesName;
+@property (strong, nonatomic) NSString                      *theCurrentRotation;
+
+@property (assign, nonatomic) int iRemoteUserId;
+@property (weak, nonatomic) IBOutlet UILabel *leftButtonTipLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rightButtonTipLabel;
 
 @end
 
 @implementation VideoVC
-
-@synthesize iRemoteUserId;
-@synthesize remoteVideoSurface;
-@synthesize localVideoSurface;
-@synthesize theLocalView;
-@synthesize endCallBtn;
-@synthesize switchCameraBtn;
-@synthesize theLocolFunBtn;
-@synthesize leftLineView;
-@synthesize rightLineView;
-@synthesize isFinishVideoActSheet;
-@synthesize theVideoBitrateAlertView;
-@synthesize theVideoNItem;
-@synthesize theServerFunBtn;
-@synthesize theFeaturesName;
-@synthesize theTakePhotoPath;
-@synthesize theCurrentRotation;
-@synthesize theVideoPlayBackBtn;
-@synthesize theVideoTimeLab;
-@synthesize theVideoMZTimer;
 
 
 #pragma mark -
@@ -54,6 +56,8 @@
     self.theFeaturesName = [AnyChatVC sharedAnyChatVC].theFeaturesName;
     [self StartVideoChat:self.iRemoteUserId];
     [self setTheTimer];
+    [self p_configNavItem];
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
 
 }
 
@@ -70,7 +74,26 @@
     [self.theVideoMZTimer pause];
 }
 
+- (void)p_configNavItem {
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(switchCameraBtn_OnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"video_switch"] forState:UIControlStateNormal];
+    [button sizeToFit];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
 
+-(void)navLeftClick {
+    
+    [self FinishVideoChatBtnClicked:nil];
+}
+
+-(BOOL)navBarTranslucent {
+    
+    return YES;
+}
 #pragma mark - Memory Warning method
 
 - (void)didReceiveMemoryWarning
@@ -78,43 +101,262 @@
     [super didReceiveMemoryWarning];
 }
 
-
 #pragma mark -
-#pragma mark - UIActionSheet Delegate & Record Video Method
+#pragma mark ----- 业务核心代码 -----
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void) StartVideoChat:(int) userid
 {
-    if (actionSheet == self.isFinishVideoActSheet)
+    //Get a camera, Must be in the real machine.
+    NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
+    if (cameraDeviceArray.count > 0)
     {
-        if (buttonIndex == 0)
-        {
-            if ([self.theFeaturesName isEqualToString:@"呼叫中心"])
-            {
-                [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_FINISH :iRemoteUserId :0 :0 :0 :nil];
-            }
-            else
-            {
-                [self FinishVideoChat];
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        }
+        if(cameraDeviceArray.count >= 2)
+            [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+        else
+            [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:0]];
+    }
+    
+    // open local video
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
+    [AnyChatPlatform UserSpeakControl: -1:YES];
+    [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
+    [AnyChatPlatform UserCameraControl:-1 : YES];
+    
+    // request other user video
+    [AnyChatPlatform UserSpeakControl: userid:YES];
+    [AnyChatPlatform SetVideoPos:userid: self.remoteVideoSurface:0:0:0:0];
+
+    [AnyChatPlatform UserCameraControl:userid : YES];
+    
+    self.iRemoteUserId = userid;
+    
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
+}
+
+- (void) FinishVideoChat
+{
+    [AnyChatPlatform UserSpeakControl: -1 : NO];
+    [AnyChatPlatform UserCameraControl: -1 : NO];
+    
+    [AnyChatPlatform UserSpeakControl: self.iRemoteUserId : NO];
+    [AnyChatPlatform UserCameraControl: self.iRemoteUserId : NO];
+    
+    self.iRemoteUserId = -1;
+}
+
+- (void) OnLocalVideoRelease:(id)sender
+{
+    if(self.localVideoSurface)
+    {
+        self.localVideoSurface = nil;
     }
 }
 
-#pragma mark - AlertView delegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void) OnLocalVideoInit:(id)session
 {
-    if (alertView == self.theVideoBitrateAlertView)
-    {
-        if (buttonIndex == 0)
-        {
+    self.localVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
+    self.localVideoSurface.frame = CGRectMake(0, 0, kLocalVideo_Width, kLocalVideo_Height);
+    self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    
+    [self.theLocalView.layer addSublayer:self.localVideoSurface];
+}
+
+
+- (IBAction)theLocolFunBtn_OnClicked:(id)sender
+{
+
+
+    self.theLocolFunBtn.selected = !self.theLocolFunBtn.selected;
+    //当前 selected = YES, 则关闭声音；否则，打开声音
+    if([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"]) {
+        
+        [AnyChatPlatform UserSpeakControl:-1 :!self.theLocolFunBtn.selected];
+    } else if ([self.theFeaturesName isEqualToString:@"视频抓拍"])
+    {   // Local video SnapShot
+        [theAudioPlayer play];
+        [AnyChatPlatform SnapShot:-1 :BRAC_RECORD_FLAGS_SNAPSHOT :0];
+    }
+}
+
+//[AnyChatPlatform GetCameraState:-1]  0 没有摄像头  1 有摄像头但没有打开 2 摄像头已打开
+- (IBAction)theServerFunBtn_OnClicked:(id)sender
+{
+
+    if([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"]) {
+        
+        if (self.theServerFunBtn.selected == NO)  {
+            
+            if ([AnyChatPlatform GetCameraState:-1] == 2)//摄像头已打开
+            {
+                //close local Camera 关闭本地摄像头
+                [AnyChatPlatform UserCameraControl:-1 :NO];
+            }
+            self.theLocalView.hidden = YES;
+            self.theServerFunBtn.selected = YES;
+
+        } else  {
+            
+            if ([AnyChatPlatform GetCameraState:-1] == 1)//有摄像头但没有打开
+            {
+                //open local Camera 打开本地摄像头
+                [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
+                [AnyChatPlatform UserCameraControl:-1 : YES];
+            }
+            self.theLocalView.hidden = NO;
+            self.theServerFunBtn.selected = NO;
+        }
+        
+
+    } else if ([self.theFeaturesName isEqualToString:@"视频抓拍"]) {
+       
+        // RemoteUser video SnapShot
+        [theAudioPlayer play];
+        [AnyChatPlatform SnapShot:self.iRemoteUserId :BRAC_RECORD_FLAGS_SNAPSHOT :0];
+    }
+
+}
+
+- (IBAction)FinishVideoChatBtnClicked:(id)sender
+{
+
+    
+    [ACVideoAlertView showAlertViewByTitle:@"是否想要结束当前通话？" clickBlock:^(NSInteger index) {
+       
+        if(index == 0) {
+            
+            if ([self.theFeaturesName isEqualToString:@"呼叫中心"])
+            {
+                [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_FINISH :self.iRemoteUserId :0 :0 :0 :nil];
+            }
             [self FinishVideoChat];
             [self.navigationController popViewControllerAnimated:YES];
         }
+    }];
+}
+
+
+
+#pragma mark action
+- (void) switchCameraBtn_OnClicked:(UIButton *)button
+{
+    static int CurrentCameraDevice = 1;
+    NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
+    if(cameraDeviceArray.count == 2)
+    {
+        CurrentCameraDevice = (CurrentCameraDevice+1) % 2;
+        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
     }
     
-    self.theVideoBitrateAlertView = nil;
+    [self btnSelectedOnClicked:button];
+}
+
+- (void) btnSelectedOnClicked:(UIButton*)button
+{
+    if (button.selected)
+    {
+        button.selected = NO;
+    }
+    else
+    {
+        button.selected = YES;
+    }
+}
+
+- (IBAction)changeContentModeFromImageView:(id)sender
+{
+    if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFit)
+    {
+        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    else if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFill)
+    {
+        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFit;
+    }
+}
+
+
+#pragma mark - others -
+//iRemote user video loading status
+-(BOOL)remoteVideoDidLoadStatus
+{
+    BOOL isDidLoad = NO;
+    int videoHeight = 0;
+    int theTimes = 0;
+    
+    while (isDidLoad == NO && theTimes < 5000)
+    {
+        videoHeight = [AnyChatPlatform GetUserVideoHeight:self.iRemoteUserId];
+        
+        if (videoHeight > 0) {
+            isDidLoad = YES;
+        }
+        else
+        {
+            isDidLoad = NO;
+            theTimes++;
+        }
+    }
+    
+    return isDidLoad;
+}
+
+- (void)initWithTakePhotoSound
+{
+    NSString *musicPath = [[NSBundle mainBundle] pathForResource:@"sound_takePhoto"
+                                                          ofType:@"wav"];
+    if (musicPath)
+    {
+        NSURL *musicURL = [NSURL fileURLWithPath:musicPath];
+        theAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:musicURL
+                                                                error:nil];
+    }
+}
+
+- (void)setTheTimer
+{
+    //The Timer Init
+    self.theVideoMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theVideoTimeLab];
+    self.theVideoMZTimer.timeFormat = @"HH:mm:ss";
+    [self.theVideoMZTimer start];
+}
+
+- (void)setUI
+{
+    NSString *targetUserName = [AnyChatVC sharedAnyChatVC].theTargetUserName;
+    self.title = [[NSString alloc] initWithFormat:@"与“%@”的对话",targetUserName];
+    
+    if ([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])// 开关音频  开关视频
+    {
+        [self.theLocolFunBtn setBackgroundImage:[UIImage imageNamed:@"video_audio_on"] forState:UIControlStateNormal];
+        [self.theLocolFunBtn setBackgroundImage:[UIImage imageNamed:@"video_audio_off"] forState:UIControlStateSelected];
+        [self.theServerFunBtn setBackgroundImage:[UIImage imageNamed:@"video_video_on"] forState:UIControlStateNormal];
+        [self.theServerFunBtn setBackgroundImage:[UIImage imageNamed:@"video_video_off"] forState:UIControlStateSelected];
+        self.leftButtonTipLabel.text = @"语音";
+        self.rightButtonTipLabel.text = @"视频";
+    }
+    else if ([self.theFeaturesName isEqualToString:@"视频抓拍"])//自拍 拍照
+    {
+        [self initWithTakePhotoSound];
+        
+        [self.theLocolFunBtn setBackgroundImage:[UIImage imageNamed:@"snap_local"] forState:UIControlStateNormal];
+        [self.theLocolFunBtn setBackgroundImage:nil forState:UIControlStateSelected];
+        [self.theServerFunBtn setBackgroundImage:[UIImage imageNamed:@"snap_server"] forState:UIControlStateNormal];
+        [self.theServerFunBtn setBackgroundImage:nil forState:UIControlStateSelected];
+        self.leftButtonTipLabel.text = @"自拍";
+        self.rightButtonTipLabel.text = @"拍照";
+    }
+    
+    //Local View line
+    self.theLocalView.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.theLocalView.layer.borderWidth = 1.0f;
+    //Rounded corners
+    self.theLocalView.layer.cornerRadius = 4;
+    self.theLocalView.layer.masksToBounds = YES;
+    
+    [self.theVideoMZTimer start];
+    
+    //disable the “idle timer” to avert system sleep.
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 
@@ -157,7 +399,7 @@
 {
     self.theCurrentRotation =@"Portrait";
     //Rotate
-    remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(0.0);
+    self.remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(0.0);
     self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(0.0);
     //Scale
     self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
@@ -168,7 +410,7 @@
 {
     self.theCurrentRotation =@"LandscapeLeft";
     //Rotate
-    remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(-90.0);
+    self.remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(-90.0);
     self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(-90.0);
     //Scale
     self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
@@ -179,282 +421,11 @@
 {
     self.theCurrentRotation =@"LandscapeRight";
     //Rotate
-    remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
+    self.remoteVideoSurface.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
     self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
     //Scale
     self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
     self.theLocalView.frame = kLocalVideoLandscape_CGRect;
-}
-
-
-#pragma mark -
-#pragma mark - Instance Method
-
-- (void) StartVideoChat:(int) userid
-{
-    //Get a camera, Must be in the real machine.
-    NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
-    if (cameraDeviceArray.count > 0)
-    {
-        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
-    }
-    
-    // open local video
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
-    [AnyChatPlatform UserSpeakControl: -1:YES];
-    [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
-    [AnyChatPlatform UserCameraControl:-1 : YES];
-    
-    // request other user video
-    [AnyChatPlatform UserSpeakControl: userid:YES];
-    [AnyChatPlatform SetVideoPos:userid: self.remoteVideoSurface:0:0:0:0];
-    [AnyChatPlatform UserCameraControl:userid : YES];
-    
-    self.iRemoteUserId = userid;
-    
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
-}
-
-- (IBAction)theLocolFunBtn_OnClicked:(id)sender
-{
-    if (theLocolFunBtn.selected == NO)
-    {
-        if([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
-        {   //本地声源.关
-            [AnyChatPlatform UserSpeakControl:-1 :NO];
-        }
-
-        theLocolFunBtn.selected = YES;
-    }
-    else
-    {
-        if([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
-        {   //本地声源.开
-            [AnyChatPlatform UserSpeakControl: -1:YES];
-        }
-
-        theLocolFunBtn.selected = NO;
-    }
-    
-    if ([self.theFeaturesName isEqualToString:@"视频抓拍"])
-    {   // Local video SnapShot
-        [theAudioPlayer play];
-        [AnyChatPlatform SnapShot:-1 :BRAC_RECORD_FLAGS_SNAPSHOT :0];
-    }
-}
-
-- (IBAction)theServerFunBtn_OnClicked:(id)sender
-{
-    if (theServerFunBtn.selected == NO)
-    {
-
-        if([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
-        {
-            if ([AnyChatPlatform GetCameraState:-1] == 2)
-            {   //close local Camera
-                [AnyChatPlatform UserCameraControl:-1 :NO];
-                self.theLocalView.hidden = YES;
-            }
-        }
-        
-        theServerFunBtn.selected = YES;
-    }
-    else
-    {
-        if([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
-        {
-            if ([AnyChatPlatform GetCameraState:-1] == 1)
-            {   //open local Camera
-                [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
-                [AnyChatPlatform UserCameraControl:-1 : YES];
-                self.theLocalView.hidden = NO;
-            }
-        }
-        
-        theServerFunBtn.selected = NO;
-    }
-    
-    if ([self.theFeaturesName isEqualToString:@"视频抓拍"])
-    {   // RemoteUser video SnapShot
-        [theAudioPlayer play];
-        [AnyChatPlatform SnapShot:self.iRemoteUserId :BRAC_RECORD_FLAGS_SNAPSHOT :0];
-    }
-}
-
-- (IBAction)FinishVideoChatBtnClicked:(id)sender
-{
-        self.isFinishVideoActSheet = [[UIActionSheet alloc]
-                                      initWithTitle:@"确定结束会话?"
-                                      delegate:self
-                                      cancelButtonTitle:nil
-                                      destructiveButtonTitle:nil
-                                      otherButtonTitles:@"确定",@"取消", nil];
-    
-        self.isFinishVideoActSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-        [self.isFinishVideoActSheet showInView:self.view];
-}
-
-- (void) FinishVideoChat
-{
-    [AnyChatPlatform UserSpeakControl: -1 : NO];
-    [AnyChatPlatform UserCameraControl: -1 : NO];
-    
-    [AnyChatPlatform UserSpeakControl: self.iRemoteUserId : NO];
-    [AnyChatPlatform UserCameraControl: self.iRemoteUserId : NO];
-    
-    self.iRemoteUserId = -1;
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-- (IBAction) switchCameraBtn_OnClicked:(id)sender
-{
-    static int CurrentCameraDevice = 1;
-    NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
-    if(cameraDeviceArray.count == 2)
-    {
-        CurrentCameraDevice = (CurrentCameraDevice+1) % 2;
-        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
-    }
-    
-    [self btnSelectedOnClicked:switchCameraBtn];
-}
-
-- (IBAction)theVideoPlayBackBtn_OnClicked
-{
-    ShowVC *theShowVC = [ShowVC new];
-    theShowVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self.navigationController presentViewController:theShowVC animated:YES completion:nil];
-}
-
-- (void) OnLocalVideoRelease:(id)sender
-{
-    if(self.localVideoSurface)
-    {
-        self.localVideoSurface = nil;
-    }
-}
-
-- (void) OnLocalVideoInit:(id)session
-{
-    self.localVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
-    self.localVideoSurface.frame = CGRectMake(0, 0, kLocalVideo_Width, kLocalVideo_Height);
-    self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    
-    [self.theLocalView.layer addSublayer:self.localVideoSurface];
-}
-
-- (void) btnSelectedOnClicked:(UIButton*)button
-{
-    if (button.selected)
-    {
-        button.selected = NO;
-    }
-    else
-    {
-        button.selected = YES;
-    }
-}
-
-- (IBAction)changeContentModeFromImageView:(id)sender
-{
-    if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFit)
-    {
-        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFill;
-    }
-    else if (self.remoteVideoSurface.contentMode == UIViewContentModeScaleAspectFill)
-    {
-        self.remoteVideoSurface.contentMode = UIViewContentModeScaleAspectFit;
-    }
-}
-
-//iRemote user video loading status
--(BOOL)remoteVideoDidLoadStatus
-{
-    BOOL isDidLoad = NO;
-    int videoHeight = 0;
-    int theTimes = 0;
-    
-    while (isDidLoad == NO && theTimes < 5000)
-    {
-        videoHeight = [AnyChatPlatform GetUserVideoHeight:self.iRemoteUserId];
-        
-        if (videoHeight > 0) {
-            isDidLoad = YES;
-        }
-        else
-        {
-            isDidLoad = NO;
-            theTimes++;
-        }
-    }
-    
-    return isDidLoad;
-}
-
-- (void)initWithTakePhotoSound
-{
-    NSString *musicPath = [[NSBundle mainBundle] pathForResource:@"sound_takePhoto"
-                                                          ofType:@"wav"];
-    if (musicPath)
-    {
-        NSURL *musicURL = [NSURL fileURLWithPath:musicPath];
-        theAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:musicURL
-                                                                error:nil];
-    }
-}
-
-- (void)setTheTimer
-{
-    //The Timer Init
-    theVideoMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theVideoTimeLab];
-    theVideoMZTimer.timeFormat = @"▷ HH:mm:ss";
-    [theVideoMZTimer start];
-}
-
-- (void)setUI
-{
-    NSString *targetUserName = [AnyChatVC sharedAnyChatVC].theTargetUserName;
-    self.theVideoNItem.title = [[NSString alloc] initWithFormat:@"与“%@”视频中",targetUserName];
-    
-    if ([self.theFeaturesName isEqualToString:@"视频录像"])
-    {
-        [self.theLocolFunBtn setBackgroundImage:[UIImage imageNamed:@"Icon_offRecordVideo_Local"] forState:UIControlStateNormal];
-        [self.theLocolFunBtn setBackgroundImage:[UIImage imageNamed:@"Icon_onRecordVideo_Local"] forState:UIControlStateSelected];
-        [self.theServerFunBtn setBackgroundImage:[UIImage imageNamed:@"Icon_offRecordVideo_Server"] forState:UIControlStateNormal];
-        [self.theServerFunBtn setBackgroundImage:[UIImage imageNamed:@"Icon_onRecordVideo_Server"] forState:UIControlStateSelected];
-
-        self.theVideoPlayBackBtn.hidden = NO;
-    }
-    else if ([self.theFeaturesName isEqualToString:@"音视频交互"] || [self.theFeaturesName isEqualToString:@"呼叫中心"])
-    {
-        [self.theLocolFunBtn setBackgroundImage:[UIImage imageNamed:@"Icon_speak_on"] forState:UIControlStateNormal];
-        [self.theLocolFunBtn setBackgroundImage:[UIImage imageNamed:@"Icon_speak_off"] forState:UIControlStateSelected];
-        [self.theServerFunBtn setBackgroundImage:[UIImage imageNamed:@"Icon_camera_on"] forState:UIControlStateNormal];
-        [self.theServerFunBtn setBackgroundImage:[UIImage imageNamed:@"Icon_camera_off"] forState:UIControlStateSelected];
-    }
-    else if ([self.theFeaturesName isEqualToString:@"视频抓拍"])
-    {
-        [self initWithTakePhotoSound];
-        
-        [self.theLocolFunBtn setBackgroundImage:[UIImage imageNamed:@"Icon_takePhoto_Local"] forState:UIControlStateNormal];
-        [self.theServerFunBtn setBackgroundImage:[UIImage imageNamed:@"Icon_takePhoto_Server"] forState:UIControlStateNormal];
-    }
-    
-    //Local View line
-    theLocalView.layer.borderColor = [[UIColor whiteColor] CGColor];
-    theLocalView.layer.borderWidth = 1.0f;
-    //Rounded corners
-    theLocalView.layer.cornerRadius = 4;
-    theLocalView.layer.masksToBounds = YES;
-    
-    [theVideoMZTimer start];
-    
-    //disable the “idle timer” to avert system sleep.
-    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 @end

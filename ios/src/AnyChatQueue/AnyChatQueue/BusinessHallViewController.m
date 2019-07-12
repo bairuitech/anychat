@@ -16,6 +16,7 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 #import "AnyChatObjectDefine.h"
+#import "AnyChat_QueueModel.h"
 
 @interface BusinessHallViewController ()<UIActionSheetDelegate>
 @end
@@ -26,9 +27,10 @@ static NSString * const reuseIdentifier = @"BusinessHall";
 
 - (instancetype)init {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(80, 80);   //cell大小
-    layout.minimumInteritemSpacing = 0;     //cell水平间距
-    layout.minimumLineSpacing = 10;         //cell垂直间距
+    CGFloat width = [[UIScreen mainScreen] bounds].size.width/2;
+    layout.itemSize = CGSizeMake(width-10, 127);   //cell大小
+    layout.minimumInteritemSpacing = 1;     //cell水平间距
+    layout.minimumLineSpacing = 1;         //cell垂直间距
     layout.sectionInset = UIEdgeInsetsMake(layout.minimumLineSpacing, 0, 0, 0); //section内边距
     
     return [super initWithCollectionViewLayout:layout];
@@ -71,7 +73,7 @@ static NSString * const reuseIdentifier = @"BusinessHall";
     
     BusinessHall *bHall = self.businessHallObjectArr[indexPath.item];
     // 进营业厅
-    [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AREA :(int)bHall.hallId :ANYCHAT_AREA_CTRL_USERENTER :0 :0 :0 :0 :nil];
+    [[AnyChatQueueDataManager getInstance].queueModel enterAreaWithid:[NSString stringWithFormat:@"%d",bHall.hallId]];
     
 }
 

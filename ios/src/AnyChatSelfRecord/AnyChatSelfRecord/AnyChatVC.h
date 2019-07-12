@@ -17,49 +17,21 @@
 #import "AnyChatErrorCode.h"
 
 
-@interface AnyChatVC : UIViewController <NSCoding,UITextFieldDelegate,MBProgressHUDDelegate,AnyChatNotifyMessageDelegate,AnyChatTransDataDelegate,AnyChatRecordSnapShotDelegate>
-{
-    MBProgressHUD   *HUD;
-}
+@interface AnyChatVC : ACBaseViewController <NSCoding,UITextFieldDelegate,MBProgressHUDDelegate,AnyChatNotifyMessageDelegate,AnyChatTransDataDelegate,AnyChatRecordSnapShotDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField            *theUserName;
-@property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
-@property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
-@property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *theHideKeyboardBtn;
-@property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
+
 @property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
-@property (strong, nonatomic) NSMutableArray                *onlineUserMArray;
-@property (strong, nonatomic) NSMutableArray                *theVideoRecordMArray;
-@property (strong, nonatomic) NSString                      *theMyUserName;
-@property (strong, nonatomic) NSString                      *theTargetUserName;
+@property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
+
+@property (nonatomic, assign) BOOL                          theNextVCBool;//判断是否到下一步
+@property (nonatomic, copy) NSString                        *videoCoverImagePath;//截取视频中的一帧
 @property (strong, nonatomic) NSString                      *thePhotoPath;
 @property (strong, nonatomic) NSString                      *theVideoPath;
-@property (strong, nonatomic) AnyChatPlatform               *anyChat;
-@property int   theFeaturesNO;
-@property int   theMyUserID;
-@property int   theTargetUserID;
-@property BOOL  theLoginState;
-@property BOOL  theNextVCBool;
 
+@property (nonatomic, assign) int                           theMyUserID;
+@property (nonatomic, assign) BOOL                          theLoginState;
 
 kGCD_SINGLETON_FOR_HEADER(AnyChatVC);
-
-- (IBAction)hideKeyBoard;
-
-- (IBAction)OnLoginBtnClicked:(id)sender;
-
-- (void)OnLogout;
-
-- (void)saveSettings;
-
-- (void)dimissAlertView:(UIAlertView *)alert;
-
-- (void)NetworkAnomaliesAlert;
-
-- (NSString *)showInfoAlertView:(NSString *)Title : (NSString *)subTitle;
-
-- (IBAction)VideoSetting:(id)sender;
 
 
 @end

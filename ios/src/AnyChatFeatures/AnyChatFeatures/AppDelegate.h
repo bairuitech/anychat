@@ -9,12 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "AnyChatVC.h"
 
-@class AnyChatVC;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow                  *window;
-@property (strong, nonatomic) UINavigationController    *navController;
-@property (strong, nonatomic) AnyChatVC     *anychatVC;
+
 
 @end

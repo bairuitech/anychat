@@ -35,6 +35,12 @@
     
     [self StartVideoChat:0];
     [self setTheTimer];
+    
+    UIView *maskView = [self maskView];
+    [self.view insertSubview:maskView aboveSubview:self.theLocalView];
+    
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -82,8 +88,12 @@
     NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
     if (cameraDeviceArray.count > 0)
     {
-        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+        if(cameraDeviceArray.count >= 2)
+            [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+        else
+            [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:0]];
     }
+    
     
     // open local video
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
@@ -114,9 +124,14 @@
         [theLocalRecordMZTimer start];
         
         theLocolFunBtn.selected = YES;
+        
+        //截取一帧作为视频封面
+        [AnyChatPlatform SnapShot:theRecordId :BRAC_RECORD_FLAGS_SNAPSHOT :1000];
+
     }
     else
     {
+       
             //Stop recording local
             [AnyChatPlatform StreamRecordCtrlEx: theRecordId
                                                : NO
@@ -139,10 +154,6 @@
     [AnyChatPlatform UserCameraControl: -1 : NO];
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
 
 - (void) OnLocalVideoRelease:(id)sender
 {
@@ -195,4 +206,52 @@
                                           animated:YES];
 }
 
+
+- (UIView *)maskView{
+    UIView *_maskView;
+    if (!_maskView) {
+        
+        
+        _maskView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWid, kScreenHei)];
+        _maskView.backgroundColor = [UIColor blackColor];
+        _maskView.alpha = 0.5;
+        
+        UIBezierPath *bpath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, kSelfView_Width, kSelfView_Height) ];
+        UIBezierPath *inPath = [UIBezierPath bezierPathWithRect:[self scanRect]];
+        
+        [bpath appendPath:[inPath bezierPathByReversingPath]];
+        CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+        shapeLayer.path = bpath.CGPath;
+        _maskView.layer.mask = shapeLayer;
+        
+        CAShapeLayer *circleLayer = [CAShapeLayer layer];
+        circleLayer.path = inPath.CGPath;
+        circleLayer.strokeColor = [UIColor whiteColor].CGColor;
+        circleLayer.lineWidth = 2;
+        [_maskView.layer addSublayer:circleLayer];
+    }
+    return _maskView;
+}
+
+
+- (CGRect)scanRect {
+    
+    CGFloat wid = AdaptW(316);
+    CGFloat height = AdaptW(402);
+    CGFloat left = (kScreenWid - wid) / 2;
+    CGFloat top = (kScreenHei - height) / 2;
+    
+    return CGRectMake(left, top, wid, height);
+}
+
+
+-(BOOL)navBarTranslucent {
+    
+    return YES;
+}
+
+-(BOOL)needLeftBackNavItem {
+    
+    return NO;
+}
 @end

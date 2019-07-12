@@ -1,104 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShowVC">
             <connections>
-                <outlet property="theShowVCNItem" destination="M2m-Ov-et2" id="2bH-kt-YK4"/>
+                <outlet property="imageView" destination="kWA-SS-koQ" id="pW8-TV-ZEE"/>
+                <outlet property="nextButton" destination="DKr-f2-S9s" id="dMK-m5-3In"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <navigationBar contentMode="scaleToFill" id="One-8i-6t3">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <items>
-                        <navigationItem title="回放录制视频" id="M2m-Ov-et2"/>
-                    </items>
-                </navigationBar>
-                <view contentMode="scaleToFill" id="XRn-Nh-KUV">
-                    <rect key="frame" x="0.0" y="44" width="320" height="436"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Replay Video" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yac-Pd-voI">
-                            <rect key="frame" x="131" y="237" width="68" height="14"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DOf-xS-qWX" userLabel="Button - Play">
-                            <rect key="frame" x="123" y="153" width="84" height="84"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" image="Icon_PlayVideo_3.png">
-                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="playBackVideo" destination="-1" eventType="touchUpInside" id="Li7-Hz-DjG"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                </view>
-                <view contentMode="scaleToFill" id="HTV-k6-bva" userLabel="View - footer">
-                    <rect key="frame" x="0.0" y="450" width="320" height="30"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <subviews>
-                        <imageView alpha="0.37999999523162842" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video_footer.png" highlightedImage="bg_video_footer.png" id="4nb-Gm-b5B">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="w3r-pr-ebi" userLabel="Button - 重拍">
-                            <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal" title="重新录制">
-                                <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <state key="highlighted">
-                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="LeaveBtn_OnClick" destination="-1" eventType="touchUpInside" id="Txg-zf-9rl"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DKr-f2-S9s">
-                            <rect key="frame" x="220" y="0.0" width="100" height="30"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal" title="下一步">
-                                <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <state key="highlighted">
-                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="nextVC" destination="-1" eventType="touchUpInside" id="B7p-sg-GeV"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kWA-SS-koQ">
+                    <rect key="frame" x="10" y="24" width="394" height="325"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="325" id="u3v-P3-Z3f"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOf-xS-qWX" userLabel="Button - Play">
+                    <rect key="frame" x="173.5" y="153" width="67" height="67"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="67" id="BRx-RD-2ij"/>
+                        <constraint firstAttribute="width" constant="67" id="Rs7-LA-MSX"/>
+                    </constraints>
+                    <state key="normal" image="video_play">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="playBackVideo" destination="-1" eventType="touchUpInside" id="Li7-Hz-DjG"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DKr-f2-S9s">
+                    <rect key="frame" x="149.5" y="653" width="115" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="115" id="eua-Tz-DUj"/>
+                        <constraint firstAttribute="height" constant="40" id="jkF-m9-6Tc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                    <state key="normal" title="下一步">
+                        <color key="titleColor" red="0.0" green="0.5450980392" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="nextVC" destination="-1" eventType="touchUpInside" id="B7p-sg-GeV"/>
+                    </connections>
+                </button>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="kWA-SS-koQ" secondAttribute="trailing" constant="10" id="C3p-Mj-XC1"/>
+                <constraint firstItem="kWA-SS-koQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="Epw-ld-ubW"/>
+                <constraint firstItem="kWA-SS-koQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="24" id="N3K-xM-gag"/>
+                <constraint firstItem="DOf-xS-qWX" firstAttribute="centerX" secondItem="kWA-SS-koQ" secondAttribute="centerX" id="bdw-Na-rDf"/>
+                <constraint firstItem="DOf-xS-qWX" firstAttribute="centerY" secondItem="kWA-SS-koQ" secondAttribute="centerY" id="e9j-tf-RdR"/>
+                <constraint firstAttribute="bottom" secondItem="DKr-f2-S9s" secondAttribute="bottom" constant="43" id="uHG-Sq-o8B"/>
+                <constraint firstItem="DKr-f2-S9s" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="uJM-og-omI"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="41.600000000000001" y="46.776611694152926"/>
         </view>
     </objects>
     <resources>
-        <image name="Icon_PlayVideo_3.png" width="128" height="128"/>
-        <image name="bg_video_footer.png" width="640" height="60"/>
+        <image name="video_play" width="67" height="67"/>
     </resources>
 </document>

@@ -7,6 +7,7 @@
 
 @interface EndVC ()
 
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @end
 
 @implementation EndVC
@@ -26,12 +27,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.nextButton.layer.borderWidth = 1;
+    self.nextButton.layer.borderColor = [UIColor colorWithRed:0 green:139/255.0 blue:227/255.0 alpha:1].CGColor;
+    self.nextButton.layer.masksToBounds = YES;
+    
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self prefersStatusBarHidden];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,14 +57,20 @@
     
     [AnyChatVC sharedAnyChatVC].theStateInfo.text = [NSString stringWithFormat:@"• Logout."];
     [AnyChatVC sharedAnyChatVC].theLoginState = NO;
-    [[AnyChatVC sharedAnyChatVC].theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
+    [AnyChatVC sharedAnyChatVC].theLoginBtn.selected = NO;
     
     [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    
 }
 
-- (BOOL)prefersStatusBarHidden
-{
+-(BOOL)needLeftBackNavItem {
+    
+    return NO;
+}
+
+-(BOOL)navBarTranslucent {
+    
     return YES;
 }
-
 @end

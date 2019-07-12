@@ -6,6 +6,8 @@
 #import "ProviewPhotoVC.h"
 
 @interface ProviewPhotoVC ()
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 @end
 
@@ -24,6 +26,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self p_configItem];
+    self.title = @"照片预览";
+    
+    self.nextButton.layer.borderWidth = 1;
+    self.nextButton.layer.borderColor = [UIColor colorWithRed:0 green:139/255.0 blue:227/255.0 alpha:1].CGColor;
+    self.nextButton.layer.masksToBounds = YES;
+    
+    self.imageView.image = [UIImage imageWithContentsOfFile:self.filePath];
+
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -36,6 +48,22 @@
     [super didReceiveMemoryWarning];
 }
 
+-(BOOL)needLeftBackNavItem{
+    
+    return NO;
+}
+
+- (void)p_configItem {
+    
+    UIButton *btn= [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"重拍" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [btn addTarget:self action:@selector(returnBtn_OnClick) forControlEvents:UIControlEventTouchUpInside];
+    [btn sizeToFit];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
 
 #pragma mark -
 #pragma mark - Instance Method
@@ -51,21 +79,6 @@
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
-- (void)showSnapShotPhoto:(NSString *)theFilePath transform:(NSString *)transformParam
-{
-    UIImage *s_Image = [UIImage imageWithContentsOfFile:theFilePath];
-    
-    UIImageView *theSnapShotImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 44,kSelfView_Width,kSelfView_Height-44-38)];
-    theSnapShotImageView.image = s_Image;
-    theSnapShotImageView.contentMode = UIViewContentModeScaleAspectFit;
-    
-    if ([transformParam isEqualToString:@"Portrait"])
-    {
-        theSnapShotImageView.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
-    }
-    
-    [self.view addSubview:theSnapShotImageView];
-}
 
 
 #pragma mark - Orientation Rotation

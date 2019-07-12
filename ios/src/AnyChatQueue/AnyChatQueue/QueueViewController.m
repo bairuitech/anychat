@@ -28,6 +28,7 @@
 @property(nonatomic, strong) AVAudioPlayer *theAudioPlayer;             // 音乐播放器
 
 - (IBAction)cancelAction:(UIButton *)sender;
+
 @end
 
 @implementation QueueViewController
@@ -41,10 +42,11 @@
     NSString *businessName = [AnyChatPlatform ObjectGetStringValue:ANYCHAT_OBJECT_TYPE_QUEUE :(int)self.businessId :ANYCHAT_OBJECT_INFO_NAME];
     self.title = [NSString stringWithFormat:@"%@-排队等待中",businessName];
     
-    self.queueUserSite = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_INFO_BEFOREUSERNUM] + 1;
+    self.queueUserSite = [[AnyChatQueueDataManager getInstance].queueModel getQueueIndexWithid:[NSString stringWithFormat:@"%d",self.businessId]] + 1;
+    
     self.queuUserSiteLabel.text = [NSString stringWithFormat:@"你现在排在第%d位",self.queueUserSite];
     
-    self.queueUserCount = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_INFO_QUEUELENGTH];
+    self.queueUserCount = [[AnyChatQueueDataManager getInstance].queueModel getQueuelengthWithid:[NSString stringWithFormat:@"%d",self.businessId]];
     self.queueUserCountLabel.text = [NSString stringWithFormat:@"当前排队人数共:%d人",self.queueUserCount];
     
     // 防止锁屏
@@ -80,7 +82,7 @@
 #pragma mark - AnyChat Call Delegate
 - (void) OnAnyChatVideoCallEventCallBack:(int) dwEventType : (int) dwUserId : (int) dwErrorCode : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr{
     self.remoteUserId = dwUserId;
-    self.loginVC.remoteUserId = dwUserId;
+    [AnyChatQueueDataManager getInstance].remoteUserId = dwUserId;
     switch (dwEventType) {
         
         case BRAC_VIDEOCALL_EVENT_REQUEST://呼叫请求 1
@@ -130,6 +132,7 @@
             
         case BRAC_VIDEOCALL_EVENT_START://视频呼叫会话开始事件 3
         {
+            [MBProgressHUD showMessage:@"正在进入房间，请稍等..."];
             //进入房间
             [AnyChatPlatform EnterRoom:dwParam :nil];
             break;
@@ -169,7 +172,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         //退出队列
-        [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_CTRL_USERLEAVE :0 :0 :0 :0 :nil];
+        [[AnyChatQueueDataManager getInstance].queueModel cancelQueuing];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -178,7 +181,7 @@
 #pragma mark - Action
 - (void)backAction:(UIControlEvents *)event {
     // 退出队列
-    [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_CTRL_USERLEAVE :0 :0 :0 :0 :nil];
+    [[AnyChatQueueDataManager getInstance].queueModel cancelQueuing];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -198,14 +201,14 @@
 
 // 设置label计时器
 - (void)setWaitingTimeLabel {
-    int waitingTime = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :self.businessId :ANYCHAT_QUEUE_INFO_WAITTIMESECOND];
+    int waitingTime = [[AnyChatQueueDataManager getInstance].queueModel getQueueTimeWithid:[NSString stringWithFormat:@"%d",self.businessId]];
     NSString *timeLabelText = [self transform:waitingTime];
-    self.queueWaitingTimeLabel.text = [NSString stringWithFormat:@"已等待时长 %@",timeLabelText];
+    self.queueWaitingTimeLabel.text = timeLabelText;
 }
 
 // 时间转换
 - (NSString *)transform:(int)second {
-    return [NSString stringWithFormat:@"%d时 %d分 %d秒", second/(60*60), (second%(60*60))/60, second%60];
+    return [NSString stringWithFormat:@"%02d:%02d", (second%(60*60))/60, second%60];
 }
 
 // 声音

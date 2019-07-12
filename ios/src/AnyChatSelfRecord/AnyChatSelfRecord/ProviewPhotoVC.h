@@ -8,12 +8,11 @@
 #import "RecordLocalVC.h"
 
 
-@interface ProviewPhotoVC : UIViewController
+@interface ProviewPhotoVC : ACBaseViewController
 
-- (IBAction)returnBtn_OnClick;
+@property (nonatomic, copy) NSString *filePath;
 
 - (IBAction)nextBtn_OnClick;
 
-- (void)showSnapShotPhoto:(NSString *)theFilePath transform:(NSString *)transformParam;
 
 @end

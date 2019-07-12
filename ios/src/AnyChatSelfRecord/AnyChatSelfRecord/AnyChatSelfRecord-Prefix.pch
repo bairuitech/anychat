@@ -109,3 +109,10 @@ return shared##classname;   \
 #pragma mark - Device systemVersion
 
 #define k_sysVersion (float)[[[UIDevice currentDevice] systemVersion] floatValue]
+
+#import "ACBaseViewController.h"
+#import "IQKeyboardManager.h"
+#import "UIView+AdaptScreen.h"
+
+#define kScreenWid ([UIScreen mainScreen].bounds.size.width)
+#define kScreenHei ([UIScreen mainScreen].bounds.size.height)
