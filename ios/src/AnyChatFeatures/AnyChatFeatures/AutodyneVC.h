@@ -16,36 +16,8 @@
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
+//抓拍自己
 
-
-@interface AutodyneVC : UIViewController <UIActionSheetDelegate>
-{
-    AnyChatPlatform     *theAnyChat;
-    AVAudioPlayer       *theAudioPlayer;
-    int theLocalRecordFlags;
-    int theServerRecordFlags;
-}
-
-@property (strong, nonatomic) AVCaptureVideoPreviewLayer    *localVideoSurface;
-@property (strong, nonatomic) IBOutlet UIImageView          *remoteVideoSurface;
-@property (strong, nonatomic) IBOutlet UIView               *theLocalView;
-@property (weak, nonatomic) IBOutlet UINavigationItem       *theVideoNItem;
-@property (weak, nonatomic) IBOutlet UIButton               *switchCameraBtn;
-@property (strong, nonatomic) NSString                      *theFeaturesName;
-@property (strong, nonatomic) NSString                      *theTakePhotoPath;
-@property (strong, nonatomic) NSString                      *theCurrentRotation;
-
-
-- (IBAction) FinishVideoChatBtnClicked:(id)sender;
-
-- (IBAction) switchCameraBtn_OnClicked:(id)sender;
-
-- (IBAction) theLocolFunBtn_OnClicked:(id)sender;
-
-- (void) FinishVideoChat;
-
-- (void) StartVideoChat:(int) userid;
-
-- (void) btnSelectedOnClicked:(UIButton*)button;
+@interface AutodyneVC : ACBaseViewController <UIActionSheetDelegate>
 
 @end

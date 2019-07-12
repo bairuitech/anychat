@@ -11,7 +11,9 @@
 @interface ServerQueueViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(nonatomic, strong)UIAlertView *waitingAlertView;
-@property(nonatomic, strong)NSArray *businessListIdArray;   //队列id数组
-@property(nonatomic, assign)int businessHallId;             //营业厅id
-@property(nonatomic, assign)int selfUserId;                 //用户id
+//@property(nonatomic, strong)NSArray *businessListIdArray;   //队列id数组
+//@property(nonatomic, assign)int businessHallId;             //营业厅id
+//@property(nonatomic, assign)int selfUserId;                 //用户id
+@property(nonatomic, strong)NSArray *businesses;
+
 @end

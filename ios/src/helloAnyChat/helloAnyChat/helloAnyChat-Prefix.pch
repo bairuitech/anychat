@@ -27,8 +27,8 @@
 
 #pragma mark - VideoViewController Function Parameters & Method
 
-#define kLocalVideo_Width                   100.0f
-#define kLocalVideo_Height                  130.0f
+#define kLocalVideo_Width                   AdaptW(121.0)
+#define kLocalVideo_Height                  AdaptW(162.0)
 #define kBar_Height                         30.0f
 #define kSelfView_Width                     self.view.frame.size.width
 #define kSelfView_Height                    self.view.frame.size.height
@@ -80,5 +80,6 @@ return shared##classname;   \
 }
 
 
-
+#import "ACBaseViewController.h"
+#import "UIView+AdaptScreen.h"
 

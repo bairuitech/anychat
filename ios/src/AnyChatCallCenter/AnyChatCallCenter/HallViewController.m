@@ -17,9 +17,27 @@ NSString* const kVideoBitrate = @"videobitrate";
 NSString* const kVideoPreset = @"videopreset";
 NSString* const kVideoQuality = @"videoquality";
 
+#define kTableVCell_NameLabTag              1001
+#define kTableVCell_UserIDLabTag            1002
+#define kTableVCell_BGViewTag               1003
+#define kTableVCell_BGViewTag               1003
+
+
 @interface HallViewController ()
 
 @property (nonatomic, weak) VideoViewController *videoViewController;
+
+
+@property (nonatomic, strong) NSString              *theStateMsg;
+
+@property (nonatomic, strong) NSMutableArray        *onlineUserMArray;
+@property (nonatomic, strong) IBOutlet UITableView  *onlineUserTable;
+@property (nonatomic, strong) UIAlertView           *theReplyAlertView;
+@property (nonatomic, strong) UIAlertView           *theWaitingAlertView;
+
+@property (nonatomic, strong) UserEntity            *theUserEntity;
+@property (nonatomic, strong) UserInfo              *theUInfo;
+
 
 @end
 
@@ -49,10 +67,12 @@ NSString* const kVideoQuality = @"videoquality";
     theAnyChat.videoCallDelegate = self;
     theAnyChat.notifyMsgDelegate = self;
     
-    [self createTableView];
+    [self configTableView];
     self.theUserEntity = [UserEntity new];
+    self.title = @"用户列表";
+    
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
 }
-
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -62,51 +82,44 @@ NSString* const kVideoQuality = @"videoquality";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    
     UITableViewCell *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
     if(Cell == nil) {
-        Cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"tableVCell" owner:self options:nil];
+        Cell = [nibs objectAtIndex:0];
+        
     }
     
     UserInfo *tempUserInfo = [self.onlineUserMArray objectAtIndex:[indexPath row]];
     
-    Cell.textLabel.text = tempUserInfo.theUserInfoName;
-    Cell.textLabel.font = [UIFont systemFontOfSize:19];
-    Cell.textLabel.numberOfLines = 1;
+    UILabel *userIDLabel = (UILabel *)[Cell.contentView viewWithTag:kTableVCell_UserIDLabTag];
+    UILabel *nameLabel = (UILabel *)[Cell.contentView viewWithTag:kTableVCell_NameLabTag];
+    UIImageView *bgView = (UIImageView *)[Cell viewWithTag:kTableVCell_BGViewTag];
     
-    Cell.detailTextLabel.text = tempUserInfo.theUserInfoID;
-    Cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
-    Cell.detailTextLabel.numberOfLines = 1;
-    
-    UIImage *icon = [UIImage imageNamed:tempUserInfo.theUserInfoIcon];
-    
-    CGSize iconSize = CGSizeMake(45, 45);
-    UIGraphicsBeginImageContextWithOptions(iconSize, NO,0.0);
-    CGRect imageRect = CGRectMake(0.0, 0.0, iconSize.width, iconSize.height);
-    [icon drawInRect:imageRect];
-    
-    Cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
+    userIDLabel.text = tempUserInfo.theUserInfoID;
+    nameLabel.text = tempUserInfo.theUserInfoName;
+    bgView.image = [UIImage imageNamed:tempUserInfo.theUserInfoIcon];
     return Cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 54.0f;
+    return 70.0f;
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int selectID = [[[self.onlineUserMArray objectAtIndex:[indexPath row]] theUserInfoID] intValue];
+    UserInfo *tempUserInfo = [self.onlineUserMArray objectAtIndex:[indexPath row]];
+    int selectID = tempUserInfo.theUserInfoID.intValue;
+    
     
     [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REQUEST :selectID :0 :0 :0 :nil];
     
-    self.theWaitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫等待..." message:@"Call waiting" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+    self.theWaitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫中..." message:[[NSString alloc] initWithFormat:@"等待 %@ 回应...",tempUserInfo.theUserInfoName] delegate:self cancelButtonTitle:@"挂断" otherButtonTitles:nil, nil];
     [self.theWaitingAlertView show];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
@@ -114,13 +127,16 @@ NSString* const kVideoQuality = @"videoquality";
 
 - (void) OnAnyChatVideoCallEventCallBack:(int) dwEventType : (int) dwUserId : (int) dwErrorCode : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr{
     
+    NSString *s_theCallbackUserName = [AnyChatPlatform GetUserName:dwUserId];
     self.theUserEntity.theEntityRemoteID = dwUserId;
+    self.theUserEntity.theEntityRemoteName = s_theCallbackUserName;
+
     
     switch (dwEventType) {
             
         case BRAC_VIDEOCALL_EVENT_REQUEST:
         {
-            [self showReplyAlertView];
+            [self showReplyAlertView:s_theCallbackUserName];
             break;
         }
             
@@ -215,12 +231,12 @@ NSString* const kVideoQuality = @"videoquality";
             break;
         }
             
-        case BRAC_VIDEOCALL_EVENT_START:
+        case BRAC_VIDEOCALL_EVENT_START://成功
         {
             if (self.theWaitingAlertView != nil) {
                 [self dimissAlertView:self.theWaitingAlertView];
             }
-            
+            //进入房间
             [AnyChatPlatform EnterRoom:dwParam :@""];
             
             break;
@@ -278,10 +294,7 @@ NSString* const kVideoQuality = @"videoquality";
                 
         }
         
-    }
-    
-    
-    if (alertView == self.theWaitingAlertView) {
+    }else if (alertView == self.theWaitingAlertView) {
         
         if (buttonIndex == 0 ) {
             
@@ -317,11 +330,14 @@ NSString* const kVideoQuality = @"videoquality";
     {
         //        [self updateLocalSettings];
         
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 54.0f)];
-        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 54.0f)];
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 70)];
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
         [self setUserInfoFromHeaderView:headerView :dwUserId];
         self.onlineUserTable.tableHeaderView = headerView;
         self.onlineUserTable.tableFooterView = footerView;
+        
+        self.theUserEntity.theEntityID = dwUserId;
+        self.theUserEntity.theEntityName = [AnyChatPlatform GetUserName:dwUserId];
     }
 }
 
@@ -419,9 +435,9 @@ NSString* const kVideoQuality = @"videoquality";
 }
 
 
-- (void) showReplyAlertView{
+- (void) showReplyAlertView: (NSString *)callUserName {
     self.theReplyAlertView = [[UIAlertView alloc] initWithTitle:@"用户请求会话"
-                                                        message:@"Video Call"
+                                                        message:[[NSString alloc] initWithFormat:@" %@ 请求与你通话",callUserName]
                                                        delegate:self
                                               cancelButtonTitle:@"拒绝"
                                               otherButtonTitles:@"同意", nil];
@@ -455,14 +471,11 @@ NSString* const kVideoQuality = @"videoquality";
     [theAnyChat OnRecvAnyChatNotify:dict];
 }
 
-- (void)createTableView
+- (void)configTableView
 {
-    self.onlineUserTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, self.view.frame.size.width, self.view.frame.size.height)];
-    
     self.onlineUserTable.delegate = self;
     self.onlineUserTable.dataSource = self;
     
-    [self.view addSubview:self.onlineUserTable];
 }
 
 - (void) refreshTableView
@@ -502,17 +515,8 @@ NSString* const kVideoQuality = @"videoquality";
 }
 
 
-- (void) getOnlineUserList:(NSMutableArray *)onlineUList{
-    self.onlineUserMArray = onlineUList;
-}
 
-
-- (BOOL)prefersStatusBarHidden{
-    return YES;
-}
-
-
-- (IBAction)leaveLoginBtnClicked:(id)sender {
+- (void)navLeftClick {
     
     [AnyChatPlatform LeaveRoom:-1];
     [AnyChatPlatform Logout];
@@ -522,12 +526,12 @@ NSString* const kVideoQuality = @"videoquality";
 
 - (void) setUserInfoFromHeaderView:(UIView *)headerView : (int) dwUserId
 {
-    UILabel *selfName = [[UILabel alloc] initWithFrame:CGRectMake(75, 8, 200, 25)];
-    selfName.text = [AnyChatPlatform GetUserName:dwUserId];
+    UILabel *selfName = [[UILabel alloc] initWithFrame:CGRectMake(75, 12, 200, 25)];
+    selfName.text = [[AnyChatPlatform GetUserName:dwUserId] stringByAppendingString:@"（自己）"];
     selfName.font = [UIFont systemFontOfSize:19];
     [headerView addSubview:selfName];
     
-    UILabel *selfID = [[UILabel alloc] initWithFrame:CGRectMake(75, 27, 200, 25)];
+    UILabel *selfID = [[UILabel alloc] initWithFrame:CGRectMake(75, 35, 200, 25)];
     selfID.text = [[NSString alloc] initWithFormat:@"%i",dwUserId];
     selfID.font = [UIFont systemFontOfSize:13];
     [headerView addSubview:selfID];
@@ -535,10 +539,10 @@ NSString* const kVideoQuality = @"videoquality";
     NSString *selfIconStr = [[NSString alloc] initWithFormat:@"%i",[self getRandomNumber:1 to:9]];
     UIImage *selfIconImg = [UIImage imageNamed:selfIconStr];
     UIImageView *selfIconImgV = [[UIImageView alloc] initWithImage:selfIconImg];
-    selfIconImgV.frame =CGRectMake(15, 5, 45, 45);
+    selfIconImgV.frame =CGRectMake(15, (70-53)/2, 53, 53);
     [headerView addSubview:selfIconImgV];
     
-    UIView *lineV = [[UIView alloc] initWithFrame:CGRectMake(75, 53, self.view.frame.size.width - 75, 1.0f)];
+    UIView *lineV = [[UIView alloc] initWithFrame:CGRectMake(14, 69, self.view.frame.size.width - 14, 1.0f)];
     lineV.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:223.0/255.0 alpha:1.0];
     [headerView addSubview:lineV];
 }

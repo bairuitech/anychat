@@ -16,32 +16,9 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-@interface VideoViewController : UIViewController<UIActionSheetDelegate,UIGestureRecognizerDelegate>
-{
-    AnyChatPlatform *theAnyChat;
-}
+@interface VideoViewController : ACBaseViewController<UIActionSheetDelegate,UIGestureRecognizerDelegate>
 
-@property (strong, nonatomic) AVCaptureVideoPreviewLayer    *localVideoSurface;
-@property (strong, nonatomic) IBOutlet UIImageView          *remoteVideoSurface;
-@property (strong, nonatomic) IBOutlet UIView               *theLocalView;
-@property (weak, nonatomic) IBOutlet UIButton               *switchCameraBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *endCallBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *voiceBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *cameraBtn;
-@property int iRemoteUserId;
-
-- (IBAction) FinishVideoChatBtnClicked:(id)sender;
-
-- (IBAction) OnSwitchCameraBtnClicked:(id)sender;
-
-- (IBAction) OnCloseVoiceBtnClicked:(id)sender;
-
-- (IBAction) OnCloseCameraBtnClicked:(id)sender;
-
+@property (nonatomic, assign) int iRemoteUserId;
+@property (nonatomic, copy) NSString *remoteUserName;
 - (void) FinishVideoChat;
-
-- (void) StartVideoChat:(int) userid;
-
-- (void) btnSelectedOnClicked:(UIButton*)button;
-
 @end

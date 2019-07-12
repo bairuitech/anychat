@@ -14,8 +14,8 @@
     
     self = [super init];
     if (self) {
-        self.title = [dic objectForKey:@"title"];
-        self.businessId = [[dic objectForKey:@"id"] longLongValue];
+        self.title = [dic objectForKey:@"name"];
+        self.businessId = [[dic objectForKey:@"id"] intValue];
     }
     return self;
 }

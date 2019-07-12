@@ -13,15 +13,11 @@
 #import "AnyChatErrorCode.h"
 
 
-@interface ShowVC : UIViewController <UITableViewDelegate,UITableViewDataSource>
-
-@property (weak, nonatomic) IBOutlet UINavigationItem       *theShowVCNItem;
+@interface ShowVC : ACBaseViewController <UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView          *theVideoRecordTableView;
-@property (strong, nonatomic) NSMutableArray                *theVideoRecordList;
-@property (strong, nonatomic) NSString                      *theSelectContentPath;
+
+
 @property int   theObjType;
 
-- (IBAction)clearDatas_OnClick;
-- (IBAction)LeaveBtn_OnClick;
 
 @end

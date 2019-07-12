@@ -6,9 +6,8 @@
 #import <UIKit/UIKit.h>
 #import "SettingVC.h"
 
-@interface DetailVC : UIViewController
+@interface DetailVC : ACBaseViewController
 
-@property (weak, nonatomic) IBOutlet UINavigationItem       *theDetailNItem;
 @property (strong, nonatomic) IBOutlet UITableView          *theDetailSettingTableView;
 @property (strong, nonatomic) NSMutableDictionary           *theMainSettingMDict;
 @property (strong, nonatomic) NSMutableArray                *theTitlesParamMArray;

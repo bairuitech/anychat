@@ -7,9 +7,25 @@
 //
 
 #import "VideoViewController.h"
+#import "ACVideoAlertView.h"
 
 @interface VideoViewController ()
 
+
+
+@property (strong, nonatomic) AVCaptureVideoPreviewLayer    *localVideoSurface;
+@property (strong, nonatomic) NSMutableArray                *theOnlineUserList;
+@property (strong, nonatomic) IBOutlet UIImageView          *theUIImageView;
+@property (strong, nonatomic) IBOutlet UIView               *theLocalView;
+
+
+@property (weak, nonatomic) IBOutlet UIButton               *voiceBtn;
+@property (weak, nonatomic) IBOutlet UIButton               *cameraBtn;
+
+@property (weak, nonatomic) IBOutlet UILabel                *theVideoTimeLab;
+@property (strong, nonatomic) MZTimerLabel                  *theVideoMZTimer;
+
+@property (nonatomic, assign) int                            iRemoteUserId;
 @end
 
 @implementation VideoViewController
@@ -17,19 +33,16 @@
 
 #pragma mark - Life Cycle
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self StartVideoChat:self.theUserEntity.theEntityRemoteID];
+    [self setTheTimer];
+    [self p_configNavItem];
+    self.title = [NSString stringWithFormat:@"与%@的对话", self.theUserEntity.theEntityRemoteName];
+    
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -38,25 +51,33 @@
     [self setUIControls];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewDidDisappear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
+    [super viewDidDisappear:YES];
+    //The Timer Pause
+    [self.theVideoMZTimer pause];
 }
 
-
-#pragma mark - UIActionSheet Delegate Method
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)
-    {
-        [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_FINISH :self.iRemoteUserId :0 :0 :0 :nil];
-        
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]
-                                              animated:YES];
-    }
+-(void)navLeftClick {
+    
+    [self FinishVideoChatBtnClicked:nil];
 }
 
+-(BOOL)navBarTranslucent {
+    
+    return YES;
+}
+
+- (void)p_configNavItem {
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(OnSwitchCameraBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"video_switch"] forState:UIControlStateNormal];
+    [button sizeToFit];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
 
 #pragma mark - Action Method
 
@@ -66,7 +87,10 @@
     NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
     if (cameraDeviceArray.count > 0)
     {
-        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+        if(cameraDeviceArray.count >= 2)
+            [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+        else
+            [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:0]];
     }
     
     // open local video
@@ -101,18 +125,17 @@
 
 - (IBAction)FinishVideoChatBtnClicked:(id)sender {
     
-    HallViewController *hallVC = [[HallViewController alloc] init];
-    [hallVC getOnlineUserList:[hallVC getOnlineUserArray]];
-    [hallVC refreshTableView];
     
-    UIActionSheet *isFinish = [[UIActionSheet alloc]
-                               initWithTitle:@"确定结束会话?"
-                               delegate:self
-                               cancelButtonTitle:nil
-                               destructiveButtonTitle:nil
-                               otherButtonTitles:@"确定",@"取消", nil];
-    isFinish.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-    [isFinish showInView:self.view];
+    [ACVideoAlertView showAlertViewByTitle:@"是否想要结束当前通话？" clickBlock:^(NSInteger index) {
+        
+        if(index == 0) {
+            
+            [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_FINISH :self.iRemoteUserId :0 :0 :0 :nil];
+            [self FinishVideoChat];
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]
+                                                  animated:YES];
+        }
+    }];
 }
 
 - (IBAction)OnCloseVoiceBtnClicked:(id)sender
@@ -159,13 +182,9 @@
     }
 }
 
-- (BOOL)prefersStatusBarHidden{
-    return YES;
-}
-
 #pragma mark - Local Video
 
-- (IBAction) OnSwitchCameraBtnClicked:(id)sender
+- (void) OnSwitchCameraBtnClicked:(id)sender
 {
     static int CurrentCameraDevice = 1;
     NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
@@ -175,7 +194,7 @@
         [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
     }
     
-    [self btnSelectedOnClicked:self.switchCameraBtn];
+    [self btnSelectedOnClicked:sender];
 }
 
 - (void) OnLocalVideoRelease:(id)sender
@@ -200,7 +219,7 @@
 
 - (void)setUIControls
 {
-    [self.switchCameraBtn setBackgroundImage:[UIImage imageNamed:@"Icon_camera_w_b"] forState:UIControlStateSelected];
+//    [self.switchCameraBtn setBackgroundImage:[UIImage imageNamed:@"Icon_camera_w_b"] forState:UIControlStateSelected];
     
     //Local View line
     self.theLocalView.layer.borderColor = [[UIColor whiteColor] CGColor];
@@ -208,6 +227,16 @@
     //Rounded corners
     self.theLocalView.layer.cornerRadius = 4;
     self.theLocalView.layer.masksToBounds = YES;
+    
+    [self.theVideoMZTimer start];
+}
+
+- (void)setTheTimer
+{
+    //The Timer Init
+    self.theVideoMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theVideoTimeLab];
+    self.theVideoMZTimer.timeFormat = @"HH:mm:ss";
+    [self.theVideoMZTimer start];
 }
 
 -(void)dealloc {

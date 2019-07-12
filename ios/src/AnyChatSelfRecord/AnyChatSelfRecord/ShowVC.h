@@ -13,12 +13,10 @@
 #import "AnyChatErrorCode.h"
 
 
-@interface ShowVC : UIViewController <QLPreviewControllerDataSource,QLPreviewControllerDelegate>
+@interface ShowVC : ACBaseViewController <QLPreviewControllerDataSource,QLPreviewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UINavigationItem       *theShowVCNItem;
 @property (strong, nonatomic) NSString                      *theVideoFilePath;
 
-- (IBAction)LeaveBtn_OnClick;
 
 - (IBAction)playBackVideo;
 

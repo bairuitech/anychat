@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +14,6 @@
                 <outlet property="theFileNameLab" destination="w5U-Jy-KpK" id="TVP-hO-02j"/>
                 <outlet property="theIconImageView" destination="09m-gC-7qV" id="Q58-jn-NqW"/>
                 <outlet property="theToolbar" destination="lYc-oH-eub" id="iXS-ti-Xtg"/>
-                <outlet property="theTransFileNItem" destination="A6E-1r-ZSp" id="Wwc-CJ-69e"/>
                 <outlet property="theTransFileTableView" destination="fjh-La-jVe" id="X1T-X6-rO0"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,65 +23,52 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.74999999999999978" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_TestMsg.jpg" id="06z-PB-tft" userLabel="Image View - bg">
-                    <rect key="frame" x="0.0" y="44" width="320" height="392"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                </imageView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="fjh-La-jVe">
-                    <rect key="frame" x="0.0" y="44" width="320" height="392"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fjh-La-jVe">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="420"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="ZBT-as-kHT"/>
                         <outlet property="delegate" destination="-1" id="33o-Im-vha"/>
                     </connections>
                 </tableView>
-                <navigationBar contentMode="scaleToFill" id="GkY-7k-PCv">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <items>
-                        <navigationItem title="Title" id="A6E-1r-ZSp">
-                            <barButtonItem key="leftBarButtonItem" systemItem="reply" id="B01-z8-BtF">
-                                <connections>
-                                    <action selector="Leave_Onclick" destination="-1" id="ogf-Gt-JfC"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem key="rightBarButtonItem" systemItem="trash" id="9Pu-sE-gY5" userLabel="ClearDatas">
-                                <connections>
-                                    <action selector="clearDatas_OnClick" destination="-1" id="Vi8-zQ-azO"/>
-                                </connections>
-                            </barButtonItem>
-                        </navigationItem>
-                    </items>
-                </navigationBar>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="lYc-oH-eub">
-                    <rect key="frame" x="0.0" y="436" width="320" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lYc-oH-eub">
+                    <rect key="frame" x="0.0" y="420" width="320" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="IZX-rZ-r0i"/>
+                    </constraints>
                     <items>
                         <barButtonItem style="plain" id="q6r-zV-vvH" userLabel="Bar Button Item - left">
                             <view key="customView" contentMode="scaleToFill" id="2fp-xy-E4L" userLabel="View - bg">
-                                <rect key="frame" x="16" y="7" width="180" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="16" y="15" width="200" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="09m-gC-7qV">
-                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="09m-gC-7qV">
+                                        <rect key="frame" x="0.0" y="-7.5" width="45" height="45"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="45" id="TlQ-by-Kae"/>
+                                            <constraint firstAttribute="height" constant="45" id="xQg-bE-LT4"/>
+                                        </constraints>
                                     </imageView>
-                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="w5U-Jy-KpK" userLabel="Label - name">
-                                        <rect key="frame" x="40" y="0.0" width="130" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w5U-Jy-KpK" userLabel="Label - name">
+                                        <rect key="frame" x="55" y="15" width="0.0" height="0.0"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="w5U-Jy-KpK" firstAttribute="leading" secondItem="09m-gC-7qV" secondAttribute="trailing" constant="10" id="5HY-Ow-biM"/>
+                                    <constraint firstItem="09m-gC-7qV" firstAttribute="leading" secondItem="2fp-xy-E4L" secondAttribute="leading" id="6Cd-nW-dNq"/>
+                                    <constraint firstItem="09m-gC-7qV" firstAttribute="centerY" secondItem="2fp-xy-E4L" secondAttribute="centerY" id="DTE-xK-u6K"/>
+                                    <constraint firstItem="w5U-Jy-KpK" firstAttribute="centerY" secondItem="09m-gC-7qV" secondAttribute="centerY" id="o1W-8q-p8a"/>
+                                </constraints>
                             </view>
                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
                         <barButtonItem style="plain" id="rJe-an-reh" userLabel="Bar Button Item - center">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="iIU-oy-djm" userLabel="albumBtn">
-                                <rect key="frame" x="204" y="7" width="50" height="30"/>
+                                <rect key="frame" x="216" y="15" width="50" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="相册">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -95,7 +81,7 @@
                         </barButtonItem>
                         <barButtonItem style="done" id="16w-ck-MLB" userLabel="Bar Button Item - right">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xgQ-zR-51d" userLabel="sendBtn">
-                                <rect key="frame" x="254" y="7" width="50" height="30"/>
+                                <rect key="frame" x="266" y="15" width="38" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="发送">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -109,12 +95,18 @@
                     </items>
                 </toolbar>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="fjh-La-jVe" secondAttribute="trailing" id="Mxl-Ag-qJl"/>
+                <constraint firstAttribute="trailing" secondItem="lYc-oH-eub" secondAttribute="trailing" id="RB0-HL-Pec"/>
+                <constraint firstItem="lYc-oH-eub" firstAttribute="top" secondItem="fjh-La-jVe" secondAttribute="bottom" id="VuK-rt-bke"/>
+                <constraint firstAttribute="bottom" secondItem="lYc-oH-eub" secondAttribute="bottom" id="Z8h-Im-Mex"/>
+                <constraint firstItem="lYc-oH-eub" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aLB-PW-qN9"/>
+                <constraint firstItem="fjh-La-jVe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="rVz-mr-uZ3"/>
+                <constraint firstItem="fjh-La-jVe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wOO-gs-1SA"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
-    <resources>
-        <image name="bg_TestMsg.jpg" width="640" height="1136"/>
-    </resources>
 </document>

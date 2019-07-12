@@ -6,6 +6,6 @@
 #import <UIKit/UIKit.h>
 #import "RecordLocalVC.h"
 
-@interface EndVC : UIViewController
+@interface EndVC : ACBaseViewController
 
 @end

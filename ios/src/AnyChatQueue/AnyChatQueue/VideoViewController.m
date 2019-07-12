@@ -15,7 +15,7 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-@interface VideoViewController ()<UIActionSheetDelegate>
+@interface VideoViewController ()<UIActionSheetDelegate,UIGestureRecognizerDelegate>
 @property(strong, nonatomic)AVCaptureVideoPreviewLayer  *localCaptureLayer;
 @property (weak, nonatomic) IBOutlet UIView *localVideoView;
 @property (weak, nonatomic) IBOutlet UIImageView *remoteVideoView;
@@ -28,6 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self p_configNavItem];
     // 设置本地视频窗口的layer属性
     [self setLocalViewLayerStyle];
     // 开始视频通话
@@ -35,6 +36,10 @@
     // 切换imageView的contentMode
     [self.remoteVideoView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeContentModeFromImageView)]];
     self.view.backgroundColor = [UIColor blackColor];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    pan.delegate = self;
+    [self.localVideoView addGestureRecognizer:pan];
     
     // 防止锁屏
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
@@ -44,9 +49,53 @@
     
 }
 
+- (void)p_configNavItem {
+    {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button addTarget:self action:@selector(navLeftClick) forControlEvents:UIControlEventTouchUpInside];
+        [button setImage:[UIImage imageNamed:@"icon_back"] forState:UIControlStateNormal];
+        [button sizeToFit];
+        
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+        self.navigationItem.leftBarButtonItem = leftItem;
+    }
+    {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button addTarget:self action:@selector(OnSwitchCameraBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [button setImage:[UIImage imageNamed:@"video_switch"] forState:UIControlStateNormal];
+        [button sizeToFit];
+        
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
+}
+
+- (void)navLeftClick {
+    
+    [self EndCallAction:nil];
+    
+}
+
+- (void) OnSwitchCameraBtnClicked:(id)sender
+{
+    static int CurrentCameraDevice = 1;
+    NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
+    if(cameraDeviceArray.count == 2)
+    {
+        CurrentCameraDevice = (CurrentCameraDevice+1) % 2;
+        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
+    }
+    
+//    [self btnSelectedOnClicked:sender];
+}
+
+
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+
 }
 
 - (void)orientationChanged:(NSNotification *)note  {
@@ -73,8 +122,7 @@
 }
 
 
--(void)viewWillDisappear:(BOOL)animated {
-    
+-(void)viewWillDisappear:(BOOL)animated {    
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     UIDevice *device = [UIDevice currentDevice]; //Get the device object
     [nc removeObserver:self name:UIDeviceOrientationDidChangeNotification object:device];
@@ -139,7 +187,7 @@
 //创建和初始化 AVCaptureVideoPreviewLayer 对象,实现本地视频的显示
 - (void) OnLocalVideoInit:(id)session {
     self.localCaptureLayer = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
-    self.localCaptureLayer.frame = CGRectMake(0, 0, 100, 130);
+    self.localCaptureLayer.frame = CGRectMake(0, 0, 121, 162);
     self.localCaptureLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     [self.localVideoView.layer addSublayer:self.localCaptureLayer];
 }
@@ -166,7 +214,7 @@
 {
     //The Timer Init
     MZTimerLabel *theVideoMZTimer = [[MZTimerLabel alloc]initWithLabel:self.timerLabel];
-    theVideoMZTimer.timeFormat = @"▷ HH:mm:ss";
+    theVideoMZTimer.timeFormat = @"HH:mm:ss";
     [theVideoMZTimer start];
 }
 
@@ -176,6 +224,48 @@
     actionSheet.delegate = self;
     [actionSheet showInView:self.view];
 }
+
+#pragma mark - action
+- (void)handlePan:(UIPanGestureRecognizer*)recognizer {
+    
+    CGPoint translation = [recognizer translationInView:self.remoteVideoView];
+    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x,
+                                         recognizer.view.center.y + translation.y);
+    
+//    NSLog(@"-------center x:%.2f y:%.2f",recognizer.view.center.x,recognizer.view.center.y);
+    
+    if (recognizer.view.frame.origin.x<2) {
+        CGRect rect = recognizer.view.frame;
+        rect.origin.x = 2;
+        recognizer.view.frame = rect;
+    }
+    
+    CGFloat rightX = self.view.frame.size.width -2 - recognizer.view.frame.size.width;
+    if (recognizer.view.frame.origin.x > rightX) {
+        NSLog(@"recognizer.view.x = %f",recognizer.view.frame.origin.x);
+        CGRect rect = recognizer.view.frame;
+        rect.origin.x =  rightX;
+        recognizer.view.frame = rect;
+        
+    }
+    
+    if (recognizer.view.frame.origin.y<2) {
+        CGRect rect = recognizer.view.frame;
+        rect.origin.y = 2;
+        recognizer.view.frame = rect;
+    }
+    
+    CGFloat righty = self.view.frame.size.height -2 - recognizer.view.frame.size.height;
+    if (recognizer.view.frame.origin.y > righty) {
+        CGRect rect = recognizer.view.frame;
+        rect.origin.y = righty;
+        recognizer.view.frame = rect;
+    }
+    
+    [recognizer setTranslation:CGPointZero inView:self.remoteVideoView];
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

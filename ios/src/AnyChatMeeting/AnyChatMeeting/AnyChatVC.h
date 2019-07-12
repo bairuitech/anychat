@@ -20,38 +20,18 @@
 @class VideoVC;
 
 
-@interface AnyChatVC : UIViewController <NSCoding,UITextFieldDelegate,UIAlertViewDelegate,MBProgressHUDDelegate,AnyChatNotifyMessageDelegate>
-{
-    MBProgressHUD   *HUD;
+@interface AnyChatVC : ACBaseViewController <NSCoding,UITextFieldDelegate,UIAlertViewDelegate,MBProgressHUDDelegate,AnyChatNotifyMessageDelegate>
 
-}
-
-@property (strong, nonatomic) VideoVC                       *videoVC;
-@property (strong, nonatomic) AnyChatPlatform               *anyChat;
-
-@property (weak, nonatomic) IBOutlet UITextField            *theUserName;
-@property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
-@property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
-@property (weak, nonatomic) IBOutlet UITextField            *theRoomNO;
-@property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *theHideKeyboardBtn;
-@property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
-@property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
 @property (strong, nonatomic) NSMutableArray                *onlineUserMArray;
 @property (strong, nonatomic) NSMutableArray                *theOnChatUserIDStrMArray;
-@property (strong, nonatomic) NSString                      *theMyUserName;
 
-@property int   theMyUserID;
-@property BOOL  theOnLineLoginState;
+@property (strong, nonatomic) NSString                      *theMyUserName;
+@property (assign, nonatomic) int                            theMyUserID;
 
 kGCD_SINGLETON_FOR_HEADER(AnyChatVC);
 
-- (IBAction) hideKeyBoard;
-- (IBAction) OnLoginBtnClicked:(id)sender;
-- (void) OnLogout;
-- (void) saveSettings;
-- (void) dimissAlertView:(UIAlertView *)alert;
-- (NSString *)showInfoAlertView:(NSString *)Title : (NSString *)subTitle;
+
+- (IBAction)OnLoginBtnClicked:(id)sender;
 - (NSMutableArray *) getOnlineUserArray;
 
 @end

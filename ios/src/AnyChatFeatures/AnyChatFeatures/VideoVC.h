@@ -4,7 +4,8 @@
 //
 //  Created by alexChen  .
 //  Copyright (c) 2014年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
-//
+
+//音视频交互 呼叫中心 视频抓拍
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
@@ -18,51 +19,12 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
+@interface VideoVC : ACBaseViewController <UIActionSheetDelegate,UIAlertViewDelegate>
 
-@interface VideoVC : UIViewController <UIActionSheetDelegate,UIAlertViewDelegate>
-{
-    AnyChatPlatform     *theAnyChat;
-    AVAudioPlayer       *theAudioPlayer;
-    int theLocalRecordFlags;
-    int theServerRecordFlags;
-}
 
-@property (strong, nonatomic) AVCaptureVideoPreviewLayer    *localVideoSurface;
-@property (strong, nonatomic) UIActionSheet                 *isFinishVideoActSheet;
-@property (strong, nonatomic) UIAlertView                   *theVideoBitrateAlertView;
-@property (strong, nonatomic) IBOutlet UIImageView          *remoteVideoSurface;
-@property (strong, nonatomic) IBOutlet UIView               *theLocalView;
-@property (weak, nonatomic) IBOutlet UIButton               *theVideoPlayBackBtn;
-@property (weak, nonatomic) IBOutlet UINavigationItem       *theVideoNItem;
-@property (weak, nonatomic) IBOutlet UIButton               *switchCameraBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *endCallBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *theLocolFunBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *theServerFunBtn;
-@property (weak, nonatomic) IBOutlet UIView                 *leftLineView;
-@property (weak, nonatomic) IBOutlet UIView                 *rightLineView;
-@property (weak, nonatomic) IBOutlet UILabel                *theVideoTimeLab;
-@property (strong, nonatomic) NSString                      *theFeaturesName;
-@property (strong, nonatomic) NSString                      *theTakePhotoPath;
-@property (strong, nonatomic) NSString                      *theCurrentRotation;
-@property (strong, nonatomic) MZTimerLabel                  *theVideoMZTimer;
-@property int iRemoteUserId;
 
-- (IBAction)changeContentModeFromImageView:(id)sender;
-
-- (IBAction) FinishVideoChatBtnClicked:(id)sender;
-
-- (IBAction) switchCameraBtn_OnClicked:(id)sender;
-
-- (IBAction) theLocolFunBtn_OnClicked:(id)sender;
-
-- (IBAction) theServerFunBtn_OnClicked:(id)sender;
-
-- (IBAction) theVideoPlayBackBtn_OnClicked;
 
 - (void) FinishVideoChat;
 
-- (void) StartVideoChat:(int) userid;
-
-- (void) btnSelectedOnClicked:(UIButton*)button;
 
 @end

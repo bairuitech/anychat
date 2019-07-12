@@ -13,7 +13,7 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-@interface RecordLocalVC : UIViewController <UIActionSheetDelegate,UIAlertViewDelegate>
+@interface RecordLocalVC : ACBaseViewController <UIActionSheetDelegate,UIAlertViewDelegate>
 {
     AnyChatPlatform     *theAnyChat;
     AVAudioPlayer       *theAudioPlayer;

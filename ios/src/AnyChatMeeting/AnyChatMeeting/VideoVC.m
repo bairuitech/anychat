@@ -10,27 +10,25 @@
 
 @interface VideoVC ()
 
+
+@property (strong, nonatomic) IBOutlet UIImageView          *iRemoteVideoView1;
+@property (strong, nonatomic) IBOutlet UIImageView          *iRemoteVideoView2;
+@property (strong, nonatomic) IBOutlet UIImageView          *iRemoteVideoView3;
+@property (strong, nonatomic) IBOutlet UIView               *theLocalView;
+@property (strong, nonatomic) AVCaptureVideoPreviewLayer    *localVideoSurface;
+
+@property (strong, nonatomic) UIActionSheet                 *isFinishVideoActSheet;
+
+@property (weak, nonatomic) IBOutlet UILabel                *theLabel3001;
+@property (weak, nonatomic) IBOutlet UILabel                *theLabel3002;
+@property (weak, nonatomic) IBOutlet UILabel                *theLabel3003;
+@property (weak, nonatomic) IBOutlet UILabel                *theSelfIDLabel;
+
+@property (strong, nonatomic) NSString                      *theCurrentRotation;
+
 @end
 
 @implementation VideoVC
-
-
-@synthesize localVideoSurface;
-@synthesize theLocalView;
-@synthesize switchCameraBtn;
-@synthesize isFinishVideoActSheet;
-@synthesize theVideoBitrateAlertView;
-@synthesize theVideoNItem;
-@synthesize theCurrentRotation;
-@synthesize onRoomUserMArray;
-@synthesize theSelfIDLabel;
-
-@synthesize iRemoteVideoView1;
-@synthesize iRemoteVideoView2;
-@synthesize iRemoteVideoView3;
-@synthesize theLabel3001;
-@synthesize theLabel3002;
-@synthesize theLabel3003;
 
 
 #pragma mark -
@@ -51,6 +49,10 @@
     [self StartLocalVideoChat];
     //  iRemote Video
     [self myEnterRoomChat];
+    
+    [self p_configNavItem];
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
+    self.title = @"多方视频会议";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -72,7 +74,7 @@
             {
                 videoVC.theLabel3001.text = [NSString stringWithFormat:@"%@(%d)",userName,targerUserID];
                 [AnyChatPlatform SetVideoPos:targerUserID: videoVC.iRemoteVideoView1:0:0:0:0];
-                videoVC.iRemoteVideoView1.contentMode = UIViewContentModeScaleAspectFit;
+//                videoVC.iRemoteVideoView1.contentMode = UIViewContentModeScaleAspectFill;
                 break;
             }
                 
@@ -80,7 +82,7 @@
             {
                 videoVC.theLabel3002.text = [NSString stringWithFormat:@"%@(%d)",userName,targerUserID];
                 [AnyChatPlatform SetVideoPos:targerUserID: videoVC.iRemoteVideoView2:0:0:0:0];
-                videoVC.iRemoteVideoView2.contentMode = UIViewContentModeScaleAspectFit;
+//                videoVC.iRemoteVideoView2.contentMode = UIViewContentModeScaleAspectFill;
                 break;
             }
                 
@@ -88,7 +90,7 @@
             {
                 videoVC.theLabel3003.text = [NSString stringWithFormat:@"%@(%d)",userName,targerUserID];
                 [AnyChatPlatform SetVideoPos:targerUserID: videoVC.iRemoteVideoView3:0:0:0:0];
-                videoVC.iRemoteVideoView3.contentMode = UIViewContentModeScaleAspectFit;
+//                videoVC.iRemoteVideoView3.contentMode = UIViewContentModeScaleAspectFill;
                 break;
             }
                 
@@ -130,6 +132,23 @@
 }
 
 
+-(UIColor *)navBarColor {
+    
+    return [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
+}
+
+- (void)p_configNavItem {
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(switchCameraBtn_OnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"video_switch"] forState:UIControlStateNormal];
+    [button sizeToFit];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+
+
 #pragma mark - Memory Warning method
 
 - (void)didReceiveMemoryWarning
@@ -156,27 +175,9 @@
 }
 
 
-#pragma mark - AlertView delegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)navLeftClick
 {
-    if (alertView == self.theVideoBitrateAlertView)
-    {
-        if (buttonIndex == 0)
-        {
-            [self FinishVideoChat];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }
     
-    self.theVideoBitrateAlertView = nil;
-}
-
-
-#pragma mark - IBAction Method
-
-- (IBAction)FinishVideoChatBtnClicked:(id)sender
-{
     self.isFinishVideoActSheet = [[UIActionSheet alloc]
                                   initWithTitle:@"确定结束会话?"
                                   delegate:self
@@ -198,7 +199,7 @@
         [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
     }
     
-    [self btnSelectedOnClicked:switchCameraBtn];
+    [self btnSelectedOnClicked:sender];
 }
 
 
@@ -242,7 +243,7 @@
 {
     self.theCurrentRotation =@"Portrait";
     //Rotate
-    iRemoteVideoView1.layer.transform = kLayer_Z_Axis_3DRotation(0.0);
+    self.iRemoteVideoView1.layer.transform = kLayer_Z_Axis_3DRotation(0.0);
     self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(0.0);
     //Scale
     self.iRemoteVideoView1.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
@@ -253,7 +254,7 @@
 {
     self.theCurrentRotation =@"LandscapeLeft";
     //Rotate
-    iRemoteVideoView1.layer.transform = kLayer_Z_Axis_3DRotation(-90.0);
+    self.iRemoteVideoView1.layer.transform = kLayer_Z_Axis_3DRotation(-90.0);
     self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(-90.0);
     //Scale
     self.iRemoteVideoView1.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
@@ -264,7 +265,7 @@
 {
     self.theCurrentRotation =@"LandscapeRight";
     //Rotate
-    iRemoteVideoView1.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
+    self.iRemoteVideoView1.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
     self.theLocalView.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
     //Scale
     self.iRemoteVideoView1.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
@@ -313,7 +314,7 @@
         {
             self.theLabel3001.text = [NSString stringWithFormat:@"%@(%d)",userName,targerUserID];
             [AnyChatPlatform SetVideoPos:targerUserID: self.iRemoteVideoView1:0:0:0:0];
-            self.iRemoteVideoView1.contentMode = UIViewContentModeScaleAspectFit;
+//            self.iRemoteVideoView1.contentMode = UIViewContentModeScaleAspectFit;
             break;
         }
             
@@ -321,7 +322,7 @@
         {
             self.theLabel3002.text = [NSString stringWithFormat:@"%@(%d)",userName,targerUserID];
             [AnyChatPlatform SetVideoPos:targerUserID: self.iRemoteVideoView2:0:0:0:0];
-            self.iRemoteVideoView2.contentMode = UIViewContentModeScaleAspectFit;
+//            self.iRemoteVideoView2.contentMode = UIViewContentModeScaleAspectFit;
             break;
         }
             
@@ -329,7 +330,7 @@
         {
             self.theLabel3003.text = [NSString stringWithFormat:@"%@(%d)",userName,targerUserID];
             [AnyChatPlatform SetVideoPos:targerUserID: self.iRemoteVideoView3:0:0:0:0];
-            self.iRemoteVideoView3.contentMode = UIViewContentModeScaleAspectFit;
+//            self.iRemoteVideoView3.contentMode = UIViewContentModeScaleAspectFit;
             break;
         }
             
@@ -345,7 +346,10 @@
     NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
     if (cameraDeviceArray.count > 0)
     {
-        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+        if(cameraDeviceArray.count >= 2)
+            [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+        else
+            [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:0]];
     }
     
     // open local video
@@ -368,7 +372,10 @@
 - (void) OnLocalVideoInit:(id)session
 {
     self.localVideoSurface = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
-    self.localVideoSurface.frame = CGRectMake(0, 0, kLocalVideo_Width, kLocalVideo_Height);
+    
+    CGFloat width = AdaptW(kLocalVideo_Width);
+    CGFloat height = AdaptW(kLocalVideo_Height);
+    self.localVideoSurface.frame = CGRectMake(0, 0, width, height);
     self.localVideoSurface.videoGravity = AVLayerVideoGravityResizeAspectFill;
     
     [self.theLocalView.layer addSublayer:self.localVideoSurface];
@@ -405,19 +412,21 @@
     }
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
 
 - (void)setUI
 {
-    self.theVideoNItem.title = [[NSString alloc] initWithFormat:@"多方视频会议"];
+    self.title = @"多方视频会议";
     self.theSelfIDLabel.text = [NSString stringWithFormat:@"%@(%d)",[AnyChatVC sharedAnyChatVC].theMyUserName,[AnyChatVC sharedAnyChatVC].theMyUserID];
     
-    //Local View line
-    theLocalView.layer.borderColor = [[UIColor redColor] CGColor];
-    theLocalView.layer.borderWidth = 1.0f;
+    UIColor *bgColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+    self.theSelfIDLabel.backgroundColor = bgColor;
+    self.theLabel3001.backgroundColor = bgColor;
+    self.theLabel3002.backgroundColor = bgColor;
+    self.theLabel3003.backgroundColor = bgColor;
+    
+//    //Local View line
+//    theLocalView.layer.borderColor = [[UIColor redColor] CGColor];
+//    theLocalView.layer.borderWidth = 1.0f;
     
     //disable the “idle timer” to avert system sleep.
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];

@@ -4,8 +4,9 @@
 //
 
 #import "TransFileVC.h"
-
+#import "MBProgressHUD.h"
 @interface TransFileVC ()
+@property (weak, nonatomic) IBOutlet UIButton *uploadButton;
 
 @end
 
@@ -28,12 +29,23 @@
 {
     [super viewDidLoad];
     self.theTransFileBtnTimes = 0;
+    
+    self.uploadButton.layer.borderWidth = 1;
+    self.uploadButton.layer.borderColor = [UIColor colorWithRed:0 green:139/255.0 blue:227/255.0 alpha:1].CGColor;
+    self.uploadButton.layer.masksToBounds = YES;
+    
+    self.thePhotoProgressView.layer.cornerRadius = 5;
+    self.thePhotoProgressView.layer.masksToBounds = YES;
+    
+    self.theVideoProgressView.layer.cornerRadius = 5;
+    self.theVideoProgressView.layer.masksToBounds = YES;
+    
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self setUI];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -52,6 +64,15 @@
     [super didReceiveMemoryWarning];
 }
 
+-(BOOL)navBarTranslucent {
+    
+    return YES;
+}
+
+-(BOOL)needLeftBackNavItem {
+    
+    return NO;
+}
 
 #pragma mark - AlertView delegate
 
@@ -80,6 +101,7 @@
 {
     if (self.theTransFileBtnTimes < 1)
     {
+        
         NSString* photoFilePath = [AnyChatVC sharedAnyChatVC].thePhotoPath;
         NSString* videoFilePath = [AnyChatVC sharedAnyChatVC].theVideoPath;
         
@@ -103,8 +125,8 @@
         }
         else
         {
-            [[AnyChatVC sharedAnyChatVC] showInfoAlertView:@"上传失败，信息内容完整。"
-                                                          :@"Warning"];
+
+            [self showAutoDismissAlertView:@"上传失败，信息内容完整。" :@"Warning"];
             self.theTransFileBtnTimes = 0;
         }
     }
@@ -151,15 +173,15 @@
     
     int thephotoProgress = [[self newFloat:photoTaskIDProgress withNumber:0] intValue];
     int thevideoProgress = [[self newFloat:videoTaskIDProgress withNumber:0] intValue];
-    
+
     
     //Photo Progress
-    self.thePhotoProgressView.progress = thephotoProgress;
+    self.thePhotoProgressView.progress = thephotoProgress / 100.0;
     NSString *thephotoProgressStr = [[NSString alloc] initWithFormat:@"%i",thephotoProgress];
     self.thePhotoProgressLab.text = [thephotoProgressStr stringByAppendingString:@"%"];
     
     //Video Progress
-    self.theVideoProgressView.progress = thevideoProgress;
+    self.theVideoProgressView.progress = thevideoProgress / 100.0;
     NSString *thevideoProgressStr = [[NSString alloc] initWithFormat:@"%i",thevideoProgress];
     self.theVideoProgressLab.text = [thevideoProgressStr stringByAppendingString:@"%"];
     
@@ -168,32 +190,10 @@
         //close NSTimer
         [theNSTimer invalidate];
         theNSTimer = nil;
-        
         EndVC *endVC = [EndVC new];
         [self.navigationController pushViewController:endVC animated:YES];
         
     }
-}
-
-
-#pragma mark - UI Controls
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-- (void)setUI
-{
-    [self.navigationController setNavigationBarHidden:YES];
-    
-    if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0)
-    {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    }
-    
-    [self prefersStatusBarHidden];
-    
 }
 
 

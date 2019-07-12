@@ -11,7 +11,7 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-@interface TransFileVC : UIViewController <UIAlertViewDelegate>
+@interface TransFileVC : ACBaseViewController <UIAlertViewDelegate>
 {
     BOOL m_photoTransStatus;
     BOOL m_videoTransStatus;
