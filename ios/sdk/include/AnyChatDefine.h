@@ -55,6 +55,8 @@ enum BRAC_VideoShowDriver{
 #define BRAC_FUNC_CORE_FORBIDWINMSG	0x00002000	///< 禁止使用windows消息循环
 #define BRAC_FUNC_AUDIO_LARGEBUFFER	0x00004000	///< 音频大缓冲区模式，适合音乐播放类应用
 #define BRAC_FUNC_NET_LARGEDELAY	0x00010000	///< 网络高延迟模式，适用于卫星网络环境
+#define BRAC_FUNC_DISABLEVIDEODEC	0x00020000	///< 禁止视频解码
+#define BRAC_FUNC_DISABLEAUDIODEC	0x00040000	///< 禁止音频解码
 
 
 // 内核参数定义（API：BRAC_SetSDKOption、BRAC_GetSDKOption 传入参数）
@@ -181,6 +183,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_NEWLOGFILE			136	///< 产生新的日志文件
 #define BRAC_SO_CORESDK_SUPPORTSIP			137	///< 判断当前是否支持SIP通信
 #define BRAC_SO_CORESDK_SUPPORTHTML5		138	///< 判断当前是否支持HTML5
+#define BRAC_SO_CORESDK_DISABLELOGFILE		139	///< 禁止生成本地日志文件
 #define BRAC_SO_CORESDK_SUPPORTVIDEOCODEC	210	///< 设置支持的视频编码器
 #define BRAC_SO_CORESDK_SUPPORTAUDIOCODEC	211	///< 设置支持的音频编码器
 #define BRAC_SO_CORESDK_DISABLEMEDIACONSUL	212	///< 禁止媒体协商
@@ -204,7 +207,8 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_USESERVERTIME		230	///< 使用服务器时间戳（参数为int型，0 关闭[默认] 1 开启）
 #define BRAC_SO_CORESDK_APPMONITORLIST		231	///< 应用程序列表，应用程序共享模块使用（参数为字符串）
 #define BRAC_SO_CORESDK_SSLCERTCHAIN		232	///< SSL证书链
-#define BRAC_SO_CORESDK_SUPPORTMEDIACODEC	233	///< 本地支持的编码器信息，用于编码协商
+#define BRAC_SO_CORESDK_SETUSERAPPINFO		236	///< 设置用户APP信息
+#define BRAC_SO_CORESDK_LASTERRORCODE		237	///< 获取最后的出错代码
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -387,15 +391,12 @@ enum BRAC_VideoShowDriver{
 
 
 // 视频裁剪模式定义
-#if !defined(_ANYCHAT_VIDEOCLIPMODE_)
-#define _ANYCHAT_VIDEOCLIPMODE_
 #define ANYCHAT_VIDEOCLIPMODE_UNKNOW		-1	///< 未知模式，不需要做裁剪时使用
 #define ANYCHAT_VIDEOCLIPMODE_AUTO			0	///< 默认模式，以最大比例进行裁剪，然后再整体拉伸，画面保持比例，但被裁剪画面较大
 #define ANYCHAT_VIDEOCLIPMODE_OVERLAP		1	///< 重叠模式，只取最大有效部分，对边缘进行裁剪
 #define ANYCHAT_VIDEOCLIPMODE_SHRINK		2	///< 缩小模式，缩小到合适的比例，不进行裁剪
 #define ANYCHAT_VIDEOCLIPMODE_STRETCH		3	///< 平铺模式，不进行裁剪，但可能导致画面不成比例
 #define ANYCHAT_VIDEOCLIPMODE_DYNAMIC		4	///< 动态模式，由上层应用根据分辩率来调整显示表面，保持画面不变形
-#endif
 
 
 // 服务器信息查询常量定义（API：BRAC_QueryInfoFromServer 传入参数）
@@ -404,6 +405,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SERVERQUERY_STRIDBYUSERID	3	///< 根据用户ID查询字符串ID
 #define ANYCHAT_SERVERQUERY_NAMEBYUSERID	4	///< 根据用户ID查询用户名
 #define ANYCHAT_SERVERQUERY_NAMEBYSTRID		5	///< 根据字符串ID查询用户名
+#define ANYCHAT_SERVERQUERY_USERINFOBYID	6	///< 根据用户ID查询用户信息
 #define ANYCHAT_SERVERQUERY_PPTFILEINFO		10	///< PPT文件信息
 #define ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	100	///< 查询指定队列的坐席服务信息
 #define ANYCHAT_SERVERQUERY_RUNNINGSTATUS	200	///< 查询服务器运行状态
@@ -418,6 +420,7 @@ enum BRAC_VideoShowDriver{
 
 // SDK控制常量定义（API：BRAC_SDKControl 传入参数）
 #define ANYCHAT_SDKCTRL_BASE				1	///< 基本功能控制
+#define ANYCHAT_SDKCTRL_SERVER				2	///< 服务器通信
 #define ANYCHAT_SDKCTRL_USERBUFFER			3	///< 用户缓冲区传输控制
 #define ANYCHAT_SDKCTRL_INVOKEEVENT			4	///< 触发异步事件
 #define ANYCHAT_SDKCTRL_RECORD				5	///< 音视频录制
@@ -482,6 +485,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_CORESDKEVENT_CAMERASTATE	10	///< 摄像头状态事件
 #define ANYCHAT_CORESDKEVENT_MICSTATE		11	///< Mic状态事件
 #define ANYCHAT_CORESDKEVENT_TRANSFILE		12	///< 文件传输事件
+#define ANYCHAT_CORESDKEVENT_RECORDSTATUS	13	///< 录像状态事件
 #define ANYCHAT_CORESDKEVENT_STREAMPLAY		30	///< 媒体播放事件
 #define ANYCHAT_CORESDKEVENT_PPTHELPER		31	///< PPTHelper事件
 #define ANYCHAT_CORESDKEVENT_BUSINESS		32	///< 业务事件
