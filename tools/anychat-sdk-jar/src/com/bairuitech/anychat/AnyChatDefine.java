@@ -69,6 +69,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_RECORD_AUDIOBR			=	11;	///< 录像音频码率设置（参数为：int型，单位：bps）
 	public static final int BRAC_SO_RECORD_TMPDIR			=	12;	///< 录像文件临时目录设置（参数为字符串TCHAR类型，必须是完整的绝对路径）
 	public static final int BRAC_SO_SNAPSHOT_TMPDIR			=	13;	///< 快照文件临时目录设置（参数为字符串TCHAR类型，必须是完整的绝对路径）
+	public static final int BRAC_SO_CORESDK_DISABLELOGFILE	=	139;	///< 禁止生成本地日志文
 	public static final int BRAC_SO_RECORD_FILETYPE			=	140;///< 录制文件类型设置（参数为：int型， 0 MP4[默认], 1 WMV, 2 FLV, 3 MP3）
 	public static final int BRAC_SO_RECORD_WIDTH			=	141;///< 录制视频宽度设置（参数为：int型，如：320）
 	public static final int BRAC_SO_RECORD_HEIGHT			=	142;///< 录制文件高度设置（参数为：int型，如：240）
@@ -179,6 +180,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_CORESDK_APPMONITORLIST	=	231; ///< 应用程序列表，应用程序共享模块使用（参数为字符串）	
 	public static final int BRAC_SO_CORESDK_SSLCERTCHAIN	=	232; ///< SSL证书链
 	public static final int BRAC_SO_CORESDK_SUPPORTMEDIACODEC =	233; ///< 本地支持的编码器信息，用于编码协商
+	public static final int BRAC_SO_CORESDK_SETUSERAPPINFO		=236;	///< 设置用户APP信息
 	
 	public static final int BRAC_SO_UDPTRACE_MODE			=	160; ///< UDP数据包跟踪模式
 	public static final int BRAC_SO_UDPTRACE_PACKSIZE		=	161; ///< UDP数据包跟踪的大小，单位：BYTE
@@ -212,6 +214,7 @@ public class AnyChatDefine {
 	public static final int BRAC_RECORD_FLAGS_MULTISTREAM	=	0x00008000;	///< 支持多路流的录制（拍照）
 	public static final int BRAC_RECORD_FLAGS_CANCEL		=	0x00010000;	///< 取消录像，删除录像文件
 	public static final int BRAC_RECORD_FLAGS_BUFFERCB		=	0x00020000;	///< 缓冲区数据回调
+	public static final int ANYCHAT_RECORD_FLAGS_FILEMD5	=	0x00040000;	///< 计算录像文件的MD5值
 
 
 	// 用户状态标志定义（API：BRAC_QueryUserState 传入参数）
@@ -270,6 +273,7 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_SERVERQUERY_USERIDBYNAME =	1;	///< 根据用户昵称查询用户ID
 	public static final int ANYCHAT_SERVERQUERY_USERIDBYSTRID=	2;	///< 根据字符串ID查询用户ID
 	public static final int ANYCHAT_SERVERQUERY_STRIDBYUSERID=	3;	///< 根据用户ID查询字符串ID
+	public static final int ANYCHAT_SERVERQUERY_USERINFOBYID =	6;	///< 根据用户ID查询用户信息
 	
 	// SDK控制常量定义（API：BRAC_SDKControl 传入参数）
 	public static final int ANYCHAT_SDKCTRL_BASE			=	1;	///< 基本功能控制
@@ -302,6 +306,10 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_SDKCTRL_UPDATERECUSERSTR=	98;	///< 更新录像用户参数
 	public static final int ANYCHAT_SDKCTRL_SYNCRECORD		=	99;	///< 同步录像参数设置
 	public static final int ANYCHAT_SDKCTRL_BUSINESSBUFFER	=	100;///< 业务缓冲区控制
+    public static final int ANYCHAT_SDKCTRL_LIVESTREAM		=	101;	///< 直播业务控制
+    public static final int ANYCHAT_SDKCTRL_AIABILITY		=	102;	///< AI能力
+    public static final int ANYCHAT_SDKCTRL_APPBUFFER		=	103;	///< APP自定义缓冲区
+    public static final int ANYCHAT_SDKCTRL_FACEEMOTIONCTRL	=	300;	///< 微表情控制
 
 
 	// 常见出错代码定义
@@ -359,6 +367,7 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_CORESDKEVENT_CAMERASTATE=	10;	///< 摄像头状态事件
 	public static final int ANYCHAT_CORESDKEVENT_MICSTATE	=	11;	///< Mic状态事件
 	public static final int ANYCHAT_CORESDKEVENT_TRANSFILE	=	12;	///< 文件传输事件
+	public static final int ANYCHAT_CORESDKEVENT_RECORDSTATUS=	13;	///< 录像状态事件
 	public static final int ANYCHAT_CORESDKEVENT_STREAMPLAY	=	30;	///< 媒体播放事件
 	public static final int ANYCHAT_CORESDKEVENT_PPTHELPER	=	31;	///< PPTHelper事件
 	public static final int ANYCHAT_CORESDKEVENT_BUSINESS	=	32;	///< 业务事件
@@ -366,7 +375,13 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_CORESDKEVENT_MEDIABUFFER=	34;	///< 媒体缓冲区事件
 	public static final int ANYCHAT_CORESDKEVENT_USERBUFFER	=	35;	///< 用户缓冲区事件
 	public static final int ANYCHAT_CORESDKEVENT_MEDIAPROCESS=	36;	///< 媒体处理事件
+	public static final int ANYCHAT_CORESDKEVENT_FACEEMOTION=	40;	///< 微表情检测结果
+    public static final int ANYCHAT_CORESDKEVENT_REGEDITDATA=	41;	///< 数据接口返回数据
+    public static final int ANYCHAT_CORESDKEVENT_REQUESTEX=		42;	///< 扩展请求返回数据
 	public static final int ANYCHAT_CORESDKEVENT_BUSINESSBUFFER=100;///< 业务缓冲区事件
+	public static final int ANYCHAT_CORESDKEVENT_LIVESTREAM=	101;	///< 直播业务事件
+    public static final int ANYCHAT_CORESDKEVENT_AIABILITY=		102;	///< AI能力事件
+    public static final int ANYCHAT_CORESDKEVENT_APPBUFFER=		103;	///< APP自定义缓冲区事件
 	public static final int ANYCHAT_CORESDKEVENT_USERDEFINE	=	800;///< 用户自定义事件起始序号
 
 	// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
