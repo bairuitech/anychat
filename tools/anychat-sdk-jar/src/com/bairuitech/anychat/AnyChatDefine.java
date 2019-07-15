@@ -69,7 +69,6 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_RECORD_AUDIOBR			=	11;	///< 录像音频码率设置（参数为：int型，单位：bps）
 	public static final int BRAC_SO_RECORD_TMPDIR			=	12;	///< 录像文件临时目录设置（参数为字符串TCHAR类型，必须是完整的绝对路径）
 	public static final int BRAC_SO_SNAPSHOT_TMPDIR			=	13;	///< 快照文件临时目录设置（参数为字符串TCHAR类型，必须是完整的绝对路径）
-	public static final int BRAC_SO_CORESDK_DISABLELOGFILE	=	139;///< 禁止生成本地日志文件
 	public static final int BRAC_SO_RECORD_FILETYPE			=	140;///< 录制文件类型设置（参数为：int型， 0 MP4[默认], 1 WMV, 2 FLV, 3 MP3）
 	public static final int BRAC_SO_RECORD_WIDTH			=	141;///< 录制视频宽度设置（参数为：int型，如：320）
 	public static final int BRAC_SO_RECORD_HEIGHT			=	142;///< 录制文件高度设置（参数为：int型，如：240）
@@ -156,6 +155,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_CORESDK_UPLOADLOGINFO	=	134; ///< 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
 	public static final int BRAC_SO_CORESDK_WRITELOG		=	135; ///< 写入调试信息到客户端日志文件中
 	public static final int BRAC_SO_CORESDK_NEWLOGFILE		=	136; ///< 产生新的日志文件
+	public static final int BRAC_SO_CORESDK_DISABLELOGFILE	=	139;///< 禁止生成本地日志文件
 	public static final int BRAC_SO_CORESDK_SUPPORTVIDEOCODEC =	210; ///< 设置支持的视频编码器
 	public static final int BRAC_SO_CORESDK_SUPPORTAUDIOCODEC =	211; ///< 设置支持的音频编码器
 	public static final int BRAC_SO_CORESDK_DISABLEMEDIACONSUL=	212; ///< 禁止媒体协商
@@ -180,7 +180,7 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_CORESDK_APPMONITORLIST	=	231; ///< 应用程序列表，应用程序共享模块使用（参数为字符串）	
 	public static final int BRAC_SO_CORESDK_SSLCERTCHAIN	=	232; ///< SSL证书链
 	public static final int BRAC_SO_CORESDK_SUPPORTMEDIACODEC =	233; ///< 本地支持的编码器信息，用于编码协商
-	public static final int BRAC_SO_CORESDK_SETUSERAPPINFO	=236;    ///< 设置用户APP信息
+	public static final int BRAC_SO_CORESDK_SETUSERAPPINFO	=	236; ///< 设置用户APP信息
 	
 	public static final int BRAC_SO_UDPTRACE_MODE			=	160; ///< UDP数据包跟踪模式
 	public static final int BRAC_SO_UDPTRACE_PACKSIZE		=	161; ///< UDP数据包跟踪的大小，单位：BYTE
