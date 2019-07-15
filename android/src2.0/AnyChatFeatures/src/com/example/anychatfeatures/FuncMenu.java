@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.view.*;
+import android.widget.*;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
@@ -25,12 +26,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	public static final int FUNC_VOICEVIDEO = 1;		// 音视频交互
@@ -154,18 +150,23 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 				// 网络检测选择二次框确定按钮
 			case R.id.udpTraceConfirm:
 				int curSelcetTraceIndex = mTraceSelectDialog.getCurSelectTraceRole();
+				int roomId = mTraceSelectDialog.getRoomId();
+				if(roomId==-1){
+					Toast.makeText(FuncMenu.this, "请输入房间号", Toast.LENGTH_SHORT).show();
+					return;
+				}
 				Intent intent = new Intent();
 				if (curSelcetTraceIndex == 0) {
 					intent.setClass(FuncMenu.this, SenderTrace.class);
 				}else {
 					intent.setClass(FuncMenu.this, ReceiverTrace.class);
 				}
-				//设置背景颜色变亮
-				WindowManager.LayoutParams lps = getWindow().getAttributes();
-				lps.alpha = 1f;
-				getWindow().setAttributes(lps);
+//				//设置背景颜色变亮
+//				WindowManager.LayoutParams lps = getWindow().getAttributes();
+//				lps.alpha = 1f;
+//				getWindow().setAttributes(lps);
 
-				anyChatSDK.EnterRoom(FUNC_UDPTRACE, "");
+				anyChatSDK.EnterRoom(roomId, "");
 				startActivity(intent);
 				mTraceSelectDialog.dismiss();
 				mTraceSelectDialog = null;
@@ -173,9 +174,9 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 				// 网络检测选择二次框取消按钮
 			case R.id.udpTraceCancel:
 				//设置背景颜色变亮
-				WindowManager.LayoutParams lp = getWindow().getAttributes();
-				lp.alpha = 1f;
-				getWindow().setAttributes(lp);
+//				WindowManager.LayoutParams lp = getWindow().getAttributes();
+//				lp.alpha = 1f;
+//				getWindow().setAttributes(lp);
 
 				mTraceSelectDialog.dismiss();
 				mTraceSelectDialog = null;

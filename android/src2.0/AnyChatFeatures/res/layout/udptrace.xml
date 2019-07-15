@@ -15,10 +15,34 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
-            android:paddingTop="30dp" 
+            android:paddingTop="30dp"
             android:paddingBottom="20dp">
 
+
+            <TextView
+                    android:id="@+id/tipsText"
+                    android:text="房间号:"
+                    android:textSize="19sp"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="#333333"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <EditText
+                    android:id="@+id/roomId"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/tipsText"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:digits="01234566789"
+                    android:background="#F3F3F3"
+                    android:inputType="numberSigned"
+                    android:layout_width="260dp"
+                    android:paddingLeft="5dp"
+                    android:layout_height="40dp"/>
+
             <RadioGroup
+                    android:layout_below="@+id/roomId"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >

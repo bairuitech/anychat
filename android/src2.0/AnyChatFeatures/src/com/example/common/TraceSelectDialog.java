@@ -1,6 +1,7 @@
 package com.example.common;
 
 import android.view.WindowManager;
+import android.widget.EditText;
 import com.example.anychatfeatures.R;
 
 import android.app.Activity;
@@ -23,6 +24,7 @@ public class TraceSelectDialog extends PopupWindow {
 	private Button mTraceConfimBtn;
 	private Button mTraceCancelBtn;
 	private View mLayoutView;
+	private EditText roomIdView;
 	
 	public  TraceSelectDialog(Activity content, OnClickListener onListener) {
 		super(content);
@@ -33,7 +35,7 @@ public class TraceSelectDialog extends PopupWindow {
 		mTraceReceiverBtn = (RadioButton)mLayoutView.findViewById(R.id.traceReceiver);
 		mTraceConfimBtn = (Button)mLayoutView.findViewById(R.id.udpTraceConfirm);
 		mTraceCancelBtn = (Button)mLayoutView.findViewById(R.id.udpTraceCancel);
-		
+		roomIdView = (EditText)mLayoutView.findViewById(R.id.roomId);
 		mTraceConfimBtn.setOnClickListener(onListener);
 		mTraceCancelBtn.setOnClickListener(onListener);
 		
@@ -42,15 +44,15 @@ public class TraceSelectDialog extends PopupWindow {
 		this.setContentView(mLayoutView);
 		this.setWidth(LayoutParams.WRAP_CONTENT);
 		this.setHeight(LayoutParams.WRAP_CONTENT);
-		this.setFocusable(false);
-		this.setOutsideTouchable(false);
+		this.setFocusable(true);
+	//	this.setOutsideTouchable(true);
 	//	this.setAnimationStyle(R.style.AnimBottom);
 		ColorDrawable dw = new ColorDrawable((Color.TRANSPARENT));
 		this.setBackgroundDrawable(dw);
-		// 设置背景颜色变暗
-		WindowManager.LayoutParams lp = content.getWindow().getAttributes();
-		lp.alpha = 0.7f;
-		content.getWindow().setAttributes(lp);
+//		// 设置背景颜色变暗
+//		WindowManager.LayoutParams lp = content.getWindow().getAttributes();
+//		lp.alpha = 0.7f;
+//		content.getWindow().setAttributes(lp);
 
 		mLayoutView.setOnTouchListener(new OnTouchListener() {
 			
@@ -68,6 +70,15 @@ public class TraceSelectDialog extends PopupWindow {
 			}
 		});
 	}
+
+	public int getRoomId(){
+		if(roomIdView.getText().toString().trim().equals("")){
+			return -1;
+		}
+		return Integer.valueOf(roomIdView.getText().toString().trim());
+	}
+
+
 	
 	public short getCurSelectTraceRole(){
 		if (mTraceSenderBtn.isChecked()) {

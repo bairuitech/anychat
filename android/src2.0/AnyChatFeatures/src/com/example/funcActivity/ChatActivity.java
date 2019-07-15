@@ -111,11 +111,11 @@ public class ChatActivity extends Activity implements AnyChatBaseEvent,
 		mSendTV.setOnClickListener(onClickListener);
 
 		sendLayout.addView(mMessagEditText, new LayoutParams(
-				ScreenInfo.WIDTH * 4 / 5 - 60, 100));
+				ScreenInfo.WIDTH * 4 / 5 - 60, 120));
 		sendLayout.addView(mSendTV, new LayoutParams(ScreenInfo.WIDTH / 5,
-				100));
+				120));
 		mMainLayout.addView(sendLayout, new LayoutParams(
-				LayoutParams.FILL_PARENT, 140));
+				LayoutParams.FILL_PARENT, 160));
 
 		mFullLayout.addView(mMainLayout, new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
