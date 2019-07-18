@@ -906,7 +906,7 @@
 				);
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.helloAnyChatCloud.0709;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.helloAnyChatCloud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -941,7 +941,7 @@
 					../../sdk/libs,
 				);
 				MACH_O_TYPE = mh_execute;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.helloAnyChatCloud.0709;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.helloAnyChatCloud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

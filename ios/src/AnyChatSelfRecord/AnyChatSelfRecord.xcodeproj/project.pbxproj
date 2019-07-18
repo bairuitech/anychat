@@ -960,7 +960,7 @@
 					../../sdk/libs,
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatSelfRecord.0709;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatSelfRecord;
 				PRODUCT_NAME = AnyChatSelfRecord;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
@@ -992,7 +992,7 @@
 					../../sdk/libs,
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatSelfRecord.0709;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatSelfRecord;
 				PRODUCT_NAME = AnyChatSelfRecord;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";

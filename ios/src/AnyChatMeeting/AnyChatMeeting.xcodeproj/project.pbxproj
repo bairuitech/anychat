@@ -877,7 +877,7 @@
 					../../sdk/libs,
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatMeeting.0709;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatMeeting;
 				PRODUCT_NAME = AnyChatMeeting;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -910,7 +910,7 @@
 					"$(inherited)",
 					../../sdk/libs,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatMeeting.0709;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatMeeting;
 				PRODUCT_NAME = AnyChatMeeting;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -1241,7 +1241,7 @@
 					../../sdk/libs,
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatFeatures.0709;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatFeatures;
 				PRODUCT_NAME = AnyChatFeatures;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
@@ -1272,7 +1272,7 @@
 					"$(inherited)",
 					../../sdk/libs,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatFeatures.0709;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatFeatures;
 				PRODUCT_NAME = AnyChatFeatures;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";

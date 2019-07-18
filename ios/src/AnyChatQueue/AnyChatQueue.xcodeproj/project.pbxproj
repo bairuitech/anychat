@@ -731,7 +731,7 @@
 					"$(inherited)",
 					../../sdk/libs,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueue.0709;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -752,7 +752,7 @@
 					"$(inherited)",
 					../../sdk/libs,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueue.0709;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
