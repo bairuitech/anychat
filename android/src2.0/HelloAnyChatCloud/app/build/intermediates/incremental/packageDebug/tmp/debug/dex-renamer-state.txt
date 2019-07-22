@@ -1,4 +1,0 @@
-#Tue Jul 09 00:54:04 CST 2019
-base.0=D\:\\android studio workspace\\HelloAnyChatCloud\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-path.0=classes.dex
-renamed.0=classes.dex
