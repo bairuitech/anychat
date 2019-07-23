@@ -82,4 +82,4 @@ return shared##classname;   \
 
 #import "ACBaseViewController.h"
 #import "UIView+AdaptScreen.h"
-
+#import "UINavigationController+DeviceOrientataion.h"

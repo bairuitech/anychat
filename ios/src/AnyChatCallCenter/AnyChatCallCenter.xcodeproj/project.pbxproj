@@ -49,6 +49,7 @@
 		F84AE8F522C35646004CD66F /* ACVideoAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F84AE8F322C35645004CD66F /* ACVideoAlertView.xib */; };
 		F84AE8F622C35646004CD66F /* ACVideoAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F84AE8F422C35646004CD66F /* ACVideoAlertView.m */; };
 		F854CF0B21475157002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CF0A21475157002FC106 /* libc++.tbd */; };
+		F88FC35722E01DFD00A58B31 /* UINavigationController+DeviceOrientataion.m in Sources */ = {isa = PBXBuildFile; fileRef = F88FC35622E01DFD00A58B31 /* UINavigationController+DeviceOrientataion.m */; };
 		FE673EC01A1ED9E300C18ACD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FE673EBF1A1ED9E300C18ACD /* Settings.bundle */; };
 		FE673EC31A1EE70E00C18ACD /* bg_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673EC11A1EE70E00C18ACD /* bg_video@2x.png */; };
 		FE673EC41A1EE70E00C18ACD /* bg_video-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE673EC21A1EE70E00C18ACD /* bg_video-568h@2x.png */; };
@@ -166,6 +167,8 @@
 		F84AE8F322C35645004CD66F /* ACVideoAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACVideoAlertView.xib; sourceTree = "<group>"; };
 		F84AE8F422C35646004CD66F /* ACVideoAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACVideoAlertView.m; sourceTree = "<group>"; };
 		F854CF0A21475157002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		F88FC35522E01DFD00A58B31 /* UINavigationController+DeviceOrientataion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+DeviceOrientataion.h"; sourceTree = "<group>"; };
+		F88FC35622E01DFD00A58B31 /* UINavigationController+DeviceOrientataion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+DeviceOrientataion.m"; sourceTree = "<group>"; };
 		FE673EBF1A1ED9E300C18ACD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FE673EC11A1EE70E00C18ACD /* bg_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_video@2x.png"; path = "AnyChatCallCenter/bk/bg_video@2x.png"; sourceTree = "<group>"; };
 		FE673EC21A1EE70E00C18ACD /* bg_video-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_video-568h@2x.png"; path = "AnyChatCallCenter/bk/bg_video-568h@2x.png"; sourceTree = "<group>"; };
@@ -500,6 +503,8 @@
 				FEB337D719B8555200D2C2F3 /* AnyChatAppDelegate.m */,
 				F84AE8EC22C340F8004CD66F /* ACBaseViewController.h */,
 				F84AE8EB22C340F8004CD66F /* ACBaseViewController.m */,
+				F88FC35522E01DFD00A58B31 /* UINavigationController+DeviceOrientataion.h */,
+				F88FC35622E01DFD00A58B31 /* UINavigationController+DeviceOrientataion.m */,
 				FEB3388C19B862B400D2C2F3 /* AnyChatNavigationController.h */,
 				FEB3388D19B862B400D2C2F3 /* AnyChatNavigationController.m */,
 				FE95EC8F19B944AC000798CF /* LoginViewController.h */,
@@ -706,6 +711,7 @@
 				F84AE8DD22C340CD004CD66F /* IQUIView+Hierarchy.m in Sources */,
 				F84AE8E222C340CD004CD66F /* IQBarButtonItem.m in Sources */,
 				F84AE8DC22C340CD004CD66F /* IQUITextFieldView+Additions.m in Sources */,
+				F88FC35722E01DFD00A58B31 /* UINavigationController+DeviceOrientataion.m in Sources */,
 				F84AE8E422C340CD004CD66F /* IQTitleBarButtonItem.m in Sources */,
 				FE94CF791C65979B00D199DE /* MBProgressHUD+JT.m in Sources */,
 				FE95ECA719B944AC000798CF /* HallViewController.m in Sources */,

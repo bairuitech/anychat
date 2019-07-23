@@ -39,6 +39,7 @@
 		F8394EAD22AE3ABD00F49012 /* ACFeatureCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8394EAB22AE3ABD00F49012 /* ACFeatureCollectionCell.xib */; };
 		F854CF0921475100002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CF0821475100002FC106 /* libc++.tbd */; };
 		F85F1C2022A7AF0100F8F310 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F85F1C1F22A7AF0100F8F310 /* Launch Screen.storyboard */; };
+		F88FC35A22E043DD00A58B31 /* UINavigationController+DeviceOrientataion.m in Sources */ = {isa = PBXBuildFile; fileRef = F88FC35822E043DC00A58B31 /* UINavigationController+DeviceOrientataion.m */; };
 		F8B08CAC22B7280600C07FEE /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B08C8C22B7280600C07FEE /* IQNSArray+Sort.m */; };
 		F8B08CAD22B7280600C07FEE /* IQUIScrollView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B08C8E22B7280600C07FEE /* IQUIScrollView+Additions.m */; };
 		F8B08CAE22B7280600C07FEE /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B08C9022B7280600C07FEE /* IQUITextFieldView+Additions.m */; };
@@ -212,6 +213,8 @@
 		F8394EAB22AE3ABD00F49012 /* ACFeatureCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ACFeatureCollectionCell.xib; sourceTree = "<group>"; };
 		F854CF0821475100002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		F85F1C1F22A7AF0100F8F310 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		F88FC35822E043DC00A58B31 /* UINavigationController+DeviceOrientataion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+DeviceOrientataion.m"; sourceTree = "<group>"; };
+		F88FC35922E043DD00A58B31 /* UINavigationController+DeviceOrientataion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+DeviceOrientataion.h"; sourceTree = "<group>"; };
 		F8B08C8B22B7280600C07FEE /* IQNSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQNSArray+Sort.h"; sourceTree = "<group>"; };
 		F8B08C8C22B7280600C07FEE /* IQNSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQNSArray+Sort.m"; sourceTree = "<group>"; };
 		F8B08C8D22B7280600C07FEE /* IQUIScrollView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIScrollView+Additions.h"; sourceTree = "<group>"; };
@@ -779,6 +782,8 @@
 				FE94D09E1C65EFE400D199DE /* sdk */,
 				FEBBA25F19C2CC0B009EE02C /* AppDelegate.h */,
 				FEBBA26019C2CC0B009EE02C /* AppDelegate.m */,
+				F88FC35922E043DD00A58B31 /* UINavigationController+DeviceOrientataion.h */,
+				F88FC35822E043DC00A58B31 /* UINavigationController+DeviceOrientataion.m */,
 				F8394EA022AE26A900F49012 /* ACBaseViewController.h */,
 				F8394EA122AE26A900F49012 /* ACBaseViewController.m */,
 				FE8CF22219FA1FC1005E2F71 /* Login */,
@@ -1095,6 +1100,7 @@
 				FEBBA26119C2CC0B009EE02C /* AppDelegate.m in Sources */,
 				F8394E9F22ADFE1600F49012 /* UIView+AdaptScreen.m in Sources */,
 				F8B08CB322B7280600C07FEE /* IQTextView.m in Sources */,
+				F88FC35A22E043DD00A58B31 /* UINavigationController+DeviceOrientataion.m in Sources */,
 				F8B08CAF22B7280600C07FEE /* IQUIView+Hierarchy.m in Sources */,
 				F8B08CB522B7280600C07FEE /* IQPreviousNextView.m in Sources */,
 				FEBBA25D19C2CC0B009EE02C /* main.m in Sources */,

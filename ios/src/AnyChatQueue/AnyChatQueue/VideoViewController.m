@@ -122,15 +122,17 @@
 }
 
 
--(void)viewWillDisappear:(BOOL)animated {    
+-(void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    UIDevice *device = [UIDevice currentDevice]; //Get the device object
-    [nc removeObserver:self name:UIDeviceOrientationDidChangeNotification object:device];
+    [nc removeObserver:self name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    // Do any additional setup after loading the view from its nib.
-    //----- SETUP DEVICE ORIENTATION CHANGE NOTIFICATION -----
+   
+    [super viewDidAppear:animated];
+    
     UIDevice *device = [UIDevice currentDevice]; //Get the device object
     [device beginGeneratingDeviceOrientationNotifications]; //Tell it to start monitoring the accelerometer for orientation
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter]; //Get the notification centre for the app
@@ -169,7 +171,7 @@
     // 枚举本地视频采集设备
     NSMutableArray* videoDeviceArray = [AnyChatPlatform EnumVideoCapture];
     // 选择指定的视频采集设备
-    if (videoDeviceArray.count > 0) [AnyChatPlatform SelectVideoCapture:[videoDeviceArray objectAtIndex:1]];
+    if (videoDeviceArray.count > 0) [AnyChatPlatform SelectVideoCapture:[videoDeviceArray lastObject]];
     
     //设置本地视频采用 Overlay 模式
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
@@ -271,4 +273,16 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+ 
+//返回直接支持的方向
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+//返回最优先显示的屏幕方向
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
 @end

@@ -4,7 +4,7 @@
 //
 //  Created by tim.tan on 15/6/25.
 //  Copyright (c) 2015年 tim.tan. All rights reserved.
-//  坐席服务控制器(业务队列列表)
+//  坐席（客服）----- 坐席服务控制器(含业务队列列表)
 
 #import <UIKit/UIKit.h>
 

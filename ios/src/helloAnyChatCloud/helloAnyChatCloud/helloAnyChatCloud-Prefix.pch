@@ -83,4 +83,4 @@ return shared##classname;   \
 #import "IQKeyboardManager.h"
 #import "UIView+AdaptScreen.h"
 #import "ACBaseViewController.h"
-
+#import "UINavigationController+DeviceOrientataion.h"

@@ -111,6 +111,18 @@
     return UIStatusBarStyleLightContent;
 }
 
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+//返回直接支持的方向
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
+}
+//返回最优先显示的屏幕方向
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
 
 
 

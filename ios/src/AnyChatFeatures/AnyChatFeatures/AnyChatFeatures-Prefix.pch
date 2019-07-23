@@ -120,3 +120,4 @@ return shared##classname;   \
 #import "ACBaseViewController.h"
 #import "AnyChatVC.h"
 #import "IQKeyboardManager.h"
+#import "UINavigationController+DeviceOrientataion.h"

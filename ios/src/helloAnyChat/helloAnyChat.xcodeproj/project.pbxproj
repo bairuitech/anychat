@@ -28,6 +28,7 @@
 		098DF23E1EA7435800FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF23D1EA7435800FB36FA /* VideoToolbox.framework */; };
 		464E84AE1ECCA17900A8BC2D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 464E84AD1ECCA17900A8BC2D /* libz.tbd */; };
 		F854CEFF21474F84002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CEFE21474F84002FC106 /* libc++.tbd */; };
+		F88FC36122E0620A00A58B31 /* UINavigationController+DeviceOrientataion.m in Sources */ = {isa = PBXBuildFile; fileRef = F88FC35F22E0620A00A58B31 /* UINavigationController+DeviceOrientataion.m */; };
 		F89B2B1322C1BD3900B86FE2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F89B2B1222C1BD3900B86FE2 /* Launch Screen.storyboard */; };
 		F89B2B1622C1C14100B86FE2 /* UIView+AdaptScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = F89B2B1422C1C14100B86FE2 /* UIView+AdaptScreen.m */; };
 		F89B2B1922C1C15300B86FE2 /* ACBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F89B2B1822C1C15300B86FE2 /* ACBaseViewController.m */; };
@@ -116,6 +117,8 @@
 		464E84AB1ECCA14A00A8BC2D /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../../sdk/libs/libavfilter.a; sourceTree = "<group>"; };
 		464E84AD1ECCA17900A8BC2D /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		F854CEFE21474F84002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		F88FC35F22E0620A00A58B31 /* UINavigationController+DeviceOrientataion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+DeviceOrientataion.m"; sourceTree = "<group>"; };
+		F88FC36022E0620A00A58B31 /* UINavigationController+DeviceOrientataion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+DeviceOrientataion.h"; sourceTree = "<group>"; };
 		F89B2B1222C1BD3900B86FE2 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F89B2B1422C1C14100B86FE2 /* UIView+AdaptScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AdaptScreen.m"; sourceTree = "<group>"; };
 		F89B2B1522C1C14100B86FE2 /* UIView+AdaptScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AdaptScreen.h"; sourceTree = "<group>"; };
@@ -389,6 +392,8 @@
 				FEBBA26019C2CC0B009EE02C /* AppDelegate.m */,
 				F89B2B1722C1C15200B86FE2 /* ACBaseViewController.h */,
 				F89B2B1822C1C15300B86FE2 /* ACBaseViewController.m */,
+				F88FC36022E0620A00A58B31 /* UINavigationController+DeviceOrientataion.h */,
+				F88FC35F22E0620A00A58B31 /* UINavigationController+DeviceOrientataion.m */,
 				FE85404519D515A800253FA0 /* tableVCell.xib */,
 				FEBBA2B719C2CF67009EE02C /* AnyChatViewController.h */,
 				FEBBA2B819C2CF67009EE02C /* AnyChatViewController.m */,
@@ -586,6 +591,7 @@
 				F89B2B1622C1C14100B86FE2 /* UIView+AdaptScreen.m in Sources */,
 				FEB0A3711A523BE50065FDB7 /* SettingVC.m in Sources */,
 				FEBBA25D19C2CC0B009EE02C /* main.m in Sources */,
+				F88FC36122E0620A00A58B31 /* UINavigationController+DeviceOrientataion.m in Sources */,
 				04B125941CEDC1DA0008E358 /* TextModelTool.m in Sources */,
 				FEB0A3721A523BE50065FDB7 /* DetailVC.m in Sources */,
 				04B125911CEDBF390008E358 /* TextModel.m in Sources */,

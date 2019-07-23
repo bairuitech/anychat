@@ -44,6 +44,7 @@
 		F84AE8AD22C30944004CD66F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F84AE8AC22C30944004CD66F /* Launch Screen.storyboard */; };
 		F854CEFD21474DC4002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CEFC21474DC4002FC106 /* libc++.tbd */; };
 		F854CF5A214758F9002FC106 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09558B751ECDBCA900D966CE /* libz.tbd */; };
+		F88FC36422E069B800A58B31 /* UINavigationController+DeviceOrientataion.m in Sources */ = {isa = PBXBuildFile; fileRef = F88FC36222E069B700A58B31 /* UINavigationController+DeviceOrientataion.m */; };
 		F8D082322150EE66002B0DAC /* DetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8D0822A2150EE66002B0DAC /* DetailVC.xib */; };
 		F8D082332150EE66002B0DAC /* VideoSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D0822B2150EE66002B0DAC /* VideoSettings.plist */; };
 		F8D082342150EE66002B0DAC /* SettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D0822C2150EE66002B0DAC /* SettingVC.m */; };
@@ -166,6 +167,8 @@
 		F84AE8AA22C304DA004CD66F /* ACBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACBaseViewController.h; sourceTree = "<group>"; };
 		F84AE8AC22C30944004CD66F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F854CEFC21474DC4002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		F88FC36222E069B700A58B31 /* UINavigationController+DeviceOrientataion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+DeviceOrientataion.m"; sourceTree = "<group>"; };
+		F88FC36322E069B700A58B31 /* UINavigationController+DeviceOrientataion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+DeviceOrientataion.h"; sourceTree = "<group>"; };
 		F8D0822A2150EE66002B0DAC /* DetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailVC.xib; path = helloAnyChatCloud/DetailVC.xib; sourceTree = "<group>"; };
 		F8D0822B2150EE66002B0DAC /* VideoSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = VideoSettings.plist; path = helloAnyChatCloud/VideoSettings.plist; sourceTree = "<group>"; };
 		F8D0822C2150EE66002B0DAC /* SettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingVC.m; path = helloAnyChatCloud/SettingVC.m; sourceTree = "<group>"; };
@@ -585,6 +588,8 @@
 				FEBBA26019C2CC0B009EE02C /* AppDelegate.m */,
 				F84AE8AA22C304DA004CD66F /* ACBaseViewController.h */,
 				F84AE8A922C304DA004CD66F /* ACBaseViewController.m */,
+				F88FC36322E069B700A58B31 /* UINavigationController+DeviceOrientataion.h */,
+				F88FC36222E069B700A58B31 /* UINavigationController+DeviceOrientataion.m */,
 				FE85404519D515A800253FA0 /* tableVCell.xib */,
 				FEBBA2B719C2CF67009EE02C /* AnyChatViewController.h */,
 				FEBBA2B819C2CF67009EE02C /* AnyChatViewController.m */,
@@ -756,6 +761,7 @@
 				F84AE8A622C304C6004CD66F /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				FEBBA25D19C2CC0B009EE02C /* main.m in Sources */,
 				F84AE8A322C304C6004CD66F /* IQPreviousNextView.m in Sources */,
+				F88FC36422E069B800A58B31 /* UINavigationController+DeviceOrientataion.m in Sources */,
 				F84AE8A522C304C6004CD66F /* IQToolbar.m in Sources */,
 				FE94CE431C634C6400D199DE /* AFURLResponseSerialization.m in Sources */,
 				FE1B2E7519C692F300773FE6 /* VideoViewController.m in Sources */,

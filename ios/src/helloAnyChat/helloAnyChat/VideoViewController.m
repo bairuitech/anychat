@@ -231,16 +231,18 @@
 
 #pragma mark - Orientation Rotation
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (BOOL)shouldAutorotate
-{
+- (BOOL)shouldAutorotate {
     return YES;
 }
+//返回直接支持的方向
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+//返回最优先显示的屏幕方向
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
@@ -260,6 +262,7 @@
         [self setFrameOfPortrait];
     }
 }
+ 
 
 #pragma mark - Video Rotation
 
@@ -268,9 +271,6 @@
     //Rotate
     self.remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(0.0);
     self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(0.0);
-    //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
-    self.theLocalView.frame = kLocalVideoPortrait_CGRect;
 }
 
 -(void)setFrameOfLandscapeLeft
@@ -278,9 +278,6 @@
     //Rotate
     self.remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(-90.0);
     self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(-90.0);
-    //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
-    self.theLocalView.frame = kLocalVideoLandscape_CGRect;
 }
 
 -(void)setFrameOfLandscapeRight
@@ -288,9 +285,6 @@
     //Rotate
     self.remoteVideoSurface.layer.transform = kLayer3DRotation_Z_Axis(90.0);
     self.theLocalView.layer.transform = kLayer3DRotation_Z_Axis(90.0);
-    //Scale
-    self.remoteVideoSurface.frame = CGRectMake(0, 0, kSelfView_Width, kSelfView_Height);
-    self.theLocalView.frame = kLocalVideoLandscape_CGRect;
 }
 
 
@@ -320,5 +314,8 @@
         button.selected = YES;
     }
 }
+
+
+
 
 @end

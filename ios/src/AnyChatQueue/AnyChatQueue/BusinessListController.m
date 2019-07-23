@@ -17,7 +17,9 @@
 #import "AnyChatObjectDefine.h"
 #import "AnyChat_QueueModel.h"
 
-@interface BusinessListController ()
+#import "AppDelegate.h"
+
+@interface BusinessListController ()<UITableViewDelegate, UITableViewDataSource>
 
 @end
 
@@ -26,19 +28,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.navigationItem.title = @"队列列表";
-    
+    self.title = @"队列列表";
+    self.tableView.tableFooterView = [UIView new];
     // 添加退出按钮
     [self setupBackButton];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:nil];
-
+    
+    [self preferredInterfaceOrientationForPresentation];
+    [BusinessListController interfaceOrientation:UIInterfaceOrientationPortrait];
 }
 
 #pragma mark - Action
@@ -74,8 +78,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [MBProgressHUD showMessage:@"正在连接中，请稍等..."];
     // 进队列
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     Business *business = self.businesses[indexPath.row];
-    
     [[AnyChatQueueDataManager getInstance].queueModel enterQueueWithid:[NSString stringWithFormat:@"%d",business.businessId]];
 }
 
@@ -97,6 +101,22 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
++ (void)interfaceOrientation:(UIInterfaceOrientation)orientation
+{
+    
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector  = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = orientation;
+        // 从2开始是因为0 1 两个参数已经被selector和target占用
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
 }
 
 @end

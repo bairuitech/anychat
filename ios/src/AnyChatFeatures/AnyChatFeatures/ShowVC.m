@@ -123,9 +123,10 @@
         _moviePlayerVC = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
         
         // 弹出控制器
-        [self presentViewController:_moviePlayerVC animated:YES completion:nil];
+        [self.navigationController presentViewController:_moviePlayerVC animated:YES completion:nil];
         
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 }
 
