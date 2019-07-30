@@ -1,6 +1,7 @@
 package com.bairuitech.anychat;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
 
@@ -34,6 +35,9 @@ import javax.crypto.Cipher;
 public class AnyChatCertHelper {
     public static final String ECB_PKCS1_PADDING = "RSA/ECB/PKCS1Padding";//加密填充方式
     public static final String RSA = "RSA";// 非对称加密密钥算法
+    private static String beginCertificate = "-----BEGIN CERTIFICATE-----";
+    private static String endCertificate = "-----END CERTIFICATE-----";
+
     /**
      * @param certBytes，数字证书crt传入的byte数组
      * @return
@@ -100,18 +104,44 @@ public class AnyChatCertHelper {
         X509Certificate cert;
         InputStream input;
         int result = 0;
+        String chainString=null;
+        String strCertChain = new String(certChain);
+        if(strCertChain!=null && strCertChain.length()>0) {
+            String[] strings = strCertChain.split(beginCertificate);
+            int length = strings.length;
+             chainString = beginCertificate+strings[length-1];
+        }
         do {
             try {
-                String[] splitCert = splitCert(certChain);
-                certificatefactory = CertificateFactory.getInstance("X.509", "BC");
+                String[] splitCert = splitCert(chainString.getBytes());
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.P){
+                    certificatefactory = CertificateFactory.getInstance("X.509");
+                }else{
+                    certificatefactory = CertificateFactory.getInstance("X.509", "BC");
+                }
+
                 input = new ByteArrayInputStream(cert2Verify);
                 cert = (X509Certificate) certificatefactory.generateCertificate(input);
                 certs.add(cert);
+                StringBuilder stringBuilder;
                 for (String b : splitCert) {
-                    byte[] certByte = b.getBytes();
+                    if(b.indexOf(beginCertificate)==-1){
+                        break;
+                    }
+                    stringBuilder = new StringBuilder();
+                    stringBuilder.append(b);
+                    if(!b.endsWith(endCertificate)){
+                        stringBuilder.append(endCertificate);
+                    }
+                    byte[] certByte = stringBuilder.toString().getBytes();
                     input = new ByteArrayInputStream(certByte);
-                    cert = (X509Certificate) certificatefactory.generateCertificate(input);
-                    certs.add(cert);
+
+                    try{
+                        cert = (X509Certificate) certificatefactory.generateCertificate(input);
+                        certs.add(cert);
+                    }catch (Exception e){
+                        Log.e("AnyChatCertHelper", "VerifyX509Cert parse failure", e.fillInStackTrace());
+                    }
                 }
                 List<X509Certificate> certOrder = order(certs);
                 if (certOrder.size()<=0){
@@ -146,7 +176,7 @@ public class AnyChatCertHelper {
      */
     private static String[] splitCert(byte[] certChain) {
         String s = new String(certChain);
-        String[] cert = s.split("-----END CERTIFICATE-----");
+        String[] cert = s.split(endCertificate);
         return cert;
     }
 
