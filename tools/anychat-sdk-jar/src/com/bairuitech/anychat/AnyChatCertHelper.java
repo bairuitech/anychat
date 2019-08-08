@@ -33,10 +33,15 @@ import javax.crypto.Cipher;
  * 获取数字证书相关信息，证书有效性验证，RSA加密和解密功能
  */
 public class AnyChatCertHelper {
-    public static final String ECB_PKCS1_PADDING = "RSA/ECB/PKCS1Padding";//加密填充方式
-    public static final String RSA = "RSA";// 非对称加密密钥算法
+    private static final int AC_RSA_PKCS1_OAEP_PADDING_SHE256 = 100;
+    private static final String RSA_OAEP_SHA256_PADDING = "RSA/ECB/OAEPWithSHA256AndMGF1Padding";//加密填充方式
+    private static final String RSA = "RSA";// 非对称加密密钥算法
     private static String beginCertificate = "-----BEGIN CERTIFICATE-----";
     private static String endCertificate = "-----END CERTIFICATE-----";
+
+    public static int GetRSAPaddingMode(int flags) {
+        return AC_RSA_PKCS1_OAEP_PADDING_SHE256;
+    }
 
     /**
      * @param certBytes，数字证书crt传入的byte数组
@@ -104,19 +109,19 @@ public class AnyChatCertHelper {
         X509Certificate cert;
         InputStream input;
         int result = 0;
-        String chainString=null;
+        String chainString = null;
         String strCertChain = new String(certChain);
-        if(strCertChain!=null && strCertChain.length()>0) {
+        if (strCertChain != null && strCertChain.length() > 0) {
             String[] strings = strCertChain.split(beginCertificate);
             int length = strings.length;
-             chainString = beginCertificate+strings[length-1];
+            chainString = beginCertificate + strings[length - 1];
         }
         do {
             try {
                 String[] splitCert = splitCert(chainString.getBytes());
-                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.P){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     certificatefactory = CertificateFactory.getInstance("X.509");
-                }else{
+                } else {
                     certificatefactory = CertificateFactory.getInstance("X.509", "BC");
                 }
 
@@ -125,29 +130,29 @@ public class AnyChatCertHelper {
                 certs.add(cert);
                 StringBuilder stringBuilder;
                 for (String b : splitCert) {
-                    if(b.indexOf(beginCertificate)==-1){
+                    if (b.indexOf(beginCertificate) == -1) {
                         break;
                     }
                     stringBuilder = new StringBuilder();
                     stringBuilder.append(b);
-                    if(!b.endsWith(endCertificate)){
+                    if (!b.endsWith(endCertificate)) {
                         stringBuilder.append(endCertificate);
                     }
                     byte[] certByte = stringBuilder.toString().getBytes();
                     input = new ByteArrayInputStream(certByte);
 
-                    try{
+                    try {
                         cert = (X509Certificate) certificatefactory.generateCertificate(input);
                         certs.add(cert);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         Log.e("AnyChatCertHelper", "VerifyX509Cert parse failure", e.fillInStackTrace());
                     }
                 }
                 List<X509Certificate> certOrder = order(certs);
-                if (certOrder.size()<=0){
+                if (certOrder.size() <= 0) {
                     break;
                 }
-                X509Certificate lastCert=certOrder.get(certOrder.size()-1);
+                X509Certificate lastCert = certOrder.get(certOrder.size() - 1);
                 if (!lastCert.getIssuerDN().equals(lastCert.getSubjectDN())) {
                     X509Certificate rootCert = getRootCert(lastCert);
                     if (rootCert == null) {
@@ -195,7 +200,7 @@ public class AnyChatCertHelper {
         }
         for (int i = 0; i < parents.size(); i++) {
             X509Certificate parent = parents.get(i);
-            if (parent==null){
+            if (parent == null) {
                 break;
             }
             if (issuerDN.equals(parent.getSubjectDN())) {
@@ -246,6 +251,7 @@ public class AnyChatCertHelper {
 
     /**
      * 用公钥对字符串进行加密
+     *
      * @param data 数据
      */
     @SuppressLint("TrulyRandom")
@@ -256,7 +262,7 @@ public class AnyChatCertHelper {
             KeyFactory kf = KeyFactory.getInstance(RSA);
             RSAPublicKey keyPublic = (RSAPublicKey) kf.generatePublic(keySpec);
             int keySize = keyPublic.getModulus().bitLength();
-            Cipher cipher = Cipher.getInstance(ECB_PKCS1_PADDING);
+            Cipher cipher = Cipher.getInstance(RSA_OAEP_SHA256_PADDING);
             cipher.init(Cipher.ENCRYPT_MODE, keyPublic);
             return rsaSplitCodec(Cipher.ENCRYPT_MODE, data, keySize, cipher);
         } catch (Exception e) {
@@ -268,6 +274,7 @@ public class AnyChatCertHelper {
 
     /**
      * 私钥加密
+     *
      * @param data       待加密数据
      * @param privateKey 密钥
      * @return byte[] 加密数据
@@ -281,7 +288,7 @@ public class AnyChatCertHelper {
             KeyFactory kf = KeyFactory.getInstance(RSA);
             RSAPrivateKey keyPrivate = (RSAPrivateKey) kf.generatePrivate(keySpec);
             int keySize = keyPrivate.getModulus().bitLength();
-            Cipher cipher = Cipher.getInstance(ECB_PKCS1_PADDING);
+            Cipher cipher = Cipher.getInstance(RSA_OAEP_SHA256_PADDING);
             cipher.init(Cipher.ENCRYPT_MODE, keyPrivate);
             return rsaSplitCodec(Cipher.ENCRYPT_MODE, data, keySize, cipher);
         } catch (Exception e) {
@@ -292,6 +299,7 @@ public class AnyChatCertHelper {
 
     /**
      * 公钥解密
+     *
      * @param data      待解密数据
      * @param publicKey 密钥
      * @return byte[] 解密数据
@@ -304,7 +312,7 @@ public class AnyChatCertHelper {
             KeyFactory kf = KeyFactory.getInstance(RSA);
             RSAPublicKey keyPublic = (RSAPublicKey) kf.generatePublic(keySpec);
             int keySize = keyPublic.getModulus().bitLength();
-            Cipher cipher = Cipher.getInstance(ECB_PKCS1_PADDING);
+            Cipher cipher = Cipher.getInstance(RSA_OAEP_SHA256_PADDING);
             cipher.init(Cipher.DECRYPT_MODE, keyPublic);
             return rsaSplitCodec(Cipher.DECRYPT_MODE, data, keySize, cipher);
         } catch (Exception e) {
@@ -325,7 +333,7 @@ public class AnyChatCertHelper {
             KeyFactory kf = KeyFactory.getInstance(RSA);
             RSAPrivateKey keyPrivate = (RSAPrivateKey) kf.generatePrivate(keySpec);
             int keySize = keyPrivate.getModulus().bitLength();
-            Cipher cipher = Cipher.getInstance(ECB_PKCS1_PADDING);
+            Cipher cipher = Cipher.getInstance(RSA_OAEP_SHA256_PADDING);
             cipher.init(Cipher.DECRYPT_MODE, keyPrivate);
             return rsaSplitCodec(Cipher.DECRYPT_MODE, data, keySize, cipher);
         } catch (Exception e) {
@@ -343,7 +351,7 @@ public class AnyChatCertHelper {
         if (mode == Cipher.DECRYPT_MODE) {
             maxBlock = keySize / 8;
         } else {
-            maxBlock = (keySize / 8) - 11;
+            maxBlock = (keySize / 8) - 66;
         }
         if (dataLen <= maxBlock) {
             return cipher.doFinal(data);
@@ -375,18 +383,22 @@ public class AnyChatCertHelper {
         }
         return bytes;
     }
+
     /**
      * 获取特定的字符串
+     *
      * @param s
      * @return
      */
     private static byte[] getKey(byte[] s) {
         String keyContent = new String(s);
-        String key=keyContent.substring(keyContent.indexOf("Y-----")+7,keyContent.lastIndexOf("-----E"));
+        String key = keyContent.substring(keyContent.indexOf("Y-----") + 7, keyContent.lastIndexOf("-----E"));
         return key.getBytes();
     }
+
     /**
      * 获取系统根证书
+     *
      * @param selfCert
      * @return
      */
@@ -409,18 +421,18 @@ public class AnyChatCertHelper {
                 }
             }
             return mCertificates;
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.e("AnyChatCertHelper", "Get RootCert failure", e.fillInStackTrace());
         }
         return null;
     }
 
-    private static X509Certificate readCertificate(File mDir,String file) {
+    private static X509Certificate readCertificate(File mDir, String file) {
         CertificateFactory mCertFactory = null;
         InputStream is = null;
         X509Certificate x509Certificate = null;
         try {
-            is = new BufferedInputStream(new FileInputStream(new File(mDir,file)));
+            is = new BufferedInputStream(new FileInputStream(new File(mDir, file)));
             mCertFactory = CertificateFactory.getInstance("X.509");
             x509Certificate = (X509Certificate) mCertFactory.generateCertificate(is);
             is.close();
