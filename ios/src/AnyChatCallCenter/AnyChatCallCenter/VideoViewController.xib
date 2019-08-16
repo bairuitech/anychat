@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +24,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="936"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video.png" translatesAutoresizingMaskIntoConstraints="NO" id="gvn-o5-Q4l">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video-568h" translatesAutoresizingMaskIntoConstraints="NO" id="gvn-o5-Q4l" customClass="BRUIImageView">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="936"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pcW-8H-Quo" userLabel="LocalView">
@@ -72,7 +72,7 @@
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
-                            <state key="selected" image="Icon_EndCall.png">
+                            <state key="selected" image="video_cutoff">
                                 <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <state key="highlighted">
@@ -157,12 +157,11 @@
         </view>
     </objects>
     <resources>
-        <image name="Icon_EndCall.png" width="454" height="60"/>
-        <image name="bg_video.png" width="320" height="568"/>
-        <image name="video_audio_off" width="74" height="74"/>
-        <image name="video_audio_on" width="74" height="74"/>
-        <image name="video_cutoff" width="74" height="74"/>
-        <image name="video_video_off" width="74" height="74"/>
-        <image name="video_video_on" width="74" height="74"/>
+        <image name="bg_video-568h" width="320" height="568"/>
+        <image name="video_audio_off" width="74.5" height="74.5"/>
+        <image name="video_audio_on" width="74.5" height="74.5"/>
+        <image name="video_cutoff" width="74.5" height="74.5"/>
+        <image name="video_video_off" width="74.5" height="74.5"/>
+        <image name="video_video_on" width="74.5" height="74.5"/>
     </resources>
 </document>

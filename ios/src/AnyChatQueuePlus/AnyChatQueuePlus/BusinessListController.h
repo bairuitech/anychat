@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BusinessListController : UITableViewController
+@interface BusinessListController : ACBaseViewController
+
+@property (nonatomic, strong) UITableView *tableView;
+
 @property(nonatomic, strong)NSArray *businessListIdArray;   //队列id数组
 @property(nonatomic, assign)int businessHallId;                 //营业厅id
+@property(nonatomic, copy)NSString *businessHallName;           //营业厅名字
+
 @end

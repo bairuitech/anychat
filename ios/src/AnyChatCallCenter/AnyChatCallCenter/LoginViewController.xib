@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
             <connections>
+                <outlet property="rembemberBtn" destination="HDC-o4-BfF" id="aIH-KS-bJz"/>
+                <outlet property="rememberView" destination="WiU-Eg-fRU" id="EFX-wA-xr4"/>
                 <outlet property="theIP" destination="2fa-oj-KAF" id="r36-YL-hZB"/>
                 <outlet property="theLoginBtn" destination="5UP-A1-DAw" id="F3A-Xn-GqW"/>
                 <outlet property="thePort" destination="hRg-J5-TbT" id="2dg-V5-bhW"/>
@@ -41,7 +43,7 @@
                     <rect key="frame" x="0.0" y="350" width="414" height="248"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L64-1C-mQS" userLabel="View - ip">
-                            <rect key="frame" x="53" y="50" width="308" height="48"/>
+                            <rect key="frame" x="53" y="15" width="308" height="48"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="服务器 IP" minimumFontSize="25" translatesAutoresizingMaskIntoConstraints="NO" id="2fa-oj-KAF" userLabel="Text Field - IP">
                                     <rect key="frame" x="41" y="0.0" width="259" height="48"/>
@@ -60,7 +62,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aiX-cU-Ogy" userLabel="View - port">
-                            <rect key="frame" x="53" y="118" width="308" height="48"/>
+                            <rect key="frame" x="53" y="83" width="308" height="48"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="端口" minimumFontSize="25" translatesAutoresizingMaskIntoConstraints="NO" id="hRg-J5-TbT" userLabel="Text Field - Port">
                                     <rect key="frame" x="41" y="0.0" width="259" height="48"/>
@@ -79,7 +81,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PRv-1J-i2d" userLabel="View - name">
-                            <rect key="frame" x="53" y="186" width="308" height="48"/>
+                            <rect key="frame" x="53" y="151" width="308" height="48"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名称" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Va-l1-uju" userLabel="Text Field - name">
                                     <rect key="frame" x="41" y="0.0" width="259" height="48"/>
@@ -108,9 +110,43 @@
                                 <constraint firstItem="0Va-l1-uju" firstAttribute="leading" secondItem="WZf-mU-Lg8" secondAttribute="trailing" constant="10" id="yTj-X1-oEW"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WiU-Eg-fRU" userLabel="View - remeber">
+                            <rect key="frame" x="53" y="214" width="150" height="13"/>
+                            <subviews>
+                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HDC-o4-BfF" userLabel="rememberBtn">
+                                    <rect key="frame" x="13" y="0.0" width="13" height="13"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="13" id="0nQ-Nr-jIP"/>
+                                        <constraint firstAttribute="width" constant="13" id="A5Y-Of-4YA"/>
+                                    </constraints>
+                                    <state key="normal" image="unselected"/>
+                                    <state key="selected" image="selected"/>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="记住用户名密码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mji-KO-Kgl">
+                                    <rect key="frame" x="30" y="-1.5" width="93" height="16"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <gestureRecognizers/>
+                            <constraints>
+                                <constraint firstItem="HDC-o4-BfF" firstAttribute="centerY" secondItem="WiU-Eg-fRU" secondAttribute="centerY" id="0Jy-mb-Tgg"/>
+                                <constraint firstItem="mji-KO-Kgl" firstAttribute="leading" secondItem="HDC-o4-BfF" secondAttribute="trailing" constant="4" id="2G6-OU-RkG"/>
+                                <constraint firstItem="mji-KO-Kgl" firstAttribute="centerY" secondItem="WiU-Eg-fRU" secondAttribute="centerY" id="79v-Um-IJ8"/>
+                                <constraint firstAttribute="height" constant="13" id="BKO-4G-1HS"/>
+                                <constraint firstItem="HDC-o4-BfF" firstAttribute="leading" secondItem="WiU-Eg-fRU" secondAttribute="leading" constant="13" id="fik-Qz-Ieg"/>
+                                <constraint firstAttribute="width" constant="150" id="yXY-Qt-kGZ"/>
+                            </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="QS0-Wa-A1m" appends="YES" id="CAV-BY-UhH"/>
+                            </connections>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="WiU-Eg-fRU" firstAttribute="leading" secondItem="PRv-1J-i2d" secondAttribute="leading" id="9kt-kI-DLp"/>
                         <constraint firstItem="Rqf-ev-opE" firstAttribute="height" secondItem="yhH-0E-KhF" secondAttribute="height" id="CXf-YT-G9U"/>
                         <constraint firstItem="yhH-0E-KhF" firstAttribute="width" secondItem="WZf-mU-Lg8" secondAttribute="width" id="DC7-QS-F1W"/>
                         <constraint firstItem="L64-1C-mQS" firstAttribute="leading" secondItem="aiX-cU-Ogy" secondAttribute="leading" id="DgF-Qs-NRh"/>
@@ -125,11 +161,12 @@
                         <constraint firstItem="2fa-oj-KAF" firstAttribute="height" secondItem="hRg-J5-TbT" secondAttribute="height" id="ZkX-0J-Kdn"/>
                         <constraint firstItem="aiX-cU-Ogy" firstAttribute="top" secondItem="L64-1C-mQS" secondAttribute="bottom" constant="20" id="bD0-rd-xfh"/>
                         <constraint firstItem="aiX-cU-Ogy" firstAttribute="leading" secondItem="PRv-1J-i2d" secondAttribute="leading" id="dcP-Jy-pg7"/>
-                        <constraint firstAttribute="bottom" secondItem="PRv-1J-i2d" secondAttribute="bottom" constant="14" id="fg0-DJ-GQd"/>
                         <constraint firstItem="aiX-cU-Ogy" firstAttribute="trailing" secondItem="PRv-1J-i2d" secondAttribute="trailing" id="fpl-VA-rBk"/>
                         <constraint firstItem="Rqf-ev-opE" firstAttribute="leading" secondItem="yhH-0E-KhF" secondAttribute="leading" id="gwR-oW-d4r"/>
                         <constraint firstItem="hRg-J5-TbT" firstAttribute="trailing" secondItem="0Va-l1-uju" secondAttribute="trailing" id="jg7-U3-e3h"/>
+                        <constraint firstItem="WiU-Eg-fRU" firstAttribute="top" secondItem="PRv-1J-i2d" secondAttribute="bottom" constant="15" id="rUF-iW-vIy"/>
                         <constraint firstItem="Rqf-ev-opE" firstAttribute="width" secondItem="yhH-0E-KhF" secondAttribute="width" id="y4P-Bj-1HJ"/>
+                        <constraint firstItem="L64-1C-mQS" firstAttribute="top" secondItem="3hQ-bK-cDg" secondAttribute="top" constant="15" id="yP4-3g-8hU"/>
                         <constraint firstItem="L64-1C-mQS" firstAttribute="height" secondItem="aiX-cU-Ogy" secondAttribute="height" id="yRT-L6-Oq1"/>
                         <constraint firstItem="hRg-J5-TbT" firstAttribute="leading" secondItem="0Va-l1-uju" secondAttribute="leading" id="ztF-Ej-hHX"/>
                     </constraints>
@@ -204,12 +241,19 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="132.80000000000001" y="154.72263868065968"/>
         </view>
+        <tapGestureRecognizer id="QS0-Wa-A1m">
+            <connections>
+                <action selector="rememberName:" destination="-1" id="RRj-4Q-JIU"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
-        <image name="login_account" width="22" height="22"/>
-        <image name="login_ip" width="22" height="22"/>
-        <image name="login_logo" width="193" height="46"/>
-        <image name="login_port" width="22" height="23"/>
-        <image name="total_bg" width="414" height="350"/>
+        <image name="login_account" width="22.5" height="22.5"/>
+        <image name="login_ip" width="22.5" height="22.5"/>
+        <image name="login_logo" width="193.5" height="46.5"/>
+        <image name="login_port" width="22.5" height="23"/>
+        <image name="selected" width="22.5" height="22.5"/>
+        <image name="total_bg" width="414" height="350.5"/>
+        <image name="unselected" width="22.5" height="22.5"/>
     </resources>
 </document>

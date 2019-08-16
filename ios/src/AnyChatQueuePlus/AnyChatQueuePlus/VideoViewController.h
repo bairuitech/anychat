@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VideoViewController : UIViewController
+@interface VideoViewController : ACBaseViewController
 @property(nonatomic, assign)int remoteUserId;
 
 //打开对方的视频

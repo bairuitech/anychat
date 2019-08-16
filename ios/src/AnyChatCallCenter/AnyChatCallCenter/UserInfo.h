@@ -13,5 +13,6 @@
 @property (nonatomic, copy) NSString *theUserInfoID;
 @property (nonatomic, copy) NSString *theUserInfoName;
 @property (nonatomic, copy) NSString *theUserInfoIcon;
+@property (nonatomic, copy) NSString *theUserInfoIP;
 
 @end

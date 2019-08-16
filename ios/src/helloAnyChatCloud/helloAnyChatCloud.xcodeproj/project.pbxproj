@@ -25,6 +25,7 @@
 		096D5BF31EDE9B71001100ED /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5BE31EDE9B71001100ED /* libyuv_neon.a */; };
 		096D5BF41EDE9B71001100ED /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096D5BE41EDE9B71001100ED /* libyuv.a */; };
 		098DF2401EA7436C00FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF23F1EA7436C00FB36FA /* VideoToolbox.framework */; };
+		CFD00A0C2306605100686156 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFD00A0B2306605000686156 /* Launch Screen.storyboard */; };
 		F84AE89A22C304C6004CD66F /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = F84AE87922C304C6004CD66F /* IQNSArray+Sort.m */; };
 		F84AE89B22C304C6004CD66F /* IQUIScrollView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F84AE87B22C304C6004CD66F /* IQUIScrollView+Additions.m */; };
 		F84AE89C22C304C6004CD66F /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F84AE87D22C304C6004CD66F /* IQUITextFieldView+Additions.m */; };
@@ -41,7 +42,6 @@
 		F84AE8A722C304C6004CD66F /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F84AE89822C304C6004CD66F /* IQKeyboardManager.bundle */; };
 		F84AE8A822C304C6004CD66F /* UIView+AdaptScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = F84AE89922C304C6004CD66F /* UIView+AdaptScreen.m */; };
 		F84AE8AB22C304DA004CD66F /* ACBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F84AE8A922C304DA004CD66F /* ACBaseViewController.m */; };
-		F84AE8AD22C30944004CD66F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F84AE8AC22C30944004CD66F /* Launch Screen.storyboard */; };
 		F854CEFD21474DC4002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CEFC21474DC4002FC106 /* libc++.tbd */; };
 		F854CF5A214758F9002FC106 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09558B751ECDBCA900D966CE /* libz.tbd */; };
 		F88FC36422E069B800A58B31 /* UINavigationController+DeviceOrientataion.m in Sources */ = {isa = PBXBuildFile; fileRef = F88FC36222E069B700A58B31 /* UINavigationController+DeviceOrientataion.m */; };
@@ -132,6 +132,7 @@
 		096D5BE31EDE9B71001100ED /* libyuv_neon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv_neon.a; sourceTree = "<group>"; };
 		096D5BE41EDE9B71001100ED /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libyuv.a; sourceTree = "<group>"; };
 		098DF23F1EA7436C00FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		CFD00A0B2306605000686156 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F84AE87522C304C6004CD66F /* UIView+AdaptScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AdaptScreen.h"; sourceTree = "<group>"; };
 		F84AE87822C304C6004CD66F /* IQNSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQNSArray+Sort.h"; sourceTree = "<group>"; };
 		F84AE87922C304C6004CD66F /* IQNSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQNSArray+Sort.m"; sourceTree = "<group>"; };
@@ -165,7 +166,6 @@
 		F84AE89922C304C6004CD66F /* UIView+AdaptScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AdaptScreen.m"; sourceTree = "<group>"; };
 		F84AE8A922C304DA004CD66F /* ACBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACBaseViewController.m; sourceTree = "<group>"; };
 		F84AE8AA22C304DA004CD66F /* ACBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACBaseViewController.h; sourceTree = "<group>"; };
-		F84AE8AC22C30944004CD66F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F854CEFC21474DC4002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		F88FC36222E069B700A58B31 /* UINavigationController+DeviceOrientataion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+DeviceOrientataion.m"; sourceTree = "<group>"; };
 		F88FC36322E069B700A58B31 /* UINavigationController+DeviceOrientataion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+DeviceOrientataion.h"; sourceTree = "<group>"; };
@@ -610,6 +610,7 @@
 				FEBBA25919C2CC0B009EE02C /* InfoPlist.strings */,
 				FEBBA25C19C2CC0B009EE02C /* main.m */,
 				FEBBA25E19C2CC0B009EE02C /* helloAnyChatCloud-Prefix.pch */,
+				CFD00A0B2306605000686156 /* Launch Screen.storyboard */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -633,7 +634,6 @@
 				F8D082312150EE66002B0DAC /* SettingVC.xib */,
 				F8D0822D2150EE66002B0DAC /* UserVideoSettings.plist */,
 				F8D0822B2150EE66002B0DAC /* VideoSettings.plist */,
-				F84AE8AC22C30944004CD66F /* Launch Screen.storyboard */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -699,7 +699,7 @@
 				F8D0825D2150EEB1002B0DAC /* bg.png in Resources */,
 				F8D082742150EEB1002B0DAC /* unchecked.png in Resources */,
 				F8D082372150EE66002B0DAC /* SettingVC.xib in Resources */,
-				F84AE8AD22C30944004CD66F /* Launch Screen.storyboard in Resources */,
+				CFD00A0C2306605100686156 /* Launch Screen.storyboard in Resources */,
 				FE85404619D515A800253FA0 /* tableVCell.xib in Resources */,
 				FEBBA25B19C2CC0B009EE02C /* InfoPlist.strings in Resources */,
 				F8D082352150EE66002B0DAC /* UserVideoSettings.plist in Resources */,

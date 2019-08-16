@@ -20,46 +20,68 @@
 @property (nonatomic, strong) IBOutlet UITextField   *theUserName;
 @property (nonatomic, strong) IBOutlet UIButton      *theLoginBtn;
 @property (nonatomic, strong) IBOutlet UILabel       *theVersion;
+@property (weak, nonatomic) IBOutlet UIView *rememberView;
+@property (weak, nonatomic) IBOutlet UIButton *rembemberBtn;
+
 @end
 
 @implementation LoginViewController
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     [AnyChatPlatform InitSDK:0];
-    [AnyChatPlatform SetSDKOptionInt:134 :1];
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_CORESDK_UPLOADLOGINFO :1];
     
     self.theUserName.text = kAnyChatUserName;
     self.theIP.text = kAnyChatIP;
     self.thePort.text = kAnyChatPort;
     [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
+    
+    NSNumber *rememberName = [[NSUserDefaults standardUserDefaults] valueForKey:@"rememberName"];
+    if (rememberName) {
+        self.rembemberBtn.selected = [rememberName intValue];
+    }
+    
+    if (self.rembemberBtn.isSelected) {
+        NSString *ip = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatIP"];
+        NSString *port = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatPort"];
+        NSString *name = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatName"];
+        if (ip && ip.length) {
+            self.theIP.text = ip;
+        }
+        if (port && port.length) {
+            self.thePort.text = port;
+        }
+        if (name && name.length) {
+            self.theUserName.text = name;
+        }
+    }
 }
-
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    
     [self.theVersion setText:[AnyChatPlatform GetSDKVersion]];
 }
 
 #pragma mark - Action Method
-
-
-- (IBAction)OnLoginBtnClicked:(id)sender
-{
-    
+- (IBAction)OnLoginBtnClicked:(id)sender {
     
     if([self.theUserName.text length] == 0) {
-        self.theUserName.text = kAnyChatUserName;
+        //self.theUserName.text = kAnyChatUserName;
+        [self.view makeToast:@"请填写用户名"];
+        return;
     }
     if([self.theIP.text length] == 0) {
-        self.theIP.text = kAnyChatIP;
+        //self.theIP.text = kAnyChatIP;
+        [self.view makeToast:@"请填写IP地址"];
+        return;
     }
     if([self.thePort.text length] == 0) {
-        self.thePort.text = kAnyChatPort;
+        //self.thePort.text = kAnyChatPort;
+        [self.view makeToast:@"请填写端口号"];
+        return;
     }
     
     /*
@@ -75,19 +97,28 @@
      */
     [AnyChatPlatform Login:self.theUserName.text :nil];
     
-    
     HallViewController *hallVC = [[HallViewController alloc] init];
     [self.navigationController pushViewController:hallVC animated:YES];
     
+    if (self.rembemberBtn.isSelected) {
+        [[NSUserDefaults standardUserDefaults] setValue:self.theIP.text forKey:@"AnyChatIP"];
+        [[NSUserDefaults standardUserDefaults] setValue:self.thePort.text forKey:@"AnyChatPort"];
+        [[NSUserDefaults standardUserDefaults] setValue:self.theUserName.text forKey:@"AnyChatName"];
+    }
+    
 }
 
-- (IBAction) hideKeyBoard:(id)sender
-{
+- (IBAction) hideKeyBoard:(id)sender {
     [self.view endEditing:YES];
 }
 
 -(BOOL)navBarTranslucent {
-    
     return YES;
 }
+
+- (IBAction)rememberName:(id)sender {
+    self.rembemberBtn.selected = !self.rembemberBtn.isSelected;
+    [[NSUserDefaults standardUserDefaults] setValue:@(self.rembemberBtn.isSelected) forKey:@"rememberName"];
+}
+
 @end

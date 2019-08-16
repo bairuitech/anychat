@@ -9,6 +9,7 @@
 #import "ServerQueueViewController.h"
 #import "Business.h"
 #import "LoginViewController.h"
+#import "BusinessListAgentCell.h"
 
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
@@ -28,6 +29,8 @@
 @property(nonatomic, strong) AVAudioPlayer *theAudioPlayer;             // 音乐播放器
 
 - (IBAction)startServerClick:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *StartServerBtn;
+
 @end
 
 @implementation ServerQueueViewController
@@ -55,10 +58,12 @@
     self.anyChat.videoCallDelegate = self;
     
     self.navigationItem.title = @"队列列表";
-    self.tableView.rowHeight = 50;
+    self.tableView.rowHeight = 70;
+    [self.tableView registerNib:[UINib nibWithNibName:@"BusinessListAgentCell" bundle:nil] forCellReuseIdentifier:@"agent"];
+
+    self.StartServerBtn.layer.masksToBounds = YES;
+    self.StartServerBtn.layer.cornerRadius = 15;
     
-    // 添加退出按钮
-    [self setupBackButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -66,7 +71,12 @@
     self.navigationController.navigationBarHidden = NO;
 }
 
-
+-(void)viewDidDisappear:(BOOL)animated {
+    
+    [super viewDidDisappear:animated];
+    [self.theAudioPlayer stop];
+    [self.requestAlertView dismissWithClickedButtonIndex:[self.requestAlertView cancelButtonIndex] animated:YES];
+}
 #pragma mark - AnyChat Call Delegate
 - (void) OnAnyChatVideoCallEventCallBack:(int) dwEventType : (int) dwUserId : (int) dwErrorCode : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr{
     
@@ -77,13 +87,17 @@
         {
             NSLog(@"BRAC_VIDEOCALL_EVENT_REQUEST");
             self.remoteUserId = dwUserId;
-            self.loginVC.remoteUserId = dwUserId;
+            self.loginVC.customerId = dwUserId;
             
             NSString *serviceName = [AnyChatPlatform ObjectGetStringValue:ANYCHAT_OBJECT_TYPE_CLIENTUSER :dwUserId :ANYCHAT_OBJECT_INFO_NAME];
             self.requestAlertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"用户 %@请求与您视频通话，是否接受?",serviceName] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"接受",@"拒绝" ,nil];
             self.requestAlertView.delegate = self;
             [self.requestAlertView show];
             
+            if(!self.theAudioPlayer) {
+
+                [self setVoice];
+            }
             [self.theAudioPlayer play];
             
             break;
@@ -96,7 +110,8 @@
             {
                 case GV_ERR_VIDEOCALL_CANCEL: // 源用户主动放弃会话
                 {
-                    if (self.waitingAlertView != nil) [self.waitingAlertView dismissWithClickedButtonIndex:self.waitingAlertView.cancelButtonIndex animated:YES];
+                    if (self.waitingAlertView != nil)
+                        [self.waitingAlertView dismissWithClickedButtonIndex:self.waitingAlertView.cancelButtonIndex animated:YES];
                     
                     if(self.requestAlertView!=nil)
                         [self.requestAlertView dismissWithClickedButtonIndex:self.requestAlertView.cancelButtonIndex animated:YES];
@@ -199,23 +214,59 @@
     
 }
 
+- (void)onAgentStatusChanged:(NSDictionary *)data {
+    NSLog(@"坐席状态发生改变");
+    NSString *status = data[@"status"];
+    if ([status isEqualToString:@"0"]) {
+        
+        [self.StartServerBtn setTitle:@"已关闭" forState:UIControlStateNormal];
+        
+    }else if ([status isEqualToString:@"1"]) {
+        
+        [self.StartServerBtn setTitle:@"等待服务中" forState:UIControlStateNormal];
+        
+    }else if ([status isEqualToString:@"2"]) {
+        
+        [self.StartServerBtn setTitle:@"忙碌中" forState:UIControlStateNormal];
+        
+    }else if ([status isEqualToString:@"3"]) {
+        
+        [self.StartServerBtn setTitle:@"暂停服务" forState:UIControlStateNormal];
+        
+    }else if ([status isEqualToString:@"10"]) {
+        
+        [self.StartServerBtn setTitle:@"离线" forState:UIControlStateNormal];
+    }
+}
+
+
+
 #pragma mark - TableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.businesses.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
-    }
+    
+    
+    BusinessListAgentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"agent"];
     Business *business = self.businesses[indexPath.row];
-    cell.textLabel.text =  business.title;
+    cell.queueNameLab.text =  business.title;
     int queueId = [self.businessListIdArray[indexPath.row] intValue];
     int queuePeopleCount = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_QUEUELENGTH];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"有%d人在排队",queuePeopleCount];
+    cell.queueCountLab.text = [NSString stringWithFormat:@"%d 人",queuePeopleCount];
     return cell;
+//    static NSString *cellID = @"cell";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+//    if (cell == nil) {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
+//    }
+//    Business *business = self.businesses[indexPath.row];
+//    cell.textLabel.text =  business.title;
+//    int queueId = [self.businessListIdArray[indexPath.row] intValue];
+//    int queuePeopleCount = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_QUEUELENGTH];
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"有%d人在排队",queuePeopleCount];
+//    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -258,32 +309,26 @@
         
     }
 }
-
-#pragma mark - Custom Method
-// 退出按钮
-- (void)setupBackButton {
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 17, 30)];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"nav_back_hover"] forState:UIControlStateHighlighted];
-    [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    backButton.titleLabel.font = [UIFont systemFontOfSize:13.0f];
-    [backButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    [backButton setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
-    [backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-}
-
-
 #pragma mark - Action
 - (IBAction)startServerClick:(UIButton *)sender {
     // 开始服务
     [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AGENT :self.selfUserId :ANYCHAT_AGENT_CTRL_SERVICEREQUEST :0 :0 :0 :0 :nil];
 }
-- (void)backAction:(UIControlEvents *)event {
+- (void)navLeftClick {
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"您确定退出坐席服务区吗？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
     actionSheet.delegate = self;
     [actionSheet showInView:self.view];
+}
+
+
+- (void)setVoice {
+    NSString *musicPath = [[NSBundle mainBundle] pathForResource:@"sound_phoneCall" ofType:@"wav"];
+    if (musicPath) {
+        NSURL *musicURL = [NSURL fileURLWithPath:musicPath];
+        self.theAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:musicURL
+                                                                     error:nil];
+    }
 }
 
 #pragma mark - Memory

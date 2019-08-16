@@ -35,6 +35,38 @@
 #define kLocalVideoPortrait_CGRect          CGRectMake(kLocalVideoPortrait_X_Axis, kLocalVideoPortrait_Y_Axis, kLocalVideo_Width, kLocalVideo_Height)
 #define kLocalVideoLandscape_CGRect         CGRectMake(kLocalVideoLandscape_X_Axis, kLocalVideoLandscape_Y_Axis, kLocalVideo_Height, kLocalVideo_Width)
 
+#pragma mark - GCD Synthesize Singleton Mode
+
+#define kGCD_SINGLETON_FOR_HEADER(classname) \
+\
++ (instancetype)shared##classname;
+
+#define kGCD_SINGLETON_FOR_CLASS(classname) \
+\
+static classname *shared##classname = nil; \
+\
++(id)allocWithZone:(struct _NSZone *)zone   \
+{   \
+static dispatch_once_t onceToken;   \
+dispatch_once(&onceToken, ^{    \
+shared##classname = [super allocWithZone:zone]; \
+});     \
+return shared##classname;   \
+}   \
+\
++(instancetype)shared##classname   \
+{   \
+static dispatch_once_t onceToken;   \
+dispatch_once(&onceToken, ^{    \
+shared##classname = [[classname alloc] init];   \
+});     \
+return shared##classname;   \
+}   \
+\
+-(id)copyWithZone:(NSZone *)zone    \
+{   \
+return shared##classname;   \
+}
 
 #pragma mark - Device Type
 

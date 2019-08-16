@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="client" rowHeight="82" id="KGk-i7-Jjw" customClass="BusinessListClientCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="82"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="82"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="现金队列" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZM-fo-3lk">
+                        <rect key="frame" x="16" y="11" width="180" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="mTo-Qx-iRc"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QV1-2U-jJ6">
+                        <rect key="frame" x="0.0" y="66" width="320" height="15"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="Mv7-9q-BXX"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b7T-px-YhZ">
+                        <rect key="frame" x="204" y="17" width="100" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="OH1-BW-Z3Y"/>
+                            <constraint firstAttribute="height" constant="35" id="ntc-VY-kZ0"/>
+                        </constraints>
+                        <state key="normal" image="立即办理"/>
+                        <connections>
+                            <action selector="enterQueue:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Lci-Da-zhQ"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前队列有0人" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZn-gY-aRc">
+                        <rect key="frame" x="16" y="36" width="180" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="hrg-o8-ieB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="sZM-fo-3lk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="1bg-dC-7AQ"/>
+                    <constraint firstItem="gZn-gY-aRc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="AJU-Th-Lih"/>
+                    <constraint firstAttribute="trailing" secondItem="QV1-2U-jJ6" secondAttribute="trailing" id="CeA-Bo-Htb"/>
+                    <constraint firstItem="b7T-px-YhZ" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="DQw-Qc-Nbi"/>
+                    <constraint firstItem="QV1-2U-jJ6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="GXX-SW-BsT"/>
+                    <constraint firstItem="gZn-gY-aRc" firstAttribute="top" secondItem="sZM-fo-3lk" secondAttribute="bottom" constant="3" id="M0K-FI-nwJ"/>
+                    <constraint firstItem="b7T-px-YhZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="UGA-Js-8l6"/>
+                    <constraint firstItem="sZM-fo-3lk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="XMj-jP-Z3y"/>
+                    <constraint firstItem="b7T-px-YhZ" firstAttribute="leading" secondItem="gZn-gY-aRc" secondAttribute="trailing" constant="8" id="cDX-Tf-OaS"/>
+                    <constraint firstAttribute="bottom" secondItem="QV1-2U-jJ6" secondAttribute="bottom" constant="0.5" id="dDx-ge-P4O"/>
+                    <constraint firstItem="b7T-px-YhZ" firstAttribute="leading" secondItem="sZM-fo-3lk" secondAttribute="trailing" constant="8" id="htx-Of-7AP"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="countLab" destination="gZn-gY-aRc" id="sdM-ig-VBi"/>
+                <outlet property="queueNameLab" destination="sZM-fo-3lk" id="CYh-RI-5km"/>
+            </connections>
+            <point key="canvasLocation" x="-105" y="-21"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="立即办理" width="100" height="35"/>
+    </resources>
+</document>
