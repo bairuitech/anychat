@@ -107,6 +107,10 @@ typedef void (^ServiceNotifyCallback)(NSDictionary *data);
 
 @property (nonatomic, weak) id<AnyChat_QueueModelDelegate> delegate;
 @property (nonatomic, assign, readonly) int selfUserId;
+/**
+ 主动路由
+ */
+@property (nonatomic, assign, readonly) BOOL autoRoute;
 
 - (instancetype)initWithRole:(BRAC_QueueRole)role priority:(NSString *)priority autoRoute:(BOOL)autoRoute;
 

@@ -269,8 +269,11 @@
         [self.StartServerBtn setTitle:@"已关闭" forState:UIControlStateNormal];
         
     }else if ([status isEqualToString:@"1"]) {
-        
-        [self.StartServerBtn setTitle:@"等待中" forState:UIControlStateNormal];
+        if ([AnyChatQueueDataManager getInstance].queueModel.autoRoute) {
+            [self.StartServerBtn setTitle:@"等待中" forState:UIControlStateNormal];
+        } else {
+            [self.StartServerBtn setTitle:@"呼叫队列中的用户" forState:UIControlStateNormal];
+        }
         
     }else if ([status isEqualToString:@"2"]) {
         

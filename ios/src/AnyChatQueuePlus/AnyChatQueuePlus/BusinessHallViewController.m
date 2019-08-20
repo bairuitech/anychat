@@ -17,38 +17,56 @@
 #import "AnyChatErrorCode.h"
 #import "AnyChatObjectDefine.h"
 
-@interface BusinessHallViewController ()<UIActionSheetDelegate>
+@interface BusinessHallViewController ()<UIActionSheetDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+
+@property (nonatomic, strong) UICollectionView *collectionView;
 @end
 
 @implementation BusinessHallViewController
 
 static NSString * const reuseIdentifier = @"BusinessHall";
 
-- (instancetype)init {
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(80, 80);   //cell大小
-    layout.minimumInteritemSpacing = 0;     //cell水平间距
-    layout.minimumLineSpacing = 10;         //cell垂直间距
-    layout.sectionInset = UIEdgeInsetsMake(layout.minimumLineSpacing, 0, 0, 0); //section内边距
-    
-    return [super initWithCollectionViewLayout:layout];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"营业厅列表";
-    self.navigationController.navigationBarHidden = NO;
-    
-    // 1.注册一个Collect的cell
-    UINib *nib = [UINib nibWithNibName:@"BusinessHallCell" bundle:nil];
-    [self.collectionView registerNib:nib forCellWithReuseIdentifier:reuseIdentifier];
-    
-    // 2.设置collectionView的背景色
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    [self p_initCollectionView];
+    self.navigationItem.title = @"营业厅列表";    
+//    // 1.注册一个Collect的cell
+//    UINib *nib = [UINib nibWithNibName:@"BusinessHallCell" bundle:nil];
+//    [self.collectionView registerNib:nib forCellWithReuseIdentifier:reuseIdentifier];
+//
+//    // 2.设置collectionView的背景色
+//    self.collectionView.backgroundColor = [UIColor whiteColor];
     
     // 添加退出按钮
     [self setupBackButton];
+}
+
+- (void)p_initCollectionView {
+    
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    CGFloat width = [[UIScreen mainScreen] bounds].size.width/2;
+    layout.itemSize = CGSizeMake(width-10, 127);   //cell大小
+    layout.minimumInteritemSpacing = 1;     //cell水平间距
+    layout.minimumLineSpacing = 1;         //cell垂直间距
+    layout.sectionInset = UIEdgeInsetsMake(layout.minimumLineSpacing, 0, 0, 0);
+    
+    self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+    UINib *nib = [UINib nibWithNibName:@"BusinessHallCell" bundle:nil];
+    [self.collectionView registerNib:nib forCellWithReuseIdentifier:reuseIdentifier];
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    // 2.设置collectionView的背景色
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    
+    [self.view addSubview:self.collectionView];
+}
+
+- (void)setupNav {
+    //set NavigationBar 背景颜色&title 颜色
+    UIColor *color = [UIColor colorWithRed:0 green:139 / 255.0 blue:227 / 255.0 alpha:1];
+    [self.navigationController.navigationBar setBarTintColor:color];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
 
 #pragma mark <UICollectionViewDataSource>

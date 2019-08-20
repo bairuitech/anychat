@@ -176,6 +176,9 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode
 {
+    [HUD hide:YES];
+    [HUD removeFromSuperViewOnHide];
+    
     self.onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
     
     if(dwErrorCode == GV_ERR_SUCCESS)
@@ -193,8 +196,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
         
         ACFeaturesListVC *featuresListVC = [[ACFeaturesListVC alloc] init];
         [self.navigationController pushViewController:featuresListVC animated:YES];
-        [HUD hide:YES];
-        [HUD removeFromSuperViewOnHide];
+
         [self storeLoginInfo];
     }
     else
@@ -263,6 +265,8 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     [[UserListVC sharedUserListVC].onlineUserMArray removeAllObjects];
     [[UserListVC sharedUserListVC].onLineUserTableView reloadData];
     
+    [HUD hide:YES];
+    [HUD removeFromSuperViewOnHide];
     self.theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
     self.theOnLineLoginState = NO;
     [self.theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];

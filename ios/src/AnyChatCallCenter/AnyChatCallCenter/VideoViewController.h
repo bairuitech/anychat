@@ -22,6 +22,7 @@
 
 
 - (void) StartVideoChat:(int) userid;
+-(void)openRemoteView;
 
 
 @end

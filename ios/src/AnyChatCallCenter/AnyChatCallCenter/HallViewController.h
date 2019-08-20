@@ -11,7 +11,7 @@
 #import "VideoViewController.h"
 #import "UserEntity.h"
 #import "UserInfo.h"
-#import "Toast+UIView.h"
+#import "UIView+Toast.h"
 #import "AnyChatPlatform.h"
 
 @class VideoViewController;
