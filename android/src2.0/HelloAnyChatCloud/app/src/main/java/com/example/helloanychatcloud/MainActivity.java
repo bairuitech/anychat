@@ -1,18 +1,5 @@
 package com.example.helloanychatcloud;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.bairuitech.anychat.AnyChatBaseEvent;
-import com.bairuitech.anychat.AnyChatCoreSDK;
-import com.bairuitech.anychat.AnyChatDefine;
-import com.example.config.ConfigEntity;
-import com.example.config.ConfigService;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,9 +14,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -41,6 +28,20 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bairuitech.anychat.AnyChatBaseEvent;
+import com.bairuitech.anychat.AnyChatCoreSDK;
+import com.bairuitech.anychat.AnyChatDefine;
+import com.example.config.ConfigEntity;
+import com.example.config.ConfigService;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends Activity implements AnyChatBaseEvent {
 	// 视频配置界面标识
@@ -95,7 +96,8 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 					int timeStamp = object.optInt("timestamp");
 					String signedStr = object.optString("sigStr");
 					if(errCode == 0){
-						anyChatSDK.LoginEx(mStrName,1001, "", guidStr, timeStamp, signedStr,"");
+                        anyChatSDK.Connect(mStrIP, mSPort);
+                        anyChatSDK.LoginEx(mStrName, -1, "", guidStr, timeStamp, signedStr, "");
 					}
 					
 				} catch (JSONException e) {
@@ -198,6 +200,9 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 						
 						}
 				}else {
+                    if (!TextUtils.isEmpty(guidStr)) {
+                        AnyChatCoreSDK.SetSDKOptionString(AnyChatDefine.BRAC_SO_CLOUD_APPGUID, guidStr);
+                    }
 					System.out.println("签名登录");
 					if (checkInputData()) {
 						//如果
@@ -214,10 +219,9 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 						mSPort = Integer.parseInt(mEditPort.getText().toString()
 								.trim());
 						
-						anyChatSDK.Connect(mStrIP, mSPort);
-						
+						//anyChatSDK.Connect(mStrIP, mSPort);
 						final HashMap<String,String> map = new HashMap<String, String>();
-						map.put("userid","1001");
+						map.put("userid","-1");
 						map.put("strUserid","");
 						map.put("appid", guidStr);
 						new Thread(){
