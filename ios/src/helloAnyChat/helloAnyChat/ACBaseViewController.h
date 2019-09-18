@@ -1,6 +1,6 @@
 //
 //  ACBaseViewController.h
-//  AnyChatFeatures
+//  HelloAnyChat
 //
 //  Created by Bairui on 2019/6/10.
 //  Copyright © 2019年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
@@ -17,8 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 //导航栏是否透明  默认NO
 - (BOOL)navBarTranslucent;
-
-
 
 @end
 

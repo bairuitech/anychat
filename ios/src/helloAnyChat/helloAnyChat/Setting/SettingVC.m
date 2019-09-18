@@ -6,11 +6,10 @@
 #import "SettingVC.h"
 
 @interface SettingVC ()<UIAlertViewDelegate>
-
 {
-    
     BOOL _maybeChange; //是否修改了参数
 }
+
 @property (weak, nonatomic) IBOutlet UITableView    *theUserSettingTabelView;
 @property (strong,nonatomic) UISwitch               *theP2PSwitch;
 @property (strong,nonatomic) UISwitch               *theServerSwitch;
@@ -23,17 +22,13 @@
 @property (strong,nonatomic) NSMutableDictionary    *theVideoFramerateMDict;
 @property (strong,nonatomic) NSMutableDictionary    *theVideoPresetMDict;
 @property (strong,nonatomic) NSMutableDictionary    *theVideoQualityMDict;
+
 @end
 
 @implementation SettingVC
 
-
-
-#pragma mark -
 #pragma mark - Life cycle
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     _maybeChange = NO;
@@ -43,64 +38,44 @@
     [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    
     [self configParamData];//根据plist数据设置
     [self.theUserSettingTabelView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
--(void)navLeftClick {
-
+- (void)navLeftClick {
     if(_maybeChange) {
-        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否保存设置？" message:@"" delegate:self cancelButtonTitle:@"退出" otherButtonTitles:@"保存", nil];
         [alertView show];
     } else {
-        
         [super navLeftClick];
     }
  
 }
 
-
-#pragma mark - AlertViewDelegate -
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
+#pragma mark - AlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if(buttonIndex == 0) {
-        
         _maybeChange = NO;
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        
         [self saveBtn_OnClick];
     }
 }
 
-#pragma mark -
 #pragma mark - Shared Instance
-
 kGCD_SINGLETON_FOR_CLASS(SettingVC);
 
-
-#pragma mark -
 #pragma mark - Table view data source
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil)
-    {
+    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
         cell.textLabel.font = [UIFont systemFontOfSize:AdaptW(16)];
@@ -108,10 +83,8 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
         cell.detailTextLabel.textColor = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1];
     }
     
-    
     cell.detailTextLabel.text = @"";
-    if (indexPath.section == 0)
-    {
+    if (indexPath.section == 0) {
         cell.textLabel.text = @"优先P2P";
         cell.accessoryType = UITableViewCellAccessoryNone;
         
@@ -119,11 +92,8 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
         [self.theP2PSwitch addTarget:self action:@selector(switchBtnStatus:) forControlEvents:UIControlEventValueChanged];
         self.theP2PSwitch.onTintColor = [UIColor colorWithRed:0 green:139 / 255.0 blue:227 / 255.0 alpha:1];
         self.theP2PSwitch.on = [self.theP2PNum boolValue];
-        
         cell.accessoryView = self.theP2PSwitch;
-    }
-    else if(indexPath.section == 1)
-    {
+    } else if(indexPath.section == 1) {
         cell.textLabel.text = @"使用服务器视频参数";
         cell.accessoryType = UITableViewCellAccessoryNone;
         
@@ -133,33 +103,22 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
         self.theServerSwitch.on = [self.theServerParamNum boolValue];
         
         cell.accessoryView = self.theServerSwitch;
-    }
-    else if(indexPath.section == 2)
-    {
+    } else if(indexPath.section == 2) {
         cell.accessoryView = nil;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        if (indexPath.row == 0)
-        {
+        if (indexPath.row == 0) {
             cell.textLabel.text = @"视频分辨率";
             cell.detailTextLabel.text = self.theSolutionStr;
-        }
-        else if(indexPath.row == 1)
-        {
+        } else if(indexPath.row == 1) {
             cell.textLabel.text = @"视频码率";
             cell.detailTextLabel.text = self.theBitrateStr;
-        }
-        else if(indexPath.row == 2)
-        {
+        } else if(indexPath.row == 2) {
             cell.textLabel.text = @"视频帧率";
             cell.detailTextLabel.text = self.theFrameRateStr;
-        }
-        else if(indexPath.row == 3)
-        {
+        } else if(indexPath.row == 3) {
             cell.textLabel.text = @"预设参数";
             cell.detailTextLabel.text = self.thePresetStr;
-        }
-        else if(indexPath.row == 4)
-        {
+        } else if(indexPath.row == 4) {
             cell.textLabel.text = @"视频质量";
             cell.detailTextLabel.text = self.theQualityStr;
         }
@@ -168,73 +127,50 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
     return cell;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{   // Return the number of rows in the section.
-    if (section == 2)
-    {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {  // Return the number of rows in the section.
+    if (section == 2) {
         return 5;
     }
-    
     return 1;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 3;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if (section == 0)
-    {
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
         return @"网络参数设置";
-    }
-    else if (section == 1) {
+    } else if (section == 1) {
         return @"视频参数控制";
-    }
-    else if (section == 2) {
+    } else if (section == 2) {
         return @"本地视频参数设置";
     }
-    
     return nil;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    
     return 30;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return 63;
 }
-#pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DetailVC *detailVC = [[DetailVC alloc] init];
-    
-    if (indexPath.section == 2)
-    {
-        if (indexPath.row == 0)
-        {
+    if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
             [detailVC setType:@"视频分辨率"];
-        }
-        else if (indexPath.row == 1)
-        {
+        } else if (indexPath.row == 1) {
             [detailVC setType:@"视频码率"];
-        }
-        else if (indexPath.row == 2)
-        {
+        } else if (indexPath.row == 2) {
             [detailVC setType:@"视频帧率"];
-        }
-        else if (indexPath.row == 3)
-        {
+        } else if (indexPath.row == 3) {
             [detailVC setType:@"预设参数"];
-        }
-        else if (indexPath.row == 4)
-        {
+        } else if (indexPath.row == 4) {
             [detailVC setType:@"视频质量"];
         }
         
@@ -245,12 +181,8 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-
-#pragma mark -
 #pragma mark - Instance Methed
-
-- (NSString *)plistFileAtSandboxPathWithName:(NSString *)thePlistName
-{
+- (NSString *)plistFileAtSandboxPathWithName:(NSString *)thePlistName {
     //Get plist Path
     NSArray *mainPathsArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     NSString *documentsPath = [mainPathsArray objectAtIndex:0];
@@ -259,8 +191,7 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
     return plistPath;
 }
 
-- (void)createObjPlistFileToDocumentsPath
-{
+- (void)createObjPlistFileToDocumentsPath {
     NSString *plistSandboxPath = [self plistFileAtSandboxPathWithName:@"UserVideoSettings.plist"];
     
     //plist isExist
@@ -268,26 +199,20 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
     BOOL isExist =[theFM fileExistsAtPath:plistSandboxPath];
     
     NSString *plistObjectPath = [[NSBundle mainBundle] pathForResource:@"UserVideoSettings" ofType:@"plist"];
-    if(!(isExist))
-    {
+    if(!(isExist)) {
         BOOL createSuccess = [theFM copyItemAtPath:plistObjectPath toPath:plistSandboxPath error:nil];
-        if (!(createSuccess))
-        {
+        if (!(createSuccess)) {
             NSLog(@"\n create Plist File failed!");
         }
     }
 }
 
-- (NSMutableDictionary *)readPListToMDictionaryAtSandboxPList:(NSString *)thePListName
-{
+- (NSMutableDictionary *)readPListToMDictionaryAtSandboxPList:(NSString *)thePListName {
     NSString *thePListPath = [self plistFileAtSandboxPathWithName:thePListName];
     NSMutableDictionary *theMDict = [NSMutableDictionary alloc];
-    if (thePListPath)
-    {
+    if (thePListPath) {
         theMDict = [theMDict initWithContentsOfFile:thePListPath];
-    }
-    else
-    {
+    } else {
         theMDict = nil;
         NSLog(@"\n %@ is not in this.",thePListName);
     }
@@ -295,12 +220,10 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
     return theMDict;
 }
 
-- (void)readDataWithPList
-{
+- (void)readDataWithPList {
     //read userData
     self.theMainUserSettingMDict = [self readPListToMDictionaryAtSandboxPList:@"UserVideoSettings.plist"];
-    if (self.theMainUserSettingMDict != nil)
-    {
+    if (self.theMainUserSettingMDict != nil) {
         self.theVideop2pMDict = [self.theMainUserSettingMDict objectForKey:@"usep2p"];
         self.theVideoServerParamMDict = [self.theMainUserSettingMDict objectForKey:@"useserverparam"];
         self.theVideoSolutionMDict = [self.theMainUserSettingMDict objectForKey:@"videosolution"];
@@ -311,11 +234,8 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
     }
 }
 
-- (void)configParamData
-{
-    
+- (void)configParamData {
     if(!_maybeChange) { //数据没变，则读取原数据
-        
         self.theP2PNum = [self.theVideop2pMDict objectForKey:@"Values"];
         self.theServerParamNum = [self.theVideoServerParamMDict objectForKey:@"Values"];
         self.theSolutionStr = [self.theVideoSolutionMDict objectForKey:@"Titles"];
@@ -329,55 +249,43 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
         self.theQualityStr = [self.theVideoQualityMDict objectForKey:@"Titles"];
         self.theQualityNum = [self.theVideoQualityMDict objectForKey:@"Values"];
     } else {
-        
-        if (self.theP2PNum == nil)
-        {
+        if (self.theP2PNum == nil) {
             self.theP2PNum = [self.theVideop2pMDict objectForKey:@"Values"];
         }
         
-        if (self.theServerParamNum == nil)
-        {
+        if (self.theServerParamNum == nil) {
             self.theServerParamNum = [self.theVideoServerParamMDict objectForKey:@"Values"];
         }
         
-        if (self.theSolutionNum == nil)
-        {
+        if (self.theSolutionNum == nil) {
             self.theSolutionStr = [self.theVideoSolutionMDict objectForKey:@"Titles"];
             self.theSolutionNum = [self.theVideoSolutionMDict objectForKey:@"Values"];
         }
         
-        if (self.theBitrateNum == nil)
-        {
+        if (self.theBitrateNum == nil) {
             self.theBitrateStr = [self.theVideoBitrateMDict objectForKey:@"Titles"];
             self.theBitrateNum = [self.theVideoBitrateMDict objectForKey:@"Values"];
         }
         
-        if (self.theFrameRateNum == nil)
-        {
+        if (self.theFrameRateNum == nil) {
             self.theFrameRateStr = [self.theVideoFramerateMDict objectForKey:@"Titles"];
             self.theFrameRateNum = [self.theVideoFramerateMDict objectForKey:@"Values"];
         }
         
-        if (self.thePresetNum == nil)
-        {
+        if (self.thePresetNum == nil) {
             self.thePresetStr = [self.theVideoPresetMDict objectForKey:@"Titles"];
             self.thePresetNum = [self.theVideoPresetMDict objectForKey:@"Values"];
         }
         
-        if (self.theQualityNum == nil)
-        {
+        if (self.theQualityNum == nil) {
             self.theQualityStr = [self.theVideoQualityMDict objectForKey:@"Titles"];
             self.theQualityNum = [self.theVideoQualityMDict objectForKey:@"Values"];
         }
     }
-    
-
 }
 
-- (IBAction)saveBtn_OnClick
-{
-    if (self.theP2PNum && self.theServerParamNum && self.theSolutionNum && self.theBitrateNum && self.theFrameRateNum && self.thePresetNum && self.theQualityNum && self.theSolutionStr && self.theBitrateStr && self.theFrameRateStr && self.thePresetStr && self.theQualityStr)
-    {
+- (IBAction)saveBtn_OnClick {
+    if (self.theP2PNum && self.theServerParamNum && self.theSolutionNum && self.theBitrateNum && self.theFrameRateNum && self.thePresetNum && self.theQualityNum && self.theSolutionStr && self.theBitrateStr && self.theFrameRateStr && self.thePresetStr && self.theQualityStr) {
         //set Values in Dict
         [self.theVideop2pMDict setValue:self.theP2PNum forKey:@"Values"];
         [self.theVideoServerParamMDict setValue:self.theServerParamNum forKey:@"Values"];
@@ -408,27 +316,20 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
         
         [self.navigationController popViewControllerAnimated:YES];
         _maybeChange = NO;
-    }
-    else
-    {
+    } else {
         UIAlertView *showInfoAlertView = [[UIAlertView alloc] initWithTitle:@"参数不能为空."
                                                                    message:@"Video Settings cannot be empty."
                                                                   delegate:self
                                                          cancelButtonTitle:nil
                                                          otherButtonTitles:@"确定",nil];
         [showInfoAlertView show];
-
     }
 }
 
-- (void)switchBtnStatus:(UISwitch*)theSwitchBtn
-{
+- (void)switchBtnStatus:(UISwitch*)theSwitchBtn {
     BOOL isButtonOn = [theSwitchBtn isOn];
-    
-    if (theSwitchBtn == self.theP2PSwitch)
-    {
-        if (isButtonOn)
-        {
+    if (theSwitchBtn == self.theP2PSwitch) {
+        if (isButtonOn) {
             BOOL s_isOn = YES;
             self.theP2PNum = [NSNumber numberWithBool:s_isOn];
         }else {
@@ -436,40 +337,33 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
             self.theP2PNum = [NSNumber numberWithBool:s_isOff];
         }
     }
-    else if (theSwitchBtn == self.theServerSwitch)
-    {
-        if (isButtonOn)
-        {
+    else if (theSwitchBtn == self.theServerSwitch) {
+        if (isButtonOn) {
             BOOL s_isOn = YES;
             self.theServerParamNum = [NSNumber numberWithBool:s_isOn];
-        }else {
+        } else {
             BOOL s_isOff = NO;
             self.theServerParamNum = [NSNumber numberWithBool:s_isOff];
         }
     }
-    
     _maybeChange = YES;
 }
 
-- (BOOL)shouldAutorotate
-{
+- (BOOL)shouldAutorotate {
     return NO;
 }
 
 //Get the Values of the MutableDictionary
-- (id)getValuesFromMDict:(NSMutableDictionary *)mainMDict firstMDictKey:(NSString *)firstKey secondValuesKey:(NSString *)secondKey
-{
+- (id)getValuesFromMDict:(NSMutableDictionary *)mainMDict firstMDictKey:(NSString *)firstKey secondValuesKey:(NSString *)secondKey {
     NSMutableDictionary *theMDict = [mainMDict objectForKey:firstKey];
     NSNumber *theValues = [theMDict objectForKey:secondKey];
-    
     return theValues;
 }
 
 
 #pragma mark - User-defined video parameter Settings
 // 更新用户自定义视频参数设置
-- (void) updateUserVideoSettings
-{
+- (void) updateUserVideoSettings {
     //read user data
     NSMutableDictionary *theMDict = [self readPListToMDictionaryAtSandboxPList:@"UserVideoSettings.plist"];
     
@@ -498,13 +392,10 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
     // P2P
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_NETWORK_P2PPOLITIC : (bUseP2P ? 1 : 0)];
     
-    if(bUseServerVideoParam)
-    {
+    if(bUseServerVideoParam) {
         // 屏蔽本地参数，采用服务器视频参数设置
         [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_APPLYPARAM :0];
-    }
-    else
-    {
+    } else {
         int iWidth, iHeight;
         switch (iVideoSolution) {
             case 0:     iWidth = 1280;  iHeight = 720;  break;
@@ -525,6 +416,5 @@ kGCD_SINGLETON_FOR_CLASS(SettingVC);
         [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_APPLYPARAM :1];
     }
 }
-
 
 @end

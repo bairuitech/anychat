@@ -1,6 +1,6 @@
 //
 //  UINavigationController+DeviceOrientataion.m
-//  AnyChatCallCenter
+//  HelloAnyChat
 //
 //  Created by bairui on 2019/7/18.
 //  Copyright © 2019 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
@@ -10,18 +10,16 @@
 
 @implementation UINavigationController (DeviceOrientataion)
 
-
--(UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return self.topViewController.supportedInterfaceOrientations;
 }
--(BOOL)shouldAutorotate
-{
+
+-(BOOL)shouldAutorotate {
     return [self.topViewController shouldAutorotate];
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-{
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
     return [self.topViewController preferredInterfaceOrientationForPresentation];
 }
+
 @end

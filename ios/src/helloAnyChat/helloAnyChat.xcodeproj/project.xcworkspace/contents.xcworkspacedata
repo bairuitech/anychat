@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:helloAnyChat.xcodeproj">
+      location = "self:/Users/zhongchen/BaiRuiTech/AnyChatProjects-iOS/SDKNewDemo/src/helloAnyChat/HelloAnyChat.xcodeproj">
    </FileRef>
 </Workspace>

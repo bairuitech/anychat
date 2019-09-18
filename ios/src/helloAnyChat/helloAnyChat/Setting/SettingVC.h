@@ -6,13 +6,11 @@
 #import <UIKit/UIKit.h>
 #import "DetailVC.h"
 #import "AnyChatViewController.h"
-
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
 @interface SettingVC : ACBaseViewController <UITableViewDelegate,UITableViewDataSource>
-
 
 //user setting param - Values
 @property (strong,nonatomic) NSNumber               *theP2PNum;

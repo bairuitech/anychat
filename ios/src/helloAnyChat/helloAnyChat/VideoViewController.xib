@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,7 +23,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video.png" translatesAutoresizingMaskIntoConstraints="NO" id="gvn-o5-Q4l" userLabel="ImageView - bg">
+                <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video-568h" translatesAutoresizingMaskIntoConstraints="NO" id="gvn-o5-Q4l" userLabel="ImageView - bg">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                     <gestureRecognizers/>
                     <connections>
@@ -67,7 +67,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDB-0E-z8m" userLabel="Button - EndCall">
-                            <rect key="frame" x="170" y="0.0" width="75" height="75"/>
+                            <rect key="frame" x="169.5" y="0.0" width="75" height="75"/>
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" image="video_cutoff">
@@ -151,11 +151,11 @@
     </objects>
     <resources>
         <image name="Icon_EndCall.png" width="454" height="60"/>
-        <image name="bg_video.png" width="320" height="568"/>
-        <image name="video_audio_off" width="74" height="74"/>
-        <image name="video_audio_on" width="74" height="74"/>
-        <image name="video_cutoff" width="74" height="74"/>
-        <image name="video_video_off" width="74" height="74"/>
-        <image name="video_video_on" width="74" height="74"/>
+        <image name="bg_video-568h" width="320" height="568"/>
+        <image name="video_audio_off" width="74.5" height="74.5"/>
+        <image name="video_audio_on" width="74.5" height="74.5"/>
+        <image name="video_cutoff" width="74.5" height="74.5"/>
+        <image name="video_video_off" width="74.5" height="74.5"/>
+        <image name="video_video_on" width="74.5" height="74.5"/>
     </resources>
 </document>

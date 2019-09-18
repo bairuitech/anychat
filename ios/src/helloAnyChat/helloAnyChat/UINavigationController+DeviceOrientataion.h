@@ -1,6 +1,6 @@
 //
 //  UINavigationController+DeviceOrientataion.h
-//  AnyChatCallCenter
+//  HelloAnyChat
 //
 //  Created by bairui on 2019/7/18.
 //  Copyright © 2019 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
@@ -11,8 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UINavigationController (DeviceOrientataion)
-
-
 
 @end
 

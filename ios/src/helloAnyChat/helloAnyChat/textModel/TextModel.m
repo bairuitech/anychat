@@ -1,6 +1,6 @@
 //
 //  TextModel.m
-//  helloAnyChat
+//  HelloAnyChat
 //
 //  Created by Mac on 16/5/19.
 //  Copyright © 2016年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
@@ -18,8 +18,7 @@
  *  从文件中解析对象的时候调用
  *
  */
-- (id)initWithCoder:(NSCoder *)decode
-{
+- (id)initWithCoder:(NSCoder *)decode {
     if (self = [super init]) {
         self.roomId = [decode decodeObjectForKey:@"roomId "];
         self.userName = [decode decodeObjectForKey:@"userName"];
@@ -34,20 +33,11 @@
  *  将对象写入到文件的时候调用
  *
  */
-- (void)encodeWithCoder:(NSCoder *)encode
-{
-    
-    //    LOG(@"accessToken --- %@",self.accessToken);
-    //      LOG(@"accessToken --- %@",self.expiresIn);
-    //      LOG(@"accessToken --- %@",self.userid);
-    //      LOG(@"accessToken --- %@",self.userName);  LOG(@"accessToken --- %@",self.accessToken);
-    
+- (void)encodeWithCoder:(NSCoder *)encode {
     [encode encodeObject:self.roomId forKey:@"roomId"];
     [encode encodeObject:self.userName forKey:@"userName"];
     [encode encodeObject:self.chatIp forKey:@"chatIp"];
     [encode encodeObject:self.chatPort forKey:@"chatPort"];
-
-    
 }
 
 @end
