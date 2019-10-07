@@ -13,10 +13,15 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-fPIC" />
 					<Add directory="../../../../sdk/server/c++" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-Wl,-rpath ." />
+					<Add library="dl" />
+					<Add library="rt" />
+					<Add library="z" />
 					<Add library="anychatserversdk" />
 					<Add directory="../../../../bin/serversdk" />
 				</Linker>

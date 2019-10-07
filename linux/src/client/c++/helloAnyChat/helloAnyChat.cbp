@@ -13,10 +13,15 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-fPIC" />
 					<Add directory="../../../../sdk/client/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-Wl,-rpath ." />
+					<Add library="dl" />
+					<Add library="rt" />
+					<Add library="z" />
 					<Add library="anychatcore" />
 					<Add directory="../../../../bin/client" />
 				</Linker>
