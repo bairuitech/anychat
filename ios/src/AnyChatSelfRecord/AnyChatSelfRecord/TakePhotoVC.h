@@ -12,7 +12,7 @@
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
-
+#import "ProviewPhotoVC.h"
 
 @interface TakePhotoVC : ACBaseViewController
 

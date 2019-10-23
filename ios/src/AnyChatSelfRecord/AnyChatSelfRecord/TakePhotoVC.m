@@ -42,11 +42,17 @@
 {
     [super viewWillAppear:YES];
     
-    if ([AnyChatVC sharedAnyChatVC].theNextVCBool == YES)
-    {
-        [self nextVC];
-        [AnyChatVC sharedAnyChatVC].theNextVCBool = NO;
-    }
+//    if ([AnyChatVC sharedAnyChatVC].theNextVCBool == YES)
+//    {
+//        [self nextVC];
+//        [AnyChatVC sharedAnyChatVC].theNextVCBool = NO;
+//    }
+}
+
+-(void)dismissVC
+{
+    [self nextVC];
+    [AnyChatVC sharedAnyChatVC].theNextVCBool = NO;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
