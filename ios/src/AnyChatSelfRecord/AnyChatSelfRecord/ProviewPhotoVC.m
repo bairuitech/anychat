@@ -76,7 +76,13 @@
 - (IBAction)nextBtn_OnClick
 {
     [AnyChatVC sharedAnyChatVC].theNextVCBool = YES;
-    [self dismissViewControllerAnimated:NO completion:nil];
+//    [self dismissViewControllerAnimated:NO completion:nil];
+    
+    [self dismissViewControllerAnimated:NO completion:^{
+        if ([self.delegate respondsToSelector:@selector(dismissVC)]) {
+            [self.delegate dismissVC];
+        }
+    }];
 }
 
 

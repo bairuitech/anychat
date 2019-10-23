@@ -30,6 +30,9 @@
 @property (strong, nonatomic) AnyChatPlatform               *anyChat;
 @property int   theFeaturesNO;
 @property int   theTargetUserID;
+
+@property (strong, nonatomic) TakePhotoVC *takePhotoVC;
+
 @end
 
 @implementation AnyChatVC
@@ -155,6 +158,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_HEIGHTCTRL :720];
     
     TakePhotoVC *takePhotoVC = [[TakePhotoVC alloc] init];
+    self.takePhotoVC = takePhotoVC;
     [self.navigationController pushViewController:takePhotoVC animated:YES];
 }
 
@@ -240,6 +244,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:proviewPhotoVC];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
     
+    proviewPhotoVC.delegate = self.takePhotoVC;
     if (lpFileName)
     {
         self.thePhotoPath = lpFileName;
