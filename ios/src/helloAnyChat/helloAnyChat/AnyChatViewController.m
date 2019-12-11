@@ -34,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
 
 @property (strong, nonatomic) IBOutlet UITableView          *onLineUserTableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 
 @property BOOL theOnLineLoginState;
 @property int theMyUserID;
@@ -121,7 +122,7 @@
 
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
     self.onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
     if(dwErrorCode == GV_ERR_SUCCESS) {
         self.theOnLineLoginState = YES;
@@ -136,6 +137,7 @@
         }
         [AnyChatPlatform EnterRoom:(int)[self.theRoomNO.text integerValue] :@""];
     } else {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         self.theOnLineLoginState = NO;
         self.theStateInfo.text = [NSString stringWithFormat:@"• Login failed(ErrorCode:%i)",dwErrorCode];
     }
@@ -144,6 +146,7 @@
 
 // 用户进入房间消息
 - (void) OnAnyChatEnterRoom:(int) dwRoomId : (int) dwErrorCode {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     if (dwErrorCode != 0) {
         self.theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
     }
@@ -183,6 +186,7 @@
 
 // 网络断开消息
 - (void) OnAnyChatLinkClose:(int) dwErrorCode {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     [self.videoVC FinishVideoChat];
     [AnyChatPlatform LeaveRoom:-1];
     [AnyChatPlatform Logout];
@@ -328,8 +332,12 @@
 
 #pragma mark - UI Controls
 - (void)setUIControls{
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 40.0f)];
-    self.onLineUserTableView.tableFooterView = footerView;
+
+//    if (k_iPhoneX_XS_11Pro || k_iPhoneXR_XSMax_11_11ProMax) {
+//        self.bottomConstraint.constant = 20;
+//    } else {
+//        self.bottomConstraint.constant = 0;
+//    }
     self.theVersionLab.text = [AnyChatPlatform GetSDKVersion];
 }
 

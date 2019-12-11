@@ -26,7 +26,7 @@
     
     [super viewWillAppear:animated];
     
-    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
    
     UIColor *color = [self navBarColor];
     CGFloat alpha = [self navBarTranslucent] ? 0 : 1;
@@ -36,6 +36,11 @@
     
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (UIColor *)navBarColor {

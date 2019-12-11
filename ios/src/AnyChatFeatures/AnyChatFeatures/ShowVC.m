@@ -7,9 +7,9 @@
 //
 
 #import "ShowVC.h"
-#import <MediaPlayer/MediaPlayer.h>
+#import <AVKit/AVKit.h>
+
 @interface ShowVC ()
-@property (strong, nonatomic) MPMoviePlayerViewController *moviePlayerVC;
 
 @property (strong, nonatomic) NSMutableArray                *theVideoRecordList;
 @property (strong, nonatomic) NSString                      *theSelectContentPath;
@@ -116,14 +116,11 @@
     self.theSelectContentPath = [selectCellDataMDict objectForKey:@"contentPathStr"];
     // init
     if (self.theSelectContentPath) {
-        
         NSURL *url =  [NSURL fileURLWithPath:self.theSelectContentPath];
-        
-        // 实例化
-        _moviePlayerVC = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
-        
-        // 弹出控制器
-        [self.navigationController presentViewController:_moviePlayerVC animated:YES completion:nil];
+        AVPlayerViewController *player = [[AVPlayerViewController alloc] init];
+        AVPlayer *item = [[AVPlayer alloc] initWithURL:url];
+        player.player = item;
+        [self presentViewController:player animated:YES completion:nil];
         
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

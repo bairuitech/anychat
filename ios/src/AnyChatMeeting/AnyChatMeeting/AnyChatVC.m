@@ -9,7 +9,7 @@
 #import "AnyChatVC.h"
 
 
-#define kAnyChatRoomID 1
+#define kAnyChatRoomID 1234
 #define kUserID 1001
 #define kAnyChatIP @"demo.anychat.cn"
 #define kAnyChatPort @"8906"
@@ -32,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
 @property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 
 @property BOOL  theOnLineLoginState;
 
@@ -44,7 +45,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    if (k_iPhoneX_XS_11Pro || k_iPhoneXR_XSMax_11_11ProMax) {
+        self.bottomConstraint.constant = 20;
+    } else {
+        self.bottomConstraint.constant = 0;
+    }
+    
     [self setUI];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
     [AnyChatPlatform InitSDK:0];
@@ -110,7 +117,6 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
         //更新系统默认视频参数设置
@@ -136,6 +142,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 当前用户进入房间消息
 - (void) OnAnyChatEnterRoom:(int) dwRoomId : (int) dwErrorCode
 {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     //更新用户自定义视频参数设置
     [[SettingVC sharedSettingVC] updateUserVideoSettings];
     
@@ -145,6 +152,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     }
 
     self.onlineUserMArray = [self getOnlineUserArray];
+    NSLog(@"onLineUserList:%@", self.onlineUserMArray);
 }
 
 

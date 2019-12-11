@@ -44,6 +44,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UILabel                *theVersion;
 @property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
 @property (strong, nonatomic) IBOutlet UITableView          *onLineUserTableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 
 
 @property (strong, nonatomic) VideoViewController           *videoVC;
@@ -478,6 +479,12 @@ typedef enum {
 
     [self.theVersion setText:[AnyChatPlatform GetSDKVersion]];
     [self updateSignUI];
+    
+    if (k_iPhoneX_XS_11Pro || k_iPhoneXR_XSMax_11_11ProMax) {
+        self.bottomConstraint.constant = 20;
+    } else {
+        self.bottomConstraint.constant = 0;
+    }
 
 //    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 70.0f)];
 //    onLineUserTableView.tableFooterView = footerView;

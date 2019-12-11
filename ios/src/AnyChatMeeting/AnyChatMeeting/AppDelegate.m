@@ -29,9 +29,6 @@
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
-//    NSLog(@"\n\n bounds : %@ \n\n",[UIScreen mainScreen].bounds);
-//    NSLog(@"\n\n size : %@ \n\n",[[UIScreen mainScreen] currentMode].size);
 
     return YES;
     

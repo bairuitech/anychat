@@ -33,6 +33,7 @@
 		CF2AF924230E6D6C00C82570 /* DetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2AF91E230E6D6B00C82570 /* DetailVC.m */; };
 		CF2AF925230E6D6C00C82570 /* SettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2AF91F230E6D6B00C82570 /* SettingVC.m */; };
 		CF2AF926230E6D6C00C82570 /* UserVideoSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF2AF920230E6D6B00C82570 /* UserVideoSettings.plist */; };
+		F3B3355C2382A48300186C1E /* LaunchBg.png in Resources */ = {isa = PBXBuildFile; fileRef = F3B3355B2382A48300186C1E /* LaunchBg.png */; };
 		F854CEFF21474F84002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CEFE21474F84002FC106 /* libc++.tbd */; };
 		F88FC36122E0620A00A58B31 /* UINavigationController+DeviceOrientataion.m in Sources */ = {isa = PBXBuildFile; fileRef = F88FC35F22E0620A00A58B31 /* UINavigationController+DeviceOrientataion.m */; };
 		F89B2B1322C1BD3900B86FE2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F89B2B1222C1BD3900B86FE2 /* Launch Screen.storyboard */; };
@@ -92,6 +93,7 @@
 		CF2AF91E230E6D6B00C82570 /* DetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailVC.m; path = HelloAnyChat/Setting/DetailVC.m; sourceTree = "<group>"; };
 		CF2AF91F230E6D6B00C82570 /* SettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingVC.m; path = HelloAnyChat/Setting/SettingVC.m; sourceTree = "<group>"; };
 		CF2AF920230E6D6B00C82570 /* UserVideoSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = UserVideoSettings.plist; path = HelloAnyChat/Setting/UserVideoSettings.plist; sourceTree = "<group>"; };
+		F3B3355B2382A48300186C1E /* LaunchBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchBg.png; sourceTree = "<group>"; };
 		F854CEFE21474F84002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		F88FC35F22E0620A00A58B31 /* UINavigationController+DeviceOrientataion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+DeviceOrientataion.m"; sourceTree = "<group>"; };
 		F88FC36022E0620A00A58B31 /* UINavigationController+DeviceOrientataion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+DeviceOrientataion.h"; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				FE1B2E7219C692F300773FE6 /* VideoViewController.h */,
 				FE1B2E7319C692F300773FE6 /* VideoViewController.m */,
 				FB3679A719D8453E008D9C5E /* VideoViewController.xib */,
+				F3B3355B2382A48300186C1E /* LaunchBg.png */,
 				FECFA0071C211320002777D9 /* Images.xcassets */,
 				FED273F01A51610D00DC64AD /* Setting */,
 				FEBBA25719C2CC0B009EE02C /* Supporting Files */,
@@ -365,7 +368,7 @@
 				ORGANIZATIONNAME = "GuangZhou BaiRui NetWork Technology Co.,Ltd.";
 				TargetAttributes = {
 					FEBBA24C19C2CC0B009EE02C = {
-						DevelopmentTeam = 6TZ958XNMU;
+						DevelopmentTeam = 7448PDV238;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -396,6 +399,7 @@
 				CF2AF926230E6D6C00C82570 /* UserVideoSettings.plist in Resources */,
 				FE85404619D515A800253FA0 /* tableVCell.xib in Resources */,
 				CF2AF923230E6D6C00C82570 /* DetailVC.xib in Resources */,
+				F3B3355C2382A48300186C1E /* LaunchBg.png in Resources */,
 				FEBBA25B19C2CC0B009EE02C /* InfoPlist.strings in Resources */,
 				FECFA0081C211320002777D9 /* Images.xcassets in Resources */,
 				F89B2B1322C1BD3900B86FE2 /* Launch Screen.storyboard in Resources */,
@@ -567,7 +571,7 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6TZ958XNMU;
+				DEVELOPMENT_TEAM = 7448PDV238;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloAnyChat/HelloAnyChat-Prefix.pch";
@@ -576,7 +580,7 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/HelloAnyChat/HelloAnyChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					../../sdk/libs,
@@ -585,10 +589,10 @@
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.helloAnyChat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairui.helloAnyChatiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
+				VALID_ARCHS = "arm64 arm64e";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -601,7 +605,7 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6TZ958XNMU;
+				DEVELOPMENT_TEAM = 7448PDV238;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloAnyChat/HelloAnyChat-Prefix.pch";
@@ -610,7 +614,7 @@
 					../../sdk/include,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/HelloAnyChat/HelloAnyChat-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					../../sdk/libs,
@@ -618,10 +622,10 @@
 				);
 				MACH_O_TYPE = mh_execute;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.helloAnyChat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairui.helloAnyChatiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
+				VALID_ARCHS = "arm64 arm64e";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -22,6 +22,7 @@
 @property (nonatomic, strong) IBOutlet UILabel       *theVersion;
 @property (weak, nonatomic) IBOutlet UIView *rememberView;
 @property (weak, nonatomic) IBOutlet UIButton *rembemberBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 
 @end
 
@@ -30,6 +31,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (k_iPhoneX_XS_11Pro || k_iPhoneXR_XSMax_11_11ProMax) {
+        self.bottomConstraint.constant = 20;
+    } else {
+        self.bottomConstraint.constant = 0;
+    }
     
     [AnyChatPlatform InitSDK:0];
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_CORESDK_UPLOADLOGINFO :1];

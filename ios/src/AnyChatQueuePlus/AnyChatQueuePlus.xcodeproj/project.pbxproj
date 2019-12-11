@@ -583,7 +583,7 @@
 				TargetAttributes = {
 					22D55FFE1B2B2B2100FE5DC2 = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = 6TZ958XNMU;
+						DevelopmentTeam = 7448PDV238;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -791,7 +791,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Guangzhou BaiRui Network Technology Co. Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6TZ958XNMU;
+				DEVELOPMENT_TEAM = 7448PDV238;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = AnyChatQueuePlus/PrefixHeader.pch;
 				INFOPLIST_FILE = AnyChatQueuePlus/Info.plist;
@@ -801,7 +801,7 @@
 					"$(inherited)",
 					../../sdk/libs,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueuePlus;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairui.AnyChatQueuePlusiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -813,7 +813,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Guangzhou BaiRui Network Technology Co. Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6TZ958XNMU;
+				DEVELOPMENT_TEAM = 7448PDV238;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = AnyChatQueuePlus/PrefixHeader.pch;
 				INFOPLIST_FILE = AnyChatQueuePlus/Info.plist;
@@ -823,7 +823,7 @@
 					"$(inherited)",
 					../../sdk/libs,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueuePlus;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairui.AnyChatQueuePlusiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

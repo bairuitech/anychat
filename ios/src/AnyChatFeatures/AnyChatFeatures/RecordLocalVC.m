@@ -46,7 +46,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.view.layer.masksToBounds = YES;
     self.iRemoteUserId = [AnyChatVC sharedAnyChatVC].theTargetUserID;
     [self StartVideoChat:self.iRemoteUserId];
     [self setTheTimer];

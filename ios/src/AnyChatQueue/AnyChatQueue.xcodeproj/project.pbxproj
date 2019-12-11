@@ -542,7 +542,7 @@
 				TargetAttributes = {
 					22D55FFE1B2B2B2100FE5DC2 = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = 6TZ958XNMU;
+						DevelopmentTeam = 7448PDV238;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -716,7 +716,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Guangzhou BaiRui Network Technology Co. Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6TZ958XNMU;
+				DEVELOPMENT_TEAM = 7448PDV238;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/AnyChatQueue/PrefixHeader.pch";
@@ -727,7 +727,7 @@
 					"$(inherited)",
 					../../sdk/libs,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueue;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairui.AnyChatQueueiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -738,7 +738,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Guangzhou BaiRui Network Technology Co. Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6TZ958XNMU;
+				DEVELOPMENT_TEAM = 7448PDV238;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/AnyChatQueue/PrefixHeader.pch";
@@ -749,7 +749,7 @@
 					"$(inherited)",
 					../../sdk/libs,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bairuitech.AnyChatQueue;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bairui.AnyChatQueueiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

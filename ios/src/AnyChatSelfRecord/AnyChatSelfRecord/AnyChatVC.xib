@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
-    <device id="retina5_5" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnyChatVC">
             <connections>
+                <outlet property="bottomConstraint" destination="8xW-jA-9Xs" id="oTJ-u7-fDc"/>
                 <outlet property="theLoginBtn" destination="Na6-1Z-fa2" id="V8L-kj-2C3"/>
                 <outlet property="theServerIP" destination="3tK-w0-pgW" id="JAZ-wR-8dv"/>
                 <outlet property="theServerPort" destination="KW0-TX-ntw" id="6U5-hA-398"/>
@@ -131,6 +130,7 @@
                     <constraints>
                         <constraint firstItem="u9M-RC-5mp" firstAttribute="leading" secondItem="4RE-IZ-K8S" secondAttribute="leading" constant="53" id="0nd-SF-xtU"/>
                         <constraint firstItem="kzs-wY-RSN" firstAttribute="height" secondItem="Car-d5-Sr1" secondAttribute="height" id="37j-CW-GuH"/>
+                        <constraint firstAttribute="height" constant="248" id="3FK-rD-aEV"/>
                         <constraint firstItem="Car-d5-Sr1" firstAttribute="top" secondItem="kzs-wY-RSN" secondAttribute="bottom" constant="20" id="89P-OV-pkv"/>
                         <constraint firstItem="kzs-wY-RSN" firstAttribute="centerX" secondItem="Car-d5-Sr1" secondAttribute="centerX" id="APB-dN-nvv"/>
                         <constraint firstItem="u9M-RC-5mp" firstAttribute="centerX" secondItem="4RE-IZ-K8S" secondAttribute="centerX" id="Ncv-Qs-ywF"/>
@@ -199,7 +199,7 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Single Video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLm-5g-zbL">
-                    <rect key="frame" x="152.66666666666666" y="143" width="108.66666666666666" height="24"/>
+                    <rect key="frame" x="152.66666666666666" y="143" width="108.99999999999997" height="24"/>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -217,7 +217,6 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="1Qn-S9-C21" firstAttribute="top" secondItem="Na6-1Z-fa2" secondAttribute="bottom" constant="60" id="00I-ZO-069"/>
                 <constraint firstAttribute="trailing" secondItem="1Qn-S9-C21" secondAttribute="trailing" id="2pZ-6n-2O7"/>
                 <constraint firstItem="VQj-Jm-QDp" firstAttribute="top" secondItem="gLm-5g-zbL" secondAttribute="bottom" constant="20" id="3ma-wc-6eY"/>
                 <constraint firstItem="Na6-1Z-fa2" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="53" id="42W-lG-HGn"/>
@@ -243,10 +242,10 @@
         </view>
     </objects>
     <resources>
-        <image name="login_account" width="22" height="22"/>
-        <image name="login_ip" width="22" height="22"/>
-        <image name="login_logo" width="193" height="46"/>
-        <image name="login_port" width="22" height="22"/>
-        <image name="total_bg" width="414" height="350"/>
+        <image name="login_account" width="22.666666030883789" height="22.666666030883789"/>
+        <image name="login_ip" width="22.666666030883789" height="22.666666030883789"/>
+        <image name="login_logo" width="193.33332824707031" height="46.333332061767578"/>
+        <image name="login_port" width="22.666666030883789" height="22.666666030883789"/>
+        <image name="total_bg" width="414" height="350.33334350585938"/>
     </resources>
 </document>

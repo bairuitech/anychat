@@ -108,7 +108,7 @@
     [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
     [AnyChatPlatform UserCameraControl:-1 : YES];
     
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION :(int)[UIApplication sharedApplication].statusBarOrientation];
 }
 
 - (IBAction)takePhotoBtn_OnClicked:(id)sender
@@ -159,8 +159,8 @@
     [self FinishVideoChat];
     
     //录像最佳像素
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_WIDTHCTRL :352];
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_HEIGHTCTRL :288];
+    //[AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_WIDTHCTRL :352];
+    //[AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_HEIGHTCTRL :288];
     
     RecordLocalVC *recordLocalVC = [RecordLocalVC new];
     [self.navigationController pushViewController:recordLocalVC animated:YES];

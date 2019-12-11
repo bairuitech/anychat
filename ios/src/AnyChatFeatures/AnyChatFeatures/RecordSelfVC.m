@@ -43,7 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.view.layer.masksToBounds = YES;
     [self StartVideoChat:0];
     [self setTheTimer];
     [self p_configNavItem];

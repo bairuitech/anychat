@@ -60,7 +60,6 @@
     [super viewWillAppear:YES];
     [self setUI];
     
-    
     //Video Chat Block
     self.pvBlock =  ^(int targerUserID,int imgViewTag,VideoVC *videoVC)
     {
@@ -93,6 +92,8 @@
 //                videoVC.iRemoteVideoView3.contentMode = UIViewContentModeScaleAspectFill;
                 break;
             }
+            default:
+                break;
                 
         }
         [AnyChatPlatform UserCameraControl:targerUserID : YES];
@@ -101,7 +102,7 @@
     //add image Block
     self.aiBlock = ^(int imgViewTag,VideoVC *videoVC)
     {
-        UIImage *bgImg = [UIImage imageNamed:@"Default"];
+        UIImage *bgImg = [UIImage imageNamed:@"video_item_bg"];
         
         switch (imgViewTag)
         {
@@ -125,6 +126,8 @@
                 videoVC.iRemoteVideoView3.image = bgImg;
                 break;
             }
+            default:
+                break;
         }
 
     };
@@ -331,7 +334,7 @@
     }
     [AnyChatPlatform UserCameraControl:targerUserID : YES];
     
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION :(int)[UIApplication sharedApplication].statusBarOrientation];
 }
 
 - (void) StartLocalVideoChat
@@ -352,7 +355,7 @@
     [AnyChatPlatform SetVideoPos:-1 :self :0 :0 :0 :0];
     [AnyChatPlatform UserCameraControl:-1 : YES];
     
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION :(int)[UIApplication sharedApplication].statusBarOrientation];
 }
 
 - (void) OnLocalVideoRelease:(id)sender

@@ -97,7 +97,7 @@
     
     self.iRemoteUserId = userid;
     
-    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : [UIApplication sharedApplication].statusBarOrientation];
+    [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : (int)[UIApplication sharedApplication].statusBarOrientation];
 }
 
 //打开对方的视频

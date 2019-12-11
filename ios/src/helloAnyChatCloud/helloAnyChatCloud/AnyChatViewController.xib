@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnyChatViewController">
             <connections>
+                <outlet property="bottomConstraint" destination="tRb-lI-fDf" id="vjh-Rs-oNi"/>
                 <outlet property="onLineUserTableView" destination="VgH-gd-LJY" id="76n-Oq-7dH"/>
                 <outlet property="theGuid" destination="smR-58-uB3" id="IYq-Sl-zlh"/>
                 <outlet property="theLoginBtn" destination="C6m-vn-hZY" id="Y6B-7q-N6B"/>
@@ -78,7 +77,6 @@
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zhU-DY-Izx" userLabel="Text Field - name">
                             <rect key="frame" x="85" y="204" width="160" height="23"/>
-                            <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
@@ -87,7 +85,6 @@
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="房间号" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iiJ-c1-h6m" userLabel="Text Field - roomNO">
                             <rect key="frame" x="300" y="204" width="77" height="23"/>
-                            <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                         </textField>
@@ -96,7 +93,6 @@
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="应用id" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="smR-58-uB3" userLabel="Text Field - appId">
                             <rect key="frame" x="85" y="258" width="292" height="23"/>
-                            <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
@@ -105,7 +101,6 @@
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="服务器ID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LUW-d0-gnN" userLabel="Text Field - server">
                             <rect key="frame" x="85" y="312" width="292" height="23"/>
-                            <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>

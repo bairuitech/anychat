@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,31 +21,31 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="ztE-r4-6o7">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video.png" translatesAutoresizingMaskIntoConstraints="NO" id="pUF-sz-JNk" userLabel="remoteVideoSurface">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <gestureRecognizers/>
                     <connections>
                         <outletCollection property="gestureRecognizers" destination="99L-D9-dTU" appends="YES" id="cT7-fm-J77"/>
                     </connections>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lo-b2-blZ" userLabel="theVideoTimeLab">
-                    <rect key="frame" x="163.5" y="571.5" width="87" height="21"/>
+                    <rect key="frame" x="163.5" y="697.5" width="87" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </label>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loacl Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oow-3L-haa" userLabel="serverRecordTime">
-                    <rect key="frame" x="13" y="572" width="83" height="20"/>
+                    <rect key="frame" x="13" y="698" width="83" height="20"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eh4-us-qcF" userLabel="View - footer">
-                    <rect key="frame" x="0.0" y="612" width="414" height="100"/>
+                    <rect key="frame" x="0.0" y="738" width="414" height="100"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务器录像" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tex-4x-Be5">
                             <rect key="frame" x="16.5" y="85" width="76.5" height="18"/>
@@ -157,14 +156,14 @@
                 <constraint firstItem="oow-3L-haa" firstAttribute="centerX" secondItem="ikc-wi-vBv" secondAttribute="centerX" id="Fef-nF-abu"/>
                 <constraint firstAttribute="trailing" secondItem="cck-Gt-e7F" secondAttribute="trailing" constant="17" id="VdQ-Rj-KmL"/>
                 <constraint firstItem="0Lo-b2-blZ" firstAttribute="centerY" secondItem="oow-3L-haa" secondAttribute="centerY" id="WMb-ff-wqX"/>
-                <constraint firstAttribute="bottom" secondItem="eh4-us-qcF" secondAttribute="bottom" constant="24" id="Wni-oW-qzl"/>
+                <constraint firstItem="hSw-jj-Pua" firstAttribute="bottom" secondItem="eh4-us-qcF" secondAttribute="bottom" constant="24" id="Wni-oW-qzl"/>
                 <constraint firstItem="eh4-us-qcF" firstAttribute="top" secondItem="oow-3L-haa" secondAttribute="bottom" constant="20" id="ZRL-S8-CNU"/>
                 <constraint firstItem="pUF-sz-JNk" firstAttribute="leading" secondItem="ztE-r4-6o7" secondAttribute="leading" id="k3y-j4-OUc"/>
                 <constraint firstAttribute="bottom" secondItem="pUF-sz-JNk" secondAttribute="bottom" id="vlq-tY-hBN"/>
                 <constraint firstItem="pUF-sz-JNk" firstAttribute="top" secondItem="ztE-r4-6o7" secondAttribute="top" id="ydX-EH-Zmb"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="hSw-jj-Pua"/>
             <point key="canvasLocation" x="592" y="112.44377811094454"/>
         </view>
         <tapGestureRecognizer numberOfTapsRequired="2" id="99L-D9-dTU">
@@ -178,9 +177,9 @@
         <image name="Icon_EndCall.png" width="454" height="60"/>
         <image name="bg_video.png" width="320" height="568"/>
         <image name="record_server_normal" width="75" height="75"/>
-        <image name="record_server_selected" width="74" height="74"/>
-        <image name="video_audio_off" width="74" height="74"/>
-        <image name="video_audio_on" width="74" height="74"/>
-        <image name="video_cutoff" width="74" height="74"/>
+        <image name="record_server_selected" width="74.5" height="74.5"/>
+        <image name="video_audio_off" width="74.5" height="74.5"/>
+        <image name="video_audio_on" width="74.5" height="74.5"/>
+        <image name="video_cutoff" width="74.5" height="74.5"/>
     </resources>
 </document>

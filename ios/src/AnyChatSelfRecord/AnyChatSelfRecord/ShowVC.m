@@ -32,6 +32,8 @@
     [super viewDidLoad];
     self.title = @"录像回放";
     self.imageView.image = [UIImage imageWithContentsOfFile:[AnyChatVC sharedAnyChatVC].videoCoverImagePath];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.imageView.layer.masksToBounds = YES;
     self.nextButton.layer.borderWidth = 1;
     self.nextButton.layer.borderColor = [UIColor colorWithRed:0 green:139/255.0 blue:227/255.0 alpha:1].CGColor;
     self.nextButton.layer.masksToBounds = YES;

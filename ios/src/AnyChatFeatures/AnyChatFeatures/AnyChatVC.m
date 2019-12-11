@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
 @property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (strong, nonatomic) UIAlertView                   *theVideoRecordAlertView;
 @property (strong, nonatomic) UIAlertView                   *theSnapShotAlertView;
 
@@ -49,6 +50,13 @@
 #pragma mark - Life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    if (k_iPhoneX_XS_11Pro || k_iPhoneXR_XSMax_11_11ProMax) {
+//        self.bottomConstraint.constant = 20;
+//    } else {
+//        self.bottomConstraint.constant = 0;
+//    }
+    
     [self setUI];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];

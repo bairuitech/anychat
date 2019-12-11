@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
-    <device id="retina5_5" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnyChatVC">
             <connections>
+                <outlet property="bottomConstraint" destination="8xW-jA-9Xs" id="3zG-bI-4zU"/>
                 <outlet property="theLoginBtn" destination="Na6-1Z-fa2" id="V8L-kj-2C3"/>
                 <outlet property="theRoomNO" destination="5i6-Jv-pCM" id="7Id-66-i1g"/>
                 <outlet property="theServerIP" destination="tl5-Yo-oAq" id="XVS-xN-zSb"/>
@@ -59,7 +58,6 @@
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="房间号" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5i6-Jv-pCM" userLabel="Text Field - roomNO">
                             <rect key="frame" x="299" y="140" width="78" height="23"/>
-                            <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                         </textField>
@@ -75,7 +73,6 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="23" id="3wb-Ai-JKy"/>
                             </constraints>
-                            <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
@@ -125,6 +122,7 @@
                         <constraint firstItem="eNL-Ab-OKp" firstAttribute="centerY" secondItem="zD9-P8-g2P" secondAttribute="centerY" id="tJZ-bT-1Sy"/>
                         <constraint firstItem="tl5-Yo-oAq" firstAttribute="leading" secondItem="zKh-lB-kcg" secondAttribute="leading" id="tRR-jc-UZ3"/>
                         <constraint firstItem="zKh-lB-kcg" firstAttribute="centerY" secondItem="zD9-P8-g2P" secondAttribute="centerY" id="uhZ-gn-mCQ"/>
+                        <constraint firstAttribute="height" constant="248" id="v91-lI-y7X"/>
                         <constraint firstItem="5i6-Jv-pCM" firstAttribute="height" secondItem="zKh-lB-kcg" secondAttribute="height" id="wGN-7U-5ev"/>
                         <constraint firstItem="tl5-Yo-oAq" firstAttribute="centerY" secondItem="1Nw-4b-bBS" secondAttribute="centerY" id="wog-cx-5Zg"/>
                         <constraint firstItem="IeR-mU-sPU" firstAttribute="top" secondItem="zD9-P8-g2P" secondAttribute="bottom" constant="10" id="x8u-gg-EId"/>
@@ -208,7 +206,6 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="1Qn-S9-C21" firstAttribute="top" secondItem="Na6-1Z-fa2" secondAttribute="bottom" constant="60" id="00I-ZO-069"/>
                 <constraint firstAttribute="trailing" secondItem="1Qn-S9-C21" secondAttribute="trailing" id="2pZ-6n-2O7"/>
                 <constraint firstItem="VQj-Jm-QDp" firstAttribute="top" secondItem="gLm-5g-zbL" secondAttribute="bottom" constant="20" id="3ma-wc-6eY"/>
                 <constraint firstItem="Na6-1Z-fa2" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="53" id="42W-lG-HGn"/>
@@ -234,11 +231,11 @@
         </view>
     </objects>
     <resources>
-        <image name="login_account" width="22" height="22"/>
-        <image name="login_ip" width="22" height="22"/>
-        <image name="login_logo" width="193" height="46"/>
-        <image name="login_port" width="22" height="22"/>
-        <image name="login_room" width="22" height="22"/>
-        <image name="total_bg" width="414" height="350"/>
+        <image name="login_account" width="22.666666030883789" height="22.666666030883789"/>
+        <image name="login_ip" width="22.666666030883789" height="22.666666030883789"/>
+        <image name="login_logo" width="193.33332824707031" height="46.333332061767578"/>
+        <image name="login_port" width="22.666666030883789" height="22.666666030883789"/>
+        <image name="login_room" width="22.666666030883789" height="22.666666030883789"/>
+        <image name="total_bg" width="414" height="350.33334350585938"/>
     </resources>
 </document>

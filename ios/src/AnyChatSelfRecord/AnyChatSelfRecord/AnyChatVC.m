@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
 @property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
 @property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 
 @property (strong, nonatomic) NSMutableArray                *onlineUserMArray;
 @property (strong, nonatomic) NSMutableArray                *theVideoRecordMArray;
@@ -73,6 +74,11 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    if (k_iPhoneX_XS_11Pro || k_iPhoneXR_XSMax_11_11ProMax) {
+        self.bottomConstraint.constant = 20;
+    } else {
+        self.bottomConstraint.constant = 0;
+    }
     [self p_configRightItem];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
@@ -245,6 +251,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     [self.navigationController presentViewController:nav animated:YES completion:nil];
     
     proviewPhotoVC.delegate = self.takePhotoVC;
+    
     if (lpFileName)
     {
         self.thePhotoPath = lpFileName;

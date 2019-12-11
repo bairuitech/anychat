@@ -211,6 +211,7 @@ kGCD_SINGLETON_FOR_CLASS(TextMsg_TransBufferVC);
     // Config
     UILabel *theTitleLabel = (UILabel *)[Cell.contentView viewWithTag:kTitleCell_LableTag];
     UILabel *theContentLabel = (UILabel *)[Cell.contentView viewWithTag:kContentCell_LableTag];
+    theContentLabel.numberOfLines = 0;
     NSDictionary *textMsgDict = [self.theMsgMArray objectAtIndex:[indexPath row]];
     NSString *actionStatus = [textMsgDict objectForKey:@"ACTStatus"];
     
@@ -264,6 +265,18 @@ kGCD_SINGLETON_FOR_CLASS(TextMsg_TransBufferVC);
 
 - (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+        if (indexPath.row < self.theMsgMArray.count) {
+            NSDictionary *textMsgDict = [self.theMsgMArray objectAtIndex:[indexPath row]];
+    
+            NSString *str =  [textMsgDict objectForKey:@"contentStr"];
+    
+            CGFloat width = SCREEN_WIDTH - 3;
+    
+            CGSize size =  [str boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading  attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
+            return size.height + 24+10;// after createTextContainer, have value
+    
+    
+        }
     return 60;
 }
 
