@@ -5,6 +5,7 @@
 #include <openssl/err.h>
 #include <openssl/md5.h>
 #include "base64.h"
+#include "acthread.h"
 
 #if defined(WIN32)
 #	include <windows.h>
@@ -12,6 +13,32 @@
 #	include <ctype.h>
 #define _snprintf   snprintf
 #endif
+
+// 锁对象
+class CMutexLock
+{
+public:
+	CMutexLock(void)
+	{
+		ac_thread_mutex_init(&m_hMutex, NULL);
+	}
+	~CMutexLock(void)
+	{
+		ac_thread_mutex_destroy(&m_hMutex);
+	}
+	void EnterLock()
+	{
+		ac_thread_mutex_lock(&m_hMutex);
+	}
+	void ExitLock()
+	{
+		ac_thread_mutex_unlock(&m_hMutex);
+	}
+public:
+	ac_thread_mutex_t	m_hMutex;
+};
+
+CMutexLock g_globalLock; ///< 全局锁对象
 
 
 #if defined(WIN32)
@@ -204,6 +231,8 @@ int AnyChatRsaSign(int dwUserId, const char* lpStrUserId, const char* lpAppId, c
 			_snprintf(szStrUserId, sizeof(szStrUserId), "%s", lpStrUserId);
 		_snprintf(szMessage, sizeof(szMessage), "{\"id\":%d, \"strid\":\"%s\", \"appid\":\"%s\", \"timestamp\":%d}", dwUserId, szStrUserId, lpAppId, dwTimeStamp);
 		
+		g_globalLock.EnterLock();	//< 加锁
+
 		// md5 加密
 		std::string strMD5Value; 
 		MD5_EncryptMessage(szMessage, strMD5Value);
@@ -212,6 +241,9 @@ int AnyChatRsaSign(int dwUserId, const char* lpStrUserId, const char* lpAppId, c
 		unsigned char szEncrypt[1024] = {0};
 		int encryptLen = sizeof(szEncrypt);
 		ret = RSA_PrivateEncrypt(lpPrivateKey, (const unsigned char *)strMD5Value.c_str(), strMD5Value.size(), szEncrypt, encryptLen);
+
+		g_globalLock.ExitLock();
+
 		if(ret != 0)
 			break;
 
@@ -238,6 +270,8 @@ int AnyChatRsaVerify(int dwUserId, const char* lpStrUserId, const char* lpAppId,
 			_snprintf(szStrUserId, sizeof(szStrUserId), "%s", lpStrUserId);
 		_snprintf(szMessage, sizeof(szMessage), "{\"id\":%d, \"strid\":\"%s\", \"appid\":\"%s\", \"timestamp\":%d}", dwUserId, szStrUserId, lpAppId, dwTimeStamp);
 		
+		g_globalLock.EnterLock();	//< 加锁
+
 		// md5 加密
 		std::string strMD5Value; 
 		MD5_EncryptMessage(szMessage, strMD5Value);
@@ -249,6 +283,9 @@ int AnyChatRsaVerify(int dwUserId, const char* lpStrUserId, const char* lpAppId,
 		unsigned char szDecrypt[1024] = {0};
 		int decryptLen = sizeof(szDecrypt);
 		ret = RSA_PublicDecrypt(lpPublicKey, (const unsigned char *)sigstr_orig.c_str(), sigstr_orig.size(), szDecrypt, decryptLen);
+
+		g_globalLock.ExitLock();
+		
 		if(ret != 0)
 			break;
 
