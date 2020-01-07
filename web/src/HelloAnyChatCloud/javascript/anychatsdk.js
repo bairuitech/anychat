@@ -1194,7 +1194,7 @@ function BRAC_Release() {
 
 // »ñÈ¡µ±Ç°ä¯ÀÀÆ÷
 function getBrowser(){
-	var browser = "unknown browser";	
+	var browser = "unknown browser";
 	var ua = navigator.userAgent.toLowerCase();
 	
 	var info = {
@@ -1205,12 +1205,11 @@ function getBrowser(){
 		ff: /firefox/.test(ua),
 		qh360: /chrome/.test(ua) && !window.navigator.webkitPersistentStorage,
 		qq: /qqbrowser/.test(ua),
-        sg: /metasr/.test(ua)        
+	    sg: /metasr/.test(ua)        
 	};	
-	
 	if (info.ch){
 		browser = "Chrome";
-	}else if (info.ie){
+	}else if (info.ie || (!!window.ActiveXObject || "ActiveXObject" in window) ){
 		browser = "IE";
 	}else if (info.ff){
 		browser = "Firefox";
@@ -1225,7 +1224,6 @@ function getBrowser(){
 	}else if (info.sg){
 		browser = "ËÑ¹·ä¯ÀÀÆ÷";
 	}
-	
 	return browser;
 }
 
