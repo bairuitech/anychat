@@ -217,10 +217,12 @@ public class HallActivity extends Activity implements OnItemClickListener,
 		Log.i("ANYCHAT", "initSdk");
 	}
 
-	protected void startBackServce() {
+	private void startBackServce() {
 		Intent intent = new Intent();
 		intent.setAction(BaseConst.ACTION_BACK_SERVICE);
+		intent.setPackage(getPackageName());
 		this.startService(intent);
+
 	}
 
 	@Override

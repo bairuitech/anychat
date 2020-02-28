@@ -53,6 +53,7 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 	private RoleListAdapter mAdapter;
 	// 呼叫中心用到的对话框
 	private Dialog mDialog;
+	private boolean mReceiverTag = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,7 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 	};
 	
 	private void destroyCurActivity() {
-		onPause();
+		//onPause();
 		onDestroy();
 	}
 
@@ -175,9 +176,10 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 
 	@Override
 	protected void onDestroy() {
+		super.onDestroy();
 		anyChatSDK.LeaveRoom(-1);
 		anyChatSDK.removeEvent(this);
-		super.onDestroy();
+		unRegisterReceiver();
 		finish();
 	}
 
@@ -297,10 +299,13 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 	};
 
 	public void registerBoradcastReceiver() {
-		IntentFilter myIntentFilter = new IntentFilter();
-		myIntentFilter.addAction("NetworkDiscon");
-		// 注册广播
-		registerReceiver(mBroadcastReceiver, myIntentFilter);
+		if (!mReceiverTag){
+			IntentFilter myIntentFilter = new IntentFilter();
+			myIntentFilter.addAction("NetworkDiscon");
+			// 注册广播
+			this.registerReceiver(mBroadcastReceiver, myIntentFilter);
+			mReceiverTag = true;
+		}
 	}
 
 	@Override
@@ -378,4 +383,15 @@ public class RolesListActivity extends Activity implements AnyChatBaseEvent,
 		
 		return strMessage;
 	}
+
+	private void unRegisterReceiver(){
+		if (mReceiverTag) {
+			mReceiverTag = false;
+			if(mBroadcastReceiver!=null){
+				this.unregisterReceiver(mBroadcastReceiver);
+			}
+		}
+
+	}
+
 }

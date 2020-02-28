@@ -15,36 +15,14 @@
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
+#import "MZTimerLabel.h"
+@interface VideoViewController : ACBaseViewController<UIActionSheetDelegate>
 
-@interface VideoViewController : UIViewController<UIActionSheetDelegate>
-{
-    AnyChatPlatform *theAnyChat;
-}
-
-@property (strong, nonatomic) AVCaptureVideoPreviewLayer    *localVideoSurface;
 @property (strong, nonatomic) UserEntity                    *theUserEntity;
-@property (strong, nonatomic) NSMutableArray                *theOnlineUserList;
-@property (strong, nonatomic) IBOutlet UIImageView          *theUIImageView;
-@property (strong, nonatomic) IBOutlet UIView               *theLocalView;
-@property (weak, nonatomic) IBOutlet UIButton               *switchCameraBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *endCallBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *voiceBtn;
-@property (weak, nonatomic) IBOutlet UIButton               *cameraBtn;
-@property int iRemoteUserId;
 
-
-- (IBAction) FinishVideoChatBtnClicked:(id)sender;
-
-- (IBAction) OnSwitchCameraBtnClicked:(id)sender;
-
-- (IBAction) OnCloseVoiceBtnClicked:(id)sender;
-
-- (IBAction) OnCloseCameraBtnClicked:(id)sender;
-
-- (void) FinishVideoChat;
 
 - (void) StartVideoChat:(int) userid;
+-(void)openRemoteView;
 
-- (void) btnSelectedOnClicked:(UIButton*)button;
 
 @end

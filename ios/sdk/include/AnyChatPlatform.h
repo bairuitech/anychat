@@ -284,11 +284,25 @@ typedef struct tagWAVEFORMATEX{
 
 // 操作用户视频
 + (int) UserCameraControl: (int) dwUserid : (BOOL) bOpen;
+// 操作用户视频（扩展）
++ (int) UserCameraControlEx: (int) dwUserid : (BOOL) bOpen : (int) dwStreamIndex :  (int) dwFlags :  (NSString*) lpStrParam;
 // 操作用户语音
 + (int) UserSpeakControl: (int) dwUserid : (BOOL) bOpen;
+// 操作用户语音（扩展）
++ (int) UserSpeakControlEx: (int) dwUserid : (BOOL) bOpen : (int) dwStreamIndex : (int) dwFlags : (NSString*) lpStrParam;
 // 设置视频显示位置
 + (int) SetVideoPos: (int) dwUserid : (NSObject*) surface : (int) left : (int) top : (int) width : (int) height;
+// 设置视频显示位置（扩展）
++ (int) SetVideoPosEx: (int) dwUserid : (NSObject*) surface : (int) dwLeft : (int) dwTop : (int) dwRight : (int) dwBottom : (int) dwStreamIndex : (int) dwFlags;
 
+// 设置指定用户音视频流相关参数
++ (int) SetUserStreamInfoInt: (int) dwUserId : (int) dwStreamIndex : (int) infoname : (int) value;
+// 设置指定用户音视频流相关参数
++ (int) SetUserStreamInfoString: (int) dwUserId : (int) dwStreamIndex : (int) infoname : (NSString*) value;
+// 获取指定用户音视频流相关参数
++ (int) GetUserStreamInfoInt: (int) dwUserId : (int) dwStreamIndex : (int) infoname;
+// 获取指定用户音视频流相关参数
++ (NSString*) GetUserStreamInfoString: (int) dwUserId : (int) dwStreamIndex : (int) infoname;
 
 // 获取指定音频设备的当前音量
 + (int) AudioGetVolume:(int) device;
@@ -298,7 +312,7 @@ typedef struct tagWAVEFORMATEX{
 // 用户音、视频录制
 + (int) StreamRecordCtrl: (int) dwUserId : (BOOL) bStartRecord : (int) dwFlags : (int) dwParam;
 // 用户音、视频录制(扩展)
-+ (int) StreamRecordCtrlEx: (int) dwUserId : (BOOL) bStartRecord : (int) dwFlags : (int) dwParam : (NSString*)lpUserStr;
++ (int) StreamRecordCtrlEx: (int) dwUserId : (BOOL) bStartRecord : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr;
 // 对用户的视频进行抓拍（快照）
 + (int) SnapShot: (int) dwUserId : (int) dwFlags : (int) dwParam;
 // 获取音频播放数据
@@ -355,12 +369,20 @@ typedef struct tagWAVEFORMATEX{
 
 // 设置外部输入视频格式
 + (int) SetInputVideoFormat: (int) pixFmt : (int) dwWidth : (int) dwHeight : (int) dwFps : (int) dwFlags;
+// 设置外部输入视频格式（扩展）
++ (int) SetInputVideoFormatEx: (int) dwStreamIndex : (int) dwCodecId : (int) pixFmt : (int) dwWidth : (int) dwHeight : (int) dwFps : (int) dwFlags;
 // 外部视频数据输入
 + (int) InputVideoData: (NSData*) lpVideoFrame : (int) dwTimeStamp;
+// 外部视频数据输入（扩展）
++ (int) InputVideoDataEx: (int) dwStreamIndex : (NSData*) lpVideoFrame : (int) dwTimeStamp : (int) dwFlags;
 // 设置外部输入音频格式
 + (int) SetInputAudioFormat: (int) dwChannels : (int) dwSamplesPerSec : (int) dwBitsPerSample : (int) dwFlags;
+// 设置外部输入音频格式（扩展）
++ (int) SetInputAudioFormatEx: (int) dwStreamIndex : (int) dwCodecId : (int) dwChannels : (int) dwSamplesPerSec : (int) dwBitsPerSample : (int) dwFlags;
 // 外部音频数据输入
 + (int) InputAudioData: (NSData*) lpSamples : (int) dwTimeStamp;
+// 外部音频数据输入（扩展）
++ (int) InputAudioDataEx: (int) dwStreamIndex : (NSData*) lpSamples : (int) dwTimeStamp : (int) dwFlags;
 
 // 视频呼叫事件控制（请求、回复、挂断等）
 + (int) VideoCallControl: (int) dwEventType : (int) dwUserId : (int) dwErrorCode : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr;

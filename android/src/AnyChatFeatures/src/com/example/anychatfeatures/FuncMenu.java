@@ -1,22 +1,5 @@
 package com.example.anychatfeatures;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import com.bairuitech.anychat.AnyChatBaseEvent;
-import com.bairuitech.anychat.AnyChatCoreSDK;
-import com.bairuitech.anychat.AnyChatDefine;
-import com.example.anychatfeatures.R;
-import com.example.common.CustomApplication;
-import com.example.common.RecordListMenu;
-import com.example.common.ScreenInfo;
-import com.example.common.TraceSelectDialog;
-import com.example.config.ConfigEntity;
-import com.example.config.ConfigService;
-import com.example.funcActivity.ReceiverTrace;
-import com.example.funcActivity.SenderTrace;
-import com.example.funcActivity.VideoConfig;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,12 +11,21 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import com.bairuitech.anychat.AnyChatBaseEvent;
+import com.bairuitech.anychat.AnyChatCoreSDK;
+import com.bairuitech.anychat.AnyChatDefine;
+import com.example.common.CustomApplication;
+import com.example.common.TraceSelectDialog;
+import com.example.config.ConfigEntity;
+import com.example.config.ConfigService;
+import com.example.funcActivity.ReceiverTrace;
+import com.example.funcActivity.SenderTrace;
+import com.example.funcActivity.VideoConfig;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	public static final int FUNC_VOICEVIDEO = 1;		// 音视频交互
@@ -58,6 +50,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	private TraceSelectDialog mTraceSelectDialog;		// 网络检测二次选择确认框
 	
 	AnyChatCoreSDK anyChatSDK;
+	private boolean mReceiverTag = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -158,14 +151,20 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 				// 网络检测选择二次框确定按钮
 			case R.id.udpTraceConfirm:
 				int curSelcetTraceIndex = mTraceSelectDialog.getCurSelectTraceRole();
+				int roomId = mTraceSelectDialog.getRoomId();
+				if(roomId==-1){
+					Toast.makeText(FuncMenu.this,"请输入房间号",Toast.LENGTH_SHORT).show();
+					return;
+				}
 				Intent intent = new Intent();
 				if (curSelcetTraceIndex == 0) {
 					intent.setClass(FuncMenu.this, SenderTrace.class);
+					intent.putExtra("roomId",roomId+"");
 				}else {
 					intent.setClass(FuncMenu.this, ReceiverTrace.class);
+					intent.putExtra("roomId",roomId+"");
 				}
-				
-				anyChatSDK.EnterRoom(FUNC_UDPTRACE, "");
+				anyChatSDK.EnterRoom(roomId, "");
 				startActivity(intent);
 				mTraceSelectDialog.dismiss();
 				mTraceSelectDialog = null;
@@ -282,16 +281,18 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 
 	// 注册广播
 	public void registerBoradcastReceiver() {
-		IntentFilter myIntentFilter = new IntentFilter();
-		myIntentFilter.addAction("NetworkDiscon");
-		// 注册广播
-		registerReceiver(mBroadcastReceiver, myIntentFilter);
+		if (!mReceiverTag){
+			IntentFilter myIntentFilter = new IntentFilter();
+			myIntentFilter.addAction("NetworkDiscon");
+			// 注册广播
+			this.registerReceiver(mBroadcastReceiver, myIntentFilter);
+			mReceiverTag = true;
+		}
 	}
 
 	private void destroyCurActivity() {
 		this.setResult(RESULT_OK);
-		
-		onPause();
+		//onPause();
 		onDestroy();
 		finish();
 	}
@@ -299,6 +300,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		unRegisterReceiver();
 		if(anyChatSDK != null)
 		anyChatSDK.removeEvent(this);
 	}
@@ -362,4 +364,14 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 		// 发送广播
 		sendBroadcast(mIntent);
 	}
+
+	private void unRegisterReceiver(){
+		if (mReceiverTag) {
+			mReceiverTag = false;
+			if(mBroadcastReceiver!=null){
+				this.unregisterReceiver(mBroadcastReceiver);
+			}
+		}
+	}
+
 }

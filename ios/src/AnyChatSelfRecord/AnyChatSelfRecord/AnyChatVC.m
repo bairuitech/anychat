@@ -13,6 +13,27 @@
 
 @interface AnyChatVC ()
 
+{
+    MBProgressHUD   *HUD;
+}
+
+@property (weak, nonatomic) IBOutlet UITextField            *theUserName;
+@property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
+@property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
+@property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
+
+@property (strong, nonatomic) NSMutableArray                *onlineUserMArray;
+@property (strong, nonatomic) NSMutableArray                *theVideoRecordMArray;
+@property (strong, nonatomic) NSString                      *theMyUserName;
+@property (strong, nonatomic) NSString                      *theTargetUserName;
+
+@property (strong, nonatomic) AnyChatPlatform               *anyChat;
+@property int   theFeaturesNO;
+@property int   theTargetUserID;
+
+@property (strong, nonatomic) TakePhotoVC *takePhotoVC;
+
 @end
 
 @implementation AnyChatVC
@@ -25,7 +46,6 @@
 @synthesize theServerIP;
 @synthesize theServerPort;
 @synthesize theLoginBtn;
-@synthesize theHideKeyboardBtn;
 @synthesize theFeaturesNO;
 @synthesize theMyUserName;
 @synthesize theMyUserID;
@@ -53,6 +73,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    if (k_iPhoneX_XS_11Pro || k_iPhoneXR_XSMax_11_11ProMax) {
+        self.bottomConstraint.constant = 20;
+    } else {
+        self.bottomConstraint.constant = 0;
+    }
+    [self p_configRightItem];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
     
@@ -64,35 +91,30 @@
     anyChat.recordSnapShotDelegate = self;
     
     self.theVideoRecordMArray = [[NSMutableArray alloc] initWithCapacity:5];
-    
     //创建默认视频参数
     [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
     [self setUI];
+    
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
+
 }
 
+
+- (void)p_configRightItem {
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(VideoSetting:) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"icon_setting"] forState:UIControlStateNormal];
+    [button sizeToFit];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
 
 #pragma mark - Shared Instance
 
 kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 
-
-#pragma mark -
-#pragma mark - TextField Delegate
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    return YES;
-}
 
 
 #pragma mark - AnyChatNotifyMessageDelegate
@@ -109,7 +131,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
     self.onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
@@ -121,7 +143,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
         self.theMyUserName = self.theUserName.text;
         [self saveSettings];  //登陆信息归档
         theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
-        [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_logout_01"] forState:UIControlStateNormal];
+        self.theLoginBtn.selected = YES;
         [AnyChatPlatform EnterRoom:1 :@""];
     }
     else
@@ -135,11 +157,14 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 进入房间消息
 - (void) OnAnyChatEnterRoom:(int) dwRoomId : (int) dwErrorCode
 {
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     //拍照最佳像素
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_WIDTHCTRL :1280];
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_HEIGHTCTRL :720];
     
     TakePhotoVC *takePhotoVC = [[TakePhotoVC alloc] init];
+    self.takePhotoVC = takePhotoVC;
     [self.navigationController pushViewController:takePhotoVC animated:YES];
 }
 
@@ -165,7 +190,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     
     theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
     theLoginState = NO;
-    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
+    self.theLoginBtn.selected = NO;
     
     [self.navigationController popToRootViewControllerAnimated:YES];
     UIAlertView *networkAlertView = [[UIAlertView alloc] initWithTitle:@"网络断开,请重新登录."
@@ -210,10 +235,22 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 抓拍完成事件
 - (void) OnAnyChatSnapShotCallBack:(int) dwUserid : (int) dwErrorCode : (NSString*) lpFileName : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr
 {
+    
+    if(dwParam == 1000) {
+        
+        //视频封面截图
+        self.videoCoverImagePath = lpFileName;
+        return;
+    }
+    
+    
     ProviewPhotoVC *proviewPhotoVC = [ProviewPhotoVC new];
-    [proviewPhotoVC showSnapShotPhoto:lpFileName transform:@""];
+    proviewPhotoVC.filePath = lpFileName;
     proviewPhotoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self.navigationController presentViewController:proviewPhotoVC animated:YES completion:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:proviewPhotoVC];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
+    
+    proviewPhotoVC.delegate = self.takePhotoVC;
     
     if (lpFileName)
     {
@@ -261,9 +298,11 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     }
 }
 
-- (IBAction)VideoSetting:(id)sender
+- (void)VideoSetting:(id)sender
 {
-    [self.navigationController pushViewController:[SettingVC sharedSettingVC] animated:YES];
+    SettingVC *setVC = [SettingVC new];
+    [setVC readDataWithPList];
+    [self.navigationController pushViewController:setVC animated:YES];
 }
 
 - (void) OnLogin
@@ -303,36 +342,10 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     theLoginState = NO;
     
     theStateInfo.text = @"• Logout Server.";
-    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
+    self.theLoginBtn.selected = NO;
 }
 
 
-#pragma mark - AlertView method
-
-- (NSString *)showInfoAlertView:(NSString *)Title : (NSString *)subTitle
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:Title
-                                                        message:subTitle
-                                                       delegate:self
-                                              cancelButtonTitle:nil
-                                              otherButtonTitles:nil,nil];
-    [alertView show];
-    
-    [self performSelector:@selector(dimissAlertView:) withObject:alertView afterDelay:1.5];
-    
-    return subTitle;
-}
-
-- (void) dimissAlertView:(UIAlertView *)alert {
-    if(alert){
-        [alert dismissWithClickedButtonIndex:[alert cancelButtonIndex] animated:YES];
-    }
-}
 
 - (void)NetworkAnomaliesAlert
 {
@@ -367,25 +380,17 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 
 - (void)setUI
 {
-    [self.navigationController setNavigationBarHidden:YES];
     
     theUserName.text = kAnyChatUserName;
     theServerIP.text = kAnyChatIP;
     theServerPort.text = kAnyChatPort;
 
-    [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theUserName addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    
-    if (k_sysVersion < 7.0)
-    {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    }
-
     theVersionLab.text = [AnyChatPlatform GetSDKVersion];
-    
-    [self prefersStatusBarHidden];
     
 }
 
+-(BOOL)navBarTranslucent {
+    
+    return YES;
+}
 @end

@@ -9,7 +9,7 @@
 #import "AnyChatVC.h"
 
 
-#define kAnyChatRoomID 1
+#define kAnyChatRoomID 1234
 #define kUserID 1001
 #define kAnyChatIP @"demo.anychat.cn"
 #define kAnyChatPort @"8906"
@@ -17,34 +17,28 @@
 
 @interface AnyChatVC ()
 
+{
+    MBProgressHUD   *HUD;
+    
+}
+
+@property (strong, nonatomic) VideoVC                       *videoVC;
+@property (strong, nonatomic) AnyChatPlatform               *anyChat;
+
+@property (weak, nonatomic) IBOutlet UITextField            *theUserName;
+@property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
+@property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
+@property (weak, nonatomic) IBOutlet UITextField            *theRoomNO;
+@property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
+@property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
+@property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
+
+@property BOOL  theOnLineLoginState;
+
 @end
 
 @implementation AnyChatVC
-
-@synthesize anyChat;
-@synthesize videoVC;
-@synthesize theOnLineLoginState;
-@synthesize theVersionLab;
-@synthesize theStateInfo;
-@synthesize theUserName;
-@synthesize theServerIP;
-@synthesize theServerPort;
-@synthesize theRoomNO;
-@synthesize theLoginBtn;
-@synthesize theHideKeyboardBtn;
-@synthesize theMyUserName;
-@synthesize theMyUserID;
-@synthesize onlineUserMArray;
-@synthesize theOnChatUserIDStrMArray;
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self){
-    }
-    return self;
-}
 
 #pragma mark - Life cycle
 
@@ -52,26 +46,45 @@
 {
     [super viewDidLoad];
     
+    if (k_iPhoneX_XS_11Pro || k_iPhoneXR_XSMax_11_11ProMax) {
+        self.bottomConstraint.constant = 20;
+    } else {
+        self.bottomConstraint.constant = 0;
+    }
+    
+    [self setUI];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
-    
     [AnyChatPlatform InitSDK:0];
-    
-    anyChat = [AnyChatPlatform getInstance];
-    anyChat.notifyMsgDelegate = self;
+    self.anyChat = [AnyChatPlatform getInstance];
+    self.anyChat.notifyMsgDelegate = self;
     
     //创建默认视频参数
-    [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
     self.onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
     self.theOnChatUserIDStrMArray = [[NSMutableArray alloc] initWithObjects:@"0",@"0",@"0", nil];
+    
+    [[SettingVC sharedSettingVC] createObjPlistFileToDocumentsPath];
+    [self p_configRightItem];
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
-    [self setUI];
 }
 
+
+
+- (void)p_configRightItem {
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(VideoSetting:) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"icon_setting"] forState:UIControlStateNormal];
+    [button sizeToFit];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
 #pragma mark - Memory Warning Method
 
 - (void)didReceiveMemoryWarning
@@ -85,18 +98,6 @@
 kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 
 
-#pragma mark -
-#pragma mark - TextField Delegate
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    return YES;
-}
 
 
 #pragma mark - AnyChatNotifyMessageDelegate
@@ -106,9 +107,9 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 {
     if (bSuccess)
     {
-        theStateInfo.text = @"• Success connected to server";
+        self.theStateInfo.text = @"• Success connected to server";
     }else {
-        theStateInfo.text = @"• Fail connected to server";
+        self.theStateInfo.text = @"• Fail connected to server";
         [HUD hide:YES];
     }
 }
@@ -116,26 +117,24 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
     if(dwErrorCode == GV_ERR_SUCCESS)
     {
         //更新系统默认视频参数设置
         [[SettingVC sharedSettingVC] updateUserVideoSettings];
         
-        theOnLineLoginState = YES;
+        self.theOnLineLoginState = YES;
         self.theMyUserID = dwUserId;
         self.theMyUserName = self.theUserName.text;
         [self saveSettings];  //登陆信息归档
-        theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
-        [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_logout_01"] forState:UIControlStateNormal];
+        self.theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
+        self.theLoginBtn.selected = YES;
 
-        [AnyChatPlatform EnterRoom:[theRoomNO.text intValue] :@""];
+        [AnyChatPlatform EnterRoom:[self.theRoomNO.text intValue] :@""];
     }
     else
     {
-        theOnLineLoginState = NO;
-        
-        theStateInfo.text = [NSString stringWithFormat:@"• Login failed(ErrorCode:%i)",dwErrorCode];
+        self.theOnLineLoginState = NO;
+        self.theStateInfo.text = [NSString stringWithFormat:@"• Login failed(ErrorCode:%i)",dwErrorCode];
     }
     
 }
@@ -143,25 +142,28 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 当前用户进入房间消息
 - (void) OnAnyChatEnterRoom:(int) dwRoomId : (int) dwErrorCode
 {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     //更新用户自定义视频参数设置
     [[SettingVC sharedSettingVC] updateUserVideoSettings];
     
     if (dwErrorCode != 0)
     {
-        theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
+        self.theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
     }
 
     self.onlineUserMArray = [self getOnlineUserArray];
+    NSLog(@"onLineUserList:%@", self.onlineUserMArray);
 }
+
 
 // 房间在线用户消息
 - (void) OnAnyChatOnlineUser:(int) dwUserNum : (int) dwRoomId
 {
     self.onlineUserMArray = [self getOnlineUserArray];
     
-    videoVC = [[VideoVC alloc] init];
+    self.videoVC = [[VideoVC alloc] init];
     
-    [self.navigationController pushViewController:videoVC animated:YES];
+    [self.navigationController pushViewController:self.videoVC animated:YES];
 }
 
 // 用户进入房间消息
@@ -170,16 +172,16 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     NSString *dwUserIdStr = [NSString stringWithFormat:@"%d",dwUserId];
     
     NSInteger isNilArrayOfIndex = [self.theOnChatUserIDStrMArray indexOfObject:@"0"];
-    if (isNilArrayOfIndex != NSNotFound)
+    if (isNilArrayOfIndex != NSNotFound)//预留四个0 然后依次替换 “0”
     {
         [self.theOnChatUserIDStrMArray replaceObjectAtIndex:isNilArrayOfIndex
                                                  withObject:dwUserIdStr];
         
-        if (videoVC == nil) {
-            videoVC = [[VideoVC alloc] init];
+        if (self.videoVC == nil) {
+            self.videoVC = [[VideoVC alloc] init];
         }
         //进行视频
-        videoVC.pvBlock(dwUserId,((int)isNilArrayOfIndex + 1),videoVC);
+        self.videoVC.pvBlock(dwUserId,((int)isNilArrayOfIndex + 1),self.videoVC);
     }
   
     self.onlineUserMArray = [self getOnlineUserArray];
@@ -188,9 +190,9 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 用户退出房间消息
 - (void) OnAnyChatUserLeaveRoom:(int) dwUserId
 {
-    if (videoVC == nil)
+    if (self.videoVC == nil)
     {
-        videoVC = [[VideoVC alloc] init];
+        self.videoVC = [[VideoVC alloc] init];
     }
 
     NSString *dwUserIdStr = [NSString stringWithFormat:@"%d",dwUserId];
@@ -202,7 +204,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
         [self.theOnChatUserIDStrMArray replaceObjectAtIndex:userIDIndexOfInt withObject:@"0"];
         
         //用户离开后，把停止的最后一帧 设置为图片
-        videoVC.aiBlock(((int)userIDIndexOfInt+1),videoVC);
+        self.videoVC.aiBlock(((int)userIDIndexOfInt+1),self.videoVC);
     }
     
     //NSMutableArray *OnLineWaitingChatUserIDMArray = [self getOnLineWaitingChatUserIDMArray];
@@ -212,14 +214,13 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 网络断开消息
 - (void) OnAnyChatLinkClose:(int) dwErrorCode
 {
-    [videoVC FinishVideoChat];
+    [self.videoVC FinishVideoChat];
     [AnyChatPlatform LeaveRoom:-1];
     [AnyChatPlatform Logout];
     
-    theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
-    theOnLineLoginState = NO;
-    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
-    
+    self.theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
+    self.theOnLineLoginState = NO;
+    self.theLoginBtn.selected = NO;
     [self.navigationController popToRootViewControllerAnimated:YES];
     UIAlertView *networkAlertView = [[UIAlertView alloc] initWithTitle:@"网络断开,请重新登录."
                                                         message:@"Network disconnection."
@@ -236,7 +237,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 {
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    [[NSArray arrayWithObjects:theServerIP.text,theServerPort.text,theUserName.text,theRoomNO.text, nil] writeToFile:filePath atomically:YES];
+    [[NSArray arrayWithObjects:self.theServerIP.text,self.theServerPort.text,self.theUserName.text,self.theRoomNO.text, nil] writeToFile:filePath atomically:YES];
 }
 
 
@@ -246,7 +247,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 - (void)AnyChatNotifyHandler:(NSNotification*)notify
 {
     NSDictionary* dict = notify.userInfo;
-    [anyChat OnRecvAnyChatNotify:dict];
+    [self.anyChat OnRecvAnyChatNotify:dict];
 }
 
 //获取等候视频的在线用户
@@ -266,18 +267,15 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     return onLineUserList;
 }
 
-- (IBAction)hideKeyBoard
+- (void)hideKeyBoard
 {
-    [self.theServerIP resignFirstResponder];
-    [self.theServerPort resignFirstResponder];
-    [self.theUserName resignFirstResponder];
-    [self.theRoomNO resignFirstResponder];
 
+    [self.view endEditing:YES];
 }
 
 - (IBAction)OnLoginBtnClicked:(id)sender
 {
-    if (theOnLineLoginState == YES) {
+    if (self.theOnLineLoginState == YES) {
         [self OnLogout];
     }else {
         [self OnLogin];
@@ -288,17 +286,17 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 {
     
     
-    if([theServerIP.text length] == 0) {
-        theServerIP.text = kAnyChatIP;
+    if([self.theServerIP.text length] == 0) {
+        self.theServerIP.text = kAnyChatIP;
     }
-    if([theServerPort.text length] == 0) {
-        theServerPort.text = kAnyChatPort;
+    if([self.theServerPort.text length] == 0) {
+        self.theServerPort.text = kAnyChatPort;
     }
-    if([theUserName.text length] == 0) {
-        theUserName.text = kAnyChatUserName;
+    if([self.theUserName.text length] == 0) {
+        self.theUserName.text = kAnyChatUserName;
     }
-    if([theRoomNO.text length] == 0) {
-        theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
+    if([self.theRoomNO.text length] == 0) {
+        self.theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
     }
     
     [self showLoadingAnimated];
@@ -308,12 +306,12 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
      * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
      */
     
-    [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
+    [AnyChatPlatform Connect:self.theServerIP.text : [self.theServerPort.text intValue]];
     
     /*
      * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
      */
-    [AnyChatPlatform Login:theUserName.text :nil];
+    [AnyChatPlatform Login:self.theUserName.text :nil];
 
     [self hideKeyBoard];
 }
@@ -322,20 +320,19 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 {
     [AnyChatPlatform Logout];
     
-    theOnLineLoginState = NO;
+    self.theOnLineLoginState = NO;
     
-    theStateInfo.text = @"• Logout Server.";
-    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
+    self.theStateInfo.text = @"• Logout Server.";
+    self.theLoginBtn.selected = NO;
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
 
-- (IBAction)VideoSetting:(id)sender
+
+- (void)VideoSetting:(id)sender
 {
-    [self.navigationController pushViewController:[SettingVC sharedSettingVC] animated:YES];
+    SettingVC *setVC = [SettingVC new];
+    [setVC readDataWithPList];
+    [self.navigationController pushViewController:setVC animated:YES];
 }
 
 
@@ -389,27 +386,16 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 
 - (void)setUI
 {
-    [self.navigationController setNavigationBarHidden:YES];
     
-    theUserName.text = kAnyChatUserName;
-    theServerIP.text = kAnyChatIP;
-    theServerPort.text = kAnyChatPort;
-    theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
- 
-    [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theUserName addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theRoomNO addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    
-    if (k_sysVersion < 7.0)
-    {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    }
-
-    theVersionLab.text = [AnyChatPlatform GetSDKVersion];
-    
-    [self prefersStatusBarHidden];
-    
+    self.theUserName.text = kAnyChatUserName;
+    self.theServerIP.text = kAnyChatIP;
+    self.theServerPort.text = kAnyChatPort;
+    self.theRoomNO.text = [NSString stringWithFormat:@"%d",kAnyChatRoomID];
+    self.theVersionLab.text = [AnyChatPlatform GetSDKVersion];
 }
 
+-(BOOL)navBarTranslucent {
+    
+    return YES;
+}
 @end

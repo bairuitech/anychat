@@ -15,49 +15,40 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 #import "AnyChatObjectDefine.h"
+#import "AnyChat_QueueModel.h"
 
-@interface BusinessListController ()
-@property(nonatomic, strong)NSArray *businesses;
+#import "AppDelegate.h"
+
+@interface BusinessListController ()<UITableViewDelegate, UITableViewDataSource>
+
 @end
 
 @implementation BusinessListController
 
-// 懒加载
-- (NSArray *)businesses {
-    if (_businesses == nil) {
-        NSMutableArray *businessesObjArr = [NSMutableArray array];
-        for (NSString *businessId in self.businessListIdArray) {
-            //获取队列名称
-            NSString *businessName = [AnyChatPlatform ObjectGetStringValue:ANYCHAT_OBJECT_TYPE_QUEUE :[businessId intValue] :ANYCHAT_OBJECT_INFO_NAME];
-            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:businessName,@"title", businessId,@"id",nil];
-            Business *business = [Business businessWithDic:dic];
-            [businessesObjArr addObject:business];
-        }
-        _businesses = businessesObjArr;
-    }
-    
-    return _businesses;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.navigationItem.title = @"队列列表";
-    
+    self.title = @"队列列表";
+    self.tableView.tableFooterView = [UIView new];
     // 添加退出按钮
     [self setupBackButton];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = NO;
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:nil];
+    
+    [self preferredInterfaceOrientationForPresentation];
+    [BusinessListController interfaceOrientation:UIInterfaceOrientationPortrait];
 }
 
 #pragma mark - Action
 - (void)backAction:(UIControlEvents *)event {
     // 退出营业厅
-    [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AREA :self.businessHallId :ANYCHAT_AREA_CTRL_USERLEAVE :0 :0 :0 :0 :nil];
+    [[AnyChatQueueDataManager getInstance].queueModel leaveArea];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -79,8 +70,7 @@
     }
     Business *business = self.businesses[indexPath.row];
     cell.textLabel.text =  business.title;
-    int queueId = [self.businessListIdArray[indexPath.row] intValue];
-    int queuePeopleCount = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_QUEUELENGTH];
+    int queuePeopleCount = [[AnyChatQueueDataManager getInstance].queueModel getQueuelengthWithid:[NSString stringWithFormat:@"%d",business.businessId]];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"有%d人在排队",queuePeopleCount];
     return cell;
 }
@@ -88,7 +78,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [MBProgressHUD showMessage:@"正在连接中，请稍等..."];
     // 进队列
-    [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_QUEUE :[self.businessListIdArray[indexPath.row] intValue] :ANYCHAT_QUEUE_CTRL_USERENTER :0 :0 :0 :0 :nil];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    Business *business = self.businesses[indexPath.row];
+    [[AnyChatQueueDataManager getInstance].queueModel enterQueueWithid:[NSString stringWithFormat:@"%d",business.businessId]];
 }
 
 #pragma mark - Custom Method
@@ -109,6 +101,22 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
++ (void)interfaceOrientation:(UIInterfaceOrientation)orientation
+{
+    
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector  = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = orientation;
+        // 从2开始是因为0 1 两个参数已经被selector和target占用
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
 }
 
 @end

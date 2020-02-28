@@ -1,0 +1,248 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="131dp">
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="131dp"
+          android:background="@drawable/icon_bgm"/>
+
+        <ImageView
+                android:src="@drawable/icon_logo"
+                android:layout_width="292dp"
+                android:layout_height="46dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dip"
+                android:id="@+id/imageViews"/>
+
+    </RelativeLayout>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,1" >
+
+        <TableRow>
+
+            <LinearLayout
+                android:layout_width="70dip"
+                android:layout_height="35dip"
+                android:layout_marginLeft="36dip"
+                android:layout_marginTop="20dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/icon_ip" />
+
+                <EditText
+                    android:id="@+id/mainUIEditIP"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="demo.anychat.cn"
+                    android:textColorHint="#bfbfbf"
+                    android:textColor="#333333"
+                    android:textSize="19sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_marginTop="20dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/icon_port" />
+
+                <EditText
+                    android:id="@+id/mainUIEditPort"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="8906"
+                    android:inputType="number"
+                    android:textColorHint="#bfbfbf"
+                    android:textColor="#333333"
+                    android:textSize="19sp" />
+            </LinearLayout>
+        </TableRow>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="38dp"
+            android:layout_marginRight="38dp"
+            android:layout_marginTop="1dp"
+            android:background="#E6E6E6" />
+
+        <TableRow>
+
+            <LinearLayout
+                android:layout_width="70dip"
+                android:layout_height="35dip"
+                android:layout_marginLeft="36dip"
+                android:layout_marginTop="10dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/icon_account" />
+
+                <EditText
+                    android:id="@+id/main_et_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="name"
+                    android:textColorHint="#bfbfbf"
+                    android:textColor="#333333"
+                    android:textSize="19sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_marginTop="10dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/icon_room" />
+
+                <EditText
+                    android:id="@+id/mainUIEditRoomID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="房间ID"
+                    android:inputType="number"
+                    android:textColorHint="#bfbfbf"
+                    android:textColor="#333333"
+                    android:textSize="19sp" />
+            </LinearLayout>
+        </TableRow>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="38dp"
+            android:layout_marginRight="38dp"
+            android:layout_marginTop="1dp"
+            android:background="#E6E6E6" />
+    </TableLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dip" >
+
+        <Button
+            android:id="@+id/mainUIStartBtn"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginLeft="38dp"
+            android:layout_marginRight="38dp"
+            android:layout_gravity="center"
+            android:background="#008BE3"
+            android:textColor="#FFFFFF"
+            android:textSize="19sp"
+            android:gravity="center"
+            android:text="登录"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/mainUILogoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginLeft="38dp"
+            android:layout_marginRight="38dp"
+            android:layout_gravity="center"
+            android:background="#008BE3"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:textSize="19sp"
+            android:text="点击退出登录"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/mainUIWaitingBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_warting_01"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+       <LinearLayout
+            android:id="@+id/waitingLayout"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+        
+        </LinearLayout>
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/roleListView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dip"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:listSelector="#00000000"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth" />
+
+    <TextView
+        android:id="@+id/mainUIbottomConnMsg"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:text="Not connect to the server"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/mainUIbottomBuildMsg"
+        android:layout_width="fill_parent"
+        android:layout_height="20dip"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="Not connect to 192.168.1.1"
+        android:textColor="#000000" />
+
+</LinearLayout>

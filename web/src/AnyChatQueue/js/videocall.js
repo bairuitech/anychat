@@ -26,6 +26,8 @@ function CancelCall() {
 		$("#queueMsg2").hide();
 		$("#queueMsg1").show();
 		$("#enterRoom").show();//显示队列列表
+		$("#poptip").show();
+		$("#roomOut").show();
     } else if (userType == USER_TYPE_AGNET) {
 		/**客服结束服务*/
 		BRAC_ObjectControl(ANYCHAT_OBJECT_TYPE_AGENT, mSelfUserId, ANYCHAT_AGENT_CTRL_FINISHSERVICE, 0,0,0,0,"");	
@@ -110,6 +112,7 @@ function onVideoCallControlReply(dwUserId, dwErrorCode, dwFlags, dwParam, szUser
 			$('#LOADING_GREY_DIV').hide();
 			ForSession("目标用户拒绝会话", true);
 			startServiceTag = false;
+			CancelCall();
 			break; 
 		case GV_ERR_SESSION_TIMEOUT:
 			$("#Initiative_Call_Div").hide();

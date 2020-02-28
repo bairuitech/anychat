@@ -18,7 +18,7 @@
 		<string>anychat.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.anychat.demo</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -33,18 +33,16 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>cameraDesciption</string>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>microphoneDesciption</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>photoDesciption</string>
 	<key>UIStatusBarHidden</key>
 	<true/>
-    
-    <key>NSCameraUsageDescription</key>
-    <string>cameraDesciption</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>microphoneDesciption</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>photoDesciption</string>
-    
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

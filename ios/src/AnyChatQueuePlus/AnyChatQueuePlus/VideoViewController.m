@@ -7,7 +7,6 @@
 //
 
 #import "VideoViewController.h"
-#import "BusinessListController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MZTimerLabel.h"
 
@@ -46,7 +45,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    self.navigationController.navigationBarHidden = YES;
+
 }
 
 - (void)orientationChanged:(NSNotification *)note  {
@@ -89,6 +88,16 @@
     [nc addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification  object:device];
 }
 
+-(BOOL)navBarTranslucent {
+    
+    return YES;
+}
+
+-(void)navLeftClick {
+    
+    [self EndCallAction:nil];
+}
+
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
@@ -112,7 +121,7 @@
     // 枚举本地视频采集设备
     NSMutableArray* videoDeviceArray = [AnyChatPlatform EnumVideoCapture];
     // 选择指定的视频采集设备
-    if (videoDeviceArray.count > 0) [AnyChatPlatform SelectVideoCapture:[videoDeviceArray objectAtIndex:1]];
+    if (videoDeviceArray.count > 0) [AnyChatPlatform SelectVideoCapture:[videoDeviceArray lastObject]];
     
     //设置本地视频采用 Overlay 模式
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_OVERLAY :1];
@@ -128,6 +137,7 @@
 
 -(void)openRemoteView
 {
+    NSLog(@"----openRemoteView remoteUserId:%d",self.remoteUserId);
     [AnyChatPlatform UserSpeakControl:self.remoteUserId :YES];
     [AnyChatPlatform UserCameraControl:self.remoteUserId : YES];
     [AnyChatPlatform SetVideoPos:self.remoteUserId :self.remoteVideoView :0:0:0:0];
@@ -137,7 +147,7 @@
 //创建和初始化 AVCaptureVideoPreviewLayer 对象,实现本地视频的显示
 - (void) OnLocalVideoInit:(id)session {
     self.localCaptureLayer = [AVCaptureVideoPreviewLayer layerWithSession: (AVCaptureSession*)session];
-    self.localCaptureLayer.frame = CGRectMake(0, 0, 100, 130);
+    self.localCaptureLayer.frame = self.localVideoView.bounds;
     self.localCaptureLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     [self.localVideoView.layer addSublayer:self.localCaptureLayer];
 }
@@ -164,7 +174,7 @@
 {
     //The Timer Init
     MZTimerLabel *theVideoMZTimer = [[MZTimerLabel alloc]initWithLabel:self.timerLabel];
-    theVideoMZTimer.timeFormat = @"▷ HH:mm:ss";
+    theVideoMZTimer.timeFormat = @"HH:mm:ss";
     [theVideoMZTimer start];
 }
 
@@ -179,4 +189,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//返回直接支持的方向
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+//返回最优先显示的屏幕方向
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
 @end

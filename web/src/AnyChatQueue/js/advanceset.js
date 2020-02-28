@@ -144,9 +144,9 @@ function ChangeTheResult(id) {
 		break;
 	case "audio_vadctrl": // 静音检测
 		if (GetID(id).checked == true)
-			BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 1);
+			BRAC_SetSDKOption(BRAC_SO_AUDIO_VADCTRL, 1);
 		else
-			BRAC_SetSDKOption(BRAC_SO_NETWORK_P2PPOLITIC, 0);
+			BRAC_SetSDKOption(BRAC_SO_AUDIO_VADCTRL, 0);
 		break;
 	case "audio_echoctrl": // 回音消除
 		if (GetID(id).checked == true)

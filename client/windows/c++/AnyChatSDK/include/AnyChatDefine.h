@@ -18,6 +18,7 @@ enum BRAC_PixelFormat{
 	BRAC_PIX_FMT_NV12,							///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is U and V
 	BRAC_PIX_FMT_NV21,							///< Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is V and U
 	BRAC_PIX_FMT_NV16,							///< YUV422SP
+	BRAC_PIX_FMT_BGR32,
 	
 	BRAC_PIX_FMT_MJPEG = 200,
 	BRAC_PIX_FMT_H264,
@@ -54,6 +55,8 @@ enum BRAC_VideoShowDriver{
 #define BRAC_FUNC_CORE_FORBIDWINMSG	0x00002000	///< 禁止使用windows消息循环
 #define BRAC_FUNC_AUDIO_LARGEBUFFER	0x00004000	///< 音频大缓冲区模式，适合音乐播放类应用
 #define BRAC_FUNC_NET_LARGEDELAY	0x00010000	///< 网络高延迟模式，适用于卫星网络环境
+#define BRAC_FUNC_DISABLEVIDEODEC	0x00020000	///< 禁止视频解码
+#define BRAC_FUNC_DISABLEAUDIODEC	0x00040000	///< 禁止音频解码
 
 
 // 内核参数定义（API：BRAC_SetSDKOption、BRAC_GetSDKOption 传入参数）
@@ -74,6 +77,8 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_AUDIO_ECHODELAY				75	///< 音频回声消除延迟参数设置（参数为int型，单位：ms）
 #define BRAC_SO_AUDIO_NSLEVEL				76	///< 音频噪音抑制水平参数设置（参数为int型，0 - 3，默认为2，值越大抑制水平越高，抑制噪音的能力越强）
 #define BRAC_SO_AUDIO_CBCODEC				77	///< 音频数据回调编码器类型（参数为int型）
+#define BRAC_SO_AUDIO_ECHOLEVEL				78	///< 音频回声消除水平参数设置（参数为int型，0 - 4，默认为4，值越大回声消除能力越强）
+#define BRAC_SO_AUDIO_PLAYCAPTURE			79	///< 音频播放采集参数设置（参数为int型，0 关闭[默认]，1 开启）
 
 #define BRAC_SO_RECORD_VIDEOBR				10	///< 录像视频码率设置（参数为：int型，单位：bps）
 #define BRAC_SO_RECORD_AUDIOBR				11	///< 录像音频码率设置（参数为：int型，单位：bps）
@@ -136,6 +141,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_LOCALVIDEO_SCREENHWND		108	///< 屏幕采集窗口句柄
 #define BRAC_SO_LOCALVIDEO_SCREENFLAGS		109	///< 屏幕采集标志（参数为int型）
 #define BRAC_SO_LOCALVIDEO_VIRTUALBK		111 ///< 本地视频迭加虚拟背景（字符串类型，JSON格式，包括虚拟背景路径以及其它参数项，为NULL表示取消虚拟背景）
+#define BRAC_SO_LOCALVIDEO_VIDEOCOLOR		112	///< 视频颜色控制（字符串类型，参数为JSON）
 
 #define BRAC_SO_NETWORK_P2PPOLITIC			40	///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
 #define BRAC_SO_NETWORK_P2PCONNECT			41	///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -177,6 +183,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_NEWLOGFILE			136	///< 产生新的日志文件
 #define BRAC_SO_CORESDK_SUPPORTSIP			137	///< 判断当前是否支持SIP通信
 #define BRAC_SO_CORESDK_SUPPORTHTML5		138	///< 判断当前是否支持HTML5
+#define BRAC_SO_CORESDK_DISABLELOGFILE		139	///< 禁止生成本地日志文件
 #define BRAC_SO_CORESDK_SUPPORTVIDEOCODEC	210	///< 设置支持的视频编码器
 #define BRAC_SO_CORESDK_SUPPORTAUDIOCODEC	211	///< 设置支持的音频编码器
 #define BRAC_SO_CORESDK_DISABLEMEDIACONSUL	212	///< 禁止媒体协商
@@ -192,6 +199,16 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_FILEENCANDDEC		222	///< 文件加解密控制（参数为字符串类型，JSON格式）
 #define BRAC_SO_CORESDK_PPTHELPERINIT		223	///< PPT播报环境初始化
 #define BRAC_SO_CORESDK_PPTFILECTRL			224	///< PPT文件控制
+#define BRAC_SO_CORESDK_CBMEDIASTREAM		225	///< 回调原始音视频流
+#define BRAC_SO_CORESDK_CBVIDEOSTREAM		226	///< 回调原始视频流
+#define BRAC_SO_CORESDK_CBAUDIOSTREAM		227 ///< 回调原始音频流
+#define BRAC_SO_CORESDK_STREAMADAPTIVE		228	///< 流媒体自适应控制（参数为int型，0 关闭 1 开启[默认]）
+#define BRAC_SO_CORESDK_MAXTRANSFILESIZE	229	///< 允许传输的最大文件大小（参数为int型，单位：MByte）
+#define BRAC_SO_CORESDK_USESERVERTIME		230	///< 使用服务器时间戳（参数为int型，0 关闭[默认] 1 开启）
+#define BRAC_SO_CORESDK_APPMONITORLIST		231	///< 应用程序列表，应用程序共享模块使用（参数为字符串）
+#define BRAC_SO_CORESDK_SSLCERTCHAIN		232	///< SSL证书链
+#define BRAC_SO_CORESDK_SETUSERAPPINFO		236	///< 设置用户APP信息
+#define BRAC_SO_CORESDK_LASTERRORCODE		237	///< 获取最后的出错代码
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE
@@ -201,6 +218,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_UDPTRACE_SERVERRECVNUM		165	///< UDP数据包跟踪服务器接收包数量
 #define BRAC_SO_UDPTRACE_SOURCESENDNUM		166	///< UDP数据包跟踪源发包数量
 #define BRAC_SO_UDPTRACE_SENDUSERID			167	///< UDP数据包跟踪源用户ID
+#define BRAC_SO_UDPTRACE_NETDELAY			168	///< UDP数据包网络延迟，单位：ms，-1表示未知
 
 // 用户多媒体流参数定义（API：BRAC_GetUserStreamInfo 传入参数）
 #define BRAC_STREAMINFO_VIDEOWIDTH			180 ///< 视频流宽度
@@ -209,11 +227,13 @@ enum BRAC_VideoShowDriver{
 #define BRAC_STREAMINFO_VIDEOBITRATE		183	///< 视频流码率，单位：bps
 #define BRAC_STREAMINFO_VIDEOCODECID		184	///< 视频流编码器ID
 #define BRAC_STREAMINFO_VIDEOPACKLOSSRATE	185	///< 视频流丢包率
-#define BRAC_STREAMINFO_ADUIOCHANNELS		190	///< 音频流通道数
+#define BRAC_STREAMINFO_VIDEODEVICENAME		186	///< 视频采集设备名称
+#define BRAC_STREAMINFO_AUDIOCHANNELS		190	///< 音频流通道数
 #define BRAC_STREAMINFO_AUDIOSAMPLERATE		191	///< 音频流采样率
 #define BRAC_STREAMINFO_AUDIOBITRATE		192	///< 音频流码率，单位：bps
 #define BRAC_STREAMINFO_AUDIOCODECID		193	///< 音频流编码器ID
 #define BRAC_STREAMINFO_AUDIOPACKLOSSRATE	194	///< 音频流丢包率
+#define BRAC_STREAMINFO_AUDIODEVICENAME		195	///< 音频采集设备名称
 
 
 #define BRAC_SO_OBJECT_INITFLAGS			200	///< 业务对象身份初始化
@@ -260,6 +280,9 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_RECORD_FLAGS_USERFILENAME	BRAC_RECORD_FLAGS_USERFILENAME
 #define ANYCHAT_RECORD_FLAGS_ERRORCODE		0x00004000	///< 支持出错代码
 #define ANYCHAT_RECORD_FLAGS_MULTISTREAM	0x00008000	///< 支持多路流的录制（拍照）
+#define ANYCHAT_RECORD_FLAGS_CANCEL			0x00010000	///< 取消录像，删除录像文件
+#define ANYCHAT_RECORD_FLAGS_BUFFERCB		0x00020000	///< 缓冲区数据回调
+#define ANYCHAT_RECORD_FLAGS_FILEMD5		0x00040000	///< 计算录像文件的MD5值
 #endif
 
 
@@ -299,6 +322,7 @@ enum BRAC_VideoShowDriver{
 #define BRAC_USERSTATE_VIDEOMIRRORED		19	///< 查询指定用户的视频是否需要镜像翻转
 #define BRAC_USERSTATE_AUDIOCODECID			20	///< 查询指定用户的音频编码器ID
 #define BRAC_USERSTATE_VIDEOCODECID			21	///< 查询指定用户的视频编码器ID
+#define BRAC_USERSTATE_RESENDLOSSRATE		22	///< 丢包补偿后的丢包率（参数为DWORD类型，返回值：0 - 100，如：返回值为5，表示丢包率为5%）
 
 // 房间状态标志定义（API：BRAC_QueryRoomState 传入参数）
 #define BRAC_ROOMSTATE_ROOMNAME				1	///< 房间名称（参数为字符串TCHAR类型）
@@ -379,27 +403,57 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SERVERQUERY_USERIDBYNAME	1	///< 根据用户昵称查询用户ID
 #define ANYCHAT_SERVERQUERY_USERIDBYSTRID	2	///< 根据字符串ID查询用户ID
 #define ANYCHAT_SERVERQUERY_STRIDBYUSERID	3	///< 根据用户ID查询字符串ID
+#define ANYCHAT_SERVERQUERY_NAMEBYUSERID	4	///< 根据用户ID查询用户名
+#define ANYCHAT_SERVERQUERY_NAMEBYSTRID		5	///< 根据字符串ID查询用户名
+#define ANYCHAT_SERVERQUERY_USERINFOBYID	6	///< 根据用户ID查询用户信息
 #define ANYCHAT_SERVERQUERY_PPTFILEINFO		10	///< PPT文件信息
 #define ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	100	///< 查询指定队列的坐席服务信息
 #define ANYCHAT_SERVERQUERY_RUNNINGSTATUS	200	///< 查询服务器运行状态
 #define ANYCHAT_SERVERQUERY_ONLINEUSERS		201	///< 查询服务器在线用户数
 
+// 外部音视频输入标志定义
+#define ANYCHAT_INPUTMEDIAFLAGS_STREAM		0x01	///< 流输入
+#define ANYCHAT_INPUTMEDIAFLAGS_KEYFRAME	0x02	///< 关键帧
+#define ANYCHAT_INPUTMEDIAFLAGS_ROTATION	0x04	///< 合成视频方向标志
+#define ANYCHAT_INPUTMEDIAFLAGS_MIXRECORD	0x08	///< 对流进行合成录制
+
 
 // SDK控制常量定义（API：BRAC_SDKControl 传入参数）
 #define ANYCHAT_SDKCTRL_BASE				1	///< 基本功能控制
+#define ANYCHAT_SDKCTRL_SERVER				2	///< 服务器通信
+#define ANYCHAT_SDKCTRL_USERBUFFER			3	///< 用户缓冲区传输控制
+#define ANYCHAT_SDKCTRL_INVOKEEVENT			4	///< 触发异步事件
+#define ANYCHAT_SDKCTRL_RECORD				5	///< 音视频录制
 #define ANYCHAT_SDKCTRL_OBJECT				20	///< 对象操作
 #define ANYCHAT_SDKCTRL_VIDEOCALL			30	///< 呼叫控制
 #define ANYCHAT_SDKCTRL_USERINFO			40	///< 用户信息控制
 #define ANYCHAT_SDKCTRL_STREAMPLAY			50	///< 流媒体播放
+#define ANYCHAT_SDKCTRL_MEDIAPROCESS		51	///< 流媒体处理控制
 #define ANYCHAT_SDKCTRL_NETWORK				60	///< 网络控制
 #define ANYCHAT_SDKCTRL_MEDIA				70	///< 媒体控制
+#define ANYCHAT_SDKCTRL_RECORDTAG			71	///< 录像标签
+#define ANYCHAT_SDKCTRL_SCREENCAPPARAM		72	///< 屏幕采集参数设置
 #define ANYCHAT_SDKCTRL_FILEDELETE			80	///< 删除文件
 #define ANYCHAT_SDKCTRL_FILEINFO			81	///< 获取文件信息
 #define ANYCHAT_SDKCTRL_DISKSIZE			82	///< 获取磁盘容量
 #define ANYCHAT_SDKCTRL_FILEENCRYPT			83	///< 文件加解密控制
+#define ANYCHAT_SDKCTRL_DELETEDIR			84	///< 删除目录
+#define ANYCHAT_SDKCTRL_CREATEDIR			85	///< 创建目录
+#define ANYCHAT_SDKCTRL_DIRCLEAN			86	///< 目录清理
+#define ANYCHAT_SDKCTRL_FINDFILE			87	///< 查找文件
 #define ANYCHAT_SDKCTRL_PPTHELPERINIT		90	///< PPT播报环境初始化
 #define ANYCHAT_SDKCTRL_PPTFILECTRL			91	///< PPT文件控制
 #define ANYCHAT_SDKCTRL_PPTFILEINFO			92	///< PPT文件信息
+#define ANYCHAT_SDKCTRL_BUSINESS			95	///< 业务控制
+#define ANYCHAT_SDKCTRL_MEDIAFILTERINIT		96	///< 媒体过滤器初始化
+#define ANYCHAT_SDKCTRL_VIDEODEVICEINFO		97	///< 获取视频采集设备信息
+#define ANYCHAT_SDKCTRL_UPDATERECUSERSTR	98	///< 更新录像用户参数
+#define ANYCHAT_SDKCTRL_SYNCRECORD			99	///< 同步录像参数设置
+#define ANYCHAT_SDKCTRL_BUSINESSBUFFER		100	///< 业务缓冲区控制
+#define ANYCHAT_SDKCTRL_LIVESTREAM			101	///< 直播业务控制
+#define ANYCHAT_SDKCTRL_AIABILITY			102	///< AI能力
+#define ANYCHAT_SDKCTRL_APPBUFFER			103	///< APP自定义缓冲区
+#define ANYCHAT_SDKCTRL_FACEEMOTIONCTRL		300	///< 微表情控制
 
 
 // 媒体播放事件类型定义
@@ -410,6 +464,7 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT	0x00000001	///< 播放音频流代替本地音频输入（Mic）
 #define ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT	0x00000002	///< 播放视频流代替本地视频输入（Camera）
 #define ANYCHAT_STREAMPLAY_FLAGS_CALLBACKDATA		0x00000010	///< 回调数据给上层
+#define ANYCHAT_STREAMPLAY_FLAGS_PPTPLAY			0x00000080	///< 双录风险揭示PPT播放
 
 // 媒体播放信息类型定义（API：BRAC_StreamPlayGetInfo 传入参数）
 #define ANYCHAT_STREAMPLAY_INFO_JSONVALUE	1	///< 包含所有播放信息的Json字符串
@@ -426,11 +481,26 @@ enum BRAC_VideoShowDriver{
 
 // CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
 #define ANYCHAT_CORESDKEVENT_BASEEVENT		1	///< SDK基础事件
+#define ANYCHAT_CORESDKEVENT_CONNECTHOLD	2	///< 连接保持事件
 #define ANYCHAT_CORESDKEVENT_CAMERASTATE	10	///< 摄像头状态事件
 #define ANYCHAT_CORESDKEVENT_MICSTATE		11	///< Mic状态事件
 #define ANYCHAT_CORESDKEVENT_TRANSFILE		12	///< 文件传输事件
+#define ANYCHAT_CORESDKEVENT_RECORDSTATUS	13	///< 录像状态事件
 #define ANYCHAT_CORESDKEVENT_STREAMPLAY		30	///< 媒体播放事件
 #define ANYCHAT_CORESDKEVENT_PPTHELPER		31	///< PPTHelper事件
+#define ANYCHAT_CORESDKEVENT_BUSINESS		32	///< 业务事件
+#define ANYCHAT_CORESDKEVENT_DEVICEFAIL		33	///< 设备失败事件
+#define ANYCHAT_CORESDKEVENT_MEDIABUFFER	34	///< 媒体缓冲区事件
+#define ANYCHAT_CORESDKEVENT_USERBUFFER		35	///< 用户缓冲区事件
+#define ANYCHAT_CORESDKEVENT_MEDIAPROCESS	36	///< 媒体处理事件
+#define ANYCHAT_CORESDKEVENT_FACEEMOTION	40	///< 微表情检测结果
+#define ANYCHAT_CORESDKEVENT_REGEDITDATA	41	///< 数据接口返回数据
+#define ANYCHAT_CORESDKEVENT_REQUESTEX		42	///< 扩展请求返回数据
+#define ANYCHAT_CORESDKEVENT_BUSINESSBUFFER	100	///< 业务缓冲区事件
+#define ANYCHAT_CORESDKEVENT_LIVESTREAM		101	///< 直播业务事件
+#define ANYCHAT_CORESDKEVENT_AIABILITY		102	///< AI能力事件
+#define ANYCHAT_CORESDKEVENT_APPBUFFER		103	///< APP自定义缓冲区事件
+#define ANYCHAT_CORESDKEVENT_USERDEFINE		800	///< 用户自定义事件起始序号
 
 // CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
 #define ANYCHAT_CORESDKDATA_AUDIO			1	///< 音频数据

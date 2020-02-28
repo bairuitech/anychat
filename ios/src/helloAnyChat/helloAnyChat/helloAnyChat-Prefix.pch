@@ -27,11 +27,13 @@
 
 #pragma mark - VideoViewController Function Parameters & Method
 
-#define kLocalVideo_Width                   100.0f
-#define kLocalVideo_Height                  130.0f
+#define kLocalVideo_Width                   AdaptW(121.0)
+#define kLocalVideo_Height                  AdaptW(162.0)
 #define kBar_Height                         30.0f
 #define kSelfView_Width                     self.view.frame.size.width
 #define kSelfView_Height                    self.view.frame.size.height
+#define kScreenWidth ([UIScreen mainScreen].bounds.size.width)
+#define kScreenHeight ([UIScreen mainScreen].bounds.size.height)
 
 #define kLocalVideoPortrait_CGRect          CGRectMake(kSelfView_Width-2-kLocalVideo_Width, kSelfView_Height- kLocalVideo_Height-2-kBar_Height, kLocalVideo_Width,kLocalVideo_Height)
 #define kLocalVideoLandscape_CGRect         CGRectMake(kSelfView_Width-2-kLocalVideo_Height, kSelfView_Height-kLocalVideo_Width-2-kBar_Height, kLocalVideo_Height, kLocalVideo_Width)
@@ -44,6 +46,8 @@
 
 #define	 k_iPhone4 	([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
 #define	 k_iPhone5 	([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#define k_iPhoneX_XS_11Pro (kScreenWidth == 375.f && kScreenHeight == 812.f ? YES : NO)
+#define k_iPhoneXR_XSMax_11_11ProMax (kScreenWidth == 414.f && kScreenHeight == 896.f ? YES : NO)
 
 
 #pragma mark - GCD Synthesize Singleton Mode
@@ -80,5 +84,6 @@ return shared##classname;   \
 }
 
 
-
-
+#import "ACBaseViewController.h"
+#import "UIView+AdaptScreen.h"
+#import "UINavigationController+DeviceOrientataion.h"

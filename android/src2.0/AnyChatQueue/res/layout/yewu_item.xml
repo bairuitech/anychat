@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/yewu_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:textSize="17sp"
+        android:textColor="#333333"/>
+
+    <TextView
+        android:id="@+id/yewu_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/yewu_name"
+        android:layout_below="@+id/yewu_name"
+        android:layout_marginTop="12dp"
+        android:textColor="#6D6D6D"
+        android:textSize="13sp"
+        />
+
+    <Button
+        android:id="@+id/yewu_button"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/btn_bg"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:text="立即办理" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_below="@+id/yewu_tv"
+        android:layout_marginTop="25dp"
+        android:background="#F8F8F8" />
+
+</RelativeLayout>

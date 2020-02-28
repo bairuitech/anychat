@@ -83,9 +83,19 @@ function OnAnyChatSDKFilterData(lpBuf, dwLen) {
 
 }
 
-// 收到录像或拍照完成事件（扩展：增加errorcode）
-function OnAnyChatRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr) {
+// 收到录像或拍照完成事件
+function OnAnyChatRecordSnapShot(dwUserId, lpFileName, dwParam, dwFlags) {
+	
+}
 
+// 收到录像或拍照完成事件（扩展）
+function OnAnyChatRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr) {
+
+}
+
+// 收到录像或拍照完成事件（扩展2：增加errorcode）
+function OnAnyChatRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr) {
+	
 }
 
 // AnyChatCoreSDK异步事件
@@ -375,7 +385,7 @@ function OnAnyChatObjectEvent(dwObjectType, dwObjectId, dwEventType, dwParam1, d
 //业务对象数据更新事件
 function OnAnyChatObjectUpdate(dwObjectType, dwObjectId) {
     var str = null;
-    AddLog('OnAnyChatObjectUpdate(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
+    // AddLog('OnAnyChatObjectUpdate(' + dwObjectType + ',' + dwObjectId + ')', LOG_TYPE_EVENT);
 
 	if(dwObjectType == ANYCHAT_OBJECT_TYPE_AREA) {
 	    areaIdArray[areaArrayIdx] = dwObjectId;

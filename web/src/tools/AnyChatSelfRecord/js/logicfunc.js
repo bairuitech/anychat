@@ -247,21 +247,41 @@ function InitInterfaceUI() {
     GetID("Recordplay").onclick = function () {
     	
     	displayList("advanceset_iframe,recordmsg,backRecord,Recordplay,next,AnyChatLocalVideoDiv,AnyChatFileTransDiv","none");
-    	displayList("personVideo,videotag,return","block");
+    	displayList("personVideo,videotag,return2","block");
     	Mp4Player(lpLocalPathUrl);
     	
     }
- 	// 返回
-    GetID("return").onclick = function () {
-    	GetID("videotag").innerHTML="";
+	//回放返回
+	GetID("return2").onclick = function () {
+		GetID("videotag").innerHTML="";
     	GetID("regist-process").className="step2";
 		
         GetID("rateOfProgress").style.width=10;
         GetID("rate").innerHTML="0%";
 				GetID("rateOfProgress2").style.width=10;
         GetID("rate2").innerHTML="0%";
-        displayList("videotag,return,AnyChatFileTransDiv,recordTip1,upload","none");
+        displayList("videotag,return2,AnyChatFileTransDiv,recordTip1,upload","none");
         displayList("AnyChatLocalVideoDiv,backRecord,Recordplay,next","block");
+	}
+ 	// 返回
+    GetID("return").onclick = function () {
+    	GetID("videotag").innerHTML="";
+    	GetID("regist-process").className="step1";
+		
+        GetID("rateOfProgress").style.width=10;
+        GetID("rate").innerHTML="0%";
+				GetID("rateOfProgress2").style.width=10;
+        GetID("rate2").innerHTML="0%";
+        displayList("videotag,return,AnyChatFileTransDiv,recordTip1,upload,advanceset_iframe","none");
+        displayList("AnyChatLocalVideoDiv,ScreenShot", "block");
+		ApplyVideoConfig(0, 3, 640, 480, 15, 3);
+		// 打开本地视频
+		BRAC_UserCameraControl(-1, 1);
+		// 打开本地语音
+		BRAC_UserSpeakControl(-1, 1); 
+		// 设置本地视频显示位置
+		BRAC_SetVideoPos(mSelfUserId, GetID("AnyChatLocalVideoDiv"),
+				"ANYCHAT_VIDEO_LOCAL");
     }
  	// 下一步
     GetID("next").onclick = function () {

@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">AnyChatSelfRecord</string>
+    <string name= "takePhotoMsg">请将人脸对准摄像头</string>
+    <string name = "videoRecordMsg">请将人脸正对摄像头，用普通话朗读以下内容：\n1.我是张三，自愿申请开户\n2.我已阅读数字证书文件、理解合同并接受相关条款</string>
+
+</resources>

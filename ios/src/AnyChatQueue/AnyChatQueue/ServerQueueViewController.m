@@ -16,32 +16,19 @@
 #import "AnyChatObjectDefine.h"
 
 #import "MBProgressHUD+JT.h"
+#import "AnyChat_QueueModel.h"
 
 @interface ServerQueueViewController ()<UITableViewDataSource,UITableViewDelegate,AnyChatVideoCallDelegate,UIActionSheetDelegate,UIAlertViewDelegate>
 @property(strong, nonatomic) AnyChatPlatform *anyChat;          //anyChat对象
 @property(weak, nonatomic) LoginViewController *loginVC;
-@property(nonatomic, strong)NSArray *businesses;
+
 @property(nonatomic, assign)int remoteUserId;
 
 - (IBAction)startServerClick:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *StartServerBtn;
 @end
 
 @implementation ServerQueueViewController
-// 懒加载
-- (NSArray *)businesses {
-    if (_businesses == nil) {
-        NSMutableArray *businessesObjArr = [NSMutableArray array];
-        for (NSString *businessId in self.businessListIdArray) {
-            //获取队列名称
-            NSString *businessName = [AnyChatPlatform ObjectGetStringValue:ANYCHAT_OBJECT_TYPE_QUEUE :[businessId intValue] :ANYCHAT_OBJECT_INFO_NAME];
-            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:businessName,@"title", businessId,@"id",nil];
-            Business *business = [Business businessWithDic:dic];
-            [businessesObjArr addObject:business];
-        }
-        _businesses = businessesObjArr;
-    }
-    return _businesses;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,6 +48,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = NO;
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:nil];
+
 }
 
 
@@ -135,6 +125,9 @@
                 }
                     
             }
+            [[AnyChatQueueDataManager getInstance].queueModel agentServiceCtrlWithCtrlCode:BRAC_AGENT_SERVICE_FINISHSERVICE];
+            [[AnyChatQueueDataManager getInstance].queueModel agentServiceCtrlWithCtrlCode:BRAC_AGENT_SERVICE_WAITTING];
+
             
             break;
         }
@@ -144,6 +137,7 @@
             if (self.waitingAlertView != nil) {
                 [self.waitingAlertView dismissWithClickedButtonIndex:self.waitingAlertView.cancelButtonIndex animated:YES];
             }
+            [MBProgressHUD showMessage:@"正在进入房间，请稍等..."];
             //进入房间
             [AnyChatPlatform EnterRoom:dwParam :nil];
             
@@ -154,7 +148,8 @@
         case BRAC_VIDEOCALL_EVENT_FINISH://视频结束 4
         {
             // 结束服务
-            [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AGENT :self.selfUserId :ANYCHAT_AGENT_CTRL_FINISHSERVICE :0 :0 :0 :0 :nil];
+            [[AnyChatQueueDataManager getInstance].queueModel agentServiceCtrlWithCtrlCode:BRAC_AGENT_SERVICE_FINISHSERVICE];
+            
             // 关闭设备
             [AnyChatPlatform UserSpeakControl: -1 : NO];
             [AnyChatPlatform UserCameraControl: -1 : NO];
@@ -185,8 +180,7 @@
     }
     Business *business = self.businesses[indexPath.row];
     cell.textLabel.text =  business.title;
-    int queueId = [self.businessListIdArray[indexPath.row] intValue];
-    int queuePeopleCount = [AnyChatPlatform ObjectGetIntValue:ANYCHAT_OBJECT_TYPE_QUEUE :queueId :ANYCHAT_QUEUE_INFO_QUEUELENGTH];
+    int queuePeopleCount = [[AnyChatQueueDataManager getInstance].queueModel getQueuelengthWithid:[NSString stringWithFormat:@"%d",business.businessId]];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"有%d人在排队",queuePeopleCount];
     return cell;
 }
@@ -200,7 +194,9 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         // 退出营业厅
-        [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AREA :self.businessHallId :ANYCHAT_AREA_CTRL_USERLEAVE :0 :0 :0 :0 :nil];
+        [[AnyChatQueueDataManager getInstance].queueModel setAgentObserver:nil];
+        [[AnyChatQueueDataManager getInstance].queueModel leaveArea];
+        
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -215,6 +211,7 @@
                                              :0
                                              :0
                                              :nil];
+            [[AnyChatQueueDataManager getInstance].queueModel agentServiceCtrlWithCtrlCode:BRAC_AGENT_SERVICE_FINISHSERVICE];
         }
     }
 }
@@ -236,7 +233,19 @@
 #pragma mark - Action
 - (IBAction)startServerClick:(UIButton *)sender {
     // 开始服务
-    [AnyChatPlatform ObjectControl:ANYCHAT_OBJECT_TYPE_AGENT :self.selfUserId :ANYCHAT_AGENT_CTRL_SERVICEREQUEST :0 :0 :0 :0 :nil];
+    AnyChat_AgentObserver *observer = [[AnyChat_AgentObserver alloc] init];
+    
+    __weak typeof(self) weakSelf = self;
+    observer.agentStatusChangedBlock = ^(NSDictionary * _Nonnull data) {
+        [weakSelf onAgentStatusChanged:data];
+    };
+    observer.serviceNotifyBlock = ^(NSDictionary * _Nonnull data) {
+        [weakSelf onServiceNotify:data];
+    };
+    
+    [[AnyChatQueueDataManager getInstance].queueModel setAgentObserver:observer];
+    
+    [[AnyChatQueueDataManager getInstance].queueModel agentServiceCtrlWithCtrlCode:BRAC_AGENT_SERVICE_WAITTING];
 
 }
 - (void)backAction:(UIControlEvents *)event {
@@ -250,6 +259,44 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)onAgentStatusChanged:(NSDictionary *)data {
+    NSLog(@"坐席状态发生改变");
+    NSString *status = data[@"status"];
+    if ([status isEqualToString:@"0"]) {
+        
+        [self.StartServerBtn setTitle:@"已关闭" forState:UIControlStateNormal];
+        
+    }else if ([status isEqualToString:@"1"]) {
+        if ([AnyChatQueueDataManager getInstance].queueModel.autoRoute) {
+            [self.StartServerBtn setTitle:@"等待中" forState:UIControlStateNormal];
+        } else {
+            [self.StartServerBtn setTitle:@"呼叫队列中的用户" forState:UIControlStateNormal];
+        }
+        
+    }else if ([status isEqualToString:@"2"]) {
+        
+        [self.StartServerBtn setTitle:@"忙碌中" forState:UIControlStateNormal];
+        
+    }else if ([status isEqualToString:@"3"]) {
+        
+        [self.StartServerBtn setTitle:@"暂停服务" forState:UIControlStateNormal];
+        
+    }else if ([status isEqualToString:@"10"]) {
+        
+        [self.StartServerBtn setTitle:@"离线" forState:UIControlStateNormal];
+    }
+}
+
+- (void)onServiceNotify:(NSDictionary *)data
+{
+    int clientId = [data[@"customerId"] intValue];
+    [AnyChatQueueDataManager getInstance].customerId = clientId;
+    // 呼叫用户
+    [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REQUEST :clientId :0 :0 :0 :nil];
+    self.waitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫请求中，等待客户响应..." message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+    [self.waitingAlertView show];
 }
 
 @end

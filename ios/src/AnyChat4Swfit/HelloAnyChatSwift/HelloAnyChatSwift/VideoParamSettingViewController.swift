@@ -24,22 +24,22 @@ class VideoParamSettingViewController: UITableViewController {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.reloadData()
     }
     
     func loadData() {
-        let path: String = NSBundle.mainBundle().pathForResource("VideoParamSetting.plist", ofType: nil)!
+        let path: String = Bundle.main.path(forResource: "VideoParamSetting.plist", ofType: nil)!
         groupArr = NSArray(contentsOfFile:path)!
     }
 
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section < 2 {
             return 1
         }else {
@@ -47,62 +47,62 @@ class VideoParamSettingViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return titles[section]
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ParamSetting", forIndexPath: indexPath) as UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ParamSetting", for: indexPath) as UITableViewCell
         cell
         if indexPath.section == 0 {
             cell.textLabel?.text = "优先P2P"
             let p2pSwitch: UISwitch = UISwitch()
             // 读取本地缓存
-            let defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-            p2pSwitch.setOn(defaults.boolForKey(keys[0]), animated: false)
+            let defaults: UserDefaults = UserDefaults.standard
+            p2pSwitch.setOn(defaults.bool(forKey: keys[0]), animated: false)
             cell.accessoryView = p2pSwitch
-            p2pSwitch.addTarget(self, action: "p2pChange:", forControlEvents:.ValueChanged)
+            p2pSwitch.addTarget(self, action: #selector(VideoParamSettingViewController.p2pChange(_:)), for:.valueChanged)
             cell.detailTextLabel?.text = ""
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
         }else if indexPath.section == 1 {
             cell.textLabel?.text = "使用服务器视频参数"
             let serverParamSwitch: UISwitch = UISwitch()
             // 读取本地缓存
-            let defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-            serverParamSwitch.setOn(defaults.boolForKey(keys[1]), animated: false)
-            serverParamSwitch.addTarget(self, action: "serverParamChange:", forControlEvents: .ValueChanged)
+            let defaults: UserDefaults = UserDefaults.standard
+            serverParamSwitch.setOn(defaults.bool(forKey: keys[1]), animated: false)
+            serverParamSwitch.addTarget(self, action: #selector(VideoParamSettingViewController.serverParamChange(_:)), for: .valueChanged)
             cell.accessoryView = serverParamSwitch
             cell.detailTextLabel?.text = ""
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
         }else {
             let ocDict = groupArr[indexPath.row] as! NSDictionary
-            cell.textLabel!.text = ocDict.objectForKey("keyCN") as? String
-            let key = ocDict.objectForKey("keyEN") as? String
+            cell.textLabel!.text = ocDict.object(forKey: "keyCN") as? String
+            let key = ocDict.object(forKey: "keyEN") as? String
             
             // 读取本地缓存
-            let defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-            let selectedItem = defaults.objectForKey(key!)
-            let childArr = ocDict.objectForKey("childItem") as! NSArray
+            let defaults: UserDefaults = UserDefaults.standard
+            let selectedItem = defaults.object(forKey: key!)
+            let childArr = ocDict.object(forKey: "childItem") as! NSArray
             if selectedItem == nil { // 第一次，没本地缓存
-                let defaultSel = ocDict.objectForKey("default") as! String
+                let defaultSel = ocDict.object(forKey: "default") as! String
                 for dict in childArr {
                     let ocDict = dict as! NSDictionary
-                    let childKey = ocDict.objectForKey("key") as! String
+                    let childKey = ocDict.object(forKey: "key") as! String
                     if defaultSel == childKey {
-                        cell.detailTextLabel?.text = ocDict.objectForKey("value") as? String
+                        cell.detailTextLabel?.text = ocDict.object(forKey: "value") as? String
                     }
                 }
             }else { // 有本地缓存
                 for dict in childArr {
                     let ocDict = dict as! NSDictionary
-                    let childKey = ocDict.objectForKey("key") as! String
+                    let childKey = ocDict.object(forKey: "key") as! String
                     if selectedItem as! String == childKey {
-                        cell.detailTextLabel?.text = ocDict.objectForKey("value") as? String
+                        cell.detailTextLabel?.text = ocDict.object(forKey: "value") as? String
                     }
                 }
             }
 
-            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             
         }
         
@@ -110,114 +110,114 @@ class VideoParamSettingViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section>1 {
             selectData = groupArr[indexPath.row] as! NSDictionary
-            self.performSegueWithIdentifier("Detail", sender: self)
+            self.performSegue(withIdentifier: "Detail", sender: self)
         }
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: false) // 取消选中状态
+        self.tableView.deselectRow(at: indexPath, animated: false) // 取消选中状态
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
-            let videoDetailVC = segue.destinationViewController as! VideoParamSettingDetailController;
+            let videoDetailVC = segue.destination as! VideoParamSettingDetailController;
             videoDetailVC.data = self.selectData
         }
     }
     
-    func p2pChange(sender: UISwitch) {
+    func p2pChange(_ sender: UISwitch) {
         // 设置本地缓存
-        let defaluts: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaluts.setBool(sender.on, forKey: keys[0])
+        let defaluts: UserDefaults = UserDefaults.standard
+        defaluts.set(sender.isOn, forKey: keys[0])
         defaluts.synchronize()  // 同步
         
     }
     
-    func serverParamChange(sender: UISwitch) {
+    func serverParamChange(_ sender: UISwitch) {
         // 设置本地缓存
-        let defaluts: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaluts.setBool(sender.on, forKey: keys[1])
+        let defaluts: UserDefaults = UserDefaults.standard
+        defaluts.set(sender.isOn, forKey: keys[1])
         defaluts.synchronize() // 同步
     }
     
     @IBAction func back() {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
         self.setupAnyChatVideoParam()
     }
     
     // AnyChat 参数配置
     func setupAnyChatVideoParam() {
         // 读取本地缓存
-        let defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        let p2p = defaults.boolForKey(keys[0])
-        let serverparam = defaults.boolForKey(keys[1])
-        let resolution = defaults.objectForKey(keys[2])
-        let bitrate = defaults.objectForKey(keys[3])
-        let frameRate = defaults.objectForKey(keys[4])
-        let preset = defaults.objectForKey(keys[5])
-        let quality = defaults.objectForKey(keys[6])
+        let defaults: UserDefaults = UserDefaults.standard
+        let p2p = defaults.bool(forKey: keys[0])
+        let serverparam = defaults.bool(forKey: keys[1])
+        let resolution = defaults.object(forKey: keys[2])
+        let bitrate = defaults.object(forKey: keys[3])
+        let frameRate = defaults.object(forKey: keys[4])
+        let preset = defaults.object(forKey: keys[5])
+        let quality = defaults.object(forKey: keys[6])
 
-        AnyChatPlatform.SetSDKOptionInt(BRAC_SO_NETWORK_P2PPOLITIC, p2p ? 1 : 0)    // P2P
+        AnyChatPlatform.setSDKOptionInt(BRAC_SO_NETWORK_P2PPOLITIC, p2p ? 1 : 0)    // P2P
 
         if !serverparam {
 
             // 分辨率
             if resolution == nil {
                 let ocDict = groupArr[0] as! NSDictionary
-                let defaultStr = ocDict.objectForKey("default") as! String
+                let defaultStr = ocDict.object(forKey: "default") as! String
                 let defaultInt = Int(defaultStr)!
                 let arrWidthIndex = resolutionWidthArr[defaultInt]
                 let arrHeightIndex = resolutionHeightArr[defaultInt]
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_WIDTHCTRL, arrWidthIndex)
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_HEIGHTCTRL, arrHeightIndex)
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_WIDTHCTRL, arrWidthIndex)
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_HEIGHTCTRL, arrHeightIndex)
             }else {
                 let selectedStr = resolution as! String
                 let selectedInt = Int(selectedStr)!
                 let arrWidthIndex = resolutionWidthArr[selectedInt]
                 let arrHeightIndex = resolutionHeightArr[selectedInt]
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_WIDTHCTRL, arrWidthIndex)
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_HEIGHTCTRL, arrHeightIndex)
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_WIDTHCTRL, arrWidthIndex)
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_HEIGHTCTRL, arrHeightIndex)
             }
 
             // 码率
             if bitrate == nil {
                 let ocDict = groupArr[1] as! NSDictionary
-                let defaultStr = ocDict.objectForKey("default") as! String
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_BITRATECTRL, Int32(defaultStr)!)
+                let defaultStr = ocDict.object(forKey: "default") as! String
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_BITRATECTRL, Int32(defaultStr)!)
             }else {
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_BITRATECTRL, Int32(bitrate as! String)!)
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_BITRATECTRL, Int32(bitrate as! String)!)
             }
 
             // 帧率
             if frameRate == nil {
                 let ocDict = groupArr[2] as! NSDictionary
-                let defaultStr = ocDict.objectForKey("default") as! String
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_FPSCTRL, Int32(defaultStr)!)
+                let defaultStr = ocDict.object(forKey: "default") as! String
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_FPSCTRL, Int32(defaultStr)!)
             }else {
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_FPSCTRL, Int32(frameRate as! String)!)
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_FPSCTRL, Int32(frameRate as! String)!)
             }
 
             // 预设参数
             if preset == nil {
                 let ocDict = groupArr[2] as! NSDictionary
-                let defaultStr = ocDict.objectForKey("default") as! String
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_PRESETCTRL, Int32(defaultStr)!)
+                let defaultStr = ocDict.object(forKey: "default") as! String
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_PRESETCTRL, Int32(defaultStr)!)
             }else {
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_PRESETCTRL, Int32(preset as! String)!)
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_PRESETCTRL, Int32(preset as! String)!)
             }
 
             // 视频质量
             if quality == nil {
                 let ocDict = groupArr[2] as! NSDictionary
-                let defaultStr = ocDict.objectForKey("default") as! String
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_QUALITYCTRL, Int32(defaultStr)!)
+                let defaultStr = ocDict.object(forKey: "default") as! String
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_QUALITYCTRL, Int32(defaultStr)!)
             }else {
-                AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_QUALITYCTRL, Int32(quality as! String)!)
+                AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_QUALITYCTRL, Int32(quality as! String)!)
             }
             
         }
         
-        AnyChatPlatform.SetSDKOptionInt(BRAC_SO_LOCALVIDEO_APPLYPARAM, serverparam ? 0 : 1) //本地参数
+        AnyChatPlatform.setSDKOptionInt(BRAC_SO_LOCALVIDEO_APPLYPARAM, serverparam ? 0 : 1) //本地参数
     }
     
 }

@@ -104,8 +104,17 @@ return shared##classname;   \
 #define	 k_isRetina	 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
 #define	 k_iPhone5 	([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 #define	 k_isPad 	(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define k_iPhoneX_XS_11Pro (kSelfView_Width == 375.f && kSelfView_Height == 812.f ? YES : NO)
+#define k_iPhoneXR_XSMax_11_11ProMax (kSelfView_Width == 414.f && kSelfView_Height == 896.f ? YES : NO)
 
 
 #pragma mark - Device systemVersion
 
 #define k_sysVersion (float)[[[UIDevice currentDevice] systemVersion] floatValue]
+
+#import "ACBaseViewController.h"
+#import "IQKeyboardManager.h"
+#import "UIView+AdaptScreen.h"
+
+#define kScreenWid ([UIScreen mainScreen].bounds.size.width)
+#define kScreenHei ([UIScreen mainScreen].bounds.size.height)

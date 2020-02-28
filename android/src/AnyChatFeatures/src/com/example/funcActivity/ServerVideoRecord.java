@@ -1,8 +1,5 @@
 package com.example.funcActivity;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -12,19 +9,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.SurfaceView;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
@@ -33,6 +20,9 @@ import com.example.anychatfeatures.R;
 import com.example.common.BaseMethod;
 import com.example.common.DialogFactory;
 import com.example.common.RecordListMenu;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 		AnyChatRecordEvent{
@@ -351,6 +341,7 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 			mMenuWindow.dismiss();
 			mMenuWindow = null;
 			Boolean bCanRecord = false;
+			//String objString="";
 			switch (v.getId()) {
 			// 给自己录像
 			case R.id.btn_recordself:
@@ -367,19 +358,20 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 						+ AnyChatDefine.BRAC_RECORD_FLAGS_VIDEO
 						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_LOCALCB
 						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_SERVER;
-				
 				mCurRecordUserID = mUserID;
 				bCanRecord = true;
 				break;
 			// 混合录制
 			case R.id.btn_hybridrecord:
-				mdwFlags = AnyChatDefine.BRAC_RECORD_FLAGS_AUDIO
-					+ AnyChatDefine.BRAC_RECORD_FLAGS_VIDEO
-					+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_MIXAUDIO
-					+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_MIXVIDEO
-					+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_STEREO
-					+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_ABREAST
-					+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_SERVER;
+				mdwFlags = AnyChatDefine.ANYCHAT_RECORD_FLAGS_VIDEO
+						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_AUDIO
+						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_MIXAUDIO
+						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_MIXVIDEO
+						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_STEREO
+						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_ABREAST
+						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_LOCALCB
+						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_SERVER
+						+ AnyChatDefine.ANYCHAT_RECORD_FLAGS_STREAM;
 				mCurRecordUserID = -1;
 				bCanRecord = true;
 				break;
@@ -482,7 +474,12 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 			mMenuWindow.dismiss();
 			mMenuWindow = null;
 		}
-		
+
+		if(mDialog!=null && mDialog.isShowing()){
+			mDialog.dismiss();
+			mDialog =null;
+		}
+
 		handler.removeCallbacks(runnable);
 		
 		anyChatSDK.mSensorHelper.DestroySensor();

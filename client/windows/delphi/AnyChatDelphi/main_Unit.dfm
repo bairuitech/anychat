@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 844
-  Top = 21
+  Left = 566
+  Top = 402
   BorderIcons = [biSystemMenu]
   BorderStyle = bsNone
   Caption = 'WIDTHD'

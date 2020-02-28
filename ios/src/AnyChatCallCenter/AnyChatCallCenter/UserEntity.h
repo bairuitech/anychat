@@ -10,9 +10,12 @@
 
 @interface UserEntity : NSObject
 
-@property (nonatomic, strong) NSString *theEntityName;
-@property (nonatomic, strong) NSString *theEntityPassword;
-@property int theEntityID;
-@property int theEntityRemoteID;
+@property (nonatomic, copy) NSString *theEntityName;
+@property (nonatomic, copy) NSString *theEntityPassword;
+@property (nonatomic, assign) int    theEntityID;
+
+@property (nonatomic, assign) int    theEntityRemoteID;
+@property (nonatomic, copy) NSString *theEntityRemoteName;
+
 
 @end

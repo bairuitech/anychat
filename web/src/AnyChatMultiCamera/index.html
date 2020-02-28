@@ -39,7 +39,7 @@
         <div>
             <div id="prompt_div_line1"></div>
             <div id="prompt_div_line2">控件安装完成后，请重启浏览器</div>
-            <div id="prompt_div_btn_load" onclick="window.open('http://anychat.oss-cn-hangzhou.aliyuncs.com/AnyChatWebSetup.exe')">下载安装</div>
+            <div id="prompt_div_btn_load" onclick="downloadAnyChatPlugin()">下载安装</div>
         </div>
         <div style="height: 85px;">
             <div id="prompt_div_BR">
@@ -59,7 +59,7 @@
 		<div><input type="checkbox" id="ScreenCtrl" onclick="checkScreenCtrl()"  >打开屏幕共享</input></div>        
         <div id="Btn_div">
             <div id="setting" class="Btn" onmouseout="Mouseout('setting')" onmousemove="Mouseover('setting')" style=" float:left;">设置</div>
-            <div id="loginbtn" class="Btn" onmouseout="Mouseout('loginbtn')" onmousemove="Mouseover('loginbtn')" " style=" float:right;">登录</div>
+            <div id="loginbtn" class="Btn" onmouseout="Mouseout('loginbtn')" onmousemove="Mouseover('loginbtn')"  style="float:right;">登录</div>
 
         </div>
 		
@@ -188,7 +188,7 @@
                             <td class="td_input"><a>帧率：</a></td>
                             <td><select id="frame_rate" onchange="GetTheValue('frame_rate')" disabled="disabled" style=" width:80px;"></select></td>
                             <td></td>
-                            <td class="td_input"">(当前分辨率：</td>
+                            <td class="td_input">(当前分辨率：</td>
                             <td id="current_resolution"></td>
                         </tr>
                         <tr>
@@ -217,5 +217,24 @@
 	</div>
 	
 </div>
+<script>
+    window.onbeforeunload = function () {
+        // 刷新或关闭页面时释放插件
+        BRAC_Release();
+    };
+
+	// 下载AnyChat SDK插件
+	downloadAnyChatPlugin = function(){
+		var anychat_plugin_url = 'http://anychat.oss-cn-hangzhou.aliyuncs.com/AnyChatWebSetup.exe';
+		var anychat_plugin_x64_url = 'http://anychat.oss-cn-hangzhou.aliyuncs.com/AnyChatWebSetup_x64.exe';
+		if (window.navigator.platform == 'Win64'){
+			// 64位插件
+			window.location.href = anychat_plugin_x64_url;
+		}
+		else{
+			window.location.href = anychat_plugin_url;
+		}
+	}	
+</script>
 </body>
 </html>

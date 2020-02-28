@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/cellBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
+        android:background="@drawable/button_background"
+        android:padding="10dip" >
+
+        <ImageView
+                android:id="@+id/roleHeaderImg"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:src="@drawable/role_1"/>
+
+        <TextView
+            android:id="@+id/mname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_marginTop="15dip"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:text="佳佳佳佳佳佳偏偏" />
+
+        <TextView
+            android:id="@+id/mRoleID"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip"
+            android:layout_marginRight="15dp"
+            android:textColor="#999999"
+            android:textSize="15sp"
+            android:gravity="right"
+            android:text="58888888" />
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="2dp"
+          android:layout_marginLeft="13dp"
+          android:layout_marginRight="13dp"
+          android:layout_below="@id/linearLayout"
+          android:background="#EDEDED"/>
+    
+</RelativeLayout>

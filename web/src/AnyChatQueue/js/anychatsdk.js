@@ -1,6 +1,7 @@
 // AnyChat for Web SDK
 // ²»Òª¶Ô¸ÃÎÄ¼þ½øÐÐÈÎºÎÐÞ¸Ä£¬µ±Éý¼¶SDKÊ±£¬ÐÂ°æ±¾½«»áÖ±½Ó¸²¸Ç¾É°æ±¾
 
+
 /********************************************
  *				³£Á¿¶¨Òå²¿·Ö				*
  *******************************************/
@@ -29,6 +30,12 @@ var BRAC_SO_AUDIO_CNGCTRL = 				71;	// ÊæÊÊÔëÒôÉú³É¿ØÖÆ£¨²ÎÊýÎª£ºintÐÍ£º1´ò¿ª£¬0
 var BRAC_SO_AUDIO_CODECID = 				72;	// ±¾µØÒôÆµ±àÂëÆ÷IDÉèÖÃ£¨²ÎÊýÎªintÐÍ£¬-1±íÊ¾Ä¬ÈÏ£¬Èç¹ûÉèÖÃµÄ±àÂëÆ÷ID²»´æÔÚ£¬ÔòÄÚºË»á²ÉÓÃÄ¬ÈÏµÄ±àÂëÆ÷£©
 var BRAC_SO_AUDIO_SOFTVOLMODE = 			73;	// ÉèÖÃÈí¼þÒôÁ¿Ä£Ê½¿ØÖÆ£¨²ÎÊýÎªintÐÍ£¬1´ò¿ª£¬0¹Ø±Õ[Ä¬ÈÏ]£©£¬Ê¹ÓÃÈí¼þÒôÁ¿Ä£Ê½£¬½«²»»á¸Ä±äÏµÍ³µÄÒôÁ¿ÉèÖÃ
 var BRAC_SO_AUDIO_RECORDDRVCTRL = 			74;	// ÒôÆµ²É¼¯Çý¶¯¿ØÖÆ£¨²ÎÊýÎªintÐÍ£¬0Ä¬ÈÏÇý¶¯£¬ 1 DSoundÇý¶¯£¬ 2 WaveInÇý¶¯£¬ 3 Java²É¼¯[AndroidÆ½Ì¨Ê¹ÓÃ]£©
+var BRAC_SO_AUDIO_ECHODELAY	=				75;	// ÒôÆµ»ØÉùÏû³ýÑÓ³Ù²ÎÊýÉèÖÃ£¨²ÎÊýÎªintÐÍ£¬µ¥Î»£ºms£©
+var BRAC_SO_AUDIO_NSLEVEL	=				76;	// ÒôÆµÔëÒôÒÖÖÆË®Æ½²ÎÊýÉèÖÃ£¨²ÎÊýÎªintÐÍ£¬0 - 3£¬Ä¬ÈÏÎª2£¬ÖµÔ½´óÒÖÖÆË®Æ½Ô½¸ß£¬ÒÖÖÆÔëÒôµÄÄÜÁ¦Ô½Ç¿£©
+var BRAC_SO_AUDIO_CBCODEC	=				77;	// ÒôÆµÊý¾Ý»Øµ÷±àÂëÆ÷ÀàÐÍ£¨²ÎÊýÎªintÐÍ£©
+var BRAC_SO_AUDIO_ECHOLEVEL	=				78;	// ÒôÆµ»ØÉùÏû³ýË®Æ½²ÎÊýÉèÖÃ£¨²ÎÊýÎªintÐÍ£¬0 - 4£¬Ä¬ÈÏÎª4£¬ÖµÔ½´ó»ØÉùÏû³ýÄÜÁ¦Ô½Ç¿£©
+var BRAC_SO_AUDIO_PLAYCAPTURE	=			79;	// ÒôÆµ²¥·Å²É¼¯²ÎÊýÉèÖÃ£¨²ÎÊýÎªintÐÍ£¬0 ¹Ø±Õ[Ä¬ÈÏ]£¬1 ¿ªÆô£©
+
 
 var BRAC_SO_RECORD_VIDEOBR = 				10;	// Â¼ÏñÊÓÆµÂëÂÊÉèÖÃ£¨²ÎÊýÎª£ºintÐÍ£¬µ¥Î»£ºbps£©
 var BRAC_SO_RECORD_AUDIOBR = 				11;	// Â¼ÏñÒôÆµÂëÂÊÉèÖÃ£¨²ÎÊýÎª£ºintÐÍ£¬µ¥Î»£ºbps£©
@@ -84,6 +91,7 @@ var BRAC_SO_LOCALVIDEO_CLIPMODE	=			107;// ±¾µØÊÓÆµ²Ã¼ôÄ£Ê½£¨²ÎÊýÎªintÐÍ£¬ 0 ×Ô¶
 var BRAC_SO_LOCALVIDEO_SCREENHWND	=		108;// ÆÁÄ»²É¼¯´°¿Ú¾ä±ú
 var BRAC_SO_LOCALVIDEO_SCREENFLAGS	=		109;// ÆÁÄ»²É¼¯±êÖ¾£¨²ÎÊýÎªintÐÍ£©
 var BRAC_SO_LOCALVIDEO_VIRTUALBK	=		111;// ±¾µØÊÓÆµµü¼ÓÐéÄâ±³¾°£¨×Ö·û´®ÀàÐÍ£¬JSON¸ñÊ½£¬°üÀ¨ÐéÄâ±³¾°Â·¾¶¡¢ÊÇ·ñ¿ªÆôÒÔ¼°ÆäËü²ÎÊýÏî£©
+var BRAC_SO_LOCALVIDEO_VIDEOCOLOR	=		112;// ÊÓÆµÑÕÉ«¿ØÖÆ£¨×Ö·û´®ÀàÐÍ£¬²ÎÊýÎªJSON£©
 
 var BRAC_SO_NETWORK_P2PPOLITIC = 			40;	// ±¾µØÍøÂçP2P²ßÂÔ¿ØÖÆ£¨²ÎÊýÎª£ºintÐÍ£º0 ½ûÖ¹±¾µØP2P£¬1 ·þÎñÆ÷¿ØÖÆP2P[Ä¬ÈÏ]£¬2 ÉÏ²ãÓ¦ÓÃ¿ØÖÆP2PÁ¬½Ó£¬3 °´Ðè½¨Á¢P2PÁ¬½Ó£©
 var BRAC_SO_NETWORK_P2PCONNECT = 			41;	// ³¢ÊÔÓëÖ¸¶¨ÓÃ»§½¨Á¢P2PÁ¬½Ó£¨²ÎÊýÎªintÐÍ£¬±íÊ¾Ä¿±êÓÃ»§ID£©£¬Á¬½Ó½¨Á¢³É¹¦ºó£¬»áÍ¨¹ýÏûÏ¢·´À¡¸øÉÏ²ãÓ¦ÓÃ£¬P2P¿ØÖÆ²ßÂÔ=2Ê±ÓÐÐ§
@@ -92,7 +100,12 @@ var BRAC_SO_NETWORK_TCPSERVICEPORT = 		43;	// ÉèÖÃ±¾µØTCP·þÎñ¶Ë¿Ú£¨²ÎÊýÎªintÐÍ£©
 var BRAC_SO_NETWORK_UDPSERVICEPORT = 		44;	// ÉèÖÃ±¾µØUDP·þÎñ¶Ë¿Ú£¨²ÎÊýÎªintÐÍ£©£¬Á¬½Ó·þÎñÆ÷Ö®Ç°ÉèÖÃÓÐÐ§
 var BRAC_SO_NETWORK_MULTICASTPOLITIC = 		45;	// ×é²¥²ßÂÔ¿ØÖÆ£¨²ÎÊýÎªintÐÍ£¬¶¨ÒåÎª³£Á¿£ºBRAC_MCPOLITIC_XXXX£©
 var BRAC_SO_NETWORK_TRANSBUFMAXBITRATE = 	46;	// ´«Êä»º³åÇø¡¢ÎÄ¼þ×î´óÂëÂÊ¿ØÖÆ£¨²ÎÊýÎªintÐÍ£¬0 ²»ÏÞÖÆ£¬ÒÔ×î¿ìËÙÂÊ´«Êä[Ä¬ÈÏ]£¬ ·ñÔò±íÊ¾ÏÞÖÆÂëÂÊ£¬µ¥Î»Îª£ºbps£©
-var BRAC_SO_NETWORK_AUTORECONNECT =			47;	// ÍøÂçµôÏß×Ô¶¯ÖØÁ¬¹¦ÄÜ¿ØÖÆ£¨²ÎÊýÎªintÐÍ£¬0 ¹Ø±Õ£¬ 1 ¿ªÆô[Ä¬ÈÏ]£©
+var BRAC_SO_NETWORK_AUTORECONNECT	=		47;	// ÍøÂçµôÏß×Ô¶¯ÖØÁ¬¹¦ÄÜ¿ØÖÆ£¨²ÎÊýÎªintÐÍ£¬0 ¹Ø±Õ£¬ 1 ¿ªÆô[Ä¬ÈÏ]£©
+var BRAC_SO_NETWORK_MTUSIZE			=		48;	// ÉèÖÃÍøÂç²ãMTU´óÐ¡£¨²ÎÊýÎªintÐÍ£©
+var BRAC_SO_NETWORK_UDPSTATUS		=		49;	// UDPÍøÂçÍ¨ÐÅ×´Ì¬²éÑ¯£¨²ÎÊýÎªintÐÍ£©
+var BRAC_SO_NETWORK_LARGEDELAY		=		53;	// ÍøÂç¸ßÑÓ³ÙÄ£Ê½£¬ÊÊÓÃÓÚÎÀÐÇÍøÂç»·¾³£¨²ÎÊýÎªintÐÍ£©
+var BRAC_SO_NETWORK_IPV6DNS			=		54;	// IPv6ÓòÃû½âÎö¿ØÖÆ£¨²ÎÊýÎªintÐÍ£¬0 ¹Ø±Õ£¬ 1¿ªÆô[Ä¬ÈÏ]£©£¬´«Í³ÍøÂç£¨IPv4£©ÏÂ£¬½ûÓÃIPv6¿ÉÌá¸ßÓòÃû½âÎöËÙ¶È
+
 
 var BRAC_SO_PROXY_FUNCTIONCTRL = 			50;	// ±¾µØÓÃ»§´úÀí¹¦ÄÜ¿ØÖÆ£¬£¨²ÎÊýÎª£ºintÐÍ£¬1Æô¶¯´úÀí£¬0¹Ø±Õ´úÀí[Ä¬ÈÏ]£©
 var BRAC_SO_PROXY_VIDEOCTRL = 				51;	// ±¾µØÓÃ»§´úÀíÊÓÆµ¿ØÖÆ£¬½«±¾µØÊÓÆµ±äÎªÖ¸¶¨ÓÃ»§µÄÊÓÆµ¶ÔÍâ·¢²¼£¨²ÎÊýÎªintÐÍ£¬±íÊ¾ÆäËüÓÃ»§µÄuserid£©
@@ -106,13 +119,18 @@ var BRAC_SO_VIDEOSHOW_SETPRIMARYUSER = 		81;	// ÉèÖÃÖ÷ÏÔÊ¾ÓÃ»§±àºÅ£¨²ÎÊýÎª£ºintÐ
 var BRAC_SO_VIDEOSHOW_SETOVERLAYUSER = 		82;	// ÉèÖÃµü¼ÓÏÔÊ¾ÓÃ»§±àºÅ£¨²ÎÊýÎª£ºintÐÍ£¬ÓÃ»§IDºÅ£©
 var BRAC_SO_VIDEOSHOW_DRIVERCTRL = 			83;	// ÊÓÆµÏÔÊ¾Çý¶¯¿ØÖÆ£¨²ÎÊýÎª£ºintÐÍ£¬0 Ä¬ÈÏÇý¶¯£¬ 1 Windows DirectShow£¬2 Windows GDI£¬3 SDL, 4 Android2X£©
 var BRAC_SO_VIDEOSHOW_CLIPMODE =			86;	// Ô¶³ÌÊÓÆµÏÔÊ¾Ðý×ª²Ã¼ôÄ£Ê½£¨²ÎÊýÎªintÐÍ£¬ 0 ×Ô¶¯[Ä¬ÈÏ]£©
+var BRAC_SO_VIDEOSHOW_CBPIXFMT	=			87;	// ÊÓÆµÊý¾Ý»Øµ÷¸ñÊ½£¨²ÎÊýÎªintÐÍ£©
 
 var BRAC_SO_CORESDK_TICKOUTUSER	=			110;// ´Ó·þÎñÆ÷ÉÏÌßµôÖ¸¶¨ÓÃ»§£¨²ÎÊýÎªintÐÍ£¬±íÊ¾Ä¿±êÓÃ»§ID£©
+
 var BRAC_SO_CORESDK_DEVICEMODE	=			130;// Éè±¸Ä£Ê½¿ØÖÆ£¨¾ÖÓòÍøÉè±¸Ö®¼ä¿ÉÒÔ»¥ÏàÍ¨ÐÅ£¬²»ÒÀÀµ·þÎñÆ÷£»²ÎÊýÎªintÐÍ£¬0 ¹Ø±Õ[Ä¬ÈÏ]£¬1 ¿ªÆô£©
 var BRAC_SO_CORESDK_SCREENCAMERACTRL =		131;// ×ÀÃæ¹²Ïí¹¦ÄÜ¿ØÖÆ£¨²ÎÊýÎª£ºintÐÍ£¬ 0 ¹Ø±Õ[Ä¬ÈÏ]£¬ 1 ¿ªÆô£©
 var BRAC_SO_CORESDK_UPLOADLOGINFO =			134;// ÉÏ´«ÈÕÖ¾ÐÅÏ¢µ½·þÎñÆ÷£¨²ÎÊýÎª£ºintÐÍ£¬0 ¹Ø±Õ[Ä¬ÈÏ]£¬ 1 ¿ªÆô£©
 var BRAC_SO_CORESDK_WRITELOG	=			135;// Ð´Èëµ÷ÊÔÐÅÏ¢µ½±¾µØÈÕÖ¾ÎÄ¼þÖÐ
 var BRAC_SO_CORESDK_NEWLOGFILE	=			136;// ²úÉúÐÂµÄÈÕÖ¾ÎÄ¼þ
+var BRAC_SO_CORESDK_SUPPORTSIP	=			137;// ÅÐ¶Ïµ±Ç°ÊÇ·ñÖ§³ÖSIPÍ¨ÐÅ
+var BRAC_SO_CORESDK_SUPPORTHTML5	=		138;// ÅÐ¶Ïµ±Ç°ÊÇ·ñÖ§³ÖHTML5
+var BRAC_SO_CORESDK_DISABLELOGFILE	=		139;// ½ûÖ¹Éú³É±¾µØÈÕÖ¾ÎÄ¼þ
 var BRAC_SO_CORESDK_SUPPORTVIDEOCODEC =		210;// ÉèÖÃÖ§³ÖµÄÊÓÆµ±àÂëÆ÷
 var BRAC_SO_CORESDK_SUPPORTAUDIOCODEC =		211;// ÉèÖÃÖ§³ÖµÄÒôÆµ±àÂëÆ÷
 var BRAC_SO_CORESDK_DISABLEMEDIACONSUL =	212;// ½ûÖ¹Ã½ÌåÐ­ÉÌ
@@ -126,6 +144,19 @@ var BRAC_SO_CORESDK_LOGFILERULE	=			221;// ¿Í»§¶ËÈÕÖ¾ÎÄ¼þ±£´æ¹æÔò£¨²ÎÊýÎªintÐÍ£¬
 var BRAC_SO_CORESDK_FILEENCANDDEC	=		222;// ÎÄ¼þ¼Ó½âÃÜ¿ØÖÆ£¨²ÎÊýÎª×Ö·û´®ÀàÐÍ£¬JSON¸ñÊ½£©
 var BRAC_SO_CORESDK_PPTHELPERINIT	=		223;// PPT²¥±¨»·¾³³õÊ¼»¯
 var BRAC_SO_CORESDK_PPTFILECTRL		=		224;// PPTÎÄ¼þ¿ØÖÆ
+var BRAC_SO_CORESDK_CBMEDIASTREAM	=		225;// »Øµ÷Ô­Ê¼ÒôÊÓÆµÁ÷
+var BRAC_SO_CORESDK_CBVIDEOSTREAM	=		226;// »Øµ÷Ô­Ê¼ÊÓÆµÁ÷
+var BRAC_SO_CORESDK_CBAUDIOSTREAM	=		227;// »Øµ÷Ô­Ê¼ÒôÆµÁ÷
+var BRAC_SO_CORESDK_STREAMADAPTIVE	=		228;// Á÷Ã½Ìå×ÔÊÊÓ¦¿ØÖÆ£¨²ÎÊýÎªintÐÍ£¬0 ¹Ø±Õ 1 ¿ªÆô[Ä¬ÈÏ]£©
+var BRAC_SO_CORESDK_MAXTRANSFILESIZE=		229;// ÔÊÐí´«ÊäµÄ×î´óÎÄ¼þ´óÐ¡£¨²ÎÊýÎªintÐÍ£¬µ¥Î»£ºMByte£©
+var BRAC_SO_CORESDK_USESERVERTIME	=		230;// Ê¹ÓÃ·þÎñÆ÷Ê±¼ä´Á£¨²ÎÊýÎªintÐÍ£¬0 ¹Ø±Õ[Ä¬ÈÏ] 1 ¿ªÆô£©
+var BRAC_SO_CORESDK_APPMONITORLIST	=		231;// Ó¦ÓÃ³ÌÐòÁÐ±í£¬Ó¦ÓÃ³ÌÐò¹²ÏíÄ£¿éÊ¹ÓÃ£¨²ÎÊýÎª×Ö·û´®£©
+var BRAC_SO_CORESDK_SSLCERTCHAIN	=		232;// SSLÖ¤ÊéÁ´
+var BRAC_SO_CORESDK_SUPPORTMEDIACODEC=		233;// ±¾µØÖ§³ÖµÄ±àÂëÆ÷ÐÅÏ¢£¬ÓÃÓÚ±àÂëÐ­ÉÌ
+var BRAC_SO_CORESDK_SETUSERAPPINFO	=		236;// ÉèÖÃÓÃ»§APPÐÅÏ¢
+var BRAC_SO_CORESDK_LASTERRORCODE	=		237;// »ñÈ¡×îºóµÄ³ö´í´úÂë
+
+
 
 var BRAC_SO_UDPTRACE_MODE		=			160;// UDPÊý¾Ý°ü¸ú×ÙÄ£Ê½
 var BRAC_SO_UDPTRACE_PACKSIZE	=			161;// UDPÊý¾Ý°ü¸ú×ÙµÄ´óÐ¡£¬µ¥Î»£ºBYTE
@@ -135,6 +166,8 @@ var BRAC_SO_UDPTRACE_LOCALRECVNUM	=		164;// UDPÊý¾Ý°ü¸ú×Ù±¾µØ½ÓÊÕ°üÊýÁ¿
 var BRAC_SO_UDPTRACE_SERVERRECVNUM	=		165;// UDPÊý¾Ý°ü¸ú×Ù·þÎñÆ÷½ÓÊÕ°üÊýÁ¿
 var BRAC_SO_UDPTRACE_SOURCESENDNUM	=		166;// UDPÊý¾Ý°ü¸ú×ÙÔ´·¢°üÊýÁ¿
 var BRAC_SO_UDPTRACE_SENDUSERID	=			167;// UDPÊý¾Ý°ü¸ú×ÙÔ´ÓÃ»§ID
+var BRAC_SO_UDPTRACE_NETDELAY	=			168;// UDPÊý¾Ý°üÍøÂçÑÓ³Ù£¬µ¥Î»£ºms£¬-1±íÊ¾Î´Öª
+
 
 // ÓÃ»§¶àÃ½ÌåÁ÷²ÎÊý¶¨Òå£¨API£ºBRAC_GetUserStreamInfo ´«Èë²ÎÊý£©
 var BRAC_STREAMINFO_VIDEOWIDTH	=			180;// ÊÓÆµÁ÷¿í¶È
@@ -143,14 +176,18 @@ var BRAC_STREAMINFO_VIDEOFPS	=			182;// ÊÓÆµÁ÷Ö¡ÂÊ
 var BRAC_STREAMINFO_VIDEOBITRATE=			183;// ÊÓÆµÁ÷ÂëÂÊ£¬µ¥Î»£ºbps
 var BRAC_STREAMINFO_VIDEOCODECID=			184;// ÊÓÆµÁ÷±àÂëÆ÷ID
 var BRAC_STREAMINFO_VIDEOPACKLOSSRATE=		185;// ÊÓÆµÁ÷¶ª°üÂÊ
-var BRAC_STREAMINFO_ADUIOCHANNELS	=		190;// ÒôÆµÁ÷Í¨µÀÊý
+var BRAC_STREAMINFO_VIDEODEVICENAME	=		186;// ÊÓÆµ²É¼¯Éè±¸Ãû³Æ
+var BRAC_STREAMINFO_AUDIOCHANNELS	=		190;// ÒôÆµÁ÷Í¨µÀÊý
 var BRAC_STREAMINFO_AUDIOSAMPLERATE	=		191;// ÒôÆµÁ÷²ÉÑùÂÊ
 var BRAC_STREAMINFO_AUDIOBITRATE	=		192;// ÒôÆµÁ÷ÂëÂÊ£¬µ¥Î»£ºbps
 var BRAC_STREAMINFO_AUDIOCODECID	=		193;// ÒôÆµÁ÷±àÂëÆ÷ID
 var BRAC_STREAMINFO_AUDIOPACKLOSSRATE=		194;// ÒôÆµÁ÷¶ª°üÂÊ
+var BRAC_STREAMINFO_AUDIODEVICENAME	=		195;// ÒôÆµ²É¼¯Éè±¸Ãû³Æ
 
 var BRAC_SO_OBJECT_INITFLAGS	=			200;// ÒµÎñ¶ÔÏóÉí·Ý³õÊ¼»¯
 var BRAC_SO_CLOUD_APPGUID		=			300;// ÔÆÆ½Ì¨Ó¦ÓÃGUID£¨²ÎÊýÎª£º×Ö·û´®ÀàÐÍ£¬Á¬½Ó·þÎñÆ÷Ö®Ç°ÉèÖÃ£©
+var BRAC_SO_CLOUD_ACCTYPE		=			301;// ÔÆÆ½Ì¨Ó¦ÓÃ¼¯³ÉÕËºÅÀàÐÍ
+var BRAC_SO_CLOUD_APPID3RD		=			302;// ÔÆÆ½Ì¨Ó¦ÓÃ¼¯³ÉÊ±µÚÈý·½Æ½Ì¨µÄÓ¦ÓÃGUID
 
 var BRAC_SO_ENABLEWEBSERVICE 	=			11002;	// Æô¶¯±¾µØWeb·þÎñ
 var BRAC_SO_LOCALPATH2URL		=			11003;	// ½«±¾µØÂ·¾¶×ª»»ÎªURLµØÖ·
@@ -162,6 +199,8 @@ var BRAC_TRANSTASK_PROGRESS		= 			1;	// ´«ÊäÈÎÎñ½ø¶È²éÑ¯£¨²ÎÊýÎª£ºDOUBLEÐÍ£¬·µ»Ø
 var BRAC_TRANSTASK_BITRATE		= 			2;	// ´«ÊäÈÎÎñµ±Ç°´«ÊäÂëÂÊ£¨²ÎÊýÎª£ºintÐÍ£¬µ¥Î»£ºbps£©
 var BRAC_TRANSTASK_STATUS		= 			3;	// ´«ÊäÈÎÎñµ±Ç°×´Ì¬£¨²ÎÊýÎª£ºintÐÍ£©
 var BRAC_TRANSTASK_SAVEASPATH	= 			4;	// ÎÄ¼þ´«ÊäÈÎÎñÁí´æÎªÂ·¾¶ÉèÖÃ£¬º¬ÎÄ¼þÃû£¨²ÎÊýÎª×Ö·û´®TCHARÀàÐÍ£©
+var BRAC_TRANSTASK_SOURCEFILE	=			5;	// Ô´ÎÄ¼þÃû£¨º¬Â·¾¶£¬²ÎÊýÎª×Ö·û´®£¬TCHARÀàÐÍ£©
+var BRAC_TRANSTASK_JSONSTATUS	=			6;	// ´«ÊäÈÎÎñ×´Ì¬£¬Json×Ö·û´®
 
 // Â¼Ïñ¹¦ÄÜ±êÖ¾¶¨Òå£¨API£ºBRAC_StreamRecordCtrl ´«Èë²ÎÊý£©
 var BRAC_RECORD_FLAGS_VIDEO		=	0x00000001;	// Â¼ÖÆÊÓÆµ
@@ -175,6 +214,7 @@ var BRAC_RECORD_FLAGS_SNAPSHOT	=	0x00000400;	// ÅÄÕÕ
 var BRAC_RECORD_FLAGS_LOCALCB	=	0x00000800;	// ´¥·¢±¾µØ»Øµ÷
 var BRAC_RECORD_FLAGS_STREAM	=	0x00001000;	// ¶ÔÊÓÆµÁ÷½øÐÐÂ¼ÖÆ£¨Ð§ÂÊ¸ß£¬µ«¿ÉÄÜ´æÔÚÊÓÆµ·½ÏòÐý×ªµÄÎÊÌâ£©
 var BRAC_RECORD_FLAGS_USERFILENAME=	0x00002000;	// ÓÃ»§×Ô¶¨ÒåÎÄ¼þÃû
+var BRAC_RECORD_FLAGS_FILEMD5 	=	0x00040000;	// ¼ÆËãÂ¼ÏñÎÄ¼þµÄMD5Öµ
 
 // ¿Í»§¶Ë¡¢·þÎñÆ÷¶ËÂ¼ÖÆ±êÖ¾¶¨Òå±£³ÖÍ³Ò»
 var ANYCHAT_RECORD_FLAGS_VIDEO	=	BRAC_RECORD_FLAGS_VIDEO;
@@ -188,8 +228,14 @@ var ANYCHAT_RECORD_FLAGS_SNAPSHOT =	BRAC_RECORD_FLAGS_SNAPSHOT;
 var ANYCHAT_RECORD_FLAGS_LOCALCB =	BRAC_RECORD_FLAGS_LOCALCB;
 var ANYCHAT_RECORD_FLAGS_STREAM =	BRAC_RECORD_FLAGS_STREAM;
 var ANYCHAT_RECORD_FLAGS_USERFILENAME = BRAC_RECORD_FLAGS_USERFILENAME;
+var ANYCHAT_RECORD_FLAGS_ERRORCODE =	0x00004000;	// Ö§³Ö³ö´í´úÂë
+var ANYCHAT_RECORD_FLAGS_MULTISTREAM=	0x00008000;	// Ö§³Ö¶àÂ·Á÷µÄÂ¼ÖÆ£¨ÅÄÕÕ£©
+var ANYCHAT_RECORD_FLAGS_CANCEL	=		0x00010000;	// È¡ÏûÂ¼Ïñ£¬É¾³ýÂ¼ÏñÎÄ¼þ
+var ANYCHAT_RECORD_FLAGS_BUFFERCB =		0x00020000;	// »º³åÇøÊý¾Ý»Øµ÷
+var ANYCHAT_RECORD_FLAGS_FILEMD5 =		0x00040000;	// ¼ÆËãÂ¼ÏñÎÄ¼þµÄMD5Öµ
 
 // ÊÓÆµ²Ã¼ôÄ£Ê½¶¨Òå
+var ANYCHAT_VIDEOCLIPMODE_UNKNOW	=		-1;	// Î´ÖªÄ£Ê½£¬²»ÐèÒª×ö²Ã¼ôÊ±Ê¹ÓÃ
 var ANYCHAT_VIDEOCLIPMODE_AUTO		=		0;	// Ä¬ÈÏÄ£Ê½£¬ÒÔ×î´ó±ÈÀý½øÐÐ²Ã¼ô£¬È»ºóÔÙÕûÌåÀ­Éì£¬»­Ãæ±£³Ö±ÈÀý£¬µ«±»²Ã¼ô»­Ãæ½Ï´ó
 var ANYCHAT_VIDEOCLIPMODE_OVERLAP	=		1;	// ÖØµþÄ£Ê½£¬Ö»È¡×î´óÓÐÐ§²¿·Ö£¬¶Ô±ßÔµ½øÐÐ²Ã¼ô
 var ANYCHAT_VIDEOCLIPMODE_SHRINK	=		2;	// ËõÐ¡Ä£Ê½£¬ËõÐ¡µ½ºÏÊÊµÄ±ÈÀý£¬²»½øÐÐ²Ã¼ô
@@ -225,6 +271,14 @@ var BRAC_USERSTATE_NETWORKSTATUS= 			12;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄÍøÂç×´Ì¬£¨²ÎÊýÎªDWORDÀ
 var BRAC_USERSTATE_VIDEOSIZE 	= 			13;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄÊÓÆµ·Ö±æÂÊ£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£ºµÍ16Î»±íÊ¾¿í¶È£¬¸ß16Î»±íÊ¾¸ß¶È£©
 var BRAC_USERSTATE_PACKLOSSRATE = 			14;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄÍøÂçÁ÷Ã½ÌåÊý¾Ý¶ª°üÂÊ£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£º0 - 100£¬Èç£º·µ»ØÖµÎª5£¬±íÊ¾¶ª°üÂÊÎª5%£©
 var BRAC_USERSTATE_DEVICETYPE 	=			15; // ²éÑ¯Ö¸¶¨ÓÃ»§µÄÖÕ¶ËÀàÐÍ£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£º0 Unknow£¬ 1 Windows£¬2 Android£¬3 iOS£¬4 Web£¬5 Linux£¬6 Mac£¬7 Win Phone£¬8 WinCE£©
+var BRAC_USERSTATE_SELFUSERSTATUS=			16;	// ²éÑ¯±¾µØÓÃ»§µÄµ±Ç°×´Ì¬£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£º0 Unknow£¬1 Connected£¬2 Logined£¬3 In Room£¬4 Logouted£¬5 Link Closed£©
+var BRAC_USERSTATE_SELFUSERID	=			17;	// ²éÑ¯±¾µØÓÃ»§µÄID£¨²ÎÊýÎªDWORDÀàÐÍ£¬ÈôÓÃ»§µÇÂ¼³É¹¦£¬·µ»ØÓÃ»§Êµ¼ÊµÄuserid£¬·ñÔò·µ»Ø-1£©
+var BRAC_USERSTATE_VIDEOROTATION=			18;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄµ±Ç°ÊÓÆµÐý×ª½Ç¶È£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»Ø½Ç¶ÈÖµ£©
+var BRAC_USERSTATE_VIDEOMIRRORED=			19;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄÊÓÆµÊÇ·ñÐèÒª¾µÏñ·­×ª
+var BRAC_USERSTATE_AUDIOCODECID	=			20;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄÒôÆµ±àÂëÆ÷ID
+var BRAC_USERSTATE_VIDEOCODECID	=			21;	// ²éÑ¯Ö¸¶¨ÓÃ»§µÄÊÓÆµ±àÂëÆ÷ID
+var BRAC_USERSTATE_RESENDLOSSRATE=			22;// ¶ª°ü²¹³¥ºóµÄ¶ª°üÂÊ£¨²ÎÊýÎªDWORDÀàÐÍ£¬·µ»ØÖµ£º0 - 100£¬Èç£º·µ»ØÖµÎª5£¬±íÊ¾¶ª°üÂÊÎª5%£©
+
 
 // SDKÏûÏ¢¶¨Òå£¨ÓÃÓÚOnNotifyMessageÊÂ¼þÖÐÅÐ¶ÏÊÂ¼þµÄÀàÐÍ£©
 var WM_GV = 0x0400 + 200;
@@ -239,14 +293,29 @@ var WM_GV_CAMERASTATE		=	WM_GV + 11;		// ÓÃ»§ÉãÏñÍ·×´Ì¬·¢Éú±ä»¯£¬wParam£¨INT£©±í
 var WM_GV_CHATMODECHG		=	WM_GV + 12;		// ÓÃ»§ÁÄÌìÄ£Ê½·¢Éú±ä»¯£¬wParam£¨INT£©±íÊ¾ÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾ÓÃ»§µÄµ±Ç°ÁÄÌìÄ£Ê½
 var WM_GV_ACTIVESTATE		=	WM_GV + 13;		// ÓÃ»§»î¶¯×´Ì¬·¢Éú±ä»¯£¬wParam£¨INT£©±íÊ¾ÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾ÓÃ»§µÄµ±Ç°»î¶¯×´Ì¬
 var WM_GV_P2PCONNECTSTATE	=	WM_GV + 14;		// ±¾µØÓÃ»§ÓëÆäËüÓÃ»§µÄP2PÍøÂçÁ¬½Ó×´Ì¬·¢Éú±ä»¯£¬wParam£¨INT£©±íÊ¾ÆäËüÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾±¾µØÓÃ»§ÓëÆäËüÓÃ»§µÄµ±Ç°P2PÍøÂçÁ¬½Ó×´Ì¬
+var WM_GV_VIDEOSIZECHG		=	WM_GV + 15;		// ÓÃ»§ÊÓÆµ·Ö±çÂÊ·¢Éú±ä»¯£¬wParam£¨INT£©±íÊ¾ÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾ÓÃ»§µÄÊÓÆµ·Ö±æÂÊ×éºÏÖµ£¨µÍ16Î»±íÊ¾¿í¶È£¬¸ß16Î»±íÊ¾¸ß¶È£©
+var WM_GV_USERINFOUPDATE	=	WM_GV + 16;		// ÓÃ»§ÐÅÏ¢¸üÐÂÍ¨Öª£¬wParam£¨INT£©±íÊ¾ÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾¸üÐÂÀà±ð
+var WM_GV_FRIENDSTATUS		=	WM_GV + 17;		// ºÃÓÑÔÚÏß×´Ì¬±ä»¯£¬wParam£¨INT£©±íÊ¾ºÃÓÑÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾ÓÃ»§µÄµ±Ç°»î¶¯×´Ì¬£º0 ÀëÏß£¬ 1 ÉÏÏß
+var WM_GV_OBJECTEVENT		=	WM_GV + 18;		// ¶ÔÏóÊÂ¼þÍ¨Öª£¬wParam£¨INT£©±íÊ¾¶ÔÏóÀàÐÍ£¬lParam£¨INT£©±íÊ¾¶ÔÏóID
+var WM_GV_SESSIONKEEP		=	WM_GV + 19;		// »á»°±£³ÖÊÂ¼þ£¬wParam£¨INT£©±íÊ¾»á»°±£³Ö×´Ì¬£º0 »á»°±£³Ö¿ªÊ¼£¬ 1 »á»°±£³Ö½áÊø£¬lParam£¨INT£©±íÊ¾³ö´í´úÂë
+
 var WM_GV_PRIVATEREQUEST	=	WM_GV + 21;		// ÓÃ»§·¢ÆðË½ÁÄÇëÇó£¬wParam£¨INT£©±íÊ¾·¢ÆðÕßµÄÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾Ë½ÁÄÇëÇó±àºÅ£¬±êÊ¶¸ÃÇëÇó
 var WM_GV_PRIVATEECHO		=	WM_GV + 22;		// ÓÃ»§»Ø¸´Ë½ÁÄÇëÇó£¬wParam£¨INT£©±íÊ¾»Ø¸´ÕßµÄÓÃ»§IDºÅ£¬lParam£¨INT£©Îª³ö´í´úÂë
 var WM_GV_PRIVATEEXIT		=	WM_GV + 23;		// ÓÃ»§ÍË³öË½ÁÄ£¬wParam£¨INT£©±íÊ¾ÍË³öÕßµÄÓÃ»§IDºÅ£¬lParam£¨INT£©Îª³ö´í´úÂë
+var WM_GV_SERVERCFGUPDATE	=	WM_GV + 24;		// ·þÎñÆ÷ÅäÖÃ²ÎÊý¸üÐÂ
+
+var WM_GV_EXTENDBTNPRESS	=	WM_GV + 31;		// ÓÃ»§°´ÏÂÀ©Õ¹°´Å¥£¬wParam£¨INT£©±íÊ¾°´Å¥Ëù¶ÔÓ¦µÄÓÃ»§IDºÅ£¬lParam£¨DWORD£©Ö¸Ê¾°´Å¥£¨×óÏÂ½Ç£©ËùÔÚÆÁÄ»Î»ÖÃ(x,y)£¬ÓÃ»§¿ÉÒÔÀûÓÃ¸Ã²ÎÊýÏÔÊ¾²Ëµ¥µÈ
 var WM_GV_VIDEOFULLSCREEN	=	WM_GV + 32;		// ÓÃ»§ÊÓÆµÈ«ÆÁÍ¨Öª£¬wParam£¨INT£©±íÊ¾ÓÃ»§ID£¬lParam(DWORD)±íÊ¾µ±Ç°ÊÓÆµÊÇ·ñÈ«ÆÁÏÔÊ¾
+
 var WM_GV_SDKWARNING      	=   WM_GV + 41;		// SDK¾¯¸æÐÅÏ¢£¬µ±SDKÔÚÔËÐÐ¹ý³ÌÖÐ×Ô¼ì·¢ÏÖÒì³£×´Ì¬Ê±£¬½«ÏòÉÏ²ã·¢ËÍ¸ÃÏûÏ¢£¬wParam£¨INT£©±íÊ¾¾¯¸æ´úÂë£¬¶¨ÒåÎª£ºGV_ERR_WARNING_XXXX
-var WM_GV_USERINFOUPDATE	=	WM_GV + 16;		// ÓÃ»§ÐÅÏ¢¸üÐÂÍ¨Öª£¬wParam£¨INT£©±íÊ¾ÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾¸üÐÂÀà±ð
-var WM_GV_FRIENDSTATUS		=	WM_GV + 17;		// ºÃÓÑÔÚÏß×´Ì¬±ä»¯£¬wParam£¨INT£©±íÊ¾ºÃÓÑÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾ÓÃ»§µÄµ±Ç°»î¶¯×´Ì¬£º0 ÀëÏß£¬ 1 ÉÏÏß
-var WM_GV_VIDEOSIZECHG		=	WM_GV + 15;		// ÓÃ»§ÊÓÆµ·Ö±çÂÊ·¢Éú±ä»¯£¬wParam£¨INT£©±íÊ¾ÓÃ»§IDºÅ£¬lParam£¨INT£©±íÊ¾ÓÃ»§µÄÊÓÆµ·Ö±æÂÊ×éºÏÖµ£¨µÍ16Î»±íÊ¾¿í¶È£¬¸ß16Î»±íÊ¾¸ß¶È£©
+
+var WM_GV_AUDIOPLAYCTRL		=	WM_GV + 100;	// ÒôÆµ²¥·ÅÉè±¸¿ØÖÆ£¬wParam:1 ´ò¿ª²¥·ÅÆ÷£¬ 0 ¹Ø±Õ²¥·ÅÆ÷£¬ lParam£ºprofile£¬androidÆ½Ì¨ÄÚ²¿Ê¹ÓÃ
+var WM_GV_AUDIORECCTRL		=	WM_GV + 101;	// ÒôÆµÂ¼ÒôÉè±¸¿ØÖÆ£¬wParam:1 ´ò¿ªÒôÆµ²É¼¯Éè±¸£¬0 ¹Ø±ÕÒôÆµ²É¼¯Éè±¸
+var WM_GV_VIDEOCAPCTRL		=	WM_GV + 102;	// ÊÓÆµ²É¼¯¿ØÖÆ£¬wParam: 1 ¿ªÊ¼²É¼¯£¬ 0 ¹Ø±Õ²É¼¯
+
+// ·¿¼ä×´Ì¬±êÖ¾¶¨Òå£¨API£ºBRAC_QueryRoomState ´«Èë²ÎÊý£©
+var BRAC_ROOMSTATE_ROOMNAME		=			1;	// ·¿¼äÃû³Æ£¨²ÎÊýÎª×Ö·û´®TCHARÀàÐÍ£©
+var BRAC_ROOMSTATE_ONLINEUSERS	=			2;	// ·¿¼äÔÚÏßÓÃ»§Êý£¨²ÎÊýÎªDWORDÐÍ£¬²»°üº¬×Ô¼º
 
 // ÊÓÆµºô½ÐÊÂ¼þÀàÐÍ¶¨Òå£¨API£ºBRAC_VideoCallControl ´«Èë²ÎÊý¡¢VideoCallEvent»Øµ÷²ÎÊý£©
 var BRAC_VIDEOCALL_EVENT_REQUEST=			1;	// ºô½ÐÇëÇó
@@ -290,6 +359,9 @@ var BRAC_USERINFO_CTRLCODE_LVORIENTFIX	=	10;	// ±¾µØÊÓÆµ²É¼¯·½ÏòÐÞÕý£¬wParamÎª·½
 var ANYCHAT_SERVERQUERY_USERIDBYNAME	=	1;	// ¸ù¾ÝÓÃ»§êÇ³Æ²éÑ¯ÓÃ»§ID
 var ANYCHAT_SERVERQUERY_USERIDBYSTRID	=	2;	// ¸ù¾Ý×Ö·û´®ID²éÑ¯ÓÃ»§ID
 var ANYCHAT_SERVERQUERY_STRIDBYUSERID	=	3;	// ¸ù¾ÝÓÃ»§ID²éÑ¯×Ö·û´®ID
+var ANYCHAT_SERVERQUERY_NAMEBYUSERID	=	4;	// ¸ù¾ÝÓÃ»§ID²éÑ¯ÓÃ»§Ãû
+var ANYCHAT_SERVERQUERY_NAMEBYSTRID		=	5;	// ¸ù¾Ý×Ö·û´®ID²éÑ¯ÓÃ»§Ãû
+var ANYCHAT_SERVERQUERY_USERINFOBYID	=	6;	// ¸ù¾ÝÓÃ»§ID²éÑ¯ÓÃ»§ÐÅÏ¢
 var ANYCHAT_SERVERQUERY_PPTFILEINFO		=	10;	// PPTÎÄ¼þÐÅÏ¢
 var ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	=	100;// ²éÑ¯Ö¸¶¨¶ÓÁÐµÄ×øÏ¯·þÎñÐÅÏ¢
 var ANYCHAT_SERVERQUERY_RUNNINGSTATUS	=	200;// ²éÑ¯·þÎñÆ÷ÔËÐÐ×´Ì¬
@@ -297,28 +369,51 @@ var ANYCHAT_SERVERQUERY_ONLINEUSERS		=	201;// ²éÑ¯·þÎñÆ÷ÔÚÏßÓÃ»§Êý
 
 // SDK¿ØÖÆ³£Á¿¶¨Òå£¨API£ºBRAC_SDKControl ´«Èë²ÎÊý£©
 var ANYCHAT_SDKCTRL_BASE				=	1;	// »ù±¾¹¦ÄÜ¿ØÖÆ
+var ANYCHAT_SDKCTRL_USERBUFFER			=	3;	// ÓÃ»§»º³åÇø´«Êä¿ØÖÆ
+var ANYCHAT_SDKCTRL_INVOKEEVENT			=	4;	// ´¥·¢Òì²½ÊÂ¼þ
+var ANYCHAT_SDKCTRL_RECORD				=	5;	// ÒôÊÓÆµÂ¼ÖÆ
 var ANYCHAT_SDKCTRL_OBJECT				=	20;	// ¶ÔÏó²Ù×÷
 var ANYCHAT_SDKCTRL_VIDEOCALL			=	30;	// ºô½Ð¿ØÖÆ
 var ANYCHAT_SDKCTRL_USERINFO			=	40;	// ÓÃ»§ÐÅÏ¢¿ØÖÆ
 var ANYCHAT_SDKCTRL_STREAMPLAY			=	50;	// Á÷Ã½Ìå²¥·Å
+var ANYCHAT_SDKCTRL_MEDIAPROCESS		=	51;	// Á÷Ã½Ìå´¦Àí¿ØÖÆ
 var ANYCHAT_SDKCTRL_NETWORK				=	60;	// ÍøÂç¿ØÖÆ
 var ANYCHAT_SDKCTRL_MEDIA				=	70;	// Ã½Ìå¿ØÖÆ
+var ANYCHAT_SDKCTRL_RECORDTAG			=	71;	// Â¼Ïñ±êÇ©
+var ANYCHAT_SDKCTRL_SCREENCAPPARAM		=	72;	// ÆÁÄ»²É¼¯²ÎÊýÉèÖÃ
 var ANYCHAT_SDKCTRL_FILEDELETE			=	80;	// É¾³ýÎÄ¼þ
 var ANYCHAT_SDKCTRL_FILEINFO			=	81;	// »ñÈ¡ÎÄ¼þÐÅÏ¢
 var ANYCHAT_SDKCTRL_DISKSIZE			=	82;	// »ñÈ¡´ÅÅÌÈÝÁ¿
 var ANYCHAT_SDKCTRL_FILEENCRYPT			=	83;	// ÎÄ¼þ¼Ó½âÃÜ¿ØÖÆ
+var ANYCHAT_SDKCTRL_DELETEDIR			=	84;	// É¾³ýÄ¿Â¼
+var ANYCHAT_SDKCTRL_CREATEDIR			=	85;	// ´´½¨Ä¿Â¼
+var ANYCHAT_SDKCTRL_DIRCLEAN			=	86;	// Ä¿Â¼ÇåÀí
+var ANYCHAT_SDKCTRL_FINDFILE			=	87;	// ²éÕÒÎÄ¼þ
 var ANYCHAT_SDKCTRL_PPTHELPERINIT		=	90;	// PPT²¥±¨»·¾³³õÊ¼»¯
 var ANYCHAT_SDKCTRL_PPTFILECTRL			=	91;	// PPTÎÄ¼þ¿ØÖÆ
 var ANYCHAT_SDKCTRL_PPTFILEINFO			=	92;	// PPTÎÄ¼þÐÅÏ¢
 var ANYCHAT_SDKCTRL_BUSINESS			=	95;	// ÒµÎñ¿ØÖÆ
+var ANYCHAT_SDKCTRL_MEDIAFILTERINIT		=	96;	// Ã½Ìå¹ýÂËÆ÷³õÊ¼»¯
+var ANYCHAT_SDKCTRL_VIDEODEVICEINFO		=	97;	// »ñÈ¡ÊÓÆµ²É¼¯Éè±¸ÐÅÏ¢
+var ANYCHAT_SDKCTRL_UPDATERECUSERSTR	=	98;	// ¸üÐÂÂ¼ÏñÓÃ»§²ÎÊý
+var ANYCHAT_SDKCTRL_SYNCRECORD			=	99;	// Í¬²½Â¼Ïñ²ÎÊýÉèÖÃ
+var ANYCHAT_SDKCTRL_BUSINESSBUFFER		=	100;// ÒµÎñ»º³åÇø¿ØÖÆ
+var ANYCHAT_SDKCTRL_LIVESTREAM			=	101;// Ö±²¥ÒµÎñ¿ØÖÆ
+var ANYCHAT_SDKCTRL_AIABILITY			=	102;// AIÄÜÁ¦
+var ANYCHAT_SDKCTRL_APPBUFFER			=	103;// APP×Ô¶¨Òå»º³åÇø
+var ANYCHAT_SDKCTRL_FACEEMOTIONCTRL		=	300;// Î¢±íÇé¿ØÖÆ
+
 
 // Ã½Ìå²¥·ÅÊÂ¼þÀàÐÍ¶¨Òå
 var ANYCHAT_STREAMPLAY_EVENT_START		=	3;	// ²¥·Å¿ªÊ¼ÊÂ¼þ
 var ANYCHAT_STREAMPLAY_EVENT_FINISH		=	4;	// ²¥·Å½áÊøÊÂ¼þ
 
 // Ã½Ìå²¥·Å±êÖ¾¶¨Òå£¨API£ºBRAC_StreamPlayInit ´«Èë²ÎÊý£©
-var ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT = 1;	// ²¥·ÅÒôÆµÁ÷´úÌæ±¾µØÒôÆµÊäÈë£¨Mic£©
-var ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT = 2;	// ²¥·ÅÊÓÆµÁ÷´úÌæ±¾µØÊÓÆµÊäÈë£¨Camera£©
+var ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT 	= 0x00000001;	// ²¥·ÅÒôÆµÁ÷´úÌæ±¾µØÒôÆµÊäÈë£¨Mic£©
+var ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT 	= 0x00000002;	// ²¥·ÅÊÓÆµÁ÷´úÌæ±¾µØÊÓÆµÊäÈë£¨Camera£©
+var ANYCHAT_STREAMPLAY_FLAGS_CALLBACKDATA		= 0x00000010;	// »Øµ÷Êý¾Ý¸øÉÏ²ã
+var ANYCHAT_STREAMPLAY_FLAGS_PPTPLAY			= 0x00000080;	// Ë«Â¼·çÏÕ½ÒÊ¾PPT²¥·Å
+
 
 // Ã½Ìå²¥·ÅÐÅÏ¢ÀàÐÍ¶¨Òå£¨API£ºBRAC_StreamPlayGetInfo ´«Èë²ÎÊý£©
 var ANYCHAT_STREAMPLAY_INFO_JSONVALUE	=	1;	// °üº¬ËùÓÐ²¥·ÅÐÅÏ¢µÄJson×Ö·û´®
@@ -335,12 +430,26 @@ var ANYCHAT_STREAMPLAY_CTRL_CLOSELOOP	=	7;	// ¹Ø±ÕÑ­»·²¥·Å
 
 // CoreSDKÊÂ¼þÀàÐÍ¶¨Òå£¨»Øµ÷º¯Êý£ºBRAC_CoreSDKEvent_CallBack²ÎÊý£©
 var ANYCHAT_CORESDKEVENT_BASEEVENT		=	1;	// SDK»ù´¡ÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_CONNECTHOLD	=	2;	// Á¬½Ó±£³ÖÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_CAMERASTATE	=	10;	// ÉãÏñÍ·×´Ì¬ÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_MICSTATE		=	11;	// Mic×´Ì¬ÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_TRANSFILE		=	12;	// ÎÄ¼þ´«ÊäÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_RECORDSTATUS	=	13;	// Â¼Ïñ×´Ì¬ÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_STREAMPLAY		=	30;	// Ã½Ìå²¥·ÅÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_PPTHELPER		=	31;	// PPTHelperÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_BUSINESS		=	32;	// ÒµÎñÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_DEVICEFAIL		=	33;	// Éè±¸Ê§°ÜÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_MEDIABUFFER	=	34;	// Ã½Ìå»º³åÇøÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_USERBUFFER		=	35;	// ÓÃ»§»º³åÇøÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_MEDIAPROCESS	=	36;	// Ã½Ìå´¦ÀíÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_FACEEMOTION	=	40;	// Î¢±íÇé¼ì²â½á¹û
+var ANYCHAT_CORESDKEVENT_REGEDITDATA	=	41;	// Êý¾Ý½Ó¿Ú·µ»ØÊý¾Ý
+var ANYCHAT_CORESDKEVENT_REQUESTEX		=	42;	// À©Õ¹ÇëÇó·µ»ØÊý¾Ý
+var ANYCHAT_CORESDKEVENT_BUSINESSBUFFER	=	100;// ÒµÎñ»º³åÇøÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_LIVESTREAM		=	101;// Ö±²¥ÒµÎñÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_AIABILITY		=	102;// AIÄÜÁ¦ÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_APPBUFFER		=	103;// APP×Ô¶¨Òå»º³åÇøÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_USERDEFINE		=	800;// ÓÃ»§×Ô¶¨ÒåÊÂ¼þÆðÊ¼ÐòºÅ
 
 // ÊÓÆµÏÔÊ¾²å¼þÉèÖÃ²ÎÊý
 var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// ÔÚÊÓÆµÉÏµü¼ÓÎÄ×Ö¡¢Í¼Æ¬µÈÄÚÈÝ
@@ -349,6 +458,23 @@ var ANYCHATWEB_VIDEO_SO_EXTENDEDSCREEN	=	10;	// À©Õ¹ÆÁÏÔÊ¾ÊÓÆµ
 var ANYCHATWEB_VIDEO_SO_VIDEODISPMODE	=	11;	// ÊÓÆµÏÔÊ¾Ä£Ê½
 var ANYCHATWEB_VIDEO_SO_REMOTEASSIST	=	12;	// Ô¶³ÌÐ­Öú´°¿Ú
 var ANYCHATWEB_VIDEO_SO_PLAYTASKGUID	=	20;	// ²¥·ÅÈÎÎñID
+
+// ÒµÎñ»º³åÇø±êÖ¾¶¨Òå
+var ANYCHAT_BUSINESSBUF_FLAGS_SYNC		=	0x01;// Í¬²½²Ù×÷
+
+//ÎÄ¼þ¿ØÖÆÃüÁî¶¨Òå³£Á¿£º
+var BRPPT_FILECTRL_DOWNLOAD = 0x01; 			// ÏÂÔØÎÄ¼þ
+var BRPPT_FILECTRL_CANCEL = 0x02;				// È¡ÏûÏÂÔØ
+var BRPPT_FILECTRL_DELETE = 0x04;				// É¾³ýÎÄ¼þ
+
+//ÎÄ¼þÐÅÏ¢²éÑ¯¶¨Òå³£Á¿£º
+var BRPPT_FILEINFO_DOWNLOAD_STATUS = 0x01;		// ÏÂÔØ×´Ì¬
+var BRPPT_FILEINFO_PPTDETAILS = 0x02;			// PPTÏêÇé
+
+// Ô¶³Ì×ÀÃæ¿ØÖÆ²ÎÊý¶¨Òå
+var ANYCHAT_SCREENSOURCE_FLAGS_DISABLECURSOR  =   0x01;                // ½ûÖ¹²É¼¯Êó±ê¹â±ê
+var ANYCHAT_SCREENSOURCE_FLAGS_DISABLEBORDER  =   0x02;                // ½ûÖ¹±ß¿òÏÔÊ¾
+var ANYCHAT_SCREENSOURCE_FLAGS_DISABLETRACE   =   0x04;                // ½ûÖ¹Êó±ê×·×Ù
 
 // ²å¼þ×îµÍÐèÇó°æ±¾ºÅ
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
@@ -367,34 +493,6 @@ var bSupportCluster = false;					// ÊÇ·ñÖ§³Ö¼¯ÈºÏµÍ³
 
 // ³õÊ¼»¯SDK£¬·µ»Ø³ö´í´úÂë
 function BRAC_InitSDK(apilevel) {	
-	//ÊÇ·ñÖ§³ÖHtml5
-	var isSurportH5 = window.applicationCache;
-	var browser = getBrowser();
-	
-	if(isSurportH5 && !(browser == "IE" || browser == "Safari" || browser == "unknown browser")) {
-		anychat = null;
-		anychat = AnyChatSDK();
-		anychat.InitSDK(0);
-	
-		if(typeof(OnAnyChatNotifyMessage) == "function")
-			anychat.on("OnNotifyMessage", OnAnyChatNotifyMessage);
-		if(typeof(OnAnyChatVideoCallEvent) == "function")
-			anychat.on("OnVideoCallEvent", OnAnyChatVideoCallEvent);
-		if(typeof(OnAnyChatTransBuffer) == "function")
-			anychat.on("OnTransBuffer", OnAnyChatTransBuffer);
-		if(typeof(OnAnyChatTextMessage) == "function")
-			anychat.on("OnTextMessage", OnAnyChatTextMessage);
-		if(typeof(OnAnyChatObjectEvent) == "function")
-			anychat.on("OnObjectEvent", OnAnyChatObjectEvent);
-
-		bSupportStreamRecordCtrlEx = true;
-		bSupportScriptObject = true;
-		bSupportObjectBusiness = true;
-		bSupportCluster = true;
-		
-		return GV_ERR_SUCCESS;
-	}
-	
 	var anychatsdkdiv = "AnyChatSDKPluginDiv";
 	try {
 		// ´´½¨AnyChat SDK²å¼þ
@@ -1074,9 +1172,29 @@ function BRAC_StreamPlayDestroy(lpTaskGuid, dwFlags) {
 	return anychat.StreamPlayDestroy(lpTaskGuid, dwFlags);
 }
 
+// ÊÍ·Å²å¼þ
+function BRAC_Release() {
+	var _anychatSDKDiv = BRAC_GetDmoObject("AnyChatSDKPluginDiv");
+	if (_anychatSDKDiv) {
+		if (getBrowser() == "IE") {
+			anychat = null;
+			_anychatSDKDiv.parentNode.removeChild(_anychatSDKDiv);
+			_anychatSDKDiv = null;
+			var objectPlugins = document.getElementsByTagName("object");
+			while (objectPlugins.length > 0 &&
+				objectPlugins[0].classid == "clsid:B685A393-905F-45B5-B26E-FF199EEE2FD7") {
+				objectPlugins[0].parentNode.removeChild(objectPlugins[0]);
+			}
+			setTimeout(CollectGarbage, 1);
+			return;
+		}
+		document.body.removeChild(_anychatSDKDiv);
+	}
+}
+
 // »ñÈ¡µ±Ç°ä¯ÀÀÆ÷
 function getBrowser(){
-	var browser = "unknown browser";	
+	var browser = "unknown browser";
 	var ua = navigator.userAgent.toLowerCase();
 	
 	var info = {
@@ -1087,12 +1205,11 @@ function getBrowser(){
 		ff: /firefox/.test(ua),
 		qh360: /chrome/.test(ua) && !window.navigator.webkitPersistentStorage,
 		qq: /qqbrowser/.test(ua),
-        sg: /metasr/.test(ua)        
+	    sg: /metasr/.test(ua)        
 	};	
-	
 	if (info.ch){
 		browser = "Chrome";
-	}else if (info.ie){
+	}else if (info.ie || (!!window.ActiveXObject || "ActiveXObject" in window) ){
 		browser = "IE";
 	}else if (info.ff){
 		browser = "Firefox";
@@ -1107,7 +1224,6 @@ function getBrowser(){
 	}else if (info.sg){
 		browser = "ËÑ¹·ä¯ÀÀÆ÷";
 	}
-	
 	return browser;
 }
 

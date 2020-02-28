@@ -7,25 +7,34 @@
 //
 
 #import "AppDelegate.h"
+@interface AppDelegate()
+
+@property (strong, nonatomic) UINavigationController    *navController;
+@property (strong, nonatomic) AnyChatVC     *anychatVC;
+
+@end
+
 
 @implementation AppDelegate
 
-@synthesize navController;
-@synthesize anychatVC;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
-    [application setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     self.anychatVC =  [[AnyChatVC alloc]init];
     self.navController = [[UINavigationController alloc] initWithRootViewController:self.anychatVC];
     self.window.rootViewController = self.navController;
-    
+    [self p_configNavBar];
+
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    [self p_keyboradConfig];
+   
+    
     return YES;
     
 }
@@ -86,6 +95,37 @@
     {
         return UIInterfaceOrientationMaskPortrait;
     }
+    
+}
+
+
+
+
+
+- (void)p_configNavBar {
+    
+    
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor whiteColor],NSForegroundColorAttributeName,
+                                               [UIFont boldSystemFontOfSize:18],NSFontAttributeName,
+                                               nil];
+    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+    
+}
+
+
+- (void)p_keyboradConfig {
+    
+    
+    IQKeyboardManager *keyboardManager = [IQKeyboardManager sharedManager]; // 获取类库的单例变量
+    keyboardManager.enable = YES; // 控制整个功能是否启用
+    keyboardManager.shouldResignOnTouchOutside = YES; // 控制点击背景是否收起键盘
+    keyboardManager.shouldToolbarUsesTextFieldTintColor = YES; // 控制键盘上的工具条文字颜色是否用户自定义
+    keyboardManager.toolbarManageBehaviour = IQAutoToolbarBySubviews; // 有多个输入框时，可以通过点击Toolbar 上的“前一个”“后一个”按钮来实现移动到不同的输入框
+    keyboardManager.enableAutoToolbar = NO; // 控制是否显示键盘上的工具条
+    keyboardManager.shouldShowToolbarPlaceholder = YES; // 是否显示占位文字
+    keyboardManager.placeholderFont = [UIFont boldSystemFontOfSize:17]; // 设置占位文字的字体
+    keyboardManager.keyboardDistanceFromTextField = 10.0f; // 输入框距离键盘的距离
     
 }
 

@@ -47,8 +47,9 @@
             this.chkBox_skill_cash = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.pnl_AutoRouter = new System.Windows.Forms.Panel();
-            this.lbl_router = new System.Windows.Forms.Label();
             this.cmbBox_Router = new System.Windows.Forms.ComboBox();
+            this.lbl_router = new System.Windows.Forms.Label();
+            this.btnSetting = new System.Windows.Forms.Button();
             this.pnl_selectSkill.SuspendLayout();
             this.pnl_AutoRouter.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +65,7 @@
             // 
             // btn_login
             // 
-            this.btn_login.Location = new System.Drawing.Point(153, 184);
+            this.btn_login.Location = new System.Drawing.Point(245, 156);
             this.btn_login.Name = "btn_login";
             this.btn_login.Size = new System.Drawing.Size(75, 23);
             this.btn_login.TabIndex = 3;
@@ -93,9 +94,9 @@
             // lbl_tipMessage
             // 
             this.lbl_tipMessage.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lbl_tipMessage.Location = new System.Drawing.Point(0, 227);
+            this.lbl_tipMessage.Location = new System.Drawing.Point(0, 246);
             this.lbl_tipMessage.Name = "lbl_tipMessage";
-            this.lbl_tipMessage.Size = new System.Drawing.Size(384, 17);
+            this.lbl_tipMessage.Size = new System.Drawing.Size(390, 17);
             this.lbl_tipMessage.TabIndex = 6;
             this.lbl_tipMessage.Text = "message";
             this.lbl_tipMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -182,7 +183,7 @@
             this.pnl_selectSkill.Controls.Add(this.chkBox_skill_finance);
             this.pnl_selectSkill.Controls.Add(this.chkBox_skill_cash);
             this.pnl_selectSkill.Controls.Add(this.label3);
-            this.pnl_selectSkill.Location = new System.Drawing.Point(35, 145);
+            this.pnl_selectSkill.Location = new System.Drawing.Point(45, 199);
             this.pnl_selectSkill.Name = "pnl_selectSkill";
             this.pnl_selectSkill.Size = new System.Drawing.Size(285, 31);
             this.pnl_selectSkill.TabIndex = 13;
@@ -244,15 +245,6 @@
             this.pnl_AutoRouter.Size = new System.Drawing.Size(151, 27);
             this.pnl_AutoRouter.TabIndex = 14;
             // 
-            // lbl_router
-            // 
-            this.lbl_router.AutoSize = true;
-            this.lbl_router.Location = new System.Drawing.Point(8, 4);
-            this.lbl_router.Name = "lbl_router";
-            this.lbl_router.Size = new System.Drawing.Size(68, 17);
-            this.lbl_router.TabIndex = 5;
-            this.lbl_router.Text = "自动路由：";
-            // 
             // cmbBox_Router
             // 
             this.cmbBox_Router.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -265,12 +257,31 @@
             this.cmbBox_Router.Size = new System.Drawing.Size(55, 25);
             this.cmbBox_Router.TabIndex = 6;
             // 
+            // lbl_router
+            // 
+            this.lbl_router.AutoSize = true;
+            this.lbl_router.Location = new System.Drawing.Point(8, 4);
+            this.lbl_router.Name = "lbl_router";
+            this.lbl_router.Size = new System.Drawing.Size(68, 17);
+            this.lbl_router.TabIndex = 5;
+            this.lbl_router.Text = "自动路由：";
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.Location = new System.Drawing.Point(116, 156);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(75, 23);
+            this.btnSetting.TabIndex = 3;
+            this.btnSetting.Text = "设置";
+            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnSetting.Click += new System.EventHandler(this.btn_login_Click);
+            // 
             // frmLogin
             // 
             this.AcceptButton = this.btn_login;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 244);
+            this.ClientSize = new System.Drawing.Size(390, 263);
             this.Controls.Add(this.cbox_userIdentity);
             this.Controls.Add(this.pnl_AutoRouter);
             this.Controls.Add(this.pnl_selectSkill);
@@ -283,6 +294,7 @@
             this.Controls.Add(this.lb_port);
             this.Controls.Add(this.lb_serveradd);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.btnSetting);
             this.Controls.Add(this.btn_login);
             this.Controls.Add(this.lb_name);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -327,6 +339,7 @@
         private System.Windows.Forms.Panel pnl_AutoRouter;
         private System.Windows.Forms.ComboBox cmbBox_Router;
         private System.Windows.Forms.Label lbl_router;
+        private System.Windows.Forms.Button btnSetting;
     }
 }
 

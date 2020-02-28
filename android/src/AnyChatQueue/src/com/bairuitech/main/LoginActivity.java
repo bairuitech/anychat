@@ -1,43 +1,29 @@
 package com.bairuitech.main;
 
-import java.util.ArrayList;
-import com.bairuitech.anychat.AnyChatBaseEvent;
-import com.bairuitech.anychat.AnyChatCoreSDK;
-import com.bairuitech.anychat.AnyChatDefine;
-import com.bairuitech.anychat.AnyChatObjectDefine;
-import com.bairuitech.anychat.AnyChatObjectEvent;
-import com.bairuitech.common.CustomApplication;
-import com.bairuitech.common.ScreenInfo;
-import com.bairuitech.common.ValueUtils;
-import com.example.anychatqueue.R;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.TextView;
-import android.widget.Toast;
+import com.bairuitech.anychat.AnyChatBaseEvent;
+import com.bairuitech.anychat.AnyChatCoreSDK;
+import com.bairuitech.anychat.AnyChatDefine;
+import com.bairuitech.anychat.AnyChatObjectEvent;
+import com.bairuitech.common.CustomApplication;
+import com.bairuitech.common.ScreenInfo;
+import com.bairuitech.common.ValueUtils;
+import com.example.anychatqueue.R;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends Activity implements AnyChatBaseEvent, AnyChatObjectEvent {
     private String mStrIP = "demo.anychat.cn"; // 默认ip
@@ -149,7 +135,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent, AnyChat
         mBtnWaiting = (Button) this.findViewById(R.id.mainUIWaitingBtn);
         mWaitingLayout = (LinearLayout) this.findViewById(R.id.waitingLayout);
 
-        mBottomConnMsg.setText("No content to the server");
+        mBottomConnMsg.setText("Failed to connect to the Server");
 
         // 初始化bottom_tips信息
         mBottomBuildMsg.setText(" V" + anyChatSDK.GetSDKMainVersion() + "." + anyChatSDK.GetSDKSubVersion()
@@ -408,7 +394,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent, AnyChat
             anyChatSDK.LeaveRoom(-1);
             anyChatSDK.Logout();
             setBtnVisible(SHOWLOGINSTATEFLAG);
-            mBottomConnMsg.setText("No content to the server");
+            mBottomConnMsg.setText("Failed to connect to the Server");
         }
     }
 
@@ -421,7 +407,7 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent, AnyChat
                 anyChatSDK.LeaveRoom(-1);
                 anyChatSDK.Logout();
                 setBtnVisible(SHOWLOGINSTATEFLAG);
-                mBottomConnMsg.setText("No content to the server");
+                mBottomConnMsg.setText("Failed to connect to the Server");
                 if (mToast == null) {
                     mToast = Toast.makeText(LoginActivity.this, "网络已断开!", Toast.LENGTH_SHORT);
                     mToast.show();

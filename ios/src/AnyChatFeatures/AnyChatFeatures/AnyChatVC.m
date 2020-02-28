@@ -7,68 +7,68 @@
 //
 
 #import "AnyChatVC.h"
+#import "ACFeaturesListVC.h"
 
 #define kAnyChatUserName @"AnyChat"
 #define kUserID 1001
 
 @interface AnyChatVC ()
+{
+    MBProgressHUD   *HUD;
+    
+}
 
-//@property (strong)NSString *textField0;
+@property (weak, nonatomic) IBOutlet UITextField            *theUserName;
+@property (weak, nonatomic) IBOutlet UITextField            *theServerIP;
+@property (weak, nonatomic) IBOutlet UITextField            *theServerPort;
+@property (weak, nonatomic) IBOutlet UIButton               *theLoginBtn;
+@property (weak, nonatomic) IBOutlet UILabel                *theVersionLab;
+@property (weak, nonatomic) IBOutlet UILabel                *theStateInfo;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
+@property (strong, nonatomic) UIAlertView                   *theVideoRecordAlertView;
+@property (strong, nonatomic) UIAlertView                   *theSnapShotAlertView;
+
+@property (strong, nonatomic) VideoVC                       *videoVC;
+@property (strong, nonatomic) AnyChatPlatform               *anyChat;
+@property (nonatomic, assign) AnyChatVCLoginMode loginMode; // 登录方式
+
+@property (assign, nonatomic) BOOL  theOnLineLoginState;
+
+@property (strong, nonatomic) NSMutableArray                *theVideoRecordSelfMArray;
+@property (strong, nonatomic) NSMutableArray                *theVideoRecordMArray;
+@property (copy, nonatomic) NSString                      *theMyUserName;
+@property (strong, nonatomic) NSMutableArray                *onlineUserMArray; //通过getOneLine获得
+@property (assign, nonatomic) int   theShowVCType;
+@property (assign, nonatomic) int   theMyUserID;
 
 
 @end
 
 @implementation AnyChatVC
 
-@synthesize anyChat;
-@synthesize videoVC;
-@synthesize theOnLineLoginState;
-@synthesize theVersionLab;
-@synthesize theStateInfo;
-@synthesize theUserName;
-@synthesize theServerIP;
-@synthesize theServerPort;
-@synthesize theLoginBtn;
-@synthesize theHideKeyboardBtn;
-@synthesize theFeaturesName;
-@synthesize theFeaturesNO;
-@synthesize theMyUserName;
-@synthesize theMyUserID;
-@synthesize onlineUserMArray;
-@synthesize theTargetUserID;
-@synthesize theTargetUserName;
-@synthesize theSnapShotAlertView;
-@synthesize theVideoRecordAlertView;
-@synthesize theVideoRecordMArray;
-@synthesize theVideoRecordSelfMArray;
-@synthesize theShowVCType;
-@synthesize theUDPTraceType;
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        
-    }
-    return self;
-}
 
 #pragma mark - Life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+//    if (k_iPhoneX_XS_11Pro || k_iPhoneXR_XSMax_11_11ProMax) {
+//        self.bottomConstraint.constant = 20;
+//    } else {
+//        self.bottomConstraint.constant = 0;
+//    }
+    
+    [self setUI];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnyChatNotifyHandler:) name:@"ANYCHATNOTIFY" object:nil];
     
     [AnyChatPlatform InitSDK:0];
     
-    anyChat = [AnyChatPlatform getInstance];
-    anyChat.notifyMsgDelegate = self;
-    anyChat.textMsgDelegate = self;
-    anyChat.transDataDelegate = self;
-    anyChat.recordSnapShotDelegate = self;
-    anyChat.videoCallDelegate = self;
+    self.anyChat = [AnyChatPlatform getInstance];
+    self.anyChat.notifyMsgDelegate = self;
+    self.anyChat.textMsgDelegate = self;
+    self.anyChat.transDataDelegate = self;
+    self.anyChat.recordSnapShotDelegate = self;
+    self.anyChat.videoCallDelegate = self;
     
     //视频数据回调设置
 //    anyChat.mediaDataDelegate = self;
@@ -96,13 +96,20 @@
     //设置自定义接收文件储存路径
     NSString  *myTransFileDirectory = [documentsDirectory stringByAppendingPathComponent:@"TransFile"];
     [AnyChatPlatform SetSDKOptionString:BRAC_SO_CORESDK_TMPDIR :myTransFileDirectory];
+    
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard)];
+    [self.view addGestureRecognizer:tap];
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self setUI];
 }
+
+
 
 #pragma mark - Memory Warning Method
 
@@ -117,19 +124,9 @@
 kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 
 
+
 #pragma mark -
-#pragma mark - TextField Delegate
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    return YES;
-}
-
+#pragma mark ----------------  核心业务代码  ---------
 
 #pragma mark - AnyChatMediaDataDelegate
 
@@ -177,9 +174,9 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 {
     if (bSuccess)
     {
-        theStateInfo.text = @"• Success connected to server";
+        self.theStateInfo.text = @"• Success connected to server";
     }else {
-        theStateInfo.text = @"• Fail connected to server";
+        self.theStateInfo.text = @"• Fail connected to server";
         [HUD hide:YES];
     }
 }
@@ -187,6 +184,9 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 用户登陆消息
 - (void) OnAnyChatLogin:(int) dwUserId : (int) dwErrorCode
 {
+    [HUD hide:YES];
+    [HUD removeFromSuperViewOnHide];
+    
     self.onlineUserMArray = [NSMutableArray arrayWithCapacity:5];
     
     if(dwErrorCode == GV_ERR_SUCCESS)
@@ -194,21 +194,23 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
         //更新系统默认视频参数设置
         //[self updateLocalSettings];
         
-        theOnLineLoginState = YES;
+        self.theOnLineLoginState = YES;
         self.theMyUserID = dwUserId;
         self.theMyUserName = self.theUserName.text;
+        self.theMyServerAddr = self.theServerIP.text;
+
         [self saveSettings];  //登陆信息归档
-        theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
-        [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_logout_01"] forState:UIControlStateNormal];
+        self.theStateInfo.text = [NSString stringWithFormat:@" Login successed. Self UserId: %d", dwUserId];
         
-        FeaturesListVC *featuresListVC = [[FeaturesListVC alloc] init];
+        ACFeaturesListVC *featuresListVC = [[ACFeaturesListVC alloc] init];
         [self.navigationController pushViewController:featuresListVC animated:YES];
-        [HUD hide:YES];
+
+        [self storeLoginInfo];
     }
     else
     {
-        theOnLineLoginState = NO;
-        theStateInfo.text = [NSString stringWithFormat:@"• Login failed(ErrorCode:%i)",dwErrorCode];
+        self.theOnLineLoginState = NO;
+        self.theStateInfo.text = [NSString stringWithFormat:@"• Login failed(ErrorCode:%i)",dwErrorCode];
     }
     
 }
@@ -221,7 +223,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     
     if (dwErrorCode != 0)
     {
-        theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
+        self.theStateInfo.text = [NSString stringWithFormat:@"• Enter room failed(ErrorCode:%i)",dwErrorCode];
     }
     
     [[UserListVC sharedUserListVC].onLineUserTableView reloadData];
@@ -253,8 +255,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
         
         NSString *theLeaveRoomName = [[NSString alloc] initWithFormat:@"\"%@\"已离开房间!",self.theTargetUserName];
         NSString *theLeaveRoomID = [[NSString alloc] initWithFormat:@"\"%i\"Leave Room!",self.theTargetUserID];
-        [self showInfoAlertView:theLeaveRoomName :theLeaveRoomID];
-        
+        [self showAutoDismissAlertView:theLeaveRoomName :theLeaveRoomID];
         self.theTargetUserID = -1;
     }
     
@@ -265,16 +266,18 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 网络断开消息
 - (void) OnAnyChatLinkClose:(int) dwErrorCode
 {
-    [videoVC FinishVideoChat];
+    [self.videoVC FinishVideoChat];
     [AnyChatPlatform LeaveRoom:-1];
     [AnyChatPlatform Logout];
     
     [[UserListVC sharedUserListVC].onlineUserMArray removeAllObjects];
     [[UserListVC sharedUserListVC].onLineUserTableView reloadData];
     
-    theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
-    theOnLineLoginState = NO;
-    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
+    [HUD hide:YES];
+    [HUD removeFromSuperViewOnHide];
+    self.theStateInfo.text = [NSString stringWithFormat:@"• OnLinkClose(ErrorCode:%i)",dwErrorCode];
+    self.theOnLineLoginState = NO;
+    [self.theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
     UIAlertView *networkAlertView = [[UIAlertView alloc] initWithTitle:@"网络断开,请重新登录."
@@ -365,27 +368,14 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 录像完成事件
 - (void) OnAnyChatRecordCallBack:(int) dwUserid : (int) dwErrorCode : (NSString*) lpFileName : (int) dwElapse : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr
 {
-    theVideoRecordAlertView = [[UIAlertView alloc] initWithTitle:@"视频保存:"
+    self.theVideoRecordAlertView = [[UIAlertView alloc] initWithTitle:@"视频保存:"
                                                          message:lpFileName
                                                         delegate:self
                                                cancelButtonTitle:nil
                                                otherButtonTitles:@"预览录制",@"取消",nil];
-    [theVideoRecordAlertView show];
+    [self.theVideoRecordAlertView show];
     
     NSString *s_useNameStr;
-
-//    if ([lpUserStr isEqual: @"StarLocolSelfRecord"])
-//    {
-//        s_useNameStr = self.theMyUserName;
-//    }
-//    else if ([lpUserStr isEqual: @"StarLocolRemoteRecord"])
-//    {
-//        s_useNameStr = self.theTargetUserName;
-//    }
-//    else if ([lpUserStr isEqual: @"StarLocolMaxRecord"])
-//    {
-//        s_useNameStr = @"合成录制";
-//    }
     
     if ([lpUserStr isEqual: @"StarLocolSelfRecord"] || [lpUserStr isEqual: @"StarServerSelfRecord"] )
     {
@@ -421,12 +411,12 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 // 抓拍完成事件
 - (void) OnAnyChatSnapShotCallBack:(int) dwUserid : (int) dwErrorCode : (NSString*) lpFileName : (int) dwFlags : (int) dwParam : (NSString*) lpUserStr
 {
-    theSnapShotAlertView = [[UIAlertView alloc] initWithTitle:@"照片保存:"
+    self.theSnapShotAlertView = [[UIAlertView alloc] initWithTitle:@"照片保存:"
                                                       message:lpFileName
                                                      delegate:self
                                             cancelButtonTitle:nil
                                             otherButtonTitles:@"抓拍预览",@"取消",nil];
-    [theSnapShotAlertView show];
+    [self.theSnapShotAlertView show];
 }
 
 
@@ -441,20 +431,20 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     
     switch (dwEventType)
     {
-        case BRAC_VIDEOCALL_EVENT_REQUEST:
+        case BRAC_VIDEOCALL_EVENT_REQUEST://请求通话-->回复
         {
             [[UserListVC sharedUserListVC] showReplyAlertViewWithName:s_theCallbackUserName ID:dwUserId];
             break;
         }
             
-        case BRAC_VIDEOCALL_EVENT_REPLY:
+        case BRAC_VIDEOCALL_EVENT_REPLY://被呼叫方的回复
         {
             switch (dwErrorCode)
             {
                 case GV_ERR_VIDEOCALL_CANCEL:
                 {
                     [self dimissAlertView:[UserListVC sharedUserListVC].theReplyAlertView];
-                    [self showInfoAlertView:@"用户取消会话" :@"CANCEL"];
+                    [self showAutoDismissAlertView:@"对方取消会话" :@""];
                     [[UserListVC sharedUserListVC].theAudioPlayer stop];
                     
                     break;
@@ -467,8 +457,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                         [self dimissAlertView:[UserListVC sharedUserListVC].theWaitingAlertView];
                     }
                     
-                    [self showInfoAlertView:@"用户拒绝会话" :@"REJECT"];
-                    
+                    [self showAutoDismissAlertView:@"对方已拒绝" :@""];
                     break;
                 }
                     
@@ -478,8 +467,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     {
                         [self dimissAlertView:[UserListVC sharedUserListVC].theWaitingAlertView];
                     }
-                    [self showInfoAlertView:@"对方不在线" :@"OFFLINE"];
-                    
+                    [self showAutoDismissAlertView:@"对方不在线" :@""];
                     break;
                 }
                     
@@ -489,8 +477,8 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     {
                         [self dimissAlertView:[UserListVC sharedUserListVC].theWaitingAlertView];
                     }
-                    [self showInfoAlertView:@"用户在忙" :@"BUSY"];
-                    
+                    [self showAutoDismissAlertView:@"对方正在忙" :@""];
+
                     break;
                 }
                     
@@ -500,8 +488,8 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     {
                         [self dimissAlertView:[UserListVC sharedUserListVC].theWaitingAlertView];
                     }
-                    [self showInfoAlertView:@"会话请求超时" :@"TIMEOUT"];
-                    
+                    [self showAutoDismissAlertView:@"呼叫请求超时" :@""];
+
                     break;
                 }
                     
@@ -511,8 +499,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     {
                         [self dimissAlertView:[UserListVC sharedUserListVC].theWaitingAlertView];
                     }
-                    [self showInfoAlertView:@"网络断线" :@"DISCONNECT"];
-                    
+                    [self showAutoDismissAlertView:@"网络断线" :@""];
                     break;
                 }
                     
@@ -522,8 +509,8 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
                     {
                         [self dimissAlertView:[UserListVC sharedUserListVC].theWaitingAlertView];
                     }
-                    [self showInfoAlertView:@"用户不在呼叫状态" :@"NOTINCALL"];
-                    
+                    [self showAutoDismissAlertView:@"对方不在呼叫状态" :@"NOTINCALL"];
+
                     break;
                 }
                     
@@ -532,7 +519,7 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
             break;
         }
 
-        case BRAC_VIDEOCALL_EVENT_START:
+        case BRAC_VIDEOCALL_EVENT_START://用户同意，视频开始  dwParam 表示 RoomId
         {
             if ([UserListVC sharedUserListVC].theWaitingAlertView != nil)
             {
@@ -540,17 +527,17 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
             }
             [[UserListVC sharedUserListVC].theAudioPlayer stop];
             
-            //[AnyChatPlatform EnterRoom:dwParam :@""];
+//            [AnyChatPlatform EnterRoom:dwParam :@""];
             [self.navigationController pushViewController:[[UserListVC sharedUserListVC] pushVC] animated:YES];
             
             break;
         }
             
-        case BRAC_VIDEOCALL_EVENT_FINISH:
+        case BRAC_VIDEOCALL_EVENT_FINISH://通话结束
         {
             VideoVC *s_videoVC = [VideoVC new];
             [s_videoVC FinishVideoChat];
-            [self showInfoAlertView:@"会话结束!" :@"Finish"];
+            [self showAutoDismissAlertView:@"会话结束!" :@"Finish"];
             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2]
                                                   animated:YES];
             break;
@@ -560,24 +547,62 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     
 }
 
+//登录 与 退出登录
 
-#pragma mark -
-#pragma mark - Get & Save Settings Method
-- (void)saveSettings
+- (void) OnLogin
 {
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
-    [[NSArray arrayWithObjects:theServerIP.text,theServerPort.text,theUserName.text, nil] writeToFile:filePath atomically:YES];
+    
+    if([self.theUserName.text length] == 0) {
+        self.theUserName.text = kAnyChatUserName;
+    }
+    if([self.theServerIP.text length] == 0) {
+        self.theServerIP.text = kAnyChatIP;
+    }
+    if([self.theServerPort.text length] == 0) {
+        self.theServerPort.text = kAnyChatPort;
+    }
+    
+    [self showLoadingAnimated];
+    
+    /*
+     * AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
+     * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
+     * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
+     */
+    
+    [AnyChatPlatform Connect:self.theServerIP.text : [self.theServerPort.text intValue]];
+    
+    /*
+     * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
+     */
+    [AnyChatPlatform Login:self.theUserName.text :nil];
+    
+    
+    [self hideKeyBoard];
+    
 }
 
-
-#pragma mark - Instance Method
+- (void) OnLogout
+{
+    [AnyChatPlatform Logout];
+    
+    self.theOnLineLoginState = NO;
+    
+    self.theStateInfo.text = @"• Logout Server.";
+}
 
 - (void)AnyChatNotifyHandler:(NSNotification*)notify
 {
     NSDictionary* dict = notify.userInfo;
-    [anyChat OnRecvAnyChatNotify:dict];
+    [self.anyChat OnRecvAnyChatNotify:dict];
 }
+
+
+
+
+
+#pragma mark ----- Instance Method  ------
+
 
 - (NSMutableArray *) getOnlineUserArray
 {
@@ -588,15 +613,12 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 
 - (IBAction)hideKeyBoard
 {
-    [theServerIP resignFirstResponder];
-    [theServerPort resignFirstResponder];
-    [theUserName resignFirstResponder];
-
+    [self.view endEditing:YES];
 }
 
 - (IBAction)OnLoginBtnClicked:(id)sender
 {
-    if (theOnLineLoginState == YES)
+    if (self.theOnLineLoginState == YES)
     {
         [self OnLogout];
     }
@@ -606,116 +628,27 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
     }
 }
 
-- (void) OnLogin
-{
-    
-    if([theUserName.text length] == 0) {
-        theUserName.text = kAnyChatUserName;
-    }
-    if([theServerIP.text length] == 0) {
-        theServerIP.text = kAnyChatIP;
-    }
-    if([theServerPort.text length] == 0) {
-        theServerPort.text = kAnyChatPort;
-    }
-
-    [self showLoadingAnimated];
-    
-    /*
-     * AnyChat可以连接自主部署的服务器、也可以连接AnyChat视频云平台；
-     * 连接自主部署服务器的地址为自设的服务器IP地址或域名、端口；
-     * 连接AnyChat视频云平台的服务器地址为：cloud.anychat.cn；端口为：8906
-     */
-    
-    [AnyChatPlatform Connect:theServerIP.text : [theServerPort.text intValue]];
-    
-    /*
-     * AnyChat支持多种用户身份验证方式，包括更安全的签名登录，详情请参考：http://bbs.anychat.cn/forum.php?mod=viewthread&tid=2211&highlight=%C7%A9%C3%FB
-     */
-    [AnyChatPlatform Login:theUserName.text :nil];
-
-    
-    [self hideKeyBoard];
-    
-}
-
-- (void) OnLogout
-{
-    [AnyChatPlatform Logout];
-    
-    theOnLineLoginState = NO;
-    
-    theStateInfo.text = @"• Logout Server.";
-    [theLoginBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_01"] forState:UIControlStateNormal];
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-- (void)showSnapShotPhoto:(NSString *)theFilePath transform:(NSString *)transformParam
-{   //Read the photo
-    NSString *s_filesName = [theFilePath lastPathComponent];
-    UIImage *s_Image = [UIImage imageWithContentsOfFile:theFilePath];
-
-    UIImageView *theSnapShotImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 44,kSelfView_Width,kSelfView_Height-44)];
-    theSnapShotImageView.image = s_Image;
-    theSnapShotImageView.contentMode = UIViewContentModeScaleAspectFit;
-    
-    if ([transformParam isEqualToString:@"Portrait"])
-    {
-        theSnapShotImageView.layer.transform = kLayer_Z_Axis_3DRotation(90.0);
-    }
-    
-    ShowVC *theShowPhotoVC = [ShowVC new];
-    [theShowPhotoVC.view addSubview:theSnapShotImageView];
-    theShowPhotoVC.theShowVCNItem.title = s_filesName;
-    theShowPhotoVC.theVideoRecordTableView.hidden = YES;
-    theShowPhotoVC.theShowVCNItem.hidesBackButton = YES;
-    theShowPhotoVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self.navigationController presentViewController:theShowPhotoVC animated:YES completion:nil];
-}
-
 
 #pragma mark - AlertView delegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (alertView == theSnapShotAlertView)
+    if (alertView == self.theSnapShotAlertView)
     {
         if (buttonIndex == 0)
         {
-            [self showSnapShotPhoto:theSnapShotAlertView.message transform:@""];
+            [self showSnapShotPhoto:self.theSnapShotAlertView.message transform:@""];
         }
     }
-    if (alertView == theVideoRecordAlertView)
+    if (alertView == self.theVideoRecordAlertView)
     {
         if (buttonIndex == 0)
         {
-            ShowVC *theShowVC = [ShowVC new];
-            theShowVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-            [self.navigationController presentViewController:theShowVC animated:YES completion:nil];
+            [self presentShowVC];
         }
     }
 }
 
-
-#pragma mark - AlertView method
-
-- (NSString *)showInfoAlertView:(NSString *)Title : (NSString *)subTitle
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:Title
-                                                        message:subTitle
-                                                       delegate:self
-                                              cancelButtonTitle:nil
-                                              otherButtonTitles:nil,nil];
-    [alertView show];
-    
-    [self performSelector:@selector(dimissAlertView:) withObject:alertView afterDelay:1.5];
-    
-    return subTitle;
-}
 
 - (void) dimissAlertView:(UIAlertView *)alert {
     if(alert){
@@ -750,25 +683,34 @@ kGCD_SINGLETON_FOR_CLASS(AnyChatVC);
 - (void)setUI
 {
     [self.navigationController setNavigationBarHidden:YES];
-    
-    theUserName.text = kAnyChatUserName;
-    theServerIP.text = kAnyChatIP;
-    theServerPort.text = kAnyChatPort;
-    
-    [theServerIP addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theServerPort addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [theUserName addTarget:self action:@selector(textFieldShouldReturn:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    
-    if (k_sysVersion < 7.0)
-    {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    }
-
-    theVersionLab.text = [AnyChatPlatform GetSDKVersion];
-    
-    [self prefersStatusBarHidden];
+    NSString *username = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatUserName"];
+    NSString *serverIP = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatServerIP"];
+    NSString *serverPort = [[NSUserDefaults standardUserDefaults] valueForKey:@"AnyChatServerPort"];
+    self.theUserName.text = username ? username : kAnyChatUserName;
+    self.theServerIP.text = serverIP ? serverIP : kAnyChatIP;
+    self.theServerPort.text = serverPort ? serverPort : kAnyChatPort;
+    self.theVersionLab.text = [AnyChatPlatform GetSDKVersion];
     
 }
 
+-(void)storeLoginInfo{
+    [[NSUserDefaults standardUserDefaults] setValue:self.theUserName.text forKey:@"AnyChatUserName"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.theServerIP.text forKey:@"AnyChatServerIP"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.theServerPort.text forKey:@"AnyChatServerPort"];
+}
 
+
+-(BOOL)navBarTranslucent {
+    
+    return YES;
+}
+
+#pragma mark -
+#pragma mark - Get & Save Settings Method
+- (void)saveSettings
+{
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:kAnyChatSettingsFileName];
+    [[NSArray arrayWithObjects:self.theServerIP.text,self.theServerPort.text,self.theUserName.text, nil] writeToFile:filePath atomically:YES];
+}
 @end

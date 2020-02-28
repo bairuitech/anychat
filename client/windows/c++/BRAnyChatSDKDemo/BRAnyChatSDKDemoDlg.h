@@ -96,7 +96,7 @@ protected:
 	afx_msg void OnSliderOutVolumeChange(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnOnSliderInVolumeChange(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSelChangeComboAudioCapture();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnButtonSendFile();
 	afx_msg void OnCheckVad();
 	afx_msg void OnCheckAgc();

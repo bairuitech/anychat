@@ -434,7 +434,7 @@ void CBRAnyChatSDKDemoDlg::OnButtonInit()
 	CHAR szCoreSDKPath[MAX_PATH] = {0};
 	GetModuleFileName(NULL,szCoreSDKPath,sizeof(szCoreSDKPath));
 	(strrchr(szCoreSDKPath,'\\'))[1] = 0; 
-	BRAC_SetSDKOption(BRAC_SO_CORESDK_PATH,szCoreSDKPath,strlen(szCoreSDKPath));
+	BRAC_SetSDKOption(BRAC_SO_CORESDK_PATH,szCoreSDKPath, (int)strlen(szCoreSDKPath));
 
 	// 根据BRAC_InitSDK的第二个参数：dwFuncMode，来告诉SDK该如何处理相关的任务（详情请参考开发文档）
 	DWORD dwFuncMode = BRAC_FUNC_VIDEO_AUTODISP | BRAC_FUNC_AUDIO_AUTOPLAY | BRAC_FUNC_CHKDEPENDMODULE | 
@@ -461,7 +461,7 @@ void CBRAnyChatSDKDemoDlg::OnButtonInit()
 	::GetModuleFileName(NULL,szRecordDirectory,MAX_PATH);
 	(strrchr(szRecordDirectory,'\\'))[1] = 0; 
 	strcat(szRecordDirectory,"Record");
-	BRAC_SetSDKOption(BRAC_SO_RECORD_TMPDIR,szRecordDirectory,strlen(szRecordDirectory));
+	BRAC_SetSDKOption(BRAC_SO_RECORD_TMPDIR,szRecordDirectory, (int)strlen(szRecordDirectory));
 	// 设置录像文件质量参数
 	DWORD dwVideoBitrate = 200 * 1000;	// 200kbps
 	BRAC_SetSDKOption(BRAC_SO_RECORD_VIDEOBR,(PCHAR)&dwVideoBitrate,sizeof(DWORD));
@@ -473,14 +473,14 @@ void CBRAnyChatSDKDemoDlg::OnButtonInit()
 	::GetModuleFileName(NULL,szSnapShotDirectory,MAX_PATH);
 	(strrchr(szSnapShotDirectory,'\\'))[1] = 0; 
 	strcat(szSnapShotDirectory,"SnapShot");
-	BRAC_SetSDKOption(BRAC_SO_SNAPSHOT_TMPDIR,szSnapShotDirectory,strlen(szSnapShotDirectory));
+	BRAC_SetSDKOption(BRAC_SO_SNAPSHOT_TMPDIR,szSnapShotDirectory, (int)strlen(szSnapShotDirectory));
 
 	// 设置SDK临时文件路径
 	CHAR szTempPath[MAX_PATH] = {0};
 	::GetModuleFileName(NULL,szTempPath,MAX_PATH);
 	(strrchr(szTempPath,'\\'))[1] = 0; 
 	strcat(szTempPath,"Temp");
-	BRAC_SetSDKOption(BRAC_SO_CORESDK_TMPDIR,szTempPath,strlen(szTempPath));
+	BRAC_SetSDKOption(BRAC_SO_CORESDK_TMPDIR,szTempPath, (int)strlen(szTempPath));
 	
 	// 设置服务器认证密码
 	BRAC_SetServerAuthPass("BaiRuiTech");		// 需要与服务器配置项“SDKAuthPass”相同（大小写敏感），SDK才能正常连接到服务器
@@ -583,7 +583,7 @@ LRESULT CBRAnyChatSDKDemoDlg::OnGVClientConnect(WPARAM wParam, LPARAM lParam)
 LRESULT CBRAnyChatSDKDemoDlg::OnGVClientLogin(WPARAM wParam, LPARAM lParam)
 {
 	CString logstr;
-	DWORD dwUserID = wParam;
+	DWORD dwUserID = (DWORD)wParam;
 	if(lParam == 0)
 	{
 		CHAR username[30]={0};
@@ -893,7 +893,7 @@ void CBRAnyChatSDKDemoDlg::OnWaveOutVolumeChange(DWORD dwVolume)
 
 
 
-void CBRAnyChatSDKDemoDlg::OnTimer(UINT nIDEvent) 
+void CBRAnyChatSDKDemoDlg::OnTimer(UINT_PTR nIDEvent) 
 {
 	switch(nIDEvent)
 	{

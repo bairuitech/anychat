@@ -10,17 +10,13 @@
 
 @interface UserListVC ()
 
+@property int myUserID;
+
 @end
 
 @implementation UserListVC
 
-@synthesize myUserID;
-@synthesize onLineUserTableView;
-@synthesize onlineUserMArray;
-@synthesize theReplyAlertView;
-@synthesize theRejectAlertView;
-@synthesize theWaitingAlertView;
-@synthesize theAudioPlayer;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,12 +34,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     [self setUI];
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    
+    [super viewDidDisappear:animated];
+    [self.theAudioPlayer pause];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,77 +60,16 @@
 kGCD_SINGLETON_FOR_CLASS(UserListVC);
 
 
-#pragma mark - Table view datasource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    self.onlineUserMArray = [AnyChatVC sharedAnyChatVC].onlineUserMArray;
-    return self.onlineUserMArray.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.onlineUserMArray = [AnyChatVC sharedAnyChatVC].onlineUserMArray;
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (Cell == nil)
-    {
-        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"tableVCell" owner:self options:nil];
-        Cell = [nibs objectAtIndex:0];
-    }
-    
-    int userID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] intValue];
-    NSString *name = [AnyChatPlatform GetUserName:userID];
-    
-    UILabel *userIDLabel = (UILabel *)[Cell.contentView viewWithTag:kTableVCell_UserIDLabTag];
-    UILabel *nameLabel = (UILabel *)[Cell.contentView viewWithTag:kTableVCell_NameLabTag];
-    UIImageView *bgView = (UIImageView *)[Cell viewWithTag:kTableVCell_BGViewTag];
-    
-    if (self.myUserID == userID)
-    {
-        if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"本地录像"])
-        {
-            nameLabel.text = [name stringByAppendingString:@"[录制自己]"];
-        }
-        else if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"视频抓拍"])
-        {
-            nameLabel.text = [name stringByAppendingString:@"[自拍]"];
-        }
-        else
-        {
-            nameLabel.text = [name stringByAppendingString:@"(自己)"];
-        }
-    }
-    else
-    {
-        nameLabel.text = name;
-    }
-    
-    userIDLabel.text = [NSString stringWithFormat:@"%i",userID];
-    
-    NSString *RandomNo = [[NSString alloc] initWithFormat:@"%i",[self getRandomNumber:1 to:5]];
-    bgView.image = [UIImage imageNamed:RandomNo];
-    
-    Cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-    
-    return Cell;
-}
-
-
-#pragma mark - Table view delegate
+#pragma mark --- Table view Delegate (业务核心代码) ----
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int selectID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] intValue];
     
-    if (selectID != self.myUserID)
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+   
+    int selectID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] intValue];
+    if (selectID != self.myUserID)//非本人
     {
         NSString *selectUserName = [AnyChatPlatform GetUserName:selectID];
         [AnyChatVC sharedAnyChatVC].theTargetUserID = selectID;
@@ -137,21 +79,20 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
         {
             [AnyChatPlatform VideoCallControl:BRAC_VIDEOCALL_EVENT_REQUEST :selectID :0 :0 :0 :nil];
             
-            theWaitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫等待..."
-                                                             message:[[NSString alloc] initWithFormat:@"Waiting for %@(%i) response",selectUserName,selectID]
+            self.theWaitingAlertView = [[UIAlertView alloc] initWithTitle:@"呼叫中..."
+                                                             message:[[NSString alloc] initWithFormat:@"等待 %@ 回应...",selectUserName]
                                                             delegate:self
-                                                   cancelButtonTitle:@"取消"
+                                                   cancelButtonTitle:@"挂断"
                                                    otherButtonTitles:nil, nil];
-            [theWaitingAlertView show];
-        }
-        else
-        {
+            [self.theWaitingAlertView show];
+            
+        } else{
+            
             [self.navigationController pushViewController:[self pushVC] animated:YES];
         }
-    }
-    
-    if (selectID == self.myUserID)
-    {
+        
+    } else{
+        
         if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"本地录像"])
         {
             RecordSelfVC *theRecordSelfVC = [RecordSelfVC new];
@@ -169,26 +110,11 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return 70.0f;
-}
 
 
-#pragma mark - Audio Delegate
-
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
-{
-    [self.theAudioPlayer play];
-}
-
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player
-{
-    [self.theAudioPlayer play];
-}
 
 
-#pragma mark - AlertView Delegate
+#pragma mark --- AlertView Delegate (业务：呼叫中心 -->核心代码)---
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -234,7 +160,7 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
                                              :0
                                              :nil];
             
-            [[AnyChatVC sharedAnyChatVC] dimissAlertView:self.theWaitingAlertView];
+            [self.theWaitingAlertView dismissWithClickedButtonIndex:[self.theWaitingAlertView cancelButtonIndex] animated:YES];
             [[UserListVC sharedUserListVC].theAudioPlayer stop];
         }
     }
@@ -250,25 +176,6 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
     NSMutableArray *onLineUserList = [[NSMutableArray alloc] initWithArray:[AnyChatPlatform GetOnlineUser]];
     [onLineUserList insertObject:[NSString stringWithFormat:@"%i",self.myUserID] atIndex:0];
     return onLineUserList;
-}
-
-- (int)getRandomNumber:(int)from to:(int)to
-{
-    return (int)(from + (arc4random() % (to - from + 1)));
-}
-
-- (IBAction)LeaveRoomBtn_OnClick
-{
-    [AnyChatPlatform LeaveRoom:-1];
-    [[UserListVC sharedUserListVC].onlineUserMArray removeAllObjects];
-    [[UserListVC sharedUserListVC].onLineUserTableView reloadData];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
 }
 
 - (UIViewController*)pushVC
@@ -341,12 +248,12 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
 }
 
 
-#pragma mark - AlertView method
+#pragma mark --- AlertView method ---
 
 - (void) showReplyAlertViewWithName:(NSString *)callbackUserName ID:(int)callbackUserID
 {
-    self.theReplyAlertView = [[UIAlertView alloc] initWithTitle:@"用户请求会话"
-                                                        message:[[NSString alloc] initWithFormat:@"%@(%i) Request to video",callbackUserName,callbackUserID]
+    self.theReplyAlertView = [[UIAlertView alloc] initWithTitle:@"通话请求"
+                                                        message:[[NSString alloc] initWithFormat:@" %@ 请求与你通话",callbackUserName]
                                                        delegate:self
                                               cancelButtonTitle:@"拒绝"
                                               otherButtonTitles:@"同意", nil];
@@ -368,11 +275,7 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
 - (void)setUI
 {
     self.myUserID = [AnyChatVC sharedAnyChatVC].theMyUserID;
-    self.onlineUserNItem.title = @"在线用户";
-    [self prefersStatusBarHidden];
-    
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSelfView_Width, 70.0f)];
-    self.onLineUserTableView.tableFooterView = footerView;
+    self.title = @"在线用户";
     
     if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"呼叫中心"])
     {
@@ -393,5 +296,98 @@ kGCD_SINGLETON_FOR_CLASS(UserListVC);
     }
 }
 
+#pragma mark - Table view datasource -
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    self.onlineUserMArray = [AnyChatVC sharedAnyChatVC].onlineUserMArray;
+    return self.onlineUserMArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.onlineUserMArray = [AnyChatVC sharedAnyChatVC].onlineUserMArray;
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (Cell == nil)
+    {
+        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"tableVCell" owner:self options:nil];
+        Cell = [nibs objectAtIndex:0];
+    }
+    
+    int userID = [[self.onlineUserMArray objectAtIndex:[indexPath row]] intValue];
+    NSString *name = [AnyChatPlatform GetUserName:userID];
+    
+    UILabel *userIDLabel = (UILabel *)[Cell.contentView viewWithTag:kTableVCell_UserIDLabTag];
+    UILabel *nameLabel = (UILabel *)[Cell.contentView viewWithTag:kTableVCell_NameLabTag];
+    UIImageView *bgView = (UIImageView *)[Cell viewWithTag:kTableVCell_BGViewTag];
+    
+    if (self.myUserID == userID)
+    {
+        if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"本地录像"])
+        {
+            nameLabel.text = [name stringByAppendingString:@"[录制自己]"];
+        }
+        else if ([[AnyChatVC sharedAnyChatVC].theFeaturesName isEqualToString:@"视频抓拍"])
+        {
+            nameLabel.text = [name stringByAppendingString:@"[自拍]"];
+        }
+        else
+        {
+            nameLabel.text = [name stringByAppendingString:@"(自己)"];
+        }
+    }
+    else
+    {
+        nameLabel.text = name;
+    }
+    
+    userIDLabel.text = [NSString stringWithFormat:@"%i",userID];
+    
+    NSString *RandomNo = [[NSString alloc] initWithFormat:@"%i",[self getRandomNumber:1 to:5]];
+    bgView.image = [UIImage imageNamed:RandomNo];
+    
+    Cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    
+    return Cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tabelView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70.0f;
+}
+
+#pragma mark - Audio Delegate
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    [self.theAudioPlayer play];
+}
+
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player
+{
+    [self.theAudioPlayer play];
+}
+
+
+- (int)getRandomNumber:(int)from to:(int)to
+{
+    return (int)(from + (arc4random() % (to - from + 1)));
+}
+
+- (void)navLeftClick
+{
+    [AnyChatPlatform LeaveRoom:-1];
+    [[UserListVC sharedUserListVC].onlineUserMArray removeAllObjects];
+    [[UserListVC sharedUserListVC].onLineUserTableView reloadData];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end

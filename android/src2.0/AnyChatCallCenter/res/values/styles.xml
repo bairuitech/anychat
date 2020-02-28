@@ -1,0 +1,55 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+
+    <style name="common_styple">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">5dip</item>
+    </style>
+
+    <style name="CommonDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--
+        <item name="android:windowTitleStyle">@style/dialog_title</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        -->
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="call_resume_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- <item name="android:backgroundDimAmount">0.6</item> -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    
+    <style name="common_view">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+         <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/t_bg1</item>
+         <item name="android:gravity">center</item>
+        
+    </style>
+
+    <style name="common_txt_style">
+        <item name="android:textColor">@color/txt_general_bg</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+
+</resources>

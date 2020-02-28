@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <deployment version="1808" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,34 +18,47 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="66.5"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_01.png" id="ZLb-SU-m3K" userLabel="Image View - BG">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pRA-cq-9E4">
+                        <rect key="frame" x="14" y="65.5" width="291" height="1"/>
+                        <color key="backgroundColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="gLU-S6-s6g"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" tag="1003" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xEQ-Wg-2Ry" userLabel="Image View - face">
+                        <rect key="frame" x="14" y="6" width="55" height="55"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="55" id="IMx-7h-1fh"/>
+                            <constraint firstAttribute="height" constant="55" id="cFO-3D-wBb"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CPa-1v-n4W" userLabel="Label - name">
-                        <rect key="frame" x="73" y="25" width="178" height="22"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CPa-1v-n4W" userLabel="Label - name">
+                        <rect key="frame" x="84" y="23.5" width="42" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OQD-G0-WKc" userLabel="Label - userID">
-                        <rect key="frame" x="259" y="29" width="51" height="14"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OQD-G0-WKc" userLabel="Label - userID">
+                        <rect key="frame" x="269.5" y="25" width="35.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" tag="1003" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="xEQ-Wg-2Ry" userLabel="Image View - face">
-                        <rect key="frame" x="8" y="6" width="55" height="55"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </imageView>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="pRA-cq-9E4" firstAttribute="leading" secondItem="xEQ-Wg-2Ry" secondAttribute="leading" id="7g2-uU-NOs"/>
+                    <constraint firstItem="xEQ-Wg-2Ry" firstAttribute="centerY" secondItem="N2k-FT-g1U" secondAttribute="centerY" id="BtC-km-9Sa"/>
+                    <constraint firstAttribute="trailing" secondItem="OQD-G0-WKc" secondAttribute="trailing" constant="15" id="H2g-VM-20I"/>
+                    <constraint firstItem="pRA-cq-9E4" firstAttribute="trailing" secondItem="OQD-G0-WKc" secondAttribute="trailing" id="NuS-qt-Fcs"/>
+                    <constraint firstAttribute="bottom" secondItem="pRA-cq-9E4" secondAttribute="bottom" id="W7A-hf-nhB"/>
+                    <constraint firstItem="xEQ-Wg-2Ry" firstAttribute="leading" secondItem="N2k-FT-g1U" secondAttribute="leading" constant="14" id="h4l-hF-3jQ"/>
+                    <constraint firstItem="CPa-1v-n4W" firstAttribute="leading" secondItem="xEQ-Wg-2Ry" secondAttribute="trailing" constant="15" id="mZ9-pA-kd0"/>
+                    <constraint firstItem="CPa-1v-n4W" firstAttribute="centerY" secondItem="xEQ-Wg-2Ry" secondAttribute="centerY" id="mhS-x0-UNI"/>
+                    <constraint firstItem="OQD-G0-WKc" firstAttribute="centerY" secondItem="N2k-FT-g1U" secondAttribute="centerY" id="pVN-WQ-SmP"/>
+                </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="280" y="233.5"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <point key="canvasLocation" x="448" y="210.04497751124438"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="cell_01.png" width="640" height="102"/>
-    </resources>
 </document>

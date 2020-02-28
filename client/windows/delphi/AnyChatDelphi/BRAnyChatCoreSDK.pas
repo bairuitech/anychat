@@ -40,6 +40,7 @@ const
   BRAC_FUNC_NET_SUPPORTUPNP   	=$00000200;		///< 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
   BRAC_FUNC_DISABLEDECODE		=$00000400;		///< 禁止对收到的数据进行解码和播放，为了提高代理客户端的数据转发性能，可设置该标志，否则不能设置该标志
 
+
   ANYCHAT_STREAMPLAY_CTRL_START = 1;			///< 开始播放
   ANYCHAT_STREAMPLAY_CTRL_PAUSE = 2;			///< 暂停播放
   ANYCHAT_STREAMPLAY_CTRL_STOP = 3;				///< 停止播放
@@ -68,8 +69,9 @@ const
   BRAC_CBTYPE_VIDEODATAEX2 = 19;				///< 视频数据扩展回调（支持多路流）
   BRAC_CBTYPE_AUDIODATAEX2 = 20;				
 
+
   //内核参数定义
-  BRAC_SO_AUDIO_VADCTRL			=1;	  		    ///< 音频静音检测控制（参数为：int型：1打开，0关闭）
+  BRAC_SO_AUDIO_VADCTRL			=1;	  	        ///< 音频静音检测控制（参数为：int型：1打开，0关闭）
   BRAC_SO_AUDIO_NSCTRL			=2;	    		///< 音频噪音抑制控制（参数为：int型：1打开，0关闭）
   BRAC_SO_AUDIO_ECHOCTRL		=3;	   		    ///< 音频回音消除控制（参数为：int型：1打开，0关闭）
   BRAC_SO_AUDIO_AGCCTRL			=4;	  			///< 音频自动增益控制（参数为：int型：1打开，0关闭）
@@ -109,9 +111,10 @@ const
   BRAC_SO_LOCALVIDEO_WIDTHCTRL		=38;		///< 本地视频采集分辨率宽度控制（参数为int型，同服务器配置：VideoWidth）
   BRAC_SO_LOCALVIDEO_HEIGHTCTRL		=39;		///< 本地视频采集分辨率高度控制（参数为int型，同服务器配置：VideoHeight）
   BRAC_SO_LOCALVIDEO_TVFORMAT		=104;		///< 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
-  BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP =105; 	///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）  
+
+  BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP =105; 	///< 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
   BRAC_SO_LOCALVIDEO_DEVICENAME = 106;
-  
+
 
   BRAC_SO_NETWORK_P2PPOLITIC		=40;		///< 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
   BRAC_SO_NETWORK_P2PCONNECT		=41;		///< 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -127,11 +130,23 @@ const
   
   BRAC_SO_STREAM_MAXBUFFERTIME	=60;			///< 最大流缓冲时间（参数为int型，单位：毫秒，取值范围：500 ~ 5000，默认：800），发言模式设置值，歌曲模式会自动增加一倍
   BRAC_SO_STREAM_SMOOTHPLAYMODE =61;			///< 平滑播放模式（参数为int型，0 关闭[默认], 1 打开），打开状态下遇到视频丢帧时会继续播放（可能出现马赛克），不会卡住
-  
-  BRAC_SO_CORESDK_TICKOUTUSER		=110;		///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
-  BRAC_SO_CORESDK_DEVICEMODE		=130;		///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
-  BRAC_SO_CORESDK_SCREENCAMERACTRL	=131;		///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
-  BRAC_SO_CORESDK_DATAENCRYPTION	=132;		///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
+
+  BRAC_SO_VIDEOSHOW_MODECTRL		= 80;	// 视频显示模式控制（参数为：int型，0 单画面显示，1 视频迭加显示）
+  BRAC_SO_VIDEOSHOW_SETPRIMARYUSER      = 81;	// 设置主显示用户编号（参数为：int型，用户ID号）
+  BRAC_SO_VIDEOSHOW_SETOVERLAYUSER      = 82;	// 设置迭加显示用户编号（参数为：int型，用户ID号）
+  BRAC_SO_VIDEOSHOW_DRIVERCTRL	        = 83;	// 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL）
+  BRAC_SO_VIDEOSHOW_AUTOROTATION        = 85;	// 远程视频显示自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
+  BRAC_SO_VIDEOSHOW_CLIPMODE		= 86;	// 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
+
+  BRAC_SO_CORESDK_TICKOUTUSER		=110;	///< 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
+  BRAC_SO_CORESDK_DEVICEMODE		=130;	///< 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+  BRAC_SO_CORESDK_SCREENCAMERACTRL	=131;	///< 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
+  BRAC_SO_CORESDK_DATAENCRYPTION	=132;	///< 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
+  BRAC_SO_CORESDK_UPLOADLOGINFO	        = 134;  // 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
+  BRAC_SO_CORESDK_WRITELOG		= 135;  // 写入调试信息到客户端日志文件中
+
+  BRAC_SO_CLOUD_APPGUID                  = 300;  // 云平台应用GUID（参数为：字符串类型，连接服务器之前设置）
+
   BRAC_SO_RECORD_INSERTIMAGE 		=146;		///< 录像图片
   BRAC_SO_CORESDK_PPTHELPERINIT = 223;// PPT播报环境初始化
   BRAC_SO_CORESDK_PPTFILECTRL		=		224;// PPT文件控制
@@ -224,6 +239,7 @@ const
   ANYCHAT_VIDEOCLIPMODE_STRETCH = 3;   //< 平铺模式，不进行裁剪，但可能导致画面不成比例
   ANYCHAT_VIDEOCLIPMODE_DYNAMIC = 4;   //< 动态模式，由上层应用根据分辩率来调整显示表面，保持画面不变形
   BRAC_SO_RECORD_CLIPMODE = 144;  // 录制视频裁剪模式（参数为：int型）
+
 type
   // 视频数据回调函数定义
   BRAC_VideoData_CallBack=procedure(dwUserid:DWORD;lpBuf:Pointer;dwLen:DWORD; bmiHeader:BITMAPINFOHEADER;lpUserValue:Pointer);stdcall;
@@ -663,7 +679,7 @@ implementation
   function SetVideoPosEx(userId: DWORD; hWnd: THandle; left, top, right, bottom, streamIndex, flags: DWORD): DWORD; cdecl;
       external C_BRAnyChatCoreLibName name 'BRAC_SetVideoPosEx';
 
-function BRAC_StreamPlaySetVideoPos(lpTaskGuid: LPCTSTR; hWnd: THandle; dwLeft: DWORD = 0; dwTop: DWORD = 0; dwRight: DWORD = 0; dwBottom: DWORD = 0): DWORD;  cdecl;
+  function BRAC_StreamPlaySetVideoPos(lpTaskGuid: LPCTSTR; hWnd: THandle; dwLeft: DWORD = 0; dwTop: DWORD = 0; dwRight: DWORD = 0; dwBottom: DWORD = 0): DWORD;  cdecl;
       external C_BRAnyChatCoreLibName name 'BRAC_StreamPlaySetVideoPos';
 
   function StreamRecordCtrlEx(userId: DWORD; startRecord: Integer; flags, param: DWORD; userstr: LPCTSTR): DWORD; cdecl;
@@ -682,8 +698,9 @@ function BRAC_StreamPlaySetVideoPos(lpTaskGuid: LPCTSTR; hWnd: THandle; dwLeft: 
       external C_BRAnyChatCoreLibName name 'BRAC_StreamPlayGetInfo';
 
   function BRAC_StreamPlayDestroy(taskGuid: LPCTSTR; flags: DWORD): DWORD; cdecl;
-      external C_BRAnyChatCoreLibName name 'BRAC_StreamPlayDestroy';       
+      external C_BRAnyChatCoreLibName name 'BRAC_StreamPlayDestroy';
 
   function BRAC_QueryInfoFromServer(dwInfoName: DWORD; lpInParam: LPSTR; dwInSize: DWORD; lpResult: LPSTR; var dwOutSize: DWORD; dwFlags: DWORD = 0):DWORD; cdecl;
       external C_BRAnyChatCoreLibName name 'BRAC_QueryInfoFromServer';
+
 end.

@@ -198,6 +198,9 @@
 											<div id="return" onmouseover="Btn('return',0)" onmouseout="Btn('return',1)" class="video_btn">
 												返回
 											</div>
+											<div id="return2" onmouseover="Btn('return2',0)" onmouseout="Btn('return2',1)" class="video_btn" style="display:none;margin-left:226px;">
+												返回
+											</div>
 											<div id="ScreenShot" onmouseover="Btn('ScreenShot',0)" onmouseout="Btn('ScreenShot',1)" class="video_btn">
 												拍照
 											</div>
@@ -243,6 +246,11 @@
 				</center>
 			</div>
 		</div>
-		
+	<script>
+    window.onbeforeunload = function(){
+        // 刷新或关闭页面时释放插件
+        BRAC_Release();
+    }
+	</script>	
 	</body>
 </html>

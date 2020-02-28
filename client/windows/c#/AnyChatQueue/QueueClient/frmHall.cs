@@ -10,6 +10,9 @@ using ANYCHATAPI;
 using System.Runtime.InteropServices;
 using System.Media;
 using System.Threading;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using System.IO;
 
 namespace QueueClient
 {
@@ -94,6 +97,14 @@ namespace QueueClient
         /// 队列列表
         /// </summary>
         private List<QueueInfo> queueList = new List<QueueInfo>();
+        /// <summary>
+        /// 是否在录像中
+        /// </summary>
+        private bool isRecording = false;
+        /// <summary>
+        /// 录像时间
+        /// </summary>
+        private int recordTime_Second = 0;
 
         #endregion
 
@@ -163,6 +174,10 @@ namespace QueueClient
 
             SystemSetting.VideoCallEvent_Handler = new SystemSetting.VideoCallEventCallBack(VideoCallEvent_CallBack);
             SystemSetting.AnyChatObjectEvent_Handler = new SystemSetting.AnyChatObjectEventCallBack(ObjectEvent_CallBack);
+            SystemSetting.RecordSnapShot_Handler = new AnyChatCoreSDK.RecordSnapShot_CallBack(Record_CallBack);
+            //SystemSetting.Record_Handler = new SystemSetting.RecordHandler(Record_CallBack);
+            SystemSetting.RecordSnapShotEx_Handler = new AnyChatCoreSDK.RecordSnapShotEx_CallBack(RecordEx_CallBack);
+            SystemSetting.RecordSnapShotEx2_Handler = new AnyChatCoreSDK.RecordSnapShotEx2_CallBack(RecordEx2_CallBack);
 
             lbl_agent_remoteUser.Text = string.Empty;
         }
@@ -170,7 +185,6 @@ namespace QueueClient
         //窗体关闭
         private void Hall_FormClosed(object sender, FormClosedEventArgs e)
         {
-
             AnyChatCoreSDK.Logout();
             AnyChatCoreSDK.Release();
             Application.Exit();
@@ -295,6 +309,8 @@ namespace QueueClient
         {
             if (MessageBox.Show("你确定结束当前的视频服务吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.OK)
             {
+                if (isRecording) btnRecord_Click(sender, e);
+
                 AnyChatCoreSDK.VideoCallControl(AnyChatCoreSDK.BRAC_VIDEOCALL_EVENT_FINISH, mTargetUserId, 0, 0, 0, ""); 	// 挂断
                 //btn_return.Enabled = true;
             }
@@ -308,6 +324,7 @@ namespace QueueClient
             btn_return.Enabled = false;
             btnStartService.Enabled = false;
             btnStopService.Enabled = true;
+            btnRecord.Enabled = true;
         }
 
         /// <summary>
@@ -321,6 +338,7 @@ namespace QueueClient
             if (!panel_agentVedioCall.Visible) panel_agentVedioCall.Show();
 
             btnStopService.Enabled = false;
+            btnRecord.Enabled = false;
             btnStartService.Enabled = true;
             btn_return.Enabled = btnStartService.Enabled;
             if (!btnStartService.Enabled) btnStartService.Enabled = true;
@@ -606,6 +624,7 @@ namespace QueueClient
             {
                 case UserIdentityType.Agent:
                     btnStopService.Enabled = true;
+                    btnRecord.Enabled = true;
                     btnStartService.Enabled = false;
                     break;
             }
@@ -761,6 +780,7 @@ namespace QueueClient
 
                     btnStartService.Enabled = true;
                     btnStopService.Enabled = false;
+                    btnRecord.Enabled = false;
                     btn_return.Enabled = true;
 
                     showAgentServiceFace();
@@ -1240,6 +1260,7 @@ namespace QueueClient
                     btn_return.Enabled = true;
                     btnStartService.Enabled = true;
                     btnStopService.Enabled = false;
+                    btnRecord.Enabled = false;
                     lbl_CurrentStatus.Text = statusText + "空闲";
                     showAgentServiceFace();
                     comboBox_AgentStatus.Enabled = true;
@@ -1297,8 +1318,23 @@ namespace QueueClient
             btn_return.Enabled = true;
             btnStartService.Enabled = true;
             btnStopService.Enabled = false;
+            btnRecord.Enabled = false;
         }
 
+        private void Record_CallBack(int userId, string fileName, int param, int recordType, int userValue)
+        {
+            lbl_recordFileName.Text = fileName;
+        }
+
+        private void RecordEx_CallBack(int userId, string fileName, int elapse, int flags, int param, string userStr, int userValue)
+        {
+            lbl_recordFileName.Text = fileName;
+        }
+
+        private void RecordEx2_CallBack(int userId, int errorCode, string fileName, int elapse, int flags, int param, string userStr, int userValue)
+        {
+            lbl_recordFileName.Text = fileName;
+        }
         #endregion
 
         #region 帮助函数
@@ -1856,5 +1892,57 @@ namespace QueueClient
             return retVal.TrimEnd('\0');
         }
 
+        private void btnRecord_Click(object sender, EventArgs e)
+        {
+            int recordParams = AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_VIDEO + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_AUDIO + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_MIXAUDIO +
+                               AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_MIXVIDEO + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_STEREO + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_ABREAST +
+                               AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_SERVER + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_LOCALCB + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_STREAM;
+
+
+            //自定义录像文件名称
+            FileObject fileObj = new FileObject();
+            fileObj.filename = "20170328_1";
+
+            if (!isRecording)
+            {
+                //开始录制
+                //var errorCode = AnyChatCoreSDK.StreamRecordCtrl(m_UserId, true, recordParams, 0);
+                var errorCode = AnyChatCoreSDK.StreamRecordCtrlEx(m_UserId, true, recordParams, 101, string.Empty);
+                //var errorCode = AnyChatCoreSDK.SnapShot(mTargetUserId, AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
+                btnRecord.Text = "结束录像";
+            }
+            else
+            {
+                btnRecord.Text = "开始录像";
+                //结束录制
+                //var errorCode = AnyChatCoreSDK.StreamRecordCtrl(m_UserId, false, recordParams, 0);
+                var errorCode = AnyChatCoreSDK.StreamRecordCtrlEx(m_UserId, false, recordParams, 101, string.Empty);
+                //var errorCode = AnyChatCoreSDK.SnapShot(m_UserId, AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
+            }
+
+            isRecording = !isRecording;
+        }
+
+        /// <summary>
+        /// 将对象转化成字符串
+        /// </summary>
+        /// <param name="jsonObject"></param>
+        /// <returns></returns>
+        public static string stringify(object jsonObject)
+        {
+            using (var ms = new MemoryStream())
+            {
+                new DataContractJsonSerializer(jsonObject.GetType()).WriteObject(ms, jsonObject);
+                return Encoding.UTF8.GetString(ms.ToArray());
+            }
+        }
     }
+
+    [DataContract]
+    class FileObject
+    {
+        [DataMember]
+        public string filename { get; set; }
+    }
+
 }

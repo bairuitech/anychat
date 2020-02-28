@@ -44,11 +44,13 @@
 
 #define kSelfView_Width                     self.view.frame.size.width
 #define kSelfView_Height                    self.view.frame.size.height
+#define kScreenWidth ([UIScreen mainScreen].bounds.size.width)
+#define kScreenHeight ([UIScreen mainScreen].bounds.size.height)
 #define kDegreesToRadian(degrees)           (M_PI * (degrees) / 180.0)
 #define kLayer_Z_Axis_3DRotation(degrees)    CATransform3DMakeRotation(kDegreesToRadian(degrees), 0.0, 0.0, 1.0)
 
-#define kLocalVideo_Width                   (float)137.0f
-#define kLocalVideo_Height                  (float)205.0f
+#define kLocalVideo_Width                   200.0f
+#define kLocalVideo_Height                  315.0f
 #define kBar_Height                         (float)30.0f
 #define kUI_Spacing                         (float)2.0f
 
@@ -100,6 +102,8 @@ return shared##classname;   \
 #define	 k_isRetina	 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
 #define	 k_iPhone5 	([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 #define	 k_isPad 	(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define k_iPhoneX_XS_11Pro (kScreenWidth == 375.f && kScreenHeight == 812.f ? YES : NO)
+#define k_iPhoneXR_XSMax_11_11ProMax (kScreenWidth == 414.f && kScreenHeight == 896.f ? YES : NO)
 
 
 #pragma mark - Device systemVersion
@@ -113,3 +117,6 @@ return shared##classname;   \
 #define k_sandboxPathsArray (NSArray *)NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 
 
+#import "IQKeyboardManager.h"
+#import "ACBaseViewController.h"
+#import "UIView+AdaptScreen.h"

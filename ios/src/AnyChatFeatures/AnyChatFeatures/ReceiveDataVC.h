@@ -9,26 +9,7 @@
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
 
-@interface ReceiveDataVC : UIViewController
-{
-    NSTimer *theTimers;
-}
+@interface ReceiveDataVC : ACBaseViewController
 
-@property (strong, nonatomic) IBOutlet UIView               *theSendView;
-@property (strong, nonatomic) IBOutlet UIView               *theServerView;
-@property (strong, nonatomic) IBOutlet UIView               *theRecvView;
-
-@property (strong, nonatomic) IBOutlet UILabel          *theSendViewSendLable;
-@property (strong, nonatomic) IBOutlet UILabel          *theServerViewRecvLable;
-@property (strong, nonatomic) IBOutlet UILabel          *theRecvViewRecvLable;
-@property (strong, nonatomic) IBOutlet UILabel          *theRecvViewLossLable;
-
-@property (strong, nonatomic) IBOutlet UILabel          *theSendViewIPLable;
-@property (strong, nonatomic) IBOutlet UILabel          *theRecvViewIPLable;
-@property (strong, nonatomic) IBOutlet UILabel          *theServerViewIPLable;
-
-@property   int   theSendData;
-@property   int   theRecvData;
-@property   int   theServerGetData;
 
 @end

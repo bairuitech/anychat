@@ -7,13 +7,18 @@
 #import "AnyChatVC.h"
 #import "RecordLocalVC.h"
 
+@protocol ProviewPhotoVCDelegate <NSObject>
+@optional
+-(void)dismissVC;
 
-@interface ProviewPhotoVC : UIViewController
+@end
 
-- (IBAction)returnBtn_OnClick;
+
+@interface ProviewPhotoVC : ACBaseViewController
+@property (nonatomic, weak) id<ProviewPhotoVCDelegate> delegate;
+@property (nonatomic, copy) NSString *filePath;
 
 - (IBAction)nextBtn_OnClick;
 
-- (void)showSnapShotPhoto:(NSString *)theFilePath transform:(NSString *)transformParam;
 
 @end

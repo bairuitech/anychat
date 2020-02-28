@@ -9,9 +9,10 @@ namespace ANYCHATAPI
     public delegate void TextReceivedHandler(int fromUID, int toUID, string Text, bool isserect);
     public delegate void TransBufferReceivedHandler(int userId, IntPtr buf, int len, int userValue);
     public delegate void TransFileReceivedHandler(int userId, string fileName,string filePath, int fileLength, int wParam, int lParam,int taskId, int userValue);
-    public delegate void SetRecordReceivedHandler(int userId, string filePath, int param, bool recordType, int userValue);
     public delegate void SetVolumeChange_CallBack(AnyChatCoreSDK.AudioDevice device, int currentVolume, int userValue);
-
+    //public delegate void RecordSnapShotHandler(int userId, string filePath, int param, int recordType, int userValue);
+    //public delegate void RecordSnapShotExHandler(int userId, string fileName, int elapse, int flags, int param, string userStr, int userValue);
+    //public delegate void RecordSnapShotEx2Handler(int userId, int errorCode, string fileName, int elapse, int flags, int param, string userStr, int userValue);
 
     public class SystemSetting
     {
@@ -57,7 +58,13 @@ namespace ANYCHATAPI
             ///提供服务器端验证
             AnyChatCoreSDK.SetServerAuthPass("");
             //保存视频
-            AnyChatCoreSDK.SetRecordCallBack(RecordCallBack_Callback, hWnd.ToInt32());
+            //AnyChatCoreSDK.SetRecordCallBack(RecordCallBack_Callback, hWnd.ToInt32());
+            AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_STREAMRECORD, Marshal.GetFunctionPointerForDelegate(RecordCallBack_Callback), hWnd);
+
+            AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_STREAMRECORDEX, Marshal.GetFunctionPointerForDelegate(RecordCallBackEx_CallBack), hWnd);
+
+            AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_STREAMRECORDEX2, Marshal.GetFunctionPointerForDelegate(RecordCallBackEx2_CallBack), hWnd);
+
             //设置音量变化回调函数
             AnyChatCoreSDK.SetVolumeChangeCallBack(VolumeChange_callBack, hWnd.ToInt32());
             //设置视频呼叫事件回调函数
@@ -65,6 +72,9 @@ namespace ANYCHATAPI
 
             //设置业务对象事件通知回调函数            
             AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_OBJECTEVENT, Marshal.GetFunctionPointerForDelegate(ObjectEvent_callBack), hWnd);
+
+            //AnyChatCoreSDK.SetCallBack(AnyChatCoreSDK.BRAC_CBTYPE_STREAMRECORD, Marshal.GetFunctionPointerForDelegate(record_CallBack), hWnd);
+
 
             return isok;
         }
@@ -91,7 +101,11 @@ namespace ANYCHATAPI
 
         static AnyChatCoreSDK.TextMessage_CallBack text_Callback = new AnyChatCoreSDK.TextMessage_CallBack(TextMessage_CallBack);
 
-        static AnyChatCoreSDK.RecordCallBack RecordCallBack_Callback = new AnyChatCoreSDK.RecordCallBack(SetRecordCallBack_CallBack);
+        static AnyChatCoreSDK.RecordSnapShot_CallBack RecordCallBack_Callback = new AnyChatCoreSDK.RecordSnapShot_CallBack(RecordSnapShot_CallBack);
+
+        static AnyChatCoreSDK.RecordSnapShotEx_CallBack RecordCallBackEx_CallBack = new AnyChatCoreSDK.RecordSnapShotEx_CallBack(RecordSnapShotEx_CallBack);
+
+        static AnyChatCoreSDK.RecordSnapShotEx2_CallBack RecordCallBackEx2_CallBack = new AnyChatCoreSDK.RecordSnapShotEx2_CallBack(RecordSnapShotEx2_CallBack);
 
         static AnyChatCoreSDK.TransFileCallBack transFile_callback = new AnyChatCoreSDK.TransFileCallBack(TransFile_CallBack);
 
@@ -100,8 +114,26 @@ namespace ANYCHATAPI
         static AnyChatCoreSDK.VideoCallEvent_CallBack VideoCallEvent_callBack = new AnyChatCoreSDK.VideoCallEvent_CallBack(VideoCallEvent_CallBack);
 
         static AnyChatCoreSDK.OnObjectEventNotifyCallBack ObjectEvent_callBack = new AnyChatCoreSDK.OnObjectEventNotifyCallBack(ObjectEvent_CallBack);
-       
-        public static SetRecordReceivedHandler SetRecordReceivedCallBack = null;
+
+        //static AnyChatCoreSDK.RecordCallBackEx record_CallBack = new AnyChatCoreSDK.RecordCallBackEx(RecordData_CallBack);
+
+
+
+        public static AnyChatCoreSDK.RecordSnapShot_CallBack RecordSnapShot_Handler = null;
+        /// <summary>
+        /// 设置录像回调函数定义
+        /// </summary>
+        /// <param name="device">音频设备</param>
+        /// <param name="currentVolume">当前音量</param>
+        /// <param name="userValue">附带信息</param>
+        private static void RecordSnapShot_CallBack(int userId, string filePath, int param, int recordType, int userValue)
+        {
+            if (RecordSnapShot_Handler != null)
+                RecordSnapShot_Handler(userId, filePath, param, recordType, userValue);
+        }
+
+        //public delegate void RecordHandler(int dwUserId, string lpFileName, int dwElapse, int dwFlags, int dwParam, string lpUserStr, int userValue);
+        //public static RecordHandler Record_Handler = null;
         /// <summary>
         /// 音视频录制回调函数
         /// </summary>
@@ -110,10 +142,24 @@ namespace ANYCHATAPI
         /// <param name="param"></param>
         /// <param name="recordType"></param>
         /// <param name="userValue"></param>
-        private static void SetRecordCallBack_CallBack(int userId, string filePath, int param, bool recordType, int userValue)
+        //private static void RecordData_CallBack(int userId, string fileName, int elapse, int flags, int param, string userStr, int userValue)
+        //{
+        //    if (Record_Handler != null)
+        //        Record_Handler(userId, fileName, elapse, flags, param, userStr, userValue);
+        //}
+
+        public static AnyChatCoreSDK.RecordSnapShotEx_CallBack RecordSnapShotEx_Handler = null;
+        private static void RecordSnapShotEx_CallBack(int userId, string fileName, int elapse, int flags, int param, string userStr, int userValue)
         {
-            if (SetRecordReceivedCallBack != null)
-                SetRecordReceivedCallBack(userId, filePath, param, recordType, userValue);
+            if (RecordSnapShotEx_Handler != null)
+                RecordSnapShotEx_Handler(userId, fileName, elapse, flags, param, userStr, userValue);
+        }
+
+        public static AnyChatCoreSDK.RecordSnapShotEx2_CallBack RecordSnapShotEx2_Handler = null;
+        private static void RecordSnapShotEx2_CallBack(int userId, int errorCode, string fileName, int elapse, int flags, int param, string userStr, int userValue)
+        {
+            if (RecordSnapShotEx2_Handler != null)
+                RecordSnapShotEx2_Handler(userId, errorCode, fileName, elapse, flags, param, userStr, userValue);
         }
 
         /// <summary>

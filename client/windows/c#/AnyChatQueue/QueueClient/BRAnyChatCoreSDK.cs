@@ -25,6 +25,9 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_AUDIO_PLAYDRVCTRL		        = 70;	// 音频播放驱动选择（参数为：int型，0默认驱动， 1 DSound驱动， 2 WaveOut驱动）
 		public const int BRAC_SO_AUDIO_SOFTVOLMODE		        = 73;	// 设置软件音量模式控制（参数为int型，1打开，0关闭[默认]），使用软件音量模式，将不会改变系统的音量设置
 		public const int BRAC_SO_AUDIO_RECORDDRVCTRL	        = 74;	// 音频采集驱动控制（参数为int型，0默认驱动， 1 DSound驱动， 2 WaveIn驱动， 3 Java采集[Android平台使用]）
+        public const int BRAC_SO_AUDIO_ECHODELAY				= 75;   // 音频回声消除延迟参数设置（参数为int型，单位：ms）
+        public const int BRAC_SO_AUDIO_NSLEVEL				    = 76;   // 音频噪音抑制水平参数设置（参数为int型，0 - 3，默认为2，值越大抑制水平越高，抑制噪音的能力越强）
+        public const int BRAC_SO_AUDIO_CBCODEC                  = 77;	// 音频数据回调编码器类型（参数为int型）
 
         public const int BRAC_SO_RECORD_VIDEOBR			        = 10;	// 录像视频码率设置（参数为：int型，单位：bps）
         public const int BRAC_SO_RECORD_AUDIOBR			        = 11;	// 录像音频码率设置（参数为：int型，单位：bps）
@@ -34,14 +37,52 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_RECORD_WIDTH			        = 141;  // 录制视频宽度设置（参数为：int型，如：320）
 		public const int BRAC_SO_RECORD_HEIGHT			        = 142;  // 录制视频高度设置（参数为：int型，如：240）
 		public const int BRAC_SO_RECORD_FILENAMERULE	        = 143;  // 录制文件名命名规则（参数为：int型）
+        public const int BRAC_SO_RECORD_CLIPMODE				= 144;	// 录制视频裁剪模式（参数为：int型）
+        public const int BRAC_SO_RECORD_DISABLEDATEDIR		    = 145;	// 录制文件不按日期分目录保存，全部生成在指定文件夹中（参数为：int型， 0禁止[默认] 1 开启）
+        public const int BRAC_SO_RECORD_INSERTIMAGE             = 146;	// 录制过程中插入图片，Json字符串参数
 		
         public const int BRAC_SO_CORESDK_TMPDIR			        = 14;	// 设置AnyChat Core SDK临时目录（参数为字符串PCHAR类型，必须是完整的绝对路径）
-        public const int BRAC_SO_CORESDK_USEHWCODEC             = 18;	// 设置Intel CPU硬件加速特性        
+        public const int BRAC_SO_CORESDK_MAGICADJUST			= 15;	// 内核调试参数
+        public const int BRAC_SO_CORESDK_LOADCODEC			    = 16;	// 加载外部编解码器（参数为字符串TCHAR类型，必须是完整的绝对路径，包含文件名，或包含文件名的绝对路径）
+        public const int BRAC_SO_CORESDK_USEARMV6LIB			= 17;	// 强制使用ARMv6指令集的库，android平台使用（参数为：int型，1使用ARMv6指令集， 0内核自动判断[默认]）
+        public const int BRAC_SO_CORESDK_USEHWCODEC			    = 18;	// 使用平台内置硬件编解码器（参数为int型，0 不使用硬件编解码器[默认]  1 使用内置硬件编解码器）
+        public const int BRAC_SO_CORESDK_REMOTEDEBUG            = 19;	// 远程调试（参数为int型，表示目标用户ID，复用参数长度为调试类型参数）
         public const int BRAC_SO_CORESDK_PATH			        = 20;	// 设置AnyChat Core SDK相关组件路径（参数为字符串PCHAR类型，必须是完整的绝对路径）
 		public const int BRAC_SO_CORESDK_DUMPCOREINFO	        = 21;	// 输出内核信息到日志文件中，便于分析故障原因（参数为：int型：1 输出）
+        public const int BRAC_SO_CORESDK_MAINVERSION			= 22;	// 查询SDK主版本号号（参数为int型）
+        public const int BRAC_SO_CORESDK_SUBVERSION			    = 23;	// 查询SDK从版本号（参数为int型）
+        public const int BRAC_SO_CORESDK_BUILDTIME			    = 24;	// 查询SDK编译时间（参数为字符串TCHAR类型）
+        public const int BRAC_SO_CORESDK_ACTIVESTATE            = 25;	// 应用程序活动状态控制（参数为int型， 1 应用程序处于活动状态， 0 应用程序处于非活动状态），适用于iPhone等设备程序可后台运行的场合
 		public const int BRAC_SO_CORESDK_EXTVIDEOINPUT	        = 26;	// 外部扩展视频输入控制（参数为int型， 0 关闭外部视频输入[默认]， 1 启用外部视频输入）
 		public const int BRAC_SO_CORESDK_EXTAUDIOINPUT	        = 27;	// 外部扩展音频输入控制（参数为int型， 0 关闭外部音频输入[默认]， 1 启用外部音频输入）
-		
+        public const int BRAC_SO_CORESDK_LOWDELAYCTRL		    = 28;	// 低延迟模式控制（参数为int型，0 关闭低延迟模式[默认]， 1 启用低延迟模式）
+        public const int BRAC_SO_CORESDK_NEWGUID                = 29;	// 产生新的GUID字符串
+                                                                   
+        public const int BRAC_SO_CORESDK_TICKOUTUSER            = 110;  // 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
+        public const int BRAC_SO_CORESDK_DEVICEMODE             = 130;  // 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
+        public const int BRAC_SO_CORESDK_SCREENCAMERACTRL       = 131;  // 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
+        public const int BRAC_SO_CORESDK_DATAENCRYPTION         = 132;  // 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
+        public const int BRAC_SO_CORESDK_UPLOADLOGINFO          = 134;  // 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
+        public const int BRAC_SO_CORESDK_WRITELOG               = 135;  // 写入调试信息到客户端日志文件中
+        public const int BRAC_SO_CORESDK_NEWLOGFILE			    = 136;	// 产生新的日志文件
+        public const int BRAC_SO_CORESDK_SUPPORTSIP			    = 137;	// 判断当前是否支持SIP通信
+        public const int BRAC_SO_CORESDK_SUPPORTHTML5	    	= 138;	// 判断当前是否支持HTML5
+        public const int BRAC_SO_CORESDK_SUPPORTVIDEOCODEC  	= 210;	// 设置支持的视频编码器
+        public const int BRAC_SO_CORESDK_SUPPORTAUDIOCODEC  	= 211;	// 设置支持的音频编码器
+        public const int BRAC_SO_CORESDK_DISABLEMEDIACONSUL 	= 212;	// 禁止媒体协商
+        public const int BRAC_SO_CORESDK_QUERYTIMEOUTTIME   	= 213;	// 信息查询超时时间（参数为：int型，单位：ms，默认值1000）
+        public const int BRAC_SO_CORESDK_REMOTEASSISTHWND   	= 214;	// 远程协助窗口句柄
+        public const int BRAC_SO_CORESDK_REMOTEASSISTXPOS   	= 215;	// 远程协助窗口滚动条位置（X）
+        public const int BRAC_SO_CORESDK_REMOTEASSISTYPOS   	= 216;	// 远程协助窗口滚动条位置（Y）
+        public const int BRAC_SO_CORESDK_FITTENCENTLIVE	    	= 217;	// 兼容腾讯视频直播SDK
+        public const int BRAC_SO_CORESDK_DFCFLIVE		    	= 218;
+        public const int BRAC_SO_CORESDK_DISABLEDNSCONNECT  	= 219;	// 屏蔽DNS寻址
+        public const int BRAC_SO_CORESDK_LOGFILEROOTPATH    	= 220;	// 日志文件保存根路径（日志重定向，参数为字符串，绝对路径）
+        public const int BRAC_SO_CORESDK_LOGFILERULE	    	= 221;	// 客户端日志文件保存规则（参数为int型，0 自动覆盖[默认] 1 按日期保存，不覆盖）
+        public const int BRAC_SO_CORESDK_FILEENCANDDEC	    	= 222;	// 文件加解密控制（参数为字符串类型，JSON格式）
+        public const int BRAC_SO_CORESDK_PPTHELPERINIT	    	= 223;	// PPT播报环境初始化
+        public const int BRAC_SO_CORESDK_PPTFILECTRL            = 224;	// PPT文件控制
+    
         public const int BRAC_SO_LOCALVIDEO_BITRATECTRL	        = 30;	// 本地视频编码码率设置（参数为int型，单位bps，同服务器配置：VideoBitrate）
         public const int BRAC_SO_LOCALVIDEO_QUALITYCTRL	        = 31;	// 本地视频编码质量因子控制（参数为int型，同服务器配置：VideoQuality）
         public const int BRAC_SO_LOCALVIDEO_GOPCTRL		        = 32;	// 本地视频编码关键帧间隔控制（参数为int型，同服务器配置：VideoGOPSize）
@@ -54,8 +95,25 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_LOCALVIDEO_HEIGHTCTRL	        = 39;	// 本地视频采集分辨率高度控制（参数为int型，同服务器配置：VideoHeight）
 		public const int BRAC_SO_LOCALVIDEO_FOCUSCTRL	        = 90;	// 本地视频摄像头对焦控制（参数为int型，1表示自动对焦， 0表示手动对焦）
 		public const int BRAC_SO_LOCALVIDEO_PIXFMTCTRL	        = 91;	// 本地视频采集优先格式控制（参数为int型，-1表示智能匹配，否则优先采用指定格式，参考：BRAC_PixelFormat）
+		public const int BRAC_SO_LOCALVIDEO_OVERLAY			    = 92;	// 本地视频采用Overlay模式（参数为int型，1表示采用Overlay模式， 0表示普通模式[默认]）
+		public const int BRAC_SO_LOCALVIDEO_CODECID		    	= 93;	// 本地视频编码器ID设置（参数为int型，-1表示默认，如果设置的编码器ID不存在，则内核会采用默认的编码器）
+		public const int BRAC_SO_LOCALVIDEO_ROTATECTRL	    	= 94;	// 本地视频旋转控制（已失效，使用：BRAC_SO_LOCALVIDEO_CAMERAROTATION替代）
+		public const int BRAC_SO_LOCALVIDEO_CAPDRIVER	    	= 95;	// 本地视频采集驱动设置（参数为int型，0表示自动选择[默认]， 1 Video4Linux, 2 DirectShow, 3 Java采集[Android平台使用]）
+		public const int BRAC_SO_LOCALVIDEO_FIXCOLORDEVIA   	= 96;	// 修正视频采集颜色偏色（参数为int型，0表示关闭[默认]，1 开启）
+		public const int BRAC_SO_LOCALVIDEO_ORIENTATION	    	= 97;	// 本地视频设备方向（参数为：int型，定义为常量：ANYCHAT_DEVICEORIENTATION_XXXX）
+		public const int BRAC_SO_LOCALVIDEO_AUTOROTATION	    = 98;	// 本地视频自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
+		public const int BRAC_SO_LOCALVIDEO_SURFACEROTATION 	= 99;	// 设置本地视频预览显示旋转角度（参数为int型，角度）
+		public const int BRAC_SO_LOCALVIDEO_CAMERAFACE	    	= 100;	// 本地摄像头方向（前置、后置）
+		public const int BRAC_SO_LOCALVIDEO_CAMERAROTATION  	= 101;	// 本地摄像头旋转角度
+		public const int BRAC_SO_LOCALVIDEO_DEVICEROTATION  	= 102;	// 设备旋转角度
+		public const int BRAC_SO_LOCALVIDEO_DEVICEMODE		    = 103;	// 设备类型
 		public const int BRAC_SO_LOCALVIDEO_TVFORMAT	        = 104;  // 视频采集制式设置（参数为：int型，定义为DirectShow::strmif.h::AnalogVideoStandard，默认为：AnalogVideo_PAL_B）
+		public const int BRAC_SO_LOCALVIDEO_OVERLAYTIMESTAMP	= 105;	// 迭加时间戳到本地视频（参数为：int型， 0 不迭加[默认]， 1 迭加）
         public const int BRAC_SO_LOCALVIDEO_DEVICENAME          = 106;  // 本地视频采集设备名称，用于设置打开指定摄像头设备（参数为字符串类型）  
+		public const int BRAC_SO_LOCALVIDEO_CLIPMODE			= 107;	// 本地视频裁剪模式（参数为int型， 0 自动[默认]，禁止自动旋转时有效）
+		public const int BRAC_SO_LOCALVIDEO_SCREENHWND	    	= 108;	// 屏幕采集窗口句柄
+		public const int BRAC_SO_LOCALVIDEO_SCREENFLAGS	    	= 109;	// 屏幕采集标志（参数为int型）
+        public const int BRAC_SO_LOCALVIDEO_VIRTUALBK            = 111; // 本地视频迭加虚拟背景（字符串类型，JSON格式，包括虚拟背景路径以及其它参数项，为NULL表示取消虚拟背景）
 		
         public const int BRAC_SO_NETWORK_P2PPOLITIC		        = 40;	// 本地网络P2P策略控制（参数为：int型：0 禁止本地P2P，1 服务器控制P2P[默认]，2 上层应用控制P2P连接，3 按需建立P2P连接）
         public const int BRAC_SO_NETWORK_P2PCONNECT		        = 41;	// 尝试与指定用户建立P2P连接（参数为int型，表示目标用户ID），连接建立成功后，会通过消息反馈给上层应用，P2P控制策略=2时有效
@@ -65,6 +123,14 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_NETWORK_MULTICASTPOLITIC       = 45;	// 组播策略控制（参数为int型：0 执行服务器路由策略，禁止组播发送[默认]， 1 忽略服务器路由策略，只向组播组广播媒体流， 2 执行服务器路由策略，同时组播）
 		public const int BRAC_SO_NETWORK_TRANSBUFMAXBITRATE     = 46;	// 传输缓冲区、文件最大码率控制（参数为int型，0 不限制，以最快速率传输[默认]， 否则表示限制码率，单位为：bps）
 		public const int BRAC_SO_NETWORK_AUTORECONNECT	        = 47;	// 网络掉线自动重连功能控制（参数为int型，0 关闭， 1 开启[默认]）
+        public const int BRAC_SO_NETWORK_MTUSIZE				= 48;	// 设置网络层MTU大小（参数为int型）
+        public const int BRAC_SO_NETWORK_UDPSTATUS	    		= 49;	// UDP网络通信状态查询（参数为int型）
+        public const int BRAC_SO_NETWORK_LARGEDELAY		    	= 53;	// 网络高延迟模式，适用于卫星网络环境（参数为int型）
+        public const int BRAC_SO_NETWORK_IPV6DNS				= 54;	// IPv6域名解析控制（参数为int型，0 关闭， 1开启[默认]），传统网络（IPv4）下，禁用IPv6可提高域名解析速度
+
+        public const int BRAC_SO_PROXY_FUNCTIONCTRL			    = 50;	// 本地用户代理功能控制，（参数为：int型，1启动代理，0关闭代理[默认]）
+        public const int BRAC_SO_PROXY_VIDEOCTRL				= 51;	// 本地用户代理视频控制，将本地视频变为指定用户的视频对外发布（参数为int型，表示其它用户的userid）
+        public const int BRAC_SO_PROXY_AUDIOCTRL				= 52;	// 本地用户代理音频控制，将本地音频变为指定用户的音频对外发布（参数同BRAC_SO_PROXY_VIDEOCTRL）
 		
 		public const int BRAC_SO_STREAM_MAXBUFFERTIME	        = 60;	// 最大流缓冲时间（参数为int型，单位：毫秒，取值范围：500 ~ 5000，默认：800），发言模式设置值，歌曲模式会自动增加一倍
 		public const int BRAC_SO_STREAM_SMOOTHPLAYMODE	        = 61;	// 平滑播放模式（参数为int型，0 关闭[默认], 1 打开），打开状态下遇到视频丢帧时会继续播放（可能出现马赛克），不会卡住
@@ -75,15 +141,20 @@ namespace ANYCHATAPI
 		public const int BRAC_SO_VIDEOSHOW_DRIVERCTRL	        = 83;	// 视频显示驱动控制（参数为：int型，0 默认驱动， 1 Windows DirectShow，2 Windows GDI，3 SDL）
 		public const int BRAC_SO_VIDEOSHOW_AUTOROTATION	        = 85;	// 远程视频显示自动旋转控制（参数为int型， 0表示关闭， 1 开启[默认]，视频旋转时需要参考本地视频设备方向参数）
 		public const int BRAC_SO_VIDEOSHOW_CLIPMODE		        = 86;	// 远程视频显示旋转裁剪模式（参数为int型， 0 自动[默认]）
-		
-		public const int BRAC_SO_CORESDK_TICKOUTUSER	        = 110;  // 从服务器上踢掉指定用户（参数为int型，表示目标用户ID）
-		public const int BRAC_SO_CORESDK_DEVICEMODE		        = 130;  // 设备模式控制（局域网设备之间可以互相通信，不依赖服务器；参数为int型，0 关闭[默认]，1 开启）
-		public const int BRAC_SO_CORESDK_SCREENCAMERACTRL       = 131;  // 桌面共享功能控制（参数为：int型， 0 关闭[默认]， 1 开启）
-		public const int BRAC_SO_CORESDK_DATAENCRYPTION	        = 132;  // 数据加密控制（参数为：int型， 0 关闭[默认]， 1 开启）
-		public const int BRAC_SO_CORESDK_UPLOADLOGINFO	        = 134;  // 上传日志信息到服务器（参数为：int型，0 关闭[默认]， 1 开启）
-		public const int BRAC_SO_CORESDK_WRITELOG		        = 135;  // 写入调试信息到客户端日志文件中
+        public const int BRAC_SO_VIDEOSHOW_CBPIXFMT			    = 87;	// 视频数据回调格式（参数为int型）
+
+        public const int BRAC_SO_UDPTRACE_MODE				    = 160;  // UDP数据包跟踪模式
+        public const int BRAC_SO_UDPTRACE_PACKSIZE			    = 161;	// UDP数据包跟踪的大小，单位：BYTE
+        public const int BRAC_SO_UDPTRACE_BITRATE			    = 162;	// UDP数据包跟踪的包速率，单位：bps
+        public const int BRAC_SO_UDPTRACE_START				    = 163;	// UDP数据包跟踪控制（参数为int型，1 启动， 0 停止）
+        public const int BRAC_SO_UDPTRACE_LOCALRECVNUM	    	= 164;  // UDP数据包跟踪本地接收包数量
+        public const int BRAC_SO_UDPTRACE_SERVERRECVNUM		    = 165;	// UDP数据包跟踪服务器接收包数量
+        public const int BRAC_SO_UDPTRACE_SOURCESENDNUM		    = 166;	// UDP数据包跟踪源发包数量
+        public const int BRAC_SO_UDPTRACE_SENDUSERID			= 167;	// UDP数据包跟踪源用户ID
 
         public const int BRAC_SO_CLOUD_APPGUID                  = 300;  // 云平台应用GUID（参数为：字符串类型，连接服务器之前设置）
+        public const int BRAC_SO_CLOUD_ACCTYPE			    	= 301;	// 云平台应用集成账号类型
+        public const int BRAC_SO_CLOUD_APPID3RD				    = 302;	// 云平台应用集成时第三方平台的应用GUID
 
         // 用户状态标志定义，API：BRAC_QueryUserState 传入参数
         public const int BRAC_USERSTATE_CAMERA		            = 1;	// 用户摄像头状态（参数为DWORD型）
@@ -103,6 +174,14 @@ namespace ANYCHATAPI
 		public const int BRAC_USERSTATE_DEVICETYPE		        = 15;   // 查询指定用户的终端类型（参数为DWORD类型，返回值：0 Unknow， 1 Windows，2 Android，3 iOS，4 Web，5 Linux，6 Mac，7 Win Phone，8 WinCE）
 		public const int BRAC_USERSTATE_SELFUSERSTATUS	        = 16;	// 查询本地用户的当前状态（参数为DWORD类型，返回值：0 Unknow，1 Connected，2 Logined，3 In Room，4 Logouted，5 Link Closed）
 		public const int BRAC_USERSTATE_SELFUSERID		        = 17;	// 查询本地用户的ID（参数为DWORD类型，若用户登录成功，返回用户实际的userid，否则返回-1）
+        public const int BRAC_USERSTATE_VIDEOROTATION		    = 18;	// 查询指定用户的当前视频旋转角度（参数为DWORD类型，返回角度值）
+        public const int BRAC_USERSTATE_VIDEOMIRRORED		    = 19;	// 查询指定用户的视频是否需要镜像翻转
+        public const int BRAC_USERSTATE_AUDIOCODECID			= 20;	// 查询指定用户的音频编码器ID
+        public const int BRAC_USERSTATE_VIDEOCODECID			= 21;	// 查询指定用户的视频编码器ID
+
+        // 房间状态标志定义（API：BRAC_QueryRoomState 传入参数）
+        public const int BRAC_ROOMSTATE_ROOMNAME				= 1;	// 房间名称（参数为字符串TCHAR类型）
+        public const int BRAC_ROOMSTATE_ONLINEUSERS			    = 2;	// 房间在线用户数（参数为DWORD型，不包含自己）
 		
 		// 组播策略定义
 		public const int BRAC_MCPOLITIC_DISABLE			        = 0;	// 执行服务器路由策略，禁止所有组播发送[默认]
@@ -122,7 +201,9 @@ namespace ANYCHATAPI
 		public const int BRAC_TRANSTASK_BITRATE			= 2;	// 传输任务当前传输码率（参数为：int型，单位：bps）
 		public const int BRAC_TRANSTASK_STATUS			= 3;	// 传输任务当前状态（参数为：int型）
 		public const int BRAC_TRANSTASK_SAVEASPATH		= 4;	// 文件传输任务另存为路径设置（参数为字符串TCHAR类型）
-		
+        public const int BRAC_TRANSTASK_SOURCEFILE		= 5;	// 源文件名（含路径，参数为字符串，TCHAR类型）
+        public const int BRAC_TRANSTASK_JSONSTATUS		= 6;	// 传输任务状态，Json字符串		
+
 		// 录像功能标志定义（API：BRAC_StreamRecordCtrl 传入参数）
 		public const int BRAC_RECORD_FLAGS_VIDEO		= 0x01;     // 录制视频
 		public const int BRAC_RECORD_FLAGS_AUDIO		= 0x02;     // 录制音频
@@ -148,6 +229,9 @@ namespace ANYCHATAPI
 		public const int ANYCHAT_RECORD_FLAGS_SNAPSHOT  = BRAC_RECORD_FLAGS_SNAPSHOT;
 		public const int ANYCHAT_RECORD_FLAGS_LOCALCB   = BRAC_RECORD_FLAGS_LOCALCB;
 		public const int ANYCHAT_RECORD_FLAGS_STREAM	= BRAC_RECORD_FLAGS_STREAM;
+        public const int ANYCHAT_RECORD_FLAGS_USERFILENAME = BRAC_RECORD_FLAGS_USERFILENAME;
+        public const int ANYCHAT_RECORD_FLAGS_MULTISTREAM = BRAC_RECORD_FLAGS_MULTISTREAM;
+        public const int ANYCHAT_RECORD_FLAGS_ERRORCODE	= 0x00004000;	// 支持出错代码
 		
 		// 视频呼叫事件类型定义（API：BRAC_VideoCallControl 传入参数、VideoCallEvent回调参数）
 		public const int BRAC_VIDEOCALL_EVENT_REQUEST	= 1;	// 呼叫请求
@@ -162,6 +246,8 @@ namespace ANYCHATAPI
 		public const int BRAC_VIDEOCALL_FLAGS_FBSRCVIDEO    = 0x20;	    // 禁止源（呼叫端）视频
 		public const int BRAC_VIDEOCALL_FLAGS_FBTARAUDIO    = 0x40;	    // 禁止目标（被呼叫端）音频
 		public const int BRAC_VIDEOCALL_FLAGS_FBTARVIDEO    = 0x80;	    // 禁止目标（被呼叫端）视频
+        public const int BRAC_VIDEOCALL_FLAGS_ASSISTREQ	    = 0x0100;	// 请求目标用户远程协助
+        public const int BRAC_VIDEOCALL_FLAGS_CONTROLREQ	= 0x0200;	// 请求控制目标用户
 		
 		// 远程视频方向修正标志定义
 		public const int BRAC_ROTATION_FLAGS_MIRRORED	    = 0x1000;   // 图像需要镜像翻转
@@ -181,7 +267,6 @@ namespace ANYCHATAPI
 		public const int BRAC_DATAENCDEC_FLAGS_VIDEO	= 0x20; // 视频编码数据
 		public const int BRAC_DATAENCDEC_FLAGS_BUFFER	= 0x40; // 透明通道数据
 		public const int BRAC_DATAENCDEC_FLAGS_TXTMSG	= 0x80; // 文字聊天数据
-
 
         // SDK消息定义
         public const int WM_GV = 0x0400 + 200;
@@ -212,17 +297,22 @@ namespace ANYCHATAPI
         public const int GV_ERR_SUCCESS			= 0;	        // 成功
 
         // SDK功能模式参数定义，应用于BRAC_InitSDK API
-        public const ulong BRAC_FUNC_VIDEO_CBDATA	    = 0x00000001L;  // 通过回调函数输出视频数据
-        public const ulong BRAC_FUNC_VIDEO_AUTODISP	    = 0x00000002L;  // 由SDK包处理视频，将视频显示在指定的窗口上
-        public const ulong BRAC_FUNC_AUDIO_CBDATA	    = 0x00000004L;  // 通过回调函数输出音频数据
-        public const ulong BRAC_FUNC_AUDIO_AUTOPLAY	    = 0x00000008L;  // 由SDK包处理音频，直接播放
-        public const ulong BRAC_FUNC_CONFIG_LOCALINI    = 0x00000010L;  // 生成本地配置文件（AnyChatSDK.ini）
-        public const ulong BRAC_FUNC_FIREWALL_OPEN	    = 0x00000020L;  // 允许SDK操作Windows防火墙，将当前应用程序加入防火墙访问列表（避免Windows提示用户是否阻止当前应用程序）
-        public const ulong BRAC_FUNC_CHKDEPENDMODULE    = 0x00000040L;  // 自动检查SDK所依赖的组件，并自动注册
-        public const ulong BRAC_FUNC_AUDIO_VOLUMECALC   = 0x00000080L;  // 由SDK自动计算语音的音量
-        public const ulong BRAC_FUNC_AUDIO_AUTOVOLUME   = 0x00000100L;  // 允许SDK自动控制Mic录音音量
-        public const ulong BRAC_FUNC_NET_SUPPORTUPNP    = 0x00000200L;  // 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
-        public const ulong BRAC_FUNC_DISABLEDECODE      = 0x00000400L;  // 禁止对收到的数据进行解码和播放，为了提高代理客户端的数据转发性能，可设置该标志，否则不能设置该标志
+        public const ulong BRAC_FUNC_VIDEO_CBDATA	    = 0x00000001;  // 通过回调函数输出视频数据
+        public const ulong BRAC_FUNC_VIDEO_AUTODISP	    = 0x00000002;  // 由SDK包处理视频，将视频显示在指定的窗口上
+        public const ulong BRAC_FUNC_AUDIO_CBDATA	    = 0x00000004;  // 通过回调函数输出音频数据
+        public const ulong BRAC_FUNC_AUDIO_AUTOPLAY	    = 0x00000008;  // 由SDK包处理音频，直接播放
+        public const ulong BRAC_FUNC_CONFIG_LOCALINI    = 0x00000010;  // 生成本地配置文件（AnyChatSDK.ini）
+        public const ulong BRAC_FUNC_FIREWALL_OPEN	    = 0x00000020;  // 允许SDK操作Windows防火墙，将当前应用程序加入防火墙访问列表（避免Windows提示用户是否阻止当前应用程序）
+        public const ulong BRAC_FUNC_CHKDEPENDMODULE    = 0x00000040;  // 自动检查SDK所依赖的组件，并自动注册
+        public const ulong BRAC_FUNC_AUDIO_VOLUMECALC   = 0x00000080;  // 由SDK自动计算语音的音量
+        public const ulong BRAC_FUNC_AUDIO_AUTOVOLUME   = 0x00000100;  // 允许SDK自动控制Mic录音音量
+        public const ulong BRAC_FUNC_NET_SUPPORTUPNP    = 0x00000200;  // 允许SDK打开用户网络中的UPNP设备，如果用户的路由器或是防火墙支持UPNP协议，则可提高P2P打洞的成功率
+        public const ulong BRAC_FUNC_DISABLEDECODE      = 0x00000400;  // 禁止对收到的数据进行解码和播放，为了提高代理客户端的数据转发性能，可设置该标志，否则不能设置该标志
+        public const ulong BRAC_FUNC_MAINTHREADCB		= 0x00000800;  // 主线程进行回调操作，默认是多线程环境下的数据回调
+        public const ulong BRAC_FUNC_AUDIO_FORBIDCFGHW	= 0x00001000;  // 禁止修改音频硬件配置
+        public const ulong BRAC_FUNC_CORE_FORBIDWINMSG	= 0x00002000;  // 禁止使用windows消息循环
+        public const ulong BRAC_FUNC_AUDIO_LARGEBUFFER	= 0x00004000;  // 音频大缓冲区模式，适合音乐播放类应用
+        public const ulong BRAC_FUNC_NET_LARGEDELAY     = 0x00010000;  // 网络高延迟模式，适用于卫星网络环境
 
         // 回调函数类型定义（API：BRAC_SetCallBack 传入参数）
         public const int BRAC_CBTYPE_NOTIFYMESSAGE	= 1;	// 异步消息通知回调
@@ -244,6 +334,11 @@ namespace ANYCHATAPI
         public const int BRAC_CBTYPE_OBJECTEVENT    = 18;	// 业务对象事件通知
         public const int BRAC_CBTYPE_VIDEODATAEX2   = 19;   // 视频数据扩展回调（支持多路流）
         public const int BRAC_CBTYPE_AUDIODATAEX2   = 20;   // 音频数据扩展回调（支持多路流）
+        public const int BRAC_CBTYPE_STREAMRECORDEX2 = 21;	// 录像快照任务完成通知扩展回调（支持出错代码）
+        public const int BRAC_CBTYPE_TRANSFILEEX    = 22;	// 文件传输扩展回调（支持出错代码）
+        public const int BRAC_CBTYPE_CORESDKEVENT   = 23;	// Core SDK事件回调（Json格式）
+        public const int BRAC_CBTYPE_CORESDKDATA    = 24;	// Core SDK数据回调
+
 
         //用户多媒体流参数定义（API：BRAC_GetUserStreamInfo 传入参数）
         public const int BRAC_STREAMINFO_VIDEOWIDTH         = 180;	// 视频流宽度
@@ -257,6 +352,77 @@ namespace ANYCHATAPI
         public const int BRAC_STREAMINFO_AUDIOBITRATE       = 192;	// 音频流码率，单位：bps
         public const int BRAC_STREAMINFO_AUDIOCODECID       = 193;	// 音频流编码器ID
         public const int BRAC_STREAMINFO_AUDIOPACKLOSSRATE  = 194;	// 音频流丢包率
+
+        // 视频裁剪模式定义
+        public const int ANYCHAT_VIDEOCLIPMODE_UNKNOW		= -1;	// 未知模式，不需要做裁剪时使用
+        public const int ANYCHAT_VIDEOCLIPMODE_AUTO			= 0;	// 默认模式，以最大比例进行裁剪，然后再整体拉伸，画面保持比例，但被裁剪画面较大
+        public const int ANYCHAT_VIDEOCLIPMODE_OVERLAP		= 1;	// 重叠模式，只取最大有效部分，对边缘进行裁剪
+        public const int ANYCHAT_VIDEOCLIPMODE_SHRINK		= 2;	// 缩小模式，缩小到合适的比例，不进行裁剪
+        public const int ANYCHAT_VIDEOCLIPMODE_STRETCH		= 3;	// 平铺模式，不进行裁剪，但可能导致画面不成比例
+        public const int ANYCHAT_VIDEOCLIPMODE_DYNAMIC		= 4;	// 动态模式，由上层应用根据分辩率来调整显示表面，保持画面不变形
+
+        // 服务器信息查询常量定义（API：BRAC_QueryInfoFromServer 传入参数）
+        public const int ANYCHAT_SERVERQUERY_USERIDBYNAME	= 1;	// 根据用户昵称查询用户ID
+        public const int ANYCHAT_SERVERQUERY_USERIDBYSTRID	= 2;	// 根据字符串ID查询用户ID
+        public const int ANYCHAT_SERVERQUERY_STRIDBYUSERID	= 3;	// 根据用户ID查询字符串ID
+        public const int ANYCHAT_SERVERQUERY_PPTFILEINFO	= 10;	// PPT文件信息
+        public const int ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	= 100;	// 查询指定队列的坐席服务信息
+        public const int ANYCHAT_SERVERQUERY_RUNNINGSTATUS	= 200;	// 查询服务器运行状态
+        public const int ANYCHAT_SERVERQUERY_ONLINEUSERS	= 201;	// 查询服务器在线用户数
+
+        // SDK控制常量定义（API：BRAC_SDKControl 传入参数）
+        public const int ANYCHAT_SDKCTRL_BASE				= 1;	// 基本功能控制
+        public const int ANYCHAT_SDKCTRL_OBJECT				= 20;	// 对象操作
+        public const int ANYCHAT_SDKCTRL_VIDEOCALL			= 30;	// 呼叫控制
+        public const int ANYCHAT_SDKCTRL_USERINFO			= 40;	// 用户信息控制
+        public const int ANYCHAT_SDKCTRL_STREAMPLAY			= 50;	// 流媒体播放
+        public const int ANYCHAT_SDKCTRL_NETWORK			= 60;	// 网络控制
+        public const int ANYCHAT_SDKCTRL_MEDIA				= 70;	// 媒体控制
+        public const int ANYCHAT_SDKCTRL_FILEDELETE			= 80;	// 删除文件
+        public const int ANYCHAT_SDKCTRL_FILEINFO			= 81;	// 获取文件信息
+        public const int ANYCHAT_SDKCTRL_DISKSIZE			= 82;	// 获取磁盘容量
+        public const int ANYCHAT_SDKCTRL_FILEENCRYPT		= 83;	// 文件加解密控制
+        public const int ANYCHAT_SDKCTRL_PPTHELPERINIT		= 90;	// PPT播报环境初始化
+        public const int ANYCHAT_SDKCTRL_PPTFILECTRL		= 91;	// PPT文件控制
+        public const int ANYCHAT_SDKCTRL_PPTFILEINFO		= 92;	// PPT文件信息
+
+        // 媒体播放事件类型定义
+        public const int ANYCHAT_STREAMPLAY_EVENT_START		= 3;	// 播放开始事件
+        public const int ANYCHAT_STREAMPLAY_EVENT_FINISH	= 4;	// 播放结束事件
+
+        // 媒体播放标志定义（API：BRAC_StreamPlayInit 传入参数）
+        public const int ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT	= 0x00000001;	// 播放音频流代替本地音频输入（Mic）
+        public const int ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT	= 0x00000002;	// 播放视频流代替本地视频输入（Camera）
+        public const int ANYCHAT_STREAMPLAY_FLAGS_CALLBACKDATA		= 0x00000010;	// 回调数据给上层
+
+        // 媒体播放信息类型定义（API：BRAC_StreamPlayGetInfo 传入参数）
+        public const int ANYCHAT_STREAMPLAY_INFO_JSONVALUE	= 1;	// 包含所有播放信息的Json字符串
+
+        // 媒体播放控制类型定义（API：BRAC_StreamPlayControl 传入参数）
+        public const int ANYCHAT_STREAMPLAY_CTRL_START		= 1;	// 开始播放
+        public const int ANYCHAT_STREAMPLAY_CTRL_PAUSE		= 2;	// 暂停播放
+        public const int ANYCHAT_STREAMPLAY_CTRL_STOP		= 3;	// 停止播放
+        public const int ANYCHAT_STREAMPLAY_CTRL_SEEK		= 4;	// 位置拖动
+        public const int ANYCHAT_STREAMPLAY_CTRL_SPEEDCTRL	= 5;	// 速度调整
+        public const int ANYCHAT_STREAMPLAY_CTRL_OPENLOOP	= 6;	// 打开循环播放
+        public const int ANYCHAT_STREAMPLAY_CTRL_CLOSELOOP	= 7;	// 关闭循环播放
+
+        
+        // CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
+        public const int ANYCHAT_CORESDKEVENT_BASEEVENT		= 1;	// SDK基础事件
+        public const int ANYCHAT_CORESDKEVENT_CAMERASTATE	= 10;	// 摄像头状态事件
+        public const int ANYCHAT_CORESDKEVENT_MICSTATE		= 11;	// Mic状态事件
+        public const int ANYCHAT_CORESDKEVENT_TRANSFILE		= 12;	// 文件传输事件
+        public const int ANYCHAT_CORESDKEVENT_STREAMPLAY	= 30;	// 媒体播放事件
+        public const int ANYCHAT_CORESDKEVENT_PPTHELPER		= 31;	// PPTHelper事件
+
+        // CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
+        public const int ANYCHAT_CORESDKDATA_AUDIO			= 1;	// 音频数据
+        public const int ANYCHAT_CORESDKDATA_VIDEO			= 2;	// 视频数据
+        public const int ANYCHAT_CORESDKDATA_MESSAGE		= 3;	// 文字数据
+        public const int ANYCHAT_CORESDKDATA_BUFFER         = 4;	// 缓冲区数据
+
+
 
         #region AnyChat业务对象常量定义
 
@@ -278,6 +444,14 @@ namespace ANYCHATAPI
         /// 客户端用户对象
         /// </summary>
         public const int ANYCHAT_OBJECT_TYPE_CLIENTUSER = 8;
+        /// <summary>
+        /// 业务技能对象
+        /// </summary>
+        public const int ANYCHAT_OBJECT_TYPE_SKILL		= 9;
+        /// <summary>
+        /// 队列分组对象
+        /// </summary>
+        public const int ANYCHAT_OBJECT_TYPE_QUEUEGROUP	= 10;
 
         #endregion
 
@@ -286,19 +460,23 @@ namespace ANYCHATAPI
         /// <summary>
         /// 普通客户
         /// </summary>
-        public const int ANYCHAT_OBJECT_FLAGS_CLIENT    = 0;
+        public const int ANYCHAT_OBJECT_FLAGS_CLIENT    = 0x00;
         /// <summary>
         /// 坐席用户
         /// </summary>
-        public const int ANYCHAT_OBJECT_FLAGS_AGENT     = 2;
+        public const int ANYCHAT_OBJECT_FLAGS_AGENT     = 0x02;
         /// <summary>
         /// 管理用户
         /// </summary>
-        public const int ANYCHAT_OBJECT_FLAGS_MANANGER  = 4;
+        public const int ANYCHAT_OBJECT_FLAGS_MANANGER  = 0x04;
         /// <summary>
         /// 自动服务模式
         /// </summary>
-        public const int ANYCHAT_OBJECT_FLAGS_AUTOMODE  = 16;
+        public const int ANYCHAT_OBJECT_FLAGS_AUTOMODE  = 0x10;
+        /// <summary>
+        /// 游客登录方式
+        /// </summary>
+        public const int ANYCHAT_OBJECT_FLAGS_GUESTLOGIN =	0x20;
         /// <summary>
         /// 无效的对象ID
         /// </summary>
@@ -340,6 +518,14 @@ namespace ANYCHATAPI
         /// 对象标签，字符串，上层应用自定义
         /// </summary>
         public const int ANYCHAT_OBJECT_INFO_STRINGTAG      = 13;
+        /// <summary>
+        /// 对象GUID
+        /// </summary>
+        public const int ANYCHAT_OBJECT_INFO_GUID			= 14;
+        /// <summary>
+        /// 对象状态属性集合
+        /// </summary>
+        public const int ANYCHAT_OBJECT_INFO_STATUSJSON		= 15;
 
         #endregion
 
@@ -361,6 +547,23 @@ namespace ANYCHATAPI
         /// 服务区域内队列的数量
         /// </summary>
         public const int ANYCHAT_AREA_INFO_QUEUECOUNT       = 404;
+        /// <summary>
+        /// 服务区域客服ID列表
+        /// </summary>
+        public const int ANYCHAT_AREA_INFO_AGENTIDLIST		= 405;
+        /// <summary>
+        /// 服务区域空闲坐席数量
+        /// </summary>
+        public const int ANYCHAT_AREA_INFO_IDLEAGENTCOUNT	= 406;
+        /// <summary>
+        /// 服务区域状态信息，返回Json数据
+        /// </summary>
+        public const int ANYCHAT_AREA_INFO_STATUSJSON		= 407;
+        /// <summary>
+        /// 服务区域内等候服务用户数（出了队列，但没有坐席服务的用户）
+        /// </summary>
+        public const int ANYCHAT_AREA_INFO_WAITINGCOUNT		= 408;
+
 
         #endregion
 
@@ -386,7 +589,10 @@ namespace ANYCHATAPI
         /// 自己在队列中的等待时间（单位：秒）
         /// </summary>
         public const int ANYCHAT_QUEUE_INFO_WAITTIMESECOND      = 508;
-
+        /// <summary>
+        /// 服务当前队列的坐席信息，返回Json数据
+        /// </summary>
+        public const int ANYCHAT_QUEUE_INFO_AGENTINFO		    = 509;
         #endregion
 
         #region 对象属性定义_客服（坐席）
@@ -411,6 +617,18 @@ namespace ANYCHATAPI
         /// 累计服务的用户数
         /// </summary>
         public const int ANYCHAT_AGENT_INFO_SERVICETOTALNUM     = 605;
+        /// <summary>
+        /// 当前服务用户信息，字符串
+        /// </summary>
+        public const int ANYCHAT_AGENT_INFO_SERVICEUSERINFO	    = 606;
+        /// <summary>
+        /// 关联队列List，字符串
+        /// </summary>
+        public const int ANYCHAT_AGENT_INFO_RELATEQUEUES		= 607;
+        /// <summary>
+        /// 服务失败用户数
+        /// </summary>
+        public const int ANYCHAT_AGENT_INFO_SERVICEFAILNUM	    = 608;	
 
         #endregion
 
@@ -432,7 +650,10 @@ namespace ANYCHATAPI
         /// 暂停服务
         /// </summary>
         public const int ANYCHAT_AGENT_STATUS_PAUSED            = 3;
-
+        /// <summary>
+        /// 离线
+        /// </summary>
+        public const int ANYCHAT_AGENT_STATUS_OFFLINE		    = 10;
         #endregion
 
         #endregion
@@ -453,6 +674,14 @@ namespace ANYCHATAPI
         /// 对象调试信息输出
         /// </summary>
         public const int ANYCHAT_OBJECT_CTRL_DEBUGOUTPUT    = 4;
+        /// <summary>
+        /// 删除对象
+        /// </summary>
+        public const int ANYCHAT_OBJECT_CTRL_DELETE			= 5;
+        /// <summary>
+        /// 修改对象信息
+        /// </summary>
+        public const int ANYCHAT_OBJECT_CTRL_MODIFY			= 6;
 
         #endregion
 
@@ -584,7 +813,10 @@ namespace ANYCHATAPI
         /// 暂时没有客户，请等待
         /// </summary>
         public const int ANYCHAT_AGENT_EVENT_WAITINGUSER    = 603;
-
+        /// <summary>
+        /// 坐席准备好，可以发起呼叫
+        /// </summary>
+        public const int ANYCHAT_AGENT_EVENT_ISREADY        = 604;
         #endregion
 
         #endregion
@@ -605,6 +837,12 @@ namespace ANYCHATAPI
 			BRAC_PIX_FMT_YUV420P,   //< Planar YUV 4:2:0, 12bpp, (1 Cr & Cb sample per 2x2 Y samples)
 			BRAC_PIX_FMT_RGB565,    //< 对应于：MEDIASUBTYPE_RGB565
 			BRAC_PIX_FMT_RGB555,    //< 对应于：MEDIASUBTYPE_RGB555
+            BRAC_PIX_FMT_NV12,							//Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is U and V
+	        BRAC_PIX_FMT_NV21,							//Planar YUV 4:2:0, 12bpp, Two arrays, one is all Y, the other is V and U
+	        BRAC_PIX_FMT_NV16,							//YUV422SP
+                                                        ///
+	        BRAC_PIX_FMT_MJPEG = 200,
+	        BRAC_PIX_FMT_H264,///
         }
 		
 		// 视频显示驱动定义
@@ -691,6 +929,8 @@ namespace ANYCHATAPI
         /// <param name="userValue">自定义参数</param>
         public delegate void TransFileCallBack(int userId, string fileName, string filePath, int fileLength, int wParam, int lParam, int taskId, int userValue);
 
+        public delegate void TransFileExCallBack(int userId, int errorCode, string fileName, string tempFilePath, int fileLength, int flags, string taskGuid, string userStr, int userValue);
+
         /// <summary>
         /// 音量变化回调函数定义
         /// </summary>
@@ -709,7 +949,7 @@ namespace ANYCHATAPI
         /// <param name="param">参数</param>
         /// <param name="recordType">录像类型,1录像,0拍照</param>
         /// <param name="userValue">用户参数</param>
-        public delegate void RecordCallBack(int userId, string filePath, int param, bool recordType,int userValue);
+        //public delegate void RecordCallBack(int userId, string filePath, int param, int recordType,int userValue);
 
         /// <summary>
         /// 录像回调函数（扩展）
@@ -721,7 +961,20 @@ namespace ANYCHATAPI
         /// <param name="dwParam">用户自定义参数（整形）</param>
         /// <param name="lpUserStr">用户自定义参数（字符串）</param>
         /// <param name="lpCallBackUserValue">回调自定义参数</param>
-        public delegate void RecordCallBackEx(int dwUserId, string lpFileName, int dwElapse, int dwFlags, int dwParam, string lpUserStr, IntPtr lpCallBackUserValue);
+        public delegate void RecordCallBackEx(int dwUserId, string lpFileName, int dwElapse, int dwFlags, int dwParam, string lpUserStr, int userValue);
+
+        /// <summary>
+        /// 录像回调函数（扩展）
+        /// </summary>
+        /// <param name="dwUserId">用户ID</param>
+        /// <param name="errorCode">录像返回代码，0--成功、非0不成功</param>
+        /// <param name="lpFileName">录像保存路径</param>
+        /// <param name="dwElapse">录像时长，单位：秒（s）</param>
+        /// <param name="dwFlags">录像标志</param>
+        /// <param name="dwParam">用户自定义参数（整形）</param>
+        /// <param name="lpUserStr">用户自定义参数（字符串）</param>
+        /// <param name="lpCallBackUserValue">回调自定义参数</param>
+        public delegate void RecordCallBackEx2(int dwUserId, int errorCode, string lpFileName, int dwElapse, int dwFlags, int dwParam, string lpUserStr, int userValue);
 
         /// <summary>
         /// 视频回调函数
@@ -991,8 +1244,8 @@ namespace ANYCHATAPI
         /// <param name="userValue"></param>
         /// <returns>0为成功，否则失败</returns>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetRecordSnapShotCallBack", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SetRecordCallBack(RecordCallBack function, int userValue);
-		
+        public static extern int SetRecordCallBack(RecordSnapShot_CallBack function, int userValue);
+
 		/// <summary>
         /// 设置数据加密、解密回调函数
         /// </summary>
@@ -1010,7 +1263,7 @@ namespace ANYCHATAPI
         /// <param name="param"></param>
         /// <param name="recordType"></param>
         /// <param name="userValue"></param>
-        public delegate void RecordSnapShot_CallBack(int userId, string fileName, int param, bool recordType, int userValue);
+        public delegate void RecordSnapShot_CallBack(int userId, string fileName, int param, int recordType, int userValue);
 
         /// <summary>
         /// 录像、快照任务完成扩展回调函数定义
@@ -1062,6 +1315,24 @@ namespace ANYCHATAPI
         /// <param name="strParam"></param>
         /// <returns></returns>
         public delegate void OnObjectEventNotifyCallBack(int dwObjectType, int dwObjectId, int dwEventType, int dwParam1, int dwParam2, int dwParam3, int dwParam4, string strParam, int lpUserValue);
+
+        /// <summary>
+        /// Core SDK事件通知（Json格式）
+        /// </summary>
+        /// <param name="eventType"></param>
+        /// <param name="eventJsonStr"></param>
+        /// <param name="userValue"></param>
+        public delegate void OnCoreSDKEventCallBack(int eventType, string eventJsonStr, int userValue);
+
+        /// <summary>
+        /// Core SDK数据流回调
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <param name="buf"></param>
+        /// <param name="len"></param>
+        /// <param name="jsonStr"></param>
+        /// <param name="userValue"></param>
+        public delegate void OnCoreSDKDataCallBack(int dataType, int buf, int len, string jsonStr, int userValue);
 
         /// <summary>
         /// 设置回调函数
@@ -1373,6 +1644,18 @@ namespace ANYCHATAPI
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_TransFile", CallingConvention = CallingConvention.Cdecl)]
         public static extern int TransFile(int userid, string localFilePath, int wParam, int lParam, int flag, ref int taskId);
 
+        /// <summary>
+        /// 传送文件扩展接口
+        /// </summary>
+        /// <param name="taskGuid"></param>
+        /// <param name="userid"></param>
+        /// <param name="localFileName"></param>
+        /// <param name="flag"></param>
+        /// <param name="userString"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_TransFileEx", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int TransFileEx(string taskGuid, int userid, string localFileName, int flag, string userString);
+
 		/// <summary>
         /// 查询传输任务相关信息
         /// </summary>
@@ -1383,7 +1666,10 @@ namespace ANYCHATAPI
         public static extern int QueryTransTaskInfo(int userid, int taskid, int infoname, ref double infoval, int infolen);
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_QueryTransTaskInfo", CallingConvention = CallingConvention.Cdecl)]
         public static extern int QueryTransTaskInfo(int userid, int taskid, int infoname, ref int infoval, int infolen);
-		
+
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_QueryTransTaskInfoEx", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int QueryTransTaskInfoEx(string taskGuid, int infoname, ref int infoval, int infolen);
+
 		/// <summary>
         /// 取消传输任务
         /// </summary>
@@ -1392,7 +1678,9 @@ namespace ANYCHATAPI
         /// <returns>0为成功，否则失败</returns>
 		[DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_CancelTransTask", CallingConvention = CallingConvention.Cdecl)]
         public static extern int CancelTransTask(int userid, int taskid);
-		
+
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_CancelTransTaskEx", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int CancelTransTaskEx(string taskGuid, int userId, int taskId);
 		
         /// <summary>
         /// 开启或关闭录像
@@ -1560,18 +1848,27 @@ namespace ANYCHATAPI
         /// </summary>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_InputVideoData", CallingConvention = CallingConvention.Cdecl)]
         public static extern int InputVideoData(IntPtr lpVideoFrame, int dwSize, int dwTimeStamp);
-		
+
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_InputVideoDataEx", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int InputVideoDataEx(int streamIndex, IntPtr videoFrame, int size, int timeStamp, int flags);
+
 		/// <summary>
         /// 设置外部输入音频格式
         /// </summary>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetInputAudioFormat", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetInputAudioFormat(int dwChannels, int dwSamplesPerSec, int dwBitsPerSample, int dwFlags);
-		
+
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SetInputAudioFormatEx", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetInputAudioFormatEx(int streamIndex,int codecId, int dwChannels, int dwSamplesPerSec, int dwBitsPerSample, int dwFlags);
+	
 		/// <summary>
         /// 外部音频数据输入
         /// </summary>
         [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_InputAudioData", CallingConvention = CallingConvention.Cdecl)]
         public static extern int InputAudioData(IntPtr lpSamples, int dwSize, int dwTimeStamp);
+
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_InputAudioDataEx", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int InputAudioDataEx(int streamIndex, IntPtr samples, int size, int timeStamp, int flags);
 		
 		/// <summary>
         /// 视频呼叫事件控制（请求、回复、挂断等）
@@ -1717,6 +2014,85 @@ namespace ANYCHATAPI
 
         #endregion
 
+        /// <summary>
+        /// 向服务器动态查询相关信息
+        /// </summary>
+        /// <param name="infoName"></param>
+        /// <param name="inParam"></param>
+        /// <param name="inSize"></param>
+        /// <param name="result"></param>
+        /// <param name="outSize"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_QueryInfoFromServer", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int QueryInfoFromServer(int infoName, ref int inParam, int inSize, ref string result, ref int outSize, int flags = 0);
+
+        /// <summary>
+        /// SDK控制
+        /// </summary>
+        /// <param name="dwCtrlCode"></param>
+        /// <param name="inParam"></param>
+        /// <param name="result"></param>
+        /// <param name="bufSize"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_SDKControl", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SDKControl(int dwCtrlCode, string inParam, string result, int bufSize);
+
+        /// <summary>
+        /// 流媒体播放初始化
+        /// </summary>
+        /// <param name="taskGuid"></param>
+        /// <param name="streamPath"></param>
+        /// <param name="flags"></param>
+        /// <param name="strParam"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_StreamPlayInit", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int StreamPlayInit(string taskGuid, string streamPath, int flags, string strParam);
+
+        /// <summary>
+        /// 流媒体播放控制
+        /// </summary>
+        /// <param name="taskGuid"></param>
+        /// <param name="ctrlCode"></param>
+        /// <param name="param"></param>
+        /// <param name="flags"></param>
+        /// <param name="strParam"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_StreamPlayControl", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int StreamPlayControl(string taskGuid, int ctrlCode, int param, int flags, string strParam);
+
+        /// <summary>
+        /// 流媒体播放设置视频显示位置
+        /// </summary>
+        /// <param name="taskGuid"></param>
+        /// <param name="hWnd"></param>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        /// <param name="right"></param>
+        /// <param name="bottom"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_StreamPlaySetVideoPos", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int StreamPlaySetVideoPos(string taskGuid, IntPtr hWnd, int left = 0, int top = 0, int right = 0, int bottom = 0);
+
+        /// <summary>
+        /// 流媒体播放获取参数信息
+        /// </summary>
+        /// <param name="taskGuid"></param>
+        /// <param name="infoName"></param>
+        /// <param name="infoValue"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_StreamPlayGetInfo", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int StreamPlayGetInfo(string taskGuid, int infoName, string infoValue, int size);
+
+        /// <summary>
+        /// 流媒体播放释放资源
+        /// </summary>
+        /// <param name="taskGuid"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
+        [DllImport(AnyChatCoreSDKDll, EntryPoint = "BRAC_StreamPlayDestroy", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int StreamPlayDestroy(string taskGuid, int flags);
         #endregion
     }
 }

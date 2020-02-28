@@ -1,8 +1,6 @@
 package com.bairuitech.anychat;		// 不能修改包的名称
 
 import java.lang.ref.WeakReference;
-
-import android.util.Log;
 import android.view.Surface;
 import android.content.Context;
 import android.os.Bundle;
@@ -24,6 +22,7 @@ public class AnyChatCoreSDK
 	AnyChatRecordEvent		recordEvent;
 	AnyChatObjectEvent		objectEvent;
 	AnyChatCoreSDKEvent		coresdkEvent;
+	AnyChatStreamCallBack	streamcbEvent;
 	
 	private static AnyChatCoreSDK mAnyChat = null;		// 单例模式对象
 	
@@ -124,6 +123,12 @@ public class AnyChatCoreSDK
 		RegisterNotify();
 		this.coresdkEvent = e;
 	}
+	// 设置媒体数据回调事件接口
+	public void SetMediaCallBackEvent(AnyChatStreamCallBack e)
+	{
+		RegisterNotify();
+		this.streamcbEvent = e;
+	}
 	// 移除所有事件
 	public void removeEvent(Object e) 
 	{
@@ -149,6 +154,8 @@ public class AnyChatCoreSDK
 			this.objectEvent = null;
 		if (this.coresdkEvent == e)
 			this.coresdkEvent = null;
+		if (this.streamcbEvent == e)
+			this.streamcbEvent = null;
 	}
 	
 	// 查询SDK主版本号
@@ -196,10 +203,26 @@ public class AnyChatCoreSDK
     public native int[] GetRoomOnlineUsers(int roomid);
     // 设置视频显示位置
     public native int SetVideoPos(int userid, Surface s, int lef, int top, int right, int bottom);
+	// 设置视频显示位置（扩展）
+    public native int SetVideoPosEx(int userid, Surface s, int lef, int top, int right, int bottom, int streamindex, int flags);
     // 用户摄像头控制
     public native int UserCameraControl(int userid, int bopen);
+	// 用户摄像头控制（扩展）
+    public native int UserCameraControlEx(int userid, int bopen, int streamindex, int flags, String strparam);
     // 用户音频控制
     public native int UserSpeakControl(int userid, int bopen);
+	// 用户音频控制（扩展）
+    public native int UserSpeakControlEx(int userid, int bopen, int streamindex, int flags, String strparam);
+	
+	// 设置指定用户音视频流相关参数（整型值）
+ 	public native int SetUserStreamInfoInt(int userid, int streamindex, int infoname, int infovalue);
+ 	// 设置指定用户音视频流相关参数（字符串值）
+ 	public native int SetUserStreamInfoString(int userid, int streamindex, int infoname, String infovalue);
+ 	// 查询指定用户音视频流相关参数（整型值）
+ 	public native int GetUserStreamInfoInt(int userid, int streamindex, int infoname);
+ 	// 查询指定用户音视频流相关参数（字符串值）
+ 	public native String GetUserStreamInfoString(int userid, int streamindex, int infoname);
+	
 	// 用户音、视频录制
 	public native int StreamRecordCtrl(int userid, int bstartrecord, int flags, int param);
 	// 用户音、视频录制（扩展）
@@ -317,12 +340,20 @@ public class AnyChatCoreSDK
 	
 	// 设置外部输入视频格式
 	public static native int SetInputVideoFormat(int pixFmt, int dwWidth, int dwHeight, int dwFps, int dwFlags);
+	// 设置外部输入视频格式（扩展）
+	public static native int SetInputVideoFormatEx(int dwStreamIndex, int dwCodecId, int pixFmt, int dwWidth, int dwHeight, int dwFps, int dwFlags);
 	// 外部视频数据输入
 	public static native int InputVideoData(byte[] lpVideoFrame, int dwSize, int dwTimeStamp);
+	// 外部视频数据输入（扩展）
+	public static native int InputVideoDataEx(int dwStreamIndex, byte[] lpVideoFrame, int dwSize, int dwTimeStamp, int dwFlags);
 	// 设置外部输入音频格式
 	public static native int SetInputAudioFormat(int dwChannels, int dwSamplesPerSec, int dwBitsPerSample, int dwFlags);
+	// 设置外部输入音频格式（扩展）
+	public static native int SetInputAudioFormatEx(int dwStreamIndex, int dwCodecId, int dwChannels, int dwSamplesPerSec, int dwBitsPerSample, int dwFlags);
 	// 外部音频数据输入
 	public static native int InputAudioData(byte[] lpSamples, int dwSize, int dwTimeStamp);
+	// 外部音频数据输入（扩展）
+	public static native int InputAudioDataEx(int dwStreamIndex, byte[] lpSamples, int dwSize, int dwTimeStamp, int dwFlags);
 	
 	// 视频呼叫事件控制（请求、回复、挂断等）
 	public native int VideoCallControl(int dwEventType, int dwUserId, int dwErrorCode, int dwFlags, int dwParam, String szUserStr);
@@ -687,10 +718,30 @@ public class AnyChatCoreSDK
 	// 视频数据回调函数
 	private void OnVideoDataCallBack(int userid, byte[] buf, int len, int width, int height)
 	{
-		mVideoHelper.SetVideoFmt(userid, width, height);
+		mVideoHelper.SetVideoFmt(userid, 0, width, height);
 		int degree = QueryUserStateInt(userid, AnyChatDefine.BRAC_USERSTATE_VIDEOROTATION);
 		int mirror = QueryUserStateInt(userid, AnyChatDefine.BRAC_USERSTATE_VIDEOMIRRORED);
-		mVideoHelper.ShowVideo(userid, buf, degree, mirror);
+		mVideoHelper.ShowVideo(userid, 0, buf, degree, mirror);
+		if(this.streamcbEvent != null)
+			this.streamcbEvent.OnAnyChatVideoDataCallBack(userid, 0, buf, len, width, height);
+	}
+	
+	// 视频数据回调函数（扩展）
+	private void OnVideoDataCallBackEx(int userid, int streamindex, byte[] buf, int len, int width, int height)
+	{
+		mVideoHelper.SetVideoFmt(userid, streamindex, width, height);
+		int degree = QueryUserStateInt(userid, AnyChatDefine.BRAC_USERSTATE_VIDEOROTATION);
+		int mirror = QueryUserStateInt(userid, AnyChatDefine.BRAC_USERSTATE_VIDEOMIRRORED);
+		mVideoHelper.ShowVideo(userid, streamindex, buf, degree, mirror);
+		if(this.streamcbEvent != null)
+			this.streamcbEvent.OnAnyChatVideoDataCallBack(userid, streamindex, buf, len, width, height);
+	}
+	
+	// 音频数据回调函数（扩展）
+	private void OnAudioDataCallBack(int userid, int streamindex, byte[] buf, int len, int timestamp, int channels, int samplespersecond, int bitspersample)
+	{
+		if(this.streamcbEvent != null)
+			this.streamcbEvent.OnAnyChatAudioDataCallBack(userid, streamindex, buf, len, timestamp, channels, samplespersecond, bitspersample);
 	}
 	
 	// 视频呼叫事件回调函数

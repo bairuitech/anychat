@@ -12,25 +12,14 @@
 #import "AnyChatPlatform.h"
 #import "AnyChatDefine.h"
 #import "AnyChatErrorCode.h"
+#import "ProviewPhotoVC.h"
 
-
-@interface TakePhotoVC : UIViewController
-{
-    AnyChatPlatform     *theAnyChat;
-}
+@interface TakePhotoVC : ACBaseViewController
 
 @property (strong, nonatomic) AVCaptureVideoPreviewLayer    *localVideoSurface;
 @property (strong, nonatomic) UIActionSheet                 *isFinishVideoActSheet;
 @property (strong, nonatomic) IBOutlet UIView               *theLocalView;
 
-- (IBAction) takePhotoBtn_OnClicked:(id)sender;
 
-- (void) FinishVideoChat;
-
-- (void) StartVideoChat:(int) userid;
-
-- (void) btnSelectedOnClicked:(UIButton*)button;
-
-- (void) nextVC;
 
 @end

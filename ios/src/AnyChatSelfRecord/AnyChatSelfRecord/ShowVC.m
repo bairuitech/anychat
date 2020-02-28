@@ -6,12 +6,13 @@
 #import "ShowVC.h"
 
 @interface ShowVC ()
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @end
 
 @implementation ShowVC
 
-@synthesize theShowVCNItem;
 @synthesize theVideoFilePath;
 
 #pragma mark - Life cycle
@@ -29,6 +30,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"录像回放";
+    self.imageView.image = [UIImage imageWithContentsOfFile:[AnyChatVC sharedAnyChatVC].videoCoverImagePath];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.imageView.layer.masksToBounds = YES;
+    self.nextButton.layer.borderWidth = 1;
+    self.nextButton.layer.borderColor = [UIColor colorWithRed:0 green:139/255.0 blue:227/255.0 alpha:1].CGColor;
+    self.nextButton.layer.masksToBounds = YES;
+    [self p_configItem];
+    
+    [self.view adaptScreenWidthWithType:AdaptScreenWidthTypeAll exceptViews:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -47,6 +58,17 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)p_configItem {
+    
+    UIButton *btn= [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"重录" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [btn addTarget:self action:@selector(LeaveBtn_OnClick) forControlEvents:UIControlEventTouchUpInside];
+    [btn sizeToFit];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
 
 #pragma mark - QLPreviewControllerDataSource
 
@@ -71,7 +93,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)LeaveBtn_OnClick
+- (void)LeaveBtn_OnClick
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -102,21 +124,17 @@
     [self.navigationController pushViewController:transFileVC animated:YES];
 }
 
-#pragma mark - UITouch
+//#pragma mark - UITouch
+//
+//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [self LeaveBtn_OnClick];
+//}
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self LeaveBtn_OnClick];
+
+-(BOOL)needLeftBackNavItem {
+    
+    return NO;
 }
-
-
-#pragma mark - UI Controls
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-
 
 @end

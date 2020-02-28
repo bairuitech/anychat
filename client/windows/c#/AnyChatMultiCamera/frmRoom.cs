@@ -163,6 +163,7 @@ namespace AnyChatMultiCamera
             SystemSetting.AnyChatRecordSnapShot_Handler = new SystemSetting.AnyChatRecordSnapShotCallBack(RecordSnapShot);
             SystemSetting.AnyChatRecordSnapShotEx_Handler = new SystemSetting.AnyChatRecordSnapShotExCallBack(RecordSnapShotEx);
             SystemSetting.AnyChatVideoScreenEvent_Handler = new SystemSetting.AnyChatVideoScreenEventCallBack(VideoScreenEvent);
+            SystemSetting.AnyChatCoreSDKEvent_Handler = new SystemSetting.AnyChatCoreSDKEventCallBack(CoreSDKEvent);
 
             cmbBoxSelectVideo.SelectedIndex = 0;
         }
@@ -333,12 +334,11 @@ namespace AnyChatMultiCamera
             //摄像头打开状态
             else if (m.Msg == AnyChatCoreSDK.WM_GV_CAMERASTATE)
             {
-
+                //addLog("摄像头状态改变，对应的用户为：" + (int)m.WParam + "，当前状态为：" + (int)m.LParam, LogType.LOG_TYPE_EVENT);
             }
             //网络断开
             else if (m.Msg == AnyChatCoreSDK.WM_GV_LINKCLOSE)
             {
-
                 AnyChatCoreSDK.LeaveRoom(-1);
                 int wparam = m.WParam.ToInt32();
                 int lparam = m.LParam.ToInt32();
@@ -702,7 +702,7 @@ namespace AnyChatMultiCamera
                 int videoCodecID = 0;
                 int retCode = -1;
                 retCode = AnyChatCoreSDK.GetUserStreamInfo(remoteUserID, streamIndex, AnyChatCoreSDK.BRAC_STREAMINFO_VIDEOCODECID, ref videoCodecID, sizeof(int));
-                retCode = 0;
+                //retCode = 0;
                 if (retCode == 0)
                 {
                     //AnyChatCoreSDK.SetVideoPos(remoteUserID, m_ShowWnd.Handle, 0, 0, m_ShowWnd.Width, m_ShowWnd.Height);
@@ -711,6 +711,10 @@ namespace AnyChatMultiCamera
                         retCode = AnyChatCoreSDK.SetVideoPosEx(remoteUserID, m_ShowWnd.Handle, 0, 0, m_ShowWnd.Width, m_ShowWnd.Height, streamIndex, 0);
                         addLog("SetVideoPosEx(" + remoteUserID + "," + m_ShowWnd.Handle + ", 0, 0," + m_ShowWnd.Width + ", " + m_ShowWnd.Height + ", " + streamIndex + ", 0)", LogType.LOG_TYPE_API);
                     }
+
+                    //if ((streamIndex == 0) || (streamIndex == 1)) continue;
+                    //if ((streamIndex == 1)) continue;
+
                     //AnyChatCoreSDK.UserCameraControl(remoteUserID, true);
                     retCode = AnyChatCoreSDK.UserCameraControlEx(remoteUserID, controlFlag, streamIndex, 0, string.Empty);
                     addLog("UserCameraControlEx(" + remoteUserID + ", " + controlFlag + ", " + streamIndex + ", 0, " + string.Empty + ")", LogType.LOG_TYPE_API);
@@ -718,6 +722,11 @@ namespace AnyChatMultiCamera
                     retCode = AnyChatCoreSDK.UserSpeakControlEx(remoteUserID, controlFlag, streamIndex, 0, string.Empty);
                     addLog("UserSpeakControlEx(" + remoteUserID + ", " + controlFlag + ", " + streamIndex + ", 0, " + string.Empty + ")", LogType.LOG_TYPE_API);
                 }
+                else
+                {
+                    addLog("GetUserStreamInfo(" + remoteUserID + ", " + streamIndex + ") = " + retCode, LogType.LOG_TYPE_API);
+                }
+
             } 
         }
 
@@ -735,7 +744,8 @@ namespace AnyChatMultiCamera
                 if (remoteUserID == m_myUserID || remoteUserID == currentRemoteUserID) return;
 
                 //关闭上一个远程用户的视频
-                controlRemoteVideo(currentRemoteUserID, false);
+                if (currentRemoteUserID != 0)
+                    controlRemoteVideo(currentRemoteUserID, false);
 
                 currentRemoteUserID = remoteUserID;
                 controlRemoteVideo(remoteUserID, true);
@@ -759,13 +769,16 @@ namespace AnyChatMultiCamera
             int streamIdx = 0;
             int devcNum = m_videoDeviceList.Count;
 
+            //int userId = -1;
+            int userId = remoteUserID;
+
             for (int idx = 0; idx < devcNum; idx++)
             {
                 streamIdx = idx;
                 int videoBitrate = 0;
 
                 //retCode = AnyChatCoreSDK.QueryUserState(-1, AnyChatCoreSDK.BRAC_USERSTATE_VIDEOBITRATE, ref videoBitrate, sizeof(int));
-                retCode = AnyChatCoreSDK.GetUserStreamInfo(-1, streamIdx, AnyChatCoreSDK.BRAC_STREAMINFO_VIDEOBITRATE, ref videoBitrate, sizeof(int));
+                retCode = AnyChatCoreSDK.GetUserStreamInfo(userId, streamIdx, AnyChatCoreSDK.BRAC_STREAMINFO_VIDEOBITRATE, ref videoBitrate, sizeof(int));
 
                 string m_AVSpeed = videoBitrate.ToString()+"B/S";
                 if (videoBitrate > 1000)
@@ -1030,35 +1043,44 @@ namespace AnyChatMultiCamera
         private void btnRecord_Click(object sender, EventArgs e)
         {
             int recordUserId = -1;
-            int recordFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SERVER + AnyChatCoreSDK.BRAC_RECORD_FLAGS_VIDEO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_AUDIO + 
+            int recordFlags = /*AnyChatCoreSDK.BRAC_RECORD_FLAGS_SERVER + */AnyChatCoreSDK.BRAC_RECORD_FLAGS_VIDEO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_AUDIO + 
                                 AnyChatCoreSDK.BRAC_RECORD_FLAGS_MIXAUDIO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_MIXVIDEO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_STEREO +
-                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_ABREAST + AnyChatCoreSDK.BRAC_RECORD_FLAGS_STREAM + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_LOCALCB + 
+                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_ABREAST + /*AnyChatCoreSDK.BRAC_RECORD_FLAGS_STREAM + */AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_LOCALCB + 
                                 AnyChatCoreSDK.BRAC_RECORD_FLAGS_USERFILENAME;
 
             //自定义录像文件名称
             FileObject fileObj = new FileObject();
-            fileObj.filename = "20160420.mp4";
+            fileObj.filename = "20170328_1.mp4";
+
+            //RecordObject recordObj = new RecordObject();
+            //recordObj.filename = "20170321_7";
+            //recordObj.streamlist = new List<RecordStreamObject>();
+            //recordObj.streamlist.Add(new RecordStreamObject { userid = -1, streamindex = 0, recordindex = 0 });
+            //recordObj.streamlist.Add(new RecordStreamObject { userid = currentRemoteUserID, streamindex = 0, recordindex = 1 });
 
             if (!isRecord)
             {
                 //设置录制参数
-                int record_width = 1280;
-                int record_height = 960;
+                //int record_width = 1280;
+                //int record_height = 960;
                 int VADCtrol = 0;
-                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_RECORD_WIDTH, ref record_width, sizeof(int));
-                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_RECORD_HEIGHT, ref record_height, sizeof(int));
-                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_AUDIO_VADCTRL, ref VADCtrol, sizeof(int)); 
+                //AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_RECORD_WIDTH, ref record_width, sizeof(int));
+                //AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_RECORD_HEIGHT, ref record_height, sizeof(int));
+                //AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_AUDIO_VADCTRL, ref VADCtrol, sizeof(int));
+
+                int videoClipMode = AnyChatCoreSDK.ANYCHAT_VIDEOCLIPMODE_SHRINK;
+                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_RECORD_CLIPMODE, ref videoClipMode, sizeof(int));
                 
                 //开始录像
-                AnyChatCoreSDK.StreamRecordCtrlEx(recordUserId, true, recordFlags, 0, stringify(fileObj));
-                addLog("StreamRecordCtrlEx(" + recordUserId + ", " + true + ", " + recordFlags + ", 0 " + stringify(fileObj) + ")", LogType.LOG_TYPE_API);
+                AnyChatCoreSDK.StreamRecordCtrlEx(recordUserId, true, recordFlags, 0, string.Empty);
+                addLog("StreamRecordCtrlEx(" + recordUserId + ", " + true + ", " + recordFlags + ", 0 " + ", " + string.Empty + ")", LogType.LOG_TYPE_API);
                 isRecord = true;
                 btnRecord.Text = "结束录像";
             }
             else
             {
                 //结束录像
-                AnyChatCoreSDK.StreamRecordCtrlEx(recordUserId, false, recordFlags, 0, stringify(fileObj));
+                AnyChatCoreSDK.StreamRecordCtrlEx(recordUserId, false, recordFlags, 0, string.Empty);
                 addLog("StreamRecordCtrlEx(" + recordUserId + ", " + false + ", " + recordFlags + ", 0 " + stringify(fileObj) + ")", LogType.LOG_TYPE_API);
                 isRecord = false;
                 btnRecord.Text = "开始录像";
@@ -1071,13 +1093,26 @@ namespace AnyChatMultiCamera
 
         private void btnSnapshot_Click(object sender, EventArgs e)
         {
+            //自定义录像文件名称
+            FileObject fileObj = new FileObject();
+            fileObj.filename = "20170328_1.mp4";
+
+            SnapshotObject snapshotObj = new SnapshotObject();
+            //snapshotObj.filename = "20170630_7";
+            snapshotObj.streamindex = cmbBoxSelectVideo.SelectedIndex;
+            
+
             if (remoteUserID == 0) remoteUserID = -1;
 
-            int snapshotFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SNAPSHOT + AnyChatCoreSDK.BRAC_RECORD_FLAGS_SERVER + AnyChatCoreSDK.BRAC_RECORD_FLAGS_LOCALCB +
-                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_MULTISTREAM;
+            //int snapshotFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SNAPSHOT + AnyChatCoreSDK.BRAC_RECORD_FLAGS_LOCALCB +
+            //                    AnyChatCoreSDK.BRAC_RECORD_FLAGS_MULTISTREAM;
+            int snapshotFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SNAPSHOT;
 
-            AnyChatCoreSDK.StreamRecordCtrlEx(remoteUserID, true, snapshotFlags, cmbBoxSelectVideo.SelectedIndex, "snapshot");
-            addLog("StreamRecordCtrlEx(" + remoteUserID + ", " + true + ", " + snapshotFlags + "," + cmbBoxSelectVideo.SelectedIndex + "," + string.Empty + ")", LogType.LOG_TYPE_API);
+            //AnyChatCoreSDK.StreamRecordCtrlEx(remoteUserID, true, snapshotFlags, cmbBoxSelectVideo.SelectedIndex, "snapshot");
+            //addLog("StreamRecordCtrlEx(" + remoteUserID + ", " + true + ", " + snapshotFlags + "," + cmbBoxSelectVideo.SelectedIndex + "," + "snapshot" + ")", LogType.LOG_TYPE_API);
+
+            AnyChatCoreSDK.StreamRecordCtrlEx(remoteUserID, true, snapshotFlags, 0, stringify(snapshotObj));
+            addLog("StreamRecordCtrlEx(" + remoteUserID + ", " + true + ", " + snapshotFlags + "," + 0 + "," + stringify(snapshotObj) + ")", LogType.LOG_TYPE_API);
 
             //AnyChatCoreSDK.SnapShot(remoteUserID, snapshotFlags, cmbBoxSelectVideo.SelectedIndex);
             //addLog("SnapShot(" + remoteUserID + ", " + snapshotFlags + "," + cmbBoxSelectVideo.SelectedIndex + ")", LogType.LOG_TYPE_API);
@@ -1091,7 +1126,7 @@ namespace AnyChatMultiCamera
         /// <param name="param"></param>
         /// <param name="recordType"></param>
         /// <param name="userValue"></param>
-        private void RecordSnapShot(int userId, string fileName, int param, bool recordType, int userValue)
+        private void RecordSnapShot(int userId, string fileName, int param, int recordType, int userValue)
         {
             MessageBox.Show(fileName);
         }
@@ -1109,8 +1144,7 @@ namespace AnyChatMultiCamera
             int recordFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SERVER + AnyChatCoreSDK.BRAC_RECORD_FLAGS_VIDEO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_AUDIO +
                                 AnyChatCoreSDK.BRAC_RECORD_FLAGS_MIXAUDIO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_MIXVIDEO + AnyChatCoreSDK.BRAC_RECORD_FLAGS_STEREO +
                                 AnyChatCoreSDK.BRAC_RECORD_FLAGS_ABREAST + AnyChatCoreSDK.BRAC_RECORD_FLAGS_STREAM + AnyChatCoreSDK.ANYCHAT_RECORD_FLAGS_LOCALCB;
-            int snapshotFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SNAPSHOT + AnyChatCoreSDK.BRAC_RECORD_FLAGS_SERVER + AnyChatCoreSDK.BRAC_RECORD_FLAGS_LOCALCB +
-                                AnyChatCoreSDK.BRAC_RECORD_FLAGS_MULTISTREAM;
+            int snapshotFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SNAPSHOT;
             string logHeader = "生成录像文件为：";
 
             if (flags == snapshotFlags)
@@ -1122,6 +1156,19 @@ namespace AnyChatMultiCamera
         private void VideoScreenEvent(int userId, int type, int key, int flags, int wParam, int lParam, int userValue)
         {
 
+        }
+
+        private void CoreSDKEvent(int eventType, string eventJsonStr, int userValue)
+        {
+            switch (eventType)
+            {
+                case AnyChatCoreSDK.ANYCHAT_CORESDKEVENT_CAMERASTATE:
+                    CoreSDKEventObject eventObj = ToClass<CoreSDKEventObject>(eventJsonStr);
+                    addLog("第" + eventObj.streamindex + "路摄像头状态改变，对应的用户Id为：" + (int)eventObj.userid + "，当前状态为：" + eventObj.status, LogType.LOG_TYPE_EVENT);
+                    break;
+                case AnyChatCoreSDK.ANYCHAT_CORESDKEVENT_STREAMPLAY:
+                    break;
+            }
         }
 
         /// <summary>
@@ -1141,6 +1188,50 @@ namespace AnyChatMultiCamera
                 Console.Write(exp.Message);
             }
             return retVal.TrimEnd('\0');
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int recordUserId = -1;
+            int recordFlags = AnyChatCoreSDK.BRAC_RECORD_FLAGS_SNAPSHOT;
+
+            //自定义录像文件名称
+            FileObject fileObj = new FileObject();
+            fileObj.filename = "20170629_1";
+
+            RecordObject recordObj = new RecordObject();
+            recordObj.filename = "20170629_1";
+            recordObj.streamlist = new List<RecordStreamObject>();
+            //recordObj.streamlist.Add(new RecordStreamObject { userid = -1, streamindex = 0, recordindex = 0 });
+            recordObj.streamlist.Add(new RecordStreamObject { userid = -1, streamindex = 1, recordindex = 1 });
+
+            if (!isRecord)
+            {
+                int VADCtrol = 0;
+                //AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_RECORD_WIDTH, ref record_width, sizeof(int));
+                //AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_RECORD_HEIGHT, ref record_height, sizeof(int));
+                //AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_AUDIO_VADCTRL, ref VADCtrol, sizeof(int));
+
+                int videoClipMode = AnyChatCoreSDK.ANYCHAT_VIDEOCLIPMODE_SHRINK;
+                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_RECORD_CLIPMODE, ref videoClipMode, sizeof(int));
+
+                //开始录像
+                AnyChatCoreSDK.StreamRecordCtrlEx(recordUserId, true, recordFlags, 0, stringify(recordObj));
+                addLog("StreamRecordCtrlEx(" + recordUserId + ", " + true + ", " + recordFlags + ", 0 " + stringify(fileObj) + ")", LogType.LOG_TYPE_API);
+                isRecord = true;
+                btnRecord.Text = "结束录像";
+            }
+            else
+            {
+                //结束录像
+                AnyChatCoreSDK.StreamRecordCtrlEx(recordUserId, false, recordFlags, 0, string.Empty);
+                addLog("StreamRecordCtrlEx(" + recordUserId + ", " + false + ", " + recordFlags + ", 0 " + stringify(fileObj) + ")", LogType.LOG_TYPE_API);
+                isRecord = false;
+                btnRecord.Text = "开始录像";
+                int VADCtrol = 1;
+                AnyChatCoreSDK.SetSDKOption(AnyChatCoreSDK.BRAC_SO_AUDIO_VADCTRL, ref VADCtrol, sizeof(int));
+            }
+
         }
 
     }
@@ -1164,5 +1255,45 @@ namespace AnyChatMultiCamera
     {
         [DataMember]
         public string filename { get; set; }
+    }
+
+    [DataContract]
+    class RecordObject
+    {
+        [DataMember]
+        public string filename { get; set; }
+        [DataMember]
+        public List<RecordStreamObject> streamlist { get; set; }
+    }
+
+    [DataContract]
+    class RecordStreamObject
+    {
+        [DataMember]
+        public int userid { get; set; }
+        [DataMember]
+        public int streamindex { get; set; }
+        [DataMember]
+        public int recordindex { get; set; }
+    }
+
+    [DataContract]
+    class SnapshotObject
+    {
+        //[DataMember]
+        //public string filename { get; set; }
+        [DataMember]
+        public int streamindex { get; set; }
+    }
+
+    [DataContract]
+    class CoreSDKEventObject
+    {
+        [DataMember]
+        public int userid { get; set; }
+        [DataMember]
+        public int streamindex { get; set; }
+        [DataMember]
+        public int status { get; set; }
     }
 }

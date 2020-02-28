@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/selectRole_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:paddingTop="30dp"
+            android:paddingBottom="20dp">
+
+
+            <TextView
+                    android:id="@+id/tipsText"
+                    android:text="房间号:"
+                    android:textSize="19sp"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="#333333"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <EditText
+                    android:id="@+id/roomId"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/tipsText"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:digits="01234566789"
+                    android:background="#F3F3F3"
+                    android:inputType="numberSigned"
+                    android:layout_width="260dp"
+                    android:paddingLeft="5dp"
+                    android:layout_height="40dp"/>
+
+            <RadioGroup
+                    android:layout_below="@+id/roomId"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/traceSender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="35dp"
+                    android:textColor="#999999"
+                    android:text="发送方 "
+                    android:textSize="19sp" />
+
+                <RadioButton
+                    android:id="@+id/traceReceiver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="35dp"
+                    android:textColor="#999999"
+                    android:text="接收方 "
+                    android:textSize="19sp" />
+            </RadioGroup>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="54dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/udpTraceCancel"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight="1"
+                android:background="#F3F3F3"
+                android:textColor="#C2C2C2"
+                android:text="取消"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/udpTraceConfirm"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight="1"
+                android:background="#008BE3"
+                android:textColor="#FFFFFF"
+                android:text="确定"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

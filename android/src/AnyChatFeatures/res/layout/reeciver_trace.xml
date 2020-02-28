@@ -42,7 +42,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="IP地址："
-                android:textSize="17dp" />
+                android:textSize="17dp"
+            />
+
+            <!--<TextView-->
+                    <!--android:id="@+id/IPAddress_content"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text=""-->
+                    <!--android:layout_toRightOf="@+id/rSenderIPAddress"-->
+                    <!--android:layout_alignTop="@+id/rSenderIPAddress"-->
+                    <!--android:textSize="17dp" />-->
 
             <TextView
                 android:id="@+id/senderPacket"

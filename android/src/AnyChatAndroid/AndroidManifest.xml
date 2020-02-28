@@ -77,6 +77,8 @@
 	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 	<uses-permission android:name="android.permission.RESTART_PACKAGES" />  
 	
-    <uses-sdk android:minSdkVersion="9" />
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="22" />
 
 </manifest> 

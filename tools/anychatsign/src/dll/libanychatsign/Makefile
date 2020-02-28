@@ -38,7 +38,7 @@ OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
 OUT_RELEASE = ./linux/Release/libanychatsign.so
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)/jnihelper.o $(OBJDIR_RELEASE)/libanychatsign.o
+OBJ_RELEASE = $(OBJDIR_RELEASE)/jnihelper.o $(OBJDIR_RELEASE)/acthread.o $(OBJDIR_RELEASE)/libanychatsign.o
 
 all: release
 
@@ -58,6 +58,9 @@ out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
 $(OBJDIR_RELEASE)/jnihelper.o: jnihelper.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c jnihelper.cpp -o $(OBJDIR_RELEASE)/jnihelper.o
 
+$(OBJDIR_RELEASE)/acthread.o: acthread.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c acthread.cpp -o $(OBJDIR_RELEASE)/acthread.o
+	
 $(OBJDIR_RELEASE)/libanychatsign.o: libanychatsign.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c libanychatsign.cpp -o $(OBJDIR_RELEASE)/libanychatsign.o
 

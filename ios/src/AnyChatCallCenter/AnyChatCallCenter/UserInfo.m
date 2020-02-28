@@ -10,8 +10,5 @@
 
 @implementation UserInfo
 
-@synthesize theUserInfoID;
-@synthesize theUserInfoName;
-@synthesize theUserInfoIcon;
 
 @end

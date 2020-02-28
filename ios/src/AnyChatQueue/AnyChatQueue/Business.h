@@ -10,7 +10,7 @@
 
 @interface Business : NSObject
 
-@property(nonatomic, assign)long long businessId;
+@property(nonatomic, assign)int businessId;
 @property(nonatomic, copy)NSString *title;
 
 

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BusinessHallViewController : UICollectionViewController
+@interface BusinessHallViewController : ACBaseViewController
 @property(nonatomic, strong)NSArray *businessHallObjectArr;         // 营业厅模型对象数组
 @end

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#565151"
+    android:orientation="vertical" >
+
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="#017EFF">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="19sp"
+                    android:textColor="#FFFFFF"
+                    android:text="录像回放"/>
+
+            <TextView
+                    android:id="@+id/reVideoRecordBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    android:text="重录"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center|center_vertical"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center|center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/previewVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center|center_vertical"
+            android:orientation="horizontal" >
+
+            <VideoView
+                android:id="@+id/videoViewPlay"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom"
+            android:gravity="center|center_vertical"
+            android:orientation="horizontal" >
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="350dp"
+                android:layout_height="35dp"
+                android:maxHeight="10dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="#565151"
+        android:gravity="center|center_vertical"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center|center_vertical" >
+
+            <Button
+                android:id="@+id/videoPlaybackBtn"
+                android:layout_width="115dp"
+                android:layout_height="40dp"
+                android:text="视频回放"
+                android:textColor="#FFFFFF"
+                android:background="#017EFF"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center|center_vertical" >
+
+            <Button
+                android:id="@+id/videoRecord_nextstep"
+                android:layout_width="115dp"
+                android:layout_height="40dp"
+                android:text="下一步"
+                android:textColor="#FFFFFF"
+                android:background="#017EFF"
+                android:textSize="18sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

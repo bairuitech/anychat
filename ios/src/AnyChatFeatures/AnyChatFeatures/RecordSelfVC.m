@@ -9,25 +9,24 @@
 #import "RecordSelfVC.h"
 
 @interface RecordSelfVC ()
+{
+    NSString            *theLocalRecordMZTimerStatus;
+}
+@property (strong, nonatomic) UIActionSheet                 *isFinishVideoActSheet;
+
+@property (strong, nonatomic) AVCaptureVideoPreviewLayer    *localVideoSurface;
+@property (strong, nonatomic) IBOutlet UIImageView          *remoteVideoSurface;
+@property (strong, nonatomic) IBOutlet UIView               *theLocalView;
+@property (weak, nonatomic) IBOutlet UIButton               *theLocolFunBtn;
+
+@property (weak, nonatomic) IBOutlet UILabel                *theLocalRecordTimeLab;
+@property (strong, nonatomic) MZTimerLabel                  *theLocalRecordMZTimer;
+
+@property (weak, nonatomic) IBOutlet UILabel *buttonTipLabel;
 
 @end
 
 @implementation RecordSelfVC
-
-@synthesize remoteVideoSurface;
-@synthesize localVideoSurface;
-@synthesize theLocalView;
-@synthesize switchCameraBtn;
-@synthesize theLocolFunBtn;
-@synthesize isFinishVideoActSheet;
-@synthesize theVideoNItem;
-@synthesize theTakePhotoPath;
-@synthesize theCurrentRotation;
-@synthesize theVideoPlayBackBtn;
-@synthesize theLocalRecordTimeLab;
-@synthesize theLocalRecordMZTimer;
-@synthesize theRecordVideoTypeActSheet;
-@synthesize theVideoBitrateAlertView;
 
 
 #pragma mark -
@@ -44,9 +43,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.view.layer.masksToBounds = YES;
     [self StartVideoChat:0];
     [self setTheTimer];
+    [self p_configNavItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -63,6 +63,29 @@
     theLocalRecordMZTimerStatus = @"pause";
 }
 
+-(BOOL)navBarTranslucent {
+    
+    return YES;
+}
+
+- (void)p_configNavItem {
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(switchCameraBtn_OnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"video_switch"] forState:UIControlStateNormal];
+    [button sizeToFit];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+    UIButton *button1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button1 addTarget:self action:@selector(theVideoPlayBackBtn_OnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [button1 setImage:[UIImage imageNamed:@"record_video_list"] forState:UIControlStateNormal];
+    [button1 sizeToFit];
+    
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
+    self.navigationItem.leftBarButtonItem = leftItem;
+}
 
 #pragma mark - Memory Warning method
 
@@ -103,7 +126,7 @@
 
 
 #pragma mark -
-#pragma mark - Instance Method
+#pragma mark ----------- 业务员核心代码 ----------
 
 - (void) StartVideoChat:(int) userid
 {
@@ -111,7 +134,10 @@
     NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
     if (cameraDeviceArray.count > 0)
     {
-        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+        if(cameraDeviceArray.count >= 2)
+            [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:1]];
+        else
+            [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:0]];
     }
     
     // open local video
@@ -123,87 +149,12 @@
     [AnyChatPlatform SetSDKOptionInt:BRAC_SO_LOCALVIDEO_ORIENTATION : self.interfaceOrientation];
 }
 
-- (IBAction)theLocolFunBtn_OnClicked:(id)sender
-{
-
-    theRecordId = -1;
-    theLocalRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_LOCALCB;
-    
-    if (theLocolFunBtn.selected == NO)
-    {
-        //Self recording
-        [AnyChatPlatform StreamRecordCtrlEx: theRecordId
-                                           : YES
-                                           : theLocalRecordFlags
-                                           : -1
-                                           : @"StarLocolSelfRecord"];
-        
-        //Show LocalRecord Time
-        self.theLocalRecordTimeLab.hidden = NO;
-        [theLocalRecordMZTimer reset];
-        [theLocalRecordMZTimer start];
-        
-        theLocolFunBtn.selected = YES;
-    }
-    else
-    {
-        //Stop recording local
-        [AnyChatPlatform StreamRecordCtrlEx: theRecordId
-                                           : NO
-                                           : theLocalRecordFlags
-                                           : -1
-                                           : @"StopLocolSelfRecord"];
-        //Close LocalRecord Time
-        self.theLocalRecordTimeLab.hidden = YES;
-        [theLocalRecordMZTimer pause];
-        
-        theLocolFunBtn.selected = NO;
-    }
-}
-
-- (IBAction)FinishVideoChatBtnClicked:(id)sender
-{
-    self.isFinishVideoActSheet = [[UIActionSheet alloc]
-                                  initWithTitle:@"确定结束?"
-                                  delegate:self
-                                  cancelButtonTitle:nil
-                                  destructiveButtonTitle:nil
-                                  otherButtonTitles:@"确定",@"取消", nil];
-    
-    self.isFinishVideoActSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-    [self.isFinishVideoActSheet showInView:self.view];
-}
-
 - (void) FinishVideoChat
 {
     [AnyChatPlatform UserSpeakControl: -1 : NO];
     [AnyChatPlatform UserCameraControl: -1 : NO];
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-- (IBAction) switchCameraBtn_OnClicked:(id)sender
-{
-    static int CurrentCameraDevice = 1;
-    NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
-    if(cameraDeviceArray.count == 2)
-    {
-        CurrentCameraDevice = (CurrentCameraDevice+1) % 2;
-        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
-    }
-    
-    [self btnSelectedOnClicked:switchCameraBtn];
-}
-
-- (IBAction)theVideoPlayBackBtn_OnClicked
-{
-    ShowVC *theShowVC = [ShowVC new];
-    theShowVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self.navigationController presentViewController:theShowVC animated:YES completion:nil];
-}
 
 - (void) OnLocalVideoInit:(id)session
 {
@@ -222,6 +173,86 @@
     }
 }
 
+
+
+//开启和停止录像
+- (IBAction)theLocolFunBtn_OnClicked:(id)sender
+{
+
+    int theRecordId = -1;
+    int theLocalRecordFlags = ANYCHAT_RECORD_FLAGS_AUDIO + ANYCHAT_RECORD_FLAGS_VIDEO + ANYCHAT_RECORD_FLAGS_LOCALCB;
+    
+    if (self.theLocolFunBtn.selected == NO)
+    {
+        //Self recording
+        [AnyChatPlatform StreamRecordCtrlEx: theRecordId
+                                           : YES
+                                           : theLocalRecordFlags
+                                           : -1
+                                           : @"StarLocolSelfRecord"];
+        
+        //Show LocalRecord Time
+        self.theLocalRecordTimeLab.hidden = NO;
+        [self.theLocalRecordMZTimer reset];
+        [self.theLocalRecordMZTimer start];
+        
+        self.theLocolFunBtn.selected = YES;
+        self.buttonTipLabel.textColor = [UIColor colorWithRed:255/255.0 green:22/255.0 blue:41/255.0 alpha:1];
+    }
+    else
+    {
+        //Stop recording local
+        [AnyChatPlatform StreamRecordCtrlEx: theRecordId
+                                           : NO
+                                           : theLocalRecordFlags
+                                           : -1
+                                           : @"StopLocolSelfRecord"];
+        //Close LocalRecord Time
+        self.theLocalRecordTimeLab.hidden = YES;
+        [self.theLocalRecordMZTimer pause];
+        
+        self.theLocolFunBtn.selected = NO;
+        self.buttonTipLabel.textColor = [UIColor whiteColor];
+    }
+}
+
+
+- (IBAction)FinishVideoChatBtnClicked:(id)sender
+{
+    self.isFinishVideoActSheet = [[UIActionSheet alloc]
+                                  initWithTitle:@"确定结束?"
+                                  delegate:self
+                                  cancelButtonTitle:nil
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:@"确定",@"取消", nil];
+    
+    self.isFinishVideoActSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [self.isFinishVideoActSheet showInView:self.view];
+}
+
+
+#pragma mark ----  ACTION ----
+- (IBAction) switchCameraBtn_OnClicked:(id)sender
+{
+    static int CurrentCameraDevice = 1;
+    NSMutableArray* cameraDeviceArray = [AnyChatPlatform EnumVideoCapture];
+    if(cameraDeviceArray.count == 2)
+    {
+        CurrentCameraDevice = (CurrentCameraDevice+1) % 2;
+        [AnyChatPlatform SelectVideoCapture:[cameraDeviceArray objectAtIndex:CurrentCameraDevice]];
+    }
+    
+    [self btnSelectedOnClicked:sender];
+}
+
+- (IBAction)theVideoPlayBackBtn_OnClicked
+{
+
+    [self presentShowVC];
+}
+
+
+
 - (void) btnSelectedOnClicked:(UIButton*)button
 {
     if (button.selected)
@@ -237,13 +268,13 @@
 - (void)setTheTimer
 {
     //The Timer Init
-    theLocalRecordMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theLocalRecordTimeLab];
-    theLocalRecordMZTimer.timeFormat = @"HH:mm:ss";
+    self.theLocalRecordMZTimer = [[MZTimerLabel alloc]initWithLabel:self.theLocalRecordTimeLab];
+    self.theLocalRecordMZTimer.timeFormat = @"HH:mm:ss";
 }
 
 - (void)setUI
 {
-    self.theVideoNItem.title = @"录制自己";
+    self.title = @"录制自己";
     
     if ([theLocalRecordMZTimerStatus isEqualToString:@"pause"])
     {

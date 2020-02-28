@@ -69,7 +69,7 @@
 		<div>
 			<div id="prompt_div_line1"></div>
 			<div id="prompt_div_line2">控件安装完成后，请重启浏览器</div>
-			<div id="prompt_div_btn_load" onclick="window.open('http://anychat.oss.aliyuncs.com/AnyChatWebSetup.exe')">下载安装</div>
+			<div id="prompt_div_btn_load" onclick="downloadAnyChatPlugin()">下载安装</div>
 		</div>
 		<div id="prompt_div_BR">
 			<a href="http://www.anychat.cn/">AnyChat</a>&nbsp;|;&nbsp; <a href="http://www.bairuitech.com/">佰锐科技</a>
@@ -169,13 +169,31 @@
 	
 </body>
 <script>
-$(document).keypress(function(event){  
-    var keycode = (event.keyCode ? event.keyCode : event.which);  
-    if($("#loginDiv").css("display")=="block"){
-	    if(keycode == '13')
-	        $("#loginRoom").click();
-    }
-});
+	$(document).keypress(function(event){  
+		var keycode = (event.keyCode ? event.keyCode : event.which);  
+		if($("#loginDiv").css("display")=="block"){
+			if(keycode == '13')
+				$("#loginRoom").click();
+		}
+	});
+	
+	window.onbeforeunload = function () {
+		// 刷新或关闭页面时释放插件
+		BRAC_Release();
+	};
+	
+	// 下载AnyChat SDK插件
+	downloadAnyChatPlugin = function(){
+		var anychat_plugin_url = 'http://anychat.oss-cn-hangzhou.aliyuncs.com/AnyChatWebSetup.exe';
+		var anychat_plugin_x64_url = 'http://anychat.oss-cn-hangzhou.aliyuncs.com/AnyChatWebSetup_x64.exe';
+		if (window.navigator.platform == 'Win64'){
+			// 64位插件
+			window.location.href = anychat_plugin_x64_url;
+		}
+		else{
+			window.location.href = anychat_plugin_url;
+		}
+	}
 </script>
 </html>
 

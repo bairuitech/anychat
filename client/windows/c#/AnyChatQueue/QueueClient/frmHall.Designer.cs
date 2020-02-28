@@ -56,6 +56,9 @@
             this.picBox_waiting = new System.Windows.Forms.PictureBox();
             this.timer_queueWaiting = new System.Windows.Forms.Timer(this.components);
             this.panel_agentVedioCall = new System.Windows.Forms.Panel();
+            this.comboBox_AgentStatus = new System.Windows.Forms.ComboBox();
+            this.lbl_CurrentStatus = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnStopService = new System.Windows.Forms.Button();
             this.btnStartService = new System.Windows.Forms.Button();
             this.lbl_agent_atAreaUserCount = new System.Windows.Forms.Label();
@@ -68,9 +71,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lbl_agent_remoteUser = new System.Windows.Forms.Label();
             this.picBox_agent_remoteVideo = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox_AgentStatus = new System.Windows.Forms.ComboBox();
-            this.lbl_CurrentStatus = new System.Windows.Forms.Label();
+            this.btnRecord = new System.Windows.Forms.Button();
+            this.lbl_recordFileName = new System.Windows.Forms.Label();
             this.panel_top.SuspendLayout();
             this.panel_call.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_call)).BeginInit();
@@ -334,6 +336,8 @@
             // 
             // panel_agentVedioCall
             // 
+            this.panel_agentVedioCall.Controls.Add(this.lbl_recordFileName);
+            this.panel_agentVedioCall.Controls.Add(this.btnRecord);
             this.panel_agentVedioCall.Controls.Add(this.comboBox_AgentStatus);
             this.panel_agentVedioCall.Controls.Add(this.lbl_CurrentStatus);
             this.panel_agentVedioCall.Controls.Add(this.label2);
@@ -349,14 +353,49 @@
             this.panel_agentVedioCall.Controls.Add(this.label1);
             this.panel_agentVedioCall.Controls.Add(this.lbl_agent_remoteUser);
             this.panel_agentVedioCall.Controls.Add(this.picBox_agent_remoteVideo);
-            this.panel_agentVedioCall.Location = new System.Drawing.Point(293, 95);
+            this.panel_agentVedioCall.Location = new System.Drawing.Point(47, 74);
             this.panel_agentVedioCall.Name = "panel_agentVedioCall";
             this.panel_agentVedioCall.Size = new System.Drawing.Size(994, 548);
             this.panel_agentVedioCall.TabIndex = 11;
             // 
+            // comboBox_AgentStatus
+            // 
+            this.comboBox_AgentStatus.FormattingEnabled = true;
+            this.comboBox_AgentStatus.Items.AddRange(new object[] {
+            "空闲",
+            "忙",
+            "暂停",
+            "关闭"});
+            this.comboBox_AgentStatus.Location = new System.Drawing.Point(485, 480);
+            this.comboBox_AgentStatus.Name = "comboBox_AgentStatus";
+            this.comboBox_AgentStatus.Size = new System.Drawing.Size(108, 25);
+            this.comboBox_AgentStatus.TabIndex = 16;
+            this.comboBox_AgentStatus.SelectedIndexChanged += new System.EventHandler(this.comboBox_AgentStatus_SelectedIndexChanged);
+            // 
+            // lbl_CurrentStatus
+            // 
+            this.lbl_CurrentStatus.AutoSize = true;
+            this.lbl_CurrentStatus.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_CurrentStatus.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lbl_CurrentStatus.Location = new System.Drawing.Point(482, 514);
+            this.lbl_CurrentStatus.Name = "lbl_CurrentStatus";
+            this.lbl_CurrentStatus.Size = new System.Drawing.Size(68, 17);
+            this.lbl_CurrentStatus.TabIndex = 15;
+            this.lbl_CurrentStatus.Text = "坐席状态：";
+            this.lbl_CurrentStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(411, 483);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 17);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "坐席状态：";
+            // 
             // btnStopService
             // 
-            this.btnStopService.Location = new System.Drawing.Point(777, 472);
+            this.btnStopService.Location = new System.Drawing.Point(740, 470);
             this.btnStopService.Name = "btnStopService";
             this.btnStopService.Size = new System.Drawing.Size(97, 43);
             this.btnStopService.TabIndex = 14;
@@ -474,40 +513,26 @@
             this.picBox_agent_remoteVideo.TabIndex = 1;
             this.picBox_agent_remoteVideo.TabStop = false;
             // 
-            // label2
+            // btnRecord
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(411, 483);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 17);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "坐席状态：";
+            this.btnRecord.Location = new System.Drawing.Point(864, 470);
+            this.btnRecord.Name = "btnRecord";
+            this.btnRecord.Size = new System.Drawing.Size(97, 43);
+            this.btnRecord.TabIndex = 17;
+            this.btnRecord.Text = "开始录像";
+            this.btnRecord.UseVisualStyleBackColor = true;
+            this.btnRecord.Click += new System.EventHandler(this.btnRecord_Click);
             // 
-            // comboBox_AgentStatus
+            // lbl_recordFileName
             // 
-            this.comboBox_AgentStatus.FormattingEnabled = true;
-            this.comboBox_AgentStatus.Items.AddRange(new object[] {
-            "空闲",
-            "忙",
-            "暂停",
-            "关闭"});
-            this.comboBox_AgentStatus.Location = new System.Drawing.Point(485, 480);
-            this.comboBox_AgentStatus.Name = "comboBox_AgentStatus";
-            this.comboBox_AgentStatus.Size = new System.Drawing.Size(108, 25);
-            this.comboBox_AgentStatus.TabIndex = 16;
-            this.comboBox_AgentStatus.SelectedIndexChanged += new System.EventHandler(this.comboBox_AgentStatus_SelectedIndexChanged);
-            // 
-            // lbl_CurrentStatus
-            // 
-            this.lbl_CurrentStatus.AutoSize = true;
-            this.lbl_CurrentStatus.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_CurrentStatus.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lbl_CurrentStatus.Location = new System.Drawing.Point(482, 514);
-            this.lbl_CurrentStatus.Name = "lbl_CurrentStatus";
-            this.lbl_CurrentStatus.Size = new System.Drawing.Size(68, 17);
-            this.lbl_CurrentStatus.TabIndex = 15;
-            this.lbl_CurrentStatus.Text = "坐席状态：";
-            this.lbl_CurrentStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_recordFileName.AutoSize = true;
+            this.lbl_recordFileName.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_recordFileName.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lbl_recordFileName.Location = new System.Drawing.Point(22, 514);
+            this.lbl_recordFileName.Name = "lbl_recordFileName";
+            this.lbl_recordFileName.Size = new System.Drawing.Size(0, 17);
+            this.lbl_recordFileName.TabIndex = 18;
+            this.lbl_recordFileName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // frmHall
             // 
@@ -602,5 +627,7 @@
         private System.Windows.Forms.ComboBox comboBox_AgentStatus;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lbl_CurrentStatus;
+        private System.Windows.Forms.Button btnRecord;
+        private System.Windows.Forms.Label lbl_recordFileName;
     }
 }
