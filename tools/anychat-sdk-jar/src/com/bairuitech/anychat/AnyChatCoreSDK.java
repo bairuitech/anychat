@@ -175,6 +175,11 @@ public class AnyChatCoreSDK
 	{
 		return GetSDKOptionString(AnyChatDefine.BRAC_SO_CORESDK_BUILDTIME);
 	}
+	// 写应用层日志
+	public static void Log(String str)
+	{
+		SetSDKOptionString(AnyChatDefine.BRAC_SO_CORESDK_WRITELOG, str);
+	}
     
     // 注册消息通知
     public native int RegisterNotify();

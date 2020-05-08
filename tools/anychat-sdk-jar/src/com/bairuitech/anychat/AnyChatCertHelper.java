@@ -119,7 +119,7 @@ public class AnyChatCertHelper {
         do {
             try {
                 String[] splitCert = splitCert(chainString.getBytes());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                if (Build.VERSION.SDK_INT >= 27/*Build.VERSION_CODES.P*/) {
                     certificatefactory = CertificateFactory.getInstance("X.509");
                 } else {
                     certificatefactory = CertificateFactory.getInstance("X.509", "BC");

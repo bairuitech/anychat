@@ -11,7 +11,6 @@ import android.util.Log;
 
 // AnyChat 音频包装类，实现音频采集、播放等
 public class AnyChatAudioHelper {
-	private final static String TAG = "ANYCHAT";
 	private AudioTrack mAudioTrack = null;
 	private AudioRecord mAudioRecord = null;
 	
@@ -41,7 +40,7 @@ public class AnyChatAudioHelper {
 		if(mAudioTrack != null)
 			return 0;
 		mProfile = profile;
-		Log.d(TAG, "InitAudioPlayer, profile: " + profile);
+		AnyChatCoreSDK.Log("Prepare init audio playback device, profile: " + profile);
 		int channel, samplerate, samplebit;
 		// 根据上层设定的profile来配置参数
 		if(profile==1) {
@@ -70,8 +69,9 @@ public class AnyChatAudioHelper {
 				mPlayAudioThread = new PlayAudioThread();
 				mPlayAudioThread.start();
 			}
-			Log.d(TAG, "mMinPlayBufSize = " + mMinPlayBufSize);
+			AnyChatCoreSDK.Log("Audio playback init finish, bufsize: " + mMinPlayBufSize);
 		} catch(Exception e) {
+			AnyChatCoreSDK.Log("Audio playback init exception: " + e.getMessage());
 			return -1;
 		}
 		return 0;
@@ -81,7 +81,7 @@ public class AnyChatAudioHelper {
 		if(mAudioPlayReleased)
 			return;
 		mAudioPlayReleased = true;
-		Log.d(TAG, "ReleaseAudioPlayer");
+		AnyChatCoreSDK.Log("Release audio playback device");
 		if (mPlayAudioThread != null) {
 			mPlayThreadExitFlag = true;
 			mPlayAudioThread = null;
@@ -111,14 +111,15 @@ public class AnyChatAudioHelper {
                 android.os.Process.setThreadPriority(
                     android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
             } catch (Exception e) {
-            	Log.d(TAG, "Set play thread priority failed: " + e.getMessage());
+            	AnyChatCoreSDK.Log("Set play thread priority failed: " + e.getMessage());
             }
             try {
             	mAudioTrack.play();	
             }catch(Exception e) {
             	e.printStackTrace();
+            	AnyChatCoreSDK.Log("Audio playback failed: " + e.getMessage());
             }
-			Log.d(TAG, "audio play....");
+			AnyChatCoreSDK.Log("Audio playback is starting...");
 			while(!mPlayThreadExitFlag)
 			{
 				try {
@@ -126,10 +127,11 @@ public class AnyChatAudioHelper {
 					mAudioTrack.write(data, 0, data.length);
 				}
 				catch (Exception e) {
+					AnyChatCoreSDK.Log("Audio playback exception: " + e.getMessage());
 					break;
 				}				
 			}
-			Log.d(TAG, "audio play stop....");
+			AnyChatCoreSDK.Log("Audio playback finished");
 		}
 	}
 	
@@ -166,7 +168,7 @@ public class AnyChatAudioHelper {
 	public int InitAudioRecorder(int profile) {
 		if(mAudioRecord != null)
 			return 0;
-		Log.d(TAG, "InitAudioRecorder, profile: " + profile);
+		AnyChatCoreSDK.Log("Prepare init audio capture device, profile: " + profile);
 		int channel, samplerate, samplebit;
 		// 根据上层设定的profile来配置参数
 		if(profile==1) {
@@ -197,10 +199,11 @@ public class AnyChatAudioHelper {
 				mRecordAudioThread = new RecordAudioThread();
 				mRecordAudioThread.start();
 			}
-			Log.d(TAG, "mMinRecordBufSize = " + mMinRecordBufSize);
+			AnyChatCoreSDK.Log("Audio record init finish, bufsize: " + mMinRecordBufSize);
 		}
 		catch(Exception e)
 		{
+			AnyChatCoreSDK.Log("Audio record init exception: " + e.getMessage());
 			return -1;
 		}
 		return 0;
@@ -210,7 +213,7 @@ public class AnyChatAudioHelper {
 		if(mAudioRecordReleased)
 			return;
 		mAudioRecordReleased = true;
-		Log.d(TAG, "ReleaseAudioRecorder");
+		AnyChatCoreSDK.Log("Release audio record device");
 		if (mRecordAudioThread != null) {
 			mRecordThreadExitFlag = true;
 			mRecordAudioThread = null;
@@ -240,14 +243,14 @@ public class AnyChatAudioHelper {
                 android.os.Process.setThreadPriority(
                     android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
             } catch (Exception e) {
-            	Log.d(TAG, "Set record thread priority failed: " + e.getMessage());
+            	AnyChatCoreSDK.Log("Set record thread priority failed: " + e.getMessage());
             }
             try{
             	mAudioRecord.startRecording();
             }catch(Exception e) {
             	e.printStackTrace();
             }
-			Log.d(TAG, "audio record....");
+            AnyChatCoreSDK.Log("Audio record is starting...");
 			byte [] recordbuf = new byte [640];
 			while(!mRecordThreadExitFlag)
 			{											
@@ -258,10 +261,11 @@ public class AnyChatAudioHelper {
 					// 通过AnyChat的外部音频输入接口将音频采样数据传入内核
 					AnyChatCoreSDK.InputAudioData(recordbuf, ret, 0);
 				} catch (Exception e) {
+					AnyChatCoreSDK.Log("Audio record exception: " + e.getMessage());
 					break;
 				}
 			}
-			Log.d(TAG, "audio record stop....");
+			AnyChatCoreSDK.Log("Audio record finished");
 		}
 
 	}
