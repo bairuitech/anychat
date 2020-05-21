@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecordServerVC">
+            <connections>
+                <outlet property="buttonTipLabel" destination="Tex-4x-Be5" id="SNd-v5-HKk"/>
+                <outlet property="remoteVideoSurface" destination="pUF-sz-JNk" id="v3c-eT-Td3"/>
+                <outlet property="theLocalView" destination="cck-Gt-e7F" id="O4l-d9-IRh"/>
+                <outlet property="theServerFunBtn" destination="ikc-wi-vBv" id="D0p-xC-yxd"/>
+                <outlet property="theServerRecordTimeLab" destination="oow-3L-haa" id="FDv-ur-f6d"/>
+                <outlet property="theVideoTimeLab" destination="0Lo-b2-blZ" id="uUJ-Bn-uwi"/>
+                <outlet property="view" destination="ztE-r4-6o7" id="yNj-HU-vXf"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="ztE-r4-6o7">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video.png" translatesAutoresizingMaskIntoConstraints="NO" id="pUF-sz-JNk" userLabel="remoteVideoSurface">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="99L-D9-dTU" appends="YES" id="cT7-fm-J77"/>
+                    </connections>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lo-b2-blZ" userLabel="theVideoTimeLab">
+                    <rect key="frame" x="163.5" y="697.5" width="87" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                    <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loacl Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oow-3L-haa" userLabel="serverRecordTime">
+                    <rect key="frame" x="13" y="698" width="83" height="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eh4-us-qcF" userLabel="View - footer">
+                    <rect key="frame" x="0.0" y="738" width="414" height="100"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务器录像" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tex-4x-Be5">
+                            <rect key="frame" x="16.5" y="85" width="76.5" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="挂断" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Yx-JB-cLD">
+                            <rect key="frame" x="191.5" y="85" width="31" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.98823529409999999" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="语音" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="koz-3g-8RQ">
+                            <rect key="frame" x="344" y="85" width="31" height="18"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ikc-wi-vBv" userLabel="theLocolFunBtn">
+                            <rect key="frame" x="17" y="0.0" width="75" height="75"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="75" id="4ho-Sg-bIk"/>
+                                <constraint firstAttribute="width" constant="75" id="kqB-Is-aou"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="record_server_normal" backgroundImage="record_server_normal">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <state key="selected" image="record_server_selected" backgroundImage="record_server_selected">
+                                <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="theServerFunBtn_OnClicked:" destination="-1" eventType="touchUpInside" id="GgV-p2-aGG"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oq1-Ax-vSQ" userLabel="endCallBtn">
+                            <rect key="frame" x="169.5" y="0.0" width="75" height="75"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" image="video_cutoff">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <state key="selected" image="Icon_EndCall.png">
+                                <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="FinishVideoChatBtnClicked:" destination="-1" eventType="touchUpInside" id="5k9-9A-xUe"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="clE-Cm-nqY">
+                            <rect key="frame" x="322" y="0.0" width="75" height="75"/>
+                            <state key="normal" image="video_audio_on"/>
+                            <state key="selected" image="video_audio_off"/>
+                            <connections>
+                                <action selector="speakerBtnClicked:" destination="-1" eventType="touchUpInside" id="SZk-Pq-MZd"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="9cc-pS-Skv"/>
+                        <constraint firstItem="0Yx-JB-cLD" firstAttribute="centerY" secondItem="Tex-4x-Be5" secondAttribute="centerY" id="IXI-bM-csI"/>
+                        <constraint firstItem="Tex-4x-Be5" firstAttribute="centerX" secondItem="ikc-wi-vBv" secondAttribute="centerX" id="N5g-pk-LgK"/>
+                        <constraint firstItem="Tex-4x-Be5" firstAttribute="top" secondItem="ikc-wi-vBv" secondAttribute="bottom" constant="10" id="OVO-M1-bTx"/>
+                        <constraint firstItem="ikc-wi-vBv" firstAttribute="top" secondItem="eh4-us-qcF" secondAttribute="top" id="Pl9-0v-Vfc"/>
+                        <constraint firstItem="koz-3g-8RQ" firstAttribute="centerY" secondItem="Tex-4x-Be5" secondAttribute="centerY" id="Sxw-Ht-K1N"/>
+                        <constraint firstItem="ikc-wi-vBv" firstAttribute="leading" secondItem="eh4-us-qcF" secondAttribute="leading" constant="17" id="VZf-2u-dSx"/>
+                        <constraint firstAttribute="trailing" secondItem="clE-Cm-nqY" secondAttribute="trailing" constant="17" id="eeB-WU-Dmi"/>
+                        <constraint firstItem="Oq1-Ax-vSQ" firstAttribute="height" secondItem="ikc-wi-vBv" secondAttribute="height" id="fIr-35-60V"/>
+                        <constraint firstItem="clE-Cm-nqY" firstAttribute="top" secondItem="ikc-wi-vBv" secondAttribute="top" id="fV9-nK-CYV"/>
+                        <constraint firstItem="clE-Cm-nqY" firstAttribute="height" secondItem="ikc-wi-vBv" secondAttribute="height" id="jWA-0L-mii"/>
+                        <constraint firstItem="Oq1-Ax-vSQ" firstAttribute="centerX" secondItem="eh4-us-qcF" secondAttribute="centerX" id="kTX-pX-V1f"/>
+                        <constraint firstItem="Oq1-Ax-vSQ" firstAttribute="width" secondItem="ikc-wi-vBv" secondAttribute="width" id="m6f-wt-RTI"/>
+                        <constraint firstItem="0Yx-JB-cLD" firstAttribute="centerX" secondItem="Oq1-Ax-vSQ" secondAttribute="centerX" id="qQn-Yl-Pol"/>
+                        <constraint firstItem="Oq1-Ax-vSQ" firstAttribute="top" secondItem="ikc-wi-vBv" secondAttribute="top" id="unr-KW-fSK"/>
+                        <constraint firstItem="koz-3g-8RQ" firstAttribute="centerX" secondItem="clE-Cm-nqY" secondAttribute="centerX" id="weO-Tq-rjA"/>
+                        <constraint firstItem="clE-Cm-nqY" firstAttribute="width" secondItem="ikc-wi-vBv" secondAttribute="width" id="wjF-1t-4QL"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cck-Gt-e7F" userLabel="theLocalView">
+                    <rect key="frame" x="276" y="100" width="121" height="162"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="162" id="kC0-kh-vfp"/>
+                        <constraint firstAttribute="width" constant="121" id="ra0-9A-beC"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="pUF-sz-JNk" secondAttribute="trailing" id="0Gp-bb-12I"/>
+                <constraint firstItem="eh4-us-qcF" firstAttribute="leading" secondItem="ztE-r4-6o7" secondAttribute="leading" id="36s-W2-L8c"/>
+                <constraint firstItem="cck-Gt-e7F" firstAttribute="top" secondItem="ztE-r4-6o7" secondAttribute="top" constant="100" id="9Ck-FU-Vxs"/>
+                <constraint firstAttribute="trailing" secondItem="eh4-us-qcF" secondAttribute="trailing" id="C6c-4S-pzJ"/>
+                <constraint firstItem="0Lo-b2-blZ" firstAttribute="centerX" secondItem="Oq1-Ax-vSQ" secondAttribute="centerX" id="CgO-D5-ohz"/>
+                <constraint firstItem="oow-3L-haa" firstAttribute="centerX" secondItem="ikc-wi-vBv" secondAttribute="centerX" id="Fef-nF-abu"/>
+                <constraint firstAttribute="trailing" secondItem="cck-Gt-e7F" secondAttribute="trailing" constant="17" id="VdQ-Rj-KmL"/>
+                <constraint firstItem="0Lo-b2-blZ" firstAttribute="centerY" secondItem="oow-3L-haa" secondAttribute="centerY" id="WMb-ff-wqX"/>
+                <constraint firstItem="hSw-jj-Pua" firstAttribute="bottom" secondItem="eh4-us-qcF" secondAttribute="bottom" constant="24" id="Wni-oW-qzl"/>
+                <constraint firstItem="eh4-us-qcF" firstAttribute="top" secondItem="oow-3L-haa" secondAttribute="bottom" constant="20" id="ZRL-S8-CNU"/>
+                <constraint firstItem="pUF-sz-JNk" firstAttribute="leading" secondItem="ztE-r4-6o7" secondAttribute="leading" id="k3y-j4-OUc"/>
+                <constraint firstAttribute="bottom" secondItem="pUF-sz-JNk" secondAttribute="bottom" id="vlq-tY-hBN"/>
+                <constraint firstItem="pUF-sz-JNk" firstAttribute="top" secondItem="ztE-r4-6o7" secondAttribute="top" id="ydX-EH-Zmb"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <viewLayoutGuide key="safeArea" id="hSw-jj-Pua"/>
+            <point key="canvasLocation" x="592" y="112.44377811094454"/>
+        </view>
+        <tapGestureRecognizer numberOfTapsRequired="2" id="99L-D9-dTU">
+            <connections>
+                <action selector="changeContentModeFromImageView" destination="-1" id="0QF-m0-6An"/>
+                <outlet property="delegate" destination="-1" id="mrk-0U-KDx"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="Icon_EndCall.png" width="454" height="60"/>
+        <image name="bg_video.png" width="320" height="568"/>
+        <image name="record_server_normal" width="75" height="75"/>
+        <image name="record_server_selected" width="74.5" height="74.5"/>
+        <image name="video_audio_off" width="74.5" height="74.5"/>
+        <image name="video_audio_on" width="74.5" height="74.5"/>
+        <image name="video_cutoff" width="74.5" height="74.5"/>
+    </resources>
+</document>

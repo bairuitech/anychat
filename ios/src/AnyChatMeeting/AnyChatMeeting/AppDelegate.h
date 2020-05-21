@@ -1,0 +1,20 @@
+//
+//  AppDelegate.h
+//  AnyChatMeetings
+//
+//  Created by alexChen .
+//  Copyright (c) 2015年 GuangZhou BaiRui NetWork Technology Co.,Ltd. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "AnyChatVC.h"
+
+@class AnyChatVC;
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow                  *window;
+@property (strong, nonatomic) UINavigationController    *navController;
+@property (strong, nonatomic) AnyChatVC     *anychatVC;
+
+@end

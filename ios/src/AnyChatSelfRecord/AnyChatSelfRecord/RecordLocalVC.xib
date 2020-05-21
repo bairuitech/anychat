@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment version="1808" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecordLocalVC">
+            <connections>
+                <outlet property="theLocalRecordTimeLab" destination="6pY-tK-0Em" id="OOX-dR-VKB"/>
+                <outlet property="theLocalView" destination="39h-kC-zCb" id="EFG-8S-h6D"/>
+                <outlet property="theLocolFunBtn" destination="9D8-KI-Nz2" id="XFE-9g-jQK"/>
+                <outlet property="view" destination="QSo-mU-X5B" id="P9Q-3v-Pha"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="QSo-mU-X5B">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="39h-kC-zCb" userLabel="theLocalView">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="step2" translatesAutoresizingMaskIntoConstraints="NO" id="iMG-xP-Qcp">
+                    <rect key="frame" x="0.0" y="30" width="414" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="M4Y-F3-Zit"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请对准摄像头，用普通话朗读以下内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aaD-gN-wem">
+                    <rect key="frame" x="51" y="75" width="312" height="21"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我叫张三，自愿申请开户" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uj4-H3-NUR">
+                    <rect key="frame" x="95" y="126" width="224.5" height="24"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loacl Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6pY-tK-0Em" userLabel="LocalRecordTime">
+                    <rect key="frame" x="167.5" y="601" width="79" height="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9D8-KI-Nz2" userLabel="theLocolFunBtn">
+                    <rect key="frame" x="169.5" y="631" width="75" height="75"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="75" id="Dgh-yg-v0i"/>
+                        <constraint firstAttribute="width" constant="75" id="VHd-9u-XhW"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="record_normal">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <state key="selected" backgroundImage="record_selected"/>
+                    <connections>
+                        <action selector="recordLocolBtn_OnClicked:" destination="-1" eventType="touchUpInside" id="Qsp-Gu-7wD"/>
+                    </connections>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bmn-wa-pQN">
+                    <rect key="frame" x="261" y="678" width="150" height="22"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="Return">
+                        <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="returnBtn_OnClick" destination="-1" eventType="touchUpInside" id="uAS-bN-uH5"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="iMG-xP-Qcp" firstAttribute="leading" secondItem="QSo-mU-X5B" secondAttribute="leading" id="4Pv-Oc-Cls"/>
+                <constraint firstItem="9D8-KI-Nz2" firstAttribute="centerX" secondItem="39h-kC-zCb" secondAttribute="centerX" id="AAQ-ht-bXt"/>
+                <constraint firstItem="aaD-gN-wem" firstAttribute="centerX" secondItem="iMG-xP-Qcp" secondAttribute="centerX" id="AKf-xf-peC"/>
+                <constraint firstItem="39h-kC-zCb" firstAttribute="leading" secondItem="QSo-mU-X5B" secondAttribute="leading" id="Dq8-I5-ae5"/>
+                <constraint firstItem="39h-kC-zCb" firstAttribute="top" secondItem="QSo-mU-X5B" secondAttribute="top" id="Hai-pB-D72"/>
+                <constraint firstItem="iMG-xP-Qcp" firstAttribute="top" secondItem="QSo-mU-X5B" secondAttribute="top" constant="30" id="Lys-9o-z3Q"/>
+                <constraint firstAttribute="trailing" secondItem="iMG-xP-Qcp" secondAttribute="trailing" id="N1o-e7-p6T"/>
+                <constraint firstAttribute="trailing" secondItem="39h-kC-zCb" secondAttribute="trailing" id="R2c-fc-IQr"/>
+                <constraint firstAttribute="bottom" secondItem="39h-kC-zCb" secondAttribute="bottom" id="RJe-9o-Vsq"/>
+                <constraint firstItem="Uj4-H3-NUR" firstAttribute="centerX" secondItem="aaD-gN-wem" secondAttribute="centerX" id="TQd-u3-q8C"/>
+                <constraint firstItem="9D8-KI-Nz2" firstAttribute="top" secondItem="6pY-tK-0Em" secondAttribute="bottom" constant="10" id="VSG-9S-85i"/>
+                <constraint firstAttribute="bottom" secondItem="9D8-KI-Nz2" secondAttribute="bottom" constant="30" id="g4Y-ta-lmG"/>
+                <constraint firstItem="aaD-gN-wem" firstAttribute="top" secondItem="iMG-xP-Qcp" secondAttribute="bottom" constant="22" id="hXV-3w-abU"/>
+                <constraint firstItem="6pY-tK-0Em" firstAttribute="centerX" secondItem="9D8-KI-Nz2" secondAttribute="centerX" id="hXZ-lg-MHt"/>
+                <constraint firstItem="Uj4-H3-NUR" firstAttribute="top" secondItem="aaD-gN-wem" secondAttribute="bottom" constant="30" id="reX-rY-ghb"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139" y="154"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="record_normal" width="74.5" height="74.5"/>
+        <image name="record_selected" width="74.5" height="74.5"/>
+        <image name="step2" width="414" height="26"/>
+    </resources>
+</document>
