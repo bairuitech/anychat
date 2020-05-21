@@ -181,6 +181,10 @@ public class AnyChatDefine {
 	public static final int BRAC_SO_CORESDK_SSLCERTCHAIN	=	232; ///< SSL证书链
 	public static final int BRAC_SO_CORESDK_SUPPORTMEDIACODEC =	233; ///< 本地支持的编码器信息，用于编码协商
 	public static final int BRAC_SO_CORESDK_SETUSERAPPINFO	=	236; ///< 设置用户APP信息
+	public static final int BRAC_SO_CORESDK_LASTERRORCODE	=	237; ///< 获取最后的出错代码
+	public static final int BRAC_SO_CORESDK_CBVIDEORAWDATA	=	238; ///< 回调原始视频帧
+	public static final int BRAC_SO_CORESDK_CBAUDIORAWDATA	=	239; ///< 回调原始音频帧
+	public static final int BRAC_SO_CORESDK_AUDIOMUTE		=	240; ///< 音频静音控制
 	
 	public static final int BRAC_SO_UDPTRACE_MODE			=	160; ///< UDP数据包跟踪模式
 	public static final int BRAC_SO_UDPTRACE_PACKSIZE		=	161; ///< UDP数据包跟踪的大小，单位：BYTE
@@ -309,6 +313,7 @@ public class AnyChatDefine {
     public static final int ANYCHAT_SDKCTRL_LIVESTREAM		=	101;	///< 直播业务控制
     public static final int ANYCHAT_SDKCTRL_AIABILITY		=	102;	///< AI能力
     public static final int ANYCHAT_SDKCTRL_APPBUFFER		=	103;	///< APP自定义缓冲区
+    public static final int ANYCHAT_SDKCTRL_SERVEROBJECT	=	104;	///< 服务器对象控制
     public static final int ANYCHAT_SDKCTRL_FACEEMOTIONCTRL	=	300;	///< 微表情控制
 
 
@@ -320,7 +325,6 @@ public class AnyChatDefine {
     public static final int BRAC_ERRORCODE_SESSION_REFUSE	= 100104;///< 目标用户拒绝会话
     public static final int BRAC_ERRORCODE_SESSION_TIMEOUT	= 100105;///< 会话请求超时
     public static final int BRAC_ERRORCODE_SESSION_DISCONNECT=100106;///< 网络断线
-	public static final int BRAC_SO_CORESDK_LASTERRORCODE		=237; ///< 获取最后的出错代码
 
 
 
@@ -364,6 +368,7 @@ public class AnyChatDefine {
 	// CoreSDK事件类型定义（回调函数：BRAC_CoreSDKEvent_CallBack参数）
 	public static final int ANYCHAT_CORESDKEVENT_BASEEVENT	=	1;	///< SDK基础事件
 	public static final int ANYCHAT_CORESDKEVENT_CONNECTHOLD=	2;	///< 连接保持事件
+	public static final int ANYCHAT_CORESDKEVENT_DEVICEEVENT=	3;	///< 硬件设备事件
 	public static final int ANYCHAT_CORESDKEVENT_CAMERASTATE=	10;	///< 摄像头状态事件
 	public static final int ANYCHAT_CORESDKEVENT_MICSTATE	=	11;	///< Mic状态事件
 	public static final int ANYCHAT_CORESDKEVENT_TRANSFILE	=	12;	///< 文件传输事件
@@ -382,6 +387,7 @@ public class AnyChatDefine {
 	public static final int ANYCHAT_CORESDKEVENT_LIVESTREAM=	101;	///< 直播业务事件
     public static final int ANYCHAT_CORESDKEVENT_AIABILITY=		102;	///< AI能力事件
     public static final int ANYCHAT_CORESDKEVENT_APPBUFFER=		103;	///< APP自定义缓冲区事件
+    public static final int ANYCHAT_CORESDKEVENT_SERVEROBJECT=	104;	///< 服务器对象事件
 	public static final int ANYCHAT_CORESDKEVENT_USERDEFINE	=	800;///< 用户自定义事件起始序号
 
 	// CoreSDK回调数据类型定义（回调函数：BRAC_CoreSDKData_CallBack参数）
