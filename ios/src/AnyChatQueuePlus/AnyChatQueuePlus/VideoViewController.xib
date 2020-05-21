@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoViewController">
+            <connections>
+                <outlet property="localVideoView" destination="gtd-nx-Xwe" id="Bfm-9p-e1e"/>
+                <outlet property="remoteVideoView" destination="XBJ-bd-cMf" id="N8b-wS-Yym"/>
+                <outlet property="timerLabel" destination="VML-DX-QiM" id="BQC-Gl-uuc"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_video" translatesAutoresizingMaskIntoConstraints="NO" id="XBJ-bd-cMf" userLabel="remoteVideoView">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HkQ-AC-P86" userLabel="Button - EndCall">
+                    <rect key="frame" x="169.5" y="613" width="75" height="75"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="75" id="qt2-Oo-Ekd"/>
+                        <constraint firstAttribute="width" constant="75" id="ycZ-8i-adH"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" backgroundImage="video_cutoff">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <state key="selected" image="Icon_EndCall.png">
+                        <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="1" green="0.087705143730000004" blue="0.16023095209999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="EndCallAction:" destination="-1" eventType="touchUpInside" id="031-bl-abf"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gtd-nx-Xwe" userLabel="localView">
+                    <rect key="frame" x="273" y="385" width="121" height="162"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="121" id="bx6-ov-alD"/>
+                        <constraint firstAttribute="height" constant="162" id="f75-U4-FKM"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VML-DX-QiM">
+                    <rect key="frame" x="171.5" y="567" width="71.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="XBJ-bd-cMf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="1PK-qE-7dv"/>
+                <constraint firstAttribute="bottom" secondItem="HkQ-AC-P86" secondAttribute="bottom" constant="48" id="CGJ-9h-A0E"/>
+                <constraint firstAttribute="trailing" secondItem="XBJ-bd-cMf" secondAttribute="trailing" id="Fkm-pA-JPA"/>
+                <constraint firstAttribute="bottom" secondItem="XBJ-bd-cMf" secondAttribute="bottom" id="GDl-ZT-OtA"/>
+                <constraint firstItem="HkQ-AC-P86" firstAttribute="top" secondItem="VML-DX-QiM" secondAttribute="bottom" constant="25" id="T4B-iO-BuT"/>
+                <constraint firstItem="HkQ-AC-P86" firstAttribute="centerX" secondItem="XBJ-bd-cMf" secondAttribute="centerX" id="ZXh-Sn-cNn"/>
+                <constraint firstAttribute="trailing" secondItem="gtd-nx-Xwe" secondAttribute="trailing" constant="20" id="feg-DO-CWO"/>
+                <constraint firstItem="VML-DX-QiM" firstAttribute="top" secondItem="gtd-nx-Xwe" secondAttribute="bottom" constant="20" id="iFD-Qo-ldz"/>
+                <constraint firstItem="XBJ-bd-cMf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nAW-Ah-aa4"/>
+                <constraint firstItem="VML-DX-QiM" firstAttribute="centerX" secondItem="HkQ-AC-P86" secondAttribute="centerX" id="swF-tX-TuX"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="417.39130434782612" y="239.0625"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Icon_EndCall.png" width="16" height="16"/>
+        <image name="bg_video" width="320" height="480"/>
+        <image name="video_cutoff" width="74.5" height="74.5"/>
+    </resources>
+</document>

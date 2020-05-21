@@ -1,0 +1,40 @@
+//
+//  PrefixHeader.pch
+//  AnyChatQueuePlus
+//
+//  Created by bairui on 2019/7/11.
+//  Copyright © 2019 tim.tan. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "IQKeyboardManager.h"
+#import "ACBaseViewController.h"
+#import "UIView+AdaptScreen.h"
+
+
+#define kUserID 1001
+#define kAnyChatIP @"cloud.anychat.cn"//@"demo.anychat.cn"
+#define kAnyChatPort @"8906"
+#define kAnyChatUserName @"AnyChatQueue"
+#define kAnyChatAppId @"fbe957d1-c25a-4992-9e75-d993294a5d56"
+
+#define weakify(...) \
+ext_keywordify \
+metamacro_foreach_cxt(ext_weakify_,, __weak, __VA_ARGS__)
+
+#define strongify(...) \
+ext_keywordify \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Wshadow\"") \
+metamacro_foreach(ext_strongify_,, __VA_ARGS__) \
+_Pragma("clang diagnostic pop")
+
+#import "UIViewController+Orientation.h"
+#import "UINavigationController+DeviceOrientataion.h"
+
+#endif /* PrefixHeader_pch */

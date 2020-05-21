@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment version="1808" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QueueViewController">
+            <connections>
+                <outlet property="queuUserSiteLabel" destination="mbj-DP-bcO" id="7sa-v2-fbx"/>
+                <outlet property="queueUserCountLabel" destination="wdd-ZG-CFU" id="sML-wg-Dln"/>
+                <outlet property="queueWaitingTimeLabel" destination="zGs-0t-Ry0" id="93Z-NQ-mgV"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="foP-P1-M39">
+                    <rect key="frame" x="91" y="531" width="193" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="193" id="Afu-Ao-6zJ"/>
+                        <constraint firstAttribute="height" constant="44" id="iX9-vK-ETl"/>
+                    </constraints>
+                    <state key="normal" title="取消" image="停止排队">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="sx2-dV-tg1"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l2b-Su-le8">
+                    <rect key="frame" x="119.5" y="99" width="136" height="136"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="136" id="O6c-op-AxX"/>
+                        <constraint firstAttribute="height" constant="136" id="p8w-L6-8aH"/>
+                    </constraints>
+                    <state key="normal" image="排队管理"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00：00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGs-0t-Ry0">
+                    <rect key="frame" x="158.5" y="193" width="58.5" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="58.5" id="DBy-gT-CBT"/>
+                        <constraint firstAttribute="height" constant="19" id="XOA-V8-ptl"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="18"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdd-ZG-CFU">
+                    <rect key="frame" x="187.5" y="292" width="0.0" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="18" id="F72-gl-o9n"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbj-DP-bcO">
+                    <rect key="frame" x="187.5" y="263" width="0.0" height="0.0"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="wdd-ZG-CFU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="292" id="Iww-8T-NXg"/>
+                <constraint firstItem="foP-P1-M39" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="NDm-Ta-7JG"/>
+                <constraint firstItem="zGs-0t-Ry0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="193" id="UKD-oe-FVF"/>
+                <constraint firstItem="zGs-0t-Ry0" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="WdB-G2-XZ4"/>
+                <constraint firstItem="wdd-ZG-CFU" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Wy9-oB-UWe"/>
+                <constraint firstItem="l2b-Su-le8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="99" id="YqH-4u-HkG"/>
+                <constraint firstItem="mbj-DP-bcO" firstAttribute="top" secondItem="l2b-Su-le8" secondAttribute="bottom" constant="28" id="p4h-kU-9fX"/>
+                <constraint firstAttribute="bottom" secondItem="foP-P1-M39" secondAttribute="bottom" constant="92" id="pM9-eK-UNK"/>
+                <constraint firstItem="l2b-Su-le8" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="pYm-7v-PKy"/>
+                <constraint firstItem="mbj-DP-bcO" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="t4t-4p-Vmc"/>
+            </constraints>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="停止排队" width="192.5" height="44.5"/>
+        <image name="排队管理" width="136" height="136.5"/>
+    </resources>
+</document>
