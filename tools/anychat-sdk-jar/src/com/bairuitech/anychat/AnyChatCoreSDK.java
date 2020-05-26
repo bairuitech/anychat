@@ -49,7 +49,13 @@ public class AnyChatCoreSDK
 	public synchronized static AnyChatCoreSDK getInstance(Context context)
 	{
 		if(mAnyChat==null)
+		{
 			mAnyChat = new AnyChatCoreSDK();
+			//#define BRAC_SO_CORESDK_APPBUNDLEID		810
+			//#define BRAC_SO_CORESDK_APPSIGNATURE		811
+			AnyChatCoreSDK.SetSDKOptionString(810, AnyChatUtils.getAppPackageName(context));
+			AnyChatCoreSDK.SetSDKOptionString(811, AnyChatUtils.getAppSignMd5Str(context));
+		}
 		return mAnyChat;
 	}
 	
