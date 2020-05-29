@@ -1,5 +1,6 @@
-// AnyChat for Web SDK 
+// AnyChat for Web SDK
 // ²»Òª¶Ô¸ÃÎÄ¼þ½øÐÐÈÎºÎÐÞ¸Ä£¬µ±Éý¼¶SDKÊ±£¬ÐÂ°æ±¾½«»áÖ±½Ó¸²¸Ç¾É°æ±¾
+
 
 /********************************************
  *				³£Á¿¶¨Òå²¿·Ö				*
@@ -129,6 +130,7 @@ var BRAC_SO_CORESDK_WRITELOG	=			135;// Ð´Èëµ÷ÊÔÐÅÏ¢µ½±¾µØÈÕÖ¾ÎÄ¼þÖÐ
 var BRAC_SO_CORESDK_NEWLOGFILE	=			136;// ²úÉúÐÂµÄÈÕÖ¾ÎÄ¼þ
 var BRAC_SO_CORESDK_SUPPORTSIP	=			137;// ÅÐ¶Ïµ±Ç°ÊÇ·ñÖ§³ÖSIPÍ¨ÐÅ
 var BRAC_SO_CORESDK_SUPPORTHTML5	=		138;// ÅÐ¶Ïµ±Ç°ÊÇ·ñÖ§³ÖHTML5
+var BRAC_SO_CORESDK_DISABLELOGFILE	=		139;// ½ûÖ¹Éú³É±¾µØÈÕÖ¾ÎÄ¼þ
 var BRAC_SO_CORESDK_SUPPORTVIDEOCODEC =		210;// ÉèÖÃÖ§³ÖµÄÊÓÆµ±àÂëÆ÷
 var BRAC_SO_CORESDK_SUPPORTAUDIOCODEC =		211;// ÉèÖÃÖ§³ÖµÄÒôÆµ±àÂëÆ÷
 var BRAC_SO_CORESDK_DISABLEMEDIACONSUL =	212;// ½ûÖ¹Ã½ÌåÐ­ÉÌ
@@ -151,6 +153,8 @@ var BRAC_SO_CORESDK_USESERVERTIME	=		230;// Ê¹ÓÃ·þÎñÆ÷Ê±¼ä´Á£¨²ÎÊýÎªintÐÍ£¬0 ¹Ø±
 var BRAC_SO_CORESDK_APPMONITORLIST	=		231;// Ó¦ÓÃ³ÌÐòÁÐ±í£¬Ó¦ÓÃ³ÌÐò¹²ÏíÄ£¿éÊ¹ÓÃ£¨²ÎÊýÎª×Ö·û´®£©
 var BRAC_SO_CORESDK_SSLCERTCHAIN	=		232;// SSLÖ¤ÊéÁ´
 var BRAC_SO_CORESDK_SUPPORTMEDIACODEC=		233;// ±¾µØÖ§³ÖµÄ±àÂëÆ÷ÐÅÏ¢£¬ÓÃÓÚ±àÂëÐ­ÉÌ
+var BRAC_SO_CORESDK_SETUSERAPPINFO	=		236;// ÉèÖÃÓÃ»§APPÐÅÏ¢
+var BRAC_SO_CORESDK_LASTERRORCODE	=		237;// »ñÈ¡×îºóµÄ³ö´í´úÂë
 
 
 
@@ -189,6 +193,7 @@ var BRAC_SO_ENABLEWEBSERVICE 	=			11002;	// Æô¶¯±¾µØWeb·þÎñ
 var BRAC_SO_LOCALPATH2URL		=			11003;	// ½«±¾µØÂ·¾¶×ª»»ÎªURLµØÖ·
 var BRAC_SO_GETTASKPATHNAME		=			11004;	// ¸ù¾Ý´«ÊäÈÎÎñID»ñÈ¡ÎÄ¼þÂ·¾¶
 var BRAC_SO_VIDEOBKIMAGE		=			11006;	// ÉèÖÃÊÓÆµ±³¾°Í¼Æ¬
+var ANYCHATWEB_SO_STRBASE64MODE = 			11007;	// ×Ö·û´® base64 Ä£Ê½£¨½öweb ¶ËÉúÐ§£¬Ç°¶Ë base64 ±àÂëºóÈë²Î£»»Øµ÷º¯Êý²å¼þÒ² base64 ±àÂëºó³ö²Î£©
 
 // ´«ÊäÈÎÎñÐÅÏ¢²ÎÊý¶¨Òå£¨API£ºBRAC_QueryTransTaskInfo ´«Èë²ÎÊý£©
 var BRAC_TRANSTASK_PROGRESS		= 			1;	// ´«ÊäÈÎÎñ½ø¶È²éÑ¯£¨²ÎÊýÎª£ºDOUBLEÐÍ£¬·µ»ØÖµ0.0 ~ 100.0£¬ »ò²ÎÊýÎª£ºDWORDÐÍ£¬·µ»ØÖµ0 ~ 100£©
@@ -210,6 +215,7 @@ var BRAC_RECORD_FLAGS_SNAPSHOT	=	0x00000400;	// ÅÄÕÕ
 var BRAC_RECORD_FLAGS_LOCALCB	=	0x00000800;	// ´¥·¢±¾µØ»Øµ÷
 var BRAC_RECORD_FLAGS_STREAM	=	0x00001000;	// ¶ÔÊÓÆµÁ÷½øÐÐÂ¼ÖÆ£¨Ð§ÂÊ¸ß£¬µ«¿ÉÄÜ´æÔÚÊÓÆµ·½ÏòÐý×ªµÄÎÊÌâ£©
 var BRAC_RECORD_FLAGS_USERFILENAME=	0x00002000;	// ÓÃ»§×Ô¶¨ÒåÎÄ¼þÃû
+var BRAC_RECORD_FLAGS_FILEMD5 	=	0x00040000;	// ¼ÆËãÂ¼ÏñÎÄ¼þµÄMD5Öµ
 
 // ¿Í»§¶Ë¡¢·þÎñÆ÷¶ËÂ¼ÖÆ±êÖ¾¶¨Òå±£³ÖÍ³Ò»
 var ANYCHAT_RECORD_FLAGS_VIDEO	=	BRAC_RECORD_FLAGS_VIDEO;
@@ -227,6 +233,7 @@ var ANYCHAT_RECORD_FLAGS_ERRORCODE =	0x00004000;	// Ö§³Ö³ö´í´úÂë
 var ANYCHAT_RECORD_FLAGS_MULTISTREAM=	0x00008000;	// Ö§³Ö¶àÂ·Á÷µÄÂ¼ÖÆ£¨ÅÄÕÕ£©
 var ANYCHAT_RECORD_FLAGS_CANCEL	=		0x00010000;	// È¡ÏûÂ¼Ïñ£¬É¾³ýÂ¼ÏñÎÄ¼þ
 var ANYCHAT_RECORD_FLAGS_BUFFERCB =		0x00020000;	// »º³åÇøÊý¾Ý»Øµ÷
+var ANYCHAT_RECORD_FLAGS_FILEMD5 =		0x00040000;	// ¼ÆËãÂ¼ÏñÎÄ¼þµÄMD5Öµ
 
 // ÊÓÆµ²Ã¼ôÄ£Ê½¶¨Òå
 var ANYCHAT_VIDEOCLIPMODE_UNKNOW	=		-1;	// Î´ÖªÄ£Ê½£¬²»ÐèÒª×ö²Ã¼ôÊ±Ê¹ÓÃ
@@ -355,10 +362,109 @@ var ANYCHAT_SERVERQUERY_USERIDBYSTRID	=	2;	// ¸ù¾Ý×Ö·û´®ID²éÑ¯ÓÃ»§ID
 var ANYCHAT_SERVERQUERY_STRIDBYUSERID	=	3;	// ¸ù¾ÝÓÃ»§ID²éÑ¯×Ö·û´®ID
 var ANYCHAT_SERVERQUERY_NAMEBYUSERID	=	4;	// ¸ù¾ÝÓÃ»§ID²éÑ¯ÓÃ»§Ãû
 var ANYCHAT_SERVERQUERY_NAMEBYSTRID		=	5;	// ¸ù¾Ý×Ö·û´®ID²éÑ¯ÓÃ»§Ãû
+var ANYCHAT_SERVERQUERY_USERINFOBYID	=	6;	// ¸ù¾ÝÓÃ»§ID²éÑ¯ÓÃ»§ÐÅÏ¢
 var ANYCHAT_SERVERQUERY_PPTFILEINFO		=	10;	// PPTÎÄ¼þÐÅÏ¢
 var ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	=	100;// ²éÑ¯Ö¸¶¨¶ÓÁÐµÄ×øÏ¯·þÎñÐÅÏ¢
 var ANYCHAT_SERVERQUERY_RUNNINGSTATUS	=	200;// ²éÑ¯·þÎñÆ÷ÔËÐÐ×´Ì¬
 var ANYCHAT_SERVERQUERY_ONLINEUSERS		=	201;// ²éÑ¯·þÎñÆ÷ÔÚÏßÓÃ»§Êý
+
+///////////////////////////////
+
+/**
+ *
+ * AIÄÜÁ¦
+ */
+var ANYCHAT_AI_CTRL_ROBOT_INIT	               =  1	     //< ³õÊ¼»¯AIÄÜÁ¦»úÆ÷ÈË
+var ANYCHAT_AI_CTRL_ROBOT_RELEASE              =  2	     //< ÊÍ·ÅAIÄÜÁ¦»úÆ÷ÈË
+var ANYCHAT_AI_CTRL_ROBOT_ACTIVETEST           =  3	     //< »úÆ÷ÈËÐÄÌø¼ì²â
+var ANYCHAT_AI_CTRL_ABILITY_INVOKE             =  4	     //< AIÄÜÁ¦µ÷ÓÃ
+var ANYCHAT_AI_CTRL_ABILITY_REQUEST            =  5	     //< ÇëÇóAIÄÜÁ¦
+var ANYCHAT_AI_CTRL_ABILITY_RELEASE            =  6	     //< ÊÍ·ÅAIÄÜÁ¦
+var ANYCHAT_AI_CTRL_ABILITY_ACTIVETEST         =  7	     //< AIÄÜÁ¦ÐÄÌø¼ì²â
+var ANYCHAT_AI_CTRL_GETOPTION                  =  8      //< ²ÎÊý²éÑ¯
+var ANYCHAT_AI_CTRL_SETOPTION                  =  9      //< ²ÎÊýÉèÖÃ
+
+//AI·µ»ØÊÂ¼þÀàÐÍ
+var ANYCHAT_AI_EVENT_ROBOT_INITRESULT          =  1       //< »úÆ÷ÈË³õÊ¼»¯½á¹û
+var ANYCHAT_AI_EVENT_ROBOT_STATUS              =  2	      //< »úÆ÷ÈË×´Ì¬Í¨Öª
+var ANYCHAT_AI_EVENT_ROBOT_ACTIVERET           =  3       //< »úÆ÷ÈËÐÄÌø¼ì²â½á¹û
+var ANYCHAT_AI_EVENT_ABILITY_RESULT            =  4       //< AIÄÜÁ¦Ö´ÐÐ½á¹û
+var ANYCHAT_AI_EVENT_ABILITY_STATUS            =  5       //< AIÄÜÁ¦×´Ì¬Í¨Öª
+var ANYCHAT_AI_EVENT_ABILITY_ACTIVERET         =  6       //< AIÄÜÁ¦ÐÄÌø¼ì²â½á¹û
+
+//»úÆ÷ÈË×´Ì¬
+var ANYCHAT_AIROBOT_STATUS_UNKNOW              =  0;      //< Î´Öª×´Ì¬
+var ANYCHAT_AIROBOT_STATUS_OFFLINE             =  1;      //< ÀëÏß×´Ì¬
+var ANYCHAT_AIROBOT_STATUS_PREPARE             =  2;      //< ×¼±¸×´Ì¬
+var ANYCHAT_AIROBOT_STATUS_ONLINE              =  3;      //< ÔÚÏß×´Ì¬
+var ANYCHAT_AIROBOT_STATUS_PAUSE               =  4;      //< ÔÝÍ£×´Ì¬
+
+//AIÄÜÁ¦×´Ì¬
+var ANYCHAT_AIABILITY_STATUS_PREPARE           =  1;      //< ×¼±¸×´Ì¬
+var ANYCHAT_AIABILITY_STATUS_PROCESS           =  2;      //< Ö´ÐÐ×´Ì¬
+var ANYCHAT_AIABILITY_STATUS_FINISH            =  3;      //< Íê³É×´Ì¬
+//ASRÄÜÁ¦Ïà¹Ø¶¨Òå
+//ÎÄ±¾ÀàÐÍ
+var ANYCHAT_OCRTYPE_NUMBER                     =  1;      //< Êý×Ö
+var ANYCHAT_OCRTYPE_CHINESE                    =  2;      //< ººÓïÆÕÍ¨»°
+//AIÄÜÁ¦ÀàÐÍ¶¨Òå
+var ANYCHAT_AI_TYPE_ASR		                   =  1	      //< ÓïÒôÊ¶±ð
+var ANYCHAT_AI_TYPE_TTS		                   =  2	      //< ÓïÒôºÏ³É
+var ANYCHAT_AI_TYPE_VPR		                   =  3	      //< ÉùÎÆÊ¶±ð
+var ANYCHAT_AI_TYPE_AFR		                   =  4	      //< ÈËÁ³Ê¶±ð
+var ANYCHAT_AI_TYPE_OCR		                   =  5	      //< ÎÄ×ÖÊ¶±ð
+var ANYCHAT_AI_TYPE_HWR		                   =  6	      //< ÊÖÐ´Ê¶±ð
+var ANYCHAT_AI_TYPE_NLU		                   =  7	      //< ÓïÒåÀí½â
+var ANYCHAT_AI_TYPE_FPR		                   =  8	      //< Ö¸ÎÆÊ¶±ð
+var ANYCHAT_AI_TYPE_AIR		                   =  9	      //< Í¼ÏñÊ¶±ð
+var ANYCHAT_AI_TYPE_AIC		                   =  100     //< ×Ô¶¯ÕÕÆ¬²¶»ñ
+//¹¤×÷Ä£Ê½
+var ANYCHAT_ASRMODE_FILESTREAM                 =  1;	  //< ¶ÔÂ¼ÒôÎÄ¼þ½øÐÐÓïÒôÊ¶±ð
+var ANYCHAT_ASRMODE_LIVESTREAM                 =  2;	  //< ¶ÔÊµÊ±Á÷½øÐÐÓïÒôÊ¶±ð
+var ANYCHAT_ASRMODE_TAGRECORD                  =  3;	  //< ¶ÔÂ¼ÏñÎÄ¼þ¼Ó±êÇ©½øÐÐÓïÒôÊ¶±ð
+var ANYCHAT_ASRMODE_KEYWORDRECOGNITION         =  4;	  //< ÓïÒô¹Ø¼ü×ÖÊ¶±ð
+
+//Óï¾ä±êÖ¾
+var ANYCHAT_ASR_SENTENCE_STARTED               =  1;	  //< Óï¾ä¿ªÊ¼
+var ANYCHAT_ASR_SENTENCE_CHANGED               =  2;      //< Óï¾ä¸Ä±ä
+var ANYCHAT_ASR_SENTENCE_ENDED                 =  3;	  //< Óï¾ä½áÊø
+
+//TTSÄÜÁ¦Ïà¹Ø¶¨Òå
+//ÈËÉùÀàÐÍ
+var ANYCHAT_TTSTYPE_MENVOICE                   =   1;	  //< TTSÄÐÉù
+var ANYCHAT_TTSTYPE_WOMENVOICE                 =   2;	  //< TTSÅ®Éù
+//AFRÄÜÁ¦Ïà¹Ø¶¨Òå
+//¹¤×÷Ä£Ê½
+var ANYCHAT_AFRMODE_IMAGEFACEDETECT            =   1;	  //< ÕÕÆ¬ÈËÁ³¼ì²â£º¼ì²âÖ¸¶¨ÕÕÆ¬ÖÐÊÇ·ñ´æÔÚÈËÁ³£¬²¢·µ»ØÈËÁ³Î»ÖÃ
+var ANYCHAT_AFRMODE_STREAMFACEDETECT           =   2;	  //< ÊÓÆµÁ÷ÈËÁ³¼ì²â£º¼ì²âÖ¸¶¨ÓÃ»§µÄÊÓÆµÁ÷ÊÇ·ñ´æÔÚÈËÁ³£¬²¢·µ»ØÈËÁ³Î»ÖÃ
+var ANYCHAT_AFRMODE_IMAGEFACECOMPARE           =   3;	  //< ÕÕÆ¬ÈËÁ³±È¶Ô£º±È½ÏÁ½ÕÅÕÕÆ¬ÖÐµÄÈËÁ³ÊÇ·ñÏàËÆ£¬·µ»ØÏàËÆ¶È¼°ÈËÁ³Î»ÖÃ
+var ANYCHAT_AFRMODE_STREAMFACECOMPARE          =   4;	  //< ÊÓÆµÁ÷ÈËÁ³±È¶Ô£º±È½ÏÊÓÆµÁ÷ÖÐµÄÈËÁ³ºÍ¸ø¶¨ÕÕÆ¬µÄÈËÁ³ÊÇ·ñÏàËÆ£¬·µ»ØÏàËÆ¶È¼°ÈËÁ³Î»ÖÃ
+var ANYCHAT_AFRMODE_IMAGEFACEREC               =   5;	  //< ÕÕÆ¬ÈËÁ³Ê¶±ð£ºÊ¶±ðÕÕÆ¬ÖÐµÄÈËÁ³ÊÇË­
+var ANYCHAT_AFRMODE_STREAMFACEREC              =   6;	  //< ÊÓÆµÁ÷ÈËÁ³Ê¶±ð£ºÊ¶±ðÊÓÆµÁ÷ÖÐµÄÈËÁ³ÊÇË­
+var ANYCHAT_AFRMODE_IMAGETWOPERSONCOMPARE      =   7;	  //< ÕÕÆ¬Á½ÈËÈËÁ³±È¶Ô£ºÒ»ÕÅº¬Á½ÈËµÄÍ¼Æ¬ÓëÁ½ÕÅÁ½¸öÈËµ¥¶ÀµÄÍ¼Æ¬±È¶Ô
+var ANYCHAT_AFRMODE_STREAMTWOPERSONCOMPARE     =   8;	  //< ÊÓÆµÁ÷Á½ÈËÈËÁ³±È¶Ô£ºÒ»ÕÅº¬Á½ÈËµÄÍ¼Æ¬ÓëÒ»ÕÅÊÓÆµ½ØÍ¼ºÍÒ»ÕÅÈËÁ³Í¼Æ¬±È¶Ô
+var ANYCHAT_AFRMODE_IMAGEFACEPOSTUREDETECT     =   9;	  //< Í¼Æ¬ÈËÁ³×ËÊÆ¼ì²â£¨ÕýÁ³¡¢²àÁ³£©
+var ANYCHAT_AFRMODE_STREAMFACEPOSTUREDETECT    =   10;	  //< ÊÓÆµÁ÷ÈËÁ³×ËÊÆ¼ì²â£¨ÕýÁ³¡¢²àÁ³£©
+//OCRÄÜÁ¦Ïà¹Ø¶¨Òå
+//ÎÄµµÀàÐÍ
+var ANYCHAT_OCRTYPE_UNKNOW                     =   0;	  //< Î´ÖªÎÄµµ
+var ANYCHAT_OCRTYPE_NORMALDOC                  =   1;	  //< ±ê×¼ÎÄµµ
+var ANYCHAT_OCRTYPE_IDCARDFRONT                =   2;	  //< Éí·ÝÖ¤ÕýÃæ
+var ANYCHAT_OCRTYPE_IDCARDBACK                 =   3;	  //< Éí·ÝÖ¤±³Ãæ
+var ANYCHAT_OCRTYPE_BINKCARD                   =   4;	  //< ÒøÐÐ¿¨
+//AIRÄÜÁ¦Ïà¹Ø¶¨Òå
+//¹¤×÷Ä£Ê½
+var ANYCHAT_AIRMODE_SCENELOGOREC               =   1;	  //< ³¡¾°logoÊ¶±ð
+//AICÄÜÁ¦Ïà¹Ø¶¨Òå
+//¹¤×÷Ä£Ê½
+var ANYCHAT_AICMODE_FACECAPTURE                =   1;	  //< ×Ô¶¯×¥ÅÄÈËÁ³£¬ÈËÁ³Î»ÖÃ¾ÓÖÐ¼ì²â
+var ANYCHAT_AICMODE_FACECOMPARE                =   2;	  //< ×¥ÅÄÊ±½øÐÐÈËÁ³±È¶Ô£¬ºÍÖ¸ÁîÖÐµÄ"content"Êý¾Ý½øÐÐ±È¶Ô
+var ANYCHAT_AICMODE_IDCARDFRONTOCR             =   3;	  //< ×¥ÅÄÊ±½øÐÐÉí·ÝÖ¤ÕýÃæµÄOCRÊ¶±ð
+var ANYCHAT_AICMODE_IDCARDBACKOCR              =   4;	  //< ×¥ÅÄÊ±½øÐÐÉí·ÝÖ¤±³ÃæµÄOCRÊ¶±ð
+var ANYCHAT_AICMODE_BANKCARDOCR                =   5;	  //< ×¥ÅÄÊ±½øÐÐÒøÐÐ¿¨µÄOCRÊ¶±ð
+var ANYCHAT_AICMODE_NORMALDOCOCR               =   6;	  //< ×¥ÅÄÊ±½øÐÐ±ê×¼ÎÄµµOCRÊ¶±ð
+
+//////////////////////
 
 // SDK¿ØÖÆ³£Á¿¶¨Òå£¨API£ºBRAC_SDKControl ´«Èë²ÎÊý£©
 var ANYCHAT_SDKCTRL_BASE				=	1;	// »ù±¾¹¦ÄÜ¿ØÖÆ
@@ -391,9 +497,10 @@ var ANYCHAT_SDKCTRL_VIDEODEVICEINFO		=	97;	// »ñÈ¡ÊÓÆµ²É¼¯Éè±¸ÐÅÏ¢
 var ANYCHAT_SDKCTRL_UPDATERECUSERSTR	=	98;	// ¸üÐÂÂ¼ÏñÓÃ»§²ÎÊý
 var ANYCHAT_SDKCTRL_SYNCRECORD			=	99;	// Í¬²½Â¼Ïñ²ÎÊýÉèÖÃ
 var ANYCHAT_SDKCTRL_BUSINESSBUFFER		=	100;// ÒµÎñ»º³åÇø¿ØÖÆ
-var ANYCHAT_SDKCTRL_LIVESTREAM		    =	101;// Ö±²¥ÒµÎñ¿ØÖÆ
-var ANYCHAT_SDKCTRL_AIABILITY		    =	102;// AIÄÜÁ¦
-var ANYCHAT_SDKCTRL_APPBUFFER		    =	103;// APP×Ô¶¨Òå»º³åÇø
+var ANYCHAT_SDKCTRL_LIVESTREAM			=	101;// Ö±²¥ÒµÎñ¿ØÖÆ
+var ANYCHAT_SDKCTRL_AIABILITY			=	102;// AIÄÜÁ¦
+var ANYCHAT_SDKCTRL_APPBUFFER			=	103;// APP×Ô¶¨Òå»º³åÇø
+var ANYCHAT_SDKCTRL_FACEEMOTIONCTRL		=	300;// Î¢±íÇé¿ØÖÆ
 
 
 // Ã½Ìå²¥·ÅÊÂ¼þÀàÐÍ¶¨Òå
@@ -401,8 +508,11 @@ var ANYCHAT_STREAMPLAY_EVENT_START		=	3;	// ²¥·Å¿ªÊ¼ÊÂ¼þ
 var ANYCHAT_STREAMPLAY_EVENT_FINISH		=	4;	// ²¥·Å½áÊøÊÂ¼þ
 
 // Ã½Ìå²¥·Å±êÖ¾¶¨Òå£¨API£ºBRAC_StreamPlayInit ´«Èë²ÎÊý£©
-var ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT = 1;	// ²¥·ÅÒôÆµÁ÷´úÌæ±¾µØÒôÆµÊäÈë£¨Mic£©
-var ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT = 2;	// ²¥·ÅÊÓÆµÁ÷´úÌæ±¾µØÊÓÆµÊäÈë£¨Camera£©
+var ANYCHAT_STREAMPLAY_FLAGS_REPLACEAUDIOINPUT 	= 0x00000001;	// ²¥·ÅÒôÆµÁ÷´úÌæ±¾µØÒôÆµÊäÈë£¨Mic£©
+var ANYCHAT_STREAMPLAY_FLAGS_REPLACEVIDEOINPUT 	= 0x00000002;	// ²¥·ÅÊÓÆµÁ÷´úÌæ±¾µØÊÓÆµÊäÈë£¨Camera£©
+var ANYCHAT_STREAMPLAY_FLAGS_CALLBACKDATA		= 0x00000010;	// »Øµ÷Êý¾Ý¸øÉÏ²ã
+var ANYCHAT_STREAMPLAY_FLAGS_PPTPLAY			= 0x00000080;	// Ë«Â¼·çÏÕ½ÒÊ¾PPT²¥·Å
+
 
 // Ã½Ìå²¥·ÅÐÅÏ¢ÀàÐÍ¶¨Òå£¨API£ºBRAC_StreamPlayGetInfo ´«Èë²ÎÊý£©
 var ANYCHAT_STREAMPLAY_INFO_JSONVALUE	=	1;	// °üº¬ËùÓÐ²¥·ÅÐÅÏ¢µÄJson×Ö·û´®
@@ -423,6 +533,7 @@ var ANYCHAT_CORESDKEVENT_CONNECTHOLD	=	2;	// Á¬½Ó±£³ÖÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_CAMERASTATE	=	10;	// ÉãÏñÍ·×´Ì¬ÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_MICSTATE		=	11;	// Mic×´Ì¬ÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_TRANSFILE		=	12;	// ÎÄ¼þ´«ÊäÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_RECORDSTATUS	=	13;	// Â¼Ïñ×´Ì¬ÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_STREAMPLAY		=	30;	// Ã½Ìå²¥·ÅÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_PPTHELPER		=	31;	// PPTHelperÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_BUSINESS		=	32;	// ÒµÎñÊÂ¼þ
@@ -430,11 +541,14 @@ var ANYCHAT_CORESDKEVENT_DEVICEFAIL		=	33;	// Éè±¸Ê§°ÜÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_MEDIABUFFER	=	34;	// Ã½Ìå»º³åÇøÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_USERBUFFER		=	35;	// ÓÃ»§»º³åÇøÊÂ¼þ
 var ANYCHAT_CORESDKEVENT_MEDIAPROCESS	=	36;	// Ã½Ìå´¦ÀíÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_FACEEMOTION	=	40;	// Î¢±íÇé¼ì²â½á¹û
+var ANYCHAT_CORESDKEVENT_REGEDITDATA	=	41;	// Êý¾Ý½Ó¿Ú·µ»ØÊý¾Ý
+var ANYCHAT_CORESDKEVENT_REQUESTEX		=	42;	// À©Õ¹ÇëÇó·µ»ØÊý¾Ý
 var ANYCHAT_CORESDKEVENT_BUSINESSBUFFER	=	100;// ÒµÎñ»º³åÇøÊÂ¼þ
-var ANYCHAT_CORESDKEVENT_LIVESTREAM	    =   101;// Ö±²¥ÒµÎñÊÂ¼þ
-var ANYCHAT_CORESDKEVENT_AIABILITY	    =   102;// AIÄÜÁ¦ÊÂ¼þ
-var ANYCHAT_CORESDKEVENT_APPBUFFER	    =   103;// APP×Ô¶¨Òå»º³åÇøÊÂ¼þ
-var ANYCHAT_CORESDKEVENT_USERDEFINE		=   800;// ÓÃ»§×Ô¶¨ÒåÊÂ¼þÆðÊ¼ÐòºÅ
+var ANYCHAT_CORESDKEVENT_LIVESTREAM		=	101;// Ö±²¥ÒµÎñÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_AIABILITY		=	102;// AIÄÜÁ¦ÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_APPBUFFER		=	103;// APP×Ô¶¨Òå»º³åÇøÊÂ¼þ
+var ANYCHAT_CORESDKEVENT_USERDEFINE		=	800;// ÓÃ»§×Ô¶¨ÒåÊÂ¼þÆðÊ¼ÐòºÅ
 
 // ÊÓÆµÏÔÊ¾²å¼þÉèÖÃ²ÎÊý
 var ANYCHATWEB_VIDEO_SO_OVERLAY		=		8;	// ÔÚÊÓÆµÉÏµü¼ÓÎÄ×Ö¡¢Í¼Æ¬µÈÄÚÈÝ
@@ -475,6 +589,8 @@ var bSupportObjectBusiness = false;				// ÊÇ·ñÖ§³ÖÒµÎñ¶ÔÏóAPI½Ó¿Ú
 var bSupportMultiStream = false;				// ÊÇ·ñÖ§³Ö¶àÂ·Á÷£¨¶àÉãÏñÍ·£©API½Ó¿Ú
 var bSupportScriptObject = false;				// ÊÇ·ñÖ§³ÖJavaScript¶ÔÏó
 var bSupportCluster = false;					// ÊÇ·ñÖ§³Ö¼¯ÈºÏµÍ³
+var bSupportParamBase64 = false;				// ÊÇ·ñÖ§³Ö²ÎÊýbase64¼ÓÃÜ
+var base64TranFuc = new Base64();
 
 // ³õÊ¼»¯SDK£¬·µ»Ø³ö´í´úÂë
 function BRAC_InitSDK(apilevel) {	
@@ -527,7 +643,7 @@ function BRAC_InitSDK(apilevel) {
 			if(typeof(OnAnyChatNotifyMessage) == "function")
 				BRAC_RegisterCallBack(anychat, 'OnNotifyMessage', 	OnAnyChatNotifyMessage);
 			if(typeof(OnAnyChatTextMessage) == "function")
-				BRAC_RegisterCallBack(anychat, 'OnTextMessage', 	OnAnyChatTextMessage);
+				BRAC_RegisterCallBack(anychat, 'OnTextMessage', 	OnAnyChatKernelTextMessage);
 			if(typeof(OnAnyChatTransBuffer) == "function")
 				BRAC_RegisterCallBack(anychat, 'OnTransBuffer', 	OnAnyChatTransBuffer);
 			if(typeof(OnAnyChatTransBufferEx) == "function")
@@ -539,20 +655,24 @@ function BRAC_InitSDK(apilevel) {
 			if(typeof(OnAnyChatSDKFilterData) == "function")
 				BRAC_RegisterCallBack(anychat, 'OnSDKFilterData', 	OnAnyChatSDKFilterData);
 			if(typeof(OnAnyChatVideoCallEvent) == "function")
-				BRAC_RegisterCallBack(anychat, 'OnVideoCallEvent', 	OnAnyChatVideoCallEvent);
+				BRAC_RegisterCallBack(anychat, 'OnVideoCallEvent', 	OnAnyChatKernelVideoCallEvent);
 			if(typeof(OnAnyChatRecordSnapShot) == "function")
 				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShot', 	OnAnyChatRecordSnapShot);
 			if(typeof(OnAnyChatRecordSnapShotEx) == "function" && bSupportStreamRecordCtrlEx)
-				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx', OnAnyChatRecordSnapShotEx);
+				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx', OnAnyChatKernelRecordSnapShotEx);
 			if(typeof(OnAnyChatRecordSnapShotEx2) == "function" && bSupportCluster)
-				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx2', OnAnyChatRecordSnapShotEx2);
+				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx2', OnAnyChatKernelRecordSnapShotEx2);
 			if(typeof(OnAnyChatObjectEvent) == "function" && bSupportObjectBusiness)
 				BRAC_RegisterCallBack(anychat, 'OnObjectEvent', OnAnyChatObjectEvent);
 			if(typeof(OnAnyChatCoreSDKEvent) == "function" && CUR_ANYCHAT_PLUGIN_VAR >= "1.0.6.0")
-				BRAC_RegisterCallBack(anychat, 'OnAnyChatCoreSDKEvent', OnAnyChatCoreSDKEvent);	
+				BRAC_RegisterCallBack(anychat, 'OnAnyChatCoreSDKEvent', OnAnyChatKernelCoreSDKEvent);	
 		} else {
 			document.body.removeChild(insertdiv);
 		}
+		// ÅÐ¶ÏÊÇ·ñÖ§³Öbase64²ÎÊý¼ÓÃÜ
+		var base64Flag = BRAC_SetSDKOption(ANYCHATWEB_SO_STRBASE64MODE,1)
+		if(base64Flag == 0 && BRAC_GetSDKOptionInt(ANYCHATWEB_SO_STRBASE64MODE) == 1)
+			bSupportParamBase64 = true;
 		return bRightVersion ? GV_ERR_SUCCESS : GV_ERR_PLUGINOLDVERSION;
 	}
 	catch (e) {
@@ -561,6 +681,31 @@ function BRAC_InitSDK(apilevel) {
 	        document.body.removeChild(insertdiv);
 	    return GV_ERR_PLUGINNOINSTALL;
 	}
+}
+//ÊÓÆµºô½Ð
+function OnAnyChatKernelVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr){
+	szUserStr = bSupportParamBase64?base64TranFuc.decode(szUserStr):szUserStr;
+	OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr)
+}
+//ÒµÎñ»º³åÇø£¨ÒµÎñÍ¸Ã÷Í¨µÀ£©
+function OnAnyChatKernelCoreSDKEvent(dwEventType,lpEventJsonStr){
+	lpEventJsonStr = (dwEventType==ANYCHAT_SDKCTRL_BUSINESSBUFFER && bSupportParamBase64)?base64TranFuc.decode(lpEventJsonStr):lpEventJsonStr;
+	OnAnyChatCoreSDKEvent(dwEventType,lpEventJsonStr)
+}
+//Â¼ÖÆ»Øµ÷
+function OnAnyChatKernelRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr){
+	lpUserStr = bSupportParamBase64?base64TranFuc.decode(lpUserStr):lpUserStr;
+	OnAnyChatRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr)
+}
+//ÊÕµ½·¿¼äÏûÏ¢»Øµ÷
+function OnAnyChatKernelTextMessage (dwFromUserId, dwToUserId, bSecret, lpMsgBuf, dwLen){
+	lpMsgBuf = bSupportParamBase64?base64TranFuc.decode(lpMsgBuf):lpMsgBuf;
+	OnAnyChatTextMessage(dwFromUserId, dwToUserId, bSecret, lpMsgBuf, dwLen)
+}
+//Â¼ÖÆ»Øµ÷
+function OnAnyChatKernelRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr){
+	lpUserStr = bSupportParamBase64?base64TranFuc.decode(lpUserStr):lpUserStr;
+	OnAnyChatRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr)
 }
 
 // ×¢²á»Øµ÷ÊÂ¼þ
@@ -670,13 +815,13 @@ function BRAC_Connect(lpServerAddr, dwPort) {
 }
 // µÇÂ¼ÏµÍ³
 function BRAC_Login(lpUserName, lpPassword, dwParam) {
-	return anychat.Login(lpUserName, lpPassword, dwParam);
+	return anychat.Login(bSupportParamBase64?base64TranFuc.encode(lpUserName) : lpUserName, lpPassword, dwParam);
 }
 // µÇÂ¼ÏµÍ³£¨À©Õ¹£©
 function BRAC_LoginEx(lpNickName, dwUserId, lpStrUserId, lpAppId, dwTimeStamp, lpSigStr, lpStrParam) {
 	if(!bSupportCluster)
 		return GV_ERR_PLUGINOLDVERSION;
-	return anychat.LoginEx(lpNickName, parseInt(dwUserId), lpStrUserId, lpAppId, parseInt(dwTimeStamp), lpSigStr, lpStrParam);
+		return anychat.LoginEx(bSupportParamBase64?base64TranFuc.encode(lpNickName) : lpNickName, parseInt(dwUserId),lpStrUserId, lpAppId, parseInt(dwTimeStamp), lpSigStr, bSupportParamBase64?base64TranFuc.encode(lpStrParam) : lpStrParam);
 }
 // ½øÈë·¿¼ä
 function BRAC_EnterRoom(dwRoomid, lpRoomPass, dwParam) {
@@ -751,7 +896,7 @@ function BRAC_GetUserLevel(dwUserId) {
 }
 // ²éÑ¯ÓÃ»§Ãû³Æ
 function BRAC_GetUserName(dwUserId) {
-	return anychat.QueryUserStateString(dwUserId, BRAC_USERSTATE_NICKNAME);
+	return bSupportParamBase64?base64TranFuc.decode(anychat.QueryUserStateString(dwUserId, BRAC_USERSTATE_NICKNAME)) : anychat.QueryUserStateString(dwUserId, BRAC_USERSTATE_NICKNAME);
 }
 // ²éÑ¯Ö¸¶¨ÓÃ»§Ïà¹Ø×´Ì¬£¨ÕûÐÍÖµ×´Ì¬£©
 function BRAC_QueryUserStateInt(dwUserId, infoname) {
@@ -759,7 +904,7 @@ function BRAC_QueryUserStateInt(dwUserId, infoname) {
 }
 // ²éÑ¯Ö¸¶¨ÓÃ»§Ïà¹Ø×´Ì¬£¨×Ö·û´®Öµ×´Ì¬£©
 function BRAC_QueryUserStateString(dwUserId, infoname) {
-	return anychat.QueryUserStateString(dwUserId, infoname);
+	return bSupportParamBase64?base64TranFuc.decode(anychat.QueryUserStateString(dwUserId, infoname)) : anychat.QueryUserStateString(dwUserId, infoname);
 }
 
 // ÏÔÊ¾±¾µØÊÓÆµ»­Ãæµ÷½Ú¶Ô»°¿ò
@@ -831,7 +976,7 @@ function BRAC_StreamRecordCtrl(dwUserId, bStartRecord, dwFlags, dwParam) {
 // ÓÃ»§Òô¡¢ÊÓÆµÂ¼ÖÆ£¨À©Õ¹£©
 function BRAC_StreamRecordCtrlEx(dwUserId, bStartRecord, dwFlags, dwParam, lpUserStr) {
 	if(bSupportStreamRecordCtrlEx)
-		return anychat.StreamRecordCtrlEx(dwUserId, bStartRecord, dwFlags, dwParam, lpUserStr);
+		return anychat.StreamRecordCtrlEx(dwUserId, bStartRecord, dwFlags, dwParam, bSupportParamBase64?base64TranFuc.encode(lpUserStr):lpUserStr );
 	else
 		return anychat.StreamRecordCtrl(dwUserId, bStartRecord, dwFlags, dwParam);
 }
@@ -863,7 +1008,7 @@ function BRAC_CancelTransTask(dwUserId, dwTaskId) {
 }
 // ´«ËÍÎÄ±¾ÏûÏ¢
 function BRAC_SendTextMessage(dwUserId, bSecret, lpMsgBuf) {
-	return anychat.SendTextMessage(dwUserId, bSecret, lpMsgBuf, 0);
+	return anychat.SendTextMessage(dwUserId, bSecret, bSupportParamBase64?base64TranFuc.encode(lpMsgBuf) : lpMsgBuf, 0);
 }
 // ·¢ËÍSDK Filter Í¨ÐÅÊý¾Ý
 function BRAC_SendSDKFilterData(lpBuf) {
@@ -928,7 +1073,7 @@ function BRAC_MultiCastControl(lpMultiCastAddr, dwPort, lpNicAddr, dwTTL, dwFlag
 
 // ÊÓÆµºô½ÐÊÂ¼þ¿ØÖÆ£¨ÇëÇó¡¢»Ø¸´¡¢¹Ò¶ÏµÈ£©
 function BRAC_VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr) {
-	return anychat.VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr);
+	return anychat.VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, bSupportParamBase64?base64TranFuc.encode(szUserStr):szUserStr);
 }
 
 // »ñÈ¡ÓÃ»§ºÃÓÑIDÁÐ±í£¨·µ»ØÒ»¸öuseridµÄÊý×é£©
@@ -1040,7 +1185,7 @@ function BRAC_ObjectGetIntValue(dwObjectType, dwObjectId, dwInfoName) {
 function BRAC_ObjectGetStringValue(dwObjectType, dwObjectId, dwInfoName) {
 	if(!bSupportObjectBusiness)
 		return -1;
-	return anychat.GetObjectStringValue(dwObjectType, dwObjectId, dwInfoName);
+	return bSupportParamBase64?base64TranFuc.decode(anychat.GetObjectStringValue(dwObjectType, dwObjectId, dwInfoName)) : anychat.GetObjectStringValue(dwObjectType, dwObjectId, dwInfoName);
 }
 
 // ÉèÖÃÒµÎñ¶ÔÏó²ÎÊýÖµ
@@ -1048,7 +1193,7 @@ function BRAC_ObjectSetValue(dwObjectType, dwObjectId, dwInfoName, value) {
 	if(!bSupportObjectBusiness)
 		return -1;
 	if(typeof value == "string")
-		return anychat.SetObjectStringValue(dwObjectType, dwObjectId, dwInfoName, value);
+		return anychat.SetObjectStringValue(dwObjectType, dwObjectId, dwInfoName, bSupportParamBase64?base64TranFuc.encode(value) :value);
 	else
 		return anychat.SetObjectIntValue(dwObjectType, dwObjectId, dwInfoName, value);
 }
@@ -1088,14 +1233,14 @@ function BRAC_GetUserStreamInfoString(dwUserId, dwStreamIndex, infoname) {
 function BRAC_QueryInfoFromServer(dwInfoName, lpInParam) {
 	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.5.0")
 		return "";
-	return anychat.QueryInfoFromServer(dwInfoName, lpInParam);
+		return bSupportParamBase64?base64TranFuc.decode(anychat.QueryInfoFromServer(dwInfoName, lpInParam)) : anychat.QueryInfoFromServer(dwInfoName, lpInParam);
 }
 
 // SDK¿ØÖÆ
 function BRAC_SDKControl(dwCtrlCode, lpInParam) {
 	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.7.0")
 		return JSON.stringify({"errorcode":32});
-	return anychat.SDKControl(dwCtrlCode, lpInParam);
+	return anychat.SDKControl(dwCtrlCode, (dwCtrlCode==ANYCHAT_SDKCTRL_BUSINESSBUFFER && bSupportParamBase64)?base64TranFuc.encode(lpInParam):lpInParam);
 }
 
 // ÎÄ¼þ´«ÊäÀ©Õ¹½Ó¿Ú
@@ -1195,7 +1340,7 @@ function getBrowser(){
 	
 	if (info.ch){
 		browser = "Chrome";
-	}else if (info.ie){
+	}else if (info.ie || (!!window.ActiveXObject || "ActiveXObject" in window)){
 		browser = "IE";
 	}else if (info.ff){
 		browser = "Firefox";
@@ -1214,4 +1359,101 @@ function getBrowser(){
 	return browser;
 }
 
+function Base64() {
+	    // private property  
+	    _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+	    // public method for encoding  
+	    this.encode = function(input) {
+	        var output = "";
+	        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+	        var i = 0;
+	        input = _utf8_encode(input);
+	        while (i < input.length) {
+	            chr1 = input.charCodeAt(i++);
+	            chr2 = input.charCodeAt(i++);
+	            chr3 = input.charCodeAt(i++);
+	            enc1 = chr1 >> 2;
+	            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+	            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+	            enc4 = chr3 & 63;
+	            if (isNaN(chr2)) {
+	                enc3 = enc4 = 64;
+	            } else if (isNaN(chr3)) {
+	                enc4 = 64;
+	            }
+	            output = output +
+	                _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
+	                _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
+	        }
+	        return output;
+	    }
+	    // public method for decoding  
+	    this.decode = function(input) {
+	        var output = "";
+	        var chr1, chr2, chr3;
+	        var enc1, enc2, enc3, enc4;
+	        var i = 0;
+	        input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+	        while (i < input.length) {
+	            enc1 = _keyStr.indexOf(input.charAt(i++));
+	            enc2 = _keyStr.indexOf(input.charAt(i++));
+	            enc3 = _keyStr.indexOf(input.charAt(i++));
+	            enc4 = _keyStr.indexOf(input.charAt(i++));
+	            chr1 = (enc1 << 2) | (enc2 >> 4);
+	            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+	            chr3 = ((enc3 & 3) << 6) | enc4;
+	            output = output + String.fromCharCode(chr1);
+	            if (enc3 != 64) {
+	                output = output + String.fromCharCode(chr2);
+	            }
+	            if (enc4 != 64) {
+	                output = output + String.fromCharCode(chr3);
+	            }
+	        }
+	        output = _utf8_decode(output);
+	        return output;
+	    }
+	    // private method for UTF-8 encoding  
+	    _utf8_encode = function(string) {
+	        string = string.replace(/\r\n/g, "\n");
+	        var utftext = "";
+	        for (var n = 0; n < string.length; n++) {
+	            var c = string.charCodeAt(n);
+	            if (c < 128) {
+	                utftext += String.fromCharCode(c);
+	            } else if ((c > 127) && (c < 2048)) {
+	                utftext += String.fromCharCode((c >> 6) | 192);
+	                utftext += String.fromCharCode((c & 63) | 128);
+	            } else {
+	                utftext += String.fromCharCode((c >> 12) | 224);
+	                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+	                utftext += String.fromCharCode((c & 63) | 128);
+	            }
 
+	        }
+	        return utftext;
+	    }
+	    // private method for UTF-8 decoding  
+	    _utf8_decode = function(utftext) {
+	        var string = "";
+	        var i = 0;
+	        var c = c1 = c2 = 0;
+	        while (i < utftext.length) {
+	            c = utftext.charCodeAt(i);
+	            if (c < 128) {
+	                string += String.fromCharCode(c);
+	                i++;
+	            } else if ((c > 191) && (c < 224)) {
+	                c2 = utftext.charCodeAt(i + 1);
+	                string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+	                i += 2;
+	            } else {
+	                c2 = utftext.charCodeAt(i + 1);
+	                c3 = utftext.charCodeAt(i + 2);
+	                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+	                i += 3;
+	            }
+	        }
+	        return string;
+	    }
+	}

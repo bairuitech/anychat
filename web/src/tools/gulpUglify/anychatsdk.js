@@ -1,6 +1,7 @@
 // AnyChat for Web SDK
 // 不要对该文件进行任何修改，当升级SDK时，新版本将会直接覆盖旧版本
 
+
 /********************************************
  *				常量定义部分				*
  *******************************************/
@@ -192,6 +193,7 @@ var BRAC_SO_ENABLEWEBSERVICE 	=			11002;	// 启动本地Web服务
 var BRAC_SO_LOCALPATH2URL		=			11003;	// 将本地路径转换为URL地址
 var BRAC_SO_GETTASKPATHNAME		=			11004;	// 根据传输任务ID获取文件路径
 var BRAC_SO_VIDEOBKIMAGE		=			11006;	// 设置视频背景图片
+var ANYCHATWEB_SO_STRBASE64MODE = 			11007;	// 字符串 base64 模式（仅web 端生效，前端 base64 编码后入参；回调函数插件也 base64 编码后出参）
 
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
 var BRAC_TRANSTASK_PROGRESS		= 			1;	// 传输任务进度查询（参数为：DOUBLE型，返回值0.0 ~ 100.0， 或参数为：DWORD型，返回值0 ~ 100）
@@ -366,12 +368,109 @@ var ANYCHAT_SERVERQUERY_QUEUEAGENTINFO	=	100;// 查询指定队列的坐席服务信息
 var ANYCHAT_SERVERQUERY_RUNNINGSTATUS	=	200;// 查询服务器运行状态
 var ANYCHAT_SERVERQUERY_ONLINEUSERS		=	201;// 查询服务器在线用户数
 
+///////////////////////////////
+
+/**
+ *
+ * AI能力
+ */
+var ANYCHAT_AI_CTRL_ROBOT_INIT	               =  1	     //< 初始化AI能力机器人
+var ANYCHAT_AI_CTRL_ROBOT_RELEASE              =  2	     //< 释放AI能力机器人
+var ANYCHAT_AI_CTRL_ROBOT_ACTIVETEST           =  3	     //< 机器人心跳检测
+var ANYCHAT_AI_CTRL_ABILITY_INVOKE             =  4	     //< AI能力调用
+var ANYCHAT_AI_CTRL_ABILITY_REQUEST            =  5	     //< 请求AI能力
+var ANYCHAT_AI_CTRL_ABILITY_RELEASE            =  6	     //< 释放AI能力
+var ANYCHAT_AI_CTRL_ABILITY_ACTIVETEST         =  7	     //< AI能力心跳检测
+var ANYCHAT_AI_CTRL_GETOPTION                  =  8      //< 参数查询
+var ANYCHAT_AI_CTRL_SETOPTION                  =  9      //< 参数设置
+
+//AI返回事件类型
+var ANYCHAT_AI_EVENT_ROBOT_INITRESULT          =  1       //< 机器人初始化结果
+var ANYCHAT_AI_EVENT_ROBOT_STATUS              =  2	      //< 机器人状态通知
+var ANYCHAT_AI_EVENT_ROBOT_ACTIVERET           =  3       //< 机器人心跳检测结果
+var ANYCHAT_AI_EVENT_ABILITY_RESULT            =  4       //< AI能力执行结果
+var ANYCHAT_AI_EVENT_ABILITY_STATUS            =  5       //< AI能力状态通知
+var ANYCHAT_AI_EVENT_ABILITY_ACTIVERET         =  6       //< AI能力心跳检测结果
+
+//机器人状态
+var ANYCHAT_AIROBOT_STATUS_UNKNOW              =  0;      //< 未知状态
+var ANYCHAT_AIROBOT_STATUS_OFFLINE             =  1;      //< 离线状态
+var ANYCHAT_AIROBOT_STATUS_PREPARE             =  2;      //< 准备状态
+var ANYCHAT_AIROBOT_STATUS_ONLINE              =  3;      //< 在线状态
+var ANYCHAT_AIROBOT_STATUS_PAUSE               =  4;      //< 暂停状态
+
+//AI能力状态
+var ANYCHAT_AIABILITY_STATUS_PREPARE           =  1;      //< 准备状态
+var ANYCHAT_AIABILITY_STATUS_PROCESS           =  2;      //< 执行状态
+var ANYCHAT_AIABILITY_STATUS_FINISH            =  3;      //< 完成状态
+//ASR能力相关定义
+//文本类型
+var ANYCHAT_OCRTYPE_NUMBER                     =  1;      //< 数字
+var ANYCHAT_OCRTYPE_CHINESE                    =  2;      //< 汉语普通话
+//AI能力类型定义
+var ANYCHAT_AI_TYPE_ASR		                   =  1	      //< 语音识别
+var ANYCHAT_AI_TYPE_TTS		                   =  2	      //< 语音合成
+var ANYCHAT_AI_TYPE_VPR		                   =  3	      //< 声纹识别
+var ANYCHAT_AI_TYPE_AFR		                   =  4	      //< 人脸识别
+var ANYCHAT_AI_TYPE_OCR		                   =  5	      //< 文字识别
+var ANYCHAT_AI_TYPE_HWR		                   =  6	      //< 手写识别
+var ANYCHAT_AI_TYPE_NLU		                   =  7	      //< 语义理解
+var ANYCHAT_AI_TYPE_FPR		                   =  8	      //< 指纹识别
+var ANYCHAT_AI_TYPE_AIR		                   =  9	      //< 图像识别
+var ANYCHAT_AI_TYPE_AIC		                   =  100     //< 自动照片捕获
+//工作模式
+var ANYCHAT_ASRMODE_FILESTREAM                 =  1;	  //< 对录音文件进行语音识别
+var ANYCHAT_ASRMODE_LIVESTREAM                 =  2;	  //< 对实时流进行语音识别
+var ANYCHAT_ASRMODE_TAGRECORD                  =  3;	  //< 对录像文件加标签进行语音识别
+var ANYCHAT_ASRMODE_KEYWORDRECOGNITION         =  4;	  //< 语音关键字识别
+
+//语句标志
+var ANYCHAT_ASR_SENTENCE_STARTED               =  1;	  //< 语句开始
+var ANYCHAT_ASR_SENTENCE_CHANGED               =  2;      //< 语句改变
+var ANYCHAT_ASR_SENTENCE_ENDED                 =  3;	  //< 语句结束
+
+//TTS能力相关定义
+//人声类型
+var ANYCHAT_TTSTYPE_MENVOICE                   =   1;	  //< TTS男声
+var ANYCHAT_TTSTYPE_WOMENVOICE                 =   2;	  //< TTS女声
+//AFR能力相关定义
+//工作模式
+var ANYCHAT_AFRMODE_IMAGEFACEDETECT            =   1;	  //< 照片人脸检测：检测指定照片中是否存在人脸，并返回人脸位置
+var ANYCHAT_AFRMODE_STREAMFACEDETECT           =   2;	  //< 视频流人脸检测：检测指定用户的视频流是否存在人脸，并返回人脸位置
+var ANYCHAT_AFRMODE_IMAGEFACECOMPARE           =   3;	  //< 照片人脸比对：比较两张照片中的人脸是否相似，返回相似度及人脸位置
+var ANYCHAT_AFRMODE_STREAMFACECOMPARE          =   4;	  //< 视频流人脸比对：比较视频流中的人脸和给定照片的人脸是否相似，返回相似度及人脸位置
+var ANYCHAT_AFRMODE_IMAGEFACEREC               =   5;	  //< 照片人脸识别：识别照片中的人脸是谁
+var ANYCHAT_AFRMODE_STREAMFACEREC              =   6;	  //< 视频流人脸识别：识别视频流中的人脸是谁
+var ANYCHAT_AFRMODE_IMAGETWOPERSONCOMPARE      =   7;	  //< 照片两人人脸比对：一张含两人的图片与两张两个人单独的图片比对
+var ANYCHAT_AFRMODE_STREAMTWOPERSONCOMPARE     =   8;	  //< 视频流两人人脸比对：一张含两人的图片与一张视频截图和一张人脸图片比对
+var ANYCHAT_AFRMODE_IMAGEFACEPOSTUREDETECT     =   9;	  //< 图片人脸姿势检测（正脸、侧脸）
+var ANYCHAT_AFRMODE_STREAMFACEPOSTUREDETECT    =   10;	  //< 视频流人脸姿势检测（正脸、侧脸）
+//OCR能力相关定义
+//文档类型
+var ANYCHAT_OCRTYPE_UNKNOW                     =   0;	  //< 未知文档
+var ANYCHAT_OCRTYPE_NORMALDOC                  =   1;	  //< 标准文档
+var ANYCHAT_OCRTYPE_IDCARDFRONT                =   2;	  //< 身份证正面
+var ANYCHAT_OCRTYPE_IDCARDBACK                 =   3;	  //< 身份证背面
+var ANYCHAT_OCRTYPE_BINKCARD                   =   4;	  //< 银行卡
+//AIR能力相关定义
+//工作模式
+var ANYCHAT_AIRMODE_SCENELOGOREC               =   1;	  //< 场景logo识别
+//AIC能力相关定义
+//工作模式
+var ANYCHAT_AICMODE_FACECAPTURE                =   1;	  //< 自动抓拍人脸，人脸位置居中检测
+var ANYCHAT_AICMODE_FACECOMPARE                =   2;	  //< 抓拍时进行人脸比对，和指令中的"content"数据进行比对
+var ANYCHAT_AICMODE_IDCARDFRONTOCR             =   3;	  //< 抓拍时进行身份证正面的OCR识别
+var ANYCHAT_AICMODE_IDCARDBACKOCR              =   4;	  //< 抓拍时进行身份证背面的OCR识别
+var ANYCHAT_AICMODE_BANKCARDOCR                =   5;	  //< 抓拍时进行银行卡的OCR识别
+var ANYCHAT_AICMODE_NORMALDOCOCR               =   6;	  //< 抓拍时进行标准文档OCR识别
+
+//////////////////////
+
 // SDK控制常量定义（API：BRAC_SDKControl 传入参数）
 var ANYCHAT_SDKCTRL_BASE				=	1;	// 基本功能控制
 var ANYCHAT_SDKCTRL_USERBUFFER			=	3;	// 用户缓冲区传输控制
 var ANYCHAT_SDKCTRL_INVOKEEVENT			=	4;	// 触发异步事件
 var ANYCHAT_SDKCTRL_RECORD				=	5;	// 音视频录制
-var ANYCHAT_SDKCTRL_CERTCHECK           =   6;  // 授权功能检查
 var ANYCHAT_SDKCTRL_OBJECT				=	20;	// 对象操作
 var ANYCHAT_SDKCTRL_VIDEOCALL			=	30;	// 呼叫控制
 var ANYCHAT_SDKCTRL_USERINFO			=	40;	// 用户信息控制
@@ -481,10 +580,6 @@ var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
 var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.4";
 var CUR_ANYCHAT_PLUGIN_VAR = "";
 
-//VTM功能参数
-var ANYCHAT_CERTFUNC2_VTMSUPPORT =      0x00080000; //VTM接入能力
-var VTMResult                    = 	    '';         //vtm信息
-
 /********************************************
  *				方法定义部分				*
  *******************************************/
@@ -494,6 +589,8 @@ var bSupportObjectBusiness = false;				// 是否支持业务对象API接口
 var bSupportMultiStream = false;				// 是否支持多路流（多摄像头）API接口
 var bSupportScriptObject = false;				// 是否支持JavaScript对象
 var bSupportCluster = false;					// 是否支持集群系统
+var bSupportParamBase64 = false;				// 是否支持参数base64加密
+var base64TranFuc = new Base64();
 
 // 初始化SDK，返回出错代码
 function BRAC_InitSDK(apilevel) {	
@@ -546,7 +643,7 @@ function BRAC_InitSDK(apilevel) {
 			if(typeof(OnAnyChatNotifyMessage) == "function")
 				BRAC_RegisterCallBack(anychat, 'OnNotifyMessage', 	OnAnyChatNotifyMessage);
 			if(typeof(OnAnyChatTextMessage) == "function")
-				BRAC_RegisterCallBack(anychat, 'OnTextMessage', 	OnAnyChatTextMessage);
+				BRAC_RegisterCallBack(anychat, 'OnTextMessage', 	OnAnyChatKernelTextMessage);
 			if(typeof(OnAnyChatTransBuffer) == "function")
 				BRAC_RegisterCallBack(anychat, 'OnTransBuffer', 	OnAnyChatTransBuffer);
 			if(typeof(OnAnyChatTransBufferEx) == "function")
@@ -558,20 +655,24 @@ function BRAC_InitSDK(apilevel) {
 			if(typeof(OnAnyChatSDKFilterData) == "function")
 				BRAC_RegisterCallBack(anychat, 'OnSDKFilterData', 	OnAnyChatSDKFilterData);
 			if(typeof(OnAnyChatVideoCallEvent) == "function")
-				BRAC_RegisterCallBack(anychat, 'OnVideoCallEvent', 	OnAnyChatVideoCallEvent);
+				BRAC_RegisterCallBack(anychat, 'OnVideoCallEvent', 	OnAnyChatKernelVideoCallEvent);
 			if(typeof(OnAnyChatRecordSnapShot) == "function")
 				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShot', 	OnAnyChatRecordSnapShot);
 			if(typeof(OnAnyChatRecordSnapShotEx) == "function" && bSupportStreamRecordCtrlEx)
-				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx', OnAnyChatRecordSnapShotEx);
+				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx', OnAnyChatKernelRecordSnapShotEx);
 			if(typeof(OnAnyChatRecordSnapShotEx2) == "function" && bSupportCluster)
-				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx2', OnAnyChatRecordSnapShotEx2);
+				BRAC_RegisterCallBack(anychat, 'OnRecordSnapShotEx2', OnAnyChatKernelRecordSnapShotEx2);
 			if(typeof(OnAnyChatObjectEvent) == "function" && bSupportObjectBusiness)
 				BRAC_RegisterCallBack(anychat, 'OnObjectEvent', OnAnyChatObjectEvent);
 			if(typeof(OnAnyChatCoreSDKEvent) == "function" && CUR_ANYCHAT_PLUGIN_VAR >= "1.0.6.0")
-				BRAC_RegisterCallBack(anychat, 'OnAnyChatCoreSDKEvent', OnAnyChatCoreSDKEvent);	
+				BRAC_RegisterCallBack(anychat, 'OnAnyChatCoreSDKEvent', OnAnyChatKernelCoreSDKEvent);	
 		} else {
 			document.body.removeChild(insertdiv);
 		}
+		// 判断是否支持base64参数加密
+		var base64Flag = BRAC_SetSDKOption(ANYCHATWEB_SO_STRBASE64MODE,1)
+		if(base64Flag == 0 && BRAC_GetSDKOptionInt(ANYCHATWEB_SO_STRBASE64MODE) == 1)
+			bSupportParamBase64 = true;
 		return bRightVersion ? GV_ERR_SUCCESS : GV_ERR_PLUGINOLDVERSION;
 	}
 	catch (e) {
@@ -580,6 +681,31 @@ function BRAC_InitSDK(apilevel) {
 	        document.body.removeChild(insertdiv);
 	    return GV_ERR_PLUGINNOINSTALL;
 	}
+}
+//视频呼叫
+function OnAnyChatKernelVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr){
+	szUserStr = bSupportParamBase64?base64TranFuc.decode(szUserStr):szUserStr;
+	OnAnyChatVideoCallEvent(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr)
+}
+//业务缓冲区（业务透明通道）
+function OnAnyChatKernelCoreSDKEvent(dwEventType,lpEventJsonStr){
+	lpEventJsonStr = (dwEventType==ANYCHAT_SDKCTRL_BUSINESSBUFFER && bSupportParamBase64)?base64TranFuc.decode(lpEventJsonStr):lpEventJsonStr;
+	OnAnyChatCoreSDKEvent(dwEventType,lpEventJsonStr)
+}
+//录制回调
+function OnAnyChatKernelRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr){
+	lpUserStr = bSupportParamBase64?base64TranFuc.decode(lpUserStr):lpUserStr;
+	OnAnyChatRecordSnapShotEx(dwUserId, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr)
+}
+//收到房间消息回调
+function OnAnyChatKernelTextMessage (dwFromUserId, dwToUserId, bSecret, lpMsgBuf, dwLen){
+	lpMsgBuf = bSupportParamBase64?base64TranFuc.decode(lpMsgBuf):lpMsgBuf;
+	OnAnyChatTextMessage(dwFromUserId, dwToUserId, bSecret, lpMsgBuf, dwLen)
+}
+//录制回调
+function OnAnyChatKernelRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr){
+	lpUserStr = bSupportParamBase64?base64TranFuc.decode(lpUserStr):lpUserStr;
+	OnAnyChatRecordSnapShotEx2(dwUserId, dwErrorCode, lpFileName, dwElapse, dwFlags, dwParam, lpUserStr)
 }
 
 // 注册回调事件
@@ -689,13 +815,13 @@ function BRAC_Connect(lpServerAddr, dwPort) {
 }
 // 登录系统
 function BRAC_Login(lpUserName, lpPassword, dwParam) {
-	return anychat.Login(lpUserName, lpPassword, dwParam);
+	return anychat.Login(bSupportParamBase64?base64TranFuc.encode(lpUserName) : lpUserName, lpPassword, dwParam);
 }
 // 登录系统（扩展）
 function BRAC_LoginEx(lpNickName, dwUserId, lpStrUserId, lpAppId, dwTimeStamp, lpSigStr, lpStrParam) {
 	if(!bSupportCluster)
 		return GV_ERR_PLUGINOLDVERSION;
-	return anychat.LoginEx(lpNickName, parseInt(dwUserId), lpStrUserId, lpAppId, parseInt(dwTimeStamp), lpSigStr, lpStrParam);
+		return anychat.LoginEx(bSupportParamBase64?base64TranFuc.encode(lpNickName) : lpNickName, parseInt(dwUserId),lpStrUserId, lpAppId, parseInt(dwTimeStamp), lpSigStr, bSupportParamBase64?base64TranFuc.encode(lpStrParam) : lpStrParam);
 }
 // 进入房间
 function BRAC_EnterRoom(dwRoomid, lpRoomPass, dwParam) {
@@ -711,8 +837,6 @@ function BRAC_LeaveRoom(dwRoomid) {
 }
 // 注销系统
 function BRAC_Logout() {
-	var checkInfo = {"index":1,"flags":ANYCHAT_CERTFUNC2_VTMSUPPORT};
-	VTMResult = BRAC_SDKControl(ANYCHAT_SDKCTRL_CERTCHECK,JSON.stringify(checkInfo));
 	return anychat.Logout();
 }
 
@@ -772,7 +896,7 @@ function BRAC_GetUserLevel(dwUserId) {
 }
 // 查询用户名称
 function BRAC_GetUserName(dwUserId) {
-	return anychat.QueryUserStateString(dwUserId, BRAC_USERSTATE_NICKNAME);
+	return bSupportParamBase64?base64TranFuc.decode(anychat.QueryUserStateString(dwUserId, BRAC_USERSTATE_NICKNAME)) : anychat.QueryUserStateString(dwUserId, BRAC_USERSTATE_NICKNAME);
 }
 // 查询指定用户相关状态（整型值状态）
 function BRAC_QueryUserStateInt(dwUserId, infoname) {
@@ -780,7 +904,7 @@ function BRAC_QueryUserStateInt(dwUserId, infoname) {
 }
 // 查询指定用户相关状态（字符串值状态）
 function BRAC_QueryUserStateString(dwUserId, infoname) {
-	return anychat.QueryUserStateString(dwUserId, infoname);
+	return bSupportParamBase64?base64TranFuc.decode(anychat.QueryUserStateString(dwUserId, infoname)) : anychat.QueryUserStateString(dwUserId, infoname);
 }
 
 // 显示本地视频画面调节对话框
@@ -852,7 +976,7 @@ function BRAC_StreamRecordCtrl(dwUserId, bStartRecord, dwFlags, dwParam) {
 // 用户音、视频录制（扩展）
 function BRAC_StreamRecordCtrlEx(dwUserId, bStartRecord, dwFlags, dwParam, lpUserStr) {
 	if(bSupportStreamRecordCtrlEx)
-		return anychat.StreamRecordCtrlEx(dwUserId, bStartRecord, dwFlags, dwParam, lpUserStr);
+		return anychat.StreamRecordCtrlEx(dwUserId, bStartRecord, dwFlags, dwParam, bSupportParamBase64?base64TranFuc.encode(lpUserStr):lpUserStr );
 	else
 		return anychat.StreamRecordCtrl(dwUserId, bStartRecord, dwFlags, dwParam);
 }
@@ -884,7 +1008,7 @@ function BRAC_CancelTransTask(dwUserId, dwTaskId) {
 }
 // 传送文本消息
 function BRAC_SendTextMessage(dwUserId, bSecret, lpMsgBuf) {
-	return anychat.SendTextMessage(dwUserId, bSecret, lpMsgBuf, 0);
+	return anychat.SendTextMessage(dwUserId, bSecret, bSupportParamBase64?base64TranFuc.encode(lpMsgBuf) : lpMsgBuf, 0);
 }
 // 发送SDK Filter 通信数据
 function BRAC_SendSDKFilterData(lpBuf) {
@@ -949,7 +1073,7 @@ function BRAC_MultiCastControl(lpMultiCastAddr, dwPort, lpNicAddr, dwTTL, dwFlag
 
 // 视频呼叫事件控制（请求、回复、挂断等）
 function BRAC_VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr) {
-	return anychat.VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, szUserStr);
+	return anychat.VideoCallControl(dwEventType, dwUserId, dwErrorCode, dwFlags, dwParam, bSupportParamBase64?base64TranFuc.encode(szUserStr):szUserStr);
 }
 
 // 获取用户好友ID列表（返回一个userid的数组）
@@ -1061,7 +1185,7 @@ function BRAC_ObjectGetIntValue(dwObjectType, dwObjectId, dwInfoName) {
 function BRAC_ObjectGetStringValue(dwObjectType, dwObjectId, dwInfoName) {
 	if(!bSupportObjectBusiness)
 		return -1;
-	return anychat.GetObjectStringValue(dwObjectType, dwObjectId, dwInfoName);
+	return bSupportParamBase64?base64TranFuc.decode(anychat.GetObjectStringValue(dwObjectType, dwObjectId, dwInfoName)) : anychat.GetObjectStringValue(dwObjectType, dwObjectId, dwInfoName);
 }
 
 // 设置业务对象参数值
@@ -1069,7 +1193,7 @@ function BRAC_ObjectSetValue(dwObjectType, dwObjectId, dwInfoName, value) {
 	if(!bSupportObjectBusiness)
 		return -1;
 	if(typeof value == "string")
-		return anychat.SetObjectStringValue(dwObjectType, dwObjectId, dwInfoName, value);
+		return anychat.SetObjectStringValue(dwObjectType, dwObjectId, dwInfoName, bSupportParamBase64?base64TranFuc.encode(value) :value);
 	else
 		return anychat.SetObjectIntValue(dwObjectType, dwObjectId, dwInfoName, value);
 }
@@ -1109,14 +1233,14 @@ function BRAC_GetUserStreamInfoString(dwUserId, dwStreamIndex, infoname) {
 function BRAC_QueryInfoFromServer(dwInfoName, lpInParam) {
 	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.5.0")
 		return "";
-	return anychat.QueryInfoFromServer(dwInfoName, lpInParam);
+		return bSupportParamBase64?base64TranFuc.decode(anychat.QueryInfoFromServer(dwInfoName, lpInParam)) : anychat.QueryInfoFromServer(dwInfoName, lpInParam);
 }
 
 // SDK控制
 function BRAC_SDKControl(dwCtrlCode, lpInParam) {
 	if(CUR_ANYCHAT_PLUGIN_VAR < "1.0.7.0")
 		return JSON.stringify({"errorcode":32});
-	return anychat.SDKControl(dwCtrlCode, lpInParam);
+	return anychat.SDKControl(dwCtrlCode, (dwCtrlCode==ANYCHAT_SDKCTRL_BUSINESSBUFFER && bSupportParamBase64)?base64TranFuc.encode(lpInParam):lpInParam);
 }
 
 // 文件传输扩展接口
@@ -1183,18 +1307,6 @@ function BRAC_Release() {
 	var _anychatSDKDiv = BRAC_GetDmoObject("AnyChatSDKPluginDiv");
 	if (_anychatSDKDiv) {
 		if (getBrowser() == "IE") {
-			// 释放事件
-			if(!!VTMResult && (!VTMResult?"":(JSON.parse(VTMResult).errorcode == 0))){ 
-				var eles = document.getElementsByTagName('script');
-				for(var i = 0; i < eles.length ; i++){
-					var ele = eles[i];
-					if(ele.getAttribute('for') == 'AnyChatSDKPlugin'){
-						ele.parentNode.removeChild(ele); 
-						i--;
-					}
-				}
-			}
-			// 清空anychat
 			anychat = null;
 			_anychatSDKDiv.parentNode.removeChild(_anychatSDKDiv);
 			_anychatSDKDiv = null;
@@ -1228,7 +1340,7 @@ function getBrowser(){
 	
 	if (info.ch){
 		browser = "Chrome";
-	}else if (info.ie || (!!window.ActiveXObject || "ActiveXObject" in window) ){
+	}else if (info.ie || (!!window.ActiveXObject || "ActiveXObject" in window)){
 		browser = "IE";
 	}else if (info.ff){
 		browser = "Firefox";
@@ -1247,4 +1359,101 @@ function getBrowser(){
 	return browser;
 }
 
+function Base64() {
+	    // private property  
+	    _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+	    // public method for encoding  
+	    this.encode = function(input) {
+	        var output = "";
+	        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+	        var i = 0;
+	        input = _utf8_encode(input);
+	        while (i < input.length) {
+	            chr1 = input.charCodeAt(i++);
+	            chr2 = input.charCodeAt(i++);
+	            chr3 = input.charCodeAt(i++);
+	            enc1 = chr1 >> 2;
+	            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+	            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+	            enc4 = chr3 & 63;
+	            if (isNaN(chr2)) {
+	                enc3 = enc4 = 64;
+	            } else if (isNaN(chr3)) {
+	                enc4 = 64;
+	            }
+	            output = output +
+	                _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
+	                _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
+	        }
+	        return output;
+	    }
+	    // public method for decoding  
+	    this.decode = function(input) {
+	        var output = "";
+	        var chr1, chr2, chr3;
+	        var enc1, enc2, enc3, enc4;
+	        var i = 0;
+	        input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+	        while (i < input.length) {
+	            enc1 = _keyStr.indexOf(input.charAt(i++));
+	            enc2 = _keyStr.indexOf(input.charAt(i++));
+	            enc3 = _keyStr.indexOf(input.charAt(i++));
+	            enc4 = _keyStr.indexOf(input.charAt(i++));
+	            chr1 = (enc1 << 2) | (enc2 >> 4);
+	            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+	            chr3 = ((enc3 & 3) << 6) | enc4;
+	            output = output + String.fromCharCode(chr1);
+	            if (enc3 != 64) {
+	                output = output + String.fromCharCode(chr2);
+	            }
+	            if (enc4 != 64) {
+	                output = output + String.fromCharCode(chr3);
+	            }
+	        }
+	        output = _utf8_decode(output);
+	        return output;
+	    }
+	    // private method for UTF-8 encoding  
+	    _utf8_encode = function(string) {
+	        string = string.replace(/\r\n/g, "\n");
+	        var utftext = "";
+	        for (var n = 0; n < string.length; n++) {
+	            var c = string.charCodeAt(n);
+	            if (c < 128) {
+	                utftext += String.fromCharCode(c);
+	            } else if ((c > 127) && (c < 2048)) {
+	                utftext += String.fromCharCode((c >> 6) | 192);
+	                utftext += String.fromCharCode((c & 63) | 128);
+	            } else {
+	                utftext += String.fromCharCode((c >> 12) | 224);
+	                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+	                utftext += String.fromCharCode((c & 63) | 128);
+	            }
 
+	        }
+	        return utftext;
+	    }
+	    // private method for UTF-8 decoding  
+	    _utf8_decode = function(utftext) {
+	        var string = "";
+	        var i = 0;
+	        var c = c1 = c2 = 0;
+	        while (i < utftext.length) {
+	            c = utftext.charCodeAt(i);
+	            if (c < 128) {
+	                string += String.fromCharCode(c);
+	                i++;
+	            } else if ((c > 191) && (c < 224)) {
+	                c2 = utftext.charCodeAt(i + 1);
+	                string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+	                i += 2;
+	            } else {
+	                c2 = utftext.charCodeAt(i + 1);
+	                c3 = utftext.charCodeAt(i + 2);
+	                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+	                i += 3;
+	            }
+	        }
+	        return string;
+	    }
+	}
