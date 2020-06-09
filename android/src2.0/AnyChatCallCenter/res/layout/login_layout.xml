@@ -144,19 +144,26 @@
                 android:orientation="vertical" >
 
             <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="308dp"
                     android:layout_height="48dp">
 
                 <CheckBox
                         android:id="@+id/check_issavepass"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:button="@null"
+                        android:background="@drawable/checkbox"
                         android:checked="true"
-                        android:layout_marginLeft="20dp"
                         android:textSize="13sp"
                         android:textColor="#333333"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/str_isSavepass" />
+                        android:gravity="center"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="#333333"
+                        android:text="@string/str_isSavepass"/>
 
             </LinearLayout>
 

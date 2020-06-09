@@ -174,7 +174,21 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 			}
 		}
 	};
+	public void userExitRoomDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(anychatSDK.GetUserName(userID)+"已离开房间!")
+				.setCancelable(false)
+				.setPositiveButton("是",
+						new DialogInterface.OnClickListener() {
 
+							@Override
+							public void onClick(DialogInterface dialog,
+												int which) {
+								dialog.cancel();
+								onDestroy();
+							}
+						}).show();
+	}
 	private OnClickListener onClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View view) {
@@ -242,9 +256,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 
 	private void exitVideoDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Are you sure to exit ?")
+		builder.setMessage("确定结束会话?")
 				.setCancelable(false)
-				.setPositiveButton("Yes",
+				.setPositiveButton("确定",
 						new DialogInterface.OnClickListener() {
 
 							@Override
@@ -253,7 +267,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 								destroyCurActivity();
 							}
 						})
-				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+				.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -388,7 +402,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 	public void OnAnyChatUserAtRoomMessage(int dwUserId, boolean bEnter) {
 		if (!bEnter) {
 			if (dwUserId == userID) {
-				Toast.makeText(VideoActivity.this, "对方已离开！", Toast.LENGTH_SHORT).show();
+				userExitRoomDialog();
 				//userID = 0;
 				anychatSDK.UserCameraControl(dwUserId, 0);
 				anychatSDK.UserSpeakControl(dwUserId, 0);
@@ -426,6 +440,7 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 		// 销毁当前界面
 		destroyCurActivity();
 		Intent mIntent = new Intent("VideoActivity");
+		mIntent.putExtra("dwErrorCode",dwErrorCode);
 		// 发送广播
 		sendBroadcast(mIntent);
 	}

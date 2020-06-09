@@ -133,7 +133,8 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 			openRolesListActivity(arg2 + 1);
 		}
 	};
-	
+
+	private short curSelcetTraceIndex;
 	OnClickListener onClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -149,25 +150,13 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 
 				// 网络检测选择二次框确定按钮
 			case R.id.udpTraceConfirm:
-				int curSelcetTraceIndex = mTraceSelectDialog.getCurSelectTraceRole();
+				curSelcetTraceIndex = mTraceSelectDialog.getCurSelectTraceRole();
 				int roomId = mTraceSelectDialog.getRoomId();
 				if(roomId==-1){
 					Toast.makeText(FuncMenu.this, "请输入房间号", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				Intent intent = new Intent();
-				if (curSelcetTraceIndex == 0) {
-					intent.setClass(FuncMenu.this, SenderTrace.class);
-				}else {
-					intent.setClass(FuncMenu.this, ReceiverTrace.class);
-				}
-//				//设置背景颜色变亮
-//				WindowManager.LayoutParams lps = getWindow().getAttributes();
-//				lps.alpha = 1f;
-//				getWindow().setAttributes(lps);
-
 				anyChatSDK.EnterRoom(roomId, "");
-				startActivity(intent);
 				mTraceSelectDialog.dismiss();
 				mTraceSelectDialog = null;
 				break;
@@ -316,7 +305,12 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	protected void onPause() {
 		super.onPause();
 	}
-	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
 	@Override
 	protected void onRestart() {
 		super.onRestart();
@@ -347,7 +341,22 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	@Override
 	public void OnAnyChatEnterRoomMessage(int dwRoomId, int dwErrorCode) {
 		// TODO Auto-generated method stub
-		
+		if(dwErrorCode==0) {
+			Intent intent = new Intent();
+			if (curSelcetTraceIndex == 0) {
+				intent.setClass(FuncMenu.this, SenderTrace.class);
+			} else {
+				intent.setClass(FuncMenu.this, ReceiverTrace.class);
+			}
+//				//设置背景颜色变亮
+//				WindowManager.LayoutParams lps = getWindow().getAttributes();
+//				lps.alpha = 1f;
+//				getWindow().setAttributes(lps);
+			startActivity(intent);
+		}else{
+			anyChatSDK.LeaveRoom(-1);
+			Toast.makeText(FuncMenu.this,"进入房间失败，请重新操作",Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override

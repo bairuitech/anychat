@@ -48,37 +48,17 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent, AnyChat
 	// 新增信息设置功能
 	private String mQueueTypeJson = "";
 
-	private Spinner spUserSetting;// 信息设置
-	private String settingArr[] = { "客户端设置","服务端设置" };
-	private int mUserSetting = 0;// 被选中的下标
+    private Spinner spModeAuto;// 自动路由
+    private String autoModeArr[] = { "开启","关闭" };
+    private int autoModeIndex = 0;// 被选中的下标
 
-	private Spinner spModeAuto;// 自动路由
-	private String autoModeArr[] = { "开启","关闭" };
-	private int autoModeIndex = 0;// 被选中的下标
+    private LinearLayout viewAgentContainer;// 坐席设置的容器
 
-	private Spinner spModeAutoStrategy;// 路由策略
-	private String modeStrategy[] = { "队列组", "技能组" };
-	private int modeStrategyIndex = 0;// 被选中的下标
-
-	private View viewClientSetting;// 客户端设置容器
-	private LinearLayout viewAgentContainer;// 坐席设置的容器
-
-	private LinearLayout teamContainer;// 队列容器
-	private ArrayList<CheckBox> teamCbs = new ArrayList<CheckBox>();
-
-	private LinearLayout techContainer;// 技能组容器
-	private ArrayList<CheckBox> techCbs = new ArrayList<CheckBox>();
-
-	/**
-	 * 初始化
-	 */
-	private void InitAgentLayout() {
-		// 1.初始化spanner
-		spUserSetting = (Spinner) findViewById(R.id.spanner_user_setting);// 信息设置
-		ArrayAdapter<String> userSettingAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
-				settingArr);
-		userSettingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spUserSetting.setAdapter(userSettingAdapter);
+    /**
+     * 初始化
+     */
+    private void InitAgentLayout() {
+        // 1.初始化spanner
 
 		spModeAuto = (Spinner) findViewById(R.id.sp_mode_auto);// 自动路由
 		ArrayAdapter<String> modeAutoAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
@@ -86,30 +66,13 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent, AnyChat
 		modeAutoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spModeAuto.setAdapter(modeAutoAdapter);
 
-		spModeAutoStrategy = (Spinner) findViewById(R.id.sp_mode_strategy);// 路由策略
-		ArrayAdapter<String> modeStrategyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
-				modeStrategy);
-		modeStrategyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spModeAutoStrategy.setAdapter(modeStrategyAdapter);
 
-		// 2.初始化容器
-		viewAgentContainer = (LinearLayout) findViewById(R.id.ll_agent_container);
-		teamContainer = (LinearLayout) findViewById(R.id.ll_team_queue);
-		techContainer = (LinearLayout) findViewById(R.id.ll_tech_queue);
-		viewClientSetting = findViewById(R.id.ll_client_setting);
+        // 2.初始化容器
+        viewAgentContainer = (LinearLayout) findViewById(R.id.ll_agent_container);
 
-		for (int i = 0; i < teamContainer.getChildCount(); i++) {
-			teamCbs.add((CheckBox) teamContainer.getChildAt(i));
-		}
-		for (int i = 0; i < techContainer.getChildCount(); i++) {
-			techCbs.add((CheckBox) techContainer.getChildAt(i));
-		}
-
-		// 3.设置事件监听
-		spUserSetting.setOnItemSelectedListener(this);
-		spModeAuto.setOnItemSelectedListener(this);
-		spModeAutoStrategy.setOnItemSelectedListener(this);
-	}
+        // 3.设置事件监听
+        spModeAuto.setOnItemSelectedListener(this);
+    }
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -255,51 +218,22 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent, AnyChat
 			return false;
 		}
 
-		// 设置相关信息
-		if (mUserTypeCode == 2) { // 座席
-			// 1.判断是服务器设置还是客户端设置
-			if (mUserSetting == 0) { // 客户端设置
-				if (modeStrategyIndex == 0) {// 队列组
-					// 获取所选中元素
-					ArrayList<Integer> selects = new ArrayList<Integer>();
-					for (int i = 0; i < teamCbs.size(); i++) {
-						if (teamCbs.get(i).isChecked()) {
-							selects.add(Integer.valueOf("200" + (i+1)));
-						}
-					}
-					if (selects.size() == 0) {
-						Toast.makeText(this, "没有选择队列分组", Toast.LENGTH_SHORT).show();
-						return false;
-					} else {
-						int flag = mUserTypeCode;
-						if (autoModeIndex == 0) {
-							flag += AnyChatObjectDefine.ANYCHAT_OBJECT_FLAGS_AUTOMODE;
-						}
-                        mQueueTypeJson = "{\"flags\":" + flag + ",\"priority\":10,\"queuegroups\":" + selects.toString() + "}";
-					}
-				} else {// 技能组
-						// 获取选中的元素
-					ArrayList<Integer> selects = new ArrayList<Integer>();
-					for (int i = 0; i < techCbs.size(); i++) {
-						if (techCbs.get(i).isChecked()) {
-							selects.add(Integer.valueOf("100" + (i+1)));
-						}
-					}
-					if (selects.size() == 0) {
-						Toast.makeText(this, "没有选择技能分组", Toast.LENGTH_SHORT).show();
-						return false;
-					} else {
-						int flag = mUserTypeCode;
-						if (autoModeIndex == 0) {
-							flag += AnyChatObjectDefine.ANYCHAT_OBJECT_FLAGS_AUTOMODE;
-						}
-                        mQueueTypeJson = "{\"flags\":" + flag + ",\"priority\":10,\"skillgroups\":" + selects.toString() + "}";
-					}
-				}
-			}
-		}
-		return true;
-	}
+        // 设置相关信息
+        if (mUserTypeCode == 2) {// 座席
+            ArrayList<Integer> selects = new ArrayList<Integer>();
+            for (int i = 0; i < 4; i++) {
+                selects.add(Integer.valueOf("200" + (i+1)));
+
+            }
+            int flag = mUserTypeCode;
+            if (autoModeIndex == 0) {
+                flag += AnyChatObjectDefine.ANYCHAT_OBJECT_FLAGS_AUTOMODE;
+            }
+            mQueueTypeJson = "{\"flags\":" + flag + ",\"priority\":10,\"queuegroups\":" + selects.toString() + "}";
+
+        }
+        return true;
+    }
 
 	// 控制登陆，等待和登出按钮状态
 	private void setBtnVisible(int index) {
@@ -402,15 +336,16 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent, AnyChat
 
 			Intent intent = new Intent(LoginActivity.this, FuncMenuActivity.class);
 
-			intent.putExtra("userSetting", mUserSetting);// 1服务端设置，0客户端设置
+            intent.putExtra("userSetting", 0);// 0客户端设置
             intent.putExtra("autoMode", autoModeIndex);// 1关闭，0开启
-			intent.putExtra("modeStrategy", modeStrategyIndex);// 0:队列，1技能
-			intent.putExtra("queueTypeJson", mQueueTypeJson);
-			intent.putExtra("dwUserId", dwUserId);
-			intent.putExtra("userTypeCode", mUserTypeCode);//账户类型(客户、坐席)
-			startActivity(intent);
-			setBtnVisible(SHOWLOGINSTATEFLAG);
-		} else {
+            intent.putExtra("modeStrategy", 0);// 0:队列
+            intent.putExtra("queueTypeJson", mQueueTypeJson);
+            intent.putExtra("dwUserId", dwUserId);
+            intent.putExtra("userTypeCode", mUserTypeCode);//账户类型(客户、坐席)
+
+            startActivity(intent);
+            setBtnVisible(SHOWLOGINSTATEFLAG);
+        } else {
 
 			setBtnVisible(SHOWLOGINSTATEFLAG);
 			mBottomConnMsg.setText("登录失败，errorCode：" + dwErrorCode);
@@ -483,33 +418,15 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent, AnyChat
 
 	}
 
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-		// 1.用户设置
-		if (parent == spUserSetting) {
-            mUserSetting = position;
-			if (position == 1) {// 服务端设置
-				viewClientSetting.setVisibility(View.GONE);
-			} else {
-				viewClientSetting.setVisibility(View.VISIBLE);
-			}
-		}
-		// 2.路由模式
-		if (parent == spModeAuto) {
-			autoModeIndex = position;
-		}
-		// 3.路由策略
-		if (parent == spModeAutoStrategy) {
-			modeStrategyIndex = position;
-			if (position == 0) {
-				teamContainer.setVisibility(View.VISIBLE);
-				techContainer.setVisibility(View.GONE);
-			} else {
-				teamContainer.setVisibility(View.GONE);
-				techContainer.setVisibility(View.VISIBLE);
-			}
-		}
-	}
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        //路由模式
+        if (parent == spModeAuto) {
+            autoModeIndex = position;
+        }
+
+    }
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {

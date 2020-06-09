@@ -239,22 +239,26 @@ public class SenderTrace extends Activity implements AnyChatBaseEvent{
 		if (mTimer != null) {
 			mTimer.cancel();
 			mTimer = null;
-			if (anyChatSDK != null)
-				anyChatSDK.removeEvent(this);
-			AnyChatCoreSDK.SetSDKOptionInt(163, 0);
-		}
-	}
-	
-	private void destroyCurActivity() {
-		onPause();
-		onDestroy();
-	}
-	
-	@Override
-	public void OnAnyChatConnectMessage(boolean bSuccess) {
-		// TODO Auto-generated method stub
-		
-	}
+        }
+
+        if (anyChatSDK != null) {
+            anyChatSDK.LeaveRoom(-1);
+            anyChatSDK.removeEvent(this);
+        }
+        AnyChatCoreSDK.SetSDKOptionInt(163, 0);
+
+    }
+
+    private void destroyCurActivity() {
+        onPause();
+        onDestroy();
+    }
+
+    @Override
+    public void OnAnyChatConnectMessage(boolean bSuccess) {
+        // TODO Auto-generated method stub
+
+    }
 
 	@Override
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {

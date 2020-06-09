@@ -15,7 +15,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -58,6 +57,8 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 	private Timer mTimer = null;
 	
 	private AnyChatCoreSDK anyChatSDK;
+	private String strSenderIP;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,8 +107,8 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 		btnBack.setOnClickListener(onClickListener);
 		btnSet.setVisibility(View.INVISIBLE);
 		titleName.setText("网络检测评估");
-		
-		mRSenderIPAddress.setText("IP地址：" + getSenderIP());
+		strSenderIP=getSenderIP();
+		mRSenderIPAddress.setText("IP地址：" +strSenderIP);
 		mRSenderPacket.setText("发送数据包：0");
 		
 		mRServerIPAddress.setText("IP地址：" + strIP);
@@ -141,8 +142,10 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 				switch (msg.what) {
 				case MSG_UPDATETRACE:
 					// 如果发送者是后进来的，会造成发送者的ip为空，再从新获取一下
-					if(ValueUtils.isStrEmpty(mRSenderIPAddress.getText().toString().trim()))
-						mRSenderIPAddress.setText(getSenderIP());
+					if(ValueUtils.isStrEmpty(strSenderIP)) {
+						strSenderIP=getSenderIP();
+						mRSenderIPAddress.setText("IP地址：" +strSenderIP);
+					}
 					
 					msClientSenderPacket = AnyChatCoreSDK.GetSDKOptionInt(166);
 					msReceiverGetPacket = AnyChatCoreSDK.GetSDKOptionInt(164);
@@ -224,14 +227,17 @@ public class ReceiverTrace extends Activity implements AnyChatBaseEvent{
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		
+
 		if (mTimer != null) {
 			mTimer.cancel();
 			mTimer = null;
-			if (anyChatSDK != null)
-				anyChatSDK.removeEvent(this);
-			AnyChatCoreSDK.SetSDKOptionInt(163, 0);
 		}
+
+		if (anyChatSDK != null) {
+			anyChatSDK.LeaveRoom(-1);
+			anyChatSDK.removeEvent(this);
+		}
+		AnyChatCoreSDK.SetSDKOptionInt(163, 0);
 	}
 
 	private void destroyCurActivity() {

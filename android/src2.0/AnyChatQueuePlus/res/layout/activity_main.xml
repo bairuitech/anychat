@@ -209,37 +209,11 @@
                 android:visibility="gone" >
 
                 <LinearLayout
-                    android:id="@+id/ll_user_setting"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/ll_client_setting"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:gravity="center"
-                        android:text="用户信息设置"
-                        android:textColor="@color/white"
-                        android:textSize="14sp" />
-
-                    <Spinner
-                        android:id="@+id/spanner_user_setting"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="right" >
-                    </Spinner>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_client_setting"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone" >
+                        android:orientation="vertical"
+                        android:visibility="visible" >
 
                     <LinearLayout
                         android:id="@+id/ll_mode_auto"
@@ -268,121 +242,6 @@
                         </Spinner>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/ll_mode_strategy"
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:gravity="center"
-                            android:text="    路由策略    "
-                            android:textColor="@color/white"
-                            android:textSize="14sp" />
-
-                        <Spinner
-                            android:id="@+id/sp_mode_strategy"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right" >
-                        </Spinner>
-                    </LinearLayout>
-                    <!-- 队列组 -->
-
-                    <LinearLayout
-                        android:id="@+id/ll_team_queue"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone" >
-
-                        <CheckBox
-                            android:id="@+id/cb_t_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="队列组1"
-                            android:checked="true"
-                            android:textSize="12sp" />
-
-                        <CheckBox
-                            android:id="@+id/cb_t_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:checked="true"
-                            android:text="队列组2"
-                            android:textSize="12sp" />
-
-                        <CheckBox
-                            android:id="@+id/cb_t_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
-                            android:checked="true"
-                            android:text="队列组3"
-                            android:textSize="12sp" />
-
-                        <CheckBox
-                            android:id="@+id/cb_t_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="队列组4"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                    <!-- 技能组 -->
-
-                    <LinearLayout
-                        android:id="@+id/ll_tech_queue"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone" >
-
-                        <CheckBox
-                            android:id="@+id/cb_tech_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="现金"
-                            android:checked="true"
-                            android:textSize="12sp" />
-
-                        <CheckBox
-                            android:id="@+id/cb_tech_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:text="支票"
-                            android:checked="true"
-                            android:textSize="12sp" />
-
-                        <CheckBox
-                            android:id="@+id/cb_tech_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
-                            android:text="存款"
-                            android:checked="true"
-                            android:textSize="12sp" />
-
-                        <CheckBox
-                            android:id="@+id/cb_tech_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="贷款"
-                            android:checked="true"
-                            android:textSize="12sp" />
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 

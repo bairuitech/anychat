@@ -1,5 +1,6 @@
 package com.example.helloanychat;
 
+import android.widget.*;
 import com.example.config.ConfigEntity;
 import com.example.config.ConfigService;
 import com.example.helloanychat.R;
@@ -10,18 +11,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 public class VideoConfig extends Activity{
-	private ImageButton mImgBtnReturn;
+	private ImageView mImgBtnReturn;
 	private TextView mTitleName;
-	private ImageButton btnSet;
+	private ImageView btnSet;
 	
 	private Button mSaveBtn;
 	private ConfigEntity mConfigEntity;		
@@ -71,9 +65,9 @@ public class VideoConfig extends Activity{
 		setContentView(R.layout.videoconfig);
 		
 	//	getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
-		mImgBtnReturn = (ImageButton) this.findViewById(R.id.returnImgBtn);
+		mImgBtnReturn = (ImageView) this.findViewById(R.id.returnImgBtn);
 		mTitleName = (TextView) this.findViewById(R.id.titleName);
-		btnSet = (ImageButton) this.findViewById(R.id.btnSet);
+		btnSet = (ImageView) this.findViewById(R.id.btnSet);
 		mImgBtnReturn.setOnClickListener(onClickListener);
 		mTitleName.setText("视频参数设置");
 		btnSet.setVisibility(View.INVISIBLE);

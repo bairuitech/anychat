@@ -4,6 +4,15 @@ public class RoleInfo {
 	private String mStrName;
 	private String mStrUserID;
 	private int mRoleIconID;
+	private boolean isMySelf;
+
+	public boolean isMySelf() {
+		return isMySelf;
+	}
+
+	public void setMySelf(boolean mySelf) {
+		isMySelf = mySelf;
+	}
 
 	public void setName(String strName) {
 		mStrName = strName;

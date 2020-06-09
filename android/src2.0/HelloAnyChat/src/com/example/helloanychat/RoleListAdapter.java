@@ -45,6 +45,7 @@ public class RoleListAdapter extends BaseAdapter {
 			holder.mname = (TextView) convertView.findViewById(R.id.mname);
 			holder.mRoleID = (TextView) convertView.findViewById(R.id.mRoleID);
 			holder.mRoleIcon = (ImageView) convertView.findViewById(R.id.roleHeaderImg);
+			holder.mSelfTextIcon = (ImageView) convertView.findViewById(R.id.myselfTextView);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -54,6 +55,11 @@ public class RoleListAdapter extends BaseAdapter {
 		holder.mname.setText("" + info.getName());
 		holder.mRoleID.setText("" + info.getUserID());
 		holder.mRoleIcon.setImageResource(info.getRoleIconID());
+		if(!info.isMySelf()){
+			holder.mSelfTextIcon.setVisibility(View.INVISIBLE);
+		}else{
+			holder.mSelfTextIcon.setVisibility(View.VISIBLE);
+		}
 		return convertView;
 	}
 
@@ -61,5 +67,6 @@ public class RoleListAdapter extends BaseAdapter {
 		TextView mname;
 		TextView mRoleID;
 		ImageView mRoleIcon;
+		ImageView mSelfTextIcon;
 	}
 }

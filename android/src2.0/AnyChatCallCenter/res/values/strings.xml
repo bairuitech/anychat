@@ -7,7 +7,7 @@
     <string name="str_account">账          号:</string>
     <string name="str_account_input_hint">请输入账号！</string>
     <string name="str_login">登录</string>
-    <string name="str_isSavepass">记住用户名密码</string>
+    <string name="str_isSavepass">记住用户名</string>
     <string name="login_progress">正在登陆，请稍后!</string>
     <string name="server_connect_error">服务器连接失败!</string>
     <string name="str_serverip">服务器地址: </string>
