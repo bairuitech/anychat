@@ -209,6 +209,10 @@ enum BRAC_VideoShowDriver{
 #define BRAC_SO_CORESDK_SSLCERTCHAIN		232	///< SSL证书链
 #define BRAC_SO_CORESDK_SETUSERAPPINFO		236	///< 设置用户APP信息
 #define BRAC_SO_CORESDK_LASTERRORCODE		237	///< 获取最后的出错代码
+#define BRAC_SO_CORESDK_AUDIOMUTE			240	///< 音频静音控制
+#define BRAC_SO_CORESDK_RESETAUDIOPLAYBACK	242	///< 重置音频播放设备
+#define BRAC_SO_CORESDK_RESETAUDIOCAPTURE	243	///< 重置音频采集设备
+#define BRAC_SO_CORESDK_VIDEOBKTRANSPARENT	245	///< 视频背景透明显示
 
 #define BRAC_SO_UDPTRACE_MODE				160 ///< UDP数据包跟踪模式
 #define BRAC_SO_UDPTRACE_PACKSIZE			161	///< UDP数据包跟踪的大小，单位：BYTE

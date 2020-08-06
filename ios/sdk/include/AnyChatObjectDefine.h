@@ -49,6 +49,8 @@
 #define ANYCHAT_OBJECT_INFO_STATUSJSON		15	///< 对象状态属性集合
 #define ANYCHAT_OBJECT_INFO_STRINGID		16	///< 对象字符串ID
 #define ANYCHAT_OBJECT_INFO_STATISTICS		17	///< 对象统计数据
+#define ANYCHAT_OBJECT_INFO_IPADDR			18	///< 对象IP地址
+#define ANYCHAT_OBJECT_INFO_LEVEL			19	///< 对象级别
 
 
 // 服务区域信息类型定义

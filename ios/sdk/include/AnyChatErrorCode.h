@@ -85,6 +85,10 @@
 #define AC_ERROR_SECURITYBREAK		75		///< 安全协商失败
 #define AC_ERROR_CERTALGORITHMFAIL	76		///< 算法协商失败
 #define AC_ERROR_LOSSCERTHELPER		77		///< 缺少CertHelper库文件
+#define AC_ERROR_SECURITYTIMEOUT	78		///< 安全协商超时
+#define AC_ERROR_MEMORYTOOSMALL		79		///< 准备的缓冲区太小
+#define AC_ERROR_UNSUPPORTCODEC		80		///< 不支持的编码器
+#define AC_ERROR_APPTYPEOVERFLOW	81		///< 指定应用类型连接数已满
 
 //连接部分
 #define AC_ERROR_CONNECT_TIMEOUT	100		///< 连接服务器超时
@@ -113,6 +117,8 @@
 #define AC_ERROR_CONNECT_IPV6FAIL	123		///< 不支持IPv6 Only网络
 #define AC_ERROR_CONNECT_NOMASTER	124		///< 没有Master服务器在线
 #define AC_ERROR_CONNECT_NOSTATUS	125		///< 没有上报工作状态
+#define AC_ERROR_CONNECT_DATAPREPARE 126	///< 数据还没准备好
+#define AC_ERROR_COLDSTANDBY_SLEEP	127		///< 冷备休眠状态
 
 //登录部分
 #define AC_ERROR_CERTIFY_FAIL		200		///< 认证失败，用户名或密码有误
