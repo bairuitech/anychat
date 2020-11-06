@@ -21,6 +21,15 @@
     
     [self p_configNavBar];
     [self.window makeKeyAndVisible];
+    
+    NSURL *url = [NSURL URLWithString:@"http://www.baidu.com"];
+    NSURLRequest *request =[NSURLRequest requestWithURL:url];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *sessionDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+    }];
+    [sessionDataTask resume];
+    
     return YES;
 }
 

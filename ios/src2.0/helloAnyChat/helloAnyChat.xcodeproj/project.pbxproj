@@ -30,8 +30,8 @@
 		CF2AF924230E6D6C00C82570 /* DetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2AF91E230E6D6B00C82570 /* DetailVC.m */; };
 		CF2AF925230E6D6C00C82570 /* SettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2AF91F230E6D6B00C82570 /* SettingVC.m */; };
 		CF2AF926230E6D6C00C82570 /* UserVideoSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF2AF920230E6D6B00C82570 /* UserVideoSettings.plist */; };
+		F38E18D4248FAC9500CA6CAF /* AnyChatCoreSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F38E18D3248FAC9500CA6CAF /* AnyChatCoreSDK.framework */; };
 		F3B3355C2382A48300186C1E /* LaunchBg.png in Resources */ = {isa = PBXBuildFile; fileRef = F3B3355B2382A48300186C1E /* LaunchBg.png */; };
-		F3D5DA9F24652B0400E74CB3 /* AnyChatCoreSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D5DA9E24652B0400E74CB3 /* AnyChatCoreSDK.framework */; };
 		F854CEFF21474F84002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CEFE21474F84002FC106 /* libc++.tbd */; };
 		F88FC36122E0620A00A58B31 /* UINavigationController+DeviceOrientataion.m in Sources */ = {isa = PBXBuildFile; fileRef = F88FC35F22E0620A00A58B31 /* UINavigationController+DeviceOrientataion.m */; };
 		F89B2B1322C1BD3900B86FE2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F89B2B1222C1BD3900B86FE2 /* Launch Screen.storyboard */; };
@@ -93,8 +93,8 @@
 		CF2AF91E230E6D6B00C82570 /* DetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailVC.m; path = HelloAnyChat/Setting/DetailVC.m; sourceTree = "<group>"; };
 		CF2AF91F230E6D6B00C82570 /* SettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingVC.m; path = HelloAnyChat/Setting/SettingVC.m; sourceTree = "<group>"; };
 		CF2AF920230E6D6B00C82570 /* UserVideoSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = UserVideoSettings.plist; path = HelloAnyChat/Setting/UserVideoSettings.plist; sourceTree = "<group>"; };
+		F38E18D3248FAC9500CA6CAF /* AnyChatCoreSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AnyChatCoreSDK.framework; path = ../../../sdk/AnyChatCoreSDK.framework; sourceTree = "<group>"; };
 		F3B3355B2382A48300186C1E /* LaunchBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchBg.png; sourceTree = "<group>"; };
-		F3D5DA9E24652B0400E74CB3 /* AnyChatCoreSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyChatCoreSDK.framework; sourceTree = "<group>"; };
 		F854CEFE21474F84002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		F88FC35F22E0620A00A58B31 /* UINavigationController+DeviceOrientataion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+DeviceOrientataion.m"; sourceTree = "<group>"; };
 		F88FC36022E0620A00A58B31 /* UINavigationController+DeviceOrientataion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+DeviceOrientataion.h"; sourceTree = "<group>"; };
@@ -126,10 +126,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3D5DA9F24652B0400E74CB3 /* AnyChatCoreSDK.framework in Frameworks */,
 				F854CEFF21474F84002FC106 /* libc++.tbd in Frameworks */,
 				464E84AE1ECCA17900A8BC2D /* libz.tbd in Frameworks */,
 				098DF23E1EA7435800FB36FA /* VideoToolbox.framework in Frameworks */,
+				F38E18D4248FAC9500CA6CAF /* AnyChatCoreSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,16 +238,15 @@
 		FE94CFB61C65EA6200D199DE /* sdk */ = {
 			isa = PBXGroup;
 			children = (
-				F3D5DA9E24652B0400E74CB3 /* AnyChatCoreSDK.framework */,
+				F38E18D3248FAC9500CA6CAF /* AnyChatCoreSDK.framework */,
 			);
 			name = sdk;
-			path = ../../../sdk;
 			sourceTree = "<group>";
 		};
 		FEBBA24419C2CC0B009EE02C = {
 			isa = PBXGroup;
 			children = (
-				FEBBA25619C2CC0B009EE02C /* HelloAnyChat */,
+				FEBBA25619C2CC0B009EE02C /* helloAnyChat */,
 				FEBBA24F19C2CC0B009EE02C /* Frameworks */,
 				FEBBA24E19C2CC0B009EE02C /* Products */,
 			);
@@ -271,7 +270,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FEBBA25619C2CC0B009EE02C /* HelloAnyChat */ = {
+		FEBBA25619C2CC0B009EE02C /* helloAnyChat */ = {
 			isa = PBXGroup;
 			children = (
 				04B1258E1CEDBF150008E358 /* textModel */,
@@ -295,7 +294,7 @@
 				FED273F01A51610D00DC64AD /* Setting */,
 				FEBBA25719C2CC0B009EE02C /* Supporting Files */,
 			);
-			path = HelloAnyChat;
+			path = helloAnyChat;
 			sourceTree = "<group>";
 		};
 		FEBBA25719C2CC0B009EE02C /* Supporting Files */ = {
@@ -361,7 +360,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FEBBA24819C2CC0B009EE02C /* Build configuration list for PBXProject "HelloAnyChat" */;
+			buildConfigurationList = FEBBA24819C2CC0B009EE02C /* Build configuration list for PBXProject "helloAnyChat" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -560,10 +559,10 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 20200110;
+				CURRENT_PROJECT_VERSION = 20200922;
 				DEVELOPMENT_TEAM = 7448PDV238;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = ../../sdk/;
+				FRAMEWORK_SEARCH_PATHS = ../../sdk;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloAnyChat/HelloAnyChat-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -572,13 +571,13 @@
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 8.0;
-				ONLY_ACTIVE_ARCH = NO;
+				MARKETING_VERSION = 8.2;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairui.helloAnyChatiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "arm64 arm64e i386 armv7 x86_64";
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -591,10 +590,10 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 20200110;
+				CURRENT_PROJECT_VERSION = 20200922;
 				DEVELOPMENT_TEAM = 7448PDV238;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = ../../sdk/;
+				FRAMEWORK_SEARCH_PATHS = ../../sdk;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloAnyChat/HelloAnyChat-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -603,12 +602,13 @@
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 8.0;
+				MARKETING_VERSION = 8.2;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairui.helloAnyChatiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "arm64 arm64e i386 armv7 x86_64";
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -616,7 +616,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FEBBA24819C2CC0B009EE02C /* Build configuration list for PBXProject "HelloAnyChat" */ = {
+		FEBBA24819C2CC0B009EE02C /* Build configuration list for PBXProject "helloAnyChat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FEBBA27719C2CC0B009EE02C /* Debug */,

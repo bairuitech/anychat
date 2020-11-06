@@ -49,7 +49,7 @@
     [super viewDidLoad];
     
     self.loginVC = [self.navigationController.viewControllers objectAtIndex:0];
-    self.anyChat = self.loginVC.anyChat;
+    self.anyChat = [AnyChatPlatform getInstance];//self.loginVC.anyChat;
     self.anyChat.videoCallDelegate = self;
     
     self.navigationItem.title = @"队列列表";

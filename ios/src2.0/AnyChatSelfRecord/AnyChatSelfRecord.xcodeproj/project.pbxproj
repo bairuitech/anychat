@@ -853,7 +853,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Guangzhou BaiRui Network Technology Co. Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 20200110;
+				CURRENT_PROJECT_VERSION = 20200922;
 				DEVELOPMENT_TEAM = 7448PDV238;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = ../../sdk/;
@@ -864,12 +864,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 8.0;
-				ONLY_ACTIVE_ARCH = NO;
+				MARKETING_VERSION = 8.2;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairui.AnyChatSelfRecordiOS;
 				PRODUCT_NAME = "AnyChat自助双录";
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "i386 armv7 arm64 x86_64";
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -882,7 +882,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Guangzhou BaiRui Network Technology Co. Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 20200110;
+				CURRENT_PROJECT_VERSION = 20200922;
 				DEVELOPMENT_TEAM = 7448PDV238;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = ../../sdk/;
@@ -893,12 +893,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 8.0;
+				MARKETING_VERSION = 8.2;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bairui.AnyChatSelfRecordiOS;
 				PRODUCT_NAME = "AnyChat自助双录";
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "i386 armv7 arm64 x86_64";
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -344,11 +344,15 @@ kGCD_SINGLETON_FOR_CLASS(TransFileVC);
         theTransFileProgress = [AnyChatPlatform QueryTransTaskInfoInt:[AnyChatVC sharedAnyChatVC].theMyUserID
                                                                           :self.theTransFileTaskID
                                                                           :BRAC_TRANSTASK_PROGRESS];
-        if (theTransFileProgress > 98.0f )
+//        if (theTransFileProgress > 98.0f )
         {
             theTransTaskStatus = [AnyChatPlatform QueryTransTaskInfoInt:[AnyChatVC sharedAnyChatVC].theMyUserID
                                                                     :self.theTransFileTaskID
                                                                     :BRAC_TRANSTASK_STATUS];
+            if (theTransTaskStatus == kTransStatus_Success) {
+                NSString *strLog = [NSString stringWithFormat:@"onFileTransferDone taskid:%d status:%d",self.theTransFileTaskID,theTransTaskStatus];
+                [AnyChatPlatform SetSDKOptionString:BRAC_SO_CORESDK_WRITELOG :strLog];
+            }
         }
 
         HUD.progress = kTransFileProgress(theTransFileProgress);
@@ -402,8 +406,7 @@ kGCD_SINGLETON_FOR_CLASS(TransFileVC);
     
     NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
     
-    //    [formatter setDateFormat:@"MMdd_hh:mm:ss"];
-    [formatter setDateFormat:@"HH:mm:ss"];
+    [formatter setDateFormat:@"HH_mm_ss"];
     
     timeNow = [formatter stringFromDate:[NSDate date]];
     

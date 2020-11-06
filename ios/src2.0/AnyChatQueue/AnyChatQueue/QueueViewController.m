@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.loginVC = [self.navigationController.viewControllers objectAtIndex:0];
-    self.anyChat = self.loginVC.anyChat;
+    self.anyChat = [AnyChatPlatform getInstance];//self.loginVC.anyChat;
     self.anyChat.videoCallDelegate = self;
 
     NSString *businessName = [AnyChatPlatform ObjectGetStringValue:ANYCHAT_OBJECT_TYPE_QUEUE :(int)self.businessId :ANYCHAT_OBJECT_INFO_NAME];
