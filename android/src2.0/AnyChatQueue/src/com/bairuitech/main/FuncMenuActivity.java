@@ -1,21 +1,5 @@
 package com.bairuitech.main;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import com.bairuitech.anychat.AnyChatBaseEvent;
-import com.bairuitech.anychat.AnyChatCoreSDK;
-import com.bairuitech.anychat.AnyChatDefine;
-import com.bairuitech.anychat.AnyChatObjectDefine;
-import com.bairuitech.anychat.AnyChatObjectEvent;
-
-import com.bairuitech.common.ConfigEntity;
-import com.bairuitech.common.ConfigService;
-import com.bairuitech.common.CustomApplication;
-
-import com.example.anychatqueue.R;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -24,12 +8,17 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import com.bairuitech.anychat.*;
+import com.bairuitech.common.ConfigEntity;
+import com.bairuitech.common.ConfigService;
+import com.bairuitech.common.CustomApplication;
+import com.example.anychatqueue.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnClickListener,AnyChatObjectEvent {
@@ -159,7 +148,7 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
 			// 设置本地视频编码的关键帧间隔
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_GOPCTRL,
-					configEntity.videoFps * 4);
+					configEntity.videoFps);
 			// 设置本地视频采集分辨率
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL,

@@ -134,7 +134,7 @@ public class CTakePhotoPreview extends Activity implements AnyChatBaseEvent{
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			BaseMethod.exitVideoDialog(this);
-			;
+			return true;
 		}
 
 		return super.onKeyDown(keyCode, event);

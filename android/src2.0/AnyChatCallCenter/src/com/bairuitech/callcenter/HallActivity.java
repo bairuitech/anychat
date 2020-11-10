@@ -9,23 +9,16 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-
-import com.bairuitech.anychat.AnyChatBaseEvent;
-import com.bairuitech.anychat.AnyChatCoreSDK;
-import com.bairuitech.anychat.AnyChatDefine;
-import com.bairuitech.anychat.AnyChatUserInfoEvent;
-import com.bairuitech.anychat.AnyChatVideoCallEvent;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.bairuitech.anychat.*;
 import com.bairuitech.bussinesscenter.BussinessCenter;
 import com.bairuitech.bussinesscenter.SessionItem;
 import com.bairuitech.bussinesscenter.UserItem;
-import com.bairuitech.callcenter.R;
-import com.bairuitech.util.BaseConst;
-import com.bairuitech.util.BaseMethod;
-import com.bairuitech.util.ConfigEntity;
-import com.bairuitech.util.ConfigService;
-import com.bairuitech.util.DialogFactory;
+import com.bairuitech.util.*;
 
 public class HallActivity extends Activity implements OnItemClickListener,
 		OnClickListener, AnyChatBaseEvent, AnyChatVideoCallEvent,
@@ -135,7 +128,7 @@ public class HallActivity extends Activity implements OnItemClickListener,
 			// 设置本地视频编码的帧率
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_FPSCTRL, configEntity.videoFps);
 			// 设置本地视频编码的关键帧间隔
-			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_GOPCTRL, configEntity.videoFps*4);
+			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_GOPCTRL, configEntity.videoFps);
 			// 设置本地视频采集分辨率
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL, configEntity.resolution_width);
 			AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_LOCALVIDEO_HEIGHTCTRL, configEntity.resolution_height);

@@ -1,17 +1,22 @@
 package com.example.anychatfeatures;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import android.view.*;
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.*;
+import android.widget.AdapterView.OnItemClickListener;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
-import com.example.anychatfeatures.R;
 import com.example.common.CustomApplication;
-import com.example.common.RecordListMenu;
-import com.example.common.ScreenInfo;
 import com.example.common.TraceSelectDialog;
 import com.example.config.ConfigEntity;
 import com.example.config.ConfigService;
@@ -19,14 +24,8 @@ import com.example.funcActivity.ReceiverTrace;
 import com.example.funcActivity.SenderTrace;
 import com.example.funcActivity.VideoConfig;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView.OnItemClickListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FuncMenu extends Activity implements AnyChatBaseEvent {
 	public static final int FUNC_VOICEVIDEO = 1;		// 音视频交互
@@ -214,7 +213,7 @@ public class FuncMenu extends Activity implements AnyChatBaseEvent {
 			// 设置本地视频编码的关键帧间隔
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_GOPCTRL,
-					configEntity.mVideoFps * 4);
+					configEntity.mVideoFps);
 			// 设置本地视频采集分辨率
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL,

@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import android.graphics.Color;
 import android.view.Window;
+import android.widget.*;
 import com.bairuitech.anychat.AnyChatBaseEvent;
 import com.bairuitech.anychat.AnyChatCoreSDK;
 import com.bairuitech.anychat.AnyChatDefine;
@@ -27,10 +28,6 @@ import android.view.KeyEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class CSingleVideo extends Activity implements AnyChatBaseEvent,
 		AnyChatRecordEvent {
@@ -68,7 +65,8 @@ public class CSingleVideo extends Activity implements AnyChatBaseEvent,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.video_frame);
 		mCustomApplication = (CustomApplication) getApplication();
-
+		BaseMethod.initPhotosSound(CSingleVideo.this,
+				BaseMethod.PHOTOSSOUNDID);
 		InitSDK();
 		InitLayout();
 
@@ -164,15 +162,27 @@ public class CSingleVideo extends Activity implements AnyChatBaseEvent,
 		mVideoRecordTimeTV.setVisibility(View.GONE);
 	}
 
+	private long takePhotoTime=0;
 	OnClickListener onClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.takephotoBtn:
-				mAnyChatSDK.SnapShot(-1,
+				long clickTimeNow=System.currentTimeMillis();
+				long intervalTime=clickTimeNow-takePhotoTime;
+				if(takePhotoTime!=0||intervalTime<3000){
+					Toast.makeText(CSingleVideo.this,"请勿重复拍照", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				takePhotoTime=clickTimeNow;
+				int errorCode=mAnyChatSDK.SnapShot(-1,
 						AnyChatDefine.ANYCHAT_RECORD_FLAGS_SNAPSHOT, 0);
 				BaseMethod.playSound(CSingleVideo.this,
 						BaseMethod.PHOTOSSOUNDID);
+				if(errorCode!=0) {
+					takePhotoTime=0;
+					Toast.makeText(CSingleVideo.this,"拍照出错，请重试",Toast.LENGTH_SHORT).show();
+				}
 				break;
 			case R.id.VideorecordingBtn:
 				if (!mStartRecordFlag) {

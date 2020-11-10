@@ -45,15 +45,18 @@ public class BaseMethod{
 	     intent.setDataAndType(uri, fileType);
 	     return intent;
 	}
-	
-	// 播放拍照的声音
-	public static void playSound( Context context, int soundIndxe) {		
+	// 初始化拍照的声音
+	public static void initPhotosSound( Context context, int soundIndxe) {
 		if (mPhotoSoundPool == null){
 			mPhotoSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 5);
+			if (soundIndxe == PHOTOSSOUNDID) {
+				mPhotoSoundPool.load(context, R.raw.photossound, 1);
+			}
 		}
-		
+	}
+	// 播放拍照的声音
+	public static void playSound( Context context, int soundIndxe) {
 		if (soundIndxe == PHOTOSSOUNDID){
-			mPhotoSoundPool.load(context, R.raw.photossound, 1);
 			mPhotoSoundPool.play(1, 1, 1, 0, 0, 1);
 		}
 	}

@@ -236,7 +236,10 @@ public class CLogin extends Activity implements AnyChatBaseEvent {
 		mAnyChatSDK.Logout();
 		mAnyChatSDK.removeEvent(this);
 		mAnyChatSDK.Release();
-		unregisterReceiver(mBroadcastReceiver);
+		if(mBroadcastReceiver!=null) {
+			unregisterReceiver(mBroadcastReceiver);
+			mBroadcastReceiver=null;
+		}
 	}
 	
 	@Override

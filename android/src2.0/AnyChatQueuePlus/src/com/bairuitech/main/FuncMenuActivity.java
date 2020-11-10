@@ -1,21 +1,5 @@
 package com.bairuitech.main;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import com.bairuitech.anychat.AnyChatBaseEvent;
-import com.bairuitech.anychat.AnyChatCoreSDK;
-import com.bairuitech.anychat.AnyChatDefine;
-import com.bairuitech.anychat.AnyChatObjectDefine;
-import com.bairuitech.anychat.AnyChatObjectEvent;
-
-import com.bairuitech.common.ConfigEntity;
-import com.bairuitech.common.ConfigService;
-import com.bairuitech.common.CustomApplication;
-
-import com.example.anychatqueueplusplus.R;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -24,12 +8,17 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import com.bairuitech.anychat.*;
+import com.bairuitech.common.ConfigEntity;
+import com.bairuitech.common.ConfigService;
+import com.bairuitech.common.CustomApplication;
+import com.example.anychatqueueplusplus.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnClickListener,AnyChatObjectEvent {
@@ -118,6 +107,8 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
                     // 业务对象身份初始化；0代表普通客户，2是代表座席 (USER_TYPE_ID)
                     AnyChatCoreSDK.SetSDKOptionInt(AnyChatDefine.BRAC_SO_OBJECT_INITFLAGS, dwAgentFlags);
                     AnyChatCoreSDK.ObjectSetStringValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER, dwUserId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_STRINGTAG, dwAttribute);
+                   //支持所有技能组
+                    AnyChatCoreSDK.ObjectSetIntValue(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_CLIENTUSER, dwUserId, AnyChatObjectDefine.ANYCHAT_OBJECT_INFO_ATTRIBUTE, -1);
                     // 向服务器发送数据同步请求指令
                     AnyChatCoreSDK.ObjectControl(AnyChatObjectDefine.ANYCHAT_OBJECT_TYPE_AREA, AnyChatObjectDefine.ANYCHAT_INVALID_OBJECT_ID, AnyChatObjectDefine.ANYCHAT_OBJECT_CTRL_SYNCDATA, dwUserId, 0, 0, 0, "");
                 }
@@ -188,7 +179,7 @@ public class FuncMenuActivity extends Activity implements AnyChatBaseEvent,OnCli
             // 设置本地视频编码的关键帧间隔
             AnyChatCoreSDK.SetSDKOptionInt(
                     AnyChatDefine.BRAC_SO_LOCALVIDEO_GOPCTRL,
-                    configEntity.videoFps * 4);
+                    configEntity.videoFps);
             // 设置本地视频采集分辨率
             AnyChatCoreSDK.SetSDKOptionInt(
                     AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL,

@@ -215,9 +215,9 @@ public class VideoActivity extends Activity implements AnyChatBaseEvent {
 				}
 			}
 				break;
-			case (R.id.endCall): {
+			case R.id.endCall:
 				exitVideoDialog();
-			}
+				break;
 			case R.id.btn_speakControl:
 				if ((anychatSDK.GetSpeakState(-1) == 1)) {
 					mBtnSpeakCtrl.setImageResource(R.drawable.speak_off);

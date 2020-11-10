@@ -555,7 +555,11 @@ public class ServerVideoRecord extends Activity implements AnyChatBaseEvent,
 	public void OnAnyChatRecordEvent(int dwUserId, int dwErrorCode, String lpFileName,
 			int dwElapse, int dwFlags, int dwParam, String lpUserStr) {
 		// TODO Auto-generated method stub
-
+		if(dwErrorCode==0){
+			Toast.makeText(ServerVideoRecord.this,"录制成功",Toast.LENGTH_SHORT).show();
+		}else{
+			Toast.makeText(ServerVideoRecord.this,"录制失败",Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override

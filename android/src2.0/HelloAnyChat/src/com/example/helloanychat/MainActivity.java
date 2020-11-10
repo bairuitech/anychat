@@ -2,13 +2,11 @@ package com.example.helloanychat;
 
 import android.app.AlertDialog;
 import android.content.*;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -105,7 +103,7 @@ public class MainActivity extends FragmentActivity implements AnyChatBaseEvent {
             // 设置本地视频编码的关键帧间隔
             AnyChatCoreSDK.SetSDKOptionInt(
                     AnyChatDefine.BRAC_SO_LOCALVIDEO_GOPCTRL,
-                    configEntity.mVideoFps * 4);
+                    configEntity.mVideoFps);
             // 设置本地视频采集分辨率
             AnyChatCoreSDK.SetSDKOptionInt(
                     AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL,

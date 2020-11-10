@@ -187,26 +187,24 @@ public class AgentServiceActivity extends Activity implements
 		Log.i("ANYCHAT", "initSdk");
 	}
 
-	@Override
-	public boolean dispatchKeyEvent(KeyEvent event) {
-		// TODO Auto-generated method stub
-		if (event.getAction() == KeyEvent.ACTION_DOWN
-				&& event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-			
-			alertDialog();
-		}
-		
-		return super.dispatchKeyEvent(event);
-	}
-	@Override
-	public void OnAnyChatConnectMessage(boolean bSuccess) {
-		// TODO Auto-generated method stub
-		if (dialog != null
-				&& dialog.isShowing()
-				&& DialogFactory.getCurrentDialogId() == DialogFactory.DIALOGID_RESUME) {
-			dialog.dismiss();
-		}
-	}
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            alertDialog();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void OnAnyChatConnectMessage(boolean bSuccess) {
+        // TODO Auto-generated method stub
+        if (dialog != null
+                && dialog.isShowing()
+                && DialogFactory.getCurrentDialogId() == DialogFactory.DIALOGID_RESUME) {
+            dialog.dismiss();
+        }
+    }
 
 	public void OnAnyChatLoginMessage(int dwUserId, int dwErrorCode) {
 		// TODO Auto-generated method stub

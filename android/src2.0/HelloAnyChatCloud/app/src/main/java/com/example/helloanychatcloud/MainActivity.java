@@ -519,7 +519,7 @@ public class MainActivity extends Activity implements AnyChatBaseEvent {
 			// 设置本地视频编码的关键帧间隔
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_GOPCTRL,
-					configEntity.mVideoFps * 4);
+					configEntity.mVideoFps);
 			// 设置本地视频采集分辨率
 			AnyChatCoreSDK.SetSDKOptionInt(
 					AnyChatDefine.BRAC_SO_LOCALVIDEO_WIDTHCTRL,

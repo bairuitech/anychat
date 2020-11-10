@@ -222,7 +222,8 @@ public class LoginActivity extends Activity implements AnyChatBaseEvent, AnyChat
         if (mUserTypeCode == 2) {// 座席
             ArrayList<Integer> selects = new ArrayList<Integer>();
             for (int i = 0; i < 4; i++) {
-                selects.add(Integer.valueOf("200" + (i+1)));
+//                selects.add(Integer.valueOf("200" + (i+1)));
+				selects.add(Integer.valueOf("-1"));
 
             }
             int flag = mUserTypeCode;
