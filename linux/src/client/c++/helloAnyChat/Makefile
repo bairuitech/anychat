@@ -18,6 +18,14 @@ LIBDIR =
 LIB = 
 LDFLAGS = 
 
+aarch64 =
+ifeq ($(aarch64), 1)
+	CC = aarch64-linux-gnu-gcc 
+	CXX = aarch64-linux-gnu-g++ 
+	AR = aarch64-linux-gnu-ar
+	LD = aarch64-linux-gnu-g++
+endif
+
 INC_RELEASE =  $(INC) -I../../../../sdk/client/c++
 CFLAGS_RELEASE =  $(CFLAGS) -O2
 RESINC_RELEASE =  $(RESINC)
