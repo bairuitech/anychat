@@ -194,6 +194,9 @@ var BRAC_SO_LOCALPATH2URL		=			11003;	// 将本地路径转换为URL地址
 var BRAC_SO_GETTASKPATHNAME		=			11004;	// 根据传输任务ID获取文件路径
 var BRAC_SO_VIDEOBKIMAGE		=			11006;	// 设置视频背景图片
 var ANYCHATWEB_SO_STRBASE64MODE = 			11007;	// 字符串 base64 模式（仅web 端生效，前端 base64 编码后入参；回调函数插件也 base64 编码后出参）
+var ANYCHATWEB_SO_ASYNCMSGNOTIFY=			11008;  // 异步消息通知（解决部分老Chrome浏览器事件通知会导致崩溃的问题）
+var ANYCHATWEB_SO_ACTIVEMSG     =			11009;   // js 主动获取回调消息(解决插件回调导致的插件卡死问题)
+var ANYCHATWEB_SO_SUPPORTACTIVEMSG =     	11010;	// 是否支持主动获取回调消息0
 
 // 传输任务信息参数定义（API：BRAC_QueryTransTaskInfo 传入参数）
 var BRAC_TRANSTASK_PROGRESS		= 			1;	// 传输任务进度查询（参数为：DOUBLE型，返回值0.0 ~ 100.0， 或参数为：DWORD型，返回值0 ~ 100）
@@ -480,6 +483,7 @@ var ANYCHAT_SDKCTRL_NETWORK				=	60;	// 网络控制
 var ANYCHAT_SDKCTRL_MEDIA				=	70;	// 媒体控制
 var ANYCHAT_SDKCTRL_RECORDTAG			=	71;	// 录像标签
 var ANYCHAT_SDKCTRL_SCREENCAPPARAM		=	72;	// 屏幕采集参数设置
+var ANYCHAT_SDKCTRL_VIRTUALSTUDIO		=	73;	// 虚拟演播室
 var ANYCHAT_SDKCTRL_FILEDELETE			=	80;	// 删除文件
 var ANYCHAT_SDKCTRL_FILEINFO			=	81;	// 获取文件信息
 var ANYCHAT_SDKCTRL_DISKSIZE			=	82;	// 获取磁盘容量
@@ -575,6 +579,21 @@ var ANYCHAT_SCREENSOURCE_FLAGS_DISABLECURSOR  =   0x01;                // 禁止采
 var ANYCHAT_SCREENSOURCE_FLAGS_DISABLEBORDER  =   0x02;                // 禁止边框显示
 var ANYCHAT_SCREENSOURCE_FLAGS_DISABLETRACE   =   0x04;                // 禁止鼠标追踪
 
+//回调MessageType 定义
+var JAVASCRIPT_CALLBACK_ANYCHATCORESDKEVENT	="OnAnyChatCoreSDKEvent";
+var JAVASCRIPT_CALLBACK_NOTIFYMESSAGE		="OnNotifyMessage";
+var JAVASCRIPT_CALLBACK_TEXTMESSAGE			="OnTextMessage";
+var JAVASCRIPT_CALLBACK_TRANSBUFFER			="OnTransBuffer";
+var JAVASCRIPT_CALLBACK_TRANSBUFFEREX		="OnTransBufferEx";
+var JAVASCRIPT_CALLBACK_TRANSFILE			="OnTransFile";
+var JAVASCRIPT_CALLBACK_VOLUMECHANGE		="OnVolumeChange";
+var JAVASCRIPT_CALLBACK_SDKFILTERDATA		="OnSDKFilterData";
+var JAVASCRIPT_CALLBACK_RECORDSNAPSHOT		="OnRecordSnapShot";
+var JAVASCRIPT_CALLBACK_RECORDSNAPSHOTEX	="OnRecordSnapShotEx";
+var JAVASCRIPT_CALLBACK_RECORDSNAPSHOTEX2	="OnRecordSnapShotEx2";
+var JAVASCRIPT_CALLBACK_VIDEOCALLEVENT		="OnVideoCallEvent";
+var JAVASCRIPT_CALLBACK_OBJECTEVENT			="OnObjectEvent";
+
 // 插件最低需求版本号
 var MIN_ANYCHAT_PLUGIN_VER	=	"1.0.0.6";
 var MIN_VIDEO_PLUGIN_VER	=	"1.0.0.4";
@@ -591,7 +610,79 @@ var bSupportScriptObject = false;				// 是否支持JavaScript对象
 var bSupportCluster = false;					// 是否支持集群系统
 var bSupportParamBase64 = false;				// 是否支持参数base64加密
 var base64TranFuc = new Base64();
-
+var msgtimer=null;								//定时器实例
+function MessageLoop() {
+	var msg = BRAC_GetMessage();
+	if (msg.length != 0) {
+		var jsonmsg = JSON.parse(msg);
+		switch (jsonmsg.MessageType) {
+			case JAVASCRIPT_CALLBACK_ANYCHATCORESDKEVENT:
+				if(typeof(OnAnyChatKernelCoreSDKEvent) == "function")
+					OnAnyChatKernelCoreSDKEvent(jsonmsg.MessageData.dwEventType, jsonmsg.MessageData.lpEventJsonStr);
+				break;
+			case JAVASCRIPT_CALLBACK_NOTIFYMESSAGE:
+				if(typeof(OnAnyChatNotifyMessage) == "function")
+					OnAnyChatNotifyMessage(jsonmsg.MessageData.dwNotifyMsg, jsonmsg.MessageData.wParam, jsonmsg.MessageData.lParam);
+				break;
+			case JAVASCRIPT_CALLBACK_TEXTMESSAGE:
+				if(typeof(OnAnyChatKernelTextMessage) == "function")
+					OnAnyChatKernelTextMessage(jsonmsg.MessageData.dwFromUserid, jsonmsg.MessageData.dwToUserid, jsonmsg.MessageData.bSecret, jsonmsg.MessageData.lpMsgBuf, jsonmsg.MessageData.dwLen);
+				break;
+			case JAVASCRIPT_CALLBACK_TRANSBUFFER:
+				if(typeof(OnAnyChatTransBuffer) == "function")
+				{
+					var lpbuf = base64TranFuc.decode(jsonmsg.MessageData.lpBuf)
+					OnAnyChatTransBuffer(jsonmsg.MessageData.dwUserid, lpbuf, lpbuf.length);
+				}
+				break;
+			case JAVASCRIPT_CALLBACK_TRANSBUFFEREX:
+				if(typeof(OnAnyChatTransBufferEx) == "function")
+				{
+					var lpbuf = base64TranFuc.decode(jsonmsg.MessageData.lpBuf)
+					OnAnyChatTransBufferEx(jsonmsg.MessageData.dwUserid, lpbuf, lpbuf.length, jsonmsg.MessageData.wParam, jsonmsg.MessageData.lParam, jsonmsg.MessageData.dwTaskId);
+				}
+				break;
+			case JAVASCRIPT_CALLBACK_TRANSFILE:
+				if(typeof(OnAnyChatTransFile) == "function")
+					OnAnyChatTransFile(jsonmsg.MessageData.dwUserid, jsonmsg.MessageData.lpFileName, jsonmsg.MessageData.lpTempFilePath, jsonmsg.MessageData.dwFileLength, jsonmsg.MessageData.wParam, jsonmsg.MessageData.lParam, jsonmsg.MessageData.dwTaskId);
+				break;
+			case JAVASCRIPT_CALLBACK_VOLUMECHANGE:
+				if(typeof(OnAnyChatVolumeChange) == "function")
+					OnAnyChatVolumeChange(jsonmsg.MessageData.device, jsonmsg.MessageData.dwCurrentVolume);
+				break;
+			case JAVASCRIPT_CALLBACK_SDKFILTERDATA:
+				if(typeof(OnAnyChatSDKFilterData) == "function")
+					OnAnyChatSDKFilterData(jsonmsg.MessageData.dwEventType, jsonmsg.MessageData.lpEventJsonStr);
+				break;
+			case JAVASCRIPT_CALLBACK_RECORDSNAPSHOT:
+				if(typeof(OnAnyChatRecordSnapShot) == "function")
+					OnAnyChatRecordSnapShot(jsonmsg.MessageData.dwUserId, jsonmsg.MessageData.lpFileName, jsonmsg.MessageData.dwParam, jsonmsg.MessageData.dwFlags);
+				break;
+			case JAVASCRIPT_CALLBACK_RECORDSNAPSHOTEX:
+				if(typeof(OnAnyChatKernelRecordSnapShotEx) == "function")
+					OnAnyChatKernelRecordSnapShotEx(jsonmsg.MessageData.dwUserId, jsonmsg.MessageData.lpFileName, jsonmsg.MessageData.dwElapse, jsonmsg.MessageData.dwFlags, jsonmsg.MessageData.dwParam, jsonmsg.MessageData.lpUserStr);
+				break;
+			case JAVASCRIPT_CALLBACK_RECORDSNAPSHOTEX2:
+				if(typeof(OnAnyChatKernelRecordSnapShotEx2) == "function")
+					OnAnyChatKernelRecordSnapShotEx2(jsonmsg.MessageData.dwUserId,jsonmsg.MessageData.dwErrorCode, jsonmsg.MessageData.lpFileName, jsonmsg.MessageData.dwElapse, jsonmsg.MessageData.dwFlags, jsonmsg.MessageData.dwParam, jsonmsg.MessageData.lpUserStr);
+				break;
+			case JAVASCRIPT_CALLBACK_VIDEOCALLEVENT:
+				if(typeof(OnAnyChatKernelVideoCallEvent) == "function")
+					OnAnyChatKernelVideoCallEvent(jsonmsg.MessageData.dwEventType, jsonmsg.MessageData.dwUserId, jsonmsg.MessageData.dwErrorCode, jsonmsg.MessageData.dwFlags, jsonmsg.MessageData.dwParam, jsonmsg.MessageData.lpUserStr);
+				break;
+			case JAVASCRIPT_CALLBACK_OBJECTEVENT:
+				if(typeof(OnAnyChatObjectEvent) == "function")	
+					OnAnyChatObjectEvent(jsonmsg.MessageData.dwObjectType, jsonmsg.MessageData.dwObjectId, jsonmsg.MessageData.dwEventType, jsonmsg.MessageData.dwParam1, jsonmsg.MessageData.dwParam2, jsonmsg.MessageData.dwParam3, jsonmsg.MessageData.dwParam4, jsonmsg.MessageData.lpStrParam);
+				break;
+			default:
+				break;
+		}
+	}
+}
+function starttimer(){
+    MessageLoop();
+    msgtimer=setTimeout("starttimer()",200);    
+}
 // 初始化SDK，返回出错代码
 function BRAC_InitSDK(apilevel) {	
 	var anychatsdkdiv = "AnyChatSDKPluginDiv";
@@ -803,7 +894,10 @@ function BRAC_SetVideoPosEx(userid, parentobj, id, streamindex) {
 function BRAC_GetVersion(type) {
 	return anychat.GetVersion(type);
 }
-
+//获取消息
+function BRAC_GetMessage(){
+	return anychat.BRGetMessage();
+}
 // 设置服务器验证密码（可用于阻止非法用户用SDK连接服务器，合法用户可正常连接）
 function BRAC_SetServerAuthPass(lpPassword) {
 	return anychat.SetServerAuthPass(lpPassword);
@@ -1042,10 +1136,25 @@ function BRAC_PrivateChatExit(dwUserId) {
 
 // SDK内核参数设置
 function BRAC_SetSDKOption(optname, value) {
-	if(typeof value == "string")
+	if (typeof value == "string")
 		return anychat.SetSDKOptionString(optname, value);
-	else
+	else {
+		if (ANYCHATWEB_SO_ACTIVEMSG == optname) {
+			if (value == 1) {
+				if (BRAC_GetSDKOptionInt(ANYCHATWEB_SO_SUPPORTACTIVEMSG)) {
+					msgtimer && clearTimeout(msgtimer);
+					msgtimer = null;
+					setTimeout("starttimer()", 20);
+				}
+			} else {
+				msgtimer&&clearTimeout(msgtimer);
+				msgtimer=null;
+			}
+
+		}
 		return anychat.SetSDKOptionInt(optname, value);
+	}
+	
 }
 // SDK内核参数状态查询（整形参数值）
 function BRAC_GetSDKOptionInt(optname) {
@@ -1319,6 +1428,8 @@ function BRAC_Release() {
 			return;
 		}
 		document.body.removeChild(_anychatSDKDiv);
+		msgtimer&&clearTimeout(msgtimer);
+		msgtimer=null;
 	}
 }
 
