@@ -33,8 +33,7 @@ public class LoginJFrame extends JFrame implements ActionListener {
 	public JCheckBox mCheckAnnymous;
 	public JButton mBtnSeting;
 	private AnyChatCoreSDK anychat;
-	public static final String SERVER_IP = "192.168.11.250";
-//	public static final String SERVER_IP = "127.0.0.1";
+	public static final String SERVER_IP = "demo.anychat.cn";
 	public static final int SERVER_PORT = 8906;
 
 	public LoginJFrame(AnyChatCoreSDK anychat) {
