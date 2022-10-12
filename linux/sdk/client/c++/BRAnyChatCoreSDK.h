@@ -311,5 +311,12 @@ BRAC_API DWORD BRAC_StreamPlayGetInfo(CHAR* lpTaskGuid, DWORD dwInfoName, CHAR* 
 // 流媒体播放释放资源
 BRAC_API DWORD BRAC_StreamPlayDestroy(CHAR* lpTaskGuid, DWORD dwFlags=0);
 
+// 转换图像格式
+BRAC_API DWORD BRAC_ImageScale(DWORD dwSrcWidth, DWORD dwSrcHeight, DWORD dwSrcFmt, CHAR* lpInFrame, DWORD dwDesWidth, DWORD dwDesHeight, DWORD dwDesFmt, CHAR* lpOutFrame, DWORD& dwOutSize);
+// 旋转（或镜像）YUV420P格式的视频帧
+BRAC_API DWORD BRAC_RotateYUV420PFrame(DWORD dwWidth, DWORD dwHeight, CHAR* lpInFrame, CHAR* lpOutFrame, DWORD dwFlags);
+// 图像解码
+BRAC_API DWORD BRAC_ImageDecode(CHAR* lpFilePath, DWORD& dwWidth, DWORD& dwHeight, DWORD dwOutFmt, CHAR* lpOutFrame, DWORD& dwOutSize);
+
 
 #endif //BR_ANYCHAT_CORE_SDK_H__INCLUDED_

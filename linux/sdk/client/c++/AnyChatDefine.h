@@ -419,13 +419,24 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SDKCTRL_USERBUFFER			3	///< 用户缓冲区传输控制
 #define ANYCHAT_SDKCTRL_INVOKEEVENT			4	///< 触发异步事件
 #define ANYCHAT_SDKCTRL_RECORD				5	///< 音视频录制
+#define ANYCHAT_SDKCTRL_CERTCHECK			6	///< 授权功能检查
+#define ANYCHAT_SDKCTRL_APPRUNCTRL			7	///< App运行控制
+#define ANYCHAT_SDKCTRL_HDINFO				8	///< 获取本地设备硬件信息
 #define ANYCHAT_SDKCTRL_OBJECT				20	///< 对象操作
+#define ANYCHAT_SDKCTRL_PLUGINCTRL			21	///< 通用插件控制
 #define ANYCHAT_SDKCTRL_VIDEOCALL			30	///< 呼叫控制
 #define ANYCHAT_SDKCTRL_USERINFO			40	///< 用户信息控制
 #define ANYCHAT_SDKCTRL_STREAMPLAY			50	///< 流媒体播放
+#define ANYCHAT_SDKCTRL_MEDIAPROCESS		51	///< 流媒体处理控制
+#define ANYCHAT_SDKCTRL_MEDIAFILECAMERA		52	///< 媒体文件摄像头控制
+#define ANYCHAT_SDKCTRL_FACEBEAUTY			53	///< 美颜控制
+#define ANYCHAT_SDKCTRL_CAIFUCAMERA			54	///< 财富双录摄像头控制
 #define ANYCHAT_SDKCTRL_NETWORK				60	///< 网络控制
 #define ANYCHAT_SDKCTRL_MEDIA				70	///< 媒体控制
 #define ANYCHAT_SDKCTRL_RECORDTAG			71	///< 录像标签
+#define ANYCHAT_SDKCTRL_SCREENCAPPARAM		72	///< 屏幕采集参数设置
+#define ANYCHAT_SDKCTRL_VIRTUALSTUDIO		73	///< 虚拟演播室
+#define ANYCHAT_SDKCTRL_AIVIRTUALBK			74	///< AI虚拟背景
 #define ANYCHAT_SDKCTRL_FILEDELETE			80	///< 删除文件
 #define ANYCHAT_SDKCTRL_FILEINFO			81	///< 获取文件信息
 #define ANYCHAT_SDKCTRL_DISKSIZE			82	///< 获取磁盘容量
@@ -434,14 +445,22 @@ enum BRAC_VideoShowDriver{
 #define ANYCHAT_SDKCTRL_CREATEDIR			85	///< 创建目录
 #define ANYCHAT_SDKCTRL_DIRCLEAN			86	///< 目录清理
 #define ANYCHAT_SDKCTRL_FINDFILE			87	///< 查找文件
+#define ANYCHAT_SDKCTRL_UPLOADIMAGE			88	///< 上传图片（防病毒处理）
 #define ANYCHAT_SDKCTRL_PPTHELPERINIT		90	///< PPT播报环境初始化
 #define ANYCHAT_SDKCTRL_PPTFILECTRL			91	///< PPT文件控制
 #define ANYCHAT_SDKCTRL_PPTFILEINFO			92	///< PPT文件信息
+#define ANYCHAT_SDKCTRL_MARQUEEINPUT		93	///< 跑马灯数据输入
 #define ANYCHAT_SDKCTRL_BUSINESS			95	///< 业务控制
 #define ANYCHAT_SDKCTRL_MEDIAFILTERINIT		96	///< 媒体过滤器初始化
 #define ANYCHAT_SDKCTRL_VIDEODEVICEINFO		97	///< 获取视频采集设备信息
 #define ANYCHAT_SDKCTRL_UPDATERECUSERSTR	98	///< 更新录像用户参数
 #define ANYCHAT_SDKCTRL_SYNCRECORD			99	///< 同步录像参数设置
+#define ANYCHAT_SDKCTRL_BUSINESSBUFFER		100	///< 业务缓冲区控制
+#define ANYCHAT_SDKCTRL_LIVESTREAM			101	///< 直播业务控制
+#define ANYCHAT_SDKCTRL_AIABILITY			102	///< AI能力
+#define ANYCHAT_SDKCTRL_APPBUFFER			103	///< APP自定义缓冲区
+#define ANYCHAT_SDKCTRL_SERVEROBJECT		104	///< 服务器对象控制
+#define ANYCHAT_SDKCTRL_FACEEMOTIONCTRL		300	///< 微表情控制
 
 
 // 媒体播放事件类型定义
