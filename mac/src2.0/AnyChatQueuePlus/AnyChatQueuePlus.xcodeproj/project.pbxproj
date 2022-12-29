@@ -1,0 +1,420 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		22EAE9071B0F602B008C5D42 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EAE9061B0F602B008C5D42 /* AppDelegate.m */; };
+		22EAE9091B0F602B008C5D42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EAE9081B0F602B008C5D42 /* main.m */; };
+		22EAE90B1B0F602B008C5D42 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22EAE90A1B0F602B008C5D42 /* Images.xcassets */; };
+		22EAE90E1B0F602B008C5D42 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22EAE90C1B0F602B008C5D42 /* MainMenu.xib */; };
+		22EAE9551B0F60A7008C5D42 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EAE9511B0F60A7008C5D42 /* MainViewController.m */; };
+		22EAE9561B0F60A7008C5D42 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22EAE9521B0F60A7008C5D42 /* MainViewController.xib */; };
+		22EAE9571B0F60A7008C5D42 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EAE9541B0F60A7008C5D42 /* User.m */; };
+		22EAE9591B0F60F9008C5D42 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22EAE9581B0F60F9008C5D42 /* AVFoundation.framework */; };
+		22EAE95B1B0F6106008C5D42 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22EAE95A1B0F6106008C5D42 /* QuartzCore.framework */; };
+		22EAE95D1B0F6112008C5D42 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22EAE95C1B0F6112008C5D42 /* CoreVideo.framework */; };
+		22EAE95F1B0F6120008C5D42 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22EAE95E1B0F6120008C5D42 /* CoreAudio.framework */; };
+		22EAE9611B0F612B008C5D42 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22EAE9601B0F612B008C5D42 /* CoreMedia.framework */; };
+		22EAE9631B0F6135008C5D42 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22EAE9621B0F6135008C5D42 /* AudioToolbox.framework */; };
+		24476547293DE03F0020AA28 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 24476546293DE03F0020AA28 /* libz.tbd */; };
+		24476549293DE0480020AA28 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 24476548293DE0480020AA28 /* libc++.tbd */; };
+		2447654B293DE04E0020AA28 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2447654A293DE04E0020AA28 /* VideoToolbox.framework */; };
+		2447654D293DE0550020AA28 /* VideoDecodeAcceleration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2447654C293DE0550020AA28 /* VideoDecodeAcceleration.framework */; };
+		2447654F293DE0590020AA28 /* LDAP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2447654E293DE0590020AA28 /* LDAP.framework */; };
+		24476552293DEC280020AA28 /* AnyChat_QueueModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24476551293DEC280020AA28 /* AnyChat_QueueModel.m */; };
+		24476555293DEC700020AA28 /* AnyChatResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 24476553293DEC700020AA28 /* AnyChatResult.m */; };
+		245978A3294C794C00CE7FC8 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 245978A2294C794C00CE7FC8 /* AudioUnit.framework */; };
+		2490CDE2295D77A000120F2C /* AnyChatCoreSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2490CDE1295D77A000120F2C /* AnyChatCoreSDK.framework */; };
+		F3C34AEB29519907007B9366 /* AnyChatMisc.m in Sources */ = {isa = PBXBuildFile; fileRef = F3C34AEA29519906007B9366 /* AnyChatMisc.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		22EAE9001B0F602B008C5D42 /* AnyChatQueuePlus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnyChatQueuePlus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		22EAE9041B0F602B008C5D42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22EAE9051B0F602B008C5D42 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		22EAE9061B0F602B008C5D42 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		22EAE9081B0F602B008C5D42 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		22EAE90A1B0F602B008C5D42 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		22EAE90D1B0F602B008C5D42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		22EAE9181B0F602C008C5D42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22EAE9191B0F602C008C5D42 /* AnyChatCallCenterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnyChatCallCenterTests.m; sourceTree = "<group>"; };
+		22EAE9501B0F60A7008C5D42 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		22EAE9511B0F60A7008C5D42 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		22EAE9521B0F60A7008C5D42 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		22EAE9531B0F60A7008C5D42 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		22EAE9541B0F60A7008C5D42 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		22EAE9581B0F60F9008C5D42 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		22EAE95A1B0F6106008C5D42 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		22EAE95C1B0F6112008C5D42 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		22EAE95E1B0F6120008C5D42 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		22EAE9601B0F612B008C5D42 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		22EAE9621B0F6135008C5D42 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		24476546293DE03F0020AA28 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		24476548293DE0480020AA28 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		2447654A293DE04E0020AA28 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		2447654C293DE0550020AA28 /* VideoDecodeAcceleration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoDecodeAcceleration.framework; path = System/Library/Frameworks/VideoDecodeAcceleration.framework; sourceTree = SDKROOT; };
+		2447654E293DE0590020AA28 /* LDAP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LDAP.framework; path = System/Library/Frameworks/LDAP.framework; sourceTree = SDKROOT; };
+		24476550293DEC270020AA28 /* AnyChat_QueueModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChat_QueueModel.h; sourceTree = "<group>"; };
+		24476551293DEC280020AA28 /* AnyChat_QueueModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnyChat_QueueModel.m; sourceTree = "<group>"; };
+		24476553293DEC700020AA28 /* AnyChatResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnyChatResult.m; sourceTree = "<group>"; };
+		24476554293DEC700020AA28 /* AnyChatResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatResult.h; sourceTree = "<group>"; };
+		245978A2294C794C00CE7FC8 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		2490CDE1295D77A000120F2C /* AnyChatCoreSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyChatCoreSDK.framework; sourceTree = "<group>"; };
+		F3C34AE929519906007B9366 /* AnyChatMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatMisc.h; sourceTree = "<group>"; };
+		F3C34AEA29519906007B9366 /* AnyChatMisc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnyChatMisc.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		22EAE8FD1B0F602B008C5D42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2490CDE2295D77A000120F2C /* AnyChatCoreSDK.framework in Frameworks */,
+				245978A3294C794C00CE7FC8 /* AudioUnit.framework in Frameworks */,
+				2447654F293DE0590020AA28 /* LDAP.framework in Frameworks */,
+				2447654D293DE0550020AA28 /* VideoDecodeAcceleration.framework in Frameworks */,
+				2447654B293DE04E0020AA28 /* VideoToolbox.framework in Frameworks */,
+				24476549293DE0480020AA28 /* libc++.tbd in Frameworks */,
+				24476547293DE03F0020AA28 /* libz.tbd in Frameworks */,
+				22EAE9631B0F6135008C5D42 /* AudioToolbox.framework in Frameworks */,
+				22EAE9611B0F612B008C5D42 /* CoreMedia.framework in Frameworks */,
+				22EAE95F1B0F6120008C5D42 /* CoreAudio.framework in Frameworks */,
+				22EAE95D1B0F6112008C5D42 /* CoreVideo.framework in Frameworks */,
+				22EAE95B1B0F6106008C5D42 /* QuartzCore.framework in Frameworks */,
+				22EAE9591B0F60F9008C5D42 /* AVFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		22EAE8F71B0F602B008C5D42 = {
+			isa = PBXGroup;
+			children = (
+				22EAE9621B0F6135008C5D42 /* AudioToolbox.framework */,
+				22EAE9601B0F612B008C5D42 /* CoreMedia.framework */,
+				22EAE95E1B0F6120008C5D42 /* CoreAudio.framework */,
+				22EAE95C1B0F6112008C5D42 /* CoreVideo.framework */,
+				22EAE95A1B0F6106008C5D42 /* QuartzCore.framework */,
+				22EAE9581B0F60F9008C5D42 /* AVFoundation.framework */,
+				22EAE9021B0F602B008C5D42 /* AnyChatCallCenter */,
+				22EAE9161B0F602C008C5D42 /* AnyChatCallCenterTests */,
+				22EAE9011B0F602B008C5D42 /* Products */,
+				24476545293DE03F0020AA28 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		22EAE9011B0F602B008C5D42 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				22EAE9001B0F602B008C5D42 /* AnyChatQueuePlus.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		22EAE9021B0F602B008C5D42 /* AnyChatCallCenter */ = {
+			isa = PBXGroup;
+			children = (
+				FE6427101B4FAA5000CE3922 /* sdk */,
+				22EAE9051B0F602B008C5D42 /* AppDelegate.h */,
+				22EAE9061B0F602B008C5D42 /* AppDelegate.m */,
+				22EAE9501B0F60A7008C5D42 /* MainViewController.h */,
+				22EAE9511B0F60A7008C5D42 /* MainViewController.m */,
+				22EAE9521B0F60A7008C5D42 /* MainViewController.xib */,
+				24476550293DEC270020AA28 /* AnyChat_QueueModel.h */,
+				24476551293DEC280020AA28 /* AnyChat_QueueModel.m */,
+				F3C34AE929519906007B9366 /* AnyChatMisc.h */,
+				F3C34AEA29519906007B9366 /* AnyChatMisc.m */,
+				24476554293DEC700020AA28 /* AnyChatResult.h */,
+				24476553293DEC700020AA28 /* AnyChatResult.m */,
+				22EAE9531B0F60A7008C5D42 /* User.h */,
+				22EAE9541B0F60A7008C5D42 /* User.m */,
+				22EAE9031B0F602B008C5D42 /* Supporting Files */,
+			);
+			path = AnyChatCallCenter;
+			sourceTree = "<group>";
+		};
+		22EAE9031B0F602B008C5D42 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				22EAE90C1B0F602B008C5D42 /* MainMenu.xib */,
+				22EAE90A1B0F602B008C5D42 /* Images.xcassets */,
+				22EAE9041B0F602B008C5D42 /* Info.plist */,
+				22EAE9081B0F602B008C5D42 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		22EAE9161B0F602C008C5D42 /* AnyChatCallCenterTests */ = {
+			isa = PBXGroup;
+			children = (
+				22EAE9191B0F602C008C5D42 /* AnyChatCallCenterTests.m */,
+				22EAE9171B0F602C008C5D42 /* Supporting Files */,
+			);
+			path = AnyChatCallCenterTests;
+			sourceTree = "<group>";
+		};
+		22EAE9171B0F602C008C5D42 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				22EAE9181B0F602C008C5D42 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		24476545293DE03F0020AA28 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				245978A2294C794C00CE7FC8 /* AudioUnit.framework */,
+				2447654E293DE0590020AA28 /* LDAP.framework */,
+				2447654C293DE0550020AA28 /* VideoDecodeAcceleration.framework */,
+				2447654A293DE04E0020AA28 /* VideoToolbox.framework */,
+				24476548293DE0480020AA28 /* libc++.tbd */,
+				24476546293DE03F0020AA28 /* libz.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FE6427101B4FAA5000CE3922 /* sdk */ = {
+			isa = PBXGroup;
+			children = (
+				2490CDE1295D77A000120F2C /* AnyChatCoreSDK.framework */,
+			);
+			name = sdk;
+			path = ../../../sdk;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		22EAE8FF1B0F602B008C5D42 /* AnyChatQueuePlus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 22EAE91D1B0F602C008C5D42 /* Build configuration list for PBXNativeTarget "AnyChatQueuePlus" */;
+			buildPhases = (
+				22EAE8FC1B0F602B008C5D42 /* Sources */,
+				22EAE8FD1B0F602B008C5D42 /* Frameworks */,
+				22EAE8FE1B0F602B008C5D42 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AnyChatQueuePlus;
+			productName = AnyChatCallCenter;
+			productReference = 22EAE9001B0F602B008C5D42 /* AnyChatQueuePlus.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		22EAE8F81B0F602B008C5D42 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = tim.tan;
+				TargetAttributes = {
+					22EAE8FF1B0F602B008C5D42 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+				};
+			};
+			buildConfigurationList = 22EAE8FB1B0F602B008C5D42 /* Build configuration list for PBXProject "AnyChatQueuePlus" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+				Base,
+			);
+			mainGroup = 22EAE8F71B0F602B008C5D42;
+			productRefGroup = 22EAE9011B0F602B008C5D42 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				22EAE8FF1B0F602B008C5D42 /* AnyChatQueuePlus */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		22EAE8FE1B0F602B008C5D42 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22EAE90B1B0F602B008C5D42 /* Images.xcassets in Resources */,
+				22EAE9561B0F60A7008C5D42 /* MainViewController.xib in Resources */,
+				22EAE90E1B0F602B008C5D42 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		22EAE8FC1B0F602B008C5D42 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F3C34AEB29519907007B9366 /* AnyChatMisc.m in Sources */,
+				22EAE9571B0F60A7008C5D42 /* User.m in Sources */,
+				22EAE9091B0F602B008C5D42 /* main.m in Sources */,
+				22EAE9551B0F60A7008C5D42 /* MainViewController.m in Sources */,
+				24476555293DEC700020AA28 /* AnyChatResult.m in Sources */,
+				22EAE9071B0F602B008C5D42 /* AppDelegate.m in Sources */,
+				24476552293DEC280020AA28 /* AnyChat_QueueModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		22EAE90C1B0F602B008C5D42 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				22EAE90D1B0F602B008C5D42 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		22EAE91B1B0F602C008C5D42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		22EAE91C1B0F602C008C5D42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		22EAE91E1B0F602C008C5D42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = ../../sdk;
+				INFOPLIST_FILE = AnyChatCallCenter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/libs/audioprocess,
+					../../sdk/libs,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		22EAE91F1B0F602C008C5D42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = ../../sdk;
+				INFOPLIST_FILE = AnyChatCallCenter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/libs/audioprocess,
+					../../sdk/libs,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		22EAE8FB1B0F602B008C5D42 /* Build configuration list for PBXProject "AnyChatQueuePlus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22EAE91B1B0F602C008C5D42 /* Debug */,
+				22EAE91C1B0F602C008C5D42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		22EAE91D1B0F602C008C5D42 /* Build configuration list for PBXNativeTarget "AnyChatQueuePlus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22EAE91E1B0F602C008C5D42 /* Debug */,
+				22EAE91F1B0F602C008C5D42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 22EAE8F81B0F602B008C5D42 /* Project object */;
+}

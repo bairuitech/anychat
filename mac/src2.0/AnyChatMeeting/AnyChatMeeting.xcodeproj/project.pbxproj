@@ -1,0 +1,425 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		245978A1294C41D500CE7FC8 /* DroidSansFallback.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 245978A0294C41D500CE7FC8 /* DroidSansFallback.ttf */; };
+		246FFCE6293EEEBF007DD791 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246FFCE5293EEEBF007DD791 /* VideoToolbox.framework */; };
+		246FFCE8293EEEC8007DD791 /* VideoDecodeAcceleration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246FFCE7293EEEC8007DD791 /* VideoDecodeAcceleration.framework */; };
+		246FFCEA293EEECD007DD791 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 246FFCE9293EEECD007DD791 /* libz.tbd */; };
+		246FFCEC293EEED3007DD791 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 246FFCEB293EEED3007DD791 /* libc++.tbd */; };
+		246FFCEE293EEEE0007DD791 /* LDAP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246FFCED293EEEE0007DD791 /* LDAP.framework */; };
+		2490CDE0295D767700120F2C /* AnyChatCoreSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2490CDDF295D767700120F2C /* AnyChatCoreSDK.framework */; };
+		24AA37B929401EEC00B680E6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8560461B1C48DE00E42BFE /* AudioToolbox.framework */; };
+		24AA37BB29401FE100B680E6 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AA37BA29401FE100B680E6 /* AudioUnit.framework */; };
+		24AA37C0294043B400B680E6 /* MeberCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24AA37BE294043B400B680E6 /* MeberCellView.m */; };
+		24BBEA9029406C0D00D51187 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24BBEA8F29406C0D00D51187 /* Foundation.framework */; };
+		24BBEA9229406C1500D51187 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24BBEA9129406C1500D51187 /* AppKit.framework */; };
+		FE855FF81B1C413800E42BFE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE855FF71B1C413800E42BFE /* AppDelegate.m */; };
+		FE855FFA1B1C413800E42BFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FE855FF91B1C413800E42BFE /* main.m */; };
+		FE855FFC1B1C413800E42BFE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE855FFB1B1C413800E42BFE /* Images.xcassets */; };
+		FE855FFF1B1C413900E42BFE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE855FFD1B1C413900E42BFE /* MainMenu.xib */; };
+		FE8560171B1C433F00E42BFE /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8560151B1C433F00E42BFE /* MainViewController.m */; };
+		FE8560181B1C433F00E42BFE /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE8560161B1C433F00E42BFE /* MainViewController.xib */; };
+		FE8560491B1C48ED00E42BFE /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8560481B1C48ED00E42BFE /* CoreMedia.framework */; };
+		FE85604B1B1C48FA00E42BFE /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE85604A1B1C48FA00E42BFE /* CoreAudio.framework */; };
+		FE85604D1B1C490600E42BFE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE85604C1B1C490600E42BFE /* CoreVideo.framework */; };
+		FE85604F1B1C491100E42BFE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE85604E1B1C491000E42BFE /* QuartzCore.framework */; };
+		FE8560511B1C491A00E42BFE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8560501B1C491A00E42BFE /* AVFoundation.framework */; };
+		FE85605A1B1C506E00E42BFE /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8560591B1C506E00E42BFE /* User.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		245978A0294C41D500CE7FC8 /* DroidSansFallback.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DroidSansFallback.ttf; sourceTree = "<group>"; };
+		246FFCE5293EEEBF007DD791 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		246FFCE7293EEEC8007DD791 /* VideoDecodeAcceleration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoDecodeAcceleration.framework; path = System/Library/Frameworks/VideoDecodeAcceleration.framework; sourceTree = SDKROOT; };
+		246FFCE9293EEECD007DD791 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		246FFCEB293EEED3007DD791 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		246FFCED293EEEE0007DD791 /* LDAP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LDAP.framework; path = System/Library/Frameworks/LDAP.framework; sourceTree = SDKROOT; };
+		2490CDDF295D767700120F2C /* AnyChatCoreSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyChatCoreSDK.framework; sourceTree = "<group>"; };
+		24AA37BA29401FE100B680E6 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		24AA37BD294043B400B680E6 /* MeberCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeberCellView.h; sourceTree = "<group>"; };
+		24AA37BE294043B400B680E6 /* MeberCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeberCellView.m; sourceTree = "<group>"; };
+		24BBEA8F29406C0D00D51187 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		24BBEA9129406C1500D51187 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		FE855FF11B1C413800E42BFE /* AnyChatMeeting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnyChatMeeting.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE855FF51B1C413800E42BFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FE855FF61B1C413800E42BFE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FE855FF71B1C413800E42BFE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FE855FF91B1C413800E42BFE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FE855FFB1B1C413800E42BFE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		FE855FFE1B1C413900E42BFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FE8560091B1C413900E42BFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FE85600A1B1C413900E42BFE /* AnyChatMeetingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnyChatMeetingTests.m; sourceTree = "<group>"; };
+		FE8560141B1C433F00E42BFE /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		FE8560151B1C433F00E42BFE /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		FE8560161B1C433F00E42BFE /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		FE8560461B1C48DE00E42BFE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FE8560481B1C48ED00E42BFE /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		FE85604A1B1C48FA00E42BFE /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		FE85604C1B1C490600E42BFE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		FE85604E1B1C491000E42BFE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FE8560501B1C491A00E42BFE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FE8560581B1C506E00E42BFE /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		FE8560591B1C506E00E42BFE /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FE855FEE1B1C413800E42BFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24BBEA9229406C1500D51187 /* AppKit.framework in Frameworks */,
+				2490CDE0295D767700120F2C /* AnyChatCoreSDK.framework in Frameworks */,
+				24BBEA9029406C0D00D51187 /* Foundation.framework in Frameworks */,
+				24AA37BB29401FE100B680E6 /* AudioUnit.framework in Frameworks */,
+				24AA37B929401EEC00B680E6 /* AudioToolbox.framework in Frameworks */,
+				246FFCEE293EEEE0007DD791 /* LDAP.framework in Frameworks */,
+				246FFCEC293EEED3007DD791 /* libc++.tbd in Frameworks */,
+				246FFCEA293EEECD007DD791 /* libz.tbd in Frameworks */,
+				246FFCE8293EEEC8007DD791 /* VideoDecodeAcceleration.framework in Frameworks */,
+				246FFCE6293EEEBF007DD791 /* VideoToolbox.framework in Frameworks */,
+				FE8560511B1C491A00E42BFE /* AVFoundation.framework in Frameworks */,
+				FE85604F1B1C491100E42BFE /* QuartzCore.framework in Frameworks */,
+				FE85604D1B1C490600E42BFE /* CoreVideo.framework in Frameworks */,
+				FE85604B1B1C48FA00E42BFE /* CoreAudio.framework in Frameworks */,
+				FE8560491B1C48ED00E42BFE /* CoreMedia.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		246FFCE4293EEEB8007DD791 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				24BBEA9129406C1500D51187 /* AppKit.framework */,
+				24BBEA8F29406C0D00D51187 /* Foundation.framework */,
+				24AA37BA29401FE100B680E6 /* AudioUnit.framework */,
+				246FFCED293EEEE0007DD791 /* LDAP.framework */,
+				246FFCEB293EEED3007DD791 /* libc++.tbd */,
+				246FFCE9293EEECD007DD791 /* libz.tbd */,
+				246FFCE7293EEEC8007DD791 /* VideoDecodeAcceleration.framework */,
+				246FFCE5293EEEBF007DD791 /* VideoToolbox.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FE6426E21B4FA92400CE3922 /* sdk */ = {
+			isa = PBXGroup;
+			children = (
+				2490CDDF295D767700120F2C /* AnyChatCoreSDK.framework */,
+			);
+			name = sdk;
+			path = ../../../sdk;
+			sourceTree = "<group>";
+		};
+		FE855FE81B1C413800E42BFE = {
+			isa = PBXGroup;
+			children = (
+				FE8560501B1C491A00E42BFE /* AVFoundation.framework */,
+				FE85604E1B1C491000E42BFE /* QuartzCore.framework */,
+				FE85604C1B1C490600E42BFE /* CoreVideo.framework */,
+				FE85604A1B1C48FA00E42BFE /* CoreAudio.framework */,
+				FE8560481B1C48ED00E42BFE /* CoreMedia.framework */,
+				FE8560461B1C48DE00E42BFE /* AudioToolbox.framework */,
+				FE855FF31B1C413800E42BFE /* AnyChatMeeting */,
+				FE8560071B1C413900E42BFE /* AnyChatMeetingTests */,
+				FE855FF21B1C413800E42BFE /* Products */,
+				246FFCE4293EEEB8007DD791 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		FE855FF21B1C413800E42BFE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FE855FF11B1C413800E42BFE /* AnyChatMeeting.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FE855FF31B1C413800E42BFE /* AnyChatMeeting */ = {
+			isa = PBXGroup;
+			children = (
+				FE6426E21B4FA92400CE3922 /* sdk */,
+				FE855FF61B1C413800E42BFE /* AppDelegate.h */,
+				FE855FF71B1C413800E42BFE /* AppDelegate.m */,
+				FE8560141B1C433F00E42BFE /* MainViewController.h */,
+				FE8560151B1C433F00E42BFE /* MainViewController.m */,
+				FE8560161B1C433F00E42BFE /* MainViewController.xib */,
+				24AA37BD294043B400B680E6 /* MeberCellView.h */,
+				24AA37BE294043B400B680E6 /* MeberCellView.m */,
+				FE8560581B1C506E00E42BFE /* User.h */,
+				FE8560591B1C506E00E42BFE /* User.m */,
+				245978A0294C41D500CE7FC8 /* DroidSansFallback.ttf */,
+				FE855FF41B1C413800E42BFE /* Supporting Files */,
+			);
+			path = AnyChatMeeting;
+			sourceTree = "<group>";
+		};
+		FE855FF41B1C413800E42BFE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FE855FFB1B1C413800E42BFE /* Images.xcassets */,
+				FE855FFD1B1C413900E42BFE /* MainMenu.xib */,
+				FE855FF51B1C413800E42BFE /* Info.plist */,
+				FE855FF91B1C413800E42BFE /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FE8560071B1C413900E42BFE /* AnyChatMeetingTests */ = {
+			isa = PBXGroup;
+			children = (
+				FE85600A1B1C413900E42BFE /* AnyChatMeetingTests.m */,
+				FE8560081B1C413900E42BFE /* Supporting Files */,
+			);
+			path = AnyChatMeetingTests;
+			sourceTree = "<group>";
+		};
+		FE8560081B1C413900E42BFE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FE8560091B1C413900E42BFE /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FE855FF01B1C413800E42BFE /* AnyChatMeeting */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FE85600E1B1C413900E42BFE /* Build configuration list for PBXNativeTarget "AnyChatMeeting" */;
+			buildPhases = (
+				FE855FED1B1C413800E42BFE /* Sources */,
+				FE855FEE1B1C413800E42BFE /* Frameworks */,
+				FE855FEF1B1C413800E42BFE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AnyChatMeeting;
+			productName = AnyChatMeeting;
+			productReference = FE855FF11B1C413800E42BFE /* AnyChatMeeting.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FE855FE91B1C413800E42BFE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = bairuitech;
+				TargetAttributes = {
+					FE855FF01B1C413800E42BFE = {
+						CreatedOnToolsVersion = 6.3;
+					};
+				};
+			};
+			buildConfigurationList = FE855FEC1B1C413800E42BFE /* Build configuration list for PBXProject "AnyChatMeeting" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+				Base,
+			);
+			mainGroup = FE855FE81B1C413800E42BFE;
+			productRefGroup = FE855FF21B1C413800E42BFE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FE855FF01B1C413800E42BFE /* AnyChatMeeting */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FE855FEF1B1C413800E42BFE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				245978A1294C41D500CE7FC8 /* DroidSansFallback.ttf in Resources */,
+				FE855FFC1B1C413800E42BFE /* Images.xcassets in Resources */,
+				FE8560181B1C433F00E42BFE /* MainViewController.xib in Resources */,
+				FE855FFF1B1C413900E42BFE /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FE855FED1B1C413800E42BFE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE85605A1B1C506E00E42BFE /* User.m in Sources */,
+				FE855FFA1B1C413800E42BFE /* main.m in Sources */,
+				24AA37C0294043B400B680E6 /* MeberCellView.m in Sources */,
+				FE8560171B1C433F00E42BFE /* MainViewController.m in Sources */,
+				FE855FF81B1C413800E42BFE /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FE855FFD1B1C413900E42BFE /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE855FFE1B1C413900E42BFE /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FE85600C1B1C413900E42BFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		FE85600D1B1C413900E42BFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		FE85600F1B1C413900E42BFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = ../../sdk;
+				INFOPLIST_FILE = AnyChatMeeting/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+					../../sdk/libs/audioprocess,
+					../../sdk/libs,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FE8560101B1C413900E42BFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = ../../sdk;
+				INFOPLIST_FILE = AnyChatMeeting/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+					../../sdk/libs/audioprocess,
+					../../sdk/libs,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FE855FEC1B1C413800E42BFE /* Build configuration list for PBXProject "AnyChatMeeting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FE85600C1B1C413900E42BFE /* Debug */,
+				FE85600D1B1C413900E42BFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FE85600E1B1C413900E42BFE /* Build configuration list for PBXNativeTarget "AnyChatMeeting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FE85600F1B1C413900E42BFE /* Debug */,
+				FE8560101B1C413900E42BFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FE855FE91B1C413800E42BFE /* Project object */;
+}

@@ -1,0 +1,460 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		24476511293DCB8D0020AA28 /* VideoDecodeAcceleration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24476510293DCB8C0020AA28 /* VideoDecodeAcceleration.framework */; };
+		24476513293DCB920020AA28 /* LDAP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24476512293DCB920020AA28 /* LDAP.framework */; };
+		24476515293DCBA60020AA28 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 24476514293DCBA60020AA28 /* libz.tbd */; };
+		2490CDE6295D786F00120F2C /* AnyChatCoreSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2490CDE5295D786F00120F2C /* AnyChatCoreSDK.framework */; };
+		F3C34AC0294F3473007B9366 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3C34ABF294F3473007B9366 /* AudioUnit.framework */; };
+		FE74C1551AC68CBD002DE88C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE74C1541AC68CBD002DE88C /* AppDelegate.m */; };
+		FE74C1571AC68CBD002DE88C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FE74C1561AC68CBD002DE88C /* main.m */; };
+		FE74C1591AC68CBD002DE88C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE74C1581AC68CBD002DE88C /* Images.xcassets */; };
+		FE74C15C1AC68CBE002DE88C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE74C15A1AC68CBE002DE88C /* MainMenu.xib */; };
+		FE74C1821AC68D8E002DE88C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE74C1781AC68D8E002DE88C /* CoreMedia.framework */; };
+		FE74C1831AC68D8E002DE88C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE74C1791AC68D8E002DE88C /* VideoToolbox.framework */; };
+		FE74C1851AC68D8E002DE88C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE74C17B1AC68D8E002DE88C /* CoreVideo.framework */; };
+		FE74C1861AC68D8E002DE88C /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE74C17C1AC68D8E002DE88C /* CoreAudio.framework */; };
+		FE74C1871AC68D8E002DE88C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE74C17D1AC68D8E002DE88C /* AudioToolbox.framework */; };
+		FE74C1891AC68D8E002DE88C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE74C17F1AC68D8E002DE88C /* AVFoundation.framework */; };
+		FE74C18A1AC68D8E002DE88C /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE74C1801AC68D8E002DE88C /* libc++.dylib */; };
+		FE74C18B1AC68D8E002DE88C /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE74C1811AC68D8E002DE88C /* libstdc++.dylib */; };
+		FE74C1BF1AC69251002DE88C /* AnyChatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE74C1BC1AC69251002DE88C /* AnyChatVC.xib */; };
+		FE74C1C01AC69251002DE88C /* AnyChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FE74C1BD1AC69251002DE88C /* AnyChatVC.m */; };
+		FEE9402A1ACBDBCF0034A7E9 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE940251ACBDBCF0034A7E9 /* 1.png */; };
+		FEE9402B1ACBDBCF0034A7E9 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE940261ACBDBCF0034A7E9 /* 2.png */; };
+		FEE9402C1ACBDBCF0034A7E9 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE940271ACBDBCF0034A7E9 /* 3.png */; };
+		FEE9402D1ACBDBCF0034A7E9 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE940281ACBDBCF0034A7E9 /* 4.png */; };
+		FEE9402E1ACBDBCF0034A7E9 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE940291ACBDBCF0034A7E9 /* 5.png */; };
+		FEE940311ACBEE170034A7E9 /* BG_macVideo.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE9402F1ACBEE160034A7E9 /* BG_macVideo.png */; };
+		FEE940321ACBEE170034A7E9 /* mac.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE940301ACBEE170034A7E9 /* mac.png */; };
+		FEECCB8F1ACD485F00ABE371 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEECCB8E1ACD485F00ABE371 /* Quartz.framework */; };
+		FEECCB911ACD486A00ABE371 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEECCB901ACD486A00ABE371 /* QuartzCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		24476510293DCB8C0020AA28 /* VideoDecodeAcceleration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoDecodeAcceleration.framework; path = System/Library/Frameworks/VideoDecodeAcceleration.framework; sourceTree = SDKROOT; };
+		24476512293DCB920020AA28 /* LDAP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LDAP.framework; path = System/Library/Frameworks/LDAP.framework; sourceTree = SDKROOT; };
+		24476514293DCBA60020AA28 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		2490CDE5295D786F00120F2C /* AnyChatCoreSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyChatCoreSDK.framework; sourceTree = "<group>"; };
+		F3C34ABF294F3473007B9366 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		FE74C14E1AC68CBD002DE88C /* HelloAnyChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloAnyChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE74C1521AC68CBD002DE88C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FE74C1531AC68CBD002DE88C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FE74C1541AC68CBD002DE88C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FE74C1561AC68CBD002DE88C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FE74C1581AC68CBD002DE88C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		FE74C15B1AC68CBE002DE88C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FE74C1781AC68D8E002DE88C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		FE74C1791AC68D8E002DE88C /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		FE74C17A1AC68D8E002DE88C /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
+		FE74C17B1AC68D8E002DE88C /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		FE74C17C1AC68D8E002DE88C /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		FE74C17D1AC68D8E002DE88C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FE74C17F1AC68D8E002DE88C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FE74C1801AC68D8E002DE88C /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		FE74C1811AC68D8E002DE88C /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		FE74C1BC1AC69251002DE88C /* AnyChatVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnyChatVC.xib; sourceTree = "<group>"; };
+		FE74C1BD1AC69251002DE88C /* AnyChatVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnyChatVC.m; sourceTree = "<group>"; };
+		FE74C1BE1AC69251002DE88C /* AnyChatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyChatVC.h; sourceTree = "<group>"; };
+		FEE940251ACBDBCF0034A7E9 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1.png; path = HelloAnyChat/res/1.png; sourceTree = "<group>"; };
+		FEE940261ACBDBCF0034A7E9 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2.png; path = HelloAnyChat/res/2.png; sourceTree = "<group>"; };
+		FEE940271ACBDBCF0034A7E9 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 3.png; path = HelloAnyChat/res/3.png; sourceTree = "<group>"; };
+		FEE940281ACBDBCF0034A7E9 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 4.png; path = HelloAnyChat/res/4.png; sourceTree = "<group>"; };
+		FEE940291ACBDBCF0034A7E9 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 5.png; path = HelloAnyChat/res/5.png; sourceTree = "<group>"; };
+		FEE9402F1ACBEE160034A7E9 /* BG_macVideo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BG_macVideo.png; path = HelloAnyChat/res/BG_macVideo.png; sourceTree = "<group>"; };
+		FEE940301ACBEE170034A7E9 /* mac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mac.png; path = HelloAnyChat/res/mac.png; sourceTree = "<group>"; };
+		FEECCB8E1ACD485F00ABE371 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		FEECCB901ACD486A00ABE371 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FE74C14B1AC68CBD002DE88C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F3C34AC0294F3473007B9366 /* AudioUnit.framework in Frameworks */,
+				2490CDE6295D786F00120F2C /* AnyChatCoreSDK.framework in Frameworks */,
+				24476515293DCBA60020AA28 /* libz.tbd in Frameworks */,
+				24476513293DCB920020AA28 /* LDAP.framework in Frameworks */,
+				24476511293DCB8D0020AA28 /* VideoDecodeAcceleration.framework in Frameworks */,
+				FEECCB911ACD486A00ABE371 /* QuartzCore.framework in Frameworks */,
+				FEECCB8F1ACD485F00ABE371 /* Quartz.framework in Frameworks */,
+				FE74C1891AC68D8E002DE88C /* AVFoundation.framework in Frameworks */,
+				FE74C18B1AC68D8E002DE88C /* libstdc++.dylib in Frameworks */,
+				FE74C1831AC68D8E002DE88C /* VideoToolbox.framework in Frameworks */,
+				FE74C1821AC68D8E002DE88C /* CoreMedia.framework in Frameworks */,
+				FE74C18A1AC68D8E002DE88C /* libc++.dylib in Frameworks */,
+				FE74C1861AC68D8E002DE88C /* CoreAudio.framework in Frameworks */,
+				FE74C1851AC68D8E002DE88C /* CoreVideo.framework in Frameworks */,
+				FE74C1871AC68D8E002DE88C /* AudioToolbox.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		244764DB293DCB740020AA28 /* sdk */ = {
+			isa = PBXGroup;
+			children = (
+				2490CDE5295D786F00120F2C /* AnyChatCoreSDK.framework */,
+			);
+			name = sdk;
+			path = ../../sdk;
+			sourceTree = "<group>";
+		};
+		FE74C1451AC68CBD002DE88C = {
+			isa = PBXGroup;
+			children = (
+				FE74C1711AC68CED002DE88C /* AnyChatSDK */,
+				FE74C1501AC68CBD002DE88C /* HelloAnyChat */,
+				FEE940231ACBD5EE0034A7E9 /* Res */,
+				FE74C1771AC68D75002DE88C /* Frameworks */,
+				FE74C14F1AC68CBD002DE88C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FE74C14F1AC68CBD002DE88C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FE74C14E1AC68CBD002DE88C /* HelloAnyChat.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FE74C1501AC68CBD002DE88C /* HelloAnyChat */ = {
+			isa = PBXGroup;
+			children = (
+				FE74C1531AC68CBD002DE88C /* AppDelegate.h */,
+				FE74C1541AC68CBD002DE88C /* AppDelegate.m */,
+				FE74C1BE1AC69251002DE88C /* AnyChatVC.h */,
+				FE74C1BD1AC69251002DE88C /* AnyChatVC.m */,
+				FE74C1BC1AC69251002DE88C /* AnyChatVC.xib */,
+				FE74C1581AC68CBD002DE88C /* Images.xcassets */,
+				FE74C15A1AC68CBE002DE88C /* MainMenu.xib */,
+				FE74C1511AC68CBD002DE88C /* Supporting Files */,
+			);
+			path = HelloAnyChat;
+			sourceTree = "<group>";
+		};
+		FE74C1511AC68CBD002DE88C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FE74C1521AC68CBD002DE88C /* Info.plist */,
+				FE74C1561AC68CBD002DE88C /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FE74C1711AC68CED002DE88C /* AnyChatSDK */ = {
+			isa = PBXGroup;
+			children = (
+				244764DB293DCB740020AA28 /* sdk */,
+			);
+			name = AnyChatSDK;
+			sourceTree = "<group>";
+		};
+		FE74C1771AC68D75002DE88C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F3C34ABF294F3473007B9366 /* AudioUnit.framework */,
+				24476514293DCBA60020AA28 /* libz.tbd */,
+				24476512293DCB920020AA28 /* LDAP.framework */,
+				24476510293DCB8C0020AA28 /* VideoDecodeAcceleration.framework */,
+				FEECCB901ACD486A00ABE371 /* QuartzCore.framework */,
+				FEECCB8E1ACD485F00ABE371 /* Quartz.framework */,
+				FE74C1781AC68D8E002DE88C /* CoreMedia.framework */,
+				FE74C1791AC68D8E002DE88C /* VideoToolbox.framework */,
+				FE74C17A1AC68D8E002DE88C /* libstdc++.6.dylib */,
+				FE74C17B1AC68D8E002DE88C /* CoreVideo.framework */,
+				FE74C17C1AC68D8E002DE88C /* CoreAudio.framework */,
+				FE74C17D1AC68D8E002DE88C /* AudioToolbox.framework */,
+				FE74C17F1AC68D8E002DE88C /* AVFoundation.framework */,
+				FE74C1801AC68D8E002DE88C /* libc++.dylib */,
+				FE74C1811AC68D8E002DE88C /* libstdc++.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FEE940231ACBD5EE0034A7E9 /* Res */ = {
+			isa = PBXGroup;
+			children = (
+				FEE9402F1ACBEE160034A7E9 /* BG_macVideo.png */,
+				FEE940301ACBEE170034A7E9 /* mac.png */,
+				FEE940241ACBDB660034A7E9 /* HeadPortrait */,
+			);
+			name = Res;
+			sourceTree = "<group>";
+		};
+		FEE940241ACBDB660034A7E9 /* HeadPortrait */ = {
+			isa = PBXGroup;
+			children = (
+				FEE940251ACBDBCF0034A7E9 /* 1.png */,
+				FEE940261ACBDBCF0034A7E9 /* 2.png */,
+				FEE940271ACBDBCF0034A7E9 /* 3.png */,
+				FEE940281ACBDBCF0034A7E9 /* 4.png */,
+				FEE940291ACBDBCF0034A7E9 /* 5.png */,
+			);
+			name = HeadPortrait;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FE74C14D1AC68CBD002DE88C /* HelloAnyChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FE74C16B1AC68CBE002DE88C /* Build configuration list for PBXNativeTarget "HelloAnyChat" */;
+			buildPhases = (
+				FE74C14A1AC68CBD002DE88C /* Sources */,
+				FE74C14B1AC68CBD002DE88C /* Frameworks */,
+				FE74C14C1AC68CBD002DE88C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HelloAnyChat;
+			productName = HelloAnyChat;
+			productReference = FE74C14E1AC68CBD002DE88C /* HelloAnyChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FE74C1461AC68CBD002DE88C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = AlexChen;
+				TargetAttributes = {
+					FE74C14D1AC68CBD002DE88C = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
+			};
+			buildConfigurationList = FE74C1491AC68CBD002DE88C /* Build configuration list for PBXProject "helloAnyChat" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+				Base,
+			);
+			mainGroup = FE74C1451AC68CBD002DE88C;
+			productRefGroup = FE74C14F1AC68CBD002DE88C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FE74C14D1AC68CBD002DE88C /* HelloAnyChat */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FE74C14C1AC68CBD002DE88C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE74C1591AC68CBD002DE88C /* Images.xcassets in Resources */,
+				FEE9402D1ACBDBCF0034A7E9 /* 4.png in Resources */,
+				FEE9402A1ACBDBCF0034A7E9 /* 1.png in Resources */,
+				FEE9402B1ACBDBCF0034A7E9 /* 2.png in Resources */,
+				FEE9402C1ACBDBCF0034A7E9 /* 3.png in Resources */,
+				FEE9402E1ACBDBCF0034A7E9 /* 5.png in Resources */,
+				FE74C15C1AC68CBE002DE88C /* MainMenu.xib in Resources */,
+				FEE940321ACBEE170034A7E9 /* mac.png in Resources */,
+				FEE940311ACBEE170034A7E9 /* BG_macVideo.png in Resources */,
+				FE74C1BF1AC69251002DE88C /* AnyChatVC.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FE74C14A1AC68CBD002DE88C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE74C1571AC68CBD002DE88C /* main.m in Sources */,
+				FE74C1551AC68CBD002DE88C /* AppDelegate.m in Sources */,
+				FE74C1C01AC69251002DE88C /* AnyChatVC.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FE74C15A1AC68CBE002DE88C /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE74C15B1AC68CBE002DE88C /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FE74C1691AC68CBE002DE88C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		FE74C16A1AC68CBE002DE88C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		FE74C16C1AC68CBE002DE88C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = ../../sdk;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/include,
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				INFOPLIST_FILE = HelloAnyChat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/libs,
+					../../sdk/libs/audioprocess,
+					"$(PROJECT_DIR)/libs/audioprocess",
+					"$(PROJECT_DIR)/libs",
+					"$(PROJECT_DIR)/HelloAnyChat/sdk/libs/audioprocess",
+					"$(PROJECT_DIR)/HelloAnyChat/sdk/libs",
+					"$(PROJECT_DIR)/helloAnyChat/sdk/libs",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_WORKSPACE = YES;
+			};
+			name = Debug;
+		};
+		FE74C16D1AC68CBE002DE88C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = ../../sdk;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/include,
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				INFOPLIST_FILE = HelloAnyChat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../../sdk/libs,
+					../../sdk/libs/audioprocess,
+					"$(PROJECT_DIR)/libs/audioprocess",
+					"$(PROJECT_DIR)/libs",
+					"$(PROJECT_DIR)/HelloAnyChat/sdk/libs/audioprocess",
+					"$(PROJECT_DIR)/HelloAnyChat/sdk/libs",
+					"$(PROJECT_DIR)/helloAnyChat/sdk/libs",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_WORKSPACE = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FE74C1491AC68CBD002DE88C /* Build configuration list for PBXProject "helloAnyChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FE74C1691AC68CBE002DE88C /* Debug */,
+				FE74C16A1AC68CBE002DE88C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FE74C16B1AC68CBE002DE88C /* Build configuration list for PBXNativeTarget "HelloAnyChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FE74C16C1AC68CBE002DE88C /* Debug */,
+				FE74C16D1AC68CBE002DE88C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FE74C1461AC68CBD002DE88C /* Project object */;
+}
