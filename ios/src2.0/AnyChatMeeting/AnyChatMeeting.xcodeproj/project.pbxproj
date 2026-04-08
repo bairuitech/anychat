@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		09558ADE1ECDBA6D00D966CE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09558ADD1ECDBA6D00D966CE /* libz.tbd */; };
 		098DF24A1EA743B500FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF2491EA743B500FB36FA /* VideoToolbox.framework */; };
+		4656772F2F8683E30038F1CC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4656772E2F8683E30038F1CC /* WebKit.framework */; };
 		F3D5DAED246559E800E74CB3 /* AnyChatCoreSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D5DAEC246559E800E74CB3 /* AnyChatCoreSDK.framework */; };
 		F854CF072147509B002FC106 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F854CF062147509B002FC106 /* libc++.tbd */; };
 		F8687B6B22C4529E0006E050 /* ACBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8687B6922C4529E0006E050 /* ACBaseViewController.m */; };
@@ -49,6 +50,7 @@
 /* Begin PBXFileReference section */
 		09558ADD1ECDBA6D00D966CE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		098DF2491EA743B500FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		4656772E2F8683E30038F1CC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		F3D5DAEC246559E800E74CB3 /* AnyChatCoreSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyChatCoreSDK.framework; sourceTree = "<group>"; };
 		F854CF062147509B002FC106 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		F8687B6922C4529E0006E050 /* ACBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACBaseViewController.m; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4656772F2F8683E30038F1CC /* WebKit.framework in Frameworks */,
 				F854CF072147509B002FC106 /* libc++.tbd in Frameworks */,
 				F3D5DAED246559E800E74CB3 /* AnyChatCoreSDK.framework in Frameworks */,
 				09558ADE1ECDBA6D00D966CE /* libz.tbd in Frameworks */,
@@ -270,6 +273,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4656772E2F8683E30038F1CC /* WebKit.framework */,
 				F854CF062147509B002FC106 /* libc++.tbd */,
 				09558ADD1ECDBA6D00D966CE /* libz.tbd */,
 				098DF2491EA743B500FB36FA /* VideoToolbox.framework */,

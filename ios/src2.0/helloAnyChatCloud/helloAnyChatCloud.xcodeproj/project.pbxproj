@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		043DC10E21B660E5007FACE2 /* icon_signserver@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043DC10D21B660E5007FACE2 /* icon_signserver@2x.png */; };
 		098DF2401EA7436C00FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF23F1EA7436C00FB36FA /* VideoToolbox.framework */; };
+		4656773E2F86846E0038F1CC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4656773D2F86846E0038F1CC /* WebKit.framework */; };
 		CFD00A0C2306605100686156 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFD00A0B2306605000686156 /* Launch Screen.storyboard */; };
 		F3D5DAA124653B5A00E74CB3 /* AnyChatCoreSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D5DAA024653B5A00E74CB3 /* AnyChatCoreSDK.framework */; };
 		F84AE89A22C304C6004CD66F /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = F84AE87922C304C6004CD66F /* IQNSArray+Sort.m */; };
@@ -92,6 +93,7 @@
 		043DC10D21B660E5007FACE2 /* icon_signserver@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_signserver@2x.png"; sourceTree = "<group>"; };
 		09558B751ECDBCA900D966CE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		098DF23F1EA7436C00FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		4656773D2F86846E0038F1CC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		CFD00A0B2306605000686156 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F3D5DAA024653B5A00E74CB3 /* AnyChatCoreSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyChatCoreSDK.framework; sourceTree = "<group>"; };
 		F84AE87522C304C6004CD66F /* UIView+AdaptScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AdaptScreen.h"; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4656773E2F86846E0038F1CC /* WebKit.framework in Frameworks */,
 				F3D5DAA124653B5A00E74CB3 /* AnyChatCoreSDK.framework in Frameworks */,
 				F854CF5A214758F9002FC106 /* libz.tbd in Frameworks */,
 				F854CEFD21474DC4002FC106 /* libc++.tbd in Frameworks */,
@@ -452,6 +455,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4656773D2F86846E0038F1CC /* WebKit.framework */,
 				F854CEFC21474DC4002FC106 /* libc++.tbd */,
 				09558B751ECDBCA900D966CE /* libz.tbd */,
 				098DF23F1EA7436C00FB36FA /* VideoToolbox.framework */,

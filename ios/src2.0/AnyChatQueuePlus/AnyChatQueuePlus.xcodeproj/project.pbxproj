@@ -23,6 +23,7 @@
 		22D5603B1B2B4B1400FE5DC2 /* BusinessHallCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D5603A1B2B4B1400FE5DC2 /* BusinessHallCell.m */; };
 		22D5603D1B2B4B2400FE5DC2 /* BusinessHallCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22D5603C1B2B4B2400FE5DC2 /* BusinessHallCell.xib */; };
 		22D5603F1B2B4F9600FE5DC2 /* businessHalls.json in Resources */ = {isa = PBXBuildFile; fileRef = 22D5603E1B2B4F9600FE5DC2 /* businessHalls.json */; };
+		465677352F8684260038F1CC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 465677342F8684260038F1CC /* WebKit.framework */; };
 		53F2043E1CCCC5ED002E6260 /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2043D1CCCC5ED002E6260 /* MZTimerLabel.m */; };
 		C051AB0E1DCD929B00227049 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C051AB0C1DCD929B00227049 /* LoginViewController.m */; };
 		C051AB121DCDB3F900227049 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C051AB111DCDB3F900227049 /* CustomButton.m */; };
@@ -93,6 +94,7 @@
 		22D5603A1B2B4B1400FE5DC2 /* BusinessHallCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessHallCell.m; sourceTree = "<group>"; };
 		22D5603C1B2B4B2400FE5DC2 /* BusinessHallCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessHallCell.xib; sourceTree = "<group>"; };
 		22D5603E1B2B4F9600FE5DC2 /* businessHalls.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = businessHalls.json; sourceTree = "<group>"; };
+		465677342F8684260038F1CC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		53F2043C1CCCC5ED002E6260 /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MZTimerLabel.h; path = AnyChatQueuePlus/MZTimerLabel.h; sourceTree = SOURCE_ROOT; };
 		53F2043D1CCCC5ED002E6260 /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MZTimerLabel.m; path = AnyChatQueuePlus/MZTimerLabel.m; sourceTree = SOURCE_ROOT; };
 		C051AB0B1DCD929B00227049 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465677352F8684260038F1CC /* WebKit.framework in Frameworks */,
 				F854CF0321475012002FC106 /* libc++.tbd in Frameworks */,
 				F3D5DAE9246556D700E74CB3 /* AnyChatCoreSDK.framework in Frameworks */,
 				09558B2A1ECDBB9600D966CE /* libz.tbd in Frameworks */,
@@ -199,6 +202,7 @@
 		098DF2431EA7438F00FB36FA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				465677342F8684260038F1CC /* WebKit.framework */,
 				F854CF0221475012002FC106 /* libc++.tbd */,
 				09558B291ECDBB9600D966CE /* libz.tbd */,
 				098DF2441EA7438F00FB36FA /* VideoToolbox.framework */,

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		09558A921ECDB95300D966CE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09558A911ECDB95300D966CE /* libz.tbd */; };
 		098DF24E1EA743D400FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF24D1EA743D400FB36FA /* VideoToolbox.framework */; };
+		465677292F8683880038F1CC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 465677282F8683880038F1CC /* WebKit.framework */; };
 		CF82B43922FA766E00974CB5 /* call.wav in Resources */ = {isa = PBXBuildFile; fileRef = CF82B43822FA766E00974CB5 /* call.wav */; };
 		CF82B45322FA7CE200974CB5 /* UserVideoSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF82B44B22FA7CE200974CB5 /* UserVideoSettings.plist */; };
 		CF82B45422FA7CE200974CB5 /* SettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CF82B44D22FA7CE200974CB5 /* SettingVC.m */; };
@@ -65,6 +66,7 @@
 /* Begin PBXFileReference section */
 		09558A911ECDB95300D966CE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		098DF24D1EA743D400FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		465677282F8683880038F1CC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		CF82B43822FA766E00974CB5 /* call.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = call.wav; sourceTree = "<group>"; };
 		CF82B44B22FA7CE200974CB5 /* UserVideoSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserVideoSettings.plist; sourceTree = "<group>"; };
 		CF82B44C22FA7CE200974CB5 /* SettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingVC.h; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465677292F8683880038F1CC /* WebKit.framework in Frameworks */,
 				F854CF0B21475157002FC106 /* libc++.tbd in Frameworks */,
 				09558A921ECDB95300D966CE /* libz.tbd in Frameworks */,
 				098DF24E1EA743D400FB36FA /* VideoToolbox.framework in Frameworks */,
@@ -335,6 +338,7 @@
 		FEB337C619B8555200D2C2F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				465677282F8683880038F1CC /* WebKit.framework */,
 				F854CF0A21475157002FC106 /* libc++.tbd */,
 				09558A911ECDB95300D966CE /* libz.tbd */,
 				098DF24D1EA743D400FB36FA /* VideoToolbox.framework */,

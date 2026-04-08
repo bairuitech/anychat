@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		09558AB81ECDB9D300D966CE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09558AB71ECDB9D300D966CE /* libz.tbd */; };
 		098DF24C1EA743C500FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF24B1EA743C500FB36FA /* VideoToolbox.framework */; };
+		4656772C2F8683C70038F1CC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4656772B2F8683C70038F1CC /* WebKit.framework */; };
 		CF71FBCF21FAA9E000CEC573 /* RecordLocalVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF71FBCE21FAA9E000CEC573 /* RecordLocalVC.xib */; };
 		F31B54B22383818B00DCCE05 /* LaunchBg.png in Resources */ = {isa = PBXBuildFile; fileRef = F31B54B12383818A00DCCE05 /* LaunchBg.png */; };
 		F3D5DAEF24655B9800E74CB3 /* AnyChatCoreSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D5DAEE24655B9800E74CB3 /* AnyChatCoreSDK.framework */; };
@@ -149,6 +150,7 @@
 /* Begin PBXFileReference section */
 		09558AB71ECDB9D300D966CE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		098DF24B1EA743C500FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		4656772B2F8683C70038F1CC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		CF71FBCE21FAA9E000CEC573 /* RecordLocalVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordLocalVC.xib; sourceTree = "<group>"; };
 		F31B54B12383818A00DCCE05 /* LaunchBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchBg.png; sourceTree = "<group>"; };
 		F3D5DAEE24655B9800E74CB3 /* AnyChatCoreSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyChatCoreSDK.framework; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4656772C2F8683C70038F1CC /* WebKit.framework in Frameworks */,
 				F854CF0921475100002FC106 /* libc++.tbd in Frameworks */,
 				F3D5DAEF24655B9800E74CB3 /* AnyChatCoreSDK.framework in Frameworks */,
 				09558AB81ECDB9D300D966CE /* libz.tbd in Frameworks */,
@@ -641,6 +644,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4656772B2F8683C70038F1CC /* WebKit.framework */,
 				F854CF0821475100002FC106 /* libc++.tbd */,
 				09558AB71ECDB9D300D966CE /* libz.tbd */,
 				098DF24B1EA743C500FB36FA /* VideoToolbox.framework */,

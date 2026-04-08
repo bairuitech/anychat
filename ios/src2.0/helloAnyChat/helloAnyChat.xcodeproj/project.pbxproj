@@ -11,6 +11,7 @@
 		04B125941CEDC1DA0008E358 /* TextModelTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B125931CEDC1DA0008E358 /* TextModelTool.m */; };
 		098DF23E1EA7435800FB36FA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098DF23D1EA7435800FB36FA /* VideoToolbox.framework */; };
 		464E84AE1ECCA17900A8BC2D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 464E84AD1ECCA17900A8BC2D /* libz.tbd */; };
+		4656773B2F8684580038F1CC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4656773A2F8684580038F1CC /* WebKit.framework */; };
 		9A0526452457F87F004DDA95 /* IQTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A0526262457F87F004DDA95 /* IQTextView.m */; };
 		9A0526462457F87F004DDA95 /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A05262A2457F87F004DDA95 /* IQToolbar.m */; };
 		9A0526472457F87F004DDA95 /* IQTitleBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A05262C2457F87F004DDA95 /* IQTitleBarButtonItem.m */; };
@@ -56,6 +57,7 @@
 		04B125931CEDC1DA0008E358 /* TextModelTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextModelTool.m; sourceTree = "<group>"; };
 		098DF23D1EA7435800FB36FA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		464E84AD1ECCA17900A8BC2D /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		4656773A2F8684580038F1CC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		9A0526262457F87F004DDA95 /* IQTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQTextView.m; sourceTree = "<group>"; };
 		9A0526272457F87F004DDA95 /* IQTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQTextView.h; sourceTree = "<group>"; };
 		9A0526292457F87F004DDA95 /* IQUIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4656773B2F8684580038F1CC /* WebKit.framework in Frameworks */,
 				F854CEFF21474F84002FC106 /* libc++.tbd in Frameworks */,
 				464E84AE1ECCA17900A8BC2D /* libz.tbd in Frameworks */,
 				098DF23E1EA7435800FB36FA /* VideoToolbox.framework in Frameworks */,
@@ -263,6 +266,7 @@
 		FEBBA24F19C2CC0B009EE02C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4656773A2F8684580038F1CC /* WebKit.framework */,
 				F854CEFE21474F84002FC106 /* libc++.tbd */,
 				464E84AD1ECCA17900A8BC2D /* libz.tbd */,
 				098DF23D1EA7435800FB36FA /* VideoToolbox.framework */,
